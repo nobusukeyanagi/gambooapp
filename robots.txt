@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Search-engine indexing is disabled by the robots meta tag on every HTML page.
