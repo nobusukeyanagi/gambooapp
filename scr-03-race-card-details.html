@@ -2,7 +2,7 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
     <title>Gamboo アプリ ワイヤーフレーム</title>
     <style>
@@ -1039,6 +1039,49 @@
       .divider {
         height: 6px;
         background: var(--c-surface2);
+      }
+    </style>
+  
+    <style id="mobile-device-fit">
+      /* Mobile device-fit preview: remove the presentation frame only. */
+      html, body {
+        width: 100%;
+        height: 100%;
+        min-height: 100dvh;
+        overflow: hidden;
+        background: var(--c-bg);
+      }
+      .page-title,
+      .page-sub,
+      .screen-label {
+        display: none !important;
+      }
+      .screens-grid {
+        width: 100vw;
+        height: 100dvh;
+        padding: 0;
+        margin: 0;
+        gap: 0;
+        display: block;
+      }
+      .screen-wrap {
+        width: 100vw;
+        height: 100dvh;
+        display: block;
+      }
+      .phone {
+        width: 100vw;
+        height: 100dvh;
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        background: var(--c-bg);
+      }
+      .phone-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
       }
     </style>
   </head>
