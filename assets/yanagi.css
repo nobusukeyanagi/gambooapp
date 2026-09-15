@@ -1,0 +1,3018 @@
+/* ================================================================
+   JBSトップページ yanagi案 専用スタイル
+   v66: 確定デザインに基づき重複・旧上書き指定を整理
+   ================================================================ */
+
+.jbs-hd__name {
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+.jbs-hd__sns {
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.jbs-hd__sns a {
+  align-items: center;
+  justify-content: center;
+  width: 38px !important;
+  height: 38px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  outline-offset: 2px;
+  text-decoration: none;
+  line-height: 0;
+  overflow: visible;
+  transition: opacity .15s;
+}
+
+.jbs-hd__sns a:hover {
+  opacity: .68;
+  background: none !important;
+}
+
+.jbs-hd__sns a:focus-visible {
+  outline: 2px solid var(--jbs-brand);
+}
+
+.jbs-hd__sns img {
+  width: 36px !important;
+  height: 36px !important;
+  max-width: none !important;
+  object-fit: contain;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+@media (min-width:901px) {
+  .jbs-gnav__list > li {
+    flex: 0 0 16.6666667% !important;
+    width: 16.6666667%;
+    min-width: 0;
+  }
+
+  .jbs-gnav .jbs-gnav__list > li > a {
+    width: 100%;
+  }
+}
+
+.jbs-hero__slides figure:first-child img {
+  object-position: center 52%;
+}
+
+.jbs-hero__slides img {
+  filter: brightness(1.05);
+}
+
+.jbs-hero__scrim {
+  background: linear-gradient(90deg,
+    rgba(16,18,21,.90) 0%, rgba(16,18,21,.80) 30%,
+    rgba(16,18,21,.46) 50%, rgba(16,18,21,.10) 74%, rgba(16,18,21,0) 100%);
+}
+
+.jbs-ft__search {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.jbs-ft__search form {
+  width: 280px;
+}
+
+.jbs-ft__search .jbs-search__field {
+  width: auto;
+  min-width: 0;
+  flex: 1 1 auto;
+  color: var(--jbs-ink);
+  background: var(--jbs-paper);
+}
+
+.jbs-ft__search .jbs-search__field::placeholder {
+  color: var(--jbs-ink-3);
+}
+
+@media (max-width:1100px) {
+  .jbs-hd__name {
+    font-size: 18px;
+    transform: translateY(8px);
+  }
+
+  .jbs-hd__sns {
+    gap: 8px;
+  }
+
+  .jbs-hd__sns a {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .jbs-hd__sns img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+@media (max-width:900px) {
+  .jbs-hero__scrim {
+    background: linear-gradient(180deg, rgba(16,18,21,.14) 0%, rgba(16,18,21,.43) 42%, rgba(16,18,21,.78) 100%);
+  }
+
+  .jbs-hd__name {
+    white-space: normal;
+    transform: translateY(9px);
+  }
+
+  .jbs-ft__search {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .jbs-ft__search form {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .jbs-hd__name {
+    transform: translateY(9px);
+  }
+}
+
+.jbs-vb {
+  padding: 18px 0 8px;
+}
+
+.jbs-vb__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.jbs-vb__viewport {
+  position: relative;
+}
+
+.jbs-vb__mask {
+  overflow: hidden;
+  margin: 0 52px;
+}
+
+.jbs-vb__track {
+  display: flex;
+  gap: 16px;
+  transition: transform .35s ease;
+  will-change: transform;
+}
+
+.jbs-vb__item {
+  flex: 0 0 calc((100% - 48px) / 4);
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.jbs-vb__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.jbs-vb__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 999px;
+  background: rgba(255,255,255,.94);
+  color: #222;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.jbs-vb__nav--prev {
+  left: 0;
+}
+
+.jbs-vb__nav--next {
+  right: 0;
+}
+
+.jbs-vb__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.jbs-vb__dots button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(27,31,39,.22);
+  cursor: pointer;
+}
+
+.jbs-vb__dots button[aria-selected="true"] {
+  background: var(--jbs-brand);
+}
+
+@media (max-width:600px) {
+  .jbs-vb {
+    padding: 14px 0 4px;
+  }
+
+  .jbs-vb__mask {
+    margin: 0 44px;
+  }
+
+  .jbs-vb__track {
+    gap: 12px;
+  }
+
+  .jbs-vb__item {
+    flex-basis: 100%;
+  }
+
+  .jbs-vb__nav {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+}
+
+.jbs-vb {
+  background: var(--jbs-paper);
+}
+
+.jbs-vb__nav:disabled {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.jbs-hero__inner {
+  min-height: 240px !important;
+  height: 240px;
+}
+
+@media (max-width:1080px) {
+  .jbs-hero__inner {
+    min-height: 240px !important;
+    height: 240px;
+  }
+}
+
+@media (max-width:900px) {
+  .jbs-hero__inner {
+    min-height: 240px !important;
+    height: 240px;
+  }
+}
+
+@media (max-width:600px) {
+  .jbs-hero__inner {
+    min-height: 240px !important;
+    height: 240px;
+  }
+}
+
+@media (min-width:901px) {
+  .jbs-gnav__list > li + li {
+    border-left: 1px solid rgba(255,255,255,.20) !important;
+  }
+
+  .jbs-gnav .jbs-gnav__list > li > a {
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: .015em;
+  }
+}
+
+@media (min-width:901px) and (max-width:1100px) {
+  .jbs-gnav .jbs-gnav__list > li > a {
+    min-height: 50px;
+    padding: 14px 5px;
+    letter-spacing: 0;
+  }
+}
+
+@media (min-width:901px) {
+  .jbs-gnav {
+    background: var(--jbs-nav);
+    border-top: 0;
+    border-bottom: 0;
+    box-shadow: none;
+  }
+
+  .jbs-gnav .jbs-gnav__list > li > a {
+    text-shadow: none;
+  }
+
+  .jbs-gnav__list > li > a:hover,
+  .jbs-gnav__list > li:hover > a,
+  .jbs-gnav__list > li:focus-within > a {
+    background: var(--jbs-nav-hover);
+  }
+}
+
+.jbs-hero__copies {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.jbs-hero__copy {
+  display: none;
+  max-width: none;
+}
+
+.jbs-hero__copy.is-active {
+  display: block;
+}
+
+@media (min-width:601px) {
+  .jbs-hero__lead {
+    max-width: none;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width:600px) {
+  .jbs-hero__lead {
+    white-space: normal;
+  }
+
+  .jbs-hero__pcbr {
+    display: none;
+  }
+}
+
+@media (min-width:901px) {
+  .jbs-gnav__list > li {
+    position: static !important;
+  }
+
+  .jbs-gnav__mobile-sub {
+    display: none !important;
+  }
+
+  .jbs-mega {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 75;
+    width: 100%;
+    height: 240px;
+    box-sizing: border-box;
+    padding: 0;
+    overflow: hidden;
+    background: #fff;
+    border-top: 3px solid var(--jbs-brand);
+    border-bottom: 1px solid var(--jbs-line);
+    box-shadow: 0 12px 28px rgba(0,0,0,.16);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition: opacity .15s ease, transform .15s ease, visibility 0s linear .15s;
+  }
+
+  .jbs-gnav__list > li:hover > .jbs-mega,
+  .jbs-gnav__list > li:focus-within > .jbs-mega {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .jbs-mega__inner {
+    width: 100%;
+    max-width: var(--jbs-shell);
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 22px 20px 20px;
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 28px;
+    align-content: start;
+  }
+
+  .jbs-mega__inner--3 {
+    grid-template-columns: 1fr 1.25fr 1fr;
+  }
+
+  .jbs-mega__group {
+    min-width: 0;
+    padding-right: 24px;
+    border-right: 1px solid var(--jbs-line);
+  }
+
+  .jbs-mega__group:last-child {
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  .jbs-mega__group h3 {
+    margin: 0 0 9px;
+    padding: 0 0 7px;
+    border-bottom: 2px solid var(--jbs-brand);
+    color: var(--jbs-ink);
+    font-size: 14px;
+    line-height: 1.25;
+    font-weight: 800;
+    letter-spacing: .02em;
+  }
+
+  .jbs-gnav .jbs-mega__group a {
+    position: relative;
+    display: block;
+    padding: 4px 10px 4px 14px;
+    color: var(--jbs-ink);
+    font-size: 14px;
+    line-height: 1.35;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+
+  .jbs-gnav .jbs-mega__group a::before {
+    content: "›";
+    position: absolute;
+    left: 3px;
+    top: 4px;
+    color: var(--jbs-brand);
+    font-weight: 800;
+  }
+
+  .jbs-gnav .jbs-mega__group a:hover,
+  .jbs-gnav .jbs-mega__group a:focus-visible {
+    background: var(--jbs-tint);
+    color: var(--jbs-brand-dark);
+  }
+
+  .jbs-mega__group--2col {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    column-gap: 12px;
+    align-content: start;
+  }
+
+  .jbs-mega__group--2col h3 {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width:900px) {
+  .jbs-mega {
+    display: none !important;
+  }
+}
+
+@media (min-width:901px) {
+  .jbs-flow {
+    grid-template-columns: repeat(4,minmax(0,1fr));
+  }
+}
+
+.jbs-flow__item--tournament .jbs-flow__num {
+  background: var(--jbs-brand);
+}
+
+.jbs-hd__sns a {
+  position: relative;
+  color: var(--jbs-brand);
+}
+
+@supports ((-webkit-mask-image:url("")) or (mask-image:url(""))) {
+  .jbs-hd__sns img {
+    opacity: 0 !important;
+  }
+
+  .jbs-hd__sns a::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: var(--jbs-brand);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+
+  .jbs-hd__sns a[aria-label="YouTube"]::before {
+    -webkit-mask-image: url("https://backgammon.or.jp/wp-content/uploads/2025/07/logo-youtube-50.png");
+    mask-image: url("https://backgammon.or.jp/wp-content/uploads/2025/07/logo-youtube-50.png");
+  }
+
+  .jbs-hd__sns a[aria-label="X"]::before {
+    -webkit-mask-image: url("https://backgammon.or.jp/wp-content/uploads/2025/07/logo-x-50.png");
+    mask-image: url("https://backgammon.or.jp/wp-content/uploads/2025/07/logo-x-50.png");
+  }
+
+  .jbs-hd__sns a[aria-label="Instagram"]::before {
+    -webkit-mask-image: url("https://backgammon.or.jp/wp-content/uploads/2025/07/logo-instagram-50.png");
+    mask-image: url("https://backgammon.or.jp/wp-content/uploads/2025/07/logo-instagram-50.png");
+  }
+
+  .jbs-hd__sns a[aria-label="Facebook"]::before {
+    -webkit-mask-image: url("https://backgammon.or.jp/wp-content/uploads/2025/07/logo-facebook-50.png");
+    mask-image: url("https://backgammon.or.jp/wp-content/uploads/2025/07/logo-facebook-50.png");
+  }
+}
+
+@media (min-width:901px) {
+  .jbs-hd__inner {
+    min-height: 70px;
+  }
+
+  .jbs-hd .jbs-hd__logo img {
+    height: 48px;
+  }
+
+  .jbs-hd__name {
+    transform: translateY(4px);
+  }
+}
+
+@media (min-width:901px) and (max-width:1100px) {
+  .jbs-hd__name {
+    transform: translateY(5px);
+  }
+}
+
+@media (min-width:901px) {
+  .jbs-gnav .jbs-gnav__list > li > a {
+    box-sizing: border-box;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.jbs-hd__sns {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.jbs-hd__sns a {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1;
+}
+
+.jbs-hd__sns img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.jbs-hd__sns a::before {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+@media (min-width:901px) {
+  .jbs-hd__sns {
+    display: flex !important;
+  }
+}
+
+@media (min-width:901px) {
+  .jbs-gnav__list,
+  .jbs-gnav__list > li {
+    height: 50px !important;
+  }
+
+  .jbs-gnav .jbs-gnav__list > li > a {
+    height: 50px !important;
+    min-height: 50px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+.jbs-hd__sns img {
+  filter: none !important;
+}
+
+.jbs-hd__sns a::before {
+  content: none !important;
+  display: none !important;
+}
+
+.jbs-newscols--triple {
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.jbs-newscols--triple .jbs-sec {
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.jbs-newslist--twoline a {
+  display: block;
+  padding: 8px 4px 9px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.jbs-newslist--twoline .jbs-newslist__meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 19px;
+  margin-bottom: 2px;
+}
+
+.jbs-newslist--twoline time {
+  display: block;
+  padding: 0;
+  font-size: 12px;
+  color: var(--jbs-ink-3);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.jbs-newslist--twoline .jbs-tag {
+  margin: 0;
+  vertical-align: 0;
+}
+
+.jbs-newslist--twoline .jbs-newslist__t {
+  min-width: 0;
+  font-weight: 500;
+}
+
+@media (max-width:900px) {
+  .jbs-newscols--triple {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (min-width:901px) {
+  .jbs-newscols--triple {
+    grid-template-columns: minmax(0,3fr) minmax(0,3fr) minmax(0,2fr);
+  }
+}
+
+.jbs-newslist--twoline .jbs-newslist__t {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.jbs-newslist--twoline .jbs-tag--today {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 1px 6px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--jbs-brand);
+  color: #fff;
+  font-size: 10px;
+  line-height: 1.55;
+  font-weight: 800;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+@media (min-width:901px) {
+  .jbs-start-full {
+    width: 100%;
+  }
+
+  .jbs-side .jbs-rating-card {
+    margin-top: 0 !important;
+  }
+}
+
+.jbs-newscols--dual {
+  display: grid;
+  gap: 24px;
+}
+
+.jbs-newscols--dual .jbs-sec {
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.jbs-newslist--singleline > li:nth-child(n/**/+13) {
+  display: none;
+}
+
+.jbs-newslist--singleline > li > a {
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 6px 4px;
+  line-height: 1.35;
+}
+
+.jbs-newslist--singleline time {
+  color: var(--jbs-ink-3);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.jbs-newslist--singleline .jbs-newsline__title {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.jbs-newslabel {
+  width: 5.5em;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  border-radius: 3px;
+  background: var(--jbs-row-hover);
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.jbs-newslist--schedule > li > a {
+  grid-template-columns: auto minmax(0,1fr) auto;
+}
+
+.jbs-fresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  line-height: 1.4;
+  font-weight: 800;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+.jbs-fresh--new,
+.jbs-fresh--today {
+  background: var(--jbs-brand);
+  color: #fff;
+}
+
+@media (max-width:900px) {
+  .jbs-newscols--dual {
+    gap: 20px;
+  }
+}
+
+@media (max-width:600px) {
+  .jbs-newslist--singleline > li > a {
+    gap: 6px;
+    padding: 5px 2px;
+  }
+
+  .jbs-newslist--singleline .jbs-newsline__title {
+    font-size: 14px;
+  }
+
+  .jbs-fresh {
+    min-width: 36px;
+    padding: 2px 4px;
+  }
+}
+
+.jbs-ft--compact {
+  padding: 0;
+}
+
+.jbs-ft--compact .jbs-ft__row {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.jbs-ft--compact .jbs-ft__row--desc .jbs-ft__desc {
+  width: 100%;
+  flex: none;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--jbs-ft-dim);
+}
+
+.jbs-ft--compact .jbs-ft__row--utility {
+  font-size: 12px;
+  color: var(--jbs-ft-dim);
+  white-space: nowrap;
+}
+
+.jbs-ft--compact .jbs-ft__search {
+  flex: 0 0 260px;
+  width: 260px;
+  margin: 0;
+}
+
+.jbs-ft--compact .jbs-ft__search form {
+  width: 100%;
+}
+
+.jbs-ft--compact .jbs-ft__copy {
+  margin-left: auto;
+}
+
+@media (max-width:900px) {
+  .jbs-ft--compact .jbs-ft__row--utility {
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    white-space: normal;
+  }
+
+  .jbs-ft--compact .jbs-ft__search {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .jbs-ft--compact .jbs-ft__copy {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+.jbs-newslabel {
+  color: #fff !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.jbs-newslabel.is-meeting {
+  background: #2F6FB0 !important;
+}
+
+.jbs-newslabel.is-member {
+  background: #6B7280 !important;
+}
+
+.jbs-newslabel.is-event {
+  background: #D97706 !important;
+}
+
+.jbs-newscols--dual {
+  grid-template-columns: minmax(0,7fr) minmax(0,3fr) !important;
+}
+
+.jbs-newslist--singleline > li:nth-child(n/**/+11) {
+  display: none !important;
+}
+
+.jbs-newslist--singleline time {
+  font-size: 14px !important;
+}
+
+.jbs-ft--compact .jbs-ft__row--desc .jbs-ft__desc,
+.jbs-ft--compact .jbs-ft__row--utility,
+.jbs-ft--compact .jbs-ft__row--utility a,
+.jbs-ft--compact .jbs-ft__copy,
+.jbs-ft--compact .jbs-ft__search label {
+  color: #fff !important;
+}
+
+.jbs-ft--compact .jbs-ft__row--utility {
+  border-top: 0 !important;
+}
+
+@media (max-width:900px) {
+  .jbs-newscols--dual {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width:600px) {
+  .jbs-newslist--singleline time {
+    font-size: 14px !important;
+  }
+}
+
+.jbs-dashboard-grid {
+  display: grid;
+}
+
+.jbs-dashboard-card {
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.jbs-dashboard-card .jbs-sec__hd {
+  gap: 8px;
+}
+
+.jbs-dashboard-card .jbs-sec__hd h2 {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.jbs-dashboard-card .jbs-more {
+  flex: 0 0 auto;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.jbs-dash-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.jbs-dash-list > li {
+  display: grid;
+  align-items: center;
+  min-height: 32px;
+  padding: 5px 3px;
+  border-bottom: 1px solid var(--jbs-line);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.jbs-dash-list--ranking > li {
+  grid-template-columns: 24px minmax(0,1fr) auto;
+  gap: 6px;
+}
+
+.jbs-dash__rank {
+  text-align: center;
+  color: var(--jbs-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.jbs-dash__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jbs-dash__value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.jbs-dash-list--champions > li {
+  grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);
+  gap: 7px;
+}
+
+.jbs-dash__event,
+.jbs-dash__winner {
+  min-width: 0;
+}
+
+.jbs-dash__event {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jbs-dash__winner {
+  text-align: right;
+  font-weight: 600;
+}
+
+.jbs-position {
+  margin: 0;
+  padding: 8px 0 6px;
+}
+
+.jbs-position img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 702 / 546;
+  object-fit: contain;
+  background: #fff;
+}
+
+.jbs-position__choices {
+  display: grid;
+  padding-top: 6px;
+  border-top: 1px solid var(--jbs-line);
+}
+
+.jbs-position__choices button {
+  width: 100%;
+  min-height: 30px;
+  padding: 5px 8px;
+  border: 1px solid var(--jbs-line);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--jbs-ink);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.jbs-position__choices button:hover {
+  border-color: var(--jbs-brand);
+  background: var(--jbs-row-hover);
+}
+
+.jbs-dash-list--champions > li.jbs-dash__subwinner {
+  min-height: 28px;
+  padding-top: 2px;
+  padding-bottom: 5px;
+}
+
+.jbs-dash-list--champions > li.jbs-dash__subwinner .jbs-dash__winner {
+  font-weight: 600;
+}
+
+.jbs-dash-list {
+  border-top: 0 !important;
+}
+
+.jbs-newslist--singleline > li > a {
+  height: 36px !important;
+  min-height: 36px !important;
+  box-sizing: border-box;
+}
+
+.jbs-newslist--singleline time {
+  padding-top: 0 !important;
+  line-height: 1.35;
+}
+
+.jbs-newslist--singleline .jbs-newsline__title,
+.jbs-newslist--singleline .jbs-newslabel,
+.jbs-newslist--singleline .jbs-fresh {
+  align-self: center;
+}
+
+@media (max-width:600px) {
+  .jbs-newslist--singleline > li > a {
+    height: 34px !important;
+    min-height: 34px !important;
+  }
+}
+
+.jbs-ft--compact .jbs-ft__row--desc {
+  margin-bottom: 6px !important;
+  padding-bottom: 0 !important;
+}
+
+.jbs-ft--compact .jbs-ft__desc {
+  margin: 0 !important;
+}
+
+.jbs-ft--compact .jbs-ft__row--utility {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.jbs-position__choices {
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 6px !important;
+}
+
+.jbs-position__choices button {
+  text-align: center !important;
+}
+
+@media (max-width:600px) {
+  .jbs-ft--compact .jbs-ft__row--utility {
+    gap: 8px !important;
+  }
+}
+
+.jbs-newscols--dual .jbs-sec__hd,
+.jbs-dashboard-card .jbs-sec__hd {
+  margin-bottom: 0 !important;
+}
+
+.jbs-newslist--singleline > li,
+.jbs-newslist--singleline > li > a {
+  height: 36px !important;
+  min-height: 36px !important;
+  box-sizing: border-box !important;
+}
+
+.jbs-newslist--singleline > li > a {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.jbs-dash-list > li,
+.jbs-dash-list--champions > li.jbs-dash__subwinner {
+  height: 32px !important;
+  min-height: 32px !important;
+  box-sizing: border-box !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.jbs-dash-list--champions > li.jbs-dash__dualwinner {
+  border-bottom: 0 !important;
+}
+
+.jbs-position {
+  border-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+@media (max-width:600px) {
+  .jbs-newslist--singleline > li,
+  .jbs-newslist--singleline > li > a {
+    height: 34px !important;
+    min-height: 34px !important;
+  }
+}
+
+.jbs-more::before {
+  margin-right: 4px;
+  margin-left: 0;
+}
+
+.jbs-more::after {
+  content: none !important;
+  display: none !important;
+}
+
+.jbs-more::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 6px !important;
+  height: 6px !important;
+  margin: 0 !important;
+  border-top: 2px solid var(--jbs-brand) !important;
+  border-right: 2px solid var(--jbs-brand) !important;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+  transform: rotate(45deg) !important;
+  flex: 0 0 auto;
+}
+
+@media (max-width:900px) {
+  .jbs-hd__name span.jbs-hd__name-en {
+    display: block !important;
+    line-height: 1.15 !important;
+  }
+}
+
+.jbs-sec__hd .jbs-more {
+  margin-left: 0 !important;
+}
+
+.jbs-dash-list,
+.jbs-dash-list *,
+.jbs-dash__value,
+.jbs-dash__winner {
+  font-weight: 400 !important;
+}
+
+@media (max-width:900px) {
+  .jbs-hd__sns {
+    display: none !important;
+  }
+
+  .jbs-hd__util > .jbs-btn--primary {
+    display: none !important;
+  }
+
+  .jbs-burger {
+    display: flex !important;
+  }
+
+  .jbs-burger:focus-visible {
+    outline: 2px solid var(--jbs-brand) !important;
+    outline-offset: 2px !important;
+  }
+
+  .jbs-gnav {
+    background: #fff !important;
+    color: var(--jbs-ink) !important;
+    box-shadow: -10px 0 30px rgba(16,18,21,.18) !important;
+  }
+
+  .jbs-gnav > .jbs-shell {
+    background: #fff !important;
+  }
+
+  .jbs-gnav__head {
+    border-bottom: 1px solid var(--jbs-line) !important;
+    background: #fff !important;
+  }
+
+  .jbs-gnav__close {
+    color: var(--jbs-ink) !important;
+  }
+
+  .jbs-gnav__close:focus-visible,
+  .jbs-gnav__tgl:focus-visible,
+  .jbs-gnav__list a:focus-visible {
+    outline-color: var(--jbs-brand) !important;
+  }
+
+  .jbs-gnav__cta {
+    margin-top: 8px !important;
+  }
+
+  .jbs-gnav__cta .jbs-btn--primary {
+    background: var(--jbs-brand) !important;
+    border-color: var(--jbs-brand) !important;
+    color: #fff !important;
+  }
+
+  .jbs-gnav__cta .jbs-btn--ghost {
+    background: #fff !important;
+    border-color: var(--jbs-line-strong) !important;
+    color: var(--jbs-ink) !important;
+  }
+
+  .jbs-gnav__cta .jbs-btn--ghost:hover {
+    border-color: var(--jbs-brand) !important;
+    color: var(--jbs-brand-dark) !important;
+  }
+
+  .jbs-gnav__list {
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .jbs-gnav .jbs-gnav__list > li > a {
+    min-height: 50px !important;
+    padding: 13px 58px 13px 20px !important;
+    border-bottom: 1px solid var(--jbs-line) !important;
+    background: #fff !important;
+    color: var(--jbs-ink) !important;
+    font-weight: 700 !important;
+  }
+
+  .jbs-gnav__list > li > a:hover,
+  .jbs-gnav__list > li:hover > a,
+  .jbs-gnav__list > li:focus-within > a {
+    background: var(--jbs-tint) !important;
+    border-bottom-color: var(--jbs-line) !important;
+    color: var(--jbs-brand-dark) !important;
+  }
+
+  .jbs-gnav__tgl {
+    color: var(--jbs-ink-3) !important;
+  }
+
+  .jbs-gnav__list > li.is-open > .jbs-gnav__tgl {
+    color: var(--jbs-brand) !important;
+  }
+
+  .jbs-gnav__list > li > ul {
+    background: var(--jbs-paper) !important;
+  }
+
+  .jbs-gnav .jbs-gnav__list ul a {
+    border-bottom: 1px solid var(--jbs-line) !important;
+    background: var(--jbs-paper) !important;
+    color: var(--jbs-ink-2) !important;
+  }
+
+  .jbs-gnav__list ul a:hover {
+    background: var(--jbs-tint) !important;
+    color: var(--jbs-brand-dark) !important;
+  }
+
+  .jbs-gnav__mobile-head {
+    padding: 10px 20px 5px !important;
+    color: var(--jbs-brand-dark) !important;
+    background: var(--jbs-paper) !important;
+    font-weight: 700 !important;
+    letter-spacing: .06em !important;
+  }
+
+  .jbs-gnav__foot {
+    gap: 12px !important;
+    border-top: 1px solid var(--jbs-line) !important;
+    background: #fff !important;
+  }
+
+  .jbs-gnav__foot .jbs-lang {
+    color: var(--jbs-ink) !important;
+    font-weight: 700 !important;
+  }
+
+  .jbs-drawer__sns {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .jbs-drawer__sns a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .jbs-drawer__sns img {
+    display: block !important;
+    object-fit: contain !important;
+    filter: none !important;
+  }
+}
+
+.jbs-ft--compact {
+  margin-top: 0 !important;
+}
+
+.jbs-ft--compact .jbs-ft__row--desc {
+  min-height: 0 !important;
+}
+
+.jbs-ft--compact .jbs-ft__row--utility {
+  gap: 8px !important;
+  padding: 0 !important;
+  min-height: 28px !important;
+  line-height: 1.2 !important;
+}
+
+.jbs-ft--compact .jbs-ft__search form {
+  min-height: 28px !important;
+}
+
+.jbs-ft--compact .jbs-ft__search .jbs-search__field {
+  height: 28px !important;
+}
+
+.jbs-ft--compact .jbs-ft__copy,
+.jbs-ft--compact .jbs-ft__row--utility a {
+  line-height: 1.2 !important;
+}
+
+@media (max-width:600px) {
+  .jbs-ft--compact {
+    margin-top: 0 !important;
+  }
+
+  .jbs-ft--compact .jbs-ft__row--desc {
+    margin-bottom: 3px !important;
+  }
+}
+
+.jbs-hd__inner {
+  align-items: center !important;
+}
+
+.jbs-hd__name {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  line-height: 1.08 !important;
+  font-weight: 700 !important;
+}
+
+.jbs-hd__name span.jbs-hd__name-en {
+  display: block !important;
+  margin-top: 3px !important;
+  line-height: 1.2 !important;
+  font-weight: 500 !important;
+  letter-spacing: .10em !important;
+}
+
+@media (max-width:900px) {
+  .jbs-hd__name {
+    line-height: 1.08 !important;
+  }
+}
+
+@media (max-width:600px) {
+  .jbs-hd__name span.jbs-hd__name-en {
+    letter-spacing: .08em !important;
+  }
+}
+
+.jbs-sec__hd {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.jbs-sec__hd h2 {
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.jbs-sec__hd .jbs-more {
+  display: inline-flex !important;
+  align-items: center !important;
+  align-self: center !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.jbs-sec__hd .jbs-more::before {
+  align-self: center !important;
+}
+
+@media (max-width:600px) {
+  .jbs-dash-list > li,
+  .jbs-position__choices button {
+    font-size: 14px !important;
+  }
+}
+
+.jbs-ft--compact {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+@media (max-width:600px) {
+  .jbs-ft--compact {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+}
+
+.jbs-sec__hd {
+  gap: 12px !important;
+}
+
+@media (max-width:600px) {
+  .jbs-newslist--notice > li,
+  .jbs-newslist--notice > li > a {
+    height: auto !important;
+    min-height: 34px !important;
+  }
+
+  .jbs-newslist--notice > li > a {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    align-items: start !important;
+  }
+
+  .jbs-newslist--notice .jbs-newsline__title {
+    overflow: visible !important;
+    white-space: normal !important;
+    text-overflow: clip !important;
+    line-height: 1.45 !important;
+  }
+
+  .jbs-newslist--notice time,
+  .jbs-newslist--notice .jbs-newslabel,
+  .jbs-newslist--notice .jbs-fresh {
+    align-self: start !important;
+    margin-top: 1px;
+  }
+}
+
+.jbs-dash-list,
+.jbs-dash-list *,
+.jbs-dash__rank,
+.jbs-dash__value,
+.jbs-dash__event,
+.jbs-position__choices button {
+  font-weight: 400 !important;
+}
+
+.jbs-dash__name,
+.jbs-dash__winner {
+  font-weight: 700 !important;
+}
+
+@media (min-width:901px) {
+  .jbs-gnav__list > li + li {
+    border-left-width: 2px !important;
+    border-left-style: solid !important;
+    border-left-color: var(--jbs-nav-sep) !important;
+  }
+
+  .jbs-gnav__list > li:first-child {
+    box-shadow: -2px 0 0 var(--jbs-nav-sep) !important;
+  }
+
+  .jbs-gnav__list > li:last-child {
+    box-shadow: 2px 0 0 var(--jbs-nav-sep) !important;
+  }
+}
+
+@media (max-width:900px) {
+  #h-news,
+  #h-schedule {
+    font-weight: 700 !important;
+  }
+}
+
+@media (max-width:900px) {
+  .jbs-burger,
+  .jbs-gnav__close {
+    width: 42px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    border: 1px solid var(--jbs-line-strong) !important;
+    border-radius: 4px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  .jbs-gnav__close {
+    position: fixed !important;
+    top: 9px !important;
+    right: 20px !important;
+    z-index: 1002 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+
+  .jbs-gnav__close svg {
+    width: 22px !important;
+    height: 22px !important;
+    stroke: var(--jbs-ink) !important;
+    stroke-width: 2 !important;
+    fill: none !important;
+  }
+}
+
+@media (max-width:600px) {
+  .jbs-gnav__close {
+    top: 7px !important;
+    right: 14px !important;
+  }
+}
+
+@media (max-width:900px) {
+  .jbs-burger {
+    position: relative !important;
+    z-index: 131 !important;
+    width: 42px !important;
+    height: 42px !important;
+    padding: 0 10px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transition: transform .28s ease !important;
+  }
+
+  .jbs-burger span {
+    height: 2px !important;
+    background: var(--jbs-ink) !important;
+    border-radius: 1px !important;
+    transform-origin: center !important;
+    transition: transform .28s cubic-bezier(.4,0,.2,1), opacity .16s ease !important;
+  }
+
+  .jbs-burger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg) !important;
+  }
+
+  .jbs-burger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0 !important;
+    transform: scaleX(0) !important;
+  }
+
+  .jbs-burger[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg) !important;
+  }
+
+  body.jbs-nav-open .jbs-hd {
+    z-index: 130 !important;
+    background: transparent !important;
+    border-bottom-color: transparent !important;
+    pointer-events: none !important;
+  }
+
+  body.jbs-nav-open .jbs-hd__logo,
+  body.jbs-nav-open .jbs-hd__name {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  body.jbs-nav-open .jbs-hd__util {
+    pointer-events: none !important;
+  }
+
+  body.jbs-nav-open .jbs-burger {
+    pointer-events: auto !important;
+  }
+
+  .jbs-gnav__close {
+    display: none !important;
+  }
+
+  .jbs-gnav__head {
+    padding: 64px 16px 14px !important;
+  }
+
+  .jbs-gnav__cta {
+    display: grid !important;
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+    gap: 10px !important;
+    margin: 0 !important;
+  }
+
+  .jbs-gnav__cta .jbs-btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 38px !important;
+    padding: 0 10px !important;
+    font-size: 14px !important;
+  }
+
+  .jbs-gnav__foot {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 18px 20px 24px !important;
+  }
+
+  .jbs-drawer__sns {
+    width: 100% !important;
+    justify-content: center !important;
+    gap: 16px !important;
+  }
+
+  .jbs-drawer__sns a {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  .jbs-drawer__sns img {
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
+
+.jbs-newslist--notice .jbs-newsline__title {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+@media (max-width:600px) {
+  .jbs-newslist--notice .jbs-newslabel {
+    max-width: none !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+}
+
+.jbs-ft--compact .jbs-ft__row--desc,
+.jbs-ft--compact .jbs-ft__row--utility {
+  min-height: 28px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.jbs-ft--compact .jbs-ft__row--desc {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.jbs-ft--compact .jbs-ft__desc {
+  line-height: 1.2 !important;
+}
+
+.jbs-newslist--notice > li > a {
+  grid-template-columns: auto 5.5em minmax(0,1fr) auto !important;
+  column-gap: 0 !important;
+}
+
+.jbs-newslist--notice .jbs-newslabel {
+  width: 5.5em !important;
+  max-width: none !important;
+  justify-self: center !important;
+  margin-left: 6px !important;
+  margin-right: 6px !important;
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+}
+
+.jbs-newslist--notice .jbs-newsline__title {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+@media (max-width:600px) {
+  .jbs-ft--compact .jbs-ft__row--desc,
+  .jbs-ft--compact .jbs-ft__row--utility {
+    min-height: 28px !important;
+  }
+
+  .jbs-newslist--notice > li > a {
+    column-gap: 0 !important;
+  }
+
+  .jbs-newslist--notice .jbs-newslabel {
+    width: 5.5em !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+}
+
+.jbs-hd__name {
+  align-self: center !important;
+  transform: translateY(2px) !important;
+}
+
+.jbs-ft--compact .jbs-ft__search button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  width: 28px !important;
+  min-width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
+  border: 1px solid var(--jbs-brand) !important;
+  border-radius: 0 3px 3px 0 !important;
+  background: var(--jbs-brand) !important;
+  color: #fff !important;
+  overflow: visible !important;
+}
+
+.jbs-ft--compact .jbs-ft__search button svg {
+  display: block !important;
+  width: 15px !important;
+  height: 15px !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2.2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.jbs-ft--compact .jbs-ft__search button svg circle,
+.jbs-ft--compact .jbs-ft__search button svg path {
+  fill: none !important;
+  stroke: currentColor !important;
+}
+
+.jbs-ft--compact .jbs-ft__search .sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.jbs-vb__item--gp {
+  background: #072c78 !important;
+}
+
+.jbs-vb__item--gp img,
+.jbs-vb__item--shop img {
+  object-position: center center;
+}
+
+:root {
+  --jbs-brand: #C8105A !important;
+}
+
+.jbs-newslabel.is-title {
+  background: #008A68 !important;
+  color: #fff !important;
+}
+
+.jbs-newslabel.is-national {
+  background: var(--jbs-brand) !important;
+  color: #fff !important;
+}
+
+.jbs-newslabel:not(.is-meeting):not(.is-member):not(.is-title):not(.is-event):not(.is-national),
+.jbs-newslabel.is-notice,
+.jbs-newslabel.is-news {
+  background: var(--jbs-tag-bg) !important;
+  color: var(--jbs-ink-2) !important;
+}
+
+.jbs-dash__linkrow {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top: 1px solid var(--jbs-line-2);
+  box-sizing: border-box;
+}
+
+.jbs-dash__linkrow .jbs-more {
+  margin-left: 0 !important;
+}
+
+.jbs-dashboard-card .jbs-sec__hd {
+  justify-content: flex-start !important;
+}
+
+.jbs-news__linkrow {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
+}
+
+.jbs-news__linkrow .jbs-more,
+.jbs-dash__linkrow .jbs-more {
+  margin-left: 0 !important;
+  font-weight: 400 !important;
+}
+
+.jbs-newscols .jbs-sec__hd {
+  justify-content: flex-start !important;
+}
+
+@media (max-width:900px) {
+  .jbs-news__linkrow .jbs-more,
+  .jbs-dash__linkrow .jbs-more {
+    font-size: 14px !important;
+  }
+}
+
+body.jbs-home {
+  font-size: 16px !important;
+}
+
+.jbs-skip {
+  font-size: 14px !important;
+}
+
+.jbs-btn,
+.jbs-btn--sm,
+.jbs-gnav__cta .jbs-btn {
+  font-size: 14px !important;
+}
+
+.jbs-search .jbs-search__field,
+.jbs-ft--compact .jbs-ft__search .jbs-search__field {
+  font-size: 14px !important;
+}
+
+.jbs-hd__name {
+  font-size: 22px !important;
+}
+
+.jbs-hd__name span.jbs-hd__name-en {
+  font-size: 14px !important;
+}
+
+@media (min-width:1101px) {
+  .jbs-gnav .jbs-gnav__list > li > a {
+    font-size: 16px !important;
+  }
+}
+
+@media (min-width:901px) and (max-width:1100px) {
+  .jbs-gnav .jbs-gnav__list > li > a {
+    font-size: 14px !important;
+  }
+}
+
+.jbs-mega__group h3 {
+  font-size: 14px !important;
+}
+
+.jbs-gnav .jbs-mega__group a {
+  font-size: 14px !important;
+}
+
+.jbs-hero__title {
+  font-size: 30px !important;
+}
+
+.jbs-hero__lead {
+  font-size: 14px !important;
+}
+
+.jbs-sec__hd h2 {
+  font-size: 18px !important;
+}
+
+.jbs-newslist--singleline time,
+.jbs-newslist--singleline .jbs-newsline__title {
+  font-size: 14px !important;
+}
+
+.jbs-newslabel {
+  font-size: 12px !important;
+}
+
+.jbs-fresh {
+  font-size: 10px !important;
+}
+
+.jbs-news__linkrow .jbs-more,
+.jbs-dash__linkrow .jbs-more {
+  font-size: 14px !important;
+}
+
+.jbs-flow__num {
+  font-size: 12px !important;
+}
+
+.jbs-flow__item h3 {
+  font-size: 16px !important;
+}
+
+.jbs-flow__item p,
+.jbs-flow__go {
+  font-size: 14px !important;
+}
+
+.jbs-dashboard-card .jbs-sec__hd h2 {
+  font-size: 16px !important;
+}
+
+.jbs-dash-list > li,
+.jbs-position__choices button {
+  font-size: 14px !important;
+}
+
+.jbs-ft--compact .jbs-ft__row--desc .jbs-ft__desc,
+.jbs-ft--compact .jbs-ft__row--utility {
+  font-size: 12px !important;
+}
+
+@media (max-width:900px) {
+  .jbs-hd__name {
+    font-size: 18px !important;
+  }
+
+  .jbs-hd__name span.jbs-hd__name-en {
+    font-size: 12px !important;
+  }
+
+  .jbs-gnav .jbs-gnav__list > li > a {
+    font-size: 14px !important;
+  }
+
+  .jbs-gnav .jbs-gnav__list ul a {
+    font-size: 14px !important;
+  }
+
+  .jbs-gnav__mobile-head {
+    font-size: 12px !important;
+  }
+
+  .jbs-gnav__foot .jbs-lang {
+    font-size: 14px !important;
+  }
+
+  .jbs-hero__title {
+    font-size: 24px !important;
+  }
+
+  .jbs-hero__lead {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width:600px) {
+  body.jbs-home {
+    font-size: 16px !important;
+  }
+
+  .jbs-hd__name {
+    font-size: 18px !important;
+  }
+
+  .jbs-hd__name span.jbs-hd__name-en {
+    font-size: 10px !important;
+  }
+
+  .jbs-hero__title {
+    font-size: 22px !important;
+  }
+
+  .jbs-hero__lead {
+    font-size: 14px !important;
+  }
+
+  .jbs-sec__hd h2 {
+    font-size: 16px !important;
+  }
+
+  .jbs-newslist--singleline time,
+  .jbs-newslist--singleline .jbs-newsline__title {
+    font-size: 14px !important;
+  }
+
+  .jbs-newslabel {
+    font-size: 10px !important;
+  }
+
+  .jbs-fresh {
+    font-size: 10px !important;
+  }
+
+  .jbs-dashboard-card .jbs-sec__hd h2 {
+    font-size: 16px !important;
+  }
+
+  .jbs-dash-list > li,
+  .jbs-position__choices button,
+  .jbs-news__linkrow .jbs-more,
+  .jbs-dash__linkrow .jbs-more {
+    font-size: 14px !important;
+  }
+}
+
+@media (min-width:901px) {
+  .jbs-gnav .jbs-gnav__list > li > a {
+    font-size: 14px !important;
+  }
+}
+
+.jbs-dashboard-grid {
+  grid-template-columns: minmax(0,1.9fr)
+    minmax(0,1.9fr)
+    minmax(0,1.9fr)
+    minmax(0,3.3fr) !important;
+}
+
+@media (max-width:1100px) {
+  .jbs-dashboard-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+@media (max-width:600px) {
+  .jbs-dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.jbs-dashboard-card .jbs-dash-list > li:last-child {
+  border-bottom: 0 !important;
+}
+
+.jbs-more--sp {
+  display: none !important;
+}
+
+@media (max-width:600px) {
+  .jbs-sec__hd {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+  }
+
+  .jbs-sec__hd h2 {
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+
+  .jbs-sec__hd .jbs-more--sp {
+    display: inline-flex !important;
+    align-items: center !important;
+    margin-left: auto !important;
+    flex: 0 0 auto !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+  }
+
+  .jbs-news__linkrow,
+  .jbs-dash__linkrow {
+    display: none !important;
+  }
+}
+
+.jbs-vb {
+  padding-top: 14px !important;
+  padding-bottom: 10px !important;
+}
+
+.jbs-vb__item {
+  box-sizing: border-box !important;
+  border: 1px solid rgba(31,34,38,.12) !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  box-shadow: 0 3px 10px rgba(16,18,21,.10) !important;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease !important;
+}
+
+.jbs-vb__item img {
+  border-radius: 9px !important;
+}
+
+@media (hover:hover) and (pointer:fine) {
+  .jbs-vb__item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(200,16,90,.28) !important;
+    box-shadow: 0 6px 16px rgba(16,18,21,.12) !important;
+  }
+}
+
+.jbs-vb__nav {
+  border-color: rgba(31,34,38,.14) !important;
+  box-shadow: 0 3px 10px rgba(16,18,21,.10) !important;
+}
+
+.jbs-vb__dots {
+  margin-top: 8px !important;
+}
+
+.jbs-sec__titlelink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+@media (min-width:601px) {
+  .jbs-sec__titlelink::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    flex: 0 0 auto;
+    border-top: 2px solid var(--jbs-brand);
+    border-right: 2px solid var(--jbs-brand);
+    transform: rotate(45deg);
+    opacity: .8;
+    transition: transform .15s ease, opacity .15s ease;
+  }
+
+  .jbs-sec__titlelink:hover {
+    color: var(--jbs-brand-dark) !important;
+  }
+
+  .jbs-sec__titlelink:hover::after {
+    transform: translateX(2px) rotate(45deg);
+    opacity: 1;
+  }
+}
+
+@media (max-width:600px) {
+  .jbs-sec__titlelink::after {
+    content: none !important;
+  }
+}
+
+.jbs-main {
+  padding-top: 12px !important;
+}
+
+.jbs-newscols--dual {
+  margin-bottom: 20px !important;
+}
+
+.jbs-start-full .jbs-sec {
+  margin-bottom: 20px !important;
+}
+
+.jbs-dashboard-grid {
+  gap: 16px !important;
+  margin-top: 0 !important;
+  margin-bottom: 24px !important;
+}
+
+.jbs-sec__hd {
+  margin-bottom: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+@media (max-width:600px) {
+  .jbs-vb {
+    padding-top: 12px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .jbs-vb__item {
+    border-radius: 10px !important;
+  }
+
+  .jbs-vb__item img {
+    border-radius: 9px !important;
+  }
+
+  .jbs-dashboard-grid {
+    gap: 18px !important;
+  }
+}
+
+.jbs-flow__go::after {
+  content: none !important;
+}
+
+.jbs-flow__go::before {
+  content: "››";
+  margin-right: 5px;
+  color: var(--jbs-brand);
+  font-weight: 700;
+  letter-spacing: -.08em;
+}
+
+@media (min-width:601px) {
+  .jbs-flow__go--overlay {
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    z-index: 2;
+    display: inline-flex !important;
+    align-items: center;
+    min-height: 24px;
+    margin: 0 !important;
+    padding: 3px 9px !important;
+    border-radius: 999px;
+    background: rgba(255,255,255,.94);
+    color: var(--jbs-ink-2) !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 1.3;
+    box-shadow: 0 1px 4px rgba(0,0,0,.18);
+    white-space: nowrap;
+  }
+
+  .jbs-flow__go--body {
+    display: none !important;
+  }
+}
+
+@media (max-width:600px) {
+  .jbs-flow__go--overlay {
+    display: none !important;
+  }
+
+  .jbs-flow__go--body {
+    display: inline-flex !important;
+    align-items: center;
+    margin-top: 2px !important;
+    padding-top: 0 !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+  }
+}
+
+.jbs-more--position-pc {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+@media (max-width:600px) {
+  .jbs-more--position-pc {
+    display: none !important;
+  }
+}
+
+@media (min-width:901px) {
+  .jbs-newslist--singleline time,
+  .jbs-newslist--singleline .jbs-newsline__title {
+    font-size: 14px !important;
+  }
+
+  .jbs-dash-list > li,
+  .jbs-position__choices button {
+    font-size: 14px !important;
+  }
+
+  .jbs-flow__item p {
+    font-size: 14px !important;
+  }
+
+  .jbs-newslist--singleline > li > a {
+    min-height: 36px !important;
+  }
+
+  .jbs-dash-list > li {
+    min-height: 32px !important;
+  }
+}
+
+.jbs-flow__go--overlay,
+.jbs-flow__go--body {
+  font-size: 14px !important;
+}
+
+.jbs-more--position-history {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-left: auto !important;
+  flex: 0 0 auto !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+
+/* ==========================================================================
+   v67: バナースライダー表示枚数
+   PC 4枚 / Tablet 2枚 / SP 1枚
+   ========================================================================== */
+@media (min-width:601px) and (max-width:900px){
+  .jbs-vb__item{
+    flex-basis:calc((100% - 16px) / 2) !important;
+  }
+}
+
+
+/* ==========================================================================
+   v68: ヒーローとバナーの役割を分離
+   Hero = 世界観 / PICK UP = 情報帯
+   ========================================================================== */
+
+/* ヒーロー直下に「情報帯」として独立させる */
+.jbs-vb{
+  padding-top:20px !important;
+  padding-bottom:20px !important;
+  background:#fff !important;
+}
+
+/* PICK UP 見出し */
+.jbs-vb__title{
+  margin:0 0 10px !important;
+  padding:0 !important;
+  color:var(--jbs-ink-2);
+  font-size:14px !important;
+  font-weight:700;
+  line-height:1.2;
+  letter-spacing:.12em;
+}
+
+/* バナーを少し小さくし、広告感を弱める */
+@media (min-width:901px){
+  .jbs-vb__mask{
+    margin-left:64px !important;
+    margin-right:64px !important;
+  }
+}
+
+.jbs-vb__item{
+  border-color:rgba(31,34,38,.10) !important;
+  border-radius:8px !important;
+  box-shadow:0 2px 6px rgba(16,18,21,.07) !important;
+}
+
+.jbs-vb__item img{
+  border-radius:7px !important;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .jbs-vb__item:hover{
+    transform:translateY(-1px) !important;
+    border-color:rgba(200,16,90,.22) !important;
+    box-shadow:0 4px 10px rgba(16,18,21,.09) !important;
+  }
+}
+
+/* ナビも主張を少し抑える */
+.jbs-vb__nav{
+  width:36px !important;
+  height:36px !important;
+  border-color:rgba(31,34,38,.12) !important;
+  box-shadow:0 2px 7px rgba(16,18,21,.08) !important;
+  background:rgba(255,255,255,.96) !important;
+}
+
+/* ドットも情報帯の中で控えめに */
+.jbs-vb__dots{
+  margin-top:8px !important;
+}
+
+/* タブレット：2枚表示は維持しつつ余白を確保 */
+@media (min-width:601px) and (max-width:900px){
+  .jbs-vb{
+    padding-top:18px !important;
+    padding-bottom:18px !important;
+  }
+
+  .jbs-vb__mask{
+    margin-left:48px !important;
+    margin-right:48px !important;
+  }
+
+  .jbs-vb__title{
+    font-size:14px !important;
+  }
+}
+
+/* スマホ：1枚表示、見出しを少し小さく */
+@media (max-width:600px){
+  .jbs-vb{
+    padding-top:16px !important;
+    padding-bottom:14px !important;
+  }
+
+  .jbs-vb__title{
+    margin-bottom:8px !important;
+    font-size:12px !important;
+  }
+
+  .jbs-vb__mask{
+    margin-left:42px !important;
+    margin-right:42px !important;
+  }
+}
+
+
+/* ==========================================================================
+   v69: PICK UP 見出しを他セクションと統一
+   ========================================================================== */
+.jbs-vb__hd{
+  margin-bottom:10px !important;
+  padding-bottom:6px !important;
+}
+
+.jbs-vb__hd h2{
+  margin:0 !important;
+  color:inherit !important;
+  font-size:18px !important;
+  font-weight:700 !important;
+  line-height:1.35 !important;
+  letter-spacing:0 !important;
+}
+
+@media (max-width:600px){
+  .jbs-vb__hd{
+    margin-bottom:8px !important;
+    padding-bottom:6px !important;
+  }
+
+  .jbs-vb__hd h2{
+    font-size:16px !important;
+  }
+}
+
+
+/* ==========================================================================
+   v70: PICK UP背景・詳細リンク表現を全体統一
+   ========================================================================== */
+
+/* PICK UP背景を他の本文エリアと同じ背景へ */
+.jbs-vb{
+  background:var(--jbs-paper) !important;
+}
+
+/* 詳細リンクの記号を「≫」に統一 */
+.jbs-more::before,
+.jbs-flow__go::before{
+  content:"≫" !important;
+  display:inline-block !important;
+  width:auto !important;
+  height:auto !important;
+  margin:0 2px 0 0 !important;
+  padding:0 !important;
+  border:0 !important;
+  transform:none !important;
+  color:var(--jbs-brand) !important;
+  font-weight:700 !important;
+  line-height:1 !important;
+  letter-spacing:0 !important;
+}
+
+/* 既存の疑似矢印を無効化 */
+.jbs-more::after,
+.jbs-flow__go::after{
+  content:none !important;
+  display:none !important;
+}
+
+/* 「過去のお題」も他の詳細リンクと同じスタイルへ */
+.jbs-more--position-history{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:0 !important;
+  margin-left:auto !important;
+  padding:0 !important;
+  color:var(--jbs-ink-2) !important;
+  font-size:14px !important;
+  font-weight:400 !important;
+  line-height:1.35 !important;
+  text-decoration:none !important;
+}
+
+.jbs-more--position-history:hover{
+  color:var(--jbs-brand) !important;
+}
+
+/* STEPリンクも「≫ラベル」の詰まった見え方に統一 */
+.jbs-flow__go--overlay,
+.jbs-flow__go--body{
+  gap:0 !important;
+}
+
+
+
+/* ==========================================================================
+   v71: セクション見出し・右側リンクを完全統一
+   対象：
+   PICK UP / お知らせ / 例会・イベント予定 /
+   バックギャモンをやってみよう！ /
+   JBSレーティング / 今期ランキング / タイトル保持者 / 今日のポジション
+   ========================================================================== */
+
+/* 見出し行そのものを共通化 */
+.jbs-vb__hd,
+.jbs-newscols .jbs-sec__hd,
+.jbs-start-full .jbs-sec__hd,
+.jbs-dashboard-grid .jbs-sec__hd{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:10px !important;
+  min-height:32px !important;
+  margin:0 0 8px !important;
+  padding:0 0 6px !important;
+  border-bottom:1px solid var(--jbs-line) !important;
+  box-sizing:border-box !important;
+}
+
+/* 8項目のタイトルを同一タイポグラフィへ */
+.jbs-vb__hd h2,
+.jbs-newscols .jbs-sec__hd h2,
+.jbs-start-full .jbs-sec__hd h2,
+.jbs-dashboard-grid .jbs-sec__hd h2{
+  flex:0 1 auto !important;
+  min-width:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  color:var(--jbs-ink) !important;
+  font-size:18px !important;
+  font-weight:700 !important;
+  line-height:1.35 !important;
+  letter-spacing:0 !important;
+}
+
+/* タイトル自体がリンクの場合も見た目を同一化 */
+.jbs-vb__hd h2 a,
+.jbs-newscols .jbs-sec__hd h2 a,
+.jbs-start-full .jbs-sec__hd h2 a,
+.jbs-dashboard-grid .jbs-sec__hd h2 a,
+.jbs-sec__titlelink{
+  color:inherit !important;
+  font:inherit !important;
+  line-height:inherit !important;
+  letter-spacing:inherit !important;
+  text-decoration:none !important;
+}
+
+/* PCでタイトルリンクに付けていた小矢印は削除。
+   詳細導線の記号は右側リンクの「≫」に統一する */
+.jbs-sec__titlelink::after{
+  content:none !important;
+  display:none !important;
+}
+
+/* 右側リンクを全セクションで統一 */
+.jbs-vb__hd .jbs-more,
+.jbs-newscols .jbs-sec__hd .jbs-more,
+.jbs-start-full .jbs-sec__hd .jbs-more,
+.jbs-dashboard-grid .jbs-sec__hd .jbs-more,
+.jbs-more--sp,
+.jbs-more--position-history{
+  display:inline-flex !important;
+  align-items:center !important;
+  flex:0 0 auto !important;
+  gap:0 !important;
+  margin:0 0 0 auto !important;
+  padding:0 !important;
+  color:var(--jbs-ink-2) !important;
+  font-size:14px !important;
+  font-weight:400 !important;
+  line-height:1.35 !important;
+  letter-spacing:0 !important;
+  text-decoration:none !important;
+  white-space:nowrap !important;
+}
+
+/* 右側リンク記号はすべて「≫」 */
+.jbs-vb__hd .jbs-more::before,
+.jbs-newscols .jbs-sec__hd .jbs-more::before,
+.jbs-start-full .jbs-sec__hd .jbs-more::before,
+.jbs-dashboard-grid .jbs-sec__hd .jbs-more::before,
+.jbs-more--sp::before,
+.jbs-more--position-history::before{
+  content:"≫" !important;
+  display:inline-block !important;
+  width:auto !important;
+  height:auto !important;
+  margin:0 2px 0 0 !important;
+  padding:0 !important;
+  border:0 !important;
+  transform:none !important;
+  color:var(--jbs-brand) !important;
+  font-weight:700 !important;
+  line-height:1 !important;
+  letter-spacing:0 !important;
+}
+
+.jbs-vb__hd .jbs-more::after,
+.jbs-newscols .jbs-sec__hd .jbs-more::after,
+.jbs-start-full .jbs-sec__hd .jbs-more::after,
+.jbs-dashboard-grid .jbs-sec__hd .jbs-more::after,
+.jbs-more--sp::after,
+.jbs-more--position-history::after{
+  content:none !important;
+  display:none !important;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .jbs-vb__hd .jbs-more:hover,
+  .jbs-newscols .jbs-sec__hd .jbs-more:hover,
+  .jbs-start-full .jbs-sec__hd .jbs-more:hover,
+  .jbs-dashboard-grid .jbs-sec__hd .jbs-more:hover,
+  .jbs-more--sp:hover,
+  .jbs-more--position-history:hover{
+    color:var(--jbs-brand) !important;
+  }
+}
+
+/* SPも全セクション同一 */
+@media (max-width:600px){
+  .jbs-vb__hd,
+  .jbs-newscols .jbs-sec__hd,
+  .jbs-start-full .jbs-sec__hd,
+  .jbs-dashboard-grid .jbs-sec__hd{
+    gap:8px !important;
+    min-height:30px !important;
+    margin-bottom:8px !important;
+    padding-bottom:6px !important;
+  }
+
+  .jbs-vb__hd h2,
+  .jbs-newscols .jbs-sec__hd h2,
+  .jbs-start-full .jbs-sec__hd h2,
+  .jbs-dashboard-grid .jbs-sec__hd h2{
+    font-size:16px !important;
+  }
+
+  .jbs-vb__hd .jbs-more,
+  .jbs-newscols .jbs-sec__hd .jbs-more,
+  .jbs-start-full .jbs-sec__hd .jbs-more,
+  .jbs-dashboard-grid .jbs-sec__hd .jbs-more,
+  .jbs-more--sp,
+  .jbs-more--position-history{
+    font-size:14px !important;
+  }
+}
+
+
+/* ==========================================================================
+   v72: セクション見出し左アクセントとの重なりを解消
+   ========================================================================== */
+
+/* 全8項目で左アクセント線とタイトル文字の間隔を統一 */
+.jbs-vb__hd h2,
+.jbs-newscols .jbs-sec__hd h2,
+.jbs-start-full .jbs-sec__hd h2,
+.jbs-dashboard-grid .jbs-sec__hd h2{
+  position:relative !important;
+  padding-left:14px !important;
+}
+
+/* 左アクセント線も全8項目で同一位置 */
+.jbs-vb__hd h2::before,
+.jbs-newscols .jbs-sec__hd h2::before,
+.jbs-start-full .jbs-sec__hd h2::before,
+.jbs-dashboard-grid .jbs-sec__hd h2::before{
+  left:0 !important;
+  top:.2em !important;
+  width:4px !important;
+  height:1em !important;
+}
+
+
+/* ==========================================================================
+   v73: 一覧1行目の高さ統一 / ダッシュボード最終行罫線
+   ========================================================================== */
+
+/* 見出し下の余白が1行目だけ高く見える原因だったため、
+   一覧系ブロックでは見出し下余白をなくし、1行目を2行目以降と同じ高さにする */
+.jbs-newscols .jbs-sec__hd,
+.jbs-dashboard-grid .jbs-sec__hd{
+  margin-bottom:0 !important;
+}
+
+/* レーティング・今期ランキング・タイトル保持者は最終行にも下罫線を表示 */
+.jbs-dashboard-card:not(.jbs-position-card) .jbs-dash-list > li:last-child{
+  border-bottom:1px solid var(--jbs-line-2) !important;
+}
+
+
+/* ==========================================================================
+   v74: 横罫線の色・太さをセクション見出し下と統一
+   ========================================================================== */
+
+/* 本文内の横罫線は、見出し下と同じ 1px / var(--jbs-line) に統一 */
+.jbs-newslist--singleline > li,
+.jbs-dash-list > li,
+.jbs-dashboard-card:not(.jbs-position-card) .jbs-dash-list > li:last-child,
+.jbs-dash__linkrow,
+.jbs-position__choices{
+  border-color:var(--jbs-line) !important;
+  border-width:1px !important;
+}
+
+/* お知らせ・予定の各行 */
+.jbs-newslist--singleline > li{
+  border-bottom-style:solid !important;
+  border-bottom-color:var(--jbs-line) !important;
+}
+
+/* レーティング・ランキング・タイトル保持者の各行 */
+.jbs-dash-list > li{
+  border-bottom-style:solid !important;
+  border-bottom-color:var(--jbs-line) !important;
+}
+
+/* 同一タイトルの複数優勝者間は従来どおり区切らない */
+.jbs-dash-list--champions > li.jbs-dash__dualwinner{
+  border-bottom:0 !important;
+}
+
+/* 今日のポジション：図の直下に罫線を密着 */
+.jbs-position{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+
+.jbs-position__choices{
+  margin-top:0 !important;
+  border-top:1px solid var(--jbs-line) !important;
+}
+
+
+/* ==========================================================================
+   v75: スライダー左右余白を縮小し、バナーを少し大きく
+   ========================================================================== */
+@media (min-width:901px){
+  .jbs-vb__mask{
+    margin-left:48px !important;
+    margin-right:48px !important;
+  }
+}
+
+@media (min-width:601px) and (max-width:900px){
+  .jbs-vb__mask{
+    margin-left:40px !important;
+    margin-right:40px !important;
+  }
+}
+
+@media (max-width:600px){
+  .jbs-vb__mask{
+    margin-left:36px !important;
+    margin-right:36px !important;
+  }
+}
+
+
+/* ==========================================================================
+   v76: SPお知らせ・イベント表示 / フッター整理
+   ========================================================================== */
+
+@media (max-width:600px){
+
+  /* お知らせはPC版に準拠：
+     日付・カテゴリ・タイトルを横並びの1行構成で統一 */
+  .jbs-newslist--singleline > li > a{
+    display:grid !important;
+    grid-template-columns:84px minmax(0,1fr) !important;
+    gap:0 10px !important;
+    min-height:36px !important;
+    padding:7px 4px !important;
+    align-items:center !important;
+  }
+
+  .jbs-newslist--singleline time{
+    padding-top:.1em !important;
+    font-size:14px !important;
+    line-height:1.5 !important;
+    white-space:nowrap !important;
+  }
+
+  .jbs-newslist--singleline .jbs-newsline__title{
+    min-width:0 !important;
+    font-size:14px !important;
+    line-height:1.5 !important;
+  }
+
+  /* 例会・イベント予定もPCの情報密度に準拠 */
+  .jbs-newslist--schedule > li > a{
+    grid-template-columns:84px minmax(0,1fr) auto !important;
+  }
+
+  /* SPではイベント名を太字 */
+  .jbs-newslist--schedule .jbs-newsline__title{
+    font-weight:700 !important;
+  }
+
+  /* フッター：検索→リンク→著作権を明確に分離して整頓 */
+  .jbs-ft--compact{
+    padding:16px 0 14px !important;
+  }
+
+  .jbs-ft--compact .jbs-ft__row--desc{
+    display:block !important;
+    padding-bottom:14px !important;
+  }
+
+  .jbs-ft--compact .jbs-ft__row--desc .jbs-ft__desc{
+    margin:0 !important;
+    font-size:12px !important;
+    line-height:1.7 !important;
+  }
+
+  .jbs-ft--compact .jbs-ft__row--utility{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:10px 14px !important;
+    align-items:center !important;
+    padding-top:14px !important;
+    border-top:1px solid rgba(255,255,255,.22) !important;
+    white-space:normal !important;
+  }
+
+  .jbs-ft--compact .jbs-ft__search{
+    grid-column:1 / -1 !important;
+    width:100% !important;
+    margin:0 !important;
+  }
+
+  .jbs-ft--compact .jbs-ft__search form{
+    width:100% !important;
+  }
+
+  .jbs-ft--compact .jbs-ft__row--utility > a{
+    display:block !important;
+    margin:0 !important;
+    font-size:12px !important;
+    line-height:1.45 !important;
+    text-align:left !important;
+  }
+
+  .jbs-ft--compact .jbs-ft__copy{
+    grid-column:1 / -1 !important;
+    width:100% !important;
+    margin:2px 0 0 !important;
+    padding-top:10px !important;
+    border-top:1px solid rgba(255,255,255,.14) !important;
+    font-size:10px !important;
+    line-height:1.5 !important;
+    text-align:left !important;
+  }
+}
+
+
+/* ==========================================================================
+   v77: SPお知らせレイアウトをv75相当に復元 / タイトル太字
+   ========================================================================== */
+@media (max-width:600px){
+
+  /* お知らせ欄のみ、v76で変更した2列レイアウトを取り消す */
+  .jbs-newslist--notice > li,
+  .jbs-newslist--notice > li > a{
+    height:auto !important;
+    min-height:34px !important;
+  }
+
+  .jbs-newslist--notice > li > a{
+    display:grid !important;
+    grid-template-columns:auto 5.5em minmax(0,1fr) auto !important;
+    column-gap:0 !important;
+    row-gap:0 !important;
+    padding:6px 2px !important;
+    align-items:start !important;
+  }
+
+  .jbs-newslist--notice .jbs-newslabel{
+    width:5.5em !important;
+    max-width:none !important;
+    justify-self:center !important;
+    margin-left:5px !important;
+    margin-right:5px !important;
+    padding-left:4px !important;
+    padding-right:4px !important;
+  }
+
+  .jbs-newslist--notice time,
+  .jbs-newslist--notice .jbs-newslabel,
+  .jbs-newslist--notice .jbs-fresh{
+    align-self:start !important;
+    margin-top:1px !important;
+  }
+
+  .jbs-newslist--notice .jbs-newsline__title{
+    width:100% !important;
+    min-width:0 !important;
+    margin-left:0 !important;
+    padding-left:0 !important;
+    overflow:visible !important;
+    white-space:normal !important;
+    text-overflow:clip !important;
+    line-height:1.45 !important;
+    font-weight:700 !important;
+  }
+}
+
+
+/* ==========================================================================
+   v78: イベント曜日表示 / PC列幅微調整
+   ========================================================================== */
+
+/* PC：右列をほんの少し広く */
+@media (min-width:901px){
+  .jbs-newscols--dual{
+    grid-template-columns:minmax(0,6.8fr) minmax(0,3.2fr) !important;
+  }
+}
+
+/* イベント日時：日付 曜日 時刻 */
+.jbs-newslist--schedule time{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:4px !important;
+}
+
+.jbs-event-dow{
+  font-weight:700 !important;
+}
+
+.jbs-event-dow.is-weekday{
+  color:#16803C !important;
+}
+
+.jbs-event-dow.is-sat{
+  color:#2F6FB0 !important;
+}
+
+.jbs-event-dow.is-sunholiday{
+  color:#C8105A !important;
+}
+
+
+/* ==========================================================================
+   v79: お知らせ/イベント列幅 2:1 / SPイベント日時重なり修正
+   ========================================================================== */
+
+/* PC：お知らせ 2 / イベント予定 1 */
+@media (min-width:901px){
+  .jbs-newscols--dual{
+    grid-template-columns:minmax(0,2fr) minmax(0,1fr) !important;
+  }
+}
+
+/* SP：日時列は内容幅を確保し、イベント名と重ならないようにする */
+@media (max-width:600px){
+  .jbs-newslist--schedule > li > a{
+    grid-template-columns:max-content minmax(0,1fr) auto !important;
+    column-gap:8px !important;
+    align-items:center !important;
+  }
+
+  .jbs-newslist--schedule time{
+    min-width:max-content !important;
+    white-space:nowrap !important;
+  }
+
+  .jbs-newslist--schedule .jbs-newsline__title{
+    min-width:0 !important;
+    overflow:hidden !important;
+    white-space:nowrap !important;
+    text-overflow:ellipsis !important;
+  }
+}
