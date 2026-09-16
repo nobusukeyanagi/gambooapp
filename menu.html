@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <title>Gamboo Mock Menu</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+    }
+    .menu { width: 100%; min-height: 100dvh; background: #fafaf8; }
+    .menu-header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      padding: max(18px, env(safe-area-inset-top)) 18px 14px;
+      background: #fff;
+      border-bottom: 1px solid #e0ddd8;
+    }
+    h1 { margin: 0; font-size: 20px; line-height: 1.3; }
+    .sub { margin-top: 4px; color: #6b6b6b; font-size: 12px; }
+    .menu-list { padding: 10px 10px calc(20px + env(safe-area-inset-bottom)); }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: 52px;
+      margin: 0 0 8px;
+      padding: 12px 14px;
+      border: 1px solid #e0ddd8;
+      border-radius: 10px;
+      background: #fff;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+    .arrow { color: #adadad; font-size: 24px; line-height: 1; }
+  </style>
+</head>
+<body>
+  <main class="menu">
+    <header class="menu-header">
+      <h1>Gamboo 画面メニュー</h1>
+      <div class="sub">確認する画面を選択してください</div>
+    </header>
+    <nav class="menu-list" aria-label="画面一覧">
+        <a class="menu-item" href="home.html"><span>SCR-01 ホーム</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="race-venues.html"><span>SCR-02 出走表 場一覧</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="auto-venues.html"><span>SCR-02-AUTO 出走表 オート場一覧</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="race-detail.html"><span>SCR-03 出走表詳細</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="race-detail-nine.html"><span>SCR-03 出走表詳細 9車立て</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="mania-analysis.html"><span>SCR-03 マニア分析タブ</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="auto-race-detail.html"><span>SCR-04 オート出走表詳細</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="data-lab.html"><span>SCR-04 データ解析ラボ</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="my-page.html"><span>SCR-07 マイページ</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="campaign.html"><span>SCR-11 キャンペーン</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="blog.html"><span>SCR-12 ブログTOP</span><span class="arrow">›</span></a>
+        <a class="menu-item" href="tsubutter.html"><span>SCR-19 ツブッター</span><span class="arrow">›</span></a>
+    </nav>
+  </main>
+</body>
+</html>

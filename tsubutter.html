@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <title>Gamboo アプリ ワイヤーフレーム - SCR-19 ツブッター</title>
+    <style>
+      :root {
+        --c-primary: #f5a623;
+        --c-primary-d: #d4891a;
+        --c-secondary: #00b4d8;
+        --c-auto: #ff6b6b;
+        --c-bg: #fafaf8;
+        --c-surface: #ffffff;
+        --c-surface2: #f2f2f0;
+        --c-border: #e0ddd8;
+        --c-text: #1a1a1a;
+        --c-sub: #6b6b6b;
+        --c-dis: #adadad;
+        --c-success: #2dbd80;
+        --c-error: #e53935;
+        --c-warning: #ff9800;
+        --c-info: #1976d2;
+        --shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 2px 12px rgba(0, 0, 0, 0.04);
+        --r-sm: 6px;
+        --r-md: 10px;
+        --r-lg: 16px;
+        --r-full: 9999px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #2c2c2e;
+        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+        color: var(--c-text);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      /* ===== PAGE LAYOUT ===== */
+      .page-title {
+        text-align: center;
+        color: #f0f0f0;
+        font-size: 22px;
+        font-weight: 700;
+        padding: 32px 16px 8px;
+        letter-spacing: 0.05em;
+      }
+      .page-sub {
+        text-align: center;
+        color: #9a9a9a;
+        font-size: 13px;
+        padding-bottom: 32px;
+      }
+
+      .screens-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        justify-content: center;
+        padding: 0 24px 60px;
+      }
+
+      .screen-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .screen-label {
+        color: #d0d0d0;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      /* ===== PHONE FRAME ===== */
+      .phone {
+        width: 320px;
+        height: 640px;
+        background: #1a1a1a;
+        border-radius: 40px;
+        padding: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+      .phone-inner {
+        width: 100%;
+        height: 100%;
+        background: var(--c-bg);
+        border-radius: 30px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+
+      /* ===== STATUS BAR ===== */
+      .status-bar {
+        background: var(--c-surface);
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 14px;
+        flex-shrink: 0;
+      }
+      .status-bar span {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--c-text);
+      }
+
+      /* ===== PAGE HEADER ===== */
+      .page-header {
+        background: var(--c-surface);
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        border-bottom: 1px solid var(--c-border);
+        flex-shrink: 0;
+      }
+      .back-btn {
+        font-size: 12px;
+        color: var(--c-secondary);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+      .page-header-title {
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .header-actions {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .icon-btn {
+        width: 28px;
+        height: 28px;
+        border-radius: var(--r-full);
+        background: var(--c-surface2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        cursor: pointer;
+        position: relative;
+      }
+      .badge-dot {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 6px;
+        height: 6px;
+        background: var(--c-error);
+        border-radius: 50%;
+        border: 1px solid white;
+      }
+      .live-indicator {
+        background: var(--c-error);
+        color: white;
+        font-size: 9px;
+        font-weight: 900;
+        padding: 1px 5px;
+        border-radius: var(--r-sm);
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+      .live-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: white;
+        animation: blink 1.5s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      /* ===== SCROLL AREA ===== */
+      .scroll-area {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: var(--c-bg);
+        scrollbar-width: none;
+      }
+      .scroll-area::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* ===== BOTTOM TAB ===== */
+      .bottom-tab {
+        background: var(--c-surface);
+        height: 52px;
+        display: flex;
+        border-top: 1px solid var(--c-border);
+        flex-shrink: 0;
+      }
+      .tab-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1px;
+        font-size: 9px;
+        color: var(--c-dis);
+        cursor: pointer;
+      }
+      .tab-item.active {
+        color: var(--c-primary);
+      }
+      .tab-item .tab-icon {
+        font-size: 18px;
+      }
+
+      /* ===== TOP TABS ===== */
+      .top-tabs {
+        display: flex;
+        background: var(--c-surface);
+        border-bottom: 1px solid var(--c-border);
+        flex-shrink: 0;
+      }
+      .top-tab {
+        flex: 1;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--c-sub);
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+      }
+      .top-tab.active {
+        color: var(--c-primary);
+        border-bottom-color: var(--c-primary);
+      }
+
+      /* ===== RACE CONTEXT BAR (pinned top — which race people are chatting about) ===== */
+      .race-context-bar {
+        background: linear-gradient(
+          135deg,
+          #1a237e 0%,
+          #0d47a1 50%,
+          #00b4d8 100%
+        );
+        padding: 8px 12px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .ctx-grade {
+        font-size: 9px;
+        font-weight: 700;
+        padding: 1px 5px;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+      .ctx-text {
+        flex: 1;
+        font-size: 11px;
+        font-weight: 700;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .ctx-count {
+        font-size: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 2px 7px;
+        border-radius: var(--r-full);
+        font-weight: 700;
+      }
+
+      /* ===== FILTER CHIPS ===== */
+      .filter-chips {
+        display: flex;
+        gap: 5px;
+        padding: 6px 10px;
+        overflow-x: auto;
+        background: var(--c-surface);
+        border-bottom: 1px solid var(--c-border);
+        scrollbar-width: none;
+        flex-shrink: 0;
+      }
+      .filter-chips::-webkit-scrollbar {
+        display: none;
+      }
+      .chip {
+        padding: 3px 10px;
+        border-radius: var(--r-full);
+        font-size: 10px;
+        font-weight: 600;
+        white-space: nowrap;
+        background: var(--c-surface2);
+        color: var(--c-sub);
+        border: 1px solid var(--c-border);
+        cursor: pointer;
+      }
+      .chip.active {
+        background: var(--c-primary);
+        color: white;
+        border-color: var(--c-primary);
+      }
+
+      /* ===== COMPOSE BAR ===== */
+      .compose-bar {
+        background: var(--c-surface);
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--c-border);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .my-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f5a623, #d4891a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: white;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .compose-input {
+        flex: 1;
+        height: 32px;
+        background: var(--c-surface2);
+        border: 1px solid var(--c-border);
+        border-radius: var(--r-full);
+        padding: 0 14px;
+        font-size: 11px;
+        color: var(--c-sub);
+        display: flex;
+        align-items: center;
+      }
+
+      /* ===== TSUBUTTER POST ===== */
+      .post {
+        background: var(--c-surface);
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--c-surface2);
+        display: flex;
+        gap: 8px;
+        cursor: pointer;
+      }
+      .post-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        color: white;
+        font-weight: 700;
+      }
+      .av-1 {
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+      }
+      .av-2 {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+      }
+      .av-3 {
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+      }
+      .av-4 {
+        background: linear-gradient(135deg, #43e97b, #38f9d7);
+      }
+      .av-5 {
+        background: linear-gradient(135deg, #fa709a, #fee140);
+      }
+      .av-6 {
+        background: linear-gradient(135deg, #30cfd0, #330867);
+      }
+
+      .post-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .post-head {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 10px;
+      }
+      .post-name {
+        font-weight: 700;
+        color: var(--c-text);
+        font-size: 11px;
+      }
+      .post-handle {
+        color: var(--c-sub);
+      }
+      .post-time {
+        color: var(--c-dis);
+        margin-left: auto;
+      }
+      .post-more {
+        color: var(--c-dis);
+        font-size: 12px;
+        padding-left: 4px;
+      }
+      .post-text {
+        font-size: 12px;
+        line-height: 1.5;
+        margin-top: 3px;
+        color: var(--c-text);
+        word-break: break-word;
+      }
+      .post-mention {
+        color: var(--c-secondary);
+        font-weight: 600;
+      }
+      .post-tag {
+        color: var(--c-info);
+        font-weight: 600;
+      }
+
+      /* race attachment card inside post */
+      .race-attach {
+        margin-top: 6px;
+        padding: 6px 8px;
+        background: var(--c-surface2);
+        border: 1px solid var(--c-border);
+        border-radius: var(--r-sm);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
+      }
+      .race-attach-badge {
+        font-size: 8px;
+        font-weight: 700;
+        padding: 1px 4px;
+        border-radius: 3px;
+        background: #a5d6a7;
+        color: var(--c-text);
+      }
+      .race-attach-text {
+        flex: 1;
+        font-weight: 600;
+        color: var(--c-text);
+      }
+      .race-attach-status {
+        font-size: 9px;
+        color: var(--c-success);
+        font-weight: 700;
+      }
+      .race-attach-status.closed {
+        color: var(--c-dis);
+      }
+
+      /* prediction chips inside post */
+      .pred-chips {
+        margin-top: 6px;
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+      }
+      .pred-chip {
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 3px;
+        background: #fff3cd;
+        color: #856404;
+      }
+      .pred-chip.primary {
+        background: var(--c-primary);
+        color: white;
+      }
+
+      /* reactions */
+      .post-actions {
+        display: flex;
+        gap: 14px;
+        margin-top: 6px;
+        font-size: 10px;
+        color: var(--c-sub);
+        align-items: center;
+      }
+      .post-action {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+      .post-action.liked {
+        color: var(--c-error);
+        font-weight: 700;
+      }
+      .post-action.cheered {
+        color: var(--c-primary);
+        font-weight: 700;
+      }
+
+      /* ===== LIVE BANNER ===== */
+      .live-banner {
+        margin: 8px;
+        padding: 10px 12px;
+        background: linear-gradient(135deg, #e53935, #ff6f00);
+        border-radius: var(--r-md);
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+      .live-banner-icon {
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+      }
+      .live-banner-text {
+        flex: 1;
+      }
+      .live-banner-title {
+        font-size: 11px;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .live-banner-sub {
+        font-size: 9px;
+        opacity: 0.9;
+        margin-top: 1px;
+      }
+
+      /* ===== FAB ===== */
+      .fab {
+        position: absolute;
+        right: 12px;
+        bottom: 62px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: var(--c-primary);
+        box-shadow: 0 4px 14px rgba(245, 166, 35, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: white;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      /* ===== SECTION HEADER ===== */
+      .section-header {
+        padding: 10px 12px 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .section-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--c-text);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .section-title::before {
+        content: "";
+        width: 3px;
+        height: 12px;
+        background: var(--c-primary);
+        border-radius: 2px;
+        display: inline-block;
+      }
+      .see-all {
+        font-size: 10px;
+        color: var(--c-secondary);
+        font-weight: 600;
+      }
+
+      /* ===== RANKING USER CARD ===== */
+      .ranking-card {
+        margin: 0 8px 8px;
+        background: var(--c-surface);
+        border-radius: var(--r-md);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .rank-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--c-surface2);
+      }
+      .rank-row:last-child {
+        border-bottom: none;
+      }
+      .rank-num {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 900;
+        flex-shrink: 0;
+      }
+      .r1 {
+        background: #ffd700;
+        color: white;
+      }
+      .r2 {
+        background: #c0c0c0;
+        color: white;
+      }
+      .r3 {
+        background: #cd7f32;
+        color: white;
+      }
+      .ro {
+        background: var(--c-surface2);
+        color: var(--c-sub);
+      }
+      .rank-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .rank-name {
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .rank-stat {
+        font-size: 9px;
+        color: var(--c-sub);
+        margin-top: 1px;
+      }
+      .follow-btn {
+        font-size: 9px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: var(--r-full);
+        border: 1px solid var(--c-primary);
+        color: var(--c-primary);
+        cursor: pointer;
+        background: transparent;
+      }
+      .follow-btn.following {
+        background: var(--c-surface2);
+        border-color: var(--c-border);
+        color: var(--c-sub);
+      }
+
+      .ranking-card-header {
+        padding: 8px 10px;
+        background: linear-gradient(135deg, #fff8e1, #ffecb3);
+        border-bottom: 1px solid var(--c-border);
+        font-size: 11px;
+        font-weight: 900;
+        color: #856404;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    
+
+      /* ===== RESPONSIVE APP CANVAS (added) =====
+         Original outer phone: 320x640 with 12px padding.
+         Actual app canvas: 296x616. Keep that canvas unchanged and
+         uniformly scale the whole canvas to the browser width. */
+      html,
+      body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        background: var(--c-bg);
+      }
+      .page-title,
+      .page-sub,
+      .screen-label {
+        display: none !important;
+      }
+      .screens-grid {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+      }
+      .screen-wrap {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        overflow: hidden;
+      }
+      .phone {
+        width: 296px !important;
+        height: 616px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        transform-origin: top left !important;
+      }
+      .phone-inner {
+        width: 296px !important;
+        height: 616px !important;
+        border-radius: 0 !important;
+      }
+      .app-header,
+      .page-header {
+        cursor: pointer;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="page-title">SCR-19 ツブッター</div>
+    <div class="page-sub">
+      リアルタイム実況のアプリ最適化 / レース実況・予想シェア・選手応援が集まるタイムライン
+    </div>
+
+    <div class="screens-grid">
+      <!-- ============================================ -->
+      <!-- SCREEN A: タイムライン（おすすめ） -->
+      <!-- ============================================ -->
+      <div class="screen-wrap">
+        <div class="screen-label">SCR-19-A タイムライン（おすすめ）</div>
+        <div class="phone">
+          <div class="phone-inner">
+            <div class="status-bar">
+              <span>12:45</span>
+              <span>5G ●●●</span>
+            </div>
+            <!-- Header -->
+            <div class="page-header">
+              <div class="back-btn">‹ ホーム</div>
+              <div class="page-header-title">
+                💬 ツブッター
+                <div class="live-indicator">
+                  <div class="live-dot"></div>
+                  LIVE
+                </div>
+              </div>
+              <div class="header-actions">
+                <div class="icon-btn">🔍</div>
+              </div>
+            </div>
+
+            <!-- Top tabs -->
+            <div class="top-tabs">
+              <div class="top-tab">フォロー中</div>
+              <div class="top-tab active">おすすめ</div>
+              <div class="top-tab">レース</div>
+              <div class="top-tab">ランキング</div>
+            </div>
+
+            <!-- Race context bar -->
+            <div class="race-context-bar">
+              <div class="ctx-grade">G3</div>
+              <div class="ctx-text">大垣 3R 現在実況中</div>
+              <div class="ctx-count">💬 47</div>
+            </div>
+
+            <!-- Filter chips -->
+            <div class="filter-chips">
+              <div class="chip active">すべて</div>
+              <div class="chip">競輪</div>
+              <div class="chip">オート</div>
+              <div class="chip">予想</div>
+              <div class="chip">実況</div>
+              <div class="chip">結果</div>
+            </div>
+
+            <!-- Compose bar -->
+            <div class="compose-bar">
+              <div class="my-avatar">G</div>
+              <div class="compose-input">今のレース、つぶやいてみよう</div>
+            </div>
+
+            <div class="scroll-area">
+              <!-- Live banner -->
+              <div class="live-banner">
+                <div class="live-banner-icon">📡</div>
+                <div class="live-banner-text">
+                  <div class="live-banner-title">
+                    <div class="live-dot"></div>
+                    生実況中・大垣G3 3R
+                  </div>
+                  <div class="live-banner-sub">
+                    発走まで残り 8分 ・ 42人がつぶやき中
+                  </div>
+                </div>
+                <div style="font-size: 16px; opacity: 0.8">›</div>
+              </div>
+
+              <!-- Post 1: prediction with race attached -->
+              <div class="post">
+                <div class="post-avatar av-1">千</div>
+                <div class="post-body">
+                  <div class="post-head">
+                    <span class="post-name">千鶴</span>
+                    <span class="post-handle">@chizuru_keirin</span>
+                    <span class="post-time">2分前</span>
+                    <span class="post-more">⋯</span>
+                  </div>
+                  <div class="post-text">
+                    大垣3R、<span class="post-mention">@平原康多</span>
+                    選手の競走得点が突出してます。ライン先頭の7番から入って勝負！
+                    <span class="post-tag">#大垣G3</span>
+                    <span class="post-tag">#予想</span>
+                  </div>
+                  <div class="race-attach">
+                    <div class="race-attach-badge">G3</div>
+                    <div class="race-attach-text">大垣 3R 発走 13:50</div>
+                    <div class="race-attach-status">受付中</div>
+                  </div>
+                  <div class="pred-chips">
+                    <span class="pred-chip primary">本命 7-1</span>
+                    <span class="pred-chip">相手 5・2</span>
+                  </div>
+                  <div class="post-actions">
+                    <div class="post-action">💬 8</div>
+                    <div class="post-action">🔁 12</div>
+                    <div class="post-action liked">❤️ 48</div>
+                    <div class="post-action cheered">🎰 応援</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Post 2: live commentary -->
+              <div class="post">
+                <div class="post-avatar av-2">ヨ</div>
+                <div class="post-body">
+                  <div class="post-head">
+                    <span class="post-name">ヨコポン</span>
+                    <span class="post-handle">@yokopon</span>
+                    <span class="post-time">5分前</span>
+                    <span class="post-more">⋯</span>
+                  </div>
+                  <div class="post-text">
+                    飯塚オート4R、1番人気のハンデ10m組が全員試走好タイム！固く流れる予感…
+                    <span class="post-tag">#飯塚オート</span>
+                  </div>
+                  <div class="race-attach">
+                    <div
+                      class="race-attach-badge"
+                      style="background: #ff6b6b; color: white"
+                    >
+                      普通
+                    </div>
+                    <div class="race-attach-text">飯塚 4R 発走 13:15</div>
+                    <div class="race-attach-status closed">締切 3分前</div>
+                  </div>
+                  <div class="post-actions">
+                    <div class="post-action">💬 3</div>
+                    <div class="post-action">🔁 5</div>
+                    <div class="post-action">❤️ 21</div>
+                    <div class="post-action">🎰 応援</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Post 3: result report -->
+              <div class="post">
+                <div class="post-avatar av-3">競</div>
+                <div class="post-body">
+                  <div class="post-head">
+                    <span class="post-name">競輪太郎</span>
+                    <span class="post-handle">@keirintaro</span>
+                    <span class="post-time">12分前</span>
+                    <span class="post-more">⋯</span>
+                  </div>
+                  <div class="post-text">
+                    松山2R 的中！🎯 3連単 4-1-7 で 8,420円。<br />
+                    ラインが綺麗に決まる展開でした。
+                    <span class="post-tag">#松山記念</span>
+                    <span class="post-tag">#的中</span>
+                  </div>
+                  <div class="pred-chips">
+                    <span
+                      class="pred-chip"
+                      style="background: #e8f5e9; color: #1b5e20"
+                    >
+                      ✓ 3連単 的中
+                    </span>
+                    <span
+                      class="pred-chip"
+                      style="background: #fff3e0; color: #e65100"
+                    >
+                      +8,420円
+                    </span>
+                  </div>
+                  <div class="post-actions">
+                    <div class="post-action">💬 14</div>
+                    <div class="post-action">🔁 22</div>
+                    <div class="post-action liked">❤️ 98</div>
+                    <div class="post-action">🎰 応援</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Post 4: short comment -->
+              <div class="post">
+                <div class="post-avatar av-5">オ</div>
+                <div class="post-body">
+                  <div class="post-head">
+                    <span class="post-name">オートマスター</span>
+                    <span class="post-handle">@auto_master</span>
+                    <span class="post-time">18分前</span>
+                    <span class="post-more">⋯</span>
+                  </div>
+                  <div class="post-text">
+                    川口5R、阿久津選手の試走が抜群に良い。今日は独走に期待。
+                  </div>
+                  <div class="post-actions">
+                    <div class="post-action">💬 2</div>
+                    <div class="post-action">🔁 3</div>
+                    <div class="post-action">❤️ 15</div>
+                    <div class="post-action">🎰 応援</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Post 5 -->
+              <div class="post">
+                <div class="post-avatar av-4">G</div>
+                <div class="post-body">
+                  <div class="post-head">
+                    <span class="post-name">ギャンブー侍</span>
+                    <span class="post-handle">@gamboo_samurai</span>
+                    <span class="post-time">28分前</span>
+                    <span class="post-more">⋯</span>
+                  </div>
+                  <div class="post-text">
+                    本日の大勝負は大垣9R！
+                    <span class="post-mention">@川越</span>
+                    選手コメント「行く準備できてる」に期待。
+                    <span class="post-tag">#大垣G3</span>
+                  </div>
+                  <div class="post-actions">
+                    <div class="post-action">💬 1</div>
+                    <div class="post-action">🔁 2</div>
+                    <div class="post-action">❤️ 8</div>
+                    <div class="post-action">🎰 応援</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height: 8px"></div>
+            </div>
+
+            <!-- FAB: new post -->
+            <div class="fab">✍️</div>
+
+            <!-- Bottom Tab -->
+            <div class="bottom-tab">
+              <div class="tab-item active">
+                <div class="tab-icon">🏠</div>
+                ホーム
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🚴</div>
+                競輪
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🏍</div>
+                オート
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🎁</div>
+                キャンペーン
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">👤</div>
+                マイ
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================ -->
+      <!-- SCREEN B: ランキング -->
+      <!-- ============================================ -->
+      <div class="screen-wrap">
+        <div class="screen-label">SCR-19-B ランキング / 的中自慢</div>
+        <div class="phone">
+          <div class="phone-inner">
+            <div class="status-bar">
+              <span>12:45</span>
+              <span>5G ●●●</span>
+            </div>
+            <!-- Header -->
+            <div class="page-header">
+              <div class="back-btn">‹ ホーム</div>
+              <div class="page-header-title">
+                💬 ツブッター
+              </div>
+              <div class="header-actions">
+                <div class="icon-btn">🔍</div>
+              </div>
+            </div>
+
+            <!-- Top tabs -->
+            <div class="top-tabs">
+              <div class="top-tab">フォロー中</div>
+              <div class="top-tab">おすすめ</div>
+              <div class="top-tab">レース</div>
+              <div class="top-tab active">ランキング</div>
+            </div>
+
+            <!-- Period chips -->
+            <div class="filter-chips">
+              <div class="chip">今日</div>
+              <div class="chip active">今週</div>
+              <div class="chip">今月</div>
+              <div class="chip">的中率</div>
+              <div class="chip">回収率</div>
+            </div>
+
+            <div class="scroll-area">
+              <!-- Top commentators ranking -->
+              <div class="section-header">
+                <div class="section-title">人気ツブラー</div>
+                <div class="see-all">全員見る ›</div>
+              </div>
+
+              <div class="ranking-card">
+                <div class="ranking-card-header">
+                  <div>🏆 今週の人気ランキング</div>
+                  <div style="font-size: 9px; color: var(--c-sub)">
+                    04/11 〜 04/17
+                  </div>
+                </div>
+
+                <div class="rank-row">
+                  <div class="rank-num r1">1</div>
+                  <div class="post-avatar av-1" style="width: 34px; height: 34px; font-size: 14px">千</div>
+                  <div class="rank-body">
+                    <div class="rank-name">千鶴</div>
+                    <div class="rank-stat">
+                      @chizuru_keirin ・ いいね 2,480
+                    </div>
+                  </div>
+                  <div class="follow-btn following">✓ フォロー中</div>
+                </div>
+
+                <div class="rank-row">
+                  <div class="rank-num r2">2</div>
+                  <div class="post-avatar av-2" style="width: 34px; height: 34px; font-size: 14px">ヨ</div>
+                  <div class="rank-body">
+                    <div class="rank-name">ヨコポン</div>
+                    <div class="rank-stat">
+                      @yokopon ・ いいね 1,840
+                    </div>
+                  </div>
+                  <div class="follow-btn">+ フォロー</div>
+                </div>
+
+                <div class="rank-row">
+                  <div class="rank-num r3">3</div>
+                  <div class="post-avatar av-5" style="width: 34px; height: 34px; font-size: 14px">オ</div>
+                  <div class="rank-body">
+                    <div class="rank-name">オートマスター</div>
+                    <div class="rank-stat">
+                      @auto_master ・ いいね 1,320
+                    </div>
+                  </div>
+                  <div class="follow-btn">+ フォロー</div>
+                </div>
+
+                <div class="rank-row">
+                  <div class="rank-num ro">4</div>
+                  <div class="post-avatar av-3" style="width: 34px; height: 34px; font-size: 14px">競</div>
+                  <div class="rank-body">
+                    <div class="rank-name">競輪太郎</div>
+                    <div class="rank-stat">
+                      @keirintaro ・ いいね 980
+                    </div>
+                  </div>
+                  <div class="follow-btn">+ フォロー</div>
+                </div>
+
+                <div class="rank-row">
+                  <div class="rank-num ro">5</div>
+                  <div class="post-avatar av-6" style="width: 34px; height: 34px; font-size: 14px">デ</div>
+                  <div class="rank-body">
+                    <div class="rank-name">データ派</div>
+                    <div class="rank-stat">
+                      @data_ha ・ いいね 720
+                    </div>
+                  </div>
+                  <div class="follow-btn">+ フォロー</div>
+                </div>
+              </div>
+
+              <!-- Top hit-posts -->
+              <div class="section-header">
+                <div class="section-title">的中自慢ベスト</div>
+                <div class="see-all">もっと見る ›</div>
+              </div>
+
+              <div class="post">
+                <div class="post-avatar av-3">競</div>
+                <div class="post-body">
+                  <div class="post-head">
+                    <span class="post-name">競輪太郎</span>
+                    <span class="post-handle">@keirintaro</span>
+                    <span class="post-time">昨日</span>
+                  </div>
+                  <div class="post-text">
+                    松山2R 3連単 4-1-7 で 8,420円的中！🎯
+                  </div>
+                  <div class="pred-chips">
+                    <span
+                      class="pred-chip"
+                      style="background: #e8f5e9; color: #1b5e20"
+                    >
+                      ✓ 的中
+                    </span>
+                    <span
+                      class="pred-chip"
+                      style="background: #fff3e0; color: #e65100"
+                    >
+                      +8,420円
+                    </span>
+                  </div>
+                  <div class="post-actions">
+                    <div class="post-action">💬 14</div>
+                    <div class="post-action">🔁 22</div>
+                    <div class="post-action liked">❤️ 340</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="post">
+                <div class="post-avatar av-5">オ</div>
+                <div class="post-body">
+                  <div class="post-head">
+                    <span class="post-name">オートマスター</span>
+                    <span class="post-handle">@auto_master</span>
+                    <span class="post-time">2日前</span>
+                  </div>
+                  <div class="post-text">
+                    川口オートG2 2R 3連単 1-6-2 万車券12,340円ゲット！
+                  </div>
+                  <div class="pred-chips">
+                    <span
+                      class="pred-chip"
+                      style="background: #e8f5e9; color: #1b5e20"
+                    >
+                      ✓ 的中
+                    </span>
+                    <span
+                      class="pred-chip"
+                      style="background: #ffebee; color: #b71c1c"
+                    >
+                      万車券
+                    </span>
+                    <span
+                      class="pred-chip"
+                      style="background: #fff3e0; color: #e65100"
+                    >
+                      +12,340円
+                    </span>
+                  </div>
+                  <div class="post-actions">
+                    <div class="post-action">💬 28</div>
+                    <div class="post-action">🔁 56</div>
+                    <div class="post-action liked">❤️ 420</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height: 8px"></div>
+            </div>
+
+            <!-- Bottom Tab -->
+            <div class="bottom-tab">
+              <div class="tab-item active">
+                <div class="tab-icon">🏠</div>
+                ホーム
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🚴</div>
+                競輪
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🏍</div>
+                オート
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🎁</div>
+                キャンペーン
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">👤</div>
+                マイ
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SPEC NOTES -->
+    <!-- ============================================ -->
+    <div
+      style="
+        max-width: 960px;
+        margin: 0 auto 60px;
+        padding: 20px 24px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        color: #d0d0d0;
+        font-size: 13px;
+        line-height: 1.7;
+      "
+    >
+      <div
+        style="color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 12px"
+      >
+        💬 SCR-19 ツブッター ― 主要仕様
+      </div>
+      <div style="margin-bottom: 10px">
+        <strong style="color: #f5a623">画面ID:</strong> SCR-19 &nbsp;/&nbsp;
+        <strong style="color: #f5a623">対応現行URL:</strong> gamboo.jp/tbutter/
+        &nbsp;/&nbsp;
+        <strong style="color: #f5a623">優先度:</strong> 2（二次開発）
+      </div>
+      <div style="margin-bottom: 10px">
+        <strong style="color: #f5a623">位置付け:</strong>
+        リアルタイム実況・予想シェアのSNS機能。レース進行中のつぶやきがタイムライン上位に集約。
+      </div>
+      <div style="margin-bottom: 10px">
+        <strong style="color: #f5a623">主要UI要素:</strong>
+      </div>
+      <ul style="padding-left: 24px; margin-bottom: 10px">
+        <li>ページヘッダー（戻る / タイトル / LIVEインジケーター / 検索）</li>
+        <li>
+          上部タブ: フォロー中 / おすすめ / レース（レース別タイムライン） / ランキング
+        </li>
+        <li>
+          レース文脈バー（現在実況中のレースを固定表示、タップで SCR-03 / SCR-04 へ）
+        </li>
+        <li>フィルターチップ: すべて / 競輪 / オート / 予想 / 実況 / 結果</li>
+        <li>
+          投稿バー（自分のアバター + プレースホルダー、タップで投稿モーダル展開）
+        </li>
+        <li>LIVEバナー（現在生実況中のレースを強調、赤グラデーション + 🔴点滅）</li>
+        <li>
+          投稿カード: アバター / 氏名・ハンドル / 経過時間 / 本文（@メンション・#タグ色付け）
+          / レース添付カード / 予想買い目チップ / 的中バッジ / 💬🔁❤️🎰応援 の4アクション
+        </li>
+        <li>FAB（オレンジ、右下・52px、タップで新規つぶやき）</li>
+        <li>ランキングカード（人気ツブラー・1〜5位、メダル配色 + フォローボタン）</li>
+        <li>的中自慢ベスト（ポスト形式で的中バッジ + 払戻金額表示）</li>
+      </ul>
+      <div style="margin-bottom: 10px">
+        <strong style="color: #f5a623">主な遷移:</strong>
+      </div>
+      <ul style="padding-left: 24px; margin-bottom: 10px">
+        <li>レース添付カード タップ → SCR-03（競輪）/ SCR-04（オート）</li>
+        <li>@選手名メンション タップ → 選手詳細（WebView）</li>
+        <li>#タグ タップ → タグ別タイムライン</li>
+        <li>
+          ユーザー名 / アバター タップ → ユーザープロフィール（WebView：現行ツブッター）
+        </li>
+        <li>
+          🎰応援 タップ → 応援ポイント送信モーダル（Gambooポイント消費）
+        </li>
+        <li>FAB タップ → 新規投稿モーダル（レース紐付け・予想入力可）</li>
+        <li>ランキング「全員見る」 → WebView：/tbutter/ranking/</li>
+      </ul>
+      <div style="margin-bottom: 10px">
+        <strong style="color: #f5a623">リアルタイム要件:</strong>
+      </div>
+      <ul style="padding-left: 24px; margin-bottom: 10px">
+        <li>WebSocket 接続でタイムライン自動更新（新着投稿をトップに追加）</li>
+        <li>LIVEインジケーター: 接続中は🔴点滅 / 切断時はグレーアウト</li>
+        <li>
+          プルリフレッシュ対応 / 新着n件 通知ピルを上部に表示
+        </li>
+      </ul>
+      <div>
+        <strong style="color: #f5a623">アクセシビリティ:</strong>
+        LIVE点滅は `prefers-reduced-motion` で停止 / 全アクションに aria-label /
+        投稿本文のハッシュタグ・メンションはスクリーンリーダーで「ハッシュタグ大垣G3」等の読み上げ
+      </div>
+    </div>
+  
+  <script>
+    (() => {
+      const BASE_WIDTH = 296;
+      const BASE_HEIGHT = 616;
+
+      function fitScreens() {
+        const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+        const scale = viewportWidth / BASE_WIDTH;
+
+        document.querySelectorAll('.screen-wrap').forEach((wrap) => {
+          const phone = wrap.querySelector('.phone');
+          if (!phone) return;
+          phone.style.transform = `scale(${scale})`;
+          wrap.style.height = `${BASE_HEIGHT * scale}px`;
+        });
+      }
+
+      function enableMenuNavigation() {
+        document.querySelectorAll('.app-header, .page-header').forEach((header) => {
+          header.setAttribute('role', 'link');
+          header.setAttribute('tabindex', '0');
+          header.setAttribute('aria-label', 'メニューへ戻る');
+
+          const goMenu = () => { window.location.href = 'menu.html'; };
+          header.addEventListener('click', goMenu);
+          header.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              goMenu();
+            }
+          });
+        });
+      }
+
+      fitScreens();
+      enableMenuNavigation();
+      window.addEventListener('resize', fitScreens, { passive: true });
+      window.addEventListener('orientationchange', fitScreens, { passive: true });
+    })();
+  </script>
+
+  </body>
+</html>

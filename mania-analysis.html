@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <title>Gamboo アプリ ワイヤーフレーム</title>
+    <style>
+      :root {
+        --c-primary: #f5a623;
+        --c-primary-d: #d4891a;
+        --c-secondary: #00b4d8;
+        --c-bg: #fafaf8;
+        --c-surface: #ffffff;
+        --c-surface2: #f2f2f0;
+        --c-border: #e0ddd8;
+        --c-text: #1a1a1a;
+        --c-sub: #6b6b6b;
+        --c-dis: #adadad;
+        --c-success: #2dbd80;
+        --c-error: #e53935;
+        --r-full: 9999px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      body {
+        background: #2c2c2e;
+        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+        color: var(--c-text);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      /* ===== PAGE LAYOUT ===== */
+      .page-title {
+        text-align: center;
+        color: #f0f0f0;
+        font-size: 22px;
+        font-weight: 700;
+        padding: 32px 16px 8px;
+        letter-spacing: 0.05em;
+      }
+      .page-sub {
+        text-align: center;
+        color: #9a9a9a;
+        font-size: 13px;
+        padding-bottom: 32px;
+      }
+      .screens-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        justify-content: center;
+        padding: 0 24px 60px;
+      }
+      .screen-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .screen-label {
+        color: #d0d0d0;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+      }
+
+      /* ===== PHONE FRAME ===== */
+      .phone {
+        width: 320px;
+        height: 640px;
+        background: #1a1a1a;
+        border-radius: 40px;
+        padding: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+      .phone-inner {
+        width: 100%;
+        height: 100%;
+        background: var(--c-bg);
+        border-radius: 30px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+      .status-bar {
+        background: var(--c-surface);
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 14px;
+        flex-shrink: 0;
+      }
+      .status-bar span {
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      /* ===== PAGE HEADER ===== */
+      .page-header {
+        background: var(--c-surface);
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        border-bottom: 1px solid var(--c-border);
+        flex-shrink: 0;
+      }
+      .back-btn {
+        font-size: 12px;
+        color: var(--c-secondary);
+        font-weight: 600;
+      }
+      .page-header-title {
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .page-header-action {
+        font-size: 18px;
+      }
+
+      /* ===== RACE TABS / INFO ===== */
+      .race-tabs {
+        background: var(--c-surface);
+        display: flex;
+        overflow-x: auto;
+        border-bottom: 1px solid var(--c-border);
+        scrollbar-width: none;
+        flex-shrink: 0;
+      }
+      .race-tab {
+        min-width: 40px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--c-sub);
+        border-bottom: 2px solid transparent;
+        padding: 0 6px;
+        flex-shrink: 0;
+      }
+      .race-tab.active {
+        color: var(--c-primary);
+        border-bottom-color: var(--c-primary);
+      }
+      .race-tab.past {
+        color: var(--c-dis);
+        text-decoration: line-through;
+      }
+      .race-info-bar {
+        background: var(--c-surface);
+        padding: 6px 10px;
+        border-bottom: 1px solid var(--c-border);
+        flex-shrink: 0;
+      }
+      .race-info-title {
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .race-info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2px;
+      }
+      .race-info-meta {
+        font-size: 10px;
+        color: var(--c-sub);
+      }
+      .race-countdown {
+        font-size: 10px;
+        color: var(--c-success);
+        font-weight: 700;
+      }
+      .info-tabs {
+        display: flex;
+        border-bottom: 2px solid var(--c-border);
+        background: var(--c-surface);
+        flex-shrink: 0;
+      }
+      .info-tab {
+        flex: 1;
+        padding: 4px 2px;
+        font-size: 9px;
+        font-weight: 600;
+        color: var(--c-sub);
+        text-align: center;
+        line-height: 1.2;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+      }
+      .info-tab.active {
+        color: var(--c-primary);
+        border-bottom-color: var(--c-primary);
+      }
+
+      /* ===== BOTTOM TAB ===== */
+      .bottom-tab {
+        background: var(--c-surface);
+        height: 52px;
+        display: flex;
+        border-top: 1px solid var(--c-border);
+        flex-shrink: 0;
+        position: relative;
+        z-index: 20;
+      }
+      .tab-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1px;
+        font-size: 9px;
+        color: var(--c-dis);
+      }
+      .tab-item.active {
+        color: var(--c-primary);
+      }
+      .tab-icon {
+        font-size: 18px;
+      }
+
+      /* ===== 車番色 ===== */
+      .frame-cell {
+        width: 20px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 11px;
+        margin: 0 auto;
+      }
+      .f1 { background: #ffffff; border: 1px solid #ddd; color: #1a1a1a; }
+      .f2 { background: #222; color: white; }
+      .f3 { background: #e53935; color: white; }
+      .f4 { background: #1e3fd0; color: white; }
+      .f5 { background: #fff200; color: #1a1a1a; }
+      .f6 { background: #58b200; color: white; }
+      .f7 { background: #f39200; color: white; }
+
+      /* ===== マニア分析テーブル（SCR-03_マニア分析タブ.png 準拠） ===== */
+      .mania-wrap {
+        flex: 1;
+        overflow: auto;
+        background: var(--c-surface);
+        scrollbar-width: thin;
+      }
+      .mania-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: max-content;
+        font-size: 10px;
+      }
+      .mania-table th {
+        background: #ffffff;
+        font-size: 8px;
+        font-weight: 400;
+        line-height: 1.2;
+        color: var(--c-text);
+        text-align: center;
+        white-space: nowrap;
+        border-bottom: 1px solid var(--c-border);
+        border-right: 1px solid var(--c-border);
+        padding: 3px 3px;
+        position: sticky;
+        z-index: 2;
+      }
+      .mania-table thead tr:first-child th {
+        top: 0;
+        height: 22px;
+      }
+      .mania-table thead tr:nth-child(2) th {
+        top: 22px;
+      }
+      .mania-table th.th-group {
+        text-align: left;
+        padding-left: 8px;
+      }
+      .mania-table td {
+        background: #ffffff;
+        height: 40px;
+        padding: 2px 4px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+        border-bottom: 1px solid var(--c-border);
+        border-right: 1px solid var(--c-border);
+      }
+      .mania-table tbody tr:nth-child(even) td {
+        background: #f2f2f2;
+      }
+      /* 固定列：枠番・車番・選手名 */
+      .mania-table .fx {
+        position: sticky;
+        z-index: 1;
+      }
+      .mania-table th.fx {
+        z-index: 3;
+      }
+      .c-waku {
+        left: 0;
+        width: 20px;
+        min-width: 20px;
+      }
+      .c-sha {
+        left: 20px;
+        width: 26px;
+        min-width: 26px;
+        padding: 2px 3px !important;
+      }
+      .c-name {
+        left: 46px;
+        min-width: 92px;
+        text-align: left !important;
+      }
+      .rider-name {
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .rider-meta {
+        font-size: 8px;
+        color: var(--c-sub);
+      }
+      .c-item {
+        min-width: 48px;
+      }
+      .cls-sub {
+        font-size: 7px;
+      }
+
+      /* 評価マーク */
+      .mk {
+        font-size: 15px;
+        line-height: 1;
+        font-weight: 700;
+      }
+      .mk-dbl { color: #e53935; }
+      .mk-o { color: #2e9d2e; }
+      .mk-tri { color: #3aa6d9; }
+      .mk-x { color: #333333; }
+
+      /* 評価項目ボタン */
+      .item-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 28px;
+        margin: 0 auto;
+        border-radius: 4px;
+        border: 1px solid #e0a800;
+        background: linear-gradient(#fff3a8, #f7c531);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        font-size: 8px;
+        line-height: 1.15;
+        color: #1a1a1a;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .item-btn:active,
+      .item-btn.active {
+        background: linear-gradient(#f7c531, #f39200);
+        border-color: #d4891a;
+        color: #fff;
+        font-weight: 700;
+      }
+      .hint {
+        font-size: 8px;
+        color: var(--c-sub);
+        padding: 6px 10px 10px;
+      }
+
+      /* ===== 詳細ボトムシート ===== */
+      .sheet-overlay {
+        position: absolute;
+        inset: 0 0 52px 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 10;
+      }
+      .sheet {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 52px;
+        height: 72%;
+        background: var(--c-surface);
+        border-radius: 20px 20px 0 0;
+        z-index: 11;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
+      }
+      .sheet-handle {
+        width: 36px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--c-border);
+        margin: 6px auto 2px;
+        flex-shrink: 0;
+      }
+      .sheet-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2px 12px 6px;
+        flex-shrink: 0;
+      }
+      .sheet-title {
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .sheet-close {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: none;
+        background: var(--c-surface2);
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .sheet-cond {
+        margin: 0 12px 6px;
+        padding: 4px 8px;
+        background: #fff3cd;
+        border-radius: 4px;
+        font-size: 9px;
+        color: #856404;
+        flex-shrink: 0;
+      }
+      .sheet-body {
+        flex: 1;
+        overflow: auto;
+        scrollbar-width: thin;
+      }
+      .detail-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 9px;
+      }
+      .detail-table th {
+        background: #f5f5f3;
+        color: var(--c-sub);
+        font-weight: 700;
+        padding: 4px 3px;
+        border-bottom: 1px solid var(--c-border);
+        position: sticky;
+        top: 0;
+        white-space: nowrap;
+      }
+      .detail-table td {
+        padding: 4px 3px;
+        border-bottom: 1px solid var(--c-surface2);
+        text-align: center;
+        white-space: nowrap;
+      }
+      .detail-table td.dn {
+        text-align: left;
+        font-weight: 700;
+      }
+      .detail-table .frame-cell {
+        width: 16px;
+        height: 18px;
+        font-size: 9px;
+      }
+      .rate-hi {
+        color: var(--c-error);
+        font-weight: 700;
+      }
+      .sheet-note {
+        font-size: 8px;
+        color: var(--c-sub);
+        padding: 6px 12px 10px;
+      }
+    
+
+      /* ===== RESPONSIVE APP CANVAS (added) =====
+         Original outer phone: 320x640 with 12px padding.
+         Actual app canvas: 296x616. Keep that canvas unchanged and
+         uniformly scale the whole canvas to the browser width. */
+      html,
+      body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        background: var(--c-bg);
+      }
+      .page-title,
+      .page-sub,
+      .screen-label {
+        display: none !important;
+      }
+      .screens-grid {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+      }
+      .screen-wrap {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        overflow: hidden;
+      }
+      .phone {
+        width: 296px !important;
+        height: 616px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        transform-origin: top left !important;
+      }
+      .phone-inner {
+        width: 296px !important;
+        height: 616px !important;
+        border-radius: 0 !important;
+      }
+      .app-header,
+      .page-header {
+        cursor: pointer;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="page-title">SCR-03 マニア分析タブ</div>
+    <div class="page-sub">
+      評価項目ボタンをタップすると、その項目の詳細がボトムシートで表示されます
+    </div>
+
+    <div class="screens-grid" id="screens">
+      <div class="screen-wrap">
+        <div class="screen-label">SCR-03 マニア分析タブ（一覧）</div>
+        <div class="phone">
+          <div class="phone-inner">
+            <div class="status-bar"><span>8:32</span><span>5G ●●●</span></div>
+            <div class="page-header">
+              <div class="back-btn">‹ 大垣</div>
+              <div class="page-header-title">大垣 G3 最終日</div>
+              <div class="page-header-action">　</div>
+            </div>
+            <!-- Race Number Tabs -->
+            <div class="race-tabs">
+              <div class="race-tab past">1R</div>
+              <div class="race-tab past">2R</div>
+              <div class="race-tab active">3R</div>
+              <div class="race-tab">4R</div>
+              <div class="race-tab">5R</div>
+              <div class="race-tab">6R</div>
+              <div class="race-tab">7R</div>
+              <div class="race-tab">8R</div>
+            </div>
+            <!-- Race Info Bar -->
+            <div class="race-info-bar">
+              <div class="race-info-title">
+                G3 報知新聞社杯 — 3R A級一般 1700m(5周)
+              </div>
+              <div class="race-info-row">
+                <div class="race-info-meta">発走 13:50 / 締切 13:45</div>
+                <div class="race-countdown">🕐 残り 32分</div>
+              </div>
+            </div>
+            <!-- Info Tabs (マニア分析がactive) -->
+            <div class="info-tabs">
+              <div class="info-tab">基本出走データ</div>
+              <div class="info-tab">直近成績</div>
+              <div class="info-tab">マル得ポイント&amp;選手コメント</div>
+              <div class="info-tab">G指数</div>
+              <div class="info-tab active">マニア分析</div>
+            </div>
+
+            <!-- マニア分析テーブル（下位メニューなし：評価項目ボタンで詳細表示） -->
+            <div class="mania-wrap">
+              <table class="mania-table">
+                <thead>
+                  <tr>
+                    <th class="fx c-waku" rowspan="2">枠<br />番</th>
+                    <th class="fx c-sha" rowspan="2">車<br />番</th>
+                    <th class="fx c-name" rowspan="2">選手名<br />ホーム/期/年</th>
+                    <th rowspan="2">級班<br />現/前</th>
+                    <th rowspan="2">脚<br />質</th>
+                    <th rowspan="2">競走<br />得点</th>
+                    <th rowspan="2" class="c-item">G指数</th>
+                    <th rowspan="2" class="c-item">マニア分析<br />総合評価</th>
+                    <th class="th-group" colspan="8">マニア分析評価項目</th>
+                  </tr>
+                  <tr>
+                    <th class="c-item"><button class="item-btn" data-item="0">周長</button></th>
+                    <th class="c-item"><button class="item-btn" data-item="1">見なし<br />直線</button></th>
+                    <th class="c-item"><button class="item-btn" data-item="2">レース<br />種別</button></th>
+                    <th class="c-item"><button class="item-btn" data-item="3">レース<br />日程</button></th>
+                    <th class="c-item"><button class="item-btn" data-item="4">グレード</button></th>
+                    <th class="c-item"><button class="item-btn" data-item="5">勝ち<br />上がり率</button></th>
+                    <th class="c-item"><button class="item-btn" data-item="6">車番</button></th>
+                    <th class="c-item"><button class="item-btn" data-item="7">同県<br />選手</button></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fx c-waku">1</td>
+                    <td class="fx c-sha"><div class="frame-cell f1">1</div></td>
+                    <td class="fx c-name">
+                      <div class="rider-name">伊藤太一</div>
+                      <div class="rider-meta">山梨(境川)/91/43</div>
+                    </td>
+                    <td>A2/<span class="cls-sub">A1</span></td>
+                    <td>追</td>
+                    <td>84.42</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><span class="mk mk-o">○</span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td class="fx c-waku">2</td>
+                    <td class="fx c-sha"><div class="frame-cell f2">2</div></td>
+                    <td class="fx c-name">
+                      <div class="rider-name">藤田真</div>
+                      <div class="rider-meta">兵庫(明石)/89/45</div>
+                    </td>
+                    <td>A2/<span class="cls-sub">A1</span></td>
+                    <td>両</td>
+                    <td>86.50</td>
+                    <td><span class="mk mk-x">✕</span></td>
+                    <td><span class="mk mk-o">○</span></td>
+                    <td></td>
+                    <td><span class="mk mk-tri">△</span></td>
+                    <td><span class="mk mk-x">✕</span></td>
+                    <td></td>
+                    <td><span class="mk mk-dbl">◎</span></td>
+                    <td><span class="mk mk-o">○</span></td>
+                    <td><span class="mk mk-x">✕</span></td>
+                    <td><span class="mk mk-x">✕</span></td>
+                  </tr>
+                  <tr>
+                    <td class="fx c-waku">3</td>
+                    <td class="fx c-sha"><div class="frame-cell f3">3</div></td>
+                    <td class="fx c-name">
+                      <div class="rider-name">小原唯志</div>
+                      <div class="rider-meta">茨城(取手)/101/43</div>
+                    </td>
+                    <td>A1/<span class="cls-sub">A1</span></td>
+                    <td>逃</td>
+                    <td>90.73</td>
+                    <td><span class="mk mk-o">○</span></td>
+                    <td><span class="mk mk-dbl">◎</span></td>
+                    <td><span class="mk mk-dbl">◎</span></td>
+                    <td><span class="mk mk-dbl">◎</span></td>
+                    <td><span class="mk mk-o">○</span></td>
+                    <td><span class="mk mk-dbl">◎</span></td>
+                    <td><span class="mk mk-x">✕</span></td>
+                    <td><span class="mk mk-tri">△</span></td>
+                    <td><span class="mk mk-o">○</span></td>
+                    <td><span class="mk mk-dbl">◎</span></td>
+                  </tr>
+                  <tr>
+                    <td class="fx c-waku">4</td>
+                    <td class="fx c-sha"><div class="frame-cell f4">4</div></td>
+                    <td class="fx c-name">
+                      <div class="rider-name">鈴木庸之</div>
+                      <div class="rider-meta">新潟(弥彦)/92/40</div>
+                    </td>
+                    <td>A1/<span class="cls-sub">A1</span></td>
+                    <td>両</td>
+                    <td>92.12</td>
+                    <td><span class="mk mk-tri">△</span></td>
+                    <td><span class="mk mk-tri">△</span></td>
+                    <td><span class="mk mk-tri">△</span></td>
+                    <td><span class="mk mk-x">✕</span></td>
+                    <td><span class="mk mk-tri">△</span></td>
+                    <td><span class="mk mk-tri">△</span></td>
+                    <td></td>
+                    <td><span class="mk mk-x">✕</span></td>
+                    <td><span class="mk mk-dbl">◎</span></td>
+                    <td><span class="mk mk-tri">△</span></td>
+                  </tr>
+                  <tr>
+                    <td class="fx c-waku">5</td>
+                    <td class="fx c-sha"><div class="frame-cell f5">5</div></td>
+                    <td class="fx c-name">
+                      <div class="rider-name">小松剛之</div>
+                      <div class="rider-meta">宮城(-)/79/51</div>
+                    </td>
+                    <td>A1/<span class="cls-sub">A3</span></td>
+                    <td>両</td>
+                    <td>82.87</td>
+                    <td><span class="mk mk-dbl">◎</span></td>
+                    <td></td>
+                    <td><span class="mk mk-o">○</span></td>
+                    <td><span class="mk mk-o">○</span></td>
+                    <td><span class="mk mk-dbl">◎</span></td>
+                    <td><span class="mk mk-o">○</span></td>
+                    <td><span class="mk mk-tri">△</span></td>
+                    <td><span class="mk mk-dbl">◎</span></td>
+                    <td></td>
+                    <td><span class="mk mk-o">○</span></td>
+                  </tr>
+                  <tr>
+                    <td class="fx c-waku">6</td>
+                    <td class="fx c-sha"><div class="frame-cell f6">6</div></td>
+                    <td class="fx c-name">
+                      <div class="rider-name">倉野隆太郎</div>
+                      <div class="rider-meta">三重(松阪)/91/42</div>
+                    </td>
+                    <td>A2/<span class="cls-sub">A2</span></td>
+                    <td>追</td>
+                    <td>80.65</td>
+                    <td></td>
+                    <td><span class="mk mk-x">✕</span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td class="fx c-waku">6</td>
+                    <td class="fx c-sha"><div class="frame-cell f7">7</div></td>
+                    <td class="fx c-name">
+                      <div class="rider-name">山田雅之</div>
+                      <div class="rider-meta">岐阜(岐阜)/72/53</div>
+                    </td>
+                    <td>A1/<span class="cls-sub">A1</span></td>
+                    <td>追</td>
+                    <td>85.75</td>
+                    <td></td>
+                    <td></td>
+                    <td><span class="mk mk-x">✕</span></td>
+                    <td></td>
+                    <td></td>
+                    <td><span class="mk mk-x">✕</span></td>
+                    <td></td>
+                    <td></td>
+                    <td><span class="mk mk-tri">△</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="hint">
+                ※ 評価項目のボタンをタップすると各マニア分析の詳細を表示／表は横スクロール可
+              </div>
+            </div>
+
+            <!-- 詳細ボトムシート（ボタンタップで表示） -->
+            <div class="sheet-overlay" hidden></div>
+            <div class="sheet" hidden>
+              <div class="sheet-handle"></div>
+              <div class="sheet-head">
+                <div class="sheet-title"></div>
+                <button class="sheet-close" aria-label="閉じる">✕</button>
+              </div>
+              <div class="sheet-cond"></div>
+              <div class="sheet-body">
+                <table class="detail-table">
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+                <div class="sheet-note"></div>
+              </div>
+            </div>
+
+            <div class="bottom-tab">
+              <div class="tab-item">
+                <div class="tab-icon">🏠</div>
+                ホーム
+              </div>
+              <div class="tab-item active">
+                <div class="tab-icon">🚴</div>
+                競輪
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🏍</div>
+                オート
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🎁</div>
+                キャンペーン
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">👤</div>
+                マイ
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 評価項目ごとの詳細定義（ワイヤーフレーム用ダミー）
+      const ITEMS = [
+        { title: "周長別成績", cond: "対象条件：400mバンク（大垣）", note: "過去3年間の400mバンクでの成績" },
+        { title: "見なし直線別成績", cond: "対象条件：見なし直線 56.0m（標準）", note: "見なし直線距離の区分別成績" },
+        { title: "レース種別成績", cond: "対象条件：A級一般", note: "同一レース種別での成績" },
+        { title: "レース日程別成績", cond: "対象条件：最終日", note: "開催日程（初日／2日目／最終日）別の成績" },
+        { title: "グレード別成績", cond: "対象条件：G3", note: "同一グレード開催での成績" },
+        { title: "グレード別勝ち上がり率", cond: "対象条件：G3 開催", note: "予選→準決、準決→決勝の勝ち上がり実績", type: "win" },
+        { title: "車番別成績", cond: "対象条件：各選手の今回の車番", note: "今回と同じ車番で出走した際の成績" },
+        { title: "同県選手同乗時成績", cond: "対象条件：同県選手と同じレースに出走", note: "同県選手と同乗した際の成績" },
+      ];
+      // 評価マークごとのダミー成績 [出走, 1着, 2着, 3着]
+      const BASE = { "◎": [18, 7, 4, 3], "○": [15, 4, 3, 3], "△": [12, 2, 2, 3], "✕": [10, 0, 1, 1], "": [8, 1, 1, 2] };
+      const MK = { "◎": "mk-dbl", "○": "mk-o", "△": "mk-tri", "✕": "mk-x" };
+      const pct = (n, d) => (d ? Math.round((n / d) * 100) : 0);
+
+      function renderSheet(inner, idx) {
+        const item = ITEMS[idx];
+        const rows = [...inner.querySelectorAll(".mania-table tbody tr")];
+        inner.querySelector(".sheet-title").textContent = item.title;
+        inner.querySelector(".sheet-cond").textContent = item.cond;
+        inner.querySelector(".sheet-note").textContent = "※ " + item.note;
+
+        const head = item.type === "win"
+          ? "<tr><th>車</th><th>選手名</th><th>評価</th><th>対象</th><th>勝上り</th><th>率</th></tr>"
+          : "<tr><th>車</th><th>選手名</th><th>評価</th><th>出走</th><th>1着</th><th>2着</th><th>3着</th><th>勝率</th><th>3連対</th></tr>";
+        inner.querySelector(".detail-table thead").innerHTML = head;
+
+        inner.querySelector(".detail-table tbody").innerHTML = rows.map((tr, i) => {
+          const tds = tr.children;
+          const car = tds[1].innerHTML;
+          const name = tds[2].querySelector(".rider-name").textContent;
+          const mark = tds[8 + idx].textContent.trim();
+          const markHtml = mark ? `<span class="mk ${MK[mark]}">${mark}</span>` : "－";
+          const [n, a, b, c] = BASE[mark].map((v, k) => (k === 0 ? v + (i % 3) : v));
+          if (item.type === "win") {
+            const win = a + b;
+            const r = pct(win, n);
+            return `<tr><td>${car}</td><td class="dn">${name}</td><td>${markHtml}</td><td>${n}</td><td>${win}</td><td class="${r >= 50 ? "rate-hi" : ""}">${r}%</td></tr>`;
+          }
+          const r1 = pct(a, n);
+          const r3 = pct(a + b + c, n);
+          return `<tr><td>${car}</td><td class="dn">${name}</td><td>${markHtml}</td><td>${n}</td><td>${a}</td><td>${b}</td><td>${c}</td><td class="${r1 >= 30 ? "rate-hi" : ""}">${r1}%</td><td class="${r3 >= 60 ? "rate-hi" : ""}">${r3}%</td></tr>`;
+        }).join("");
+      }
+
+      function openSheet(inner, idx) {
+        renderSheet(inner, idx);
+        inner.querySelectorAll(".item-btn").forEach((b) => b.classList.toggle("active", +b.dataset.item === idx));
+        inner.querySelector(".sheet").hidden = false;
+        inner.querySelector(".sheet-overlay").hidden = false;
+      }
+
+      function closeSheet(inner) {
+        inner.querySelector(".sheet").hidden = true;
+        inner.querySelector(".sheet-overlay").hidden = true;
+        inner.querySelectorAll(".item-btn").forEach((b) => b.classList.remove("active"));
+      }
+
+      function bind(inner) {
+        inner.querySelectorAll(".item-btn").forEach((btn) =>
+          btn.addEventListener("click", () => openSheet(inner, +btn.dataset.item))
+        );
+        inner.querySelector(".sheet-close").addEventListener("click", () => closeSheet(inner));
+        inner.querySelector(".sheet-overlay").addEventListener("click", () => closeSheet(inner));
+      }
+
+      // 画面1：一覧（操作可能）
+      const firstWrap = document.querySelector(".screen-wrap");
+      bind(firstWrap.querySelector(".phone-inner"));
+
+      // 画面2：「周長」タップ時の状態を並べて表示
+      const secondWrap = firstWrap.cloneNode(true);
+      secondWrap.querySelector(".screen-label").textContent = "SCR-03 マニア分析 詳細（「周長」タップ時）";
+      document.getElementById("screens").appendChild(secondWrap);
+      const secondInner = secondWrap.querySelector(".phone-inner");
+      bind(secondInner);
+      openSheet(secondInner, 0);
+    </script>
+  
+  <script>
+    (() => {
+      const BASE_WIDTH = 296;
+      const BASE_HEIGHT = 616;
+
+      function fitScreens() {
+        const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+        const scale = viewportWidth / BASE_WIDTH;
+
+        document.querySelectorAll('.screen-wrap').forEach((wrap) => {
+          const phone = wrap.querySelector('.phone');
+          if (!phone) return;
+          phone.style.transform = `scale(${scale})`;
+          wrap.style.height = `${BASE_HEIGHT * scale}px`;
+        });
+      }
+
+      function enableMenuNavigation() {
+        document.querySelectorAll('.app-header, .page-header').forEach((header) => {
+          header.setAttribute('role', 'link');
+          header.setAttribute('tabindex', '0');
+          header.setAttribute('aria-label', 'メニューへ戻る');
+
+          const goMenu = () => { window.location.href = 'menu.html'; };
+          header.addEventListener('click', goMenu);
+          header.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              goMenu();
+            }
+          });
+        });
+      }
+
+      fitScreens();
+      enableMenuNavigation();
+      window.addEventListener('resize', fitScreens, { passive: true });
+      window.addEventListener('orientationchange', fitScreens, { passive: true });
+    })();
+  </script>
+
+  </body>
+</html>

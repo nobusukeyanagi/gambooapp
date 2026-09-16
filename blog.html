@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <title>Gamboo アプリ ワイヤーフレーム - SCR-12 ブログTOP</title>
+    <style>
+      :root {
+        --c-primary: #f5a623;
+        --c-primary-d: #d4891a;
+        --c-secondary: #00b4d8;
+        --c-auto: #ff6b6b;
+        --c-bg: #fafaf8;
+        --c-surface: #ffffff;
+        --c-surface2: #f2f2f0;
+        --c-border: #e0ddd8;
+        --c-text: #1a1a1a;
+        --c-sub: #6b6b6b;
+        --c-dis: #adadad;
+        --c-success: #2dbd80;
+        --c-error: #e53935;
+        --c-warning: #ff9800;
+        --shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 2px 12px rgba(0, 0, 0, 0.04);
+        --r-sm: 6px;
+        --r-md: 10px;
+        --r-lg: 16px;
+        --r-full: 9999px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #2c2c2e;
+        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+        color: var(--c-text);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      /* ===== PAGE LAYOUT ===== */
+      .page-title {
+        text-align: center;
+        color: #f0f0f0;
+        font-size: 22px;
+        font-weight: 700;
+        padding: 32px 16px 8px;
+        letter-spacing: 0.05em;
+      }
+      .page-sub {
+        text-align: center;
+        color: #9a9a9a;
+        font-size: 13px;
+        padding-bottom: 32px;
+      }
+
+      .screens-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        justify-content: center;
+        padding: 0 24px 60px;
+      }
+
+      .screen-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .screen-label {
+        color: #d0d0d0;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      /* ===== PHONE FRAME ===== */
+      .phone {
+        width: 320px;
+        height: 640px;
+        background: #1a1a1a;
+        border-radius: 40px;
+        padding: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+      .phone-inner {
+        width: 100%;
+        height: 100%;
+        background: var(--c-bg);
+        border-radius: 30px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+
+      /* ===== STATUS BAR ===== */
+      .status-bar {
+        background: var(--c-surface);
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 14px;
+        flex-shrink: 0;
+      }
+      .status-bar span {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--c-text);
+      }
+
+      /* ===== PAGE HEADER ===== */
+      .page-header {
+        background: var(--c-surface);
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        border-bottom: 1px solid var(--c-border);
+        flex-shrink: 0;
+      }
+      .back-btn {
+        font-size: 12px;
+        color: var(--c-secondary);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+      .page-header-title {
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .header-actions {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .icon-btn {
+        width: 28px;
+        height: 28px;
+        border-radius: var(--r-full);
+        background: var(--c-surface2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        cursor: pointer;
+        position: relative;
+      }
+      .badge-dot {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 6px;
+        height: 6px;
+        background: var(--c-error);
+        border-radius: 50%;
+        border: 1px solid white;
+      }
+
+      /* ===== SCROLL AREA ===== */
+      .scroll-area {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: var(--c-bg);
+        scrollbar-width: none;
+      }
+      .scroll-area::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* ===== BOTTOM TAB ===== */
+      .bottom-tab {
+        background: var(--c-surface);
+        height: 52px;
+        display: flex;
+        border-top: 1px solid var(--c-border);
+        flex-shrink: 0;
+      }
+      .tab-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1px;
+        font-size: 9px;
+        color: var(--c-dis);
+        cursor: pointer;
+      }
+      .tab-item.active {
+        color: var(--c-primary);
+      }
+      .tab-item .tab-icon {
+        font-size: 18px;
+      }
+
+      /* ===== SEARCH BAR ===== */
+      .search-bar {
+        background: var(--c-surface);
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--c-border);
+        flex-shrink: 0;
+      }
+      .search-input {
+        width: 100%;
+        height: 32px;
+        background: var(--c-surface2);
+        border: 1px solid var(--c-border);
+        border-radius: var(--r-full);
+        padding: 0 12px 0 30px;
+        font-size: 11px;
+        color: var(--c-sub);
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+      .search-input::before {
+        content: "🔍";
+        position: absolute;
+        left: 10px;
+        font-size: 11px;
+      }
+
+      /* ===== TOP TABS ===== */
+      .top-tabs {
+        display: flex;
+        background: var(--c-surface);
+        border-bottom: 1px solid var(--c-border);
+        flex-shrink: 0;
+      }
+      .top-tab {
+        flex: 1;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--c-sub);
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+      }
+      .top-tab.active {
+        color: var(--c-primary);
+        border-bottom-color: var(--c-primary);
+      }
+
+      /* ===== FILTER CHIPS ===== */
+      .filter-chips {
+        display: flex;
+        gap: 5px;
+        padding: 6px 10px;
+        overflow-x: auto;
+        background: var(--c-surface);
+        border-bottom: 1px solid var(--c-border);
+        scrollbar-width: none;
+        flex-shrink: 0;
+      }
+      .filter-chips::-webkit-scrollbar {
+        display: none;
+      }
+      .chip {
+        padding: 3px 10px;
+        border-radius: var(--r-full);
+        font-size: 10px;
+        font-weight: 600;
+        white-space: nowrap;
+        background: var(--c-surface2);
+        color: var(--c-sub);
+        border: 1px solid var(--c-border);
+        cursor: pointer;
+      }
+      .chip.active {
+        background: var(--c-primary);
+        color: white;
+        border-color: var(--c-primary);
+      }
+
+      /* ===== SECTION HEADER ===== */
+      .section-header {
+        padding: 10px 12px 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .section-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--c-text);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .section-title::before {
+        content: "";
+        width: 3px;
+        height: 12px;
+        background: var(--c-primary);
+        border-radius: 2px;
+        display: inline-block;
+      }
+      .see-all {
+        font-size: 10px;
+        color: var(--c-secondary);
+        font-weight: 600;
+      }
+
+      /* ===== PICKUP BLOG CARD (featured) ===== */
+      .featured-card {
+        margin: 0 8px 8px;
+        background: var(--c-surface);
+        border-radius: var(--r-md);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .featured-thumb {
+        height: 130px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: flex-end;
+        padding: 10px;
+        position: relative;
+      }
+      .featured-thumb::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 40%,
+          rgba(0, 0, 0, 0.6) 100%
+        );
+      }
+      .featured-badge {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        background: var(--c-error);
+        color: white;
+        font-size: 9px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: var(--r-sm);
+        z-index: 1;
+      }
+      .featured-title {
+        position: relative;
+        color: white;
+        font-size: 13px;
+        font-weight: 900;
+        line-height: 1.3;
+        z-index: 1;
+      }
+      .featured-body {
+        padding: 8px 10px;
+      }
+      .featured-author {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
+      }
+      .author-avatar-sm {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f5a623, #ff7043);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+      }
+      .author-name {
+        font-weight: 700;
+        color: var(--c-text);
+      }
+      .author-meta {
+        color: var(--c-sub);
+        font-size: 9px;
+      }
+      .featured-stats {
+        display: flex;
+        gap: 10px;
+        margin-top: 6px;
+        font-size: 9px;
+        color: var(--c-sub);
+      }
+
+      /* ===== BLOG LIST CARD ===== */
+      .blog-list-card {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        background: var(--c-surface);
+        border-bottom: 1px solid var(--c-surface2);
+        cursor: pointer;
+      }
+      .blog-thumb {
+        width: 72px;
+        height: 72px;
+        border-radius: var(--r-md);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+      }
+      .thumb-1 {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+      }
+      .thumb-2 {
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+      }
+      .thumb-3 {
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+      }
+      .thumb-4 {
+        background: linear-gradient(135deg, #43e97b, #38f9d7);
+      }
+      .thumb-5 {
+        background: linear-gradient(135deg, #fa709a, #fee140);
+      }
+      .thumb-6 {
+        background: linear-gradient(135deg, #30cfd0, #330867);
+      }
+
+      .blog-body {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .blog-tags {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 2px;
+      }
+      .tag {
+        font-size: 8px;
+        font-weight: 700;
+        padding: 1px 4px;
+        border-radius: 3px;
+      }
+      .tag-keirin {
+        background: #e1f5fe;
+        color: #0277bd;
+      }
+      .tag-auto {
+        background: #ffebee;
+        color: #c62828;
+      }
+      .tag-pickup {
+        background: #fff3e0;
+        color: #e65100;
+      }
+      .blog-list-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--c-text);
+        line-height: 1.3;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      .blog-list-author {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 4px;
+        font-size: 10px;
+        color: var(--c-sub);
+      }
+      .blog-list-author .author-name-sm {
+        font-weight: 700;
+        color: var(--c-text);
+      }
+      .blog-list-stats {
+        display: flex;
+        gap: 8px;
+        margin-top: 3px;
+        font-size: 9px;
+        color: var(--c-dis);
+      }
+      .new-badge-sm {
+        background: var(--c-error);
+        color: white;
+        font-size: 8px;
+        padding: 0 3px;
+        border-radius: 2px;
+        font-weight: 700;
+      }
+
+      /* ===== RANKING LIST ===== */
+      .ranking-card {
+        margin: 0 8px 8px;
+        background: var(--c-surface);
+        border-radius: var(--r-md);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .ranking-header {
+        padding: 8px 10px;
+        background: linear-gradient(135deg, #fff8e1, #ffecb3);
+        border-bottom: 1px solid var(--c-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .ranking-header-title {
+        font-size: 11px;
+        font-weight: 900;
+        color: #856404;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .ranking-header-sub {
+        font-size: 9px;
+        color: var(--c-sub);
+      }
+      .ranking-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 10px;
+        border-bottom: 1px solid var(--c-surface2);
+        cursor: pointer;
+      }
+      .ranking-row:last-child {
+        border-bottom: none;
+      }
+      .rank-num {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 900;
+        flex-shrink: 0;
+      }
+      .rank-1 {
+        background: #ffd700;
+        color: white;
+      }
+      .rank-2 {
+        background: #c0c0c0;
+        color: white;
+      }
+      .rank-3 {
+        background: #cd7f32;
+        color: white;
+      }
+      .rank-other {
+        background: var(--c-surface2);
+        color: var(--c-sub);
+      }
+      .ranking-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .ranking-title {
+        font-size: 11px;
+        font-weight: 600;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .ranking-meta {
+        font-size: 9px;
+        color: var(--c-sub);
+        margin-top: 1px;
+      }
+
+      /* ===== FAB (floating action button) ===== */
+      .fab {
+        position: absolute;
+        right: 12px;
+        bottom: 62px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--c-primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: white;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      /* ===== BANNER LINK ===== */
+      .banner-link {
+        margin: 8px;
+        padding: 10px 12px;
+        background: linear-gradient(135deg, #1a237e 0%, #7b1fa2 100%);
+        border-radius: var(--r-md);
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+      }
+      .banner-icon {
+        font-size: 22px;
+      }
+      .banner-text {
+        flex: 1;
+      }
+      .banner-title {
+        font-size: 11px;
+        font-weight: 900;
+      }
+      .banner-sub {
+        font-size: 9px;
+        opacity: 0.8;
+        margin-top: 1px;
+      }
+      .banner-arrow {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      .divider-thin {
+        height: 6px;
+        background: var(--c-surface2);
+      }
+    
+
+      /* ===== RESPONSIVE APP CANVAS (added) =====
+         Original outer phone: 320x640 with 12px padding.
+         Actual app canvas: 296x616. Keep that canvas unchanged and
+         uniformly scale the whole canvas to the browser width. */
+      html,
+      body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        background: var(--c-bg);
+      }
+      .page-title,
+      .page-sub,
+      .screen-label {
+        display: none !important;
+      }
+      .screens-grid {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+      }
+      .screen-wrap {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        overflow: hidden;
+      }
+      .phone {
+        width: 296px !important;
+        height: 616px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        transform-origin: top left !important;
+      }
+      .phone-inner {
+        width: 296px !important;
+        height: 616px !important;
+        border-radius: 0 !important;
+      }
+      .app-header,
+      .page-header {
+        cursor: pointer;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="page-title">SCR-12 Gambooブログ TOP</div>
+    <div class="page-sub">
+      アプリ最適化されたブログ閲覧体験 /
+      新着・人気・特選・ランキングのタブ切替でブログを探索
+    </div>
+
+    <div class="screens-grid">
+      <!-- ============================================ -->
+      <!-- SCREEN A: 新着タブ -->
+      <!-- ============================================ -->
+      <div class="screen-wrap">
+        <div class="screen-label">SCR-12-A 新着タブ（デフォルト）</div>
+        <div class="phone">
+          <div class="phone-inner">
+            <div class="status-bar">
+              <span>12:45</span>
+              <span>5G ●●●</span>
+            </div>
+            <!-- Header -->
+            <div class="page-header">
+              <div class="back-btn">‹ ホーム</div>
+              <div class="page-header-title">📝 Gambooブログ</div>
+              <div class="header-actions">
+                <div class="icon-btn">🔔<div class="badge-dot"></div></div>
+              </div>
+            </div>
+            <!-- Search bar -->
+            <div class="search-bar">
+              <div class="search-input">キーワード / 選手名で検索</div>
+            </div>
+            <!-- Top tabs -->
+            <div class="top-tabs">
+              <div class="top-tab active">新着</div>
+              <div class="top-tab">人気</div>
+              <div class="top-tab">特選</div>
+              <div class="top-tab">ランキング</div>
+            </div>
+            <!-- Category chips -->
+            <div class="filter-chips">
+              <div class="chip active">すべて</div>
+              <div class="chip">競輪</div>
+              <div class="chip">オート</div>
+              <div class="chip">フォロー中</div>
+              <div class="chip">お気に入り</div>
+            </div>
+
+            <div class="scroll-area">
+              <!-- Featured pickup -->
+              <div class="section-header">
+                <div class="section-title">ピックアップ</div>
+                <div class="see-all">特選一覧 ›</div>
+              </div>
+              <div class="featured-card">
+                <div class="featured-thumb">
+                  <div class="featured-badge">🏆 特選</div>
+                  <div class="featured-title">
+                    GP2026 前日予想<br />〜 競輪祭の見どころを徹底分析 〜
+                  </div>
+                </div>
+                <div class="featured-body">
+                  <div class="featured-author">
+                    <div class="author-avatar-sm">🎯</div>
+                    <div>
+                      <div class="author-name">
+                        千鶴さん
+                        <span class="new-badge-sm">NEW</span>
+                      </div>
+                      <div class="author-meta">
+                        2026/04/17 14:30 ・ 競輪・予想
+                      </div>
+                    </div>
+                  </div>
+                  <div class="featured-stats">
+                    <span>👁 1,248</span>
+                    <span>💬 42</span>
+                    <span>⭐ 186</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Banner to write blog -->
+              <div class="banner-link">
+                <div class="banner-icon">✍️</div>
+                <div class="banner-text">
+                  <div class="banner-title">ブログを投稿する</div>
+                  <div class="banner-sub">予想・観戦記をシェアしよう</div>
+                </div>
+                <div class="banner-arrow">›</div>
+              </div>
+
+              <!-- Section header: new -->
+              <div class="section-header">
+                <div class="section-title">新着ブログ</div>
+                <div class="see-all">並び替え ⇅</div>
+              </div>
+
+              <!-- Blog list items -->
+              <div class="blog-list-card">
+                <div class="blog-thumb thumb-2">🏆</div>
+                <div class="blog-body">
+                  <div>
+                    <div class="blog-tags">
+                      <span class="tag tag-keirin">競輪</span>
+                      <span class="tag tag-pickup">決勝</span>
+                    </div>
+                    <div class="blog-list-title">
+                      デイ川口・ナイター飯塚 ダブル優勝戦の狙い目
+                    </div>
+                  </div>
+                  <div>
+                    <div class="blog-list-author">
+                      <span class="author-name-sm">千鶴さん</span>
+                      <span>・2026/04/07</span>
+                      <span class="new-badge-sm">NEW</span>
+                    </div>
+                    <div class="blog-list-stats">
+                      <span>👁 340</span><span>💬 12</span><span>⭐ 48</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="blog-list-card">
+                <div class="blog-thumb thumb-1">🎯</div>
+                <div class="blog-body">
+                  <div>
+                    <div class="blog-tags">
+                      <span class="tag tag-keirin">競輪</span>
+                    </div>
+                    <div class="blog-list-title">
+                      NEXT東京支部 2026/04/07 目論みとは裏腹に…
+                    </div>
+                  </div>
+                  <div>
+                    <div class="blog-list-author">
+                      <span class="author-name-sm">ヨコポンさん</span>
+                      <span>・2026/04/07</span>
+                      <span class="new-badge-sm">NEW</span>
+                    </div>
+                    <div class="blog-list-stats">
+                      <span>👁 521</span><span>💬 8</span><span>⭐ 33</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="blog-list-card">
+                <div class="blog-thumb thumb-5">🏍</div>
+                <div class="blog-body">
+                  <div>
+                    <div class="blog-tags">
+                      <span class="tag tag-auto">オート</span>
+                    </div>
+                    <div class="blog-list-title">
+                      川口オート G2 展開予想 〜 ハンデ別狙い目完全版 〜
+                    </div>
+                  </div>
+                  <div>
+                    <div class="blog-list-author">
+                      <span class="author-name-sm">オートマスター</span>
+                      <span>・2026/04/07</span>
+                    </div>
+                    <div class="blog-list-stats">
+                      <span>👁 212</span><span>💬 4</span><span>⭐ 18</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="blog-list-card">
+                <div class="blog-thumb thumb-3">💭</div>
+                <div class="blog-body">
+                  <div>
+                    <div class="blog-tags">
+                      <span class="tag tag-keirin">競輪</span>
+                    </div>
+                    <div class="blog-list-title">
+                      松山記念 準決勝 3着圏内の買い目を厳選
+                    </div>
+                  </div>
+                  <div>
+                    <div class="blog-list-author">
+                      <span class="author-name-sm">競輪太郎</span>
+                      <span>・2026/04/06</span>
+                    </div>
+                    <div class="blog-list-stats">
+                      <span>👁 183</span><span>💬 6</span><span>⭐ 24</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="blog-list-card">
+                <div class="blog-thumb thumb-4">🎮</div>
+                <div class="blog-body">
+                  <div>
+                    <div class="blog-tags">
+                      <span class="tag tag-keirin">競輪</span>
+                      <span class="tag tag-pickup">初日</span>
+                    </div>
+                    <div class="blog-list-title">
+                      大垣G3 初日前検 〜 気になる若手選手をチェック 〜
+                    </div>
+                  </div>
+                  <div>
+                    <div class="blog-list-author">
+                      <span class="author-name-sm">ギャンブー侍</span>
+                      <span>・2026/04/06</span>
+                    </div>
+                    <div class="blog-list-stats">
+                      <span>👁 155</span><span>💬 3</span><span>⭐ 12</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="blog-list-card">
+                <div class="blog-thumb thumb-6">📊</div>
+                <div class="blog-body">
+                  <div>
+                    <div class="blog-tags">
+                      <span class="tag tag-auto">オート</span>
+                    </div>
+                    <div class="blog-list-title">
+                      飯塚オート 試走タイム分析 〜 直近3節の傾向 〜
+                    </div>
+                  </div>
+                  <div>
+                    <div class="blog-list-author">
+                      <span class="author-name-sm">データ派</span>
+                      <span>・2026/04/05</span>
+                    </div>
+                    <div class="blog-list-stats">
+                      <span>👁 98</span><span>💬 2</span><span>⭐ 8</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height: 8px"></div>
+            </div>
+
+            <!-- FAB: 新規投稿 -->
+            <div class="fab">✍️</div>
+
+            <!-- Bottom Tab -->
+            <div class="bottom-tab">
+              <div class="tab-item active">
+                <div class="tab-icon">🏠</div>
+                ホーム
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🚴</div>
+                競輪
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🏍</div>
+                オート
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🎁</div>
+                キャンペーン
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">👤</div>
+                マイ
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================ -->
+      <!-- SCREEN B: ランキングタブ -->
+      <!-- ============================================ -->
+      <div class="screen-wrap">
+        <div class="screen-label">SCR-12-B ランキングタブ / 月間賞</div>
+        <div class="phone">
+          <div class="phone-inner">
+            <div class="status-bar">
+              <span>12:45</span>
+              <span>5G ●●●</span>
+            </div>
+            <!-- Header -->
+            <div class="page-header">
+              <div class="back-btn">‹ ホーム</div>
+              <div class="page-header-title">📝 Gambooブログ</div>
+              <div class="header-actions">
+                <div class="icon-btn">🔔<div class="badge-dot"></div></div>
+              </div>
+            </div>
+            <!-- Search bar -->
+            <div class="search-bar">
+              <div class="search-input">キーワード / 選手名で検索</div>
+            </div>
+            <!-- Top tabs -->
+            <div class="top-tabs">
+              <div class="top-tab">新着</div>
+              <div class="top-tab">人気</div>
+              <div class="top-tab">特選</div>
+              <div class="top-tab active">ランキング</div>
+            </div>
+            <!-- Period chips -->
+            <div class="filter-chips">
+              <div class="chip">今日</div>
+              <div class="chip">今週</div>
+              <div class="chip active">今月</div>
+              <div class="chip">月間賞</div>
+              <div class="chip">年間</div>
+            </div>
+
+            <div class="scroll-area">
+              <!-- 月間賞 header -->
+              <div class="section-header">
+                <div class="section-title">月間ブログ大賞</div>
+                <div class="see-all">受賞一覧 ›</div>
+              </div>
+
+              <!-- Ranking card -->
+              <div class="ranking-card">
+                <div class="ranking-header">
+                  <div class="ranking-header-title">
+                    🏆 2026年 4月 人気ランキング
+                  </div>
+                  <div class="ranking-header-sub">04/01 〜 04/17</div>
+                </div>
+
+                <div class="ranking-row">
+                  <div class="rank-num rank-1">1</div>
+                  <div class="blog-thumb thumb-2" style="width: 42px; height: 42px; font-size: 18px">🏆</div>
+                  <div class="ranking-body">
+                    <div class="ranking-title">GP2026 前日予想 徹底分析</div>
+                    <div class="ranking-meta">
+                      千鶴さん ・ 👁 12,480 ・ ⭐ 860
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ranking-row">
+                  <div class="rank-num rank-2">2</div>
+                  <div class="blog-thumb thumb-1" style="width: 42px; height: 42px; font-size: 18px">🎯</div>
+                  <div class="ranking-body">
+                    <div class="ranking-title">高松宮記念杯 回顧と反省</div>
+                    <div class="ranking-meta">
+                      ヨコポンさん ・ 👁 8,230 ・ ⭐ 542
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ranking-row">
+                  <div class="rank-num rank-3">3</div>
+                  <div class="blog-thumb thumb-5" style="width: 42px; height: 42px; font-size: 18px">🏍</div>
+                  <div class="ranking-body">
+                    <div class="ranking-title">オート 川口G2 完全ガイド</div>
+                    <div class="ranking-meta">
+                      オートマスター ・ 👁 6,140 ・ ⭐ 421
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ranking-row">
+                  <div class="rank-num rank-other">4</div>
+                  <div class="blog-thumb thumb-3" style="width: 42px; height: 42px; font-size: 18px">💭</div>
+                  <div class="ranking-body">
+                    <div class="ranking-title">松山記念 準決勝 3着圏内の買い目</div>
+                    <div class="ranking-meta">
+                      競輪太郎 ・ 👁 4,780 ・ ⭐ 340
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ranking-row">
+                  <div class="rank-num rank-other">5</div>
+                  <div class="blog-thumb thumb-6" style="width: 42px; height: 42px; font-size: 18px">📊</div>
+                  <div class="ranking-body">
+                    <div class="ranking-title">飯塚オート 試走タイム分析</div>
+                    <div class="ranking-meta">
+                      データ派 ・ 👁 3,200 ・ ⭐ 210
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 人気ブロガー -->
+              <div class="section-header">
+                <div class="section-title">人気ブロガー</div>
+                <div class="see-all">全員見る ›</div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  gap: 8px;
+                  overflow-x: auto;
+                  padding: 0 8px 8px;
+                  scrollbar-width: none;
+                "
+              >
+                <div
+                  style="
+                    flex-shrink: 0;
+                    width: 74px;
+                    background: var(--c-surface);
+                    border-radius: var(--r-md);
+                    padding: 8px 4px;
+                    text-align: center;
+                    box-shadow: var(--shadow);
+                  "
+                >
+                  <div
+                    style="
+                      width: 42px;
+                      height: 42px;
+                      border-radius: 50%;
+                      margin: 0 auto 4px;
+                      background: linear-gradient(135deg, #f5a623, #ff7043);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 20px;
+                    "
+                  >
+                    🎯
+                  </div>
+                  <div style="font-size: 10px; font-weight: 700">千鶴さん</div>
+                  <div style="font-size: 8px; color: var(--c-sub)">
+                    投稿 142
+                  </div>
+                  <div
+                    style="
+                      margin-top: 3px;
+                      font-size: 8px;
+                      font-weight: 700;
+                      color: var(--c-primary);
+                      border: 1px solid var(--c-primary);
+                      border-radius: var(--r-full);
+                      padding: 1px 0;
+                    "
+                  >
+                    + フォロー
+                  </div>
+                </div>
+                <div
+                  style="
+                    flex-shrink: 0;
+                    width: 74px;
+                    background: var(--c-surface);
+                    border-radius: var(--r-md);
+                    padding: 8px 4px;
+                    text-align: center;
+                    box-shadow: var(--shadow);
+                  "
+                >
+                  <div
+                    style="
+                      width: 42px;
+                      height: 42px;
+                      border-radius: 50%;
+                      margin: 0 auto 4px;
+                      background: linear-gradient(135deg, #667eea, #764ba2);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 20px;
+                    "
+                  >
+                    🏆
+                  </div>
+                  <div style="font-size: 10px; font-weight: 700">
+                    ヨコポンさん
+                  </div>
+                  <div style="font-size: 8px; color: var(--c-sub)">
+                    投稿 98
+                  </div>
+                  <div
+                    style="
+                      margin-top: 3px;
+                      font-size: 8px;
+                      font-weight: 700;
+                      color: var(--c-success);
+                      background: #e8f5e9;
+                      border: 1px solid var(--c-success);
+                      border-radius: var(--r-full);
+                      padding: 1px 0;
+                    "
+                  >
+                    ✓ 中
+                  </div>
+                </div>
+                <div
+                  style="
+                    flex-shrink: 0;
+                    width: 74px;
+                    background: var(--c-surface);
+                    border-radius: var(--r-md);
+                    padding: 8px 4px;
+                    text-align: center;
+                    box-shadow: var(--shadow);
+                  "
+                >
+                  <div
+                    style="
+                      width: 42px;
+                      height: 42px;
+                      border-radius: 50%;
+                      margin: 0 auto 4px;
+                      background: linear-gradient(135deg, #fa709a, #fee140);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 20px;
+                    "
+                  >
+                    🏍
+                  </div>
+                  <div style="font-size: 10px; font-weight: 700">
+                    オートマスター
+                  </div>
+                  <div style="font-size: 8px; color: var(--c-sub)">
+                    投稿 76
+                  </div>
+                  <div
+                    style="
+                      margin-top: 3px;
+                      font-size: 8px;
+                      font-weight: 700;
+                      color: var(--c-primary);
+                      border: 1px solid var(--c-primary);
+                      border-radius: var(--r-full);
+                      padding: 1px 0;
+                    "
+                  >
+                    + フォロー
+                  </div>
+                </div>
+                <div
+                  style="
+                    flex-shrink: 0;
+                    width: 74px;
+                    background: var(--c-surface);
+                    border-radius: var(--r-md);
+                    padding: 8px 4px;
+                    text-align: center;
+                    box-shadow: var(--shadow);
+                  "
+                >
+                  <div
+                    style="
+                      width: 42px;
+                      height: 42px;
+                      border-radius: 50%;
+                      margin: 0 auto 4px;
+                      background: linear-gradient(135deg, #4facfe, #00f2fe);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 20px;
+                    "
+                  >
+                    💭
+                  </div>
+                  <div style="font-size: 10px; font-weight: 700">
+                    競輪太郎
+                  </div>
+                  <div style="font-size: 8px; color: var(--c-sub)">
+                    投稿 54
+                  </div>
+                  <div
+                    style="
+                      margin-top: 3px;
+                      font-size: 8px;
+                      font-weight: 700;
+                      color: var(--c-primary);
+                      border: 1px solid var(--c-primary);
+                      border-radius: var(--r-full);
+                      padding: 1px 0;
+                    "
+                  >
+                    + フォロー
+                  </div>
+                </div>
+              </div>
+
+              <div style="height: 12px"></div>
+            </div>
+
+            <!-- Bottom Tab -->
+            <div class="bottom-tab">
+              <div class="tab-item active">
+                <div class="tab-icon">🏠</div>
+                ホーム
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🚴</div>
+                競輪
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🏍</div>
+                オート
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">🎁</div>
+                キャンペーン
+              </div>
+              <div class="tab-item">
+                <div class="tab-icon">👤</div>
+                マイ
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SPEC NOTES -->
+    <!-- ============================================ -->
+    <div
+      style="
+        max-width: 960px;
+        margin: 0 auto 60px;
+        padding: 20px 24px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        color: #d0d0d0;
+        font-size: 13px;
+        line-height: 1.7;
+      "
+    >
+      <div style="color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 12px">
+        📝 SCR-12 Gambooブログ TOP ― 主要仕様
+      </div>
+      <div style="margin-bottom: 10px">
+        <strong style="color: #f5a623">画面ID:</strong> SCR-12 &nbsp;/&nbsp;
+        <strong style="color: #f5a623">対応現行URL:</strong> gamboo.jp/column/ &nbsp;/&nbsp;
+        <strong style="color: #f5a623">優先度:</strong> 2（二次開発）
+      </div>
+      <div style="margin-bottom: 10px">
+        <strong style="color: #f5a623">主要UI要素:</strong>
+      </div>
+      <ul style="padding-left: 24px; margin-bottom: 10px">
+        <li>ページヘッダー（戻る／タイトル／通知）</li>
+        <li>キーワード検索バー（選手名・本文対象）</li>
+        <li>上部タブ: 新着 / 人気 / 特選 / ランキング</li>
+        <li>フィルターチップ: すべて・競輪・オート・フォロー中・お気に入り</li>
+        <li>ピックアップカード（サムネ大 + タイトル + 投稿者 + 統計）</li>
+        <li>ブログリストカード（72pxサムネ + タグ + タイトル2行 + 投稿者 + 👁💬⭐）</li>
+        <li>投稿FAB（右下フローティング、タップでブログ投稿画面へ遷移）</li>
+        <li>ブログ投稿導線バナー（紫グラデ）</li>
+        <li>ランキングカード（1位〜5位、メダル配色）</li>
+        <li>人気ブロガーカルーセル（横スクロール、フォローボタン付）</li>
+      </ul>
+      <div style="margin-bottom: 10px">
+        <strong style="color: #f5a623">主な遷移:</strong>
+      </div>
+      <ul style="padding-left: 24px; margin-bottom: 10px">
+        <li>ブログカード タップ → SCR-13（ブログ詳細）</li>
+        <li>FAB タップ → ブログ投稿画面（WebView：/member/column/entry/write/）</li>
+        <li>投稿者名 タップ → ユーザープロフィール（WebView）</li>
+        <li>月間賞タブ → WebView：/topics/?tid=column_monthly_award</li>
+        <li>「特選一覧」リンク → WebView：/column/pickup/</li>
+      </ul>
+      <div>
+        <strong style="color: #f5a623">アクセシビリティ:</strong> FABはaria-label="ブログを投稿する" / タップターゲット最小44px / サムネにはalt属性 / カード全体がtabindex=0
+      </div>
+    </div>
+  
+  <script>
+    (() => {
+      const BASE_WIDTH = 296;
+      const BASE_HEIGHT = 616;
+
+      function fitScreens() {
+        const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+        const scale = viewportWidth / BASE_WIDTH;
+
+        document.querySelectorAll('.screen-wrap').forEach((wrap) => {
+          const phone = wrap.querySelector('.phone');
+          if (!phone) return;
+          phone.style.transform = `scale(${scale})`;
+          wrap.style.height = `${BASE_HEIGHT * scale}px`;
+        });
+      }
+
+      function enableMenuNavigation() {
+        document.querySelectorAll('.app-header, .page-header').forEach((header) => {
+          header.setAttribute('role', 'link');
+          header.setAttribute('tabindex', '0');
+          header.setAttribute('aria-label', 'メニューへ戻る');
+
+          const goMenu = () => { window.location.href = 'menu.html'; };
+          header.addEventListener('click', goMenu);
+          header.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              goMenu();
+            }
+          });
+        });
+      }
+
+      fitScreens();
+      enableMenuNavigation();
+      window.addEventListener('resize', fitScreens, { passive: true });
+      window.addEventListener('orientationchange', fitScreens, { passive: true });
+    })();
+  </script>
+
+  </body>
+</html>
