@@ -65,7 +65,7 @@
         --fs-min: 11px;
         --fs-dense: 11px;
 
-        --ff-num: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", monospace;
+        --ff-num: "Meiryo", "メイリオ", sans-serif;
       }
       * {
         box-sizing: border-box;
@@ -77,10 +77,16 @@
       }
       body {
         background: #2c2c2e;
-        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+        font-family: "Meiryo", "メイリオ", sans-serif;
         color: var(--c-text);
         font-size: 13px;
         line-height: 1.5;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font-family: inherit;
       }
 
       .page-title {
@@ -550,7 +556,7 @@
         font-size: 0.78em;
         font-weight: 700;
         margin-left: 1px;
-        font-family: "Noto Sans JP", sans-serif;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
 
       .ic {
@@ -936,7 +942,7 @@
       .leg-tag,
       .cls-sub,
       .item-btn {
-        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
       .score,
       .g-val,
@@ -1269,6 +1275,27 @@
       .wx span { font-size: 13px; }
       .sheet { bottom: 62px; }
       .sheet-overlay { inset: 0 0 62px 0; }
+
+      /* G指数（数値＋印） */
+      .mania-table td.c-g { white-space: nowrap; }
+      .mania-table td.c-g .g-val { margin-right: 2px; }
+      /* 詳細モーダル（マニア分析.png 準拠） */
+      .detail-table { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; }
+      .detail-table th { line-height: 1.25; border-right: 1px solid var(--c-surface2); }
+      .detail-table thead tr + tr th { top: 22px; }
+      .detail-table th.dt-grp { background: #f3eee6; color: var(--c-text); border-left: 2px solid var(--c-border); }
+      .detail-table td { border-right: 1px solid var(--c-surface2); }
+      .detail-table td.dt-gs { border-left: 2px solid var(--c-border); }
+      .detail-table .dt-fx { position: sticky; z-index: 2; background: var(--c-surface); }
+      .detail-table th.dt-fx { z-index: 4; background: #f5f5f3; }
+      .detail-table .dt-car { left: 0; width: 26px; min-width: 26px; }
+      .detail-table .dt-name { left: 26px; min-width: 64px; border-right: 2px solid var(--c-border); }
+      .detail-table td.rt { min-width: 64px; padding: 3px 4px 4px; text-align: right; vertical-align: top; }
+      .detail-table .rt-v { display: block; font-weight: 700; color: var(--c-text); line-height: 1.2; }
+      .detail-table .rt-n { display: block; font-size: 10px; color: var(--c-sub); line-height: 1.2; }
+      .detail-table .rt-bar { display: block; height: 6px; margin-top: 2px; background: #8bc34a; border-radius: 1px; }
+      .detail-table .rt-out .rt-bar { background: #64b5f6; }
+      .detail-table tbody tr:nth-child(even) td { background: #fbfaf8; }
     </style>
   </head>
   <body>
@@ -1333,11 +1360,11 @@
                     <th class="fx c-waku" rowspan="2">枠<br />番</th>
                     <th class="fx c-sha" rowspan="2">車<br />番</th>
                     <th class="fx c-name" rowspan="2">選手名<br />ホーム/期/年</th>
+                    <th rowspan="2" class="c-item">G指数</th>
+                    <th rowspan="2" class="c-item">マニア分析<br />総合評価</th>
                     <th rowspan="2">級班<br />現/前</th>
                     <th rowspan="2">脚<br />質</th>
                     <th rowspan="2">競走<br />得点</th>
-                    <th rowspan="2" class="c-item">G指数</th>
-                    <th rowspan="2" class="c-item">マニア分析<br />総合評価</th>
                     <th class="th-group" colspan="8">マニア分析評価項目</th>
                   </tr>
                   <tr>
@@ -1359,11 +1386,11 @@
                       <div class="rider-name">伊藤太一</div>
                       <div class="rider-meta">山梨(境川)/91/43</div>
                     </td>
+                    <td class="c-g"><span class="g-val">33</span> </td>
+                    <td></td>
                     <td>A2/<span class="cls-sub">A1</span></td>
                     <td>追</td>
                     <td>84.42</td>
-                    <td></td>
-                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -1380,11 +1407,11 @@
                       <div class="rider-name">藤田真</div>
                       <div class="rider-meta">兵庫(明石)/89/45</div>
                     </td>
+                    <td class="c-g"><span class="g-val">40</span> <span class="mk mk-x">✕</span></td>
+                    <td><span class="mk mk-o">○</span></td>
                     <td>A2/<span class="cls-sub">A1</span></td>
                     <td>両</td>
                     <td>86.50</td>
-                    <td><span class="mk mk-x">✕</span></td>
-                    <td><span class="mk mk-o">○</span></td>
                     <td></td>
                     <td><span class="mk mk-tri">△</span></td>
                     <td><span class="mk mk-x">✕</span></td>
@@ -1401,11 +1428,11 @@
                       <div class="rider-name">小原唯志</div>
                       <div class="rider-meta">茨城(取手)/101/43</div>
                     </td>
+                    <td class="c-g"><span class="g-val num-blue">72</span> <span class="mk mk-o">○</span></td>
+                    <td><span class="mk mk-dbl">◎</span></td>
                     <td>A1/<span class="cls-sub">A1</span></td>
                     <td>逃</td>
                     <td>90.73</td>
-                    <td><span class="mk mk-o">○</span></td>
-                    <td><span class="mk mk-dbl">◎</span></td>
                     <td><span class="mk mk-dbl">◎</span></td>
                     <td><span class="mk mk-dbl">◎</span></td>
                     <td><span class="mk mk-o">○</span></td>
@@ -1422,11 +1449,11 @@
                       <div class="rider-name">鈴木庸之</div>
                       <div class="rider-meta">新潟(弥彦)/92/40</div>
                     </td>
+                    <td class="c-g"><span class="g-val">62</span> <span class="mk mk-tri">△</span></td>
+                    <td><span class="mk mk-tri">△</span></td>
                     <td>A1/<span class="cls-sub">A1</span></td>
                     <td>両</td>
                     <td>92.12</td>
-                    <td><span class="mk mk-tri">△</span></td>
-                    <td><span class="mk mk-tri">△</span></td>
                     <td><span class="mk mk-tri">△</span></td>
                     <td><span class="mk mk-x">✕</span></td>
                     <td><span class="mk mk-tri">△</span></td>
@@ -1443,11 +1470,11 @@
                       <div class="rider-name">小松剛之</div>
                       <div class="rider-meta">宮城(-)/79/51</div>
                     </td>
+                    <td class="c-g"><span class="g-val num-hi">90</span> <span class="mk mk-dbl">◎</span></td>
+                    <td></td>
                     <td>A1/<span class="cls-sub">A3</span></td>
                     <td>両</td>
                     <td>82.87</td>
-                    <td><span class="mk mk-dbl">◎</span></td>
-                    <td></td>
                     <td><span class="mk mk-o">○</span></td>
                     <td><span class="mk mk-o">○</span></td>
                     <td><span class="mk mk-dbl">◎</span></td>
@@ -1464,11 +1491,11 @@
                       <div class="rider-name">倉野隆太郎</div>
                       <div class="rider-meta">三重(松阪)/91/42</div>
                     </td>
+                    <td class="c-g"><span class="g-val">15</span> </td>
+                    <td><span class="mk mk-x">✕</span></td>
                     <td>A2/<span class="cls-sub">A2</span></td>
                     <td>追</td>
                     <td>80.65</td>
-                    <td></td>
-                    <td><span class="mk mk-x">✕</span></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -1485,11 +1512,11 @@
                       <div class="rider-name">山田雅之</div>
                       <div class="rider-meta">岐阜(岐阜)/72/53</div>
                     </td>
+                    <td class="c-g"><span class="g-val">38</span> </td>
+                    <td></td>
                     <td>A1/<span class="cls-sub">A1</span></td>
                     <td>追</td>
                     <td>85.75</td>
-                    <td></td>
-                    <td></td>
                     <td><span class="mk mk-x">✕</span></td>
                     <td></td>
                     <td></td>
@@ -1552,46 +1579,71 @@
 
     <script>
       const ITEMS = [
-        { title: "周長別成績", cond: "対象条件：400mバンク（大垣）", note: "過去3年間の400mバンクでの成績" },
-        { title: "見なし直線別成績", cond: "対象条件：見なし直線 56.0m（標準）", note: "見なし直線距離の区分別成績" },
-        { title: "レース種別成績", cond: "対象条件：A級一般", note: "同一レース種別での成績" },
-        { title: "レース日程別成績", cond: "対象条件：最終日", note: "開催日程（初日／2日目／最終日）別の成績" },
-        { title: "グレード別成績", cond: "対象条件：G3", note: "同一グレード開催での成績" },
-        { title: "グレード別勝ち上がり率", cond: "対象条件：G3 開催", note: "予選→準決、準決→決勝の勝ち上がり実績", type: "win" },
-        { title: "車番別成績", cond: "対象条件：各選手の今回の車番", note: "今回と同じ車番で出走した際の成績" },
-        { title: "同県選手同乗時成績", cond: "対象条件：同県選手と同じレースに出走", note: "同県選手と同乗した際の成績" },
+        { title: "周長別成績", cond: "対象条件：400mバンク（大垣）", grp: ["周長：400mの成績", "周長：すべての成績"], note: "過去3年間の成績。出場選手中順位は3連対率順" },
+        { title: "見なし直線別成績", cond: "対象条件：見なし直線 56.0m（標準）", grp: ["見なし直線：56.0mの成績", "見なし直線：すべての成績"], note: "見なし直線距離の区分別成績" },
+        { title: "レース種別成績", cond: "対象条件：A級一般", grp: ["レース種別：A級一般の成績", "レース種別：すべての成績"], note: "同一レース種別での成績" },
+        { title: "レース日程別成績", cond: "対象条件：最終日", grp: ["レース日程：最終日の成績", "レース日程：すべての成績"], note: "開催日程（初日／2日目／最終日）別の成績" },
+        { title: "グレード別成績", cond: "対象条件：G3", grp: ["グレード：G3の成績", "グレード：すべての成績"], note: "同一グレード開催での成績" },
+        { title: "グレード別勝ち上がり率", cond: "対象条件：G3 開催", grp: ["グレード：G3の勝ち上がり率", "グレード：すべての勝ち上がり率"], note: "予選→準決、準決→決勝の勝ち上がり実績", type: "win" },
+        { title: "車番別成績", cond: "対象条件：各選手の今回の車番", grp: ["車番：今回の車番の成績", "車番：すべての成績"], note: "今回と同じ車番で出走した際の成績" },
+        { title: "同県選手同乗時成績", cond: "対象条件：同県選手と同じレースに出走", grp: ["同県選手：同乗時の成績", "同県選手：すべての成績"], note: "同県選手と同乗した際の成績" },
       ];
-      const BASE = { "◎": [18, 7, 4, 3], "○": [15, 4, 3, 3], "△": [12, 2, 2, 3], "✕": [10, 0, 1, 1], "": [8, 1, 1, 2] };
+      const Q = { "◎": 0.78, "○": 0.66, "△": 0.52, "✕": 0.36, "": 0.42 };
       const MK = { "◎": "mk-dbl", "○": "mk-o", "△": "mk-tri", "✕": "mk-x" };
-      const pct = (n, d) => (d ? Math.round((n / d) * 100) : 0);
+      const pct1 = (n, d) => (d ? ((n / d) * 100).toFixed(1) : "0.0");
+
+      // 評価記号から決定的にサンプル成績を作る（g=0: 条件該当 / g=1: すべて）
+      function calc(mark, i, idx, g) {
+        const seed = (i + 1) * 7 + idx * 5 + g * 3;
+        const n = g ? 30 + ((seed * 11) % 75) : 20 + ((seed * 7) % 30);
+        const q = Math.min(0.9, Math.max(0.2, Q[mark] + ((seed % 7) - 3) * 0.03));
+        const c3 = Math.round(n * q);
+        const c2 = Math.round(c3 * (0.68 + (seed % 3) * 0.06));
+        const c1 = Math.round(c2 * (0.55 + (seed % 4) * 0.05));
+        return { n, c1, c2, c3, out: n - c3, r3: c3 / n, nat: Math.round(1400 * Math.pow(1 - c3 / n, 1.6)) + (seed % 30) + 1 };
+      }
+      const rateCell = (c, n, cls = "") =>
+        `<td class="rt ${cls}"><span class="rt-v">${pct1(c, n)}%</span><span class="rt-n">(${c}/${n})</span><i class="rt-bar" style="width:${pct1(c, n)}%"></i></td>`;
 
       function renderSheet(inner, idx) {
         const item = ITEMS[idx];
+        const win = item.type === "win";
         const rows = [...inner.querySelectorAll(".mania-table tbody tr")];
         inner.querySelector(".sheet-title").textContent = item.title;
         inner.querySelector(".sheet-cond").textContent = item.cond;
         inner.querySelector(".sheet-note").textContent = "※ " + item.note;
 
-        const head = item.type === "win"
-          ? "<tr><th>車</th><th>選手名</th><th>評価</th><th>対象</th><th>勝上り</th><th>率</th></tr>"
-          : "<tr><th>車</th><th>選手名</th><th>評価</th><th>出走</th><th>1着</th><th>2着</th><th>3着</th><th>勝率</th><th>3連対</th></tr>";
-        inner.querySelector(".detail-table thead").innerHTML = head;
+        const sub = win
+          ? "<th>出場選手<br>中順位</th><th>全国<br>順位</th><th>勝ち上がり率</th>"
+          : "<th>出場選手<br>中順位</th><th>全国<br>順位</th><th>勝率</th><th>2連対率</th><th>3連対率</th><th>着外率</th>";
+        const span = win ? 3 : 6;
+        inner.querySelector(".detail-table thead").innerHTML =
+          `<tr><th class="dt-fx dt-car" rowspan="2">車</th><th class="dt-fx dt-name" rowspan="2">選手名</th><th rowspan="2">評価</th>` +
+          item.grp.map((g) => `<th class="dt-grp" colspan="${span}">${g}</th>`).join("") +
+          `</tr><tr>${sub}${sub}</tr>`;
 
-        inner.querySelector(".detail-table tbody").innerHTML = rows.map((tr, i) => {
-          const tds = tr.children;
-          const car = tds[1].innerHTML;
-          const name = tds[2].querySelector(".rider-name").textContent;
-          const mark = tds[8 + idx].textContent.trim();
+        const data = rows.map((tr, i) => {
+          const mark = tr.children[8 + idx].textContent.trim();
+          return { tr, mark, s: [calc(mark, i, idx, 0), calc(mark, i, idx, 1)] };
+        });
+        // 出場選手中順位（3連対率順）
+        [0, 1].forEach((g) => {
+          [...data].sort((a, b) => b.s[g].r3 - a.s[g].r3).forEach((d, k) => (d.s[g].rank = k + 1));
+        });
+
+        inner.querySelector(".detail-table tbody").innerHTML = data.map(({ tr, mark, s }) => {
+          const car = tr.children[1].innerHTML;
+          const name = tr.children[2].querySelector(".rider-name").textContent;
           const markHtml = mark ? `<span class="mk ${MK[mark]}">${mark}</span>` : "－";
-          const [n, a, b, c] = BASE[mark].map((v, k) => (k === 0 ? v + (i % 3) : v));
-          if (item.type === "win") {
-            const win = a + b;
-            const r = pct(win, n);
-            return `<tr><td>${car}</td><td class="dn">${name}</td><td>${markHtml}</td><td>${n}</td><td>${win}</td><td class="rate2 ${r >= 50 ? "rate-hi" : ""}"><b>${r}%</b><small>${win}/${n}</small></td></tr>`;
-          }
-          const r1 = pct(a, n);
-          const r3 = pct(a + b + c, n);
-          return `<tr><td>${car}</td><td class="dn">${name}</td><td>${markHtml}</td><td>${n}</td><td>${a}</td><td>${b}</td><td>${c}</td><td class="rate2 ${r1 >= 30 ? "rate-hi" : ""}"><b>${r1}%</b><small>${a}/${n}</small></td><td class="rate2 ${r3 >= 60 ? "rate-hi" : ""}"><b>${r3}%</b><small>${a + b + c}/${n}</small></td></tr>`;
+          const grp = s.map((x) => {
+            const head = `<td class="dt-gs">${x.rank}位</td><td>${x.nat}位</td>`;
+            if (win) {
+              const w = Math.round(x.c2 * 0.9);
+              return head + rateCell(w, x.n);
+            }
+            return head + rateCell(x.c1, x.n) + rateCell(x.c2, x.n) + rateCell(x.c3, x.n) + rateCell(x.out, x.n, "rt-out");
+          }).join("");
+          return `<tr><td class="dt-fx dt-car">${car}</td><td class="dt-fx dt-name dn">${name}</td><td>${markHtml}</td>${grp}</tr>`;
         }).join("");
       }
 

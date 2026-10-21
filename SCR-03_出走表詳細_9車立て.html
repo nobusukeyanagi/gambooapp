@@ -65,7 +65,7 @@
         --fs-min: 11px;
         --fs-dense: 11px;
 
-        --ff-num: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", monospace;
+        --ff-num: "Meiryo", "メイリオ", sans-serif;
       }
       * {
         box-sizing: border-box;
@@ -74,10 +74,16 @@
       }
       body {
         background: #2c2c2e;
-        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+        font-family: "Meiryo", "メイリオ", sans-serif;
         color: var(--c-text);
         font-size: 13px;
         line-height: 1.5;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font-family: inherit;
       }
 
       .page-title {
@@ -891,7 +897,7 @@
         font-size: 13px;
       }
       .score {
-        font-family: "Roboto Mono", monospace;
+        font-family: "Meiryo", "メイリオ", sans-serif;
         font-weight: 700;
         color: var(--c-text);
       }
@@ -1007,7 +1013,7 @@
       .point-value {
         font-size: 14px;
         font-weight: 900;
-        font-family: "Roboto Mono", monospace;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
 
       .menu-section {
@@ -1126,7 +1132,7 @@
         display: inline-block;
         min-width: 16px;
         text-align: left;
-        font-family: "Roboto Mono", monospace;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
       .mark {
         display: inline-block;
@@ -1276,7 +1282,7 @@
         font-size: 0.78em;
         font-weight: 700;
         margin-left: 1px;
-        font-family: "Noto Sans JP", sans-serif;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
 
       .ic {
@@ -1662,7 +1668,7 @@
       .leg-tag,
       .cls-sub,
       .item-btn {
-        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
       .score,
       .g-val,
@@ -1993,6 +1999,17 @@
       .at .hd { font-size: 19px; }
       .at .fx2 { min-width: 108px; max-width: 108px; }
       .wx span { font-size: 13px; }
+
+      /* 出走表（競輪出走表.png 準拠の項目） */
+      .mania-table .th-sub { font-size: 10px; font-weight: 400; color: var(--c-sub); }
+      .mania-table .th-agari { color: var(--c-error); font-weight: 700; }
+      .mania-table thead tr + tr th { top: auto; }
+      .mania-table td.cls small { font-size: 10px; color: var(--c-sub); }
+      .mania-table td.rate { min-width: 30px; }
+      .mania-table .res-cell { min-width: 0; }
+      .mania-table .res-wrap { gap: 8px; }
+      .mania-table .res-rank { font-size: 13px; font-weight: 700; color: var(--c-text); }
+      .mania-table .res-note { font-size: 10px; color: #8a4b00; }
     </style>
   </head>
   <body>
@@ -2071,25 +2088,32 @@
               <table class="mania-table">
                 <thead>
                   <tr>
-                    <th class="fx c-waku">枠</th>
-                    <th class="fx c-sha">車</th>
-                    <th class="fx c-name">選手名</th>
-                    <th>G指数</th>
-                    <th class="bl"><span class="th-mania">マニア分析</span></th>
-                    <th class="bl">得点</th>
-                    <th class="bl">S</th>
-                    <th class="bl">B</th>
-                    <th class="bl">脚</th>
+                    <th class="fx c-waku" rowspan="3">枠<br />番</th>
+                    <th class="fx c-sha" rowspan="3">車<br />番</th>
+                    <th class="fx c-name" rowspan="3">選手名<br /><span class="th-sub">府県(ホーム)/期/年</span></th>
+                    <th rowspan="3">G指数</th>
+                    <th class="bl" rowspan="3"><span class="th-mania">マニア分析</span></th>
+                    <th class="bl" rowspan="3">級班<br /><span class="th-sub">現/前</span></th>
+                    <th class="bl" rowspan="3">脚質</th>
+                    <th class="bl" colspan="11">直近4カ月成績　<span class="th-sub">※率は%</span></th>
+                    <th class="bl" rowspan="3">今開催成績<br /><span class="th-sub">着順・B獲得有無</span><br /><span class="th-sub th-agari">みなし上がりタイム</span></th>
+                    <th class="bl" rowspan="3">前開催成績<br /><span class="th-sub">着順・B獲得有無</span><br /><span class="th-sub th-agari">みなし上がりタイム</span></th>
+                  </tr>
+                  <tr>
+                    <th class="bl" rowspan="2">競走<br />得点</th>
+                    <th class="bl" rowspan="2">失<br />違</th>
+                    <th class="bl" colspan="4">決まり手</th>
+                    <th class="bl" rowspan="2">B</th>
+                    <th class="bl" rowspan="2">勝率</th>
+                    <th class="bl" rowspan="2">2連<br />対率</th>
+                    <th class="bl" rowspan="2">3連<br />対率</th>
+                    <th class="bl" rowspan="2">着外<br />率</th>
+                  </tr>
+                  <tr>
                     <th class="bl">逃</th>
-                    <th class="bl">捲</th>
-                    <th class="bl">今開催成績</th>
-                    <th class="bl">前開催成績</th>
-                    <th class="bl">前2</th>
-                    <th class="bl">前3</th>
-                    <th class="bl">前4</th>
-                    <th class="bl">前5</th>
-                    <th class="bl">前6</th>
-                    <th class="bl">前7</th>
+                    <th>捲</th>
+                    <th>差</th>
+                    <th>マ</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2098,227 +2122,222 @@
                     <td class="fx c-sha"><div class="frame-cell f1">1</div></td>
                     <td class="fx c-name">
                       <div class="rider-name">夏目新吾</div>
-                      <div class="rider-meta">静岡S2 37歳103期</div>
+                      <div class="rider-meta">静岡(-)/103/37</div>
                     </td>
                     <td><span class="g-val num-blue">72</span> <span class="mark o">○</span></td>
                     <td class="bl"><span class="mark o">○</span></td>
-                    <td class="bl score">104.37</td>
-                    <td class="bl">3</td>
-                    <td class="bl num-blue">7</td>
+                    <td class="bl cls">S2<small>/S2</small></td>
                     <td class="bl"><span class="leg-tag leg-escape">逃</span></td>
-                    <td class="bl"><b>3</b></td>
-                    <td class="bl">0</td>
-                    <td class="bl res-cell">
-                      <div class="res-wrap">
-                        <div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">12.3</span></div></div>
-                        <div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">11.8</span></div></div>
-                        <div class="res"><div class="res-main"><span class="res-rank">②</span><span class="res-time">11.9</span></div><span class="res-note">B<br />逃</span></div>
-                      </div>
-                    </td>
-                    <td class="bl res-cell">
-                      <div class="res-wrap">
-                        <div class="res-date">6/12<br />武F2</div>
-                        <div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">12.3</span></div></div>
-                        <div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">11.8</span></div></div>
-                        <div class="res"><div class="res-main"><span class="res-rank">②</span><span class="res-time">11.9</span></div><span class="res-note">B<br />逃</span></div>
-                      </div>
-                    </td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
+                    <td class="bl score">104.37</td>
+                    <td class="bl">0.0</td>
+                    <td class="bl">3</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td class="bl">7</td>
+                    <td class="bl rate">18</td>
+                    <td class="bl rate">36</td>
+                    <td class="bl rate">55</td>
+                    <td class="bl rate">45</td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">12.4</span></div><span class="res-note">B<br />逃</span></div><div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">11.7</span></div></div></div></td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/07<br />静F2</div><div class="res"><div class="res-main"><span class="res-rank">5</span><span class="res-time">12.0</span></div></div><div class="res"><div class="res-main"><span class="res-rank">②</span><span class="res-time">11.9</span></div><span class="res-note">ク</span></div><div class="res"><div class="res-main"><span class="res-rank">❹</span><span class="res-time">12.2</span></div></div></div></td>
                   </tr>
                   <tr>
                     <td class="fx c-waku">2</td>
                     <td class="fx c-sha"><div class="frame-cell f2">2</div></td>
                     <td class="fx c-name">
                       <div class="rider-name">松山桂輔</div>
-                      <div class="rider-meta">愛知S1 42歳88期</div>
+                      <div class="rider-meta">愛知(-)/88/42</div>
                     </td>
                     <td><span class="g-val">40</span> <span class="mark x">✕</span></td>
                     <td class="bl"></td>
-                    <td class="bl score">108.78</td>
-                    <td class="bl">0</td>
-                    <td class="bl">0</td>
+                    <td class="bl cls">S1<small>/S1</small></td>
                     <td class="bl"><span class="leg-tag leg-chase">追</span></td>
+                    <td class="bl score">108.78</td>
+                    <td class="bl">0.0</td>
                     <td class="bl">0</td>
-                    <td class="bl">1</td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
+                    <td>1</td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td class="bl">0</td>
+                    <td class="bl rate">12</td>
+                    <td class="bl rate">35</td>
+                    <td class="bl rate">58</td>
+                    <td class="bl rate">42</td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">11.6</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">⑤</span><span class="res-time">12.0</span></div></div></div></td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/09<br />奈F2</div><div class="res"><div class="res-main"><span class="res-rank">6</span><span class="res-time">12.5</span></div></div><div class="res"><div class="res-main"><span class="res-rank">②</span><span class="res-time">11.5</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">❼</span><span class="res-time">12.8</span></div></div></div></td>
                   </tr>
                   <tr>
                     <td class="fx c-waku">3</td>
                     <td class="fx c-sha"><div class="frame-cell f3">3</div></td>
                     <td class="fx c-name">
                       <div class="rider-name">森岡正臣</div>
-                      <div class="rider-meta">高知S1 50歳75期</div>
+                      <div class="rider-meta">高知(-)/75/50</div>
                     </td>
                     <td><span class="g-val">38</span> <span class="mark"></span></td>
                     <td class="bl"><span class="mark tri">△</span></td>
-                    <td class="bl score num-hi">110.54</td>
-                    <td class="bl num-hi">13</td>
-                    <td class="bl">0</td>
+                    <td class="bl cls">S1<small>/S1</small></td>
                     <td class="bl"><span class="leg-tag leg-chase">追</span></td>
+                    <td class="bl score num-hi">110.54</td>
+                    <td class="bl">0.0</td>
                     <td class="bl">0</td>
+                    <td>0</td>
+                    <td>6</td>
+                    <td>3</td>
                     <td class="bl">0</td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
+                    <td class="bl rate">24</td>
+                    <td class="bl rate">48</td>
+                    <td class="bl rate num-hi">70</td>
+                    <td class="bl rate">30</td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">4</span><span class="res-time">12.2</span></div></div><div class="res"><div class="res-main"><span class="res-rank">①</span><span class="res-time">11.8</span></div><span class="res-note">B<br />捲</span></div></div></td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res-date">9/19<br />松F2</div><div class="res"><div class="res-main"><span class="res-rank">2</span><span class="res-time">12.1</span></div><span class="res-note">B<br />捲</span></div><div class="res"><div class="res-main"><span class="res-rank">①</span><span class="res-time">11.6</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">❺</span><span class="res-time">12.0</span></div></div></div></td>
                   </tr>
                   <tr>
-                    <td class="fx c-waku">4</td>
+                    <td class="fx c-waku" rowspan="2">4</td>
                     <td class="fx c-sha"><div class="frame-cell f4">4</div></td>
                     <td class="fx c-name">
                       <div class="rider-name">倉松涼</div>
-                      <div class="rider-meta">高知S2 29歳117期</div>
+                      <div class="rider-meta">高知(-)/117/29</div>
                     </td>
                     <td><span class="g-val">33</span> <span class="mark"></span></td>
                     <td class="bl"><span class="mark x">✕</span></td>
-                    <td class="bl score">101.71</td>
-                    <td class="bl">2</td>
-                    <td class="bl">0</td>
+                    <td class="bl cls">S2<small>/S3</small></td>
                     <td class="bl"><span class="leg-tag leg-both">両</span></td>
-                    <td class="bl">0</td>
-                    <td class="bl num-blue">2</td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
+                    <td class="bl score">101.71</td>
+                    <td class="bl">3.0</td>
+                    <td class="bl">2</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td class="bl">5</td>
+                    <td class="bl rate">15</td>
+                    <td class="bl rate">30</td>
+                    <td class="bl rate">45</td>
+                    <td class="bl rate">55</td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">6</span><span class="res-time">12.5</span></div></div><div class="res"><div class="res-main"><span class="res-rank">②</span><span class="res-time">11.5</span></div><span class="res-note">差</span></div></div></td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/13<br />前F2</div><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">11.8</span></div><span class="res-note">B<br />捲</span></div><div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">12.3</span></div><span class="res-note">B</span></div><div class="res"><div class="res-main"><span class="res-rank">❻</span><span class="res-time">12.5</span></div></div></div></td>
                   </tr>
                   <tr>
-                    <td class="fx c-waku">5</td>
                     <td class="fx c-sha"><div class="frame-cell f5">5</div></td>
                     <td class="fx c-name">
                       <div class="rider-name">高橋成英</div>
-                      <div class="rider-meta">愛知S1 43歳89期</div>
+                      <div class="rider-meta">愛知(-)/89/43</div>
                     </td>
                     <td><span class="g-val">62</span> <span class="mark tri">△</span></td>
                     <td class="bl"></td>
-                    <td class="bl score">109.54</td>
-                    <td class="bl">0</td>
-                    <td class="bl">3</td>
+                    <td class="bl cls">S1<small>/S1</small></td>
                     <td class="bl"><span class="leg-tag leg-both">両</span></td>
+                    <td class="bl score">109.54</td>
+                    <td class="bl">0.0</td>
                     <td class="bl">1</td>
-                    <td class="bl">0</td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td class="bl">3</td>
+                    <td class="bl rate">20</td>
+                    <td class="bl rate">42</td>
+                    <td class="bl rate">62</td>
+                    <td class="bl rate">38</td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">12.4</span></div><span class="res-note">B<br />逃</span></div><div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">11.7</span></div></div></div></td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/03<br />塚F2</div><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">12.4</span></div><span class="res-note">B<br />逃</span></div><div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">11.7</span></div></div><div class="res"><div class="res-main"><span class="res-rank">❷</span><span class="res-time">12.1</span></div><span class="res-note">B<br />捲</span></div></div></td>
                   </tr>
                   <tr>
-                    <td class="fx c-waku" rowspan="2">6</td>
+                    <td class="fx c-waku" rowspan="2">5</td>
                     <td class="fx c-sha"><div class="frame-cell f6">6</div></td>
                     <td class="fx c-name">
                       <div class="rider-name">小島雅章</div>
-                      <div class="rider-meta">埼玉S2 50歳83期</div>
+                      <div class="rider-meta">埼玉(-)/83/50</div>
                     </td>
                     <td><span class="g-val">15</span> <span class="mark"></span></td>
                     <td class="bl"></td>
-                    <td class="bl score">99.40</td>
-                    <td class="bl">0</td>
-                    <td class="bl">0</td>
+                    <td class="bl cls">S2<small>/S2</small></td>
                     <td class="bl"><span class="leg-tag leg-chase">追</span></td>
+                    <td class="bl score">99.40</td>
+                    <td class="bl">0.0</td>
                     <td class="bl">0</td>
-                    <td class="bl">1</td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td class="bl">0</td>
+                    <td class="bl rate">6</td>
+                    <td class="bl rate">18</td>
+                    <td class="bl rate">33</td>
+                    <td class="bl rate">67</td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">11.6</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">⑤</span><span class="res-time">12.0</span></div></div></div></td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/03<br />戸F2</div><div class="res"><div class="res-main"><span class="res-rank">2</span><span class="res-time">11.9</span></div><span class="res-note">ク</span></div><div class="res"><div class="res-main"><span class="res-rank">④</span><span class="res-time">12.2</span></div></div><div class="res"><div class="res-main"><span class="res-rank">❶</span><span class="res-time">11.8</span></div><span class="res-note">B<br />捲</span></div></div></td>
                   </tr>
                   <tr>
                     <td class="fx c-sha"><div class="frame-cell f7">7</div></td>
                     <td class="fx c-name">
                       <div class="rider-name">鈴木良太</div>
-                      <div class="rider-meta">静岡S1 48歳86期</div>
+                      <div class="rider-meta">静岡(-)/86/48</div>
                     </td>
                     <td><span class="g-val num-hi">90</span> <span class="mark dbl">◎</span></td>
                     <td class="bl"><span class="mark dbl">◎</span></td>
+                    <td class="bl cls">S2<small>/S1</small></td>
+                    <td class="bl"><span class="leg-tag leg-escape">逃</span></td>
                     <td class="bl score num-hi">112.44</td>
-                    <td class="bl">3</td>
-                    <td class="bl">0</td>
-                    <td class="bl"><span class="leg-tag leg-chase">追</span></td>
-                    <td class="bl">0</td>
-                    <td class="bl">0</td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
+                    <td class="bl">0.0</td>
+                    <td class="bl">8</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td class="bl">12</td>
+                    <td class="bl rate num-hi">45</td>
+                    <td class="bl rate num-hi">68</td>
+                    <td class="bl rate num-hi">80</td>
+                    <td class="bl rate">20</td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">4</span><span class="res-time">12.2</span></div></div><div class="res"><div class="res-main"><span class="res-rank">①</span><span class="res-time">11.8</span></div><span class="res-note">B<br />捲</span></div></div></td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res-date">9/30<br />前F2</div><div class="res"><div class="res-main"><span class="res-rank">2</span><span class="res-time">11.5</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">⑦</span><span class="res-time">12.8</span></div></div><div class="res"><div class="res-main"><span class="res-rank">❶</span><span class="res-time">12.4</span></div><span class="res-note">B<br />逃</span></div></div></td>
                   </tr>
                   <tr>
-                    <td class="fx c-waku" rowspan="2">7</td>
+                    <td class="fx c-waku" rowspan="2">6</td>
                     <td class="fx c-sha"><div class="frame-cell f8">8</div></td>
                     <td class="fx c-name">
                       <div class="rider-name">山田一樹</div>
-                      <div class="rider-meta">岐阜S2 31歳113期</div>
+                      <div class="rider-meta">岐阜(-)/113/31</div>
                     </td>
                     <td><span class="g-val">55</span> <span class="mark"></span></td>
                     <td class="bl"></td>
-                    <td class="bl score">102.15</td>
-                    <td class="bl">5</td>
-                    <td class="bl">4</td>
+                    <td class="bl cls">S2<small>/S2</small></td>
                     <td class="bl"><span class="leg-tag leg-escape">逃</span></td>
-                    <td class="bl"><b>4</b></td>
-                    <td class="bl">1</td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
+                    <td class="bl score">102.15</td>
+                    <td class="bl">0.0</td>
+                    <td class="bl">5</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td class="bl">9</td>
+                    <td class="bl rate">22</td>
+                    <td class="bl rate">40</td>
+                    <td class="bl rate">57</td>
+                    <td class="bl rate">43</td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">6</span><span class="res-time">12.5</span></div></div><div class="res"><div class="res-main"><span class="res-rank">②</span><span class="res-time">11.5</span></div><span class="res-note">差</span></div></div></td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/01<br />岐F1</div><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">11.6</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">⑤</span><span class="res-time">12.0</span></div></div><div class="res"><div class="res-main"><span class="res-rank">❷</span><span class="res-time">11.9</span></div><span class="res-note">ク</span></div></div></td>
                   </tr>
                   <tr>
                     <td class="fx c-sha"><div class="frame-cell f9">9</div></td>
                     <td class="fx c-name">
                       <div class="rider-name">中村大輔</div>
-                      <div class="rider-meta">大阪S1 39歳98期</div>
+                      <div class="rider-meta">大阪(-)/98/39</div>
                     </td>
                     <td><span class="g-val">48</span> <span class="mark"></span></td>
                     <td class="bl"></td>
-                    <td class="bl score">106.88</td>
-                    <td class="bl">1</td>
-                    <td class="bl">2</td>
+                    <td class="bl cls">S1<small>/S1</small></td>
                     <td class="bl"><span class="leg-tag leg-both">両</span></td>
-                    <td class="bl">1</td>
+                    <td class="bl score">106.88</td>
+                    <td class="bl">0.0</td>
                     <td class="bl">2</td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl res-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
-                    <td class="bl prev-cell"></td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td class="bl">4</td>
+                    <td class="bl rate">26</td>
+                    <td class="bl rate">51</td>
+                    <td class="bl rate">66</td>
+                    <td class="bl rate">34</td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">12.4</span></div><span class="res-note">B<br />逃</span></div><div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">11.7</span></div></div></div></td>
+                    <td class="bl res-cell"><div class="res-wrap"><div class="res-date">9/27<br />岸F1</div><div class="res"><div class="res-main"><span class="res-rank">3</span><span class="res-time">12.3</span></div><span class="res-note">B</span></div><div class="res"><div class="res-main"><span class="res-rank">⑥</span><span class="res-time">12.5</span></div></div><div class="res"><div class="res-main"><span class="res-rank">❷</span><span class="res-time">11.5</span></div><span class="res-note">差</span></div></div></td>
                   </tr>
                 </tbody>
               </table>

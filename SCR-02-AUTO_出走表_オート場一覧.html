@@ -65,7 +65,7 @@
         --fs-min: 11px;
         --fs-dense: 11px;
 
-        --ff-num: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", monospace;
+        --ff-num: "Meiryo", "メイリオ", sans-serif;
       }
       * {
         box-sizing: border-box;
@@ -74,10 +74,16 @@
       }
       body {
         background: #2c2c2e;
-        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+        font-family: "Meiryo", "メイリオ", sans-serif;
         color: var(--c-text);
         font-size: 13px;
         line-height: 1.5;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font-family: inherit;
       }
 
       .page-title {
@@ -891,7 +897,7 @@
         font-size: 13px;
       }
       .score {
-        font-family: "Roboto Mono", monospace;
+        font-family: "Meiryo", "メイリオ", sans-serif;
         font-weight: 700;
         color: var(--c-text);
       }
@@ -1007,7 +1013,7 @@
       .point-value {
         font-size: 14px;
         font-weight: 900;
-        font-family: "Roboto Mono", monospace;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
 
       .menu-section {
@@ -1070,7 +1076,7 @@
       .header-payout .value {
         font-size: 12px;
         font-weight: 900;
-        font-family: "Roboto Mono", monospace;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
 
       .chip.drop::after {
@@ -1249,7 +1255,7 @@
         font-size: 0.78em;
         font-weight: 700;
         margin-left: 1px;
-        font-family: "Noto Sans JP", sans-serif;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
 
       .ic {
@@ -2039,6 +2045,26 @@
       .at .hd { font-size: 19px; }
       .at .fx2 { min-width: 108px; max-width: 108px; }
       .wx span { font-size: 13px; }
+
+      /* 区分ラベルは「ミッドナイト」の幅に統一し、開催日目の右隣に置く */
+      .kubun { min-width: calc(5.82em + 10px); }
+      .venue-header .venue-meta { margin-right: 0; }
+      .venue-header .rebate-logo { margin-left: auto; }
+      /* 決勝5%還元の対象レース */
+      .rchip.rebate { border: 2px solid var(--c-primary); background: var(--c-primary-bg); }
+      .rchip .rchip-rebate {
+        margin-top: 2px;
+        padding: 0 4px;
+        border-radius: 3px;
+        background: var(--c-primary-d);
+        color: #fff;
+        font-size: 9px;
+        font-weight: 900;
+        font-style: normal;
+        line-height: 14px;
+        white-space: nowrap;
+      }
+      .comment-text .cr-name { font-weight: 900; color: var(--c-text); margin-right: 4px; }
     </style>
   </head>
   <body>
@@ -2082,7 +2108,7 @@
                       <div class="rchip closed"><b>1R</b><small>確定</small></div>
                       <div class="rchip closed"><b>2R</b><small>確定</small></div>
                       <div class="rchip closed"><b>3R</b><small>確定</small></div>
-                      <div class="rchip live"><b>4R</b><small>レース中</small></div>
+                      <div class="rchip live"><b>4R</b><small>投票締切</small></div>
                       <div class="rchip next soon"><b>5R</b><small>締切13分前</small></div>
                       <div class="rchip"><b>6R</b><small>10:58</small></div>
                       <div class="rchip"><b>7R</b><small>11:26</small></div>
@@ -2094,7 +2120,7 @@
                   <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
                 </div>
                 <div class="venue-actions">
-                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-lab"></use></svg>5R データ解析ラボ</div>
+                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-article"></use></svg>5R 予想情報</div>
                   <div class="action-btn primary"><svg class="ic" aria-hidden="true"><use href="#ic-ticket"></use></svg>5R 投票</div>
                 </div>
               </div>
@@ -2102,7 +2128,7 @@
                 <div class="venue-header">
                   <span class="grade-badge grade-g1">G1</span>
                   <span class="venue-name">川口</span>
-                  <span class="venue-meta">2日目</span>
+                  <span class="venue-meta">最終日</span>
                   <span class="rebate-logo">決勝5%還元</span>
                 </div>
                 <div class="hscroll">
@@ -2116,12 +2142,17 @@
                       <div class="rchip"><b>5R</b><small>12:45</small></div>
                       <div class="rchip"><b>6R</b><small>13:15</small></div>
                       <div class="rchip"><b>7R</b><small>13:45</small></div>
+                      <div class="rchip"><b>8R</b><small>14:15</small></div>
+                      <div class="rchip"><b>9R</b><small>14:45</small></div>
+                      <div class="rchip"><b>10R</b><small>15:15</small></div>
+                      <div class="rchip"><b>11R</b><small>15:45</small></div>
+                      <div class="rchip rebate"><b>12R</b><small>16:20</small><em class="rchip-rebate">5%還元</em></div>
                     </div>
                   </div>
                   <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
                 </div>
                 <div class="venue-actions">
-                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-lab"></use></svg>1R データ解析ラボ</div>
+                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-article"></use></svg>1R 予想情報</div>
                   <div class="action-btn primary"><svg class="ic" aria-hidden="true"><use href="#ic-ticket"></use></svg>1R 投票</div>
                 </div>
               </div>
@@ -2147,7 +2178,7 @@
                   <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
                 </div>
                 <div class="venue-actions">
-                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-lab"></use></svg>1R データ解析ラボ</div>
+                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-article"></use></svg>1R 予想情報</div>
                   <div class="action-btn primary disabled"><svg class="ic" aria-hidden="true"><use href="#ic-ticket"></use></svg>投票（発売前）</div>
                 </div>
               </div>
@@ -2214,7 +2245,7 @@
                       <div class="rchip closed"><b>1R</b><small>確定</small></div>
                       <div class="rchip closed"><b>2R</b><small>確定</small></div>
                       <div class="rchip closed"><b>3R</b><small>確定</small></div>
-                      <div class="rchip live"><b>4R</b><small>レース中</small></div>
+                      <div class="rchip live"><b>4R</b><small>投票締切</small></div>
                       <div class="rchip next soon"><b>5R</b><small>締切13分前</small></div>
                       <div class="rchip"><b>6R</b><small>10:58</small></div>
                       <div class="rchip"><b>7R</b><small>11:26</small></div>
@@ -2226,7 +2257,7 @@
                   <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
                 </div>
                 <div class="venue-actions">
-                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-lab"></use></svg>5R データ解析ラボ</div>
+                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-article"></use></svg>5R 予想情報</div>
                   <div class="action-btn primary"><svg class="ic" aria-hidden="true"><use href="#ic-ticket"></use></svg>5R 投票</div>
                 </div>
               </div>
@@ -2234,7 +2265,7 @@
                 <div class="venue-header">
                   <span class="grade-badge grade-g1">G1</span>
                   <span class="venue-name">川口</span>
-                  <span class="venue-meta">2日目</span>
+                  <span class="venue-meta">最終日</span>
                   <span class="rebate-logo">決勝5%還元</span>
                 </div>
                 <div class="hscroll">
@@ -2248,12 +2279,17 @@
                       <div class="rchip"><b>5R</b><small>12:45</small></div>
                       <div class="rchip"><b>6R</b><small>13:15</small></div>
                       <div class="rchip"><b>7R</b><small>13:45</small></div>
+                      <div class="rchip"><b>8R</b><small>14:15</small></div>
+                      <div class="rchip"><b>9R</b><small>14:45</small></div>
+                      <div class="rchip"><b>10R</b><small>15:15</small></div>
+                      <div class="rchip"><b>11R</b><small>15:45</small></div>
+                      <div class="rchip rebate"><b>12R</b><small>16:20</small><em class="rchip-rebate">5%還元</em></div>
                     </div>
                   </div>
                   <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
                 </div>
                 <div class="venue-actions">
-                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-lab"></use></svg>1R データ解析ラボ</div>
+                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-article"></use></svg>1R 予想情報</div>
                   <div class="action-btn primary"><svg class="ic" aria-hidden="true"><use href="#ic-ticket"></use></svg>1R 投票</div>
                 </div>
               </div>
@@ -2279,7 +2315,7 @@
                   <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
                 </div>
                 <div class="venue-actions">
-                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-lab"></use></svg>1R データ解析ラボ</div>
+                  <div class="action-btn outline"><svg class="ic" aria-hidden="true"><use href="#ic-article"></use></svg>1R 予想情報</div>
                   <div class="action-btn primary disabled"><svg class="ic" aria-hidden="true"><use href="#ic-ticket"></use></svg>投票（発売前）</div>
                 </div>
               </div>

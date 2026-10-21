@@ -65,7 +65,7 @@
         --fs-min: 11px;
         --fs-dense: 11px;
 
-        --ff-num: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", monospace;
+        --ff-num: "Meiryo", "メイリオ", sans-serif;
       }
       * {
         box-sizing: border-box;
@@ -74,10 +74,16 @@
       }
       body {
         background: #2c2c2e;
-        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+        font-family: "Meiryo", "メイリオ", sans-serif;
         color: var(--c-text);
         font-size: 13px;
         line-height: 1.5;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font-family: inherit;
       }
 
       .page-title {
@@ -896,7 +902,7 @@
         font-size: 13px;
       }
       .score {
-        font-family: "Roboto Mono", monospace;
+        font-family: "Meiryo", "メイリオ", sans-serif;
         font-weight: 700;
         color: var(--c-text);
       }
@@ -1012,7 +1018,7 @@
       .point-value {
         font-size: 14px;
         font-weight: 900;
-        font-family: "Roboto Mono", monospace;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
 
       .menu-section {
@@ -1068,7 +1074,7 @@
       .payout-value {
         font-size: 14px;
         font-weight: 900;
-        font-family: "Roboto Mono", monospace;
+        font-family: "Meiryo", "メイリオ", sans-serif;
         color: var(--c-text);
         flex: 1;
       }
@@ -1335,7 +1341,7 @@
         font-size: 0.78em;
         font-weight: 700;
         margin-left: 1px;
-        font-family: "Noto Sans JP", sans-serif;
+        font-family: "Meiryo", "メイリオ", sans-serif;
       }
 
       .ic {
@@ -2316,6 +2322,37 @@
       .at .fx2 { min-width: 108px; max-width: 108px; }
       .wx span { font-size: 13px; }
       .pk2 .pickup-tile { width: 64px; font-size: 14px; letter-spacing: -0.06em; }
+
+      /* 区分ラベルは「ミッドナイト」の幅に統一 */
+      .kubun { min-width: calc(5.76em + 8px); }
+      /* 遷移バナー（Gambooブログ・ツブッター） */
+      .tsubu-link + .tsubu-link { margin-top: 0; }
+      /* 注目レース：車番＋選手名＋〇〇君 */
+      .pk-pick { display: flex; align-items: center; gap: 6px; min-width: 0; }
+      .pk-pick .pk-text { min-width: 0; }
+      .pk-pick .pk-text b { margin-right: 5px; }
+      .carno {
+        width: 22px;
+        height: 22px;
+        border-radius: var(--r-sm);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 900;
+        flex-shrink: 0;
+        border: 1px solid transparent;
+        font-family: var(--ff-num);
+      }
+      .carno.w1 { background: var(--w1); color: var(--w1-t); border-color: var(--w1-bd); }
+      .carno.w2 { background: var(--w2); color: var(--w2-t); border-color: var(--w2-bd); }
+      .carno.w3 { background: var(--w3); color: var(--w3-t); border-color: var(--w3-bd); }
+      .carno.w4 { background: var(--w4); color: var(--w4-t); border-color: var(--w4-bd); }
+      .carno.w5 { background: var(--w5); color: var(--w5-t); border-color: var(--w5-bd); }
+      .carno.w6 { background: var(--w6); color: var(--w6-t); border-color: var(--w6-bd); }
+      .carno.w7 { background: var(--w7); color: var(--w7-t); border-color: var(--w7-bd); }
+      .carno.w8 { background: var(--w8); color: var(--w8-t); border-color: var(--w8-bd); }
+      .carno.w9 { background: var(--w9); color: var(--w9-t); border-color: var(--w9-bd); }
     </style>
   </head>
   <body>
@@ -2504,31 +2541,31 @@
                 <div class="section-title">注目レース</div>
               </div>
               <div class="pickup-card pk2">
+                <div class="pickup-tile">京王閣<br />11R</div>
+                <div class="pickup-body">
+                  <div class="pickup-reason-main pk-pick"><span class="carno w1">1</span><span class="pk-text ell"><b>夏目新吾</b>ロケット君</span></div>
+                  <div class="pickup-reason-sub">締切 21:05</div>
+                </div>
+              </div>
+              <div class="pickup-card pk2">
                 <div class="pickup-tile">いわき平<br />11R</div>
                 <div class="pickup-body">
-                  <div class="pickup-reason-main ell">競走得点が突出した選手がいます</div>
-                  <div class="pickup-reason-sub">予想の軸にしやすいです</div>
+                  <div class="pickup-reason-main pk-pick"><span class="carno w3">3</span><span class="pk-text ell"><b>森岡正臣</b>ダントツ君</span></div>
+                  <div class="pickup-reason-sub">締切 21:11</div>
+                </div>
+              </div>
+              <div class="pickup-card pk2">
+                <div class="pickup-tile">玉野<br />11R</div>
+                <div class="pickup-body">
+                  <div class="pickup-reason-main pk-pick"><span class="carno w4">4</span><span class="pk-text ell"><b>倉松涼</b>逃げイチ君</span></div>
+                  <div class="pickup-reason-sub">締切 21:18</div>
                 </div>
               </div>
               <div class="pickup-card pk2">
                 <div class="pickup-tile">小倉<br />11R</div>
                 <div class="pickup-body">
-                  <div class="pickup-reason-main ell">突出ライン 1番車-4番車</div>
-                  <div class="pickup-reason-sub">本命のラインが突出しています</div>
-                </div>
-              </div>
-              <div class="pickup-card pk2">
-                <div class="pickup-tile auto">飯塚<br />10R</div>
-                <div class="pickup-body">
-                  <div class="pickup-reason-main ell">ジャイアントキリング 4番車 石田啓貴</div>
-                  <div class="pickup-reason-sub">上位ランク選手に勝ち越しています</div>
-                </div>
-              </div>
-              <div class="pickup-card pk2">
-                <div class="pickup-tile auto">飯塚<br />10R</div>
-                <div class="pickup-body">
-                  <div class="pickup-reason-main ell">全面勝ち越し 8番車 森且行</div>
-                  <div class="pickup-reason-sub">全選手に勝ち越しています</div>
+                  <div class="pickup-reason-main pk-pick"><span class="carno w7">7</span><span class="pk-text ell"><b>鈴木良太</b>連勝君 3連勝</span></div>
+                  <div class="pickup-reason-sub">締切 21:25</div>
                 </div>
               </div>
 
@@ -2563,31 +2600,13 @@
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
               </div>
 
-              <div class="section-header">
-                <div class="section-title">Gambooブログ</div>
-                <div class="see-all">もっと見る<svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
-              </div>
-              <div class="blog-card">
-                <div class="blog-content">
-                  <div class="blog-author">
-                    千鶴さん <span class="new-badge">NEW</span>
-                  </div>
-                  <div class="blog-text">デイ川口・ナイター飯塚ダブル優勝戦</div>
-                  <div class="blog-meta">
-                    <span>2026/04/07 9:59</span><span><svg class="ic" aria-hidden="true"><use href="#ic-comment"></use></svg>0</span><span><svg class="ic" aria-hidden="true"><use href="#ic-eye"></use></svg>7</span>
-                  </div>
+              <div class="tsubu-link">
+                <svg class="ic" aria-hidden="true"><use href="#ic-article"></use></svg>
+                <div style="flex: 1">
+                  <b>Gambooブログ</b>
+                  <small>予想家・ファンのブログをチェック！</small>
                 </div>
-              </div>
-              <div class="blog-card">
-                <div class="blog-content">
-                  <div class="blog-author">
-                    ヨコポンさん <span class="new-badge">NEW</span>
-                  </div>
-                  <div class="blog-text">NEXT東京支部 26260407 目論みとは裏腹に…</div>
-                  <div class="blog-meta">
-                    <span>2026/04/07 0:00</span><span><svg class="ic" aria-hidden="true"><use href="#ic-eye"></use></svg>30</span>
-                  </div>
-                </div>
+                <svg class="ic" aria-hidden="true" style="opacity: 0.7"><use href="#ic-chevron"></use></svg>
               </div>
               <div class="tsubu-link">
                 <svg class="ic" aria-hidden="true"><use href="#ic-comment"></use></svg>
