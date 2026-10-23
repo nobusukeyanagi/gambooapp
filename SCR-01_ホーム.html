@@ -6,6 +6,14 @@
     <title>Gamboo アプリ ワイヤーフレーム</title>
     <style>
       :root {
+        --fs-xs: 11px;
+        --fs-s: 12px;
+        --fs-m: 13px;
+        --fs-base: 14px;
+        --fs-l: 16px;
+        --fs-xl: 18px;
+        --fs-2xl: 20px;
+        --fs-3xl: 24px;
         --c-primary: #f5a623;
         --c-primary-d: #9a5b00;
         --c-primary-bg: #fff6e6;
@@ -62,8 +70,8 @@
 
         --tap-min: 44px;
         --tap-dense: 36px;
-        --fs-min: 11px;
-        --fs-dense: 11px;
+        --fs-min: var(--fs-xs);
+        --fs-dense: var(--fs-xs);
 
         --ff-num: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
       }
@@ -76,7 +84,7 @@
         background: #2c2c2e;
         font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
         color: var(--c-text);
-        font-size: 13px;
+        font-size: var(--fs-m);
         line-height: 1.5;
       }
       button,
@@ -89,7 +97,7 @@
       .page-title {
         text-align: center;
         color: #f0f0f0;
-        font-size: 22px;
+        font-size: var(--fs-3xl);
         font-weight: 700;
         padding: 32px 16px 8px;
         letter-spacing: 0.05em;
@@ -97,7 +105,7 @@
       .page-sub {
         text-align: center;
         color: #9a9a9a;
-        font-size: 13px;
+        font-size: var(--fs-m);
         padding-bottom: 32px;
       }
 
@@ -117,7 +125,7 @@
       }
       .screen-label {
         color: #d0d0d0;
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.1em;
@@ -155,7 +163,7 @@
         flex-shrink: 0;
       }
       .status-bar span {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 600;
         color: var(--c-text);
       }
@@ -172,14 +180,14 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
       }
       .logo {
-        font-size: 15px;
+        font-size: var(--fs-l);
         font-weight: 900;
         color: var(--c-primary-d);
         letter-spacing: -0.03em;
       }
       .logo span {
         color: var(--c-text);
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 400;
       }
       .header-actions {
@@ -195,7 +203,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 14px;
+        font-size: var(--fs-base);
         cursor: pointer;
         position: relative;
       }
@@ -212,7 +220,7 @@
       .cta-btn {
         background: var(--c-secondary);
         color: white;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         padding: 4px 8px;
         border-radius: var(--r-full);
@@ -244,7 +252,7 @@
         align-items: center;
         justify-content: center;
         gap: 1px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-dis);
         cursor: pointer;
       }
@@ -252,7 +260,7 @@
         color: var(--c-primary-d);
       }
       .tab-item .tab-icon {
-        font-size: 18px;
+        font-size: var(--fs-xl);
       }
 
       .hero-banner {
@@ -285,7 +293,7 @@
         border-radius: 50%;
       }
       .hero-tag {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         background: var(--c-primary);
         color: var(--c-text);
         padding: 1px 6px;
@@ -294,12 +302,12 @@
         margin-bottom: 4px;
       }
       .hero-title {
-        font-size: 14px;
+        font-size: var(--fs-base);
         font-weight: 900;
         line-height: 1.2;
       }
       .hero-sub {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         opacity: 0.8;
         margin-top: 2px;
       }
@@ -328,7 +336,7 @@
         justify-content: space-between;
       }
       .section-title {
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 700;
         color: var(--c-text);
         display: flex;
@@ -344,7 +352,7 @@
         display: inline-block;
       }
       .see-all {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-secondary);
         font-weight: 600;
       }
@@ -361,7 +369,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 600;
         color: var(--c-sub);
         border-bottom: 2px solid transparent;
@@ -387,7 +395,7 @@
       .chip {
         padding: 3px 10px;
         border-radius: var(--r-full);
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 600;
         white-space: nowrap;
         background: var(--c-surface2);
@@ -416,17 +424,17 @@
         border-bottom: 1px solid var(--c-border);
       }
       .venue-name {
-        font-size: 16px;
+        font-size: var(--fs-l);
         font-weight: 900;
         flex: 1;
       }
       .venue-meta {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
       }
 
       .grade-badge {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         padding: 1px 5px;
         border-radius: 3px;
@@ -452,7 +460,7 @@
       }
 
       .rebate-badge {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         background: #fff3cd;
         color: #856404;
@@ -469,18 +477,18 @@
         border-bottom: 1px solid var(--c-surface2);
       }
       .race-num {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         color: var(--c-sub);
         min-width: 20px;
       }
       .race-time {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         flex: 1;
       }
       .race-status {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-success);
         font-weight: 600;
       }
@@ -493,7 +501,7 @@
 
       .comment-row {
         padding: 4px 10px 6px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         display: flex;
         align-items: center;
@@ -506,7 +514,7 @@
         border-radius: 50%;
         background: var(--c-secondary);
         color: white;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         display: flex;
         align-items: center;
@@ -529,7 +537,7 @@
         flex: 1;
         height: 32px;
         border-radius: var(--r-full);
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         display: flex;
         align-items: center;
@@ -558,7 +566,7 @@
         gap: 10px;
       }
       .pickup-venue {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         min-width: 52px;
         text-align: center;
@@ -568,12 +576,12 @@
         flex: 1;
       }
       .pickup-reason-main {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         color: var(--c-error);
       }
       .pickup-reason-sub {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
       }
 
@@ -587,7 +595,7 @@
         cursor: pointer;
       }
       .news-badge {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         padding: 2px 5px;
         border-radius: 3px;
@@ -613,18 +621,18 @@
         min-width: 0;
       }
       .news-date {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-dis);
       }
       .news-title {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
       }
       .news-arrow {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-dis);
         flex-shrink: 0;
         margin-top: 3px;
@@ -647,18 +655,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 16px;
+        font-size: var(--fs-l);
       }
       .blog-content {
         flex: 1;
         min-width: 0;
       }
       .blog-author {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
       }
       .blog-text {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         overflow: hidden;
         white-space: nowrap;
@@ -666,7 +674,7 @@
         margin-top: 1px;
       }
       .blog-meta {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-dis);
         margin-top: 2px;
         display: flex;
@@ -675,7 +683,7 @@
       .new-badge {
         background: var(--c-error);
         color: white;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         padding: 0px 3px;
         border-radius: 2px;
         font-weight: 700;
@@ -692,7 +700,7 @@
         flex-shrink: 0;
       }
       .back-btn {
-        font-size: 12px;
+        font-size: var(--fs-s);
         color: var(--c-secondary);
         font-weight: 600;
         display: flex;
@@ -700,11 +708,11 @@
         gap: 2px;
       }
       .page-header-title {
-        font-size: 14px;
+        font-size: var(--fs-base);
         font-weight: 700;
       }
       .page-header-action {
-        font-size: 18px;
+        font-size: var(--fs-xl);
         color: var(--c-sub);
       }
 
@@ -715,16 +723,16 @@
         flex-shrink: 0;
       }
       .race-info-title {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
       }
       .race-info-meta {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         margin-top: 1px;
       }
       .race-countdown {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-success);
         font-weight: 700;
       }
@@ -746,7 +754,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 600;
         color: var(--c-sub);
         border-bottom: 2px solid transparent;
@@ -773,7 +781,7 @@
       .info-tab {
         flex: 1;
         padding: 4px 2px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 600;
         color: var(--c-sub);
         white-space: normal;
@@ -791,7 +799,7 @@
       .lineup-bar {
         background: #f8f6ff;
         padding: 5px 10px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         border-bottom: 1px solid var(--c-border);
         flex-shrink: 0;
@@ -809,11 +817,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
       }
       .lineup-sep {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-dis);
       }
 
@@ -827,13 +835,13 @@
         min-width: 400px;
         width: 100%;
         border-collapse: collapse;
-        font-size: 11px;
+        font-size: var(--fs-xs);
       }
       .race-table th {
         background: #f5f5f3;
         padding: 4px 5px;
         text-align: center;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         color: var(--c-sub);
         border-bottom: 1px solid var(--c-border);
@@ -869,7 +877,7 @@
         align-items: center;
         justify-content: center;
         font-weight: 700;
-        font-size: 12px;
+        font-size: var(--fs-s);
         border-radius: 3px;
       }
       .f1 {
@@ -899,7 +907,7 @@
       }
 
       .ai-mark {
-        font-size: 13px;
+        font-size: var(--fs-m);
       }
       .score {
         font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
@@ -911,16 +919,16 @@
         font-weight: 900;
       }
       .rider-name {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         text-align: left;
       }
       .rider-meta {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
       }
       .leg-tag {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         padding: 1px 4px;
         border-radius: 3px;
@@ -952,7 +960,7 @@
         flex: 1;
         height: 36px;
         border-radius: var(--r-full);
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         display: flex;
         align-items: center;
@@ -991,14 +999,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
+        font-size: var(--fs-2xl);
       }
       .user-name {
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 700;
       }
       .user-rank {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         opacity: 0.85;
       }
       .user-points {
@@ -1012,11 +1020,11 @@
         padding: 5px 8px;
       }
       .point-label {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         opacity: 0.8;
       }
       .point-value {
-        font-size: 14px;
+        font-size: var(--fs-base);
         font-weight: 900;
         font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
       }
@@ -1025,7 +1033,7 @@
         padding: 6px 10px 2px;
       }
       .menu-section-title {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         color: var(--c-sub);
       }
@@ -1039,17 +1047,17 @@
         cursor: pointer;
       }
       .menu-icon {
-        font-size: 15px;
+        font-size: var(--fs-l);
         width: 22px;
         text-align: center;
       }
       .menu-text {
         flex: 1;
-        font-size: 12px;
+        font-size: var(--fs-s);
       }
       .menu-arrow {
         color: var(--c-dis);
-        font-size: 11px;
+        font-size: var(--fs-xs);
       }
 
       .divider {
@@ -1067,24 +1075,24 @@
         flex-shrink: 0;
       }
       .payout-label {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         font-weight: 700;
       }
       .payout-value {
-        font-size: 14px;
+        font-size: var(--fs-base);
         font-weight: 900;
         font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
         color: var(--c-text);
         flex: 1;
       }
       .payout-value small {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         margin-left: 1px;
       }
       .payout-link {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         color: var(--c-primary-d);
       }
@@ -1108,7 +1116,7 @@
         cursor: pointer;
       }
       .feature-ribbon {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         color: white;
         background: linear-gradient(90deg, #d4891a, #f5a623);
@@ -1121,14 +1129,14 @@
         padding: 6px 8px 8px;
       }
       .feature-title {
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 900;
         display: flex;
         align-items: center;
         gap: 4px;
       }
       .feature-sub {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         margin-top: 1px;
       }
@@ -1138,7 +1146,7 @@
         border-radius: var(--r-full);
         background: var(--c-primary);
         color: var(--c-on-primary);
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         display: flex;
         align-items: center;
@@ -1152,19 +1160,19 @@
         padding: 4px 10px 4px;
       }
       .tiles-group-name {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         display: flex;
         align-items: center;
         gap: 4px;
       }
       .tiles-group-name .count {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         font-weight: 600;
       }
       .tiles-group-link {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         color: var(--c-primary-d);
       }
@@ -1188,17 +1196,17 @@
         border-top-color: var(--c-auto);
       }
       .venue-tile .grade-badge {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         padding: 0 4px;
       }
       .tile-name {
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 900;
         line-height: 1.3;
         margin-top: 2px;
       }
       .tile-tag {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         height: 12px;
       }
@@ -1216,7 +1224,7 @@
         border-radius: 50%;
         background: #e11d48;
         color: white;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         flex-shrink: 0;
       }
@@ -1245,7 +1253,7 @@
         border-radius: 12px;
         background: #1f5fbf;
         color: white;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         line-height: 1.25;
         display: flex;
@@ -1264,7 +1272,7 @@
       .race-tile.sm {
         width: 36px;
         flex-shrink: 0;
-        font-size: 11px;
+        font-size: var(--fs-xs);
       }
 
       .pickup-reason-main {
@@ -1287,7 +1295,7 @@
         flex-shrink: 0;
       }
       .dokanto-name {
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 900;
         font-style: italic;
         color: #1f5fbf;
@@ -1299,14 +1307,14 @@
         color: #f5a623;
       }
       .dokanto-deadline {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         margin-top: 2px;
       }
       .dokanto-stats {
         flex: 1;
         min-width: 0;
-        font-size: 11px;
+        font-size: var(--fs-xs);
       }
       .dokanto-row {
         display: flex;
@@ -1338,7 +1346,7 @@
         white-space: nowrap;
       }
       .unit {
-        font-size: 0.78em;
+        font-size: var(--fs-s);
         font-weight: 700;
         margin-left: 1px;
         font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
@@ -1443,7 +1451,7 @@
       }
       .tab-item {
         gap: 2px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         letter-spacing: -0.04em;
         white-space: nowrap;
@@ -1471,7 +1479,7 @@
         gap: 4px;
         min-height: 34px;
         padding: 0 11px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         background: var(--c-keirin);
         box-shadow: var(--e2);
       }
@@ -1483,7 +1491,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: var(--fs-s);
       }
 
       .chip {
@@ -1491,7 +1499,7 @@
         display: inline-flex;
         align-items: center;
         gap: 3px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
       }
       .chip .ic { width: 13px; height: 13px; }
 
@@ -1522,9 +1530,9 @@
         gap: 3px;
       }
 
-      .section-title { font-size: 13px; }
+      .section-title { font-size: var(--fs-m); }
       .see-all {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         display: inline-flex;
         align-items: center;
         gap: 2px;
@@ -1549,7 +1557,7 @@
         padding: 0 8px;
       }
       .payout-label {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         font-weight: 700;
         white-space: nowrap;
@@ -1557,7 +1565,7 @@
         text-overflow: ellipsis;
       }
       .payout-value {
-        font-size: 15px;
+        font-size: var(--fs-l);
         font-weight: 900;
         color: var(--c-text);
         flex: none;
@@ -1597,7 +1605,7 @@
         min-width: 0;
       }
       .vcard-name {
-        font-size: 15px;
+        font-size: var(--fs-l);
         font-weight: 900;
         letter-spacing: -0.04em;
         color: var(--c-text);
@@ -1608,7 +1616,7 @@
         flex: 1;
       }
       .vcard-meta {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         white-space: nowrap;
         overflow: hidden;
@@ -1621,13 +1629,13 @@
         gap: 5px;
       }
       .vcard-r {
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 900;
         color: var(--c-keirin);
       }
       .vcard.auto .vcard-r { color: var(--c-auto); }
       .vcard-dl {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         color: var(--c-sub);
         display: flex;
@@ -1637,7 +1645,7 @@
       .vcard-dl.soon { color: var(--c-error); }
       .vcard-dl .ic { width: 12px; height: 12px; }
       .gbadge {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 900;
         padding: 1px 5px;
         border-radius: var(--r-sm);
@@ -1656,7 +1664,7 @@
         align-items: center;
         gap: 10px;
         padding: 6px 12px 0;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         font-weight: 700;
       }
@@ -1671,7 +1679,7 @@
 
       .section-note {
         padding: 0 12px 5px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         line-height: 1.45;
       }
@@ -1688,7 +1696,7 @@
         border-radius: var(--r-md);
         background: var(--c-keirin);
         color: #fff;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         line-height: 1.25;
         display: flex;
@@ -1728,7 +1736,7 @@
         align-self: flex-start;
         background: rgba(255, 255, 255, 0.92);
         color: #8a4b00;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 900;
         padding: 1px 6px;
         border-radius: var(--r-sm);
@@ -1737,14 +1745,14 @@
       .hero-tag .ic { width: 12px; height: 12px; }
       .hero-title {
         color: #fff;
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 900;
         line-height: 1.3;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
       }
       .hero-sub {
         color: rgba(255, 255, 255, 0.95);
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         margin-top: 2px;
       }
@@ -1766,7 +1774,7 @@
         margin-bottom: 5px;
       }
       .dokanto-name {
-        font-size: 14px;
+        font-size: var(--fs-base);
         font-weight: 900;
         font-style: italic;
         color: var(--c-keirin);
@@ -1777,7 +1785,7 @@
       .dokanto-name em { color: var(--c-primary-d); font-style: italic; }
       .dokanto-deadline {
         margin-left: auto;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 800;
         color: var(--c-warning);
         white-space: nowrap;
@@ -1789,13 +1797,13 @@
         gap: 8px;
         line-height: 1.75;
         white-space: nowrap;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
       }
       .dokanto-row b {
         font-family: var(--ff-num);
         font-variant-numeric: tabular-nums;
-        font-size: 14px;
+        font-size: var(--fs-base);
         color: var(--c-text);
         font-weight: 900;
       }
@@ -1819,7 +1827,7 @@
         border-radius: var(--r-sm);
         background: var(--c-keirin);
         color: #fff;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 800;
         line-height: 1.2;
         text-align: center;
@@ -1828,18 +1836,18 @@
       .pickup-tile.auto { background: var(--c-auto); }
       .pickup-reason-main {
         color: var(--c-text);
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 800;
         line-height: 1.35;
       }
       .pickup-reason-sub {
         color: var(--c-sub);
-        font-size: 11px;
+        font-size: var(--fs-xs);
         margin-top: 1px;
       }
       .pickup-kind {
         display: inline-block;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 900;
         color: var(--c-primary-d);
         background: var(--c-primary-bg);
@@ -1915,8 +1923,8 @@
         gap: 12px;
         min-height: 21px;
       }
-      .pt-row .payout-label { font-size: 12px; }
-      .pt-row .payout-value { font-size: 16px; }
+      .pt-row .payout-label { font-size: var(--fs-s); }
+      .pt-row .payout-value { font-size: var(--fs-l); }
 
       .vgroup-head {
         display: flex;
@@ -1927,7 +1935,7 @@
         cursor: pointer;
       }
       .vgroup-name {
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 800;
         display: flex;
         align-items: center;
@@ -1941,9 +1949,9 @@
         background: var(--c-keirin);
       }
       .vgroup-name.auto::before { background: var(--c-auto); }
-      .vgroup-name b { font-weight: 800; color: var(--c-sub); font-size: 12px; }
+      .vgroup-name b { font-weight: 800; color: var(--c-sub); font-size: var(--fs-s); }
       .vgroup-link {
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 700;
         color: var(--c-primary-d);
         display: inline-flex;
@@ -1961,17 +1969,17 @@
         border-left-width: 3px;
         gap: 2px;
       }
-      .g3 .vcard-name { font-size: 14px; }
+      .g3 .vcard-name { font-size: var(--fs-base); }
       .g3 .vcard-meta {
         display: flex;
         align-items: center;
         gap: 4px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         min-height: 16px;
       }
       .g3 .vcard-bottom { gap: 4px; justify-content: space-between; }
-      .g3 .vcard-r { font-size: 12px; }
-      .g3 .vcard-dl { font-size: 11px; }
+      .g3 .vcard-r { font-size: var(--fs-s); }
+      .g3 .vcard-dl { font-size: var(--fs-xs); }
 
       .kubun {
         display: inline-flex;
@@ -1982,7 +1990,7 @@
         border-radius: 3px;
         background: #2b2b2b;
         color: #fff;
-        font-size:10px;
+        font-size: var(--fs-xs);
         font-weight: 800;
         letter-spacing: -0.04em;
         white-space: nowrap;
@@ -2001,7 +2009,7 @@
         aspect-ratio: 2 / 1;
         border-radius: var(--r-md);
         box-shadow: var(--e1);
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         text-align: center;
         line-height: 1.5;
@@ -2009,9 +2017,9 @@
       }
 
       .pickup-body { min-width: 0; flex: 1; }
-      .pickup-card .pickup-reason-main { font-size: 13px; }
+      .pickup-card .pickup-reason-main { font-size: var(--fs-m); }
       .pickup-card .pickup-reason-sub {
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 700;
         margin-top: 2px;
         font-family: var(--ff-num);
@@ -2043,8 +2051,8 @@
       .news-badge.keirin { background: var(--c-keirin); }
       .news-badge.auto { background: var(--c-auto); }
       .news-badge.other { background: #6b6b6b; }
-      .news-date { font-size: 12px; color: var(--c-sub); font-family: var(--ff-num); }
-      .news-title { font-size: 13px; line-height: 1.45; }
+      .news-date { font-size: var(--fs-s); color: var(--c-sub); font-family: var(--ff-num); }
+      .news-title { font-size: var(--fs-m); line-height: 1.45; }
       .news-item > .news-arrow {
         position: absolute;
         right: 10px;
@@ -2055,9 +2063,9 @@
       .news-item > .news-arrow .ic { width: 18px; height: 18px; }
 
       .blog-card { padding: 9px 12px; }
-      .blog-author { font-size: 12px; }
-      .blog-text { font-size: 13px; color: var(--c-text); }
-      .blog-meta { font-size: 11px; }
+      .blog-author { font-size: var(--fs-s); }
+      .blog-text { font-size: var(--fs-m); color: var(--c-text); }
+      .blog-meta { font-size: var(--fs-xs); }
 
       .tsubu-link {
         margin: 10px 8px 8px;
@@ -2073,8 +2081,8 @@
         color: #fff;
       }
       .tsubu-link .ic { outline-color: rgba(255, 255, 255, 0.75); }
-      .tsubu-link b { display: block; font-size: 13px; font-weight: 900; }
-      .tsubu-link small { display: block; font-size: 11px; opacity: 0.85; }
+      .tsubu-link b { display: block; font-size: var(--fs-m); font-weight: 900; }
+      .tsubu-link small { display: block; font-size: var(--fs-xs); opacity: 0.85; }
 
       .vcard.ended .vcard-dl { color: var(--c-sub); font-weight: 700; }
       .vcard.ended .vcard-name { color: var(--c-sub) !important; }
@@ -2084,7 +2092,7 @@
       .g3 .vcard-r { flex-shrink: 0; }
       .pickup-tile { width: 54px; }
       .g3 .vcard-top { gap: 4px; min-height: 18px; }
-      .g3 .vcard-name { flex: none; font-size: 15px; line-height: 1.25; margin-top: 1px; }
+      .g3 .vcard-name { flex: none; font-size: var(--fs-l); line-height: 1.25; margin-top: 1px; }
       .g3 .vcard-meta { min-height: 0; line-height: 1.3; }
       body { background: var(--c-bg); }
       .page-title, .page-sub, .screen-label { display: none; }
@@ -2105,7 +2113,7 @@
         display: block;
         background: #2c2c2e;
         color: #f0f0f0;
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 700;
         letter-spacing: 0.04em;
         text-transform: none;
@@ -2133,8 +2141,8 @@
         justify-content: space-between;
         column-gap: 6px;
       }
-      .pt-item .payout-label { font-size: 11px; }
-      .pt-item .payout-value { font-size: 14px; margin-left: auto; }
+      .pt-item .payout-label { font-size: var(--fs-xs); }
+      .pt-item .payout-value { font-size: var(--fs-base); margin-left: auto; }
       .pt-h .balance-sep { align-self: stretch; margin: 2px 10px; }
 
       .mori-card {
@@ -2156,7 +2164,7 @@
       .mori-photo .ic { width: 28px; height: 28px; }
       .mori-body { flex: 1; min-width: 0; }
       .mori-title {
-        font-size: 15px;
+        font-size: var(--fs-l);
         font-weight: 900;
         color: var(--c-success);
         line-height: 1.3;
@@ -2173,7 +2181,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 800;
         line-height: 1.25;
         background: var(--c-primary);
@@ -2191,7 +2199,7 @@
         justify-content: center;
         gap: 4px;
         padding: 0 6px;
-        font-size: 12px;
+        font-size: var(--fs-s);
         background: var(--c-surface);
         border: 1px solid var(--c-border);
         border-radius: var(--r-md);
@@ -2211,15 +2219,15 @@
         justify-content: center;
         padding: 0 2px;
         border-radius: var(--r-md);
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 900;
         line-height: 1.3;
         letter-spacing: -0.04em;
       }
-      .pk2 .pickup-reason-main { font-size: 14px; font-weight: 900; line-height: 1.4; }
+      .pk2 .pickup-reason-main { font-size: var(--fs-base); font-weight: 900; line-height: 1.4; }
       .pk2 .pickup-reason-sub {
         font-family: inherit;
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 400;
         color: var(--c-sub);
         margin-top: 2px;
@@ -2230,104 +2238,102 @@
         min-height: 36px;
         align-items: center;
       }
-      .pay-toggle .payout-label { display: inline-flex; align-items: center; gap: 4px; }
-      .pay-toggle .payout-label .ic { width: 18px; height: 18px; color: var(--c-sub); }
+      .pay-toggle .pay-val { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; }
+      .pay-toggle .pay-val .ic { width: 18px; height: 18px; color: var(--c-sub); }
+      .pay-toggle .pay-val .payout-value { margin-left: 0; }
       .pay-toggle .eye-off,
       .pay-toggle .pay-hidden { display: none; }
       .pay-toggle.masked .eye-on,
       .pay-toggle.masked .pay-shown { display: none; }
       .pay-toggle.masked .eye-off { display: block; }
       .pay-toggle.masked .pay-hidden { display: inline; color: var(--c-sub); letter-spacing: 0.1em; }
-      body { font-size: 14px; }
+      body { font-size: var(--fs-base); }
       .bottom-tab { height: 62px; }
-      .tab-item { font-size: 12px; gap: 3px; }
+      .tab-item { font-size: var(--fs-s); gap: 3px; }
       .tab-item .tab-icon { height: 26px; }
       .tab-item .ic { width: 26px; height: 26px; }
       .app-header { height: 54px; }
-      .app-header .logo { font-size: 18px; }
-      .app-header .logo span { font-size: 12px; }
+      .app-header .logo { font-size: var(--fs-xl); }
+      .app-header .logo span { font-size: var(--fs-s); }
       .icon-btn { width: 44px; height: 44px; }
       .icon-btn .ic { width: 24px; height: 24px; }
-      .cta-btn { min-height: 40px; padding: 0 14px; font-size: 13px; }
+      .cta-btn { min-height: 40px; padding: 0 14px; font-size: var(--fs-m); }
       .cta-btn .ic { width: 18px; height: 18px; }
       .page-header { height: 52px; }
       .page-header .page-header-title,
-      .page-header-title { font-size: 18px; }
+      .page-header-title { font-size: var(--fs-xl); }
       .page-header .back-btn .ic { width: 28px; height: 28px; }
       .date-tab,
-      .top-tab { min-height: 50px; font-size: 14px; }
+      .top-tab { min-height: 50px; font-size: var(--fs-base); }
       .section-header { padding: 14px 12px 8px; }
-      .section-title { font-size: 16px; }
-      .see-all { font-size: 13px; min-height: 40px; }
-      .chip { min-height: 40px; padding: 0 14px; font-size: 13px; }
-      .info-tabs .info-tab { min-height: 52px; font-size: 14px; }
+      .section-title { font-size: var(--fs-l); }
+      .see-all { font-size: var(--fs-m); min-height: 40px; }
+      .chip { min-height: 40px; padding: 0 14px; font-size: var(--fs-m); }
+      .info-tabs .info-tab { min-height: 52px; font-size: var(--fs-base); }
       .race-tab { min-width: 62px; min-height: 54px; }
-      .race-tab b { font-size: 16px; }
-      .race-tab small { font-size: 12px; }
+      .race-tab b { font-size: var(--fs-l); }
+      .race-tab small { font-size: var(--fs-s); }
       .race-tab.active { min-width: 92px; }
       .rchip { min-width: 62px; min-height: 54px; }
-      .rchip b { font-size: 16px; }
-      .rchip small { font-size: 12px; }
+      .rchip b { font-size: var(--fs-l); }
+      .rchip small { font-size: var(--fs-s); }
       .rchip.next { min-width: 90px; }
-      .action-btn { min-height: 50px; font-size: 14px; }
+      .action-btn { min-height: 50px; font-size: var(--fs-base); }
       .action-btn .ic { width: 18px; height: 18px; }
-      .sort-btn { font-size: 14px; min-height: 46px; }
-      .list-head .list-count { font-size: 14px; }
-      .comment-row { font-size: 14px; }
-      .comment-row .cr-r { font-size: 14px; }
+      .sort-btn { font-size: var(--fs-base); min-height: 46px; }
+      .list-head .list-count { font-size: var(--fs-base); }
+      .comment-row { font-size: var(--fs-base); }
+      .comment-row .cr-r { font-size: var(--fs-base); }
       .menu-item { min-height: 56px; }
-      .menu-text { font-size: 15px; }
-      .menu-section-title { font-size: 13px; }
-      .news-title { font-size: 15px; }
-      .news-date { font-size: 13px; }
-      .blog-author { font-size: 14px; }
-      .blog-text { font-size: 15px; }
+      .menu-text { font-size: var(--fs-l); }
+      .menu-section-title { font-size: var(--fs-m); }
+      .news-title { font-size: var(--fs-l); }
+      .news-date { font-size: var(--fs-m); }
+      .blog-author { font-size: var(--fs-base); }
+      .blog-text { font-size: var(--fs-l); }
 
-      .venue-grid.g3 .vcard-name { font-size: 20px; letter-spacing: -0.05em; }
-      .venue-grid.g3 .vcard-meta { font-size: 12px; }
-      .venue-grid.g3 .vcard-r { font-size: 14px; }
-      .venue-grid.g3 .vcard-dl { font-size: 12px; letter-spacing: -0.04em; }
-      .vgroup-name { font-size: 16px; }
-      .vgroup-link { font-size: 13px; }
-      .gbadge { font-size: 12px; }
-      .venue-name { font-size: 23px; }
+      .venue-grid.g3 .vcard-name { font-size: var(--fs-2xl); letter-spacing: -0.05em; }
+      .venue-grid.g3 .vcard-meta { font-size: var(--fs-s); }
+      .venue-grid.g3 .vcard-r { font-size: var(--fs-base); }
+      .venue-grid.g3 .vcard-dl { font-size: var(--fs-s); letter-spacing: -0.04em; }
+      .vgroup-name { font-size: var(--fs-l); }
+      .vgroup-link { font-size: var(--fs-m); }
+      .gbadge { font-size: var(--fs-s); }
+      .venue-name { font-size: var(--fs-3xl); }
       .venue-header { min-height: 48px; }
-      .venue-meta { font-size: 13px; }
-      .grade-badge { font-size: 13px; }
-      .ri-event { font-size: 13px; }
-      .ri-race { font-size: 19px; }
-      .ri-race span { font-size: 15px; }
-      .race-info-bar .race-info-meta { font-size: 13px; }
-      .pk2 .pickup-tile { width: 60px; height: 60px; font-size: 15px; }
-      .pk2 .pickup-reason-main { font-size: 15px; }
-      .pk2 .pickup-reason-sub { font-size: 13px; }
-      .mori-title { font-size: 17px; }
+      .venue-meta { font-size: var(--fs-m); }
+      .grade-badge { font-size: var(--fs-m); }
+      .ri-event { font-size: var(--fs-m); }
+      .ri-race { font-size: var(--fs-2xl); }
+      .ri-race span { font-size: var(--fs-l); }
+      .race-info-bar .race-info-meta { font-size: var(--fs-m); }
+      .pk2 .pickup-tile { width: 60px; height: 60px; font-size: var(--fs-l); }
+      .pk2 .pickup-reason-main { font-size: var(--fs-l); }
+      .pk2 .pickup-reason-sub { font-size: var(--fs-m); }
+      .mori-title { font-size: var(--fs-xl); }
       .mori-next,
-      .mori-sp { font-size: 13px; }
+      .mori-sp { font-size: var(--fs-m); }
 
-      .oshi-name { font-size: 16px; }
-      .oshi-act { min-height: 40px; font-size: 13px; }
-      .os-tab { min-height: 44px; font-size: 14px; }
-      .os-chip { min-height: 40px; font-size: 14px; }
-      .os-btn { min-height: 48px; font-size: 14px; }
-      .point-use span { min-height: 40px; font-size: 13px; }
+      .oshi-name { font-size: var(--fs-l); }
+      .oshi-act { min-height: 40px; font-size: var(--fs-m); }
+      .os-tab { min-height: 44px; font-size: var(--fs-base); }
+      .os-chip { min-height: 40px; font-size: var(--fs-base); }
+      .os-btn { min-height: 48px; font-size: var(--fs-base); }
+      .point-use span { min-height: 40px; font-size: var(--fs-m); }
 
       .mania-table td,
-      .race-table td { font-size: 13px; }
-      .rider-name { font-size: 14px; }
+      .race-table td { font-size: var(--fs-m); }
+      .rider-name { font-size: var(--fs-base); }
       .mania-table .c-name { min-width: 88px; width: 88px; }
-      .at td { font-size: 13px; }
-      .rn b { font-size: 14px; }
-      .at .hd { font-size: 19px; }
+      .at td { font-size: var(--fs-m); }
+      .rn b { font-size: var(--fs-base); }
+      .at .hd { font-size: var(--fs-2xl); }
       .at .fx2 { min-width: 108px; max-width: 108px; }
-      .wx span { font-size: 13px; }
-      .pk2 .pickup-tile { width: 64px; font-size: 14px; letter-spacing: -0.06em; }
+      .wx span { font-size: var(--fs-m); }
+      .pk2 .pickup-tile { width: 64px; font-size: var(--fs-base); letter-spacing: -0.06em; }
 
-      /* 区分ラベルは「ミッドナイト」の幅に統一 */
       .kubun { min-width: calc(5.76em + 8px); }
-      /* 遷移バナー（Gambooブログ・ツブッター） */
       .tsubu-link + .tsubu-link { margin-top: 0; }
-      /* 注目レース：車番＋選手名＋〇〇君 */
       .pk-pick { display: flex; align-items: center; gap: 6px; min-width: 0; }
       .pk-pick .pk-text { min-width: 0; }
       .pk-pick .pk-text b { margin-right: 5px; }
@@ -2338,7 +2344,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 900;
         flex-shrink: 0;
         border: 1px solid transparent;
@@ -2353,6 +2359,103 @@
       .carno.w7 { background: var(--w7); color: var(--w7-t); border-color: var(--w7-bd); }
       .carno.w8 { background: var(--w8); color: var(--w8-t); border-color: var(--w8-bd); }
       .carno.w9 { background: var(--w9); color: var(--w9-t); border-color: var(--w9-bd); }
+
+      .app-header .logo-img { height: 28px; width: auto; display: block; }
+      .vgroup-name,
+      .section-title { font-size: var(--fs-2xl); font-weight: 900; letter-spacing: -0.03em; }
+      .vgroup-name::before,
+      .section-title::before { width: 4px; height: 18px; }
+      .vgroup-head { min-height: 44px; }
+      .gbadge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 20px;
+        padding: 0;
+        font-size: var(--fs-s);
+      }
+      .g3 .vcard-top { justify-content: flex-start; gap: 6px; }
+      .vcard-day { font-size: var(--fs-s); color: var(--c-sub); white-space: nowrap; }
+      .vcard-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px;
+        min-height: 18px;
+      }
+      .kubun,
+      .girls {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        height: 18px;
+        padding: 0 4px;
+        border-radius: 3px;
+        background: var(--c-surface);
+        border: 1px solid var(--c-border);
+        color: var(--c-sub);
+        font-size: var(--fs-xs);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        white-space: nowrap;
+        flex-shrink: 0;
+        outline: none;
+      }
+      .girls { border-color: #e7a9bf; color: #b0285b; }
+      .venue-grid.g3 .vcard-r { font-size: var(--fs-xl); line-height: 1.2; }
+      .venue-grid.g3 .vcard-dl { font-size: var(--fs-xl); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; color: var(--c-text); font-family: var(--ff-num); }
+      .venue-grid.g3 .vcard-dl.soon { color: var(--c-error); }
+      .vcard.ended .vcard-name { color: var(--c-text) !important; }
+      .vcard.ended .vcard-bottom { justify-content: flex-end; }
+      .venue-grid.g3 .vcard.ended .vcard-dl { color: var(--c-dis); font-size: var(--fs-l); }
+      .mori-photo { overflow: hidden; background: var(--c-surface2); }
+      .mori-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .bn-carousel { position: relative; padding-bottom: 4px; }
+      .bn-track {
+        display: flex;
+        gap: 8px;
+        padding: 2px 8px 6px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 0 8px;
+        scrollbar-width: none;
+      }
+      .bn-track::-webkit-scrollbar { display: none; }
+      .bn-track .bn {
+        flex: 0 0 calc(100% - 40px);
+        aspect-ratio: 2 / 1;
+        scroll-snap-align: start;
+        position: relative;
+        overflow: hidden;
+        background: repeating-linear-gradient(45deg, #e8e6e2 0 6px, #f2f0ec 6px 12px);
+        color: var(--c-dis);
+      }
+      .bn-track .bn img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .bn .bn-fallback { display: none; }
+      .bn.noimg img { display: none; }
+      .bn.noimg .bn-fallback { display: flex; position: absolute; inset: 0; align-items: center; justify-content: center; font-size: var(--fs-s); }
+      .bn-dots { display: flex; justify-content: center; gap: 5px; }
+      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-border); transition: width .2s; }
+      .bn-dots i.on { width: 16px; border-radius: 3px; background: var(--c-primary); }
+      .pk3 { gap: 12px; padding: 10px 12px 10px 10px; align-items: center; }
+      .pk3 .kun { flex: 0 0 72px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+      .pk3 .kun-ic {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        font-size: var(--fs-xs);
+        font-weight: 700;
+        line-height: 1.3;
+        text-align: center;
+      }
+      .pk3 .kun-nm { font-size: var(--fs-s); font-weight: 900; color: var(--c-primary-d); white-space: nowrap; letter-spacing: -0.04em; }
+      .pk3 .pk-race { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
+      .pk3 .pk-race b { font-size: var(--fs-l); font-weight: 900; }
+      .pk3 .pk-dl { font-size: var(--fs-base); color: var(--c-sub); font-family: var(--ff-num); }
+      .pk3 .pk-pick { margin-top: 5px; font-size: var(--fs-l); font-weight: 900; }
+      .pk3 .pk-pick + .pk-pick { margin-top: 4px; }
+      .pk3 .pk-note { margin-left: auto; font-size: var(--fs-m); font-weight: 800; color: var(--c-error); white-space: nowrap; }
     </style>
   </head>
   <body>
@@ -2370,8 +2473,8 @@
               <span>4G ●●●</span>
             </div>
             <div class="app-header">
-              <div class="logo" style="color: var(--c-text)">
-                Gamboo<span> ギャンブー</span>
+              <div class="logo">
+                <img class="logo-img" src="logo.png" alt="Gamboo ギャンブー" />
               </div>
               <div class="header-actions">
                 <div class="icon-btn">
@@ -2383,14 +2486,17 @@
             </div>
             <div class="payout-bar pt-h">
               <div class="pt-item">
-                <span class="payout-label">デルカポイント</span>
+                <span class="payout-label">デルカ</span>
                 <span class="payout-value maxcase">9,999,999<span class="unit">pt</span></span>
               </div>
               <div class="balance-sep"></div>
-              <div class="pt-item pay-toggle" role="button" aria-pressed="false" aria-label="払戻金の表示・非表示を切り替え">
-                <span class="payout-label">払戻金<svg class="ic eye-on" aria-hidden="true"><use href="#ic-eye"></use></svg><svg class="ic eye-off" aria-hidden="true"><use href="#ic-eyeoff"></use></svg></span>
-                <span class="payout-value maxcase pay-shown">9,999,999<span class="unit">円</span></span>
-                <span class="payout-value pay-hidden">＊＊＊＊<span class="unit">円</span></span>
+              <div class="pt-item pay-toggle masked" role="button" aria-pressed="true" aria-label="払戻金の表示・非表示を切り替え">
+                <span class="payout-label">払戻金</span>
+                <span class="pay-val">
+                  <svg class="ic eye-on" aria-hidden="true"><use href="#ic-eye"></use></svg><svg class="ic eye-off" aria-hidden="true"><use href="#ic-eyeoff"></use></svg>
+                  <span class="payout-value maxcase pay-shown">9,999,999<span class="unit">円</span></span>
+                  <span class="payout-value pay-hidden">＊＊＊＊<span class="unit">円</span></span>
+                </span>
               </div>
             </div>
             <div class="date-tabs">
@@ -2400,82 +2506,67 @@
             </div>
             <div class="scroll-area">
               <div class="vgroup-head">
-                <span class="vgroup-name">競輪 <b>7場</b></span>
-                <!--<span class="vgroup-link">競輪の出走表<svg class="ic ic-sm" aria-hidden="true"><use href="#ic-chevron"></use></svg></span>-->
+                <span class="vgroup-name">競輪</span>
               </div>
               <div class="venue-grid g3">
                 <div class="vcard">
-                  <div class="vcard-top">
-                    <span class="gbadge g-f1">F1</span><span class="kubun">ナイター</span>
-                  </div>
+                  <div class="vcard-top"><span class="gbadge g-f1">FⅠ</span><span class="vcard-day">2日目</span></div>
                   <div class="vcard-name">京王閣</div>
-                  <div class="vcard-meta">2日目</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span><span class="girls">ガールズ</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl soon">締切 20:35</span>
+                    <span class="vcard-dl soon">20:35</span>
                   </div>
                 </div>
                 <div class="vcard">
-                  <div class="vcard-top">
-                    <span class="gbadge g-g3">G3</span><span class="kubun">ナイター</span>
-                  </div>
+                  <div class="vcard-top"><span class="gbadge g-g3">GⅢ</span><span class="vcard-day">最終日</span></div>
                   <div class="vcard-name maxcase">いわき平</div>
-                  <div class="vcard-meta">最終日</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl">締切 20:41</span>
+                    <span class="vcard-dl">20:41</span>
                   </div>
                 </div>
                 <div class="vcard">
-                  <div class="vcard-top">
-                    <span class="gbadge g-f1">F1</span><span class="kubun">ナイター</span>
-                  </div>
+                  <div class="vcard-top"><span class="gbadge g-f1">FⅠ</span><span class="vcard-day">最終日</span></div>
                   <div class="vcard-name">玉野</div>
-                  <div class="vcard-meta">最終日</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl">締切 20:48</span>
+                    <span class="vcard-dl">20:48</span>
                   </div>
                 </div>
                 <div class="vcard">
-                  <div class="vcard-top">
-                    <span class="gbadge g-g1">G1</span><span class="kubun">ナイター</span>
-                  </div>
+                  <div class="vcard-top"><span class="gbadge g-g1">GⅠ</span><span class="vcard-day">4日目</span></div>
                   <div class="vcard-name">小倉</div>
-                  <div class="vcard-meta">4日目</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl">締切 20:55</span>
+                    <span class="vcard-dl">20:55</span>
                   </div>
                 </div>
                 <div class="vcard">
-                  <div class="vcard-top maxcase">
-                    <span class="gbadge g-f2">F2</span><span class="kubun">ミッドナイト</span>
-                  </div>
+                  <div class="vcard-top"><span class="gbadge g-f2">FⅡ</span><span class="vcard-day">最終日</span></div>
                   <div class="vcard-name">松戸</div>
-                  <div class="vcard-meta">最終日</div>
+                  <div class="vcard-tags maxcase"><span class="kubun">ミッドナイト</span><span class="girls">ガールズ</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">1R</span>
-                    <span class="vcard-dl">締切 21:02</span>
+                    <span class="vcard-dl">21:02</span>
                   </div>
                 </div>
                 <div class="vcard">
-                  <div class="vcard-top">
-                    <span class="gbadge g-f2">F2</span><span class="kubun">ミッドナイト</span>
-                  </div>
+                  <div class="vcard-top"><span class="gbadge g-f2">FⅡ</span><span class="vcard-day">2日目</span></div>
                   <div class="vcard-name">伊東</div>
-                  <div class="vcard-meta">2日目</div>
+                  <div class="vcard-tags"><span class="kubun">ミッドナイト</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">1R</span>
-                    <span class="vcard-dl">締切 21:30</span>
+                    <span class="vcard-dl">21:30</span>
                   </div>
                 </div>
                 <div class="vcard ended">
-                  <div class="vcard-top">
-                    <span class="gbadge g-f2">F2</span>
-                  </div>
+                  <div class="vcard-top"><span class="gbadge g-f2">FⅡ</span><span class="vcard-day">初日</span></div>
                   <div class="vcard-name">平塚</div>
-                  <div class="vcard-meta">初日</div>
+                  <div class="vcard-tags"></div>
                   <div class="vcard-bottom">
                     <span class="vcard-dl">終了</span>
                   </div>
@@ -2483,36 +2574,31 @@
               </div>
 
               <div class="vgroup-head">
-                <span class="vgroup-name auto">オートレース <b>2場</b></span>
-                <!--<span class="vgroup-link">オートレースの出走表<svg class="ic ic-sm" aria-hidden="true"><use href="#ic-chevron"></use></svg></span>-->
+                <span class="vgroup-name auto">オートレース</span>
               </div>
               <div class="venue-grid g3">
                 <div class="vcard auto">
-                  <div class="vcard-top">
-                    <span class="gbadge g-f2">普通</span><span class="kubun">ナイター</span>
-                  </div>
+                  <div class="vcard-top"><span class="gbadge g-f2">普通</span><span class="vcard-day">3日目</span></div>
                   <div class="vcard-name">飯塚</div>
-                  <div class="vcard-meta">3日目</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">9R</span>
-                    <span class="vcard-dl soon">締切 20:31</span>
+                    <span class="vcard-dl soon">20:31</span>
                   </div>
                 </div>
                 <div class="vcard auto">
-                  <div class="vcard-top">
-                    <span class="gbadge g-g2">G2</span><span class="kubun">ナイター</span>
-                  </div>
+                  <div class="vcard-top"><span class="gbadge g-g2">G2</span><span class="vcard-day">2日目</span></div>
                   <div class="vcard-name">川口</div>
-                  <div class="vcard-meta">2日目</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">11R</span>
-                    <span class="vcard-dl">締切 20:40</span>
+                    <span class="vcard-dl">20:40</span>
                   </div>
                 </div>
               </div>
 
               <div class="mori-card">
-                <div class="mori-photo imgph"><svg class="ic" aria-hidden="true"><use href="#ic-person"></use></svg></div>
+                <div class="mori-photo"><img src="mori.jpg" alt="森且行選手" /></div>
                 <div class="mori-body">
                   <div class="mori-title">森且行選手を応援しよう！</div>
                   <div class="mori-actions">
@@ -2526,46 +2612,46 @@
                 <div class="section-title">キャンペーン</div>
                 <div class="see-all">すべて見る<svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
               </div>
-              <div class="hscroll">
-                <div class="hscroll-inner">
-                  <div class="bn-row">
-                    <div class="bn imgph">キャンペーンバナー画像</div>
-                    <div class="bn imgph">キャンペーンバナー画像</div>
-                    <div class="bn imgph">キャンペーンバナー画像</div>
-                  </div>
+              <div class="bn-carousel" data-interval="3500">
+                <div class="bn-track">
+                  <div class="bn"><img src="test.jpg" alt="キャンペーンバナー1" /><span class="bn-fallback">test.jpg（バナー1）</span></div>
+                  <div class="bn"><img src="test.jpg" alt="キャンペーンバナー2" /><span class="bn-fallback">test.jpg（バナー2）</span></div>
+                  <div class="bn"><img src="test.jpg" alt="キャンペーンバナー3" /><span class="bn-fallback">test.jpg（バナー3）</span></div>
+                  <div class="bn"><img src="test.jpg" alt="キャンペーンバナー4" /><span class="bn-fallback">test.jpg（バナー4）</span></div>
                 </div>
-                <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
+                <div class="bn-dots"><i class="on"></i><i></i><i></i><i></i></div>
               </div>
 
               <div class="section-header">
                 <div class="section-title">注目レース</div>
               </div>
-              <div class="pickup-card pk2">
-                <div class="pickup-tile">京王閣<br />11R</div>
+              <div class="pickup-card pk3">
+                <div class="kun"><div class="kun-ic imgph">ロケット君<br />アイコン</div><div class="kun-nm">ロケット君</div></div>
                 <div class="pickup-body">
-                  <div class="pickup-reason-main pk-pick"><span class="carno w1">1</span><span class="pk-text ell"><b>夏目新吾</b>ロケット君</span></div>
-                  <div class="pickup-reason-sub">締切 21:05</div>
+                  <div class="pk-race"><b>京王閣 11R</b><span class="pk-dl">締切 21:05</span></div>
+                  <div class="pk-pick"><span class="carno w1">1</span><span class="pk-text ell">夏目新吾</span></div>
                 </div>
               </div>
-              <div class="pickup-card pk2">
-                <div class="pickup-tile">いわき平<br />11R</div>
+              <div class="pickup-card pk3">
+                <div class="kun"><div class="kun-ic imgph">ダントツ君<br />アイコン</div><div class="kun-nm">ダントツ君</div></div>
                 <div class="pickup-body">
-                  <div class="pickup-reason-main pk-pick"><span class="carno w3">3</span><span class="pk-text ell"><b>森岡正臣</b>ダントツ君</span></div>
-                  <div class="pickup-reason-sub">締切 21:11</div>
+                  <div class="pk-race"><b>いわき平 11R</b><span class="pk-dl">締切 21:11</span></div>
+                  <div class="pk-pick"><span class="carno w3">3</span><span class="pk-text ell">森岡正臣</span></div>
                 </div>
               </div>
-              <div class="pickup-card pk2">
-                <div class="pickup-tile">玉野<br />11R</div>
+              <div class="pickup-card pk3">
+                <div class="kun"><div class="kun-ic imgph">逃げイチ君<br />アイコン</div><div class="kun-nm">逃げイチ君</div></div>
                 <div class="pickup-body">
-                  <div class="pickup-reason-main pk-pick"><span class="carno w4">4</span><span class="pk-text ell"><b>倉松涼</b>逃げイチ君</span></div>
-                  <div class="pickup-reason-sub">締切 21:18</div>
+                  <div class="pk-race"><b>玉野 11R</b><span class="pk-dl">締切 21:18</span></div>
+                  <div class="pk-pick"><span class="carno w4">4</span><span class="pk-text ell">倉松涼</span></div>
                 </div>
               </div>
-              <div class="pickup-card pk2">
-                <div class="pickup-tile">小倉<br />11R</div>
+              <div class="pickup-card pk3">
+                <div class="kun"><div class="kun-ic imgph">連勝君<br />アイコン</div><div class="kun-nm">連勝君</div></div>
                 <div class="pickup-body">
-                  <div class="pickup-reason-main pk-pick"><span class="carno w7">7</span><span class="pk-text ell"><b>鈴木良太</b>連勝君 3連勝</span></div>
-                  <div class="pickup-reason-sub">締切 21:25</div>
+                  <div class="pk-race"><b>小倉 11R</b><span class="pk-dl">締切 21:25</span></div>
+                  <div class="pk-pick"><span class="carno w7">7</span><span class="pk-text ell">鈴木良太</span><span class="pk-note">3連勝</span></div>
+                  <div class="pk-pick"><span class="carno w2">2</span><span class="pk-text ell">松山桂輔</span><span class="pk-note">2連勝</span></div>
                 </div>
               </div>
 
@@ -2656,7 +2742,32 @@
       });
     </script>
     <script>
+      document.querySelectorAll(".bn-carousel").forEach(function (box) {
+        var track = box.querySelector(".bn-track");
+        var dots = box.querySelectorAll(".bn-dots i");
+        var items = track.children;
+        var idx = 0;
+        var ms = +box.getAttribute("data-interval") || 3500;
+        function step() { return items.length > 1 ? items[1].offsetLeft - items[0].offsetLeft : track.clientWidth; }
+        function sync() {
+          var i = Math.round(track.scrollLeft / step());
+          dots.forEach(function (d, n) { d.classList.toggle("on", n === i); });
+          idx = i;
+        }
+        track.addEventListener("scroll", sync, { passive: true });
+        box.querySelectorAll("img").forEach(function (img) {
+          img.addEventListener("error", function () { img.parentElement.classList.add("noimg"); });
+          if (img.complete && !img.naturalWidth) img.parentElement.classList.add("noimg");
+        });
+        setInterval(function () {
+          var next = (idx + 1) % items.length;
+          track.scrollTo({ left: next * step(), behavior: "smooth" });
+        }, ms);
+      });
+    </script>
+    <script>
       document.querySelectorAll(".pay-toggle").forEach(function (el) {
+
         el.addEventListener("click", function () {
           var m = !el.classList.contains("masked");
           el.classList.toggle("masked", m);

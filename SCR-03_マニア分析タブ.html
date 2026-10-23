@@ -6,6 +6,14 @@
     <title>Gamboo アプリ ワイヤーフレーム</title>
     <style>
       :root {
+        --fs-xs: 11px;
+        --fs-s: 12px;
+        --fs-m: 13px;
+        --fs-base: 14px;
+        --fs-l: 16px;
+        --fs-xl: 18px;
+        --fs-2xl: 20px;
+        --fs-3xl: 24px;
         --c-primary: #f5a623;
         --c-primary-d: #9a5b00;
         --c-primary-bg: #fff6e6;
@@ -62,8 +70,8 @@
 
         --tap-min: 44px;
         --tap-dense: 36px;
-        --fs-min: 11px;
-        --fs-dense: 11px;
+        --fs-min: var(--fs-xs);
+        --fs-dense: var(--fs-xs);
 
         --ff-num: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
       }
@@ -79,7 +87,7 @@
         background: #2c2c2e;
         font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
         color: var(--c-text);
-        font-size: 13px;
+        font-size: var(--fs-m);
         line-height: 1.5;
       }
       button,
@@ -92,7 +100,7 @@
       .page-title {
         text-align: center;
         color: #f0f0f0;
-        font-size: 22px;
+        font-size: var(--fs-3xl);
         font-weight: 700;
         padding: 32px 16px 8px;
         letter-spacing: 0.05em;
@@ -100,7 +108,7 @@
       .page-sub {
         text-align: center;
         color: #9a9a9a;
-        font-size: 13px;
+        font-size: var(--fs-m);
         padding-bottom: 32px;
       }
       .screens-grid {
@@ -118,7 +126,7 @@
       }
       .screen-label {
         color: #d0d0d0;
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 700;
         letter-spacing: 0.1em;
       }
@@ -154,7 +162,7 @@
         flex-shrink: 0;
       }
       .status-bar span {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 600;
       }
 
@@ -169,16 +177,16 @@
         flex-shrink: 0;
       }
       .back-btn {
-        font-size: 12px;
+        font-size: var(--fs-s);
         color: var(--c-secondary);
         font-weight: 600;
       }
       .page-header-title {
-        font-size: 14px;
+        font-size: var(--fs-base);
         font-weight: 700;
       }
       .page-header-action {
-        font-size: 18px;
+        font-size: var(--fs-xl);
       }
 
       .race-tabs {
@@ -195,7 +203,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 600;
         color: var(--c-sub);
         border-bottom: 2px solid transparent;
@@ -217,7 +225,7 @@
         flex-shrink: 0;
       }
       .race-info-title {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
       }
       .race-info-row {
@@ -227,11 +235,11 @@
         margin-top: 2px;
       }
       .race-info-meta {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
       }
       .race-countdown {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-success);
         font-weight: 700;
       }
@@ -244,7 +252,7 @@
       .info-tab {
         flex: 1;
         padding: 4px 2px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 600;
         color: var(--c-sub);
         text-align: center;
@@ -273,14 +281,14 @@
         align-items: center;
         justify-content: center;
         gap: 1px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-dis);
       }
       .tab-item.active {
         color: var(--c-primary-d);
       }
       .tab-icon {
-        font-size: 18px;
+        font-size: var(--fs-xl);
       }
 
       .frame-cell {
@@ -290,7 +298,7 @@
         align-items: center;
         justify-content: center;
         font-weight: 700;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         margin: 0 auto;
       }
       .f1 { background: #ffffff; border: 1px solid #ddd; color: #1a1a1a; }
@@ -311,11 +319,11 @@
         border-collapse: separate;
         border-spacing: 0;
         min-width: max-content;
-        font-size: 11px;
+        font-size: var(--fs-xs);
       }
       .mania-table th {
         background: #ffffff;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 400;
         line-height: 1.2;
         color: var(--c-text);
@@ -376,22 +384,22 @@
         text-align: left !important;
       }
       .rider-name {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
       }
       .rider-meta {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
       }
       .c-item {
         min-width: 48px;
       }
       .cls-sub {
-        font-size: 11px;
+        font-size: var(--fs-xs);
       }
 
       .mk {
-        font-size: 15px;
+        font-size: var(--fs-l);
         line-height: 1;
         font-weight: 700;
       }
@@ -411,7 +419,7 @@
         border: 1px solid #e0a800;
         background: linear-gradient(#fff3a8, #f7c531);
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        font-size: 11px;
+        font-size: var(--fs-xs);
         line-height: 1.15;
         color: #1a1a1a;
         cursor: pointer;
@@ -425,7 +433,7 @@
         font-weight: 700;
       }
       .hint {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         padding: 6px 10px 10px;
       }
@@ -465,7 +473,7 @@
         flex-shrink: 0;
       }
       .sheet-title {
-        font-size: 13px;
+        font-size: var(--fs-m);
         font-weight: 700;
       }
       .sheet-close {
@@ -474,7 +482,7 @@
         border-radius: 50%;
         border: none;
         background: var(--c-surface2);
-        font-size: 12px;
+        font-size: var(--fs-s);
         cursor: pointer;
       }
       .sheet-cond {
@@ -482,7 +490,7 @@
         padding: 4px 8px;
         background: #fff3cd;
         border-radius: 4px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: #856404;
         flex-shrink: 0;
       }
@@ -494,7 +502,7 @@
       .detail-table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 11px;
+        font-size: var(--fs-xs);
       }
       .detail-table th {
         background: #f5f5f3;
@@ -519,14 +527,14 @@
       .detail-table .frame-cell {
         width: 16px;
         height: 18px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
       }
       .rate-hi {
         color: var(--c-error);
         font-weight: 700;
       }
       .sheet-note {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         padding: 6px 12px 10px;
       }
@@ -553,7 +561,7 @@
         white-space: nowrap;
       }
       .unit {
-        font-size: 0.78em;
+        font-size: var(--fs-s);
         font-weight: 700;
         margin-left: 1px;
         font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
@@ -640,6 +648,7 @@
       .ell2 {
         display: -webkit-box;
         -webkit-line-clamp: 2;
+        line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
@@ -658,7 +667,7 @@
       }
       .tab-item {
         gap: 2px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         letter-spacing: -0.04em;
         white-space: nowrap;
@@ -686,7 +695,7 @@
         gap: 4px;
         min-height: 34px;
         padding: 0 11px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         background: var(--c-keirin);
         box-shadow: var(--e2);
       }
@@ -698,7 +707,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: var(--fs-s);
       }
 
       .chip {
@@ -706,7 +715,7 @@
         display: inline-flex;
         align-items: center;
         gap: 3px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
       }
       .chip .ic { width: 13px; height: 13px; }
 
@@ -737,9 +746,9 @@
         gap: 3px;
       }
 
-      .section-title { font-size: 13px; }
+      .section-title { font-size: var(--fs-m); }
       .see-all {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         display: inline-flex;
         align-items: center;
         gap: 2px;
@@ -770,9 +779,9 @@
         padding: 3px 6px;
         text-decoration: none;
       }
-      .race-tab b { font-size: 13px; font-weight: 900; }
+      .race-tab b { font-size: var(--fs-m); font-weight: 900; }
       .race-tab small {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 700;
         color: var(--c-sub);
         font-family: var(--ff-num);
@@ -814,11 +823,12 @@
         flex-shrink: 0;
       }
       .race-info-title {
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 800;
         line-height: 1.35;
         display: -webkit-box;
         -webkit-line-clamp: 2;
+        line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
@@ -830,14 +840,14 @@
         margin-top: 3px;
       }
       .race-info-meta {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         font-family: var(--ff-num);
         font-variant-numeric: tabular-nums;
         white-space: nowrap;
       }
       .race-countdown {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 800;
         color: var(--c-warning);
         display: inline-flex;
@@ -862,7 +872,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 700;
         color: var(--c-sub);
         white-space: nowrap;
@@ -882,7 +892,7 @@
         width: 16px;
         min-width: 16px;
         padding: 2px 1px;
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
       }
       .mania-table .c-sha {
@@ -900,7 +910,7 @@
         border-right: 2px solid var(--c-border);
       }
       .rider-name {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 800;
         text-align: left;
         line-height: 1.2;
@@ -909,7 +919,7 @@
         text-overflow: ellipsis;
       }
       .rider-meta {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         color: var(--c-sub);
         line-height: 1.2;
         white-space: nowrap;
@@ -964,7 +974,7 @@
         align-items: center;
         justify-content: center;
         font-weight: 900;
-        font-size: 13px;
+        font-size: var(--fs-m);
         margin: 0 auto;
       }
       .f1 { background: var(--w1); color: var(--w1-t); border: 1px solid var(--w1-bd); }
@@ -980,14 +990,14 @@
         width: 22px;
         height: 22px;
         border-radius: var(--r-sm);
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 900;
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
-      .mark { font-size: 14px; line-height: 1; color: #3a3a3a; min-width: 16px; display: inline-block; }
+      .mark { font-size: var(--fs-base); line-height: 1; color: #3a3a3a; min-width: 16px; display: inline-block; }
       .mark.tri { color: var(--c-primary-d); }
       .mark.x { color: var(--c-sub); }
 
@@ -1002,7 +1012,7 @@
         vertical-align: -2px;
       }
 
-      .mk, .mark { font-size: 14px; line-height: 1; display: inline-block; min-width: 16px; }
+      .mk, .mark { font-size: var(--fs-base); line-height: 1; display: inline-block; min-width: 16px; }
       .mk-dbl, .mark.dbl { color: var(--c-error); }
       .mk-o, .mark.o { color: var(--c-primary-d); }
       .mk-tri, .mark.tri { color: var(--c-keirin); }
@@ -1062,10 +1072,10 @@
       }
       .page-header .back-btn .ic { width: 24px; height: 24px; }
       .page-header .page-header-action { width: 44px; flex-shrink: 0; }
-      .page-header .page-header-title { flex: 1; font-size: 15px; display: flex; align-items: center; justify-content: center; }
+      .page-header .page-header-title { flex: 1; font-size: var(--fs-l); display: flex; align-items: center; justify-content: center; }
 
       .grade-badge {
-        font-size: 11px;
+        font-size: var(--fs-xs);
         font-weight: 900;
         padding: 1px 6px;
         border-radius: var(--r-sm);
@@ -1083,7 +1093,7 @@
         align-items: center;
         gap: 6px;
         min-width: 0;
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 700;
         color: var(--c-sub);
       }
@@ -1093,15 +1103,15 @@
         flex-wrap: wrap;
         column-gap: 8px;
         margin-top: 3px;
-        font-size: 16px;
+        font-size: var(--fs-l);
         font-weight: 900;
         line-height: 1.3;
       }
-      .ri-race span { font-size: 13px; font-weight: 700; }
+      .ri-race span { font-size: var(--fs-m); font-weight: 700; }
       .race-info-bar .race-info-row { margin-top: 4px; }
-      .race-info-bar .race-info-meta { font-size: 12px; color: var(--c-text); }
+      .race-info-bar .race-info-meta { font-size: var(--fs-s); color: var(--c-text); }
       .dl-pill {
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 800;
         color: var(--c-success);
         border: 1px solid currentColor;
@@ -1116,9 +1126,9 @@
       .hscroll .race-tabs { overflow: visible; width: max-content; min-width: 100%; }
 
       .mania-table td,
-      .race-table td { font-size: 12px; }
-      .rider-name { font-size: 13px; }
-      .rider-meta { font-size: 11px; }
+      .race-table td { font-size: var(--fs-s); }
+      .rider-name { font-size: var(--fs-m); }
+      .rider-meta { font-size: var(--fs-xs); }
       .mania-table .c-name { min-width: 80px; width: 80px; }
       body { background: var(--c-bg); }
       .page-title, .page-sub, .screen-label { display: none; }
@@ -1139,7 +1149,7 @@
         display: block;
         background: #2c2c2e;
         color: #f0f0f0;
-        font-size: 12px;
+        font-size: var(--fs-s);
         font-weight: 700;
         letter-spacing: 0.04em;
         text-transform: none;
@@ -1174,7 +1184,7 @@
         justify-content: center;
         gap: 4px;
         border-radius: var(--r-full);
-        font-size: 14px;
+        font-size: var(--fs-base);
         font-weight: 900;
         cursor: pointer;
         box-shadow: var(--e2);
@@ -1188,98 +1198,96 @@
       .mania-table td:not(.c-name),
       .mania-table th:not(.c-name) { border-right: 1px solid #e6e2dc; }
       .mania-table .bl { border-left: 1px solid #c9c4bb; }
-      .rate2 b { display: block; font-size: 14px; font-weight: 900; }
-      .rate2 small { display: block; font-size: 11px; color: var(--c-sub); font-weight: 400; }
-      body { font-size: 14px; }
+      .rate2 b { display: block; font-size: var(--fs-base); font-weight: 900; }
+      .rate2 small { display: block; font-size: var(--fs-xs); color: var(--c-sub); font-weight: 400; }
+      body { font-size: var(--fs-base); }
       .bottom-tab { height: 62px; }
-      .tab-item { font-size: 12px; gap: 3px; }
+      .tab-item { font-size: var(--fs-s); gap: 3px; }
       .tab-item .tab-icon { height: 26px; }
       .tab-item .ic { width: 26px; height: 26px; }
       .app-header { height: 54px; }
-      .app-header .logo { font-size: 18px; }
-      .app-header .logo span { font-size: 12px; }
+      .app-header .logo { font-size: var(--fs-xl); }
+      .app-header .logo span { font-size: var(--fs-s); }
       .icon-btn { width: 44px; height: 44px; }
       .icon-btn .ic { width: 24px; height: 24px; }
-      .cta-btn { min-height: 40px; padding: 0 14px; font-size: 13px; }
+      .cta-btn { min-height: 40px; padding: 0 14px; font-size: var(--fs-m); }
       .cta-btn .ic { width: 18px; height: 18px; }
       .page-header { height: 52px; }
       .page-header .page-header-title,
-      .page-header-title { font-size: 18px; }
+      .page-header-title { font-size: var(--fs-xl); }
       .page-header .back-btn .ic { width: 28px; height: 28px; }
       .date-tab,
-      .top-tab { min-height: 50px; font-size: 14px; }
+      .top-tab { min-height: 50px; font-size: var(--fs-base); }
       .section-header { padding: 14px 12px 8px; }
-      .section-title { font-size: 16px; }
-      .see-all { font-size: 13px; min-height: 40px; }
-      .chip { min-height: 40px; padding: 0 14px; font-size: 13px; }
-      .info-tabs .info-tab { min-height: 52px; font-size: 14px; }
+      .section-title { font-size: var(--fs-l); }
+      .see-all { font-size: var(--fs-m); min-height: 40px; }
+      .chip { min-height: 40px; padding: 0 14px; font-size: var(--fs-m); }
+      .info-tabs .info-tab { min-height: 52px; font-size: var(--fs-base); }
       .race-tab { min-width: 62px; min-height: 54px; }
-      .race-tab b { font-size: 16px; }
-      .race-tab small { font-size: 12px; }
+      .race-tab b { font-size: var(--fs-l); }
+      .race-tab small { font-size: var(--fs-s); }
       .race-tab.active { min-width: 92px; }
       .rchip { min-width: 62px; min-height: 54px; }
-      .rchip b { font-size: 16px; }
-      .rchip small { font-size: 12px; }
+      .rchip b { font-size: var(--fs-l); }
+      .rchip small { font-size: var(--fs-s); }
       .rchip.next { min-width: 90px; }
-      .action-btn { min-height: 50px; font-size: 14px; }
+      .action-btn { min-height: 50px; font-size: var(--fs-base); }
       .action-btn .ic { width: 18px; height: 18px; }
-      .sort-btn { font-size: 14px; min-height: 46px; }
-      .list-head .list-count { font-size: 14px; }
-      .comment-row { font-size: 14px; }
-      .comment-row .cr-r { font-size: 14px; }
+      .sort-btn { font-size: var(--fs-base); min-height: 46px; }
+      .list-head .list-count { font-size: var(--fs-base); }
+      .comment-row { font-size: var(--fs-base); }
+      .comment-row .cr-r { font-size: var(--fs-base); }
       .menu-item { min-height: 56px; }
-      .menu-text { font-size: 15px; }
-      .menu-section-title { font-size: 13px; }
-      .news-title { font-size: 15px; }
-      .news-date { font-size: 13px; }
-      .blog-author { font-size: 14px; }
-      .blog-text { font-size: 15px; }
+      .menu-text { font-size: var(--fs-l); }
+      .menu-section-title { font-size: var(--fs-m); }
+      .news-title { font-size: var(--fs-l); }
+      .news-date { font-size: var(--fs-m); }
+      .blog-author { font-size: var(--fs-base); }
+      .blog-text { font-size: var(--fs-l); }
 
-      .venue-grid.g3 .vcard-name { font-size: 20px; letter-spacing: -0.05em; }
-      .venue-grid.g3 .vcard-meta { font-size: 12px; }
-      .venue-grid.g3 .vcard-r { font-size: 14px; }
-      .venue-grid.g3 .vcard-dl { font-size: 12px; letter-spacing: -0.04em; }
-      .vgroup-name { font-size: 16px; }
-      .vgroup-link { font-size: 13px; }
-      .gbadge { font-size: 12px; }
-      .venue-name { font-size: 23px; }
+      .venue-grid.g3 .vcard-name { font-size: var(--fs-2xl); letter-spacing: -0.05em; }
+      .venue-grid.g3 .vcard-meta { font-size: var(--fs-s); }
+      .venue-grid.g3 .vcard-r { font-size: var(--fs-base); }
+      .venue-grid.g3 .vcard-dl { font-size: var(--fs-s); letter-spacing: -0.04em; }
+      .vgroup-name { font-size: var(--fs-l); }
+      .vgroup-link { font-size: var(--fs-m); }
+      .gbadge { font-size: var(--fs-s); }
+      .venue-name { font-size: var(--fs-3xl); }
       .venue-header { min-height: 48px; }
-      .venue-meta { font-size: 13px; }
-      .grade-badge { font-size: 13px; }
-      .ri-event { font-size: 13px; }
-      .ri-race { font-size: 19px; }
-      .ri-race span { font-size: 15px; }
-      .race-info-bar .race-info-meta { font-size: 13px; }
-      .pk2 .pickup-tile { width: 60px; height: 60px; font-size: 15px; }
-      .pk2 .pickup-reason-main { font-size: 15px; }
-      .pk2 .pickup-reason-sub { font-size: 13px; }
-      .mori-title { font-size: 17px; }
+      .venue-meta { font-size: var(--fs-m); }
+      .grade-badge { font-size: var(--fs-m); }
+      .ri-event { font-size: var(--fs-m); }
+      .ri-race { font-size: var(--fs-2xl); }
+      .ri-race span { font-size: var(--fs-l); }
+      .race-info-bar .race-info-meta { font-size: var(--fs-m); }
+      .pk2 .pickup-tile { width: 60px; height: 60px; font-size: var(--fs-l); }
+      .pk2 .pickup-reason-main { font-size: var(--fs-l); }
+      .pk2 .pickup-reason-sub { font-size: var(--fs-m); }
+      .mori-title { font-size: var(--fs-xl); }
       .mori-next,
-      .mori-sp { font-size: 13px; }
+      .mori-sp { font-size: var(--fs-m); }
 
-      .oshi-name { font-size: 16px; }
-      .oshi-act { min-height: 40px; font-size: 13px; }
-      .os-tab { min-height: 44px; font-size: 14px; }
-      .os-chip { min-height: 40px; font-size: 14px; }
-      .os-btn { min-height: 48px; font-size: 14px; }
-      .point-use span { min-height: 40px; font-size: 13px; }
+      .oshi-name { font-size: var(--fs-l); }
+      .oshi-act { min-height: 40px; font-size: var(--fs-m); }
+      .os-tab { min-height: 44px; font-size: var(--fs-base); }
+      .os-chip { min-height: 40px; font-size: var(--fs-base); }
+      .os-btn { min-height: 48px; font-size: var(--fs-base); }
+      .point-use span { min-height: 40px; font-size: var(--fs-m); }
 
       .mania-table td,
-      .race-table td { font-size: 13px; }
-      .rider-name { font-size: 14px; }
+      .race-table td { font-size: var(--fs-m); }
+      .rider-name { font-size: var(--fs-base); }
       .mania-table .c-name { min-width: 88px; width: 88px; }
-      .at td { font-size: 13px; }
-      .rn b { font-size: 14px; }
-      .at .hd { font-size: 19px; }
+      .at td { font-size: var(--fs-m); }
+      .rn b { font-size: var(--fs-base); }
+      .at .hd { font-size: var(--fs-2xl); }
       .at .fx2 { min-width: 108px; max-width: 108px; }
-      .wx span { font-size: 13px; }
+      .wx span { font-size: var(--fs-m); }
       .sheet { bottom: 62px; }
       .sheet-overlay { inset: 0 0 62px 0; }
 
-      /* G指数（数値＋印） */
       .mania-table td.c-g { white-space: nowrap; }
       .mania-table td.c-g .g-val { margin-right: 2px; }
-      /* 詳細モーダル（マニア分析.png 準拠） */
       .detail-table { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; }
       .detail-table th { line-height: 1.25; border-right: 1px solid var(--c-surface2); }
       .detail-table thead tr + tr th { top: 22px; }
@@ -1292,10 +1300,99 @@
       .detail-table .dt-name { left: 26px; min-width: 64px; border-right: 2px solid var(--c-border); }
       .detail-table td.rt { min-width: 64px; padding: 3px 4px 4px; text-align: right; vertical-align: top; }
       .detail-table .rt-v { display: block; font-weight: 700; color: var(--c-text); line-height: 1.2; }
-      .detail-table .rt-n { display: block; font-size: 10px; color: var(--c-sub); line-height: 1.2; }
+      .detail-table .rt-n { display: block; font-size: var(--fs-xs); color: var(--c-sub); line-height: 1.2; }
       .detail-table .rt-bar { display: block; height: 6px; margin-top: 2px; background: #8bc34a; border-radius: 1px; }
       .detail-table .rt-out .rt-bar { background: #64b5f6; }
       .detail-table tbody tr:nth-child(even) td { background: #fbfaf8; }
+
+      .race-tabs { gap: 6px; padding: 8px; }
+      .race-tab { min-width: 62px; min-height: 54px; padding: 3px 5px; gap: 0; line-height: 1.15; }
+      .race-tab b { font-size: var(--fs-l); font-weight: 900; }
+      .race-tab small { font-size: var(--fs-s); font-weight: 400; color: var(--c-sub); }
+      .race-tab.past b { color: var(--c-sub); font-weight: 800; }
+      .race-tab.past small { color: var(--c-sub); font-weight: 700; }
+      .race-tab.active { min-width: 90px; }
+      .race-tab.active b { color: var(--c-on-primary); }
+      .race-tab.active small { color: #4a2f00; font-weight: 800; }
+      .race-tab.active.soon small { color: #8a1c10; }
+      .race-tab.canceled { background: var(--c-closed-bg); border-color: var(--c-closed-bg); color: var(--c-dis); cursor: default; }
+      .race-tab.canceled b,
+      .race-tab.canceled small { color: var(--c-dis); font-weight: 800; }
+      .ri-sub { margin-top: 2px; font-size: var(--fs-s); color: var(--c-sub); font-family: var(--ff-num); }
+
+      .mania-table th {
+        background: #f5f5f3;
+        font-size: var(--fs-xs);
+        font-weight: 700;
+        color: var(--c-sub);
+        line-height: 1.25;
+        border-right: 1px solid #e6e2dc;
+      }
+      .mania-table td { font-size: var(--fs-m); border-right: 1px solid #e6e2dc; border-bottom: 1px solid var(--c-border); }
+      .mania-table .bl { border-left: 1px solid #c9c4bb; }
+      .mania-table th.th-group { text-align: center; padding-left: 3px; }
+      .mania-table td.cls small { font-size: var(--fs-xs); color: var(--c-sub); }
+      .mania-table .c-item { min-width: 48px; }
+      .frame-cell { width: 24px; height: 24px; border-radius: var(--r-sm); font-size: var(--fs-m); font-weight: 900; }
+      .f1 { background: var(--w1); color: var(--w1-t); border: 1px solid var(--w1-bd); }
+      .f2 { background: var(--w2); color: var(--w2-t); border: 1px solid var(--w2-bd); }
+      .f3 { background: var(--w3); color: var(--w3-t); border: 1px solid var(--w3-bd); }
+      .f4 { background: var(--w4); color: var(--w4-t); border: 1px solid var(--w4-bd); }
+      .f5 { background: var(--w5); color: var(--w5-t); border: 1px solid var(--w5-bd); }
+      .f6 { background: var(--w6); color: var(--w6-t); border: 1px solid var(--w6-bd); }
+      .f7 { background: var(--w7); color: var(--w7-t); border: 1px solid var(--w7-bd); }
+      .mk { font-size: var(--fs-base); font-weight: 400; }
+      .mania-table .c-waku,
+      .mania-table .c-name { position: static; }
+      .mania-table .c-sha { position: sticky; left: 0; z-index: 2; width: 40px; min-width: 40px; padding: 2px !important; }
+      .mania-table th.c-sha { z-index: 4; }
+      .sha-nm {
+        display: none;
+        margin-top: 2px;
+        font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", "Meiryo", sans-serif;
+        font-size: var(--fs-xs);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.06em;
+        white-space: nowrap;
+        color: var(--c-text);
+      }
+      .mania-wrap.scrolled .sha-nm { display: block; }
+      .mania-wrap.scrolled .mania-table .c-sha { box-shadow: inset -2px 0 0 var(--c-border); }
+      .detail-table .sha-nm { display: none !important; }
+      .leg-tag { font-size: var(--fs-xs); font-weight: 700; padding: 1px 4px; border-radius: 3px; }
+      .leg-escape { background: #fff3cd; color: #856404; }
+      .leg-chase { background: #e3f2fd; color: #1565c0; }
+      .leg-both { background: #e8f5e9; color: #1b5e20; }
+      .item-btn {
+        width: 46px;
+        height: 30px;
+        border-radius: 6px;
+        border: 1px solid var(--c-border);
+        background: var(--c-surface);
+        box-shadow: var(--e1);
+        font-size: var(--fs-xs);
+        font-weight: 700;
+        color: var(--c-text);
+      }
+      .item-btn:active,
+      .item-btn.active { background: var(--c-primary); border-color: var(--c-primary-d); color: var(--c-on-primary); }
+      .rt-legend {
+        position: sticky;
+        left: 0;
+        width: 100%;
+        max-width: 375px;
+        padding: 10px 12px 16px;
+        border-top: 1px solid var(--c-border);
+        background: var(--c-bg);
+        font-size: var(--fs-s);
+        line-height: 1.5;
+        color: var(--c-sub);
+      }
+      .rt-legend-title { font-size: var(--fs-m); font-weight: 800; color: var(--c-text); margin-bottom: 4px; }
+      .rt-legend dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; }
+      .rt-legend dt { font-weight: 800; color: var(--c-text); white-space: nowrap; }
+      .rt-legend dd { margin: 0; }
     </style>
   </head>
   <body>
@@ -1322,7 +1419,7 @@
                 <div class="race-tabs">
                   <div class="race-tab past"><b>1R</b><small>確定</small></div>
                   <div class="race-tab past"><b>2R</b><small>確定</small></div>
-                  <div class="race-tab active"><b>3R</b><small>締切32分前</small></div>
+                  <div class="race-tab active soon"><b>3R</b><small>締切32分前</small></div>
                   <div class="race-tab"><b>4R</b><small>14:15</small></div>
                   <div class="race-tab"><b>5R</b><small>14:45</small></div>
                   <div class="race-tab canceled"><b>6R</b><small>中止</small></div>
@@ -1335,8 +1432,9 @@
             <div class="race-info-bar ri-has-act">
               <div class="ri-main">
                 <div class="ri-event"><span class="grade-badge grade-g3">G3</span><span class="ell maxcase">報知新聞社杯争奪戦 in 大垣記念</span></div>
-                <div class="ri-race">3R<span>A級一般</span><span>1700m(5周)</span></div>
+                <div class="ri-race">3R<span>A級一般</span></div>
                 <div class="race-info-row"><div class="race-info-meta">締切 13:45 ／ 発走 13:50</div></div>
+                <div class="ri-sub">1700m(5周)</div>
               </div>
               <div class="ri-act"><div class="ri-btn live"><svg class="ic" aria-hidden="true"><use href="#ic-live"></use></svg>LIVE</div><div class="ri-btn vote"><svg class="ic" aria-hidden="true"><use href="#ic-ticket"></use></svg>投票</div></div>
             </div>
@@ -1357,18 +1455,18 @@
               <table class="mania-table">
                 <thead>
                   <tr>
-                    <th class="fx c-waku" rowspan="2">枠<br />番</th>
-                    <th class="fx c-sha" rowspan="2">車<br />番</th>
-                    <th class="fx c-name" rowspan="2">選手名<br />ホーム/期/年</th>
+                    <th class="c-waku" rowspan="2">枠</th>
+                    <th class="fx c-sha" rowspan="2">車番</th>
+                    <th class="c-name" rowspan="2">選手名</th>
                     <th rowspan="2" class="c-item">G指数</th>
-                    <th rowspan="2" class="c-item">マニア分析<br />総合評価</th>
-                    <th rowspan="2">級班<br />現/前</th>
-                    <th rowspan="2">脚<br />質</th>
-                    <th rowspan="2">競走<br />得点</th>
-                    <th class="th-group" colspan="8">マニア分析評価項目</th>
+                    <th rowspan="2" class="bl c-item">総合<br />評価</th>
+                    <th rowspan="2" class="bl">級班</th>
+                    <th rowspan="2" class="bl">脚質</th>
+                    <th rowspan="2" class="bl">競走<br />得点</th>
+                    <th class="th-group bl" colspan="8">マニア分析 評価項目</th>
                   </tr>
                   <tr>
-                    <th class="c-item"><button class="item-btn" data-item="0">周長</button></th>
+                    <th class="c-item bl"><button class="item-btn" data-item="0">周長</button></th>
                     <th class="c-item"><button class="item-btn" data-item="1">見なし<br />直線</button></th>
                     <th class="c-item"><button class="item-btn" data-item="2">レース<br />種別</button></th>
                     <th class="c-item"><button class="item-btn" data-item="3">レース<br />日程</button></th>
@@ -1380,18 +1478,18 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="fx c-waku">1</td>
-                    <td class="fx c-sha"><div class="frame-cell f1">1</div></td>
-                    <td class="fx c-name">
+                    <td class="c-waku">1</td>
+                    <td class="fx c-sha"><div class="frame-cell f1">1</div><span class="sha-nm">伊藤太</span></td>
+                    <td class="c-name">
                       <div class="rider-name">伊藤太一</div>
                       <div class="rider-meta">山梨(境川)/91/43</div>
                     </td>
                     <td class="c-g"><span class="g-val">33</span> </td>
-                    <td></td>
-                    <td>A2/<span class="cls-sub">A1</span></td>
-                    <td>追</td>
-                    <td>84.42</td>
-                    <td></td>
+                    <td class="bl"></td>
+                    <td class="bl cls">A2<small>/A1</small></td>
+                    <td class="bl"><span class="leg-tag leg-chase">追</span></td>
+                    <td class="bl score">84.42</td>
+                    <td class="bl"></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -1401,18 +1499,18 @@
                     <td></td>
                   </tr>
                   <tr>
-                    <td class="fx c-waku">2</td>
-                    <td class="fx c-sha"><div class="frame-cell f2">2</div></td>
-                    <td class="fx c-name">
+                    <td class="c-waku">2</td>
+                    <td class="fx c-sha"><div class="frame-cell f2">2</div><span class="sha-nm">藤田真</span></td>
+                    <td class="c-name">
                       <div class="rider-name">藤田真</div>
                       <div class="rider-meta">兵庫(明石)/89/45</div>
                     </td>
                     <td class="c-g"><span class="g-val">40</span> <span class="mk mk-x">✕</span></td>
-                    <td><span class="mk mk-o">○</span></td>
-                    <td>A2/<span class="cls-sub">A1</span></td>
-                    <td>両</td>
-                    <td>86.50</td>
-                    <td></td>
+                    <td class="bl"><span class="mk mk-o">○</span></td>
+                    <td class="bl cls">A2<small>/A1</small></td>
+                    <td class="bl"><span class="leg-tag leg-both">両</span></td>
+                    <td class="bl score">86.50</td>
+                    <td class="bl"></td>
                     <td><span class="mk mk-tri">△</span></td>
                     <td><span class="mk mk-x">✕</span></td>
                     <td></td>
@@ -1422,18 +1520,18 @@
                     <td><span class="mk mk-x">✕</span></td>
                   </tr>
                   <tr>
-                    <td class="fx c-waku">3</td>
-                    <td class="fx c-sha"><div class="frame-cell f3">3</div></td>
-                    <td class="fx c-name">
+                    <td class="c-waku">3</td>
+                    <td class="fx c-sha"><div class="frame-cell f3">3</div><span class="sha-nm">小原唯</span></td>
+                    <td class="c-name">
                       <div class="rider-name">小原唯志</div>
                       <div class="rider-meta">茨城(取手)/101/43</div>
                     </td>
                     <td class="c-g"><span class="g-val num-blue">72</span> <span class="mk mk-o">○</span></td>
-                    <td><span class="mk mk-dbl">◎</span></td>
-                    <td>A1/<span class="cls-sub">A1</span></td>
-                    <td>逃</td>
-                    <td>90.73</td>
-                    <td><span class="mk mk-dbl">◎</span></td>
+                    <td class="bl"><span class="mk mk-dbl">◎</span></td>
+                    <td class="bl cls">A1<small>/A1</small></td>
+                    <td class="bl"><span class="leg-tag leg-escape">逃</span></td>
+                    <td class="bl score">90.73</td>
+                    <td class="bl"><span class="mk mk-dbl">◎</span></td>
                     <td><span class="mk mk-dbl">◎</span></td>
                     <td><span class="mk mk-o">○</span></td>
                     <td><span class="mk mk-dbl">◎</span></td>
@@ -1443,18 +1541,18 @@
                     <td><span class="mk mk-dbl">◎</span></td>
                   </tr>
                   <tr>
-                    <td class="fx c-waku">4</td>
-                    <td class="fx c-sha"><div class="frame-cell f4">4</div></td>
-                    <td class="fx c-name">
+                    <td class="c-waku">4</td>
+                    <td class="fx c-sha"><div class="frame-cell f4">4</div><span class="sha-nm">鈴木庸</span></td>
+                    <td class="c-name">
                       <div class="rider-name">鈴木庸之</div>
                       <div class="rider-meta">新潟(弥彦)/92/40</div>
                     </td>
                     <td class="c-g"><span class="g-val">62</span> <span class="mk mk-tri">△</span></td>
-                    <td><span class="mk mk-tri">△</span></td>
-                    <td>A1/<span class="cls-sub">A1</span></td>
-                    <td>両</td>
-                    <td>92.12</td>
-                    <td><span class="mk mk-tri">△</span></td>
+                    <td class="bl"><span class="mk mk-tri">△</span></td>
+                    <td class="bl cls">A1<small>/A1</small></td>
+                    <td class="bl"><span class="leg-tag leg-both">両</span></td>
+                    <td class="bl score">92.12</td>
+                    <td class="bl"><span class="mk mk-tri">△</span></td>
                     <td><span class="mk mk-x">✕</span></td>
                     <td><span class="mk mk-tri">△</span></td>
                     <td><span class="mk mk-tri">△</span></td>
@@ -1464,18 +1562,18 @@
                     <td><span class="mk mk-tri">△</span></td>
                   </tr>
                   <tr>
-                    <td class="fx c-waku">5</td>
-                    <td class="fx c-sha"><div class="frame-cell f5">5</div></td>
-                    <td class="fx c-name">
+                    <td class="c-waku">5</td>
+                    <td class="fx c-sha"><div class="frame-cell f5">5</div><span class="sha-nm">小松剛</span></td>
+                    <td class="c-name">
                       <div class="rider-name">小松剛之</div>
                       <div class="rider-meta">宮城(-)/79/51</div>
                     </td>
                     <td class="c-g"><span class="g-val num-hi">90</span> <span class="mk mk-dbl">◎</span></td>
-                    <td></td>
-                    <td>A1/<span class="cls-sub">A3</span></td>
-                    <td>両</td>
-                    <td>82.87</td>
-                    <td><span class="mk mk-o">○</span></td>
+                    <td class="bl"></td>
+                    <td class="bl cls">A1<small>/A3</small></td>
+                    <td class="bl"><span class="leg-tag leg-both">両</span></td>
+                    <td class="bl score">82.87</td>
+                    <td class="bl"><span class="mk mk-o">○</span></td>
                     <td><span class="mk mk-o">○</span></td>
                     <td><span class="mk mk-dbl">◎</span></td>
                     <td><span class="mk mk-o">○</span></td>
@@ -1485,18 +1583,18 @@
                     <td><span class="mk mk-o">○</span></td>
                   </tr>
                   <tr>
-                    <td class="fx c-waku">6</td>
-                    <td class="fx c-sha"><div class="frame-cell f6">6</div></td>
-                    <td class="fx c-name">
+                    <td class="c-waku">6</td>
+                    <td class="fx c-sha"><div class="frame-cell f6">6</div><span class="sha-nm">倉野隆</span></td>
+                    <td class="c-name">
                       <div class="rider-name">倉野隆太郎</div>
                       <div class="rider-meta">三重(松阪)/91/42</div>
                     </td>
                     <td class="c-g"><span class="g-val">15</span> </td>
-                    <td><span class="mk mk-x">✕</span></td>
-                    <td>A2/<span class="cls-sub">A2</span></td>
-                    <td>追</td>
-                    <td>80.65</td>
-                    <td></td>
+                    <td class="bl"><span class="mk mk-x">✕</span></td>
+                    <td class="bl cls">A2<small>/A2</small></td>
+                    <td class="bl"><span class="leg-tag leg-chase">追</span></td>
+                    <td class="bl score">80.65</td>
+                    <td class="bl"></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -1506,18 +1604,18 @@
                     <td></td>
                   </tr>
                   <tr>
-                    <td class="fx c-waku">7</td>
-                    <td class="fx c-sha"><div class="frame-cell f7">7</div></td>
-                    <td class="fx c-name">
+                    <td class="c-waku">7</td>
+                    <td class="fx c-sha"><div class="frame-cell f7">7</div><span class="sha-nm">山田雅</span></td>
+                    <td class="c-name">
                       <div class="rider-name">山田雅之</div>
                       <div class="rider-meta">岐阜(岐阜)/72/53</div>
                     </td>
                     <td class="c-g"><span class="g-val">38</span> </td>
-                    <td></td>
-                    <td>A1/<span class="cls-sub">A1</span></td>
-                    <td>追</td>
-                    <td>85.75</td>
-                    <td><span class="mk mk-x">✕</span></td>
+                    <td class="bl"></td>
+                    <td class="bl cls">A1<small>/A1</small></td>
+                    <td class="bl"><span class="leg-tag leg-chase">追</span></td>
+                    <td class="bl score">85.75</td>
+                    <td class="bl"><span class="mk mk-x">✕</span></td>
                     <td></td>
                     <td></td>
                     <td><span class="mk mk-x">✕</span></td>
@@ -1528,8 +1626,14 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="hint">
-                ※ 評価項目のボタンをタップすると各マニア分析の詳細を表示／表は横スクロール可
+              <div class="rt-legend">
+                <div class="rt-legend-title">項目の見方</div>
+                <dl>
+                  <dt>選手名</dt><dd>下段は 府県（ホーム）／期／年齢</dd>
+                  <dt>級班</dt><dd>今期／前期</dd>
+                  <dt>総合評価</dt><dd>マニア分析の総合評価（◎○△✕）</dd>
+                  <dt>評価項目</dt><dd>項目名のボタンをタップすると、その条件での全選手の成績を表示</dd>
+                </dl>
               </div>
             </div>
 
@@ -1592,7 +1696,6 @@
       const MK = { "◎": "mk-dbl", "○": "mk-o", "△": "mk-tri", "✕": "mk-x" };
       const pct1 = (n, d) => (d ? ((n / d) * 100).toFixed(1) : "0.0");
 
-      // 評価記号から決定的にサンプル成績を作る（g=0: 条件該当 / g=1: すべて）
       function calc(mark, i, idx, g) {
         const seed = (i + 1) * 7 + idx * 5 + g * 3;
         const n = g ? 30 + ((seed * 11) % 75) : 20 + ((seed * 7) % 30);
@@ -1626,7 +1729,6 @@
           const mark = tr.children[8 + idx].textContent.trim();
           return { tr, mark, s: [calc(mark, i, idx, 0), calc(mark, i, idx, 1)] };
         });
-        // 出場選手中順位（3連対率順）
         [0, 1].forEach((g) => {
           [...data].sort((a, b) => b.s[g].r3 - a.s[g].r3).forEach((d, k) => (d.s[g].rank = k + 1));
         });
@@ -1677,6 +1779,12 @@
       const secondInner = secondWrap.querySelector(".phone-inner");
       bind(secondInner);
       openSheet(secondInner, 0);
+
+      document.querySelectorAll(".mania-wrap").forEach((w) => {
+        const sync = () => w.classList.toggle("scrolled", w.scrollLeft > 24);
+        w.addEventListener("scroll", sync, { passive: true });
+        sync();
+      });
     </script>
     <script>
       document.querySelectorAll(".hscroll-inner").forEach(function (box) {
