@@ -2833,19 +2833,11 @@
         gap: 3px;
         font-variant-numeric: tabular-nums;
       }
-      .venue-grid.g3 .vcard-dl .deadline-clock { display: none; }
       .venue-grid.g3 .vcard-dl.soon {
         color: var(--c-deadline-soon);
         background: var(--c-deadline-soon-bg);
         padding: 2px 4px;
         margin-left: auto;
-      }
-      .venue-grid.g3 .vcard-dl.soon .deadline-clock {
-        display: block;
-        width: 13px;
-        height: 13px;
-        flex: 0 0 13px;
-        fill: currentColor;
       }
       .venue-grid.g3 .vcard.deadline-soon .vcard-bottom { flex-wrap: wrap; }
 
@@ -2908,7 +2900,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span><span class="girls" aria-label="ガールズ">♥</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl" data-deadline="20:33"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:33</span></span>
+                    <span class="vcard-dl" data-deadline="20:33"><span class="deadline-time">20:33</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2917,7 +2909,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl" data-deadline="20:55"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:55</span></span>
+                    <span class="vcard-dl" data-deadline="20:55"><span class="deadline-time">20:55</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2926,7 +2918,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl" data-deadline="20:48"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:48</span></span>
+                    <span class="vcard-dl" data-deadline="20:48"><span class="deadline-time">20:48</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2935,7 +2927,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl" data-deadline="20:41"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:41</span></span>
+                    <span class="vcard-dl" data-deadline="20:41"><span class="deadline-time">20:41</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2944,7 +2936,7 @@
                   <div class="vcard-tags maxcase"><span class="kubun">ミッドナイト</span><span class="girls" aria-label="ガールズ">♥</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">1R</span>
-                    <span class="vcard-dl" data-deadline="21:02"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">21:02</span></span>
+                    <span class="vcard-dl" data-deadline="21:02"><span class="deadline-time">21:02</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2953,7 +2945,7 @@
                   <div class="vcard-tags"><span class="kubun">ミッドナイト</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">1R</span>
-                    <span class="vcard-dl" data-deadline="21:30"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">21:30</span></span>
+                    <span class="vcard-dl" data-deadline="21:30"><span class="deadline-time">21:30</span></span>
                   </div>
                 </div>
                 <div class="vcard ended">
@@ -2976,7 +2968,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">11R</span>
-                    <span class="vcard-dl" data-deadline="20:40"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:40</span></span>
+                    <span class="vcard-dl" data-deadline="20:40"><span class="deadline-time">20:40</span></span>
                   </div>
                 </div>
                 <div class="vcard auto">
@@ -2985,7 +2977,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">9R</span>
-                    <span class="vcard-dl" data-deadline="20:31"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:31</span></span>
+                    <span class="vcard-dl" data-deadline="20:31"><span class="deadline-time">20:31</span></span>
                   </div>
                 </div>
               </div>
@@ -3143,26 +3135,117 @@
       });
     </script>
     <script>
+      // Three identical runs of slides allow the carousel to move directly
+      // from the last banner into the first banner without reversing direction.
       document.querySelectorAll(".bn-carousel").forEach(function (box) {
         var track = box.querySelector(".bn-track");
-        var dots = box.querySelectorAll(".bn-dots i");
-        var items = track.children;
-        var idx = 0;
+        var dots = Array.from(box.querySelectorAll(".bn-dots i"));
+        var originals = Array.from(track.children);
+        var count = originals.length;
+        if (count < 2) return;
         var ms = +box.getAttribute("data-interval") || 3500;
-        function step() { return items.length > 1 ? items[1].offsetLeft - items[0].offsetLeft : track.clientWidth; }
-        function sync() {
-          var i = Math.round(track.scrollLeft / step());
-          dots.forEach(function (d, n) { d.classList.toggle("on", n === i); });
-          idx = i;
+        var touching = false;
+        var pauseUntil = 0;
+        var settleTimer;
+        var normalizationPending = false;
+
+        // The middle run is the real carousel. The surrounding runs are
+        // seamless copies for both forward and backward touch swipes.
+        var leading = document.createDocumentFragment();
+        var trailing = document.createDocumentFragment();
+        originals.forEach(function (item) {
+          var first = item.cloneNode(true);
+          var last = item.cloneNode(true);
+          first.setAttribute("aria-hidden", "true");
+          last.setAttribute("aria-hidden", "true");
+          leading.appendChild(first);
+          trailing.appendChild(last);
+        });
+        track.insertBefore(leading, track.firstChild);
+        track.appendChild(trailing);
+
+        function step() {
+          return track.children[1].offsetLeft - track.children[0].offsetLeft;
         }
-        track.addEventListener("scroll", sync, { passive: true });
-        box.querySelectorAll("img").forEach(function (img) {
+        function logicalIndex() {
+          var index = Math.round(track.scrollLeft / step()) - count;
+          return ((index % count) + count) % count;
+        }
+        function syncDots() {
+          var selected = logicalIndex();
+          dots.forEach(function (dot, index) {
+            dot.classList.toggle("on", index === selected);
+          });
+        }
+        function jumpWithoutAnimation(left) {
+          normalizationPending = true;
+          var snap = track.style.scrollSnapType;
+          var behavior = track.style.scrollBehavior;
+          track.style.scrollSnapType = "none";
+          track.style.scrollBehavior = "auto";
+          track.scrollLeft = left;
+          // Re-enable snap after the browser has applied the invisible jump.
+          requestAnimationFrame(function () {
+            track.style.scrollSnapType = snap;
+            track.style.scrollBehavior = behavior;
+            normalizationPending = false;
+            syncDots();
+          });
+        }
+        function recenter() {
+          if (touching || normalizationPending) return;
+          var stride = step();
+          if (!stride) return;
+          var position = Math.round(track.scrollLeft / stride);
+          if (position < count) {
+            jumpWithoutAnimation(track.scrollLeft + count * stride);
+          } else if (position >= 2 * count) {
+            jumpWithoutAnimation(track.scrollLeft - count * stride);
+          }
+        }
+        function scheduleRecenter() {
+          clearTimeout(settleTimer);
+          settleTimer = setTimeout(recenter, 160);
+        }
+        track.addEventListener("scroll", function () {
+          syncDots();
+          if (!normalizationPending) scheduleRecenter();
+        }, { passive: true });
+        // scrollend is used when available; the debounce above is the fallback.
+        track.addEventListener("scrollend", recenter);
+        track.addEventListener("pointerdown", function () {
+          touching = true;
+          pauseUntil = Date.now() + ms;
+        });
+        function endTouch() {
+          touching = false;
+          scheduleRecenter();
+        }
+        window.addEventListener("pointerup", endTouch);
+        window.addEventListener("pointercancel", endTouch);
+        track.addEventListener("wheel", function () { pauseUntil = Date.now() + ms; }, { passive: true });
+
+        track.querySelectorAll("img").forEach(function (img) {
           img.addEventListener("error", function () { img.parentElement.classList.add("noimg"); });
           if (img.complete && !img.naturalWidth) img.parentElement.classList.add("noimg");
         });
+
+        // Start from the middle run, so swiping either direction works.
+        jumpWithoutAnimation(count * step());
+        window.addEventListener("resize", function () {
+          // Read the selected dot, rather than using an old scroll offset
+          // with a newly calculated responsive slide width.
+          var current = dots.findIndex(function (dot) { return dot.classList.contains("on"); });
+          jumpWithoutAnimation((count + Math.max(0, current)) * step());
+        });
         setInterval(function () {
-          var next = (idx + 1) % items.length;
-          track.scrollTo({ left: next * step(), behavior: "smooth" });
+          if (touching || normalizationPending || Date.now() < pauseUntil) return;
+          var position = Math.round(track.scrollLeft / step());
+          if (position >= 2 * count) {
+            jumpWithoutAnimation((count + (position % count)) * step());
+            position = count + (position % count);
+          }
+          track.scrollTo({ left: (position + 1) * step(), behavior: "smooth" });
         }, ms);
       });
     </script>
