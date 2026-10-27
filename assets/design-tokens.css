@@ -13,8 +13,6 @@
   --fs-18: 18px;
   --fs-20: 20px;
   --fs-24: 24px;
-  /* Unit labels are intentionally relative to their parent text size. */
-  --fs-unit-scale: 0.8em;
 
   /* Semantic theme colors and common brand/competition colors. */
   --c-primary: #f5a623;
