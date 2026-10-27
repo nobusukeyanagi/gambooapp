@@ -2359,8 +2359,9 @@
       }
       .bn-track::-webkit-scrollbar { display: none; }
       .bn-track .bn {
-        flex: 0 0 calc(100% - 40px);
-        aspect-ratio: 2 / 1;
+        /* Keep the previous 2:1 banner height and make each slide square. */
+        flex: 0 0 calc((100% - 40px) / 2);
+        aspect-ratio: 1 / 1;
         scroll-snap-align: start;
         position: relative;
         overflow: hidden;
@@ -2681,7 +2682,7 @@
         margin-top: -1px;
       }
       .bn-track .bn {
-        aspect-ratio: 2 / 1;
+        aspect-ratio: 1 / 1;
       }
       .bn-track .bn img {
         object-fit: cover;
