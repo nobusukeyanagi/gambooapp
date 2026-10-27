@@ -528,7 +528,7 @@
       .news-badge {
         font-size: var(--fs-12);
         font-weight: 700;
-        padding: 2px 5px;
+        padding: 2px 7px;
         border-radius: 3px;
         color: var(--palette-ffffff);
         white-space: nowrap;
@@ -1981,6 +1981,9 @@
       }
       .news-badge.keirin { background: var(--c-keirin); }
       .news-badge.auto { background: var(--c-auto); }
+      .news-badge.both {
+        background: linear-gradient(90deg, var(--c-keirin) 0 50%, var(--c-auto) 50% 100%);
+      }
       .news-badge.other { background: var(--palette-6b6b6b); }
       .news-date { font-size: var(--fs-12); color: var(--c-sub); font-family: var(--ff-num); }
       .news-title { font-size: var(--fs-14); line-height: 1.45; }
@@ -2736,7 +2739,7 @@
         white-space: nowrap;
         font-size: var(--fs-12);
         font-weight: 700;
-        color: var(--c-keirin);
+        color: var(--c-text);
         font-family: var(--ff-num);
       }
       .news-new {
@@ -2905,7 +2908,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span><span class="girls" aria-label="ガールズ">♥</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl" data-deadline="20:35"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:35</span></span>
+                    <span class="vcard-dl" data-deadline="20:33"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:33</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -3073,6 +3076,14 @@
                   <span class="news-date">2026.04.05</span><span class="news-new">[NEW]</span>
                 </div>
                 <div class="news-title ell2">川口オートレース場 SG日本選手権 特設ページを公開しました</div>
+                <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
+              </div>
+              <div class="news-item">
+                <div class="news-head">
+                  <span class="news-badge both">競輪＆オート</span>
+                  <span class="news-date">2024.04.15</span><span class="news-new">[NEW]</span>
+                </div>
+                <div class="news-title ell2">機能リリースのお知らせ(2024年4月18日)</div>
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
               </div>
 
