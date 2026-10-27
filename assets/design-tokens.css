@@ -5,25 +5,15 @@
  * Screen-specific layout and color usage remains in each HTML file.
  */
 :root {
-  /* Typography: shared UI sizes. References to legacy size tokens map to the canonical scale below. */
+  /* Typography: six canonical sizes; use only these tokens across every page. */
   --ff-ui: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
-  --fs-xs: var(--fs-s);
-  --fs-s: 12px;
-  --fs-m: 13px;
-  --fs-base: 14px;
-  --fs-l: 16px;
-  --fs-xl: 18px;
-  --fs-2xl: 20px;
-  --fs-3xl: 24px;
-
-  /* Compatibility aliases: prior 10/11/15/17/19/22/23/25px declarations now use the shared scale. */
-  --fs-10: var(--fs-s);
-  --fs-15: var(--fs-l);
-  --fs-17: var(--fs-xl);
-  --fs-19: var(--fs-2xl);
-  --fs-22: var(--fs-3xl);
-  --fs-23: var(--fs-3xl);
-  --fs-25: var(--fs-3xl);
+  --fs-12: 12px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-20: 20px;
+  --fs-24: 24px;
+  /* Unit labels are intentionally relative to their parent text size. */
   --fs-unit-scale: 0.8em;
 
   /* Semantic theme colors and common brand/competition colors. */
