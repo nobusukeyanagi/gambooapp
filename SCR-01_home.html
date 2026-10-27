@@ -2575,15 +2575,16 @@
         cursor: default;
         gap: 5px;
         margin-top: 5px;
+        flex-wrap: wrap;
       }
       .mori-heading .vgroup-name {
-        font-size: var(--fs-18);
+        font-size: var(--fs-20);
         line-height: 1.3;
-        flex: 1 1 auto;
-        min-width: 0;
+        flex: 0 1 auto;
+        min-width: max-content;
         gap: 5px;
         white-space: nowrap;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.03em;
       }
       .mori-heading .vgroup-name::before {
         flex: 0 0 4px;
@@ -2595,8 +2596,9 @@
         justify-content: flex-end;
         gap: 2px;
         min-height: 40px;
+        margin-left: auto;
         color: var(--c-secondary);
-        font-size: var(--fs-12);
+        font-size: var(--fs-14);
         font-weight: 700;
         text-decoration: none;
         white-space: nowrap;
@@ -2610,20 +2612,58 @@
       }
       .mori-card {
         margin: 2px 8px 10px;
-        padding: 10px 12px;
+        padding: 0;
+        min-height: 108px;
         background: var(--c-surface);
         border: 1px solid var(--c-border);
         border-radius: var(--r-md);
-        align-items: center;
-        gap: 12px;
+        align-items: stretch;
+        gap: 0;
+        overflow: hidden;
       }
-      .mori-card .mori-photo { width: 64px; height: 64px; }
-      .mori-card .mori-body { display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+      .mori-card .mori-photo {
+        flex: 0 0 112px;
+        width: 112px;
+        height: auto;
+        min-height: 108px;
+        border-radius: 0;
+        align-self: stretch;
+      }
+      .mori-card .mori-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 25%;
+      }
+      .mori-card .mori-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 3px;
+        padding: 12px 14px;
+      }
       .mori-schedule-label { color: var(--c-sub); font-size: var(--fs-14); font-weight: 400; }
       .mori-schedule-value { color: var(--c-text); font-size: var(--fs-18); font-weight: 800; line-height: 1.3; }
-      @media (max-width: 359px) {
-        .mori-heading .vgroup-name { font-size: var(--fs-16); }
+
+      /* Featured keirin races: same heading hierarchy as the venue lists. */
+      .featured-races-header .section-title::before {
+        background: var(--c-keirin);
       }
+      .pk3 .kun { gap: 0; }
+      .pk3 .pickup-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .pk3 .pk-explain {
+        color: var(--c-sub);
+        font-size: var(--fs-12);
+        font-weight: 400;
+        line-height: 1.35;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+      .pk3 .pk-race { margin-top: 3px; }
 
     </style>
   </head>
@@ -2788,33 +2828,37 @@
                 <div class="bn-dots"><i class="on"></i><i></i><i></i><i></i></div>
               </div>
 
-              <div class="section-header">
-                <div class="section-title">注目レース</div>
+              <div class="section-header featured-races-header">
+                <div class="section-title">競輪注目レース</div>
               </div>
               <div class="pickup-card pk3">
-                <div class="kun"><div class="kun-ic imgph">ロケット君<br />アイコン</div><div class="kun-nm">ロケット君</div></div>
+                <div class="kun"><div class="kun-ic imgph">ロケット君<br />アイコン</div></div>
                 <div class="pickup-body">
+                  <div class="pk-explain">自力型が自力型をマーク</div>
                   <div class="pk-race"><b>京王閣 11R</b><span class="pk-dl">締切 21:05</span></div>
                   <div class="pk-pick"><span class="carno w1">1</span><span class="pk-text ell">夏目新吾</span></div>
                 </div>
               </div>
               <div class="pickup-card pk3">
-                <div class="kun"><div class="kun-ic imgph">ダントツ君<br />アイコン</div><div class="kun-nm">ダントツ君</div></div>
+                <div class="kun"><div class="kun-ic imgph">ダントツ君<br />アイコン</div></div>
                 <div class="pickup-body">
+                  <div class="pk-explain">先頭選手の競走得点が突出</div>
                   <div class="pk-race"><b>いわき平 11R</b><span class="pk-dl">締切 21:11</span></div>
                   <div class="pk-pick"><span class="carno w3">3</span><span class="pk-text ell">森岡正臣</span></div>
                 </div>
               </div>
               <div class="pickup-card pk3">
-                <div class="kun"><div class="kun-ic imgph">逃げイチ君<br />アイコン</div><div class="kun-nm">逃げイチ君</div></div>
+                <div class="kun"><div class="kun-ic imgph">逃げイチ君<br />アイコン</div></div>
                 <div class="pickup-body">
+                  <div class="pk-explain">逃げ屋が1人のレース</div>
                   <div class="pk-race"><b>玉野 11R</b><span class="pk-dl">締切 21:18</span></div>
                   <div class="pk-pick"><span class="carno w4">4</span><span class="pk-text ell">倉松涼</span></div>
                 </div>
               </div>
               <div class="pickup-card pk3">
-                <div class="kun"><div class="kun-ic imgph">連勝君<br />アイコン</div><div class="kun-nm">連勝君</div></div>
+                <div class="kun"><div class="kun-ic imgph">連勝君<br />アイコン</div></div>
                 <div class="pickup-body">
+                  <div class="pk-explain">3連勝以上の選手</div>
                   <div class="pk-race"><b>小倉 11R</b><span class="pk-dl">締切 21:25</span></div>
                   <div class="pk-pick"><span class="carno w7">7</span><span class="pk-text ell">鈴木良太</span><span class="pk-note">3連勝</span></div>
                   <div class="pk-pick"><span class="carno w2">2</span><span class="pk-text ell">松山桂輔</span><span class="pk-note">2連勝</span></div>
