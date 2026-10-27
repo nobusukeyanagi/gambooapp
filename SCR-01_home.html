@@ -2665,6 +2665,29 @@
       }
       .pk3 .pk-race { margin-top: 3px; }
 
+      /* v13: mori schedule text and supplied slide banners */
+      .mori-card .mori-body {
+        gap: 2px;
+      }
+      .mori-schedule-label,
+      .mori-schedule-value {
+        color: var(--c-text);
+        font-size: var(--fs-20);
+        font-weight: 800;
+        line-height: 1.3;
+        letter-spacing: -0.04em;
+      }
+      .mori-schedule-label {
+        margin-top: -1px;
+      }
+      .bn-track .bn {
+        aspect-ratio: 2 / 1;
+      }
+      .bn-track .bn img {
+        object-fit: cover;
+        object-position: center;
+      }
+
     </style>
   </head>
   <body>
@@ -2813,19 +2836,21 @@
               <div class="mori-card">
                 <div class="mori-photo"><img src="mori.jpg" alt="森且行選手" /></div>
                 <div class="mori-body">
-                  <div class="mori-schedule-label">次回出走予定</div>
+                  <div class="mori-schedule-label">森且行</div>
                   <div class="mori-schedule-value">10/8 飯塚</div>
                 </div>
               </div>
 
               <div class="bn-carousel" data-interval="3500">
                 <div class="bn-track">
-                  <div class="bn"><img src="test.jpg" alt="キャンペーンバナー1" /><span class="bn-fallback">test.jpg（バナー1）</span></div>
-                  <div class="bn"><img src="test.jpg" alt="キャンペーンバナー2" /><span class="bn-fallback">test.jpg（バナー2）</span></div>
-                  <div class="bn"><img src="test.jpg" alt="キャンペーンバナー3" /><span class="bn-fallback">test.jpg（バナー3）</span></div>
-                  <div class="bn"><img src="test.jpg" alt="キャンペーンバナー4" /><span class="bn-fallback">test.jpg（バナー4）</span></div>
+                  <div class="bn"><img src="01.webp" alt="スライドバナー 01" /><span class="bn-fallback">01.webp</span></div>
+                  <div class="bn"><img src="02.webp" alt="スライドバナー 02" /><span class="bn-fallback">02.webp</span></div>
+                  <div class="bn"><img src="03.webp" alt="スライドバナー 03" /><span class="bn-fallback">03.webp</span></div>
+                  <div class="bn"><img src="04.webp" alt="スライドバナー 04" /><span class="bn-fallback">04.webp</span></div>
+                  <div class="bn"><img src="05.jpg" alt="スライドバナー 05" /><span class="bn-fallback">05.jpg</span></div>
+                  <div class="bn"><img src="06.webp" alt="スライドバナー 06" /><span class="bn-fallback">06.webp</span></div>
                 </div>
-                <div class="bn-dots"><i class="on"></i><i></i><i></i><i></i></div>
+                <div class="bn-dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
               </div>
 
               <div class="section-header featured-races-header">
