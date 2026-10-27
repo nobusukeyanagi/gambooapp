@@ -2223,7 +2223,12 @@
       .blog-author { font-size: var(--fs-14); }
       .blog-text { font-size: var(--fs-16); }
 
-      .venue-grid.g3 .vcard-name { font-size: var(--fs-20); letter-spacing: -0.05em; }
+      /* Venue names are a primary label on the compact home cards. */
+      .venue-grid.g3 .vcard-name { font-size: var(--fs-24); letter-spacing: -0.05em; }
+      /* Avoid truncating four-character Japanese venue names on very narrow screens. */
+      @media (max-width: 359px) {
+        .venue-grid.g3 .vcard-name { font-size: var(--fs-20); }
+      }
       .venue-grid.g3 .vcard-meta { font-size: var(--fs-12); }
       .venue-grid.g3 .vcard-r { font-size: var(--fs-14); }
       .venue-grid.g3 .vcard-dl { font-size: var(--fs-12); letter-spacing: -0.04em; }
