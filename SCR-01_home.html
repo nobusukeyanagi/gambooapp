@@ -2818,6 +2818,34 @@
         .pk3 .pk-race-time { flex-shrink: 0; }
       }
 
+      /* v22: deadline alert is a status, independent of sport colors. */
+      .venue-grid.g3 .vcard-dl[data-deadline] {
+        color: var(--c-text);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        padding: 2px 0;
+        border-radius: 4px;
+        gap: 3px;
+        font-variant-numeric: tabular-nums;
+      }
+      .venue-grid.g3 .vcard-dl .deadline-clock { display: none; }
+      .venue-grid.g3 .vcard-dl.soon {
+        color: var(--c-deadline-soon);
+        background: var(--c-deadline-soon-bg);
+        padding: 2px 4px;
+        margin-left: auto;
+      }
+      .venue-grid.g3 .vcard-dl.soon .deadline-clock {
+        display: block;
+        width: 13px;
+        height: 13px;
+        flex: 0 0 13px;
+        fill: currentColor;
+      }
+      .venue-grid.g3 .vcard.deadline-soon .vcard-bottom { flex-wrap: wrap; }
+
     </style>
   </head>
   <body>
@@ -2877,7 +2905,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span><span class="girls" aria-label="ガールズ">♥</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl soon">20:35</span>
+                    <span class="vcard-dl" data-deadline="20:35"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:35</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2886,7 +2914,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl">20:55</span>
+                    <span class="vcard-dl" data-deadline="20:55"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:55</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2895,7 +2923,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl">20:48</span>
+                    <span class="vcard-dl" data-deadline="20:48"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:48</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2904,7 +2932,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl">20:41</span>
+                    <span class="vcard-dl" data-deadline="20:41"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:41</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2913,7 +2941,7 @@
                   <div class="vcard-tags maxcase"><span class="kubun">ミッドナイト</span><span class="girls" aria-label="ガールズ">♥</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">1R</span>
-                    <span class="vcard-dl">21:02</span>
+                    <span class="vcard-dl" data-deadline="21:02"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">21:02</span></span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2922,7 +2950,7 @@
                   <div class="vcard-tags"><span class="kubun">ミッドナイト</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">1R</span>
-                    <span class="vcard-dl">21:30</span>
+                    <span class="vcard-dl" data-deadline="21:30"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">21:30</span></span>
                   </div>
                 </div>
                 <div class="vcard ended">
@@ -2945,7 +2973,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">11R</span>
-                    <span class="vcard-dl">20:40</span>
+                    <span class="vcard-dl" data-deadline="20:40"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:40</span></span>
                   </div>
                 </div>
                 <div class="vcard auto">
@@ -2954,7 +2982,7 @@
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">9R</span>
-                    <span class="vcard-dl soon">20:31</span>
+                    <span class="vcard-dl" data-deadline="20:31"><svg class="ic deadline-clock" aria-hidden="true"><use href="#ic-clock"></use></svg><span class="deadline-time">20:31</span></span>
                   </div>
                 </div>
               </div>
@@ -3137,5 +3165,39 @@
         });
       });
     </script>
+    <script>
+      /* v22: apply a 5-minute closing warning to both keirin and auto cards.
+         This wireframe uses the time printed in the status bar (20:28) as its demo clock.
+         When a live time replaces that display, the rule follows the new value. */
+      (function () {
+        var clock = document.querySelector(".status-bar span");
+        var deadlineItems = Array.from(document.querySelectorAll(".venue-grid.g3 .vcard-dl[data-deadline]"));
+        function minutes(value) {
+          var match = /^(\d{1,2}):(\d{2})$/.exec((value || "").trim());
+          if (!match || +match[1] > 23 || +match[2] > 59) return null;
+          return +match[1] * 60 + +match[2];
+        }
+        function updateDeadlineWarnings() {
+          var now = minutes(clock && clock.textContent);
+          deadlineItems.forEach(function (el) {
+            var cutoff = minutes(el.dataset.deadline);
+            var diff = now !== null && cutoff !== null ? cutoff - now : -1;
+            var soon = diff > 0 && diff <= 5;
+            el.classList.toggle("soon", soon);
+            el.closest(".vcard").classList.toggle("deadline-soon", soon);
+            if (soon) {
+              el.setAttribute("aria-label", "締切まで" + diff + "分 " + el.dataset.deadline);
+              el.setAttribute("title", "締切まで" + diff + "分");
+            } else {
+              el.removeAttribute("aria-label");
+              el.removeAttribute("title");
+            }
+          });
+        }
+        updateDeadlineWarnings();
+        setInterval(updateDeadlineWarnings, 30000);
+      })();
+    </script>
+
   </body>
 </html>
