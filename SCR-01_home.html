@@ -2436,6 +2436,69 @@
       /* v7: readable day tabs and a full-height balance divider. */
       .date-tabs .date-tab { font-size: var(--fs-16); }
       .pt-h .balance-sep { height: auto; align-self: stretch; margin: 0 10px; }
+      /* v8: supplied image assets and refined venue tags */
+      .app-header .logo-img {
+        height: 32px;
+        width: auto;
+        display: block;
+      }
+      .mori-photo { overflow: hidden; background: var(--c-surface2); }
+      .mori-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      .ic,
+      .imgph,
+      .blog-thumb,
+      .featured-thumb,
+      .cp-banner,
+      .maxcase,
+      .news-badge,
+      .kubun {
+        outline: none !important;
+      }
+
+      .venue-grid.g3 .vcard-name {
+        font-size: var(--fs-20);
+        letter-spacing: -0.04em;
+      }
+      .venue-grid.g3 .vcard-tags {
+        align-items: center;
+        gap: 4px;
+      }
+      .venue-grid.g3 .kubun {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        height: 20px;
+        padding: 0 6px;
+        border-radius: 4px;
+        background: transparent;
+        border: 1px solid var(--c-border);
+        color: var(--c-sub);
+        font-size: var(--fs-12);
+        font-weight: 400;
+        letter-spacing: 0;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .venue-grid.g3 .girls {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        min-width: 20px;
+        height: 20px;
+        padding: 1px 0 0;
+        border-radius: 4px;
+        background: transparent;
+        border: 1px solid var(--palette-e7a9bf);
+        color: var(--palette-b0285b);
+        font-size: var(--fs-18);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
     </style>
   </head>
   <body>
@@ -2528,7 +2591,7 @@
                 <div class="vcard">
                   <div class="vcard-top"><span class="gbadge g-f2">FⅡ</span><span class="vcard-day">最終日</span></div>
                   <div class="vcard-name">松戸</div>
-                  <div class="vcard-tags maxcase"><span class="kubun">ミッドナイト</span><span class="girls">ガールズ</span></div>
+                  <div class="vcard-tags maxcase"><span class="kubun">ミッドナイト</span><span class="girls">♡</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">1R</span>
                     <span class="vcard-dl">21:02</span>
