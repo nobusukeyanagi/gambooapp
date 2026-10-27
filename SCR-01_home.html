@@ -2499,6 +2499,66 @@
         letter-spacing: 0;
       }
 
+      /* v9: girls indicator uses a pink heart only, without a surrounding box. */
+      .venue-grid.g3 .girls {
+        display: inline-block;
+        width: auto;
+        min-width: 0;
+        height: auto;
+        padding: 1px 0 0;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        color: var(--palette-b0285b);
+        font-size: var(--fs-20);
+        font-weight: 700;
+        line-height: 1;
+        vertical-align: middle;
+        outline: none;
+      }
+
+      /* v9: keep the currency unit anchored when toggling the payout mask. */
+      .pay-toggle .pay-val {
+        display: inline-grid;
+        grid-template-columns: max-content 18px;
+        align-items: center;
+        column-gap: 4px;
+        margin-left: auto;
+      }
+      .pay-toggle .pay-val .payout-value {
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: end;
+        text-align: right;
+        margin: 0;
+        white-space: nowrap;
+        letter-spacing: 0;
+      }
+      .pay-toggle .pay-val .eye-on,
+      .pay-toggle .pay-val .eye-off {
+        grid-column: 2;
+        grid-row: 1;
+      }
+      /* Visibility, not display:none, preserves the grid's maximum width. */
+      .pay-toggle .pay-val .pay-shown {
+        display: inline;
+        visibility: visible;
+      }
+      .pay-toggle .pay-val .pay-hidden {
+        display: inline;
+        visibility: hidden;
+      }
+      .pay-toggle.masked .pay-val .pay-shown {
+        display: inline;
+        visibility: hidden;
+      }
+      .pay-toggle.masked .pay-val .pay-hidden {
+        display: inline;
+        visibility: visible;
+        color: var(--c-sub);
+        letter-spacing: 0;
+      }
+
     </style>
   </head>
   <body>
@@ -2562,12 +2622,12 @@
                   </div>
                 </div>
                 <div class="vcard">
-                  <div class="vcard-top"><span class="gbadge g-g3">GⅢ</span><span class="vcard-day">最終日</span></div>
-                  <div class="vcard-name maxcase">いわき平</div>
+                  <div class="vcard-top"><span class="gbadge g-g1">GⅠ</span><span class="vcard-day">4日目</span></div>
+                  <div class="vcard-name">小倉</div>
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl">20:41</span>
+                    <span class="vcard-dl">20:55</span>
                   </div>
                 </div>
                 <div class="vcard">
@@ -2580,16 +2640,16 @@
                   </div>
                 </div>
                 <div class="vcard">
-                  <div class="vcard-top"><span class="gbadge g-g1">GⅠ</span><span class="vcard-day">4日目</span></div>
-                  <div class="vcard-name">小倉</div>
+                  <div class="vcard-top"><span class="gbadge g-g3">GⅢ</span><span class="vcard-day">最終日</span></div>
+                  <div class="vcard-name maxcase">いわき平</div>
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
-                    <span class="vcard-dl">20:55</span>
+                    <span class="vcard-dl">20:41</span>
                   </div>
                 </div>
                 <div class="vcard">
-                  <div class="vcard-top"><span class="gbadge g-f2">FⅡ</span><span class="vcard-day">最終日</span></div>
+                  <div class="vcard-top"><span class="gbadge g-f1">FⅠ</span><span class="vcard-day">最終日</span></div>
                   <div class="vcard-name">松戸</div>
                   <div class="vcard-tags maxcase"><span class="kubun">ミッドナイト</span><span class="girls">♡</span></div>
                   <div class="vcard-bottom">
@@ -2621,21 +2681,21 @@
               </div>
               <div class="venue-grid g3">
                 <div class="vcard auto">
-                  <div class="vcard-top"><span class="gbadge g-f2">普通</span><span class="vcard-day">3日目</span></div>
-                  <div class="vcard-name">飯塚</div>
-                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
-                  <div class="vcard-bottom">
-                    <span class="vcard-r">9R</span>
-                    <span class="vcard-dl soon">20:31</span>
-                  </div>
-                </div>
-                <div class="vcard auto">
                   <div class="vcard-top"><span class="gbadge g-g2">G2</span><span class="vcard-day">2日目</span></div>
                   <div class="vcard-name">川口</div>
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">11R</span>
                     <span class="vcard-dl">20:40</span>
+                  </div>
+                </div>
+                <div class="vcard auto">
+                  <div class="vcard-top"><span class="gbadge g-f2">普通</span><span class="vcard-day">3日目</span></div>
+                  <div class="vcard-name">飯塚</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
+                  <div class="vcard-bottom">
+                    <span class="vcard-r">9R</span>
+                    <span class="vcard-dl soon">20:31</span>
                   </div>
                 </div>
               </div>
