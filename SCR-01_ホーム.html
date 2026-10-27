@@ -2392,6 +2392,46 @@
       .pk3 .pk-pick { margin-top: 5px; font-size: var(--fs-16); font-weight: 900; }
       .pk3 .pk-pick + .pk-pick { margin-top: 4px; }
       .pk3 .pk-note { margin-left: auto; font-size: var(--fs-14); font-weight: 800; color: var(--c-error); white-space: nowrap; }
+      /* v6: home balance + venue card refinements */
+      .venue-grid.g3 .vcard-name {
+        font-size: var(--fs-20);
+        letter-spacing: -0.04em;
+      }
+      .venue-grid.g3 .vcard-tags {
+        align-items: center;
+        gap: 4px;
+      }
+      .venue-grid.g3 .kubun {
+        display: inline;
+        height: auto;
+        min-width: 0;
+        padding: 0;
+        border-radius: 0;
+        background: none;
+        color: var(--c-sub);
+        font-size: var(--fs-12);
+        font-weight: 400;
+        letter-spacing: 0;
+        outline: none;
+      }
+      .venue-grid.g3 .girls {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        min-width: 20px;
+        height: 20px;
+        padding: 0;
+        border-radius: 4px;
+        background: transparent;
+        border: 1px solid var(--palette-e7a9bf);
+        color: var(--palette-b0285b);
+        font-size: var(--fs-18);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
     </style>
   </head>
   <body>
@@ -2423,15 +2463,15 @@
             <div class="payout-bar pt-h">
               <div class="pt-item">
                 <span class="payout-label">デルカ</span>
-                <span class="payout-value maxcase">9,999,999<span class="unit">pt</span></span>
+                <span class="payout-value maxcase">999,999,999<span class="unit">pt</span></span>
               </div>
               <div class="balance-sep"></div>
               <div class="pt-item pay-toggle masked" role="button" aria-pressed="true" aria-label="払戻金の表示・非表示を切り替え">
                 <span class="payout-label">払戻金</span>
                 <span class="pay-val">
-                  <svg class="ic eye-on" aria-hidden="true"><use href="#ic-eye"></use></svg><svg class="ic eye-off" aria-hidden="true"><use href="#ic-eyeoff"></use></svg>
-                  <span class="payout-value maxcase pay-shown">9,999,999<span class="unit">円</span></span>
+                  <span class="payout-value maxcase pay-shown">999,999,999<span class="unit">円</span></span>
                   <span class="payout-value pay-hidden">＊＊＊＊<span class="unit">円</span></span>
+                  <svg class="ic eye-on" aria-hidden="true"><use href="#ic-eye"></use></svg><svg class="ic eye-off" aria-hidden="true"><use href="#ic-eyeoff"></use></svg>
                 </span>
               </div>
             </div>
@@ -2446,9 +2486,9 @@
               </div>
               <div class="venue-grid g3">
                 <div class="vcard">
-                  <div class="vcard-top"><span class="gbadge g-f1">FⅠ</span><span class="vcard-day">2日目</span></div>
+                  <div class="vcard-top"><span class="gbadge g-gp">SG</span><span class="vcard-day">2日目</span></div>
                   <div class="vcard-name">京王閣</div>
-                  <div class="vcard-tags"><span class="kubun">ナイター</span><span class="girls">ガールズ</span></div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span><span class="girls">♡</span></div>
                   <div class="vcard-bottom">
                     <span class="vcard-r">10R</span>
                     <span class="vcard-dl soon">20:35</span>
@@ -2464,7 +2504,7 @@
                   </div>
                 </div>
                 <div class="vcard">
-                  <div class="vcard-top"><span class="gbadge g-f1">FⅠ</span><span class="vcard-day">最終日</span></div>
+                  <div class="vcard-top"><span class="gbadge g-g2">GII</span><span class="vcard-day">最終日</span></div>
                   <div class="vcard-name">玉野</div>
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
