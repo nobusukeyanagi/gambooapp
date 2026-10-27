@@ -114,7 +114,7 @@
         font-size: var(--fs-16);
         font-weight: 900;
         color: var(--c-primary-d);
-        letter-spacing: -0.03em;
+        letter-spacing: normal;
       }
       .logo span {
         color: var(--c-text);
@@ -1120,7 +1120,7 @@
         gap: 2px;
         font-size: var(--fs-12);
         font-weight: 700;
-        letter-spacing: -0.04em;
+        letter-spacing: normal;
         white-space: nowrap;
         min-width: 0;
       }
@@ -2157,10 +2157,10 @@
       .blog-author { font-size: var(--fs-14); }
       .blog-text { font-size: var(--fs-16); }
 
-      .venue-grid.g3 .vcard-name { font-size: var(--fs-20); letter-spacing: -0.05em; }
+      .venue-grid.g3 .vcard-name { font-size: var(--fs-20); letter-spacing: normal; }
       .venue-grid.g3 .vcard-meta { font-size: var(--fs-12); }
       .venue-grid.g3 .vcard-r { font-size: var(--fs-14); }
-      .venue-grid.g3 .vcard-dl { font-size: var(--fs-12); letter-spacing: -0.04em; }
+      .venue-grid.g3 .vcard-dl { font-size: var(--fs-12); letter-spacing: normal; }
       .vgroup-name { font-size: var(--fs-16); }
       .vgroup-link { font-size: var(--fs-14); }
       .gbadge { font-size: var(--fs-12); }
@@ -2197,7 +2197,7 @@
       .wx span { font-size: var(--fs-14); }
       .lsheet { bottom: 62px; }
       .lsheet-overlay { inset: 0 0 62px 0; }
-      .info-tabs .info-tab { font-size: var(--fs-14); letter-spacing: -0.02em; padding: 0 2px; }
+      .info-tabs .info-tab { font-size: var(--fs-14); letter-spacing: normal; padding: 0 2px; }
 
       .race-tabs { gap: 6px; padding: 8px; }
       .race-tab { min-width: 62px; min-height: 54px; padding: 3px 5px; gap: 0; line-height: 1.15; }
@@ -2236,12 +2236,15 @@
         font-size: var(--fs-12);
         font-weight: 800;
         line-height: 1.1;
-        letter-spacing: -0.06em;
+        letter-spacing: normal;
         white-space: nowrap;
         color: var(--c-text);
       }
       .at-wrap.scrolled .at .fx1 .sha-nm { display: block; }
       .at-wrap.scrolled .at .fx1 { box-shadow: inset -2px 0 0 var(--c-border); }
+
+      /* Let the long lab tab label wrap rather than narrowing characters. */
+      .info-tabs .info-tab[data-tab="lab"] { white-space: normal; overflow-wrap: anywhere; }
     </style>
   </head>
   <body>
