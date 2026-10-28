@@ -9,3 +9,11 @@
 .pay-toggle.tap-pressed {
   background-color: color-mix(in srgb, var(--c-text) 11%, var(--c-surface));
 }
+/* Links without destinations still receive visible feedback without navigating. */
+.see-all, .vgroup-link, .back-btn, [data-tap-feedback] {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+:is(.see-all, .vgroup-link, .mori-page-link, .back-btn).tap-pressed {
+  background-color: color-mix(in srgb, var(--c-text) 11%, var(--c-surface));
+}

@@ -5,7 +5,7 @@
   window.__gambooTapFeedbackInitialized = true;
 
   var targets = [
-    'a[href]', 'button:not(:disabled)', 'summary',
+    'a', 'button:not(:disabled)', 'summary',
     'input[type="button"]', 'input[type="submit"]', 'input[type="reset"]',
     'input[type="checkbox"]', 'input[type="radio"]',
     '[role="button"]', '[role="link"]', '[role="tab"]',
@@ -15,6 +15,8 @@
     '.venue-tile', '.vcard', '.race-tile', '.dokanto-card', '.hero-banner',
     '.pickup-card', '.rebate-chip', '.bn', '.tsubu-link', '.pay-toggle',
     '.mori-sp', '.mori-next', '.vgroup-head:not(.mori-heading)',
+    '.see-all', '.vgroup-link', '.mori-page-link', '.back-btn',
+    '[data-tap-feedback]',
     '.sort-btn', '.sort-opt', '.rchip', '.compact-row', '.op-btn', '.rpred',
     '.item-btn', '.sheet-close', '.ri-btn', '.sw', '.rd-lab', '.lb-btn',
     '.lsheet-close', '.oshi-act', '.om-edit', '.om-row', '.om-add',
