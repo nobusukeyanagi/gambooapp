@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gamboo アプリ ワイヤーフレーム</title>
-    <link rel="stylesheet" href="./assets/design-tokens.css?v=36" />
+    <link rel="stylesheet" href="./assets/design-tokens.css?v=37" />
     <style>
       * {
         box-sizing: border-box;
@@ -2910,6 +2910,16 @@
       .venue-grid.g3 .vcard {
         height: 106px;
         min-height: 106px;
+      }
+      /* Evenly distribute the four content rows instead of pushing only
+         the R / deadline row to the bottom. Keep the 106px tile height. */
+      .venue-grid.g3 .vcard:not(.mori-photo-tile) {
+        justify-content: space-between;
+        gap: 0;
+      }
+      .venue-grid.g3 .vcard:not(.mori-photo-tile) .vcard-name,
+      .venue-grid.g3 .vcard:not(.mori-photo-tile) .vcard-bottom {
+        margin-top: 0;
       }
       /* Match the heart's text box to the neighboring 12px night-race label. */
       .venue-grid.g3 .girls {

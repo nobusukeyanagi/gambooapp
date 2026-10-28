@@ -76,7 +76,7 @@
   --c-on-primary: var(--c-text);
   --c-deadline-soon: var(--c-text);
   --c-closed-bg: var(--c-bg);
-  --c-gp-t: var(--c-surface);
+  --c-gp-t: var(--w5); /* standard yellow for SG / top-grade text */
   --c-g1-t: var(--c-surface);
   --c-g2-t: var(--c-surface);
   --c-g3-t: var(--c-surface);
