@@ -2919,6 +2919,11 @@
         font-weight: 400;
         vertical-align: middle;
       }
+      /* Venue card support text: one step darker, using the next existing token. */
+      .venue-grid.g3 .vcard-day,
+      .venue-grid.g3 .kubun {
+        color: var(--c-text);
+      }
       /* Mori feature uses the same card layout as the auto venue list. */
       .venue-grid.g3 .vcard.mori-photo-tile {
         position: relative;
@@ -2940,10 +2945,10 @@
         font-size: clamp(14px, 4.5vw, 20px);
       }
       .mori-venue-grid .mori-next-card .mori-next-label {
-        font-size: clamp(14px, 4.4vw, 16px);
+        font-size: clamp(12px, 4vw, 16px);
         line-height: 1.2;
         font-weight: 700;
-        color: var(--c-sub);
+        color: var(--c-primary-d);
         white-space: nowrap;
       }
       .mori-venue-grid .mori-next-card .vcard-tags {
@@ -3128,9 +3133,10 @@
                   </div>
                 </div>
                 <div class="vcard auto mori-next-card">
-                  <div class="vcard-top"><span class="mori-next-label">次回出走予定</span></div>
-                  <div class="vcard-tags"><span class="gbadge g-f2">普通</span><span class="vcard-day">初日</span></div>
-                  <div class="vcard-name">10/8 飯塚</div>
+                  <div class="vcard-top"><span class="gbadge g-f2">普通</span><span class="vcard-day">10/8</span></div>
+                  <div class="vcard-name">飯塚</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
+                  <div class="vcard-bottom"><span class="vcard-dl mori-next-label">次回出走予定</span></div>
                 </div>
               </div>
 
