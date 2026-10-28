@@ -2001,23 +2001,6 @@
       .blog-text { font-size: var(--fs-14); color: var(--c-text); }
       .blog-meta { font-size: var(--fs-12); }
 
-      .tsubu-link {
-        margin: 10px 8px 8px;
-        padding: 10px 12px;
-        min-height: 52px;
-        background: var(--c-primary-d);
-        border-radius: var(--r-md);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        box-shadow: var(--e1);
-        color: var(--c-surface);
-      }
-      .tsubu-link .ic { outline-color: color-mix(in srgb, var(--c-surface) 75%, transparent); }
-      .tsubu-link b { display: block; font-size: var(--fs-14); font-weight: 900; }
-      .tsubu-link small { display: block; font-size: var(--fs-12); opacity: 0.85; }
-
       .vcard.ended .vcard-dl { color: var(--c-sub); font-weight: 700; }
       .vcard.ended .vcard-name { color: var(--c-sub) !important; }
       .pickup-card > .c-arrow { flex-shrink: 0; }
@@ -2272,7 +2255,6 @@
       .pk2 .pickup-tile { width: 64px; font-size: var(--fs-14); letter-spacing: normal; }
 
       .kubun { min-width: calc(5.76em + 8px); }
-      .tsubu-link + .tsubu-link { margin-top: 0; }
       .pk-pick { display: flex; align-items: center; gap: 6px; min-width: 0; }
       .pk-pick .pk-text { min-width: 0; }
       .pk-pick .pk-text b { margin-right: 5px; }
@@ -2929,17 +2911,44 @@
         position: relative;
         padding: 0;
         overflow: hidden;
+        border-left: var(--line-normal);
+        background: var(--c-surface);
       }
       .mori-venue-grid .mori-photo-tile img {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        object-position: center 25%;
+        object-fit: contain;
+        object-position: center center;
+        display: block;
       }
       .mori-venue-grid .mori-next-card .vcard-name {
         font-size: clamp(14px, 4.5vw, 20px);
+      }
+      .mori-venue-grid .mori-next-card .mori-next-label {
+        font-size: clamp(14px, 4.4vw, 16px);
+        line-height: 1.2;
+        font-weight: 700;
+        color: var(--c-sub);
+        white-space: nowrap;
+      }
+      .mori-venue-grid .mori-next-card .vcard-tags {
+        align-items: center;
+        gap: 4px;
+      }
+      /* Give prototype controls visual press feedback without fake navigation. */
+      .tap-feedback {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 120ms ease, filter 120ms ease;
+      }
+      .tap-feedback:active, .tap-feedback.tap-flash {
+        transform: scale(0.975);
+        filter: brightness(0.9);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .tap-feedback { transition: none; }
       }
     </style>
   </head>
@@ -3087,9 +3096,9 @@
                 <a class="mori-page-link" href="https://gamboo.jp/topics/?tid=mori_point2015">特設ページ<svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></a>
               </div>
               <div class="venue-grid g3 mori-venue-grid">
-                <div class="vcard auto mori-photo-tile">
+                <a class="vcard mori-photo-tile" href="https://gamboo.jp/topics/?tid=mori_point2015" aria-label="森且行選手の特設ページを見る">
                   <img src="mori.jpg" alt="森且行選手" />
-                </div>
+                </a>
                 <div class="vcard auto">
                   <div class="vcard-top"><span class="gbadge g-g2">GⅡ</span><span class="vcard-day">2日目</span></div>
                   <div class="vcard-name">川口</div>
@@ -3100,12 +3109,10 @@
                   </div>
                 </div>
                 <div class="vcard auto mori-next-card">
-                  <div class="vcard-top"><span class="gbadge g-f2">普通</span><span class="vcard-day">初日</span></div>
+                  <div class="vcard-top"><span class="mori-next-label">次回出走予定</span></div>
                   <div class="vcard-name">10/8 飯塚</div>
-                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
-                  <div class="vcard-bottom">
-                    <span class="vcard-dl">次回出走予定</span>
-                  </div>
+                  <div class="vcard-tags"><span class="gbadge g-f2">普通</span><span class="vcard-day">初日</span></div>
+                  <div class="vcard-bottom"><span class="kubun">ナイター</span></div>
                 </div>
               </div>
 
@@ -3199,22 +3206,6 @@
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
               </div>
 
-              <div class="tsubu-link">
-                <svg class="ic" aria-hidden="true"><use href="#ic-article"></use></svg>
-                <div style="flex: 1">
-                  <b>Gambooブログ</b>
-                  <small>予想家・ファンのブログをチェック！</small>
-                </div>
-                <svg class="ic" aria-hidden="true" style="opacity: 0.7"><use href="#ic-chevron"></use></svg>
-              </div>
-              <div class="tsubu-link">
-                <svg class="ic" aria-hidden="true"><use href="#ic-comment"></use></svg>
-                <div style="flex: 1">
-                  <b>ツブッター</b>
-                  <small>みんなの予想・実況をチェック！</small>
-                </div>
-                <svg class="ic" aria-hidden="true" style="opacity: 0.7"><use href="#ic-chevron"></use></svg>
-              </div>
               <div style="height: 8px"></div>
             </div>
             <div class="bottom-tab">
@@ -3413,5 +3404,33 @@
       })();
     </script>
 
+    <script>
+      /* Temporary visual response; only existing links really navigate. */
+      (function () {
+        var selectors = [
+          ".app-header .icon-btn", ".app-header .cta-btn",
+          ".date-tab", ".venue-grid .vcard", ".pickup-card",
+          ".news-item", ".bottom-tab .tab-item", ".see-all",
+          ".mori-page-link", ".pay-toggle", ".bn-track .bn",
+          ".vgroup-head:not(.mori-heading)"
+        ];
+        document.querySelectorAll(selectors.join(",")).forEach(function (el) {
+          el.classList.add("tap-feedback");
+        });
+        var timers = new WeakMap();
+        document.addEventListener("click", function (event) {
+          var target = event.target.closest(".tap-feedback");
+          if (!target) return;
+          clearTimeout(timers.get(target));
+          target.classList.remove("tap-flash");
+          void target.offsetWidth;
+          target.classList.add("tap-flash");
+          timers.set(target, setTimeout(function () {
+            target.classList.remove("tap-flash");
+            timers.delete(target);
+          }, 200));
+        });
+      })();
+    </script>
   </body>
 </html>
