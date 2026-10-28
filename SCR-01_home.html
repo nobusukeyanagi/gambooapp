@@ -260,15 +260,7 @@
         border-radius: 3px;
       }
 
-      .section-header {
-        padding: 10px 12px 6px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
       .section-title {
-        font-size: var(--fs-14);
-        font-weight: 700;
         color: var(--c-text);
         display: flex;
         align-items: center;
@@ -1448,7 +1440,6 @@
         gap: 3px;
       }
 
-      .section-title { font-size: var(--fs-14); }
 
 
       .payout-bar {
@@ -1831,17 +1822,9 @@
       .pt-row .payout-label { font-size: var(--fs-12); }
       .pt-row .payout-value { font-size: var(--fs-16); }
 
-      .vgroup-head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        min-height: 40px;
-        padding: 4px 12px 0;
-        cursor: pointer;
-      }
+      /* Common layout belongs to assets/ui-consistency.css. */
+      .vgroup-head { cursor: pointer; }
       .vgroup-name {
-        font-size: var(--fs-14);
-        font-weight: 800;
         display: flex;
         align-items: center;
         gap: 5px;
@@ -1856,8 +1839,6 @@
       .vgroup-name.auto::before { background: var(--c-auto); }
       .vgroup-name b { font-weight: 800; color: var(--c-sub); font-size: var(--fs-12); }
       .vgroup-link {
-        font-size: var(--fs-12);
-        font-weight: 700;
         color: var(--c-primary-d);
         display: inline-flex;
         align-items: center;
@@ -1866,7 +1847,7 @@
       .venue-grid.g3 {
         grid-template-columns: repeat(3, 1fr);
         gap: 5px;
-        padding: 2px 8px 6px;
+        padding: 0 8px 6px;
       }
       .g3 .vcard {
         min-height: 72px;
@@ -2156,8 +2137,6 @@
       .page-header .back-btn .ic { width: 28px; height: 28px; }
       .date-tab,
       .top-tab { min-height: 50px; font-size: var(--fs-14); }
-      .section-header { padding: 14px 12px 8px; }
-      .section-title { font-size: var(--fs-16); }
       .see-all {
         font-size: var(--fs-14);
         font-weight: 700;
@@ -2211,8 +2190,6 @@
       .venue-grid.g3 .vcard-meta { font-size: var(--fs-12); }
       .venue-grid.g3 .vcard-r { font-size: var(--fs-14); }
       .venue-grid.g3 .vcard-dl { font-size: var(--fs-12); letter-spacing: normal; }
-      .vgroup-name { font-size: var(--fs-16); }
-      .vgroup-link { font-size: var(--fs-14); }
 
       .venue-name { font-size: var(--fs-24); }
       .venue-header { min-height: 48px; }
@@ -2275,11 +2252,8 @@
       .carno.w9 { background: var(--w9); color: var(--w9-t); border-color: var(--w9-bd); }
 
       .app-header .logo-img { height: 28px; width: auto; display: block; }
-      .vgroup-name,
-      .section-title { font-size: var(--fs-20); font-weight: 900; letter-spacing: normal; }
       .vgroup-name::before,
       .section-title::before { width: 4px; height: 18px; }
-      .vgroup-head { min-height: 44px; }
       .gbadge {
         font-size: var(--fs-12);
         font-weight: 900;
@@ -2477,7 +2451,6 @@
       .mori-heading {
         cursor: default;
         gap: 5px;
-        margin-top: 5px;
         flex-wrap: wrap;
       }
       .mori-heading .vgroup-name {

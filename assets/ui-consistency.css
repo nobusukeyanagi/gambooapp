@@ -5,8 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 52px;
-  padding: 4px 12px;
+  min-height: 44px;
+  padding: 0 12px;
 }
 :is(.section-header, .vgroup-head) :is(.section-title, .vgroup-name) {
   font-size: var(--fs-20);
