@@ -2871,6 +2871,59 @@
           font-size: var(--fs-16);
         }
       }
+
+      /* v29: plain supplemental labels without decorative boxes. */
+      .venue-grid.g3 .vcard-tags {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        min-height: 16px;
+        flex-wrap: wrap;
+      }
+      .venue-grid.g3 .kubun {
+        display: inline;
+        width: auto;
+        min-width: 0;
+        height: auto;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: var(--c-sub);
+        font-size: var(--fs-12);
+        font-weight: 400;
+        line-height: 1.25;
+        letter-spacing: normal;
+        outline: none;
+      }
+      .venue-grid.g3 .girls {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        min-width: 0;
+        height: auto;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: var(--palette-b0285b);
+        font-size: var(--fs-14);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: normal;
+        outline: none;
+      }
+      /* Two winning-streak riders share one race/time label. */
+      .pk3 .pk-consecutive-players {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        flex: 0 0 auto;
+        min-width: 0;
+      }
+      .pk3 .pk-consecutive-row { align-items: center; }
     </style>
   </head>
   <body>
@@ -3058,8 +3111,13 @@
                 <div class="kun"><img class="kun-ic" src="ic_pickup03.png" alt="連勝君" width="72" height="72" /></div>
                 <div class="pickup-body">
                   <div class="pk-explain">3レース以上連続で勝利している選手</div>
-                  <div class="pk-compact-row"><div class="pk-player"><span class="carno w7">7</span><span class="pk-text">鈴木良太</span><span class="pk-note">4連勝</span></div><span class="pk-race-time">小倉11R 21:25</span></div>
-                  <div class="pk-compact-row"><div class="pk-player"><span class="carno w2">2</span><span class="pk-text">松山桂輔</span><span class="pk-note">3連勝</span></div><span class="pk-race-time">小倉11R 21:25</span></div>
+                  <div class="pk-compact-row pk-consecutive-row">
+                    <div class="pk-consecutive-players">
+                      <div class="pk-player"><span class="carno w7">7</span><span class="pk-text">鈴木良太</span><span class="pk-note">4連勝</span></div>
+                      <div class="pk-player"><span class="carno w2">2</span><span class="pk-text">松山桂輔</span><span class="pk-note">3連勝</span></div>
+                    </div>
+                    <span class="pk-race-time">小倉11R 21:25</span>
+                  </div>
                 </div>
               </div>
 
