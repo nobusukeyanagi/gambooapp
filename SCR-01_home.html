@@ -2830,7 +2830,8 @@
         flex-shrink: 0;
         outline: none;
       }
-      /* Mori feature uses the same card layout as the auto venue list. */
+      /* Mori's appearance tile keeps the 106px venue-card footprint.
+         Its left auto-race accent is enlarged into an explicit status strip. */
       .venue-grid.g3 .vcard.mori-photo-tile {
         position: relative;
         padding: 0;
@@ -2838,13 +2839,30 @@
         border-left: var(--line-normal);
         background: var(--c-surface);
       }
+      .mori-venue-grid .mori-photo-tile .mori-today-strip {
+        position: absolute;
+        inset: 0 auto 0 0;
+        z-index: 1;
+        width: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--c-auto);
+        color: var(--c-surface);
+        font-size: var(--fs-14);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: 0.08em;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+      }
       .mori-venue-grid .mori-photo-tile img {
         position: absolute;
-        inset: 0;
-        width: 100%;
+        inset: 0 0 0 32px;
+        width: calc(100% - 32px);
         height: 100%;
         object-fit: contain;
-        object-position: center center;
+        object-position: right center;
         display: block;
       }
       /* The shared tap-feedback stylesheet handles press feedback on every page. */
@@ -3002,7 +3020,8 @@
                 <a class="mori-page-link" href="https://gamboo.jp/topics/?tid=mori_point2015">特設ページ<svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></a>
               </div>
               <div class="venue-grid g3 mori-venue-grid">
-                <a class="vcard mori-photo-tile" href="https://gamboo.jp/topics/?tid=mori_point2015" aria-label="森且行選手の特設ページを見る">
+                <a class="vcard mori-photo-tile" href="https://gamboo.jp/topics/?tid=mori_point2015" aria-label="本日出走・森且行選手の特設ページを見る">
+                  <span class="mori-today-strip" aria-hidden="true">本日出走</span>
                   <img src="mori.jpg" alt="森且行選手" />
                 </a>
                 <div class="vcard auto">
