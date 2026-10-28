@@ -26,7 +26,7 @@
   --w4: #3577B8;
   --w5: #E2BF27;
   --w6: #2B8150;
-  --w7: #E58024;
+  --w7: #AD5917; /* darker orange for accessible white number */
   --w8: #E98AB4;
   --w9: #9856B2;
 
@@ -95,7 +95,7 @@
   --w5-bd: var(--w5);
   --w6-t: var(--c-surface);
   --w6-bd: var(--w6);
-  --w7-t: var(--c-text);
+  --w7-t: var(--c-surface);
   --w7-bd: var(--w7);
   --w8-t: var(--c-text);
   --w8-bd: var(--w8);
