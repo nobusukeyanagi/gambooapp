@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gamboo アプリ ワイヤーフレーム</title>
-    <link rel="stylesheet" href="./assets/design-tokens.css?v=34" />
+    <link rel="stylesheet" href="./assets/design-tokens.css?v=35" />
     <style>
       * {
         box-sizing: border-box;
@@ -107,7 +107,7 @@
         justify-content: space-between;
         padding: 0 12px;
         flex-shrink: 0;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         box-shadow: 0 1px 3px color-mix(in srgb, var(--c-text) 6%, transparent);
       }
       .logo {
@@ -146,7 +146,7 @@
         height: 8px;
         background: var(--c-error);
         border-radius: 50%;
-        border: 1px solid var(--c-surface);
+        border: var(--line-thin) solid var(--c-surface);
       }
       .cta-btn {
         background: var(--c-secondary);
@@ -173,7 +173,7 @@
         background: var(--c-surface);
         height: 52px;
         display: flex;
-        border-top: 1px solid var(--c-border);
+        border-top: var(--line-normal);
         flex-shrink: 0;
       }
       .tab-item {
@@ -286,7 +286,7 @@
       .date-tabs {
         display: flex;
         background: var(--c-surface);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .date-tab {
@@ -298,7 +298,7 @@
         font-size: var(--fs-12);
         font-weight: 600;
         color: var(--c-sub);
-        border-bottom: 2px solid transparent;
+        border-bottom: var(--line-emphasis-width) solid transparent;
         cursor: pointer;
       }
       .date-tab.active {
@@ -312,7 +312,7 @@
         padding: 6px 10px;
         overflow-x: auto;
         background: var(--c-surface);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         scrollbar-width: none;
       }
       .filter-chips::-webkit-scrollbar {
@@ -326,7 +326,7 @@
         white-space: nowrap;
         background: var(--c-surface2);
         color: var(--c-sub);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         cursor: pointer;
       }
       .chip.active {
@@ -347,7 +347,7 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
       }
       .venue-name {
         font-size: var(--fs-16);
@@ -390,7 +390,7 @@
         font-weight: 700;
         background: var(--c-bg);
         color: var(--c-warning);
-        border: 1px solid var(--c-bg);
+        border: var(--line-normal);
         padding: 1px 5px;
         border-radius: 3px;
       }
@@ -400,7 +400,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
       }
       .race-num {
         font-size: var(--fs-12);
@@ -478,7 +478,7 @@
       .action-btn.outline {
         background: var(--c-surface2);
         color: var(--c-text);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
       }
 
       .pickup-card {
@@ -516,7 +516,7 @@
         align-items: flex-start;
         gap: 8px;
         padding: 8px 10px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
         background: var(--c-surface);
         cursor: pointer;
       }
@@ -568,7 +568,7 @@
         display: flex;
         gap: 8px;
         padding: 8px 10px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
         background: var(--c-surface);
         cursor: pointer;
       }
@@ -622,7 +622,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 12px;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .back-btn {
@@ -645,7 +645,7 @@
       .race-info-bar {
         background: var(--c-surface);
         padding: 6px 10px;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .race-info-title {
@@ -667,7 +667,7 @@
         background: var(--c-surface);
         display: flex;
         overflow-x: auto;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         scrollbar-width: none;
         flex-shrink: 0;
       }
@@ -683,7 +683,7 @@
         font-size: var(--fs-12);
         font-weight: 600;
         color: var(--c-sub);
-        border-bottom: 2px solid transparent;
+        border-bottom: var(--line-emphasis-width) solid transparent;
         padding: 0 6px;
         white-space: nowrap;
         cursor: pointer;
@@ -700,7 +700,7 @@
 
       .info-tabs {
         display: flex;
-        border-bottom: 2px solid var(--c-border);
+        border-bottom: var(--line-normal);
         background: var(--c-surface);
         flex-shrink: 0;
       }
@@ -714,7 +714,7 @@
         text-align: center;
         line-height: 1.2;
         cursor: pointer;
-        border-bottom: 2px solid transparent;
+        border-bottom: var(--line-emphasis-width) solid transparent;
         margin-bottom: -2px;
       }
       .info-tab.active {
@@ -727,7 +727,7 @@
         padding: 5px 10px;
         font-size: var(--fs-12);
         color: var(--c-sub);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .lineup-row {
@@ -770,7 +770,7 @@
         font-size: var(--fs-12);
         font-weight: 700;
         color: var(--c-sub);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         position: sticky;
         top: 0;
         z-index: 1;
@@ -778,7 +778,7 @@
       }
       .race-table td {
         padding: 4px 5px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
         text-align: center;
         vertical-align: middle;
         white-space: nowrap;
@@ -808,7 +808,7 @@
       }
       .f1 {
         background: var(--c-surface);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         color: var(--c-text);
       }
       .f2 {
@@ -877,7 +877,7 @@
         height: 48px;
         display: flex;
         align-items: center;
-        border-top: 1px solid var(--c-border);
+        border-top: var(--line-normal);
         padding: 0 8px;
         gap: 6px;
         flex-shrink: 0;
@@ -968,7 +968,7 @@
         align-items: center;
         gap: 8px;
         padding: 10px 10px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
         background: var(--c-surface);
         cursor: pointer;
       }
@@ -1056,7 +1056,7 @@
         justify-content: center;
         color: var(--c-sub);
         background: var(--c-surface);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         border-radius: var(--r-full);
         box-shadow: var(--e1);
         pointer-events: none;
@@ -1092,7 +1092,7 @@
       }
 
       .maxcase {
-        outline: 1px dashed color-mix(in srgb, var(--c-error) 45%, transparent);
+        outline: var(--line-thin) solid var(--c-error);
         outline-offset: 1px;
       }
 
@@ -1211,7 +1211,7 @@
         gap: 4px;
         padding: 6px 8px;
         background: var(--c-surface);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
       }
       .race-tab {
         flex: 0 0 auto;
@@ -1222,7 +1222,7 @@
         align-items: center;
         justify-content: center;
         gap: 1px;
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         border-radius: var(--r-md);
         background: var(--c-surface);
         color: var(--c-text);
@@ -1270,7 +1270,7 @@
       .race-info-bar {
         background: var(--c-surface);
         padding: 7px 10px 8px;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .race-info-title {
@@ -1310,7 +1310,7 @@
       .info-tabs {
         display: flex;
         gap: 0;
-        border-bottom: 2px solid var(--c-border);
+        border-bottom: var(--line-normal);
         background: var(--c-surface);
         flex-shrink: 0;
       }
@@ -1329,7 +1329,7 @@
         text-align: center;
         line-height: 1.2;
         cursor: pointer;
-        border-bottom: 2px solid transparent;
+        border-bottom: var(--line-emphasis-width) solid transparent;
         margin-bottom: -2px;
       }
       .info-tab.active {
@@ -1357,7 +1357,7 @@
         width: 70px;
         padding: 2px 4px;
         text-align: left;
-        border-right: 2px solid var(--c-border);
+        border-right: var(--line-normal);
       }
       .rider-name {
         font-size: var(--fs-12);
@@ -1427,15 +1427,15 @@
         font-size: var(--fs-14);
         margin: 0 auto;
       }
-      .f1 { background: var(--w1); color: var(--w1-t); border: 1px solid var(--w1-bd); }
-      .f2 { background: var(--w2); color: var(--w2-t); border: 1px solid var(--w2-bd); }
-      .f3 { background: var(--w3); color: var(--w3-t); border: 1px solid var(--w3-bd); }
-      .f4 { background: var(--w4); color: var(--w4-t); border: 1px solid var(--w4-bd); }
-      .f5 { background: var(--w5); color: var(--w5-t); border: 1px solid var(--w5-bd); }
-      .f6 { background: var(--w6); color: var(--w6-t); border: 1px solid var(--w6-bd); }
-      .f7 { background: var(--w7); color: var(--w7-t); border: 1px solid var(--w7-bd); }
-      .f8 { background: var(--w8); color: var(--w8-t); border: 1px solid var(--w8-bd); }
-      .f9 { background: var(--w9); color: var(--w9-t); border: 1px solid var(--w9-bd); }
+      .f1 { background: var(--w1); color: var(--w1-t); border: var(--line-thin) solid var(--w1-bd); }
+      .f2 { background: var(--w2); color: var(--w2-t); border: var(--line-thin) solid var(--w2-bd); }
+      .f3 { background: var(--w3); color: var(--w3-t); border: var(--line-thin) solid var(--w3-bd); }
+      .f4 { background: var(--w4); color: var(--w4-t); border: var(--line-thin) solid var(--w4-bd); }
+      .f5 { background: var(--w5); color: var(--w5-t); border: var(--line-thin) solid var(--w5-bd); }
+      .f6 { background: var(--w6); color: var(--w6-t); border: var(--line-thin) solid var(--w6-bd); }
+      .f7 { background: var(--w7); color: var(--w7-t); border: var(--line-thin) solid var(--w7-bd); }
+      .f8 { background: var(--w8); color: var(--w8-t); border: var(--line-thin) solid var(--w8-bd); }
+      .f9 { background: var(--w9); color: var(--w9-t); border: var(--line-thin) solid var(--w9-bd); }
       .lineup-car {
         width: 22px;
         height: 22px;
@@ -1467,12 +1467,12 @@
         font-size: var(--fs-12);
         font-weight: 800;
         padding: 5px 5px;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
       }
       .race-table th.grp {
         background: var(--c-bg);
         color: var(--c-text);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
       }
       .th-fixed { background: var(--c-bg); }
       .race-table {
@@ -1482,7 +1482,7 @@
         font-size: var(--fs-12);
       }
       .race-table td {
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         background: var(--c-surface);
       }
       .race-table tbody tr:nth-child(even) td { background: var(--c-bg); }
@@ -1500,7 +1500,7 @@
         width: 78px;
         min-width: 78px;
         text-align: left;
-        border-right: 2px solid var(--c-border);
+        border-right: var(--line-normal);
       }
 
       .race-table .res-mini {
@@ -1549,7 +1549,7 @@
       .top-tab.active { color: var(--c-primary-d) !important; border-bottom-color: var(--c-primary) !important; }
 
       .ic {
-        outline: 1px dotted color-mix(in srgb, var(--c-text) 38%, transparent);
+        outline: none;
         outline-offset: 1px;
         border-radius: 2px;
       }
@@ -1568,7 +1568,7 @@
       .blog-thumb,
       .featured-thumb,
       .cp-banner {
-        outline: 1px dotted color-mix(in srgb, var(--c-text) 38%, transparent);
+        outline: none;
         outline-offset: -3px;
       }
 
@@ -1627,7 +1627,7 @@
         font-size: var(--fs-12);
         font-weight: 800;
         color: var(--c-success);
-        border: 1px solid currentColor;
+        border: var(--line-thin) solid currentColor;
         border-radius: var(--r-full);
         padding: 1px 9px;
         white-space: nowrap;
@@ -1691,7 +1691,7 @@
         gap: 4px 10px;
         padding: 6px 10px;
         background: var(--c-surface2);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         font-size: var(--fs-12);
         font-weight: 700;
         flex-shrink: 0;
@@ -1703,7 +1703,7 @@
         font-weight: 700;
         color: var(--c-sub);
         background: var(--c-surface);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         border-radius: var(--r-sm);
         padding: 0 4px;
       }
@@ -1736,14 +1736,14 @@
         font-weight: 800;
         line-height: 1.25;
         padding: 5px 6px;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         white-space: nowrap;
         text-align: center;
       }
       .at th.grp { background: var(--c-bg); color: var(--c-text); }
       .at td {
         background: var(--c-surface);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         padding: 4px 6px;
         height: 54px;
         text-align: center;
@@ -1751,7 +1751,7 @@
         white-space: nowrap;
       }
       .at tbody tr:nth-child(even) td { background: var(--c-bg); }
-      .at .bl { border-left: 1px solid var(--c-border); }
+      .at .bl { border-left: var(--line-normal); }
       .at .fx1,
       .at .fx2 { position: sticky; z-index: 2; }
       .at th.fx1,
@@ -1762,7 +1762,7 @@
         min-width: 100px;
         max-width: 100px;
         text-align: left;
-        border-right: 2px solid var(--c-border);
+        border-right: var(--line-normal);
       }
 
       .wk {
@@ -1774,7 +1774,7 @@
         justify-content: center;
         font-size: var(--fs-16);
         font-weight: 900;
-        border: 1px solid transparent;
+        border: var(--line-thin) solid transparent;
       }
       .wk.mini { width: 22px; height: 22px; font-size: var(--fs-14); }
       .wk.w1 { background: var(--w1); color: var(--w1-t); border-color: var(--w1-bd); }
@@ -1832,7 +1832,7 @@
         font-size: var(--fs-12);
         font-weight: 700;
         background: var(--c-surface);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
       }
       .sw {
         position: relative;
@@ -1863,7 +1863,7 @@
       .rc-rank {
         width: 24px;
         height: 24px;
-        border: 1.5px solid var(--c-text);
+        border: var(--line-thin) solid var(--c-text);
         border-radius: 3px;
         background: var(--c-surface);
         display: inline-flex;
@@ -1919,7 +1919,7 @@
       .at .pw i.g { background: var(--w6); }
       .wx { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; padding: 5px 4px; }
       .wx span { flex-direction: column; gap: 0; line-height: 1.3; font-size: var(--fs-12); }
-      .wx span + span { border-left: 1px solid var(--c-border); }
+      .wx span + span { border-left: var(--line-normal); }
       .wx i { background: none; border: 0; padding: 0; }
       .rd-bar {
         position: sticky;
@@ -1931,7 +1931,7 @@
         min-height: 44px;
         padding: 0 12px;
         background: var(--c-surface);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         font-size: var(--fs-12);
         font-weight: 700;
       }
@@ -1954,7 +1954,7 @@
         margin: 0 auto;
         padding: 0 4px;
         border-radius: var(--r-sm);
-        border: 1px solid var(--c-primary);
+        border: var(--line-selected);
         background: linear-gradient(var(--c-bg), var(--c-primary));
         box-shadow: var(--e1);
         font-family: var(--ff-ui);
@@ -2043,12 +2043,12 @@
         font-size: var(--fs-12);
         font-weight: 800;
         padding: 6px 4px;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         white-space: nowrap;
       }
       .ldt td {
         padding: 6px 4px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
         text-align: center;
         white-space: nowrap;
       }
@@ -2061,7 +2061,7 @@
         height: 30px;
         padding: 0 8px;
         border-radius: var(--r-sm);
-        border: 1px solid var(--c-sub);
+        border: var(--line-thin) solid var(--c-sub);
         background: var(--c-surface);
         box-shadow: var(--e1);
         font-size: var(--fs-12);
@@ -2069,7 +2069,7 @@
         white-space: nowrap;
       }
       .lb-btn.active { background: var(--c-primary); border-color: var(--c-primary-d); color: var(--c-on-primary); }
-      .at .lb-div { border-left: 3px solid var(--c-border); }
+      .at .lb-div { border-left: var(--line-normal); }
       .at.lab .rn small.rk { margin-top: 2px; }
       .race-info-bar.ri-has-act {
         display: flex;
@@ -2104,8 +2104,8 @@
       .ri-btn.live .ic { outline-color: color-mix(in srgb, var(--c-surface) 75%, transparent); }
       .race-tab.active { min-width: 86px; }
       .at td:not(.fx2),
-      .at th:not(.fx2) { border-right: 1px solid var(--c-border); }
-      .at .bl { border-left: 1px solid var(--c-border); }
+      .at th:not(.fx2) { border-right: var(--line-normal); }
+      .at .bl { border-left: var(--line-normal); }
       .at .pt { border-right: 0 !important; }
       .at .rate { line-height: 1.2; min-width: 64px; }
       .at .rate b { display: block; font-size: var(--fs-16); font-weight: 900; color: var(--c-text); }
@@ -2224,7 +2224,7 @@
       .at .fx2 { left: 40px; }
       .wk { width: 24px; height: 24px; font-size: var(--fs-14); }
       .ldt .wk { width: 24px; height: 24px; }
-      .lb-btn { background: var(--c-surface); border: 1px solid var(--c-border); box-shadow: var(--e1); color: var(--c-text); font-weight: 700; }
+      .lb-btn { background: var(--c-surface); border: var(--line-normal); box-shadow: var(--e1); color: var(--c-text); font-weight: 700; }
       .lb-btn:active,
       .lb-btn.active { background: var(--c-primary); border-color: var(--c-primary-d); color: var(--c-on-primary); }
       .at td.fx2 { position: static; }
