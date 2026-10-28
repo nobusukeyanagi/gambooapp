@@ -32,11 +32,11 @@
 
   /* ③ グレード色 */
   --c-gp: #3C4145;
-  --c-g1: #D28F8C;
-  --c-g2: #8EA9CB;
-  --c-g3: #9CB58A;
-  --c-f1: #D2AA8A;
-  --c-f2: #A8A098;
+  --c-g1: #A65358;
+  --c-g2: #4E7197;
+  --c-g3: #58774A;
+  --c-f1: #8F6749;
+  --c-f2: #754B2F;
 
   /* ④ 状態色 */
   --c-success: #477868;
@@ -66,12 +66,12 @@
   --c-on-primary: var(--c-text);
   --c-deadline-soon: var(--c-text);
   --c-closed-bg: var(--c-bg);
-  --c-gp-t: var(--c-primary);
-  --c-g1-t: var(--c-text);
-  --c-g2-t: var(--c-text);
-  --c-g3-t: var(--c-text);
-  --c-f1-t: var(--c-text);
-  --c-f2-t: var(--c-text);
+  --c-gp-t: var(--c-surface);
+  --c-g1-t: var(--c-surface);
+  --c-g2-t: var(--c-surface);
+  --c-g3-t: var(--c-surface);
+  --c-f1-t: var(--c-surface);
+  --c-f2-t: var(--c-surface);
   --w1-t: var(--c-text);
   --w1-bd: var(--c-sub);
   --w2-t: var(--c-surface);
