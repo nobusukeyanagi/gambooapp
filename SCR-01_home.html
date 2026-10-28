@@ -2941,12 +2941,9 @@
         object-position: center center;
         display: block;
       }
-      .mori-venue-grid .mori-next-card .mori-next-label {
-        font-size: clamp(12px, 4vw, 16px);
-        line-height: 1.2;
-        font-weight: 700;
-        color: var(--c-primary-d);
-        white-space: nowrap;
+      /* The race number alone is highlighted for featured keirin athletes. */
+      .pk3 .pk-race-time .pk-race-number {
+        color: var(--c-keirin);
       }
       /* The shared tap-feedback stylesheet handles press feedback on every page. */
       .section-header + .news-item {
@@ -3112,10 +3109,13 @@
                   </div>
                 </div>
                 <div class="vcard auto mori-next-card">
-                  <div class="vcard-top"><span class="gbadge g-f2">普通</span><span class="vcard-day">10/8</span></div>
+                  <div class="vcard-top"><span class="gbadge g-f2">普通</span></div>
                   <div class="vcard-name">飯塚</div>
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
-                  <div class="vcard-bottom"><span class="vcard-dl mori-next-label">次回出走予定</span></div>
+                  <div class="vcard-bottom">
+                    <span class="vcard-r">次回</span>
+                    <span class="vcard-dl">10/8</span>
+                  </div>
                 </div>
               </div>
 
@@ -3139,14 +3139,14 @@
                 <div class="kun"><img class="kun-ic" src="ic_pickup01.png" alt="ダントツ君" width="72" height="72" /></div>
                 <div class="pickup-body">
                   <div class="pk-explain">ライン先頭同士で競走得点が突出して高い選手</div>
-                  <div class="pk-compact-row"><div class="pk-player"><span class="carno w3">3</span><span class="pk-text">森岡正臣</span></div><span class="pk-race-time">いわき平11R 21:11</span></div>
+                  <div class="pk-compact-row"><div class="pk-player"><span class="carno w3">3</span><span class="pk-text">森岡正臣</span></div><span class="pk-race-time">いわき平<span class="pk-race-number">11R</span> 21:11</span></div>
                 </div>
               </div>
               <div class="pickup-card pk3">
                 <div class="kun"><img class="kun-ic" src="ic_pickup02.png" alt="逃げイチ君" width="72" height="72" /></div>
                 <div class="pickup-body">
                   <div class="pk-explain">レース内で唯一の逃げ型となる選手</div>
-                  <div class="pk-compact-row"><div class="pk-player"><span class="carno w4">4</span><span class="pk-text">倉松涼</span></div><span class="pk-race-time">玉野11R 21:18</span></div>
+                  <div class="pk-compact-row"><div class="pk-player"><span class="carno w4">4</span><span class="pk-text">倉松涼</span></div><span class="pk-race-time">玉野<span class="pk-race-number">11R</span> 21:18</span></div>
                 </div>
               </div>
               <div class="pickup-card pk3">
@@ -3158,7 +3158,7 @@
                       <div class="pk-player"><span class="carno w7">7</span><span class="pk-text">鈴木良太</span><span class="pk-note">4連勝</span></div>
                       <div class="pk-player"><span class="carno w2">2</span><span class="pk-text">松山桂輔</span><span class="pk-note">3連勝</span></div>
                     </div>
-                    <span class="pk-race-time">小倉11R 21:25</span>
+                    <span class="pk-race-time">小倉<span class="pk-race-number">11R</span> 21:25</span>
                   </div>
                 </div>
               </div>
@@ -3167,7 +3167,7 @@
                 <div class="kun"><img class="kun-ic" src="ic_pickup04.png" alt="ロケット君" width="72" height="72" /></div>
                 <div class="pickup-body">
                   <div class="pk-explain">別の自力型選手の後ろをマークする自力型選手</div>
-                  <div class="pk-compact-row"><div class="pk-player"><span class="carno w1">1</span><span class="pk-text">夏目新吾</span></div><span class="pk-race-time">京王閣11R 21:05</span></div>
+                  <div class="pk-compact-row"><div class="pk-player"><span class="carno w1">1</span><span class="pk-text">夏目新吾</span></div><span class="pk-race-time">京王閣<span class="pk-race-number">11R</span> 21:05</span></div>
                 </div>
               </div>
               <div class="section-header">
