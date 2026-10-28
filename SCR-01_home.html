@@ -2565,10 +2565,10 @@
 
       /* v10: notification indicator, girls heart, featured Mori section */
       .app-header .icon-btn > .badge {
-        width: 11px;
-        height: 11px;
-        top: 1px;
-        right: 1px;
+        width: 13px;
+        height: 13px;
+        top: 0;
+        right: 0;
       }
       .venue-grid.g3 .girls {
         font-size: var(--fs-18);
@@ -2924,6 +2924,23 @@
         min-width: 0;
       }
       .pk3 .pk-consecutive-row { align-items: center; }
+      /* Mori feature uses the same card layout as the auto venue list. */
+      .mori-venue-grid .mori-photo-tile {
+        position: relative;
+        padding: 0;
+        overflow: hidden;
+      }
+      .mori-venue-grid .mori-photo-tile img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 25%;
+      }
+      .mori-venue-grid .mori-next-card .vcard-name {
+        font-size: clamp(14px, 4.5vw, 20px);
+      }
     </style>
   </head>
   <body>
@@ -2967,12 +2984,12 @@
                 </span>
               </div>
             </div>
-            <div class="date-tabs">
-              <div class="date-tab">昨日</div>
-              <div class="date-tab active">本日開催</div>
-              <div class="date-tab">明日</div>
-            </div>
             <div class="scroll-area">
+              <div class="date-tabs">
+                <div class="date-tab">昨日</div>
+                <div class="date-tab active">本日開催</div>
+                <div class="date-tab">明日</div>
+              </div>
               <div class="vgroup-head">
                 <span class="vgroup-name">競輪</span>
               </div>
@@ -3069,11 +3086,26 @@
                 <span class="vgroup-name auto">森且行選手を応援しよう！</span>
                 <a class="mori-page-link" href="https://gamboo.jp/topics/?tid=mori_point2015">特設ページ<svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></a>
               </div>
-              <div class="mori-card">
-                <div class="mori-photo"><img src="mori.jpg" alt="森且行選手" /></div>
-                <div class="mori-body">
-                  <div class="mori-schedule-label">次回出走予定</div>
-                  <div class="mori-schedule-value">10/8 飯塚</div>
+              <div class="venue-grid g3 mori-venue-grid">
+                <div class="vcard auto mori-photo-tile">
+                  <img src="mori.jpg" alt="森且行選手" />
+                </div>
+                <div class="vcard auto">
+                  <div class="vcard-top"><span class="gbadge g-g2">GⅡ</span><span class="vcard-day">2日目</span></div>
+                  <div class="vcard-name">川口</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
+                  <div class="vcard-bottom">
+                    <span class="vcard-r">11R</span>
+                    <span class="vcard-dl" data-deadline="20:40"><span class="deadline-time">20:40</span></span>
+                  </div>
+                </div>
+                <div class="vcard auto mori-next-card">
+                  <div class="vcard-top"><span class="gbadge g-f2">普通</span><span class="vcard-day">初日</span></div>
+                  <div class="vcard-name">10/8 飯塚</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
+                  <div class="vcard-bottom">
+                    <span class="vcard-dl">次回出走予定</span>
+                  </div>
                 </div>
               </div>
 
