@@ -2153,6 +2153,7 @@
       .menu-section-title { font-size: var(--fs-14); }
       .news-title {
         font-size: var(--fs-16);
+        font-weight: 700;
         line-height: 1.45;
         overflow: hidden;
         display: -webkit-box;
@@ -2690,6 +2691,9 @@
       /* v27: retain only v26 header control corners; all other shapes revert to v25. */
       .app-header .icon-btn,
       .app-header .cta-btn { border-radius: 8px; }
+      /* Bell is secondary to the deposit action: remove only its tint.
+         Keep the 44px hit area and notification badge unchanged. */
+      .app-header .icon-btn { background: transparent; }
 
 
       /* v28: deadline warning fills the complete R/time row; deadline time remains black. */
@@ -2834,10 +2838,6 @@
         object-fit: contain;
         object-position: center center;
         display: block;
-      }
-      /* The race number alone is highlighted for featured keirin athletes. */
-      .pk3 .pk-race-time .pk-race-number {
-        color: var(--c-keirin);
       }
       /* The shared tap-feedback stylesheet handles press feedback on every page. */
       .section-header + .news-item {
@@ -3050,7 +3050,7 @@
               <div class="pickup-card pk3 pk-two-riders">
                 <div class="kun"><img class="kun-ic" src="ic_pickup03.png" alt="連勝君" width="72" height="72" /></div>
                 <div class="pickup-body">
-                  <div class="pk-explain">3連勝以上の選手</div>
+                  <div class="pk-explain">直近3走以上連続で勝利</div>
                   <div class="pk-compact-row">
                     <div class="pk-two-rider-stack">
                       <div class="pk-player"><span class="carno w7">7</span><span class="pk-text">鈴木良太</span><span class="pk-note">4連勝</span></div>
