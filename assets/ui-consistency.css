@@ -25,14 +25,43 @@
   margin-top: 0;
 }
 
-/* Venue day, featured rider description, and notification date all use
-   the same 12px / regular / near-black supporting-text hierarchy. */
+/* Free-standing supporting text: use 14px and regular black. Grade and
+   category badges remain 12px. Home is the reference for shared screens. */
 .venue-grid.g3 .vcard-day,
+.venue-grid.g3 .kubun,
 .pk3 .pk-explain,
 .news-date {
-  font-size: var(--fs-12);
+  font-size: var(--fs-14);
   font-weight: 400;
   color: var(--c-text);
   line-height: 1.25;
   letter-spacing: normal;
+}
+/* An unboxed girls heart is an icon, not a grade badge. */
+.venue-grid.g3 .girls {
+  font-size: var(--fs-14);
+  height: auto;
+  line-height: 1.25;
+}
+/* NEW is free-standing text, whereas the adjacent category badge stays 12px. */
+.news-new {
+  font-size: var(--fs-14);
+}
+/* Balance labels and currency / point units. Do not enlarge table units. */
+.payout-bar.pt-h .payout-label,
+.payout-bar.pt-h .unit {
+  font-size: var(--fs-14);
+}
+/* Bottom navigation labels are not badges. On narrow screens, wrap rather
+   than shrinking below 14px or overlapping neighboring navigation items. */
+.bottom-tab .tab-item {
+  font-size: var(--fs-14);
+  white-space: normal;
+  text-align: center;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+/* If a banner image is missing, its fallback filename is legible too. */
+.bn.noimg .bn-fallback {
+  font-size: var(--fs-14);
 }
