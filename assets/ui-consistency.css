@@ -65,3 +65,20 @@
 .bn.noimg .bn-fallback {
   font-size: var(--fs-14);
 }
+
+/* Home venue first row: center grade and day text on the same 20px line.
+   Keep the 12px boxed grade, 14px unboxed day, and 106px tile height. */
+.venue-grid.g3 .vcard-top {
+  align-items: center;
+  min-height: 20px;
+}
+.venue-grid.g3 .vcard-top .gbadge,
+.venue-grid.g3 .vcard-top .vcard-day {
+  line-height: 20px;
+}
+.venue-grid.g3 .vcard-top .vcard-day {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  white-space: nowrap;
+}
