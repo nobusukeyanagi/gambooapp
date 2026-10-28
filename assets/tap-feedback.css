@@ -1,0 +1,11 @@
+@charset "UTF-8";
+/* Shared, immediate, one-time tactile feedback for the Gamboo wireframes.
+   Do not bind the effect to click; click happens after the finger is lifted. */
+.tap-pressed {
+  filter: brightness(0.89);
+  -webkit-tap-highlight-color: transparent;
+}
+.date-tabs .date-tab.tap-pressed,
+.pay-toggle.tap-pressed {
+  background-color: color-mix(in srgb, var(--c-text) 11%, var(--c-surface));
+}
