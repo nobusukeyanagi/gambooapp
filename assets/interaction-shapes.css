@@ -1,0 +1,57 @@
+@charset "UTF-8";
+/*
+ * Clickable / non-clickable corner-radius policy, shared by every screen.
+ * Load AFTER page-specific inline styles to keep the rule authoritative.
+ * Interactive controls/cards have 8px corners; display-only surfaces
+ * and informational badges have square corners.
+ * Intrinsic round shapes (avatars, indicators, icons) keep their shape.
+ */
+:root {
+  --r-action: 8px;
+  --r-display: 0px;
+}
+
+/* Information-only cards, panels, labels, grade and number badges. */
+:is(
+  .login-panel, .card,
+  .venue-card, .mori-card, .user-card, .user-points, .user-points.pts3,
+  .om-group, .os-card, .oshi, .cp-note, .compact-list,
+  .blog-avatar, .news-badge, .new-badge, .grade-badge, .gbadge,
+  .hero-tag, .leg-tag, .rebate-badge, .rebate-logo,
+  .kubun, .girls, .carno, .lineup-car, .frame-cell,
+  .comment-row, .comment-num, .point-item, .ext-tag, .op-badge,
+  .pickup-kind, .pickup-tile, .pk2 .pickup-tile,
+  .rchip-girls, .rchip-rebate, .rc-hd, .rc-rank,
+  .lsheet, .sheet, .sheet-cond, .lsheet-cond, .th-mania,
+  .dl-pill, .leg-tag, .wk, .wx i,
+  .hscroll-bar, .hscroll-bar > i,
+  .hscroll-cue, .hscroll-cue-l,
+  .venue-summary i
+) {
+  border-radius: var(--r-display) !important;
+}
+
+/* Only actual or wireframe-intended controls, links and clickable cards. */
+:is(
+  a[href], button, input:not([type="hidden"]), select, textarea,
+  [role="button"], [role="link"], [role="tab"],
+  .login-panel button,
+  .icon-btn, .cta-btn, .action-btn, .action-bar-btn,
+  .chip, .tab-item, .date-tab, .top-tab, .info-tab, .race-tab,
+  .menu-item, .news-item, .blog-card, .feature-card, .feature-cta,
+  .venue-tile, .vcard, .race-tile, .dokanto-card, .hero-banner,
+  .pickup-card, .rebate-chip, .bn, .tsubu-link,
+  .pay-toggle, .mori-sp, .mori-next, .vgroup-head,
+  .sort-btn, .sort-opt, .rchip, .compact-row, .op-btn, .rpred,
+  .item-btn, .sheet-close, .ri-btn,
+  .sw, .rd-lab, .lb-btn, .lsheet-close,
+  .oshi-act, .om-edit, .om-row, .om-add, .os-tab,
+  .os-chip, .os-btn, .cp-card, .cp-btn,
+  .point-use span, .seg, .seg span,
+  .header-payout
+) {
+  border-radius: var(--r-action) !important;
+}
+
+/* The Mori heading is information, not a link; its separate right link stays rounded. */
+.mori-heading:not(a):not(button) { border-radius: var(--r-display) !important; }
