@@ -2743,16 +2743,40 @@
       }
 
 
-      /* Two winning-streak riders share one race/time label. */
-      .pk3 .pk-consecutive-players {
+      /* All featured-rider cards share the existing single-rider card height.
+         A two-rider card uses a compact, reusable 2-row player stack. */
+      .pickup-card.pk3 {
+        height: 86px;
+        min-height: 86px;
+      }
+      .pk3 .pk-compact-row {
+        margin-top: 4px;
+      }
+      .pk3 .pk-two-rider-stack {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 5px;
+        gap: 2px;
         flex: 0 0 auto;
         min-width: 0;
       }
-      .pk3 .pk-consecutive-row { align-items: center; }
+      .pk3 .pk-two-rider-stack .pk-player {
+        line-height: 1;
+      }
+      .pk3.pk-two-riders .pk-compact-row {
+        margin-top: 2px;
+        align-items: center;
+      }
+      @media (max-width: 330px) {
+        .pickup-card.pk3 {
+          height: 80px;
+          min-height: 80px;
+        }
+        .pk3.pk-two-riders {
+          padding-top: 7px;
+          padding-bottom: 7px;
+        }
+      }
       /* Equal-height home venue tiles; the previously shorter Hiratsuka card is the model. */
       .venue-grid.g3 .vcard {
         height: 106px;
@@ -3034,12 +3058,12 @@
                   <div class="pk-compact-row"><div class="pk-player"><span class="carno w4">4</span><span class="pk-text">倉松涼</span></div><span class="pk-race-time">玉野<span class="pk-race-number">11R</span> 21:18</span></div>
                 </div>
               </div>
-              <div class="pickup-card pk3">
+              <div class="pickup-card pk3 pk-two-riders">
                 <div class="kun"><img class="kun-ic" src="ic_pickup03.png" alt="連勝君" width="72" height="72" /></div>
                 <div class="pickup-body">
-                  <div class="pk-explain">3レース以上連続で勝利している選手</div>
-                  <div class="pk-compact-row pk-consecutive-row">
-                    <div class="pk-consecutive-players">
+                  <div class="pk-explain">3連勝以上の選手</div>
+                  <div class="pk-compact-row">
+                    <div class="pk-two-rider-stack">
                       <div class="pk-player"><span class="carno w7">7</span><span class="pk-text">鈴木良太</span><span class="pk-note">4連勝</span></div>
                       <div class="pk-player"><span class="carno w2">2</span><span class="pk-text">松山桂輔</span><span class="pk-note">3連勝</span></div>
                     </div>
