@@ -2000,8 +2000,14 @@
         column-gap: 6px;
       }
       .pt-item .payout-label { font-size: var(--fs-12); }
-      .pt-item .payout-value { font-size: var(--fs-14); margin-left: auto; }
+      .pt-item .payout-value { font-size: var(--fs-16); margin-left: auto; }
       .pt-h .balance-sep { align-self: stretch; margin: 2px 10px; }
+      @media (max-width: 359px) {
+        /* Reserve enough width for 999,999,999pt / 円 at the larger 16px
+           size; let the existing flex-wrap move labels above values. */
+        .payout-bar.pt-h { padding-inline: 6px; }
+        .pt-h .balance-sep { margin-inline: 4px; }
+      }
 
       .mori-card {
         margin: 6px 8px 4px;
@@ -2640,7 +2646,7 @@
         font-size: var(--fs-16);
       }
       .pk3 .pk-player .pk-note { font-size: var(--fs-14); }
-      .pk3 .pk-race-time { font-size: var(--fs-16); }
+      .pk3 .pk-race-time { font-size: var(--fs-14); }
       .pk3 .pk-player .pk-note {
         letter-spacing: normal;
       }
