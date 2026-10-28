@@ -2906,6 +2906,19 @@
         min-width: 0;
       }
       .pk3 .pk-consecutive-row { align-items: center; }
+      /* Equal-height home venue tiles; the previously shorter Hiratsuka card is the model. */
+      .venue-grid.g3 .vcard {
+        height: 106px;
+        min-height: 106px;
+      }
+      /* Match the heart's text box to the neighboring 12px night-race label. */
+      .venue-grid.g3 .girls {
+        height: 15px;
+        font-size: var(--fs-12);
+        line-height: 1.25;
+        font-weight: 400;
+        vertical-align: middle;
+      }
       /* Mori feature uses the same card layout as the auto venue list. */
       .venue-grid.g3 .vcard.mori-photo-tile {
         position: relative;
@@ -2943,7 +2956,8 @@
         -webkit-tap-highlight-color: transparent;
         transition: transform 120ms ease, filter 120ms ease;
       }
-      .tap-feedback:active, .tap-feedback.tap-flash {
+      /* Click feedback starts once on release; :active caused a second flash. */
+      .tap-feedback.tap-flash {
         transform: scale(0.975);
         filter: brightness(0.9);
       }
@@ -3110,9 +3124,8 @@
                 </div>
                 <div class="vcard auto mori-next-card">
                   <div class="vcard-top"><span class="mori-next-label">次回出走予定</span></div>
-                  <div class="vcard-name">10/8 飯塚</div>
                   <div class="vcard-tags"><span class="gbadge g-f2">普通</span><span class="vcard-day">初日</span></div>
-                  <div class="vcard-bottom"><span class="kubun">ナイター</span></div>
+                  <div class="vcard-name">10/8 飯塚</div>
                 </div>
               </div>
 
