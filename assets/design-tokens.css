@@ -48,6 +48,16 @@
   --c-bg: #F3F2EF;
   --c-surface: #FFFFFF;
   --c-border: #BEC2BE;
+  --c-border-control: #8F9692; /* input and interactive boundaries */
+  /* Unified line system: 1px standard/control, 3px selected/race/focus. */
+  --line-thin: 1px;
+  --line-emphasis-width: 3px;
+  --line-normal: var(--line-thin) solid var(--c-border);
+  --line-control: var(--line-thin) solid var(--c-border-control);
+  --line-selected: var(--line-emphasis-width) solid var(--c-primary-d);
+  --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
+  --line-auto: var(--line-emphasis-width) solid var(--c-auto);
+  --line-focus: var(--line-emphasis-width) solid var(--c-link);
   --c-sub: #646B68;
   --c-text: #2B3031;
   --c-primary: #E0B96E;
