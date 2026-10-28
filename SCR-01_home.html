@@ -2845,6 +2845,32 @@
       .app-header .icon-btn,
       .app-header .cta-btn { border-radius: 8px; }
 
+
+      /* v28: deadline warning fills the complete R/time row; deadline time remains black. */
+      .venue-grid.g3 .vcard.deadline-soon .vcard-bottom {
+        background: var(--c-deadline-soon-bg);
+        border-radius: 4px;
+        padding: 2px 4px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 2px;
+      }
+      .venue-grid.g3 .vcard.deadline-soon .vcard-dl.soon {
+        color: var(--c-text);
+        background: transparent;
+        border-radius: 0;
+        padding: 0;
+        margin-left: 0;
+      }
+      @media (max-width: 359px) {
+        .venue-grid.g3 .vcard.deadline-soon .vcard-bottom {
+          padding: 2px;
+        }
+        .venue-grid.g3 .vcard.deadline-soon .vcard-r,
+        .venue-grid.g3 .vcard.deadline-soon .vcard-dl.soon {
+          font-size: var(--fs-16);
+        }
+      }
     </style>
   </head>
   <body>
