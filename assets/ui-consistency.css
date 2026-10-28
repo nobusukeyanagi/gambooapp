@@ -1,0 +1,26 @@
+@charset "UTF-8";
+/* Cross-screen semantic hierarchy, based on SCR-01_home.html.
+   Load after per-page styles; unrelated components retain their own rules. */
+:is(.section-header, .vgroup-head) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: 4px 12px;
+}
+:is(.section-header, .vgroup-head) :is(.section-title, .vgroup-name) {
+  font-size: var(--fs-20);
+  font-weight: 900;
+  letter-spacing: normal;
+}
+:is(.section-header, .vgroup-head) :is(.see-all, .vgroup-link, .mori-page-link) {
+  font-size: var(--fs-14);
+  font-weight: 700;
+}
+:is(.section-header, .vgroup-head) :is(.see-all, .mori-page-link) .ic {
+  width: 16px;
+  height: 16px;
+}
+.vgroup-head.mori-heading {
+  margin-top: 0;
+}

@@ -32,6 +32,7 @@
 
   /* ③ グレード色 */
   --c-gp: #3C4145;
+  --c-grade-highlight: #E2BF27; /* SG yellow, independent from 5th lane color */
   --c-g1: #A65358;
   --c-g2: #4E7197;
   --c-g3: #58774A;
@@ -76,7 +77,7 @@
   --c-on-primary: var(--c-text);
   --c-deadline-soon: var(--c-text);
   --c-closed-bg: var(--c-bg);
-  --c-gp-t: var(--w5); /* standard yellow for SG / top-grade text */
+  --c-gp-t: var(--c-grade-highlight);
   --c-g1-t: var(--c-surface);
   --c-g2-t: var(--c-surface);
   --c-g3-t: var(--c-surface);
