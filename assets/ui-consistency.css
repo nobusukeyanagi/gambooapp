@@ -24,3 +24,15 @@
 .vgroup-head.mori-heading {
   margin-top: 0;
 }
+
+/* Venue day, featured rider description, and notification date all use
+   the same 12px / regular / near-black supporting-text hierarchy. */
+.venue-grid.g3 .vcard-day,
+.pk3 .pk-explain,
+.news-date {
+  font-size: var(--fs-12);
+  font-weight: 400;
+  color: var(--c-text);
+  line-height: 1.25;
+  letter-spacing: normal;
+}

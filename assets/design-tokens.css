@@ -36,8 +36,8 @@
   --c-g1: #A65358;
   --c-g2: #4E7197;
   --c-g3: #58774A;
-  --c-f1: #8F6749;
-  --c-f2: #D7C3A0; /* light beige distinguishes FⅡ from FⅠ */
+  --c-f1: #8C6147; /* warm chestnut: white contrast >= 5:1 */
+  --c-f2: #756E60; /* cool muted taupe, distinct from FⅠ; white contrast >= 5:1 */
 
   /* ④ 状態色 */
   --c-success: #477868;
@@ -82,7 +82,7 @@
   --c-g2-t: var(--c-surface);
   --c-g3-t: var(--c-surface);
   --c-f1-t: var(--c-surface);
-  --c-f2-t: var(--c-text);
+  --c-f2-t: var(--c-surface);
   --w1-t: var(--c-text);
   --w1-bd: var(--c-sub);
   --w2-t: var(--c-surface);
