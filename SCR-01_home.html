@@ -2002,12 +2002,6 @@
       .pt-item .payout-label { font-size: var(--fs-12); }
       .pt-item .payout-value { font-size: var(--fs-16); margin-left: auto; }
       .pt-h .balance-sep { align-self: stretch; margin: 2px 10px; }
-      @media (max-width: 359px) {
-        /* Reserve enough width for 999,999,999pt / 円 at the larger 16px
-           size; let the existing flex-wrap move labels above values. */
-        .payout-bar.pt-h { padding-inline: 6px; }
-        .pt-h .balance-sep { margin-inline: 4px; }
-      }
 
       .mori-card {
         margin: 6px 8px 4px;
@@ -2848,6 +2842,13 @@
       /* The shared tap-feedback stylesheet handles press feedback on every page. */
       .section-header + .news-item {
         border-top: var(--line-normal);
+      }
+
+      /* Last in the cascade: protect 16px maximum-balance figures on
+         small viewports without shrinking the text or changing controls. */
+      @media (max-width: 359px) {
+        .payout-bar.pt-h { padding-inline: 6px; }
+        .pt-h .balance-sep { margin-inline: 4px; }
       }
     </style>
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=2" />
