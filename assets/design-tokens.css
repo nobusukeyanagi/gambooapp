@@ -26,7 +26,7 @@
   --w4: #3577B8;
   --w5: #E2BF27;
   --w6: #2B8150;
-  --w7: #AD5917; /* darker orange for accessible white number */
+  --w7: #B05D0A; /* slightly more orange; white contrast ~4.79:1 (WCAG AA) */
   --w8: #E98AB4;
   --w9: #9856B2;
 

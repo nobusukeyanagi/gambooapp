@@ -1912,6 +1912,13 @@
         align-items: center;
         gap: 8px;
       }
+      /* Reuse the campaign tab gift immediately to the right of each date. */
+      .news-head .news-campaign-icon {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+        color: var(--c-primary-d);
+      }
       .news-badge {
         width: 76px;
         text-align: center;
@@ -1998,6 +2005,26 @@
         align-items: baseline;
         justify-content: space-between;
         column-gap: 6px;
+      }
+      /* Prospective link to Delca My Page; press interaction only for now. */
+      .delca-entry {
+        appearance: none;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        border-radius: var(--r-sm);
+        -webkit-tap-highlight-color: transparent;
+      }
+      .delca-entry.tap-pressed,
+      .delca-entry:active {
+        background: color-mix(in srgb, var(--c-text) 11%, var(--c-surface));
+      }
+      .delca-entry:focus-visible {
+        outline: var(--line-focus);
+        outline-offset: 2px;
       }
       .pt-item .payout-label { font-size: var(--fs-12); }
       .pt-item .payout-value { font-size: var(--fs-16); margin-left: auto; }
@@ -2693,7 +2720,10 @@
       .app-header .cta-btn { border-radius: 8px; }
       /* Bell is secondary to the deposit action: remove only its tint.
          Keep the 44px hit area and notification badge unchanged. */
-      .app-header .icon-btn { background: transparent; }
+      .app-header .icon-btn {
+        background: transparent;
+        border: var(--line-control);
+      }
 
 
       /* Deadline urgency belongs to the time, not the whole row.
@@ -2838,6 +2868,8 @@
         overflow: hidden;
         border-left: var(--line-normal);
         background: var(--c-surface);
+        cursor: default;
+        pointer-events: none;
       }
       .mori-venue-grid .mori-photo-tile .mori-today-strip {
         position: absolute;
@@ -2903,10 +2935,10 @@
               </div>
             </div>
             <div class="payout-bar pt-h">
-              <div class="pt-item">
+              <button type="button" class="pt-item delca-entry" aria-label="デルカマイページ（デモ・遷移先未設定）">
                 <span class="payout-label">デルカ</span>
                 <span class="payout-value maxcase">999,999,999<span class="unit">pt</span></span>
-              </div>
+              </button>
               <div class="balance-sep"></div>
               <div class="pt-item pay-toggle masked" role="button" aria-pressed="true" aria-label="払戻金の表示・非表示を切り替え">
                 <span class="payout-label">払戻金</span>
@@ -3020,10 +3052,10 @@
                 <a class="mori-page-link" href="https://gamboo.jp/topics/?tid=mori_point2015">特設ページ<svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></a>
               </div>
               <div class="venue-grid g3 mori-venue-grid">
-                <a class="vcard mori-photo-tile" href="https://gamboo.jp/topics/?tid=mori_point2015" aria-label="本日出走・森且行選手の特設ページを見る">
+                <div class="vcard mori-photo-tile">
                   <span class="mori-today-strip" aria-hidden="true">本日出走</span>
                   <img src="mori.jpg" alt="森且行選手" />
-                </a>
+                </div>
                 <div class="vcard auto">
                   <div class="vcard-top"><span class="gbadge g-g2">GⅡ</span><span class="vcard-day">2日目</span></div>
                   <div class="vcard-name">川口</div>
@@ -3102,7 +3134,7 @@
               <div class="news-item">
                 <div class="news-head">
                   <span class="news-badge point">ポイント</span>
-                  <span class="news-date">2026.04.06</span><span class="news-new">[NEW]</span>
+                  <span class="news-date">2026.04.06</span><svg class="ic news-campaign-icon" role="img" aria-label="キャンペーン"><use href="#ic-gift"></use></svg>
                 </div>
                 <div class="news-title ell2">
                   「景品に交換」に西武園GⅢオリジナルクオカードが登場！
@@ -3112,7 +3144,7 @@
               <div class="news-item">
                 <div class="news-head">
                   <span class="news-badge keirin">競輪</span>
-                  <span class="news-date">2026.04.06</span><span class="news-new">[NEW]</span>
+                  <span class="news-date">2026.04.06</span><svg class="ic news-campaign-icon" role="img" aria-label="キャンペーン"><use href="#ic-gift"></use></svg>
                 </div>
                 <div class="news-title ell2">【重要】一部開催のレース数変更について</div>
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
@@ -3120,7 +3152,7 @@
               <div class="news-item">
                 <div class="news-head">
                   <span class="news-badge auto">オートレース</span>
-                  <span class="news-date">2026.04.05</span><span class="news-new">[NEW]</span>
+                  <span class="news-date">2026.04.05</span><svg class="ic news-campaign-icon" role="img" aria-label="キャンペーン"><use href="#ic-gift"></use></svg>
                 </div>
                 <div class="news-title ell2">川口オートレース場 SG日本選手権 特設ページを公開しました</div>
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
@@ -3128,7 +3160,7 @@
               <div class="news-item">
                 <div class="news-head">
                   <span class="news-badge both">競輪＆オート</span>
-                  <span class="news-date">2024.04.15</span><span class="news-new">[NEW]</span>
+                  <span class="news-date">2024.04.15</span><svg class="ic news-campaign-icon" role="img" aria-label="キャンペーン"><use href="#ic-gift"></use></svg><span class="news-new">[NEW]</span>
                 </div>
                 <div class="news-title ell2">機能リリースのお知らせ(2024年4月18日)</div>
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
@@ -3147,7 +3179,7 @@
               </div>
               <div class="tab-item">
                 <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="#ic-auto"></use></svg></div>
-                オートレース
+                オート
               </div>
               <div class="tab-item">
                 <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="#ic-gift"></use></svg></div>
