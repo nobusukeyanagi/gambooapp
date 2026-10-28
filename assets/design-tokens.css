@@ -36,7 +36,7 @@
   --c-g2: #4E7197;
   --c-g3: #58774A;
   --c-f1: #8F6749;
-  --c-f2: #754B2F;
+  --c-f2: #D7C3A0; /* light beige distinguishes FⅡ from FⅠ */
 
   /* ④ 状態色 */
   --c-success: #477868;
@@ -81,7 +81,7 @@
   --c-g2-t: var(--c-surface);
   --c-g3-t: var(--c-surface);
   --c-f1-t: var(--c-surface);
-  --c-f2-t: var(--c-surface);
+  --c-f2-t: var(--c-text);
   --w1-t: var(--c-text);
   --w1-bd: var(--c-sub);
   --w2-t: var(--c-surface);

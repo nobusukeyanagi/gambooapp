@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gamboo アプリ ワイヤーフレーム</title>
-    <link rel="stylesheet" href="./assets/design-tokens.css?v=35" />
+    <link rel="stylesheet" href="./assets/design-tokens.css?v=36" />
     <style>
       * {
         box-sizing: border-box;
@@ -2953,13 +2953,18 @@
       /* Give prototype controls visual press feedback without fake navigation. */
       .tap-feedback {
         cursor: pointer;
+        touch-action: manipulation;
         -webkit-tap-highlight-color: transparent;
-        transition: transform 120ms ease, filter 120ms ease;
+        transition: transform 60ms ease, filter 60ms ease;
       }
-      /* Click feedback starts once on release; :active caused a second flash. */
-      .tap-feedback.tap-flash {
+      /* Start feedback immediately on contact, with no extra click flash. */
+      .tap-feedback.tap-pressed {
         transform: scale(0.975);
         filter: brightness(0.9);
+      }
+      /* A solid background lets date tabs darken like the other buttons. */
+      .date-tabs .date-tab.tap-feedback {
+        background: var(--c-surface);
       }
       @media (prefers-reduced-motion: reduce) {
         .tap-feedback { transition: none; }
@@ -3418,7 +3423,7 @@
     </script>
 
     <script>
-      /* Temporary visual response; only existing links really navigate. */
+      /* Immediate single press response without click-stage flashing. */
       (function () {
         var selectors = [
           ".app-header .icon-btn", ".app-header .cta-btn",
@@ -3430,18 +3435,48 @@
         document.querySelectorAll(selectors.join(",")).forEach(function (el) {
           el.classList.add("tap-feedback");
         });
-        var timers = new WeakMap();
-        document.addEventListener("click", function (event) {
+        var pressed = null;
+        var released = null;
+        var releaseTimer = null;
+        var startedAt = 0;
+        function cancelRelease() {
+          if (releaseTimer !== null) clearTimeout(releaseTimer);
+          releaseTimer = null;
+          if (released) released.classList.remove("tap-pressed");
+          released = null;
+        }
+        document.addEventListener("pointerdown", function (event) {
+          if (event.pointerType === "mouse" && event.button !== 0) return;
           var target = event.target.closest(".tap-feedback");
           if (!target) return;
-          clearTimeout(timers.get(target));
-          target.classList.remove("tap-flash");
-          void target.offsetWidth;
-          target.classList.add("tap-flash");
-          timers.set(target, setTimeout(function () {
-            target.classList.remove("tap-flash");
-            timers.delete(target);
-          }, 200));
+          cancelRelease();
+          if (pressed) pressed.classList.remove("tap-pressed");
+          pressed = target;
+          startedAt = Date.now();
+          target.classList.add("tap-pressed");
+        }, { passive: true });
+        document.addEventListener("pointerup", function () {
+          if (!pressed) return;
+          var target = pressed;
+          pressed = null;
+          released = target;
+          /* Very short taps remain visible; held presses reset at release. */
+          var remaining = Math.max(0, 110 - (Date.now() - startedAt));
+          releaseTimer = setTimeout(function () {
+            target.classList.remove("tap-pressed");
+            if (released === target) released = null;
+            releaseTimer = null;
+          }, remaining);
+        }, { passive: true });
+        document.addEventListener("pointercancel", function () {
+          if (pressed) pressed.classList.remove("tap-pressed");
+          pressed = null;
+          cancelRelease();
+        }, { passive: true });
+        window.addEventListener("blur", function () {
+          if (pressed) pressed.classList.remove("tap-pressed");
+          pressed = null;
+          cancelRelease();
         });
       })();
     </script>
