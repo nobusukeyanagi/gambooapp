@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gamboo アプリ ワイヤーフレーム</title>
-    <link rel="stylesheet" href="./assets/design-tokens.css?v=34" />
+    <link rel="stylesheet" href="./assets/design-tokens.css?v=35" />
     <style>
       * {
         box-sizing: border-box;
@@ -107,7 +107,7 @@
         justify-content: space-between;
         padding: 0 12px;
         flex-shrink: 0;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         box-shadow: 0 1px 3px color-mix(in srgb, var(--c-text) 6%, transparent);
       }
       .logo {
@@ -146,7 +146,7 @@
         height: 8px;
         background: var(--c-error);
         border-radius: 50%;
-        border: 1px solid var(--c-surface);
+        border: var(--line-thin) solid var(--c-surface);
       }
       .cta-btn {
         background: var(--c-secondary);
@@ -173,7 +173,7 @@
         background: var(--c-surface);
         height: 52px;
         display: flex;
-        border-top: 1px solid var(--c-border);
+        border-top: var(--line-normal);
         flex-shrink: 0;
       }
       .tab-item {
@@ -286,7 +286,7 @@
       .date-tabs {
         display: flex;
         background: var(--c-surface);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .date-tab {
@@ -298,7 +298,7 @@
         font-size: var(--fs-12);
         font-weight: 600;
         color: var(--c-sub);
-        border-bottom: 2px solid transparent;
+        border-bottom: var(--line-emphasis-width) solid transparent;
         cursor: pointer;
       }
       .date-tab.active {
@@ -312,7 +312,7 @@
         padding: 6px 10px;
         overflow-x: auto;
         background: var(--c-surface);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         scrollbar-width: none;
       }
       .filter-chips::-webkit-scrollbar {
@@ -326,7 +326,7 @@
         white-space: nowrap;
         background: var(--c-surface2);
         color: var(--c-sub);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         cursor: pointer;
       }
       .chip.active {
@@ -347,7 +347,7 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
       }
       .venue-name {
         font-size: var(--fs-16);
@@ -390,7 +390,7 @@
         font-weight: 700;
         background: var(--c-bg);
         color: var(--c-warning);
-        border: 1px solid var(--c-bg);
+        border: var(--line-normal);
         padding: 1px 5px;
         border-radius: 3px;
       }
@@ -400,7 +400,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
       }
       .race-num {
         font-size: var(--fs-12);
@@ -478,7 +478,7 @@
       .action-btn.outline {
         background: var(--c-surface2);
         color: var(--c-text);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
       }
 
       .pickup-card {
@@ -516,7 +516,7 @@
         align-items: flex-start;
         gap: 8px;
         padding: 8px 10px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
         background: var(--c-surface);
         cursor: pointer;
       }
@@ -569,7 +569,7 @@
         display: flex;
         gap: 8px;
         padding: 8px 10px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
         background: var(--c-surface);
         cursor: pointer;
       }
@@ -623,7 +623,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 12px;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .back-btn {
@@ -646,7 +646,7 @@
       .race-info-bar {
         background: var(--c-surface);
         padding: 6px 10px;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .race-info-title {
@@ -668,7 +668,7 @@
         background: var(--c-surface);
         display: flex;
         overflow-x: auto;
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         scrollbar-width: none;
         flex-shrink: 0;
       }
@@ -684,7 +684,7 @@
         font-size: var(--fs-12);
         font-weight: 600;
         color: var(--c-sub);
-        border-bottom: 2px solid transparent;
+        border-bottom: var(--line-emphasis-width) solid transparent;
         padding: 0 6px;
         white-space: nowrap;
         cursor: pointer;
@@ -701,7 +701,7 @@
 
       .info-tabs {
         display: flex;
-        border-bottom: 2px solid var(--c-border);
+        border-bottom: var(--line-normal);
         background: var(--c-surface);
         flex-shrink: 0;
       }
@@ -715,7 +715,7 @@
         text-align: center;
         line-height: 1.2;
         cursor: pointer;
-        border-bottom: 2px solid transparent;
+        border-bottom: var(--line-emphasis-width) solid transparent;
         margin-bottom: -2px;
       }
       .info-tab.active {
@@ -728,7 +728,7 @@
         padding: 5px 10px;
         font-size: var(--fs-12);
         color: var(--c-sub);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .lineup-row {
@@ -771,7 +771,7 @@
         font-size: var(--fs-12);
         font-weight: 700;
         color: var(--c-sub);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         position: sticky;
         top: 0;
         z-index: 1;
@@ -779,7 +779,7 @@
       }
       .race-table td {
         padding: 4px 5px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
         text-align: center;
         vertical-align: middle;
         white-space: nowrap;
@@ -809,7 +809,7 @@
       }
       .f1 {
         background: var(--c-surface);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         color: var(--c-text);
       }
       .f2 {
@@ -878,7 +878,7 @@
         height: 48px;
         display: flex;
         align-items: center;
-        border-top: 1px solid var(--c-border);
+        border-top: var(--line-normal);
         padding: 0 8px;
         gap: 6px;
         flex-shrink: 0;
@@ -969,7 +969,7 @@
         align-items: center;
         gap: 8px;
         padding: 10px 10px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
         background: var(--c-surface);
         cursor: pointer;
       }
@@ -1028,7 +1028,7 @@
         gap: 6px;
         padding: 5px 10px;
         background: var(--c-surface);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .view-count {
@@ -1041,7 +1041,7 @@
         font-size: var(--fs-12);
         font-weight: 700;
         padding: 2px 8px;
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         border-radius: var(--r-full);
         background: var(--c-surface);
         cursor: pointer;
@@ -1082,7 +1082,7 @@
         min-width: 46px;
         height: 36px;
         border-radius: 10px;
-        border: 1px solid var(--c-border);
+        border: var(--line-control);
         background: var(--c-surface);
         color: var(--c-text);
         display: flex;
@@ -1130,7 +1130,7 @@
         gap: 6px;
         padding: 0 10px;
         height: 48px;
-        border-bottom: 1px solid var(--c-surface2);
+        border-bottom: var(--line-normal);
         cursor: pointer;
       }
       .compact-row:last-child {
@@ -1235,7 +1235,7 @@
         justify-content: center;
         color: var(--c-sub);
         background: var(--c-surface);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         border-radius: var(--r-full);
         box-shadow: var(--e1);
         pointer-events: none;
@@ -1271,7 +1271,7 @@
       }
 
       .maxcase {
-        outline: 1px dashed color-mix(in srgb, var(--c-error) 45%, transparent);
+        outline: var(--line-thin) solid var(--c-error);
         outline-offset: 1px;
       }
 
@@ -1393,7 +1393,7 @@
         padding: 5px 10px;
         height: 42px;
         background: var(--c-surface);
-        border-bottom: 1px solid var(--c-border);
+        border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
       .op-btn {
@@ -1406,7 +1406,7 @@
         font-weight: 700;
         color: var(--c-text);
         background: var(--c-surface);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         border-radius: var(--r-full);
         white-space: nowrap;
         cursor: pointer;
@@ -1469,7 +1469,7 @@
         min-width: 52px;
         min-height: 42px;
         border-radius: var(--r-md);
-        border: 1px solid var(--c-border);
+        border: var(--line-control);
         background: var(--c-surface);
         color: var(--c-text);
         display: flex;
@@ -1519,7 +1519,7 @@
       .venue-card {
         background: var(--c-surface);
         margin: 6px 8px;
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         border-radius: var(--r-md);
         box-shadow: var(--e1);
         overflow: hidden;
@@ -1558,7 +1558,7 @@
         font-weight: 900;
         color: var(--c-primary-d);
         background: var(--c-primary-bg);
-        border: 1px solid var(--c-primary);
+        border: var(--line-selected);
         border-radius: var(--r-sm);
         padding: 1px 4px;
         flex-shrink: 0;
@@ -1591,7 +1591,7 @@
       .action-btn.outline {
         background: var(--c-surface);
         color: var(--c-text);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         box-shadow: var(--e1);
       }
 
@@ -1679,7 +1679,7 @@
       .top-tab.active { color: var(--c-primary-d) !important; border-bottom-color: var(--c-primary) !important; }
 
       .ic {
-        outline: 1px dotted color-mix(in srgb, var(--c-text) 38%, transparent);
+        outline: none;
         outline-offset: 1px;
         border-radius: 2px;
       }
@@ -1698,7 +1698,7 @@
       .blog-thumb,
       .featured-thumb,
       .cp-banner {
-        outline: 1px dotted color-mix(in srgb, var(--c-text) 38%, transparent);
+        outline: none;
         outline-offset: -3px;
       }
 
@@ -1720,7 +1720,7 @@
         font-weight: 800;
         color: var(--c-text);
         background: var(--c-surface);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         border-radius: var(--r-full);
         box-shadow: var(--e1);
         white-space: nowrap;
@@ -1744,14 +1744,14 @@
         letter-spacing: normal;
         white-space: nowrap;
         flex-shrink: 0;
-        outline: 1px dotted color-mix(in srgb, var(--c-text) 38%, transparent);
+        outline: none;
         outline-offset: 1px;
       }
       .kubun { background: var(--c-text); color: var(--c-surface); }
       .rebate-logo {
         background: var(--c-primary-bg);
         color: var(--c-primary-d);
-        border: 1px solid var(--c-primary);
+        border: var(--line-selected);
       }
 
       .rchips { padding: 8px 8px; overflow: visible; width: max-content; }
@@ -1778,7 +1778,7 @@
         justify-content: center;
         color: var(--c-sub);
         background: var(--c-surface);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         border-radius: var(--r-full);
         box-shadow: var(--e1);
         pointer-events: none;
@@ -1793,7 +1793,7 @@
         font-size: var(--fs-12);
         font-weight: 700;
         color: var(--c-text);
-        border-top: 1px solid var(--c-surface2);
+        border-top: var(--line-normal);
       }
       .comment-row .cr-r {
         font-size: var(--fs-12);
@@ -1810,7 +1810,7 @@
         font-size: var(--fs-14);
         font-weight: 900;
         flex-shrink: 0;
-        border: 1px solid transparent;
+        border: var(--line-thin) solid transparent;
         font-family: var(--ff-num);
       }
       .carno.w1 { background: var(--w1); color: var(--w1-t); border-color: var(--w1-bd); }
@@ -1837,7 +1837,7 @@
         gap: 10px;
         min-height: 52px;
         padding: 0 16px;
-        border-top: 1px solid var(--c-surface2);
+        border-top: var(--line-normal);
         font-size: var(--fs-14);
         font-weight: 700;
         cursor: pointer;
@@ -1990,7 +1990,7 @@
       .kubun { min-width: calc(5.82em + 10px); }
       .venue-header .venue-meta { margin-right: 0; }
       .venue-header .rebate-logo { margin-left: auto; }
-      .rchip.rebate { border: 2px solid var(--c-primary); background: var(--c-primary-bg); }
+      .rchip.rebate { border: var(--line-selected); background: var(--c-primary-bg); }
       .rchip .rchip-rebate {
         margin-top: 2px;
         padding: 0 4px;
@@ -2017,7 +2017,7 @@
         padding: 0 5px;
         border-radius: 3px;
         background: var(--c-surface);
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         color: var(--c-sub);
         font-size: var(--fs-12);
         font-weight: 700;
@@ -2045,7 +2045,7 @@
         align-items: center;
         justify-content: center;
         padding: 0 4px;
-        border: 1px solid var(--c-border);
+        border: var(--line-normal);
         border-radius: var(--r-md);
         background: var(--c-surface2);
         color: var(--c-text);
