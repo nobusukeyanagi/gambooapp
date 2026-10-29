@@ -5,8 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 44px;
-  padding: 0 12px;
+  min-height: var(--h-section);
+  padding: 0 var(--space-content);
 }
 :is(.section-header, .vgroup-head) :is(.section-title, .vgroup-name) {
   font-size: var(--fs-20);
@@ -87,9 +87,9 @@
 .app-header .header-actions .icon-btn {
   width: auto;
   min-width: 0;
-  height: 40px;
+  height: var(--h-control);
   padding: 0 8px;
-  gap: 3px;
+  gap: var(--space-small);
   background: transparent;
   border: var(--line-control);
   border-radius: 8px;
@@ -103,7 +103,15 @@
   flex-shrink: 0;
 }
 .app-header .header-actions .cta-btn {
-  min-height: 40px;
+  min-height: var(--h-control);
   padding: 0 10px;
   border-radius: 8px;
 }
+
+/* Canonical sizes. Legacy per-page height overrides have been removed. */
+.app-header { height: var(--h-header); }
+.page-header { height: var(--h-page-header); }
+.bottom-tab { height: var(--h-bottom-nav); }
+.icon-btn { width: var(--h-icon-button); height: var(--h-icon-button); }
+.cta-btn { min-height: var(--h-control); }
+.date-tab, .top-tab { min-height: var(--h-date-tab); font-size: var(--fs-14); }
