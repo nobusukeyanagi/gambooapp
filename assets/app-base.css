@@ -1,0 +1,9 @@
+@charset "UTF-8";
+/* Canonical app shell. All screens directly reference this file. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--c-bg); font-family: var(--ff-ui); color: var(--c-text); font-size: var(--fs-14); line-height: 1.5; }
+.page-title, .page-sub, .screen-label { display: none; }
+.screens-grid { display: block; gap: 0; padding: 0; }
+.screen-wrap { display: block; gap: 0; }
+.phone { width: 100%; height: 100vh; height: 100dvh; background: none; border-radius: 0; padding: 0; box-shadow: none; position: relative; overflow: hidden; }
+.phone-inner { width: 100%; height: 100%; background: var(--c-bg); border-radius: 0; overflow: hidden; display: flex; flex-direction: column; position: relative; }
