@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gamboo アプリ ワイヤーフレーム</title>
     <link rel="stylesheet" href="./assets/design-tokens.css?v=42" />
-    <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=5" />
+    <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=6" />
     <style>
       * {
         box-sizing: border-box;
@@ -2007,7 +2007,7 @@
         justify-content: space-between;
         column-gap: 6px;
       }
-      /* Prospective link to Delca My Page; press interaction only for now. */
+      /* DELCA balance takes users to DELCA My Page. */
       .delca-entry {
         appearance: none;
         border: 0;
@@ -2899,6 +2899,16 @@
         object-position: right center;
         display: block;
       }
+      /* Make the entire DELCA or payout half visibly darken on press. */
+      .payout-bar.pt-h .pt-item {
+        align-self: stretch;
+        align-content: center;
+        min-height: 36px;
+        border-radius: var(--r-sm);
+      }
+      .payout-bar.pt-h .pt-item:is(.tap-pressed, :active) {
+        background-color: color-mix(in srgb, var(--c-text) 18%, var(--c-surface));
+      }
       /* The shared tap-feedback stylesheet handles press feedback on every page. */
       .section-header + .news-item {
         border-top: var(--line-normal);
@@ -2937,12 +2947,12 @@
               </div>
             </div>
             <div class="payout-bar pt-h">
-              <button type="button" class="pt-item delca-entry" aria-label="デルカマイページ（デモ・遷移先未設定）">
+              <a class="pt-item delca-entry" href="https://gamboo.jp/bet/xt_autorace.aspx?mac=Mymenu_Index" aria-label="デルカマイページへ移動">
                 <span class="payout-label">デルカ</span>
                 <span class="payout-value maxcase">999,999,999<span class="unit">pt</span></span>
-              </button>
+              </a>
               <div class="balance-sep"></div>
-              <div class="pt-item pay-toggle masked" role="button" aria-pressed="true" aria-label="払戻金の表示・非表示を切り替え">
+              <div class="pt-item pay-toggle masked" role="button" tabindex="0" aria-pressed="true" aria-label="払戻金の表示・非表示を切り替え">
                 <span class="payout-label">払戻金</span>
                 <span class="pay-val">
                   <span class="payout-value maxcase pay-shown">999,999,999<span class="unit">円</span></span>
@@ -3054,7 +3064,7 @@
                 <a class="mori-page-link" href="https://gamboo.jp/topics/?tid=mori_point2015">特設ページ<svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></a>
               </div>
               <div class="venue-grid g3 mori-venue-grid">
-                <div class="vcard mori-photo-tile">
+                <div class="vcard mori-photo-tile" data-no-tap-feedback>
                   <span class="mori-today-strip" aria-hidden="true">本日出走</span>
                   <img src="mori.jpg" alt="森且行選手" />
                 </div>
@@ -3067,7 +3077,7 @@
                     <span class="vcard-dl" data-deadline="20:40"><span class="deadline-time">20:40</span></span>
                   </div>
                 </div>
-                <div class="vcard auto mori-next-card">
+                <div class="vcard auto mori-next-card" data-no-tap-feedback>
                   <div class="vcard-top"><span class="gbadge g-f2">普通</span></div>
                   <div class="vcard-name">飯塚</div>
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
@@ -3172,23 +3182,23 @@
             </div>
             <div class="bottom-tab">
               <div class="tab-item active">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=3#nav-home"></use></svg></div>
+                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=4#nav-home"></use></svg></div>
                 ホーム
               </div>
               <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=3#nav-keirin"></use></svg></div>
+                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=4#nav-keirin"></use></svg></div>
                 競輪
               </div>
               <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=3#nav-auto"></use></svg></div>
+                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=4#nav-auto"></use></svg></div>
                 オートレース
               </div>
               <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=3#nav-campaign"></use></svg></div>
+                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=4#nav-campaign"></use></svg></div>
                 キャンペーン
               </div>
               <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=3#nav-mypage"></use></svg></div>
+                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=4#nav-mypage"></use></svg></div>
                 マイページ
               </div>
             </div>
@@ -3330,6 +3340,12 @@
           el.classList.toggle("masked", m);
           el.setAttribute("aria-pressed", m ? "true" : "false");
         });
+        el.addEventListener("keydown", function (event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            el.click();
+          }
+        });
       });
     </script>
     <script>
@@ -3366,6 +3382,6 @@
     </script>
 
 
-      <script src="./assets/tap-feedback.js?v=2" defer></script>
+      <script src="./assets/tap-feedback.js?v=3" defer></script>
 </body>
 </html>
