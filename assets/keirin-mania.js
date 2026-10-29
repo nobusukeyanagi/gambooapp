@@ -115,8 +115,9 @@
   }
 
   function syncTab() {
+    const atRightEdge = wrap.scrollWidth - wrap.clientWidth - wrap.scrollLeft <= 12;
     const maniaVisible = wrap.scrollLeft > 0 &&
-      wrap.scrollLeft + wrap.clientWidth >= maniaHeading.offsetLeft + 12;
+      (atRightEdge || wrap.scrollLeft + wrap.clientWidth >= maniaHeading.offsetLeft + 12);
     selectTab(maniaVisible ? "mania" : "racecard");
   }
 
