@@ -98,7 +98,7 @@
   gap: var(--space-small);
   background: transparent;
   border: var(--line-control);
-  border-radius: 8px;
+  border-radius: var(--r-control);
   font-size: var(--fs-14);
   font-weight: var(--fw-14-strong);
   white-space: nowrap;
