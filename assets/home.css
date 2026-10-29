@@ -1,5 +1,6 @@
 @charset "UTF-8";
 /* Gamboo home: page-specific styles. Shared primitives live in the canonical assets stylesheets. */
+.icon-sprite { display: none; }
 button,
       input,
       select,
