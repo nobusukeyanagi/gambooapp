@@ -1612,7 +1612,11 @@
         color: var(--c-sub);
         vertical-align: 2px;
       }
-    </style>
+    
+/* Profile-only supporting text and destructive action label. */
+.profile-section-desc { padding: 2px 10px 0; font-size: var(--fs-12); color: var(--c-sub); }
+.danger-text { color: var(--c-error); }
+</style>
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
     <link rel="stylesheet" href="./assets/ui-consistency.css?v=7" />
   </head>
@@ -1667,11 +1671,7 @@
                 <div class="menu-section-title">激推しメン</div>
               </div>
               <div
-                style="
-                  padding: 2px 10px 0;
-                  font-size: var(--fs-12);
-                  color: var(--c-sub);
-                "
+                class="profile-section-desc"
               >
                 出走レースを当日メッセージでお知らせします（各競技1名まで）
               </div>
@@ -1694,11 +1694,7 @@
                 <div class="menu-section-title">推しメン</div>
               </div>
               <div
-                style="
-                  padding: 2px 10px 0;
-                  font-size: var(--fs-12);
-                  color: var(--c-sub);
-                "
+                class="profile-section-desc"
               >
                 応援している選手を登録できます（各競技30名まで）
               </div>
@@ -1836,8 +1832,8 @@
                 <div class="menu-arrow">›</div>
               </div>
               <div class="menu-item">
-                <div class="menu-icon" style="color: var(--c-error)"><svg class="ic" aria-hidden="true"><use href="#ic-logout"></use></svg></div>
-                <div class="menu-text" style="color: var(--c-error)">退会</div>
+                <div class="menu-icon danger-text"><svg class="ic" aria-hidden="true"><use href="#ic-logout"></use></svg></div>
+                <div class="menu-text danger-text">退会</div>
                 <div class="menu-arrow">›</div>
               </div>
               <div style="height: 10px"></div>
