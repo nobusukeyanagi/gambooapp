@@ -1,14 +1,18 @@
 @charset "UTF-8";
-/* Bottom navigation only: all five icons use the same gray.
+/* Bottom navigation only: inactive icons gray, active icon brand color.
    Symbols use currentColor, so elsewhere they can take semantic colors
    such as var(--c-keirin) and var(--c-auto) without SVG changes. */
 :root {
   --nav-icon-color: var(--c-sub, #646B68);
-  --nav-icon-active-color: var(--c-sub, #646B68);
+  --nav-icon-active-color: var(--c-primary-d, #8B663B);
+  --nav-icon-size: 30px;
+}
+.bottom-tab .tab-item .tab-icon {
+  height: var(--nav-icon-size);
 }
 .bottom-tab .tab-item .tab-icon .ic {
-  width: 26px;
-  height: 26px;
+  width: var(--nav-icon-size);
+  height: var(--nav-icon-size);
   color: var(--nav-icon-color);
   fill: currentColor;
 }
@@ -16,11 +20,11 @@
   color: var(--nav-icon-active-color);
 }
 
-/* Keep the original racing silhouettes' aspect ratios at 26px height.
+/* Keep the original racing silhouettes' aspect ratios at 30px height.
    Only the bottom-navigation racing icons are wider than the other three. */
 .bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-keirin"]) {
-  width: 32.5px;
+  width: calc(var(--nav-icon-size) * 1.25);
 }
 .bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-auto"]) {
-  width: 28.17px;
+  width: calc(var(--nav-icon-size) * 1.08333333);
 }
