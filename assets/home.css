@@ -1,0 +1,1075 @@
+@charset "UTF-8";
+/* Gamboo home: page-specific styles. Shared primitives live in the canonical assets stylesheets. */
+button,
+      input,
+      select,
+      textarea {
+        font-family: inherit;
+      }
+
+      .screen-label {
+        color: var(--c-border);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .app-header {
+        background: var(--c-surface);
+        
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 var(--space-content);
+        flex-shrink: 0;
+        border-bottom: var(--line-normal);
+        box-shadow: 0 1px 3px color-mix(in srgb, var(--c-text) 6%, transparent);
+      }
+      .logo {
+
+        color: var(--c-primary-d);
+        letter-spacing: normal;
+      }
+      .logo span {
+        color: var(--c-text);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-normal);
+      }
+      .header-actions {
+        display: flex;
+        gap: var(--space-card);
+        align-items: center;
+      }
+      .icon-btn {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        cursor: pointer;
+        position: relative;
+      }
+      .badge {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 8px;
+        height: 8px;
+        background: var(--c-error);
+        border-radius: 50%;
+        border: var(--line-thin) solid var(--c-surface);
+      }
+
+      .scroll-area {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: var(--c-bg);
+        scrollbar-width: none;
+      }
+      .scroll-area::-webkit-scrollbar {
+        display: none;
+      }
+      .tab-item.active {
+        color: var(--c-primary-d);
+      }
+
+      .section-title {
+        color: var(--c-text);
+        display: flex;
+        align-items: center;
+        gap: var(--space-5);
+      }
+      /* Canonical heading accent bar across all home sections. */
+      .section-title::before,
+      .vgroup-name::before {
+        content: "";
+        display: inline-block;
+        width: 4px;
+        flex: 0 0 4px;
+        height: 22px;
+        border-radius: var(--r-xxs);
+        background: var(--c-primary);
+      }
+      .news-badge.point {
+        background: var(--c-text);
+      }
+
+      .payout-value small {
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
+        margin-left: var(--space-1);
+      }
+      .unit {
+
+        margin-left: var(--space-1);
+        font-family: var(--ff-ui);
+      }
+
+      .ell2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .bottom-tab {
+        background: var(--c-surface);
+        display: flex;
+        border-top: var(--line-normal);
+        flex-shrink: 0;
+        
+        padding-bottom: 0;
+      }
+
+      .icon-btn::before { content: ""; position: absolute; inset: -4px; }
+      .see-all .ic { width: 16px; height: 16px; }
+
+      .payout-bar {
+        background: var(--c-surface);
+        
+        display: flex;
+
+        border-bottom: var(--line-normal);
+        flex-shrink: 0;
+      }
+      .payout-label {
+        
+        color: var(--c-sub);
+        
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .payout-value {
+        font-family: var(--ff-ui);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: "tnum" 1;
+        letter-spacing: 0;
+        text-align: right;
+        white-space: nowrap;
+        font-size: var(--fs-16);
+        font-weight: var(--fw-16-strong);
+        color: var(--c-text);
+        flex: none;
+        line-height: 1.15;
+      }
+      .balance-sep {
+        
+        width: 1px;
+        background: var(--c-border);
+        
+        flex: 0 0 1px;
+      }
+
+      .venue-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-card);
+        padding: var(--space-card) var(--space-section) var(--space-section);
+      }
+      .vcard {
+        background: var(--c-surface);
+        border: var(--line-normal);
+        border-left: var(--line-keirin);
+        border-radius: var(--r-md);
+        box-shadow: var(--e1);
+        padding: var(--space-7) var(--space-section) var(--space-section);
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+      .vcard.auto { border-left-color: var(--c-auto); }
+      .vcard-top {
+        display: flex;
+        align-items: center;
+        
+        min-width: 0;
+      }
+      .vcard-name {
+
+        letter-spacing: normal;
+        color: var(--c-text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+        flex: 1;
+      }
+      .vcard-bottom {
+        
+        display: flex;
+        align-items: center;
+        
+      }
+      .vcard-r {
+
+        color: var(--c-keirin);
+      }
+      .vcard.auto .vcard-r { color: var(--c-auto); }
+      .vcard-dl {
+
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .vcard-dl .ic { width: 12px; height: 12px; }
+
+      .g-gp { background: var(--c-gp); color: var(--w5); }
+      .g-g1 { background: var(--c-g1); color: var(--c-surface); }
+      .g-g2 { background: var(--c-g2); color: var(--c-surface); }
+      .g-g3 { background: var(--c-g3); color: var(--c-surface); }
+      .g-f1 { background: var(--c-f1); color: var(--c-surface); }
+      .g-f2 { background: var(--c-f2); color: var(--c-surface); }
+
+      .pickup-card {
+        margin: 0 var(--space-section) var(--space-card);
+        padding: var(--space-section) var(--space-10);
+        background: var(--c-surface);
+        border: var(--line-normal);
+        border-radius: var(--r-md);
+        box-shadow: var(--e1);
+        display: flex;
+        align-items: center;
+        gap: var(--space-9);
+        cursor: pointer;
+      }
+
+      .date-tabs {
+        display: flex;
+        background: var(--c-surface);
+        border-bottom: var(--line-normal);
+        flex-shrink: 0;
+      }
+      .date-tab {
+        flex: 1;
+        
+        color: var(--c-sub);
+        border-bottom: var(--line-emphasis-width) solid transparent;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        min-height: var(--tap-min);
+      }
+
+      .news-title .ic {
+        display: inline-block;
+        vertical-align: -2px;
+      }
+      .app-header .logo .ic { width: 18px; height: 18px; }
+      .date-tab.active {
+        color: var(--c-primary-d);
+        border-bottom-color: var(--c-primary-d);
+      }
+
+      .ic {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        fill: currentColor;
+        display: block;
+        outline: none;
+        outline-offset: 1px;
+        border-radius: var(--r-xxs);
+      }
+
+      /* Common layout belongs to assets/ui-consistency.css. */
+      .vgroup-head { cursor: pointer; }
+      .vgroup-name {
+        display: flex;
+        align-items: center;
+        gap: var(--space-5);
+      }
+      /* Competition headers show both their accent bar and race pictogram. */
+      .vgroup-name.race-heading .race-heading-icon {
+        display: block;
+        flex: 0 0 auto;
+        width: 47.5px;
+        height: 38px;
+        fill: currentColor;
+        color: var(--c-keirin);
+      }
+      .vgroup-name.race-heading.auto .race-heading-icon {
+        width: 41.1667px;
+        height: 38px;
+        color: var(--c-auto);
+      }
+      .vgroup-name b { font-weight: var(--fw-12-strong); color: var(--c-sub); font-size: var(--fs-12); }
+      .mori-venue-grid { row-gap: var(--space-card); }
+      .g3 .vcard {
+        /* Equal 4px vertical insets: more space between four rows while
+           avoiding an oversized gap below the last R/time row. */
+        padding: var(--space-small) var(--space-card) var(--space-small) var(--space-7);
+        border-left-width: var(--line-emphasis-width);
+        gap: var(--space-2);
+      }
+      .g3 .vcard-bottom { gap: var(--space-small); justify-content: space-between; }
+      .bn {
+        flex: 0 0 290px;
+        aspect-ratio: 2 / 1;
+        border-radius: var(--r-md);
+        box-shadow: var(--e1);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
+        text-align: center;
+        line-height: 1.5;
+        cursor: pointer;
+      }
+
+      .pickup-body { min-width: 0; flex: 1; }
+
+      .news-item {
+        display: flex;
+        align-items: flex-start;
+        border-bottom: var(--line-normal);
+        background: var(--c-surface);
+        cursor: pointer;
+        min-height: 48px;
+        flex-direction: column;
+        gap: var(--space-3);
+        padding: var(--space-9) var(--space-content) var(--space-9) var(--space-content);
+        position: relative;
+      }
+      .news-head {
+        display: flex;
+        align-items: center;
+        gap: var(--space-section);
+        width: 100%;
+      }
+      .news-campaign {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-small);
+        margin-left: auto;
+        white-space: nowrap;
+        color: var(--c-primary-d);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
+        line-height: 1;
+      }
+      /* Only campaign news shows the shared SVG gift in the brand color. */
+      .news-head .news-campaign-icon {
+        width: 20px;
+        height: 20px;
+        flex: 0 0 20px;
+        color: var(--c-primary-d);
+        fill: currentColor;
+      }
+      .news-badge {
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
+        color: var(--c-surface);
+        white-space: nowrap;
+        flex-shrink: 0;
+        width: 76px;
+        height: 24px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        text-align: center;
+        margin-top: 0;
+        padding: 0;
+        border-radius: var(--r-sm);
+        outline: none;
+        outline-offset: 1px;
+      }
+      /* Align dates and status text vertically with the center of badge lettering. */
+      .news-head :is(.news-date, .news-new) { display: inline-flex; align-items: center; line-height: 1; }
+      .news-badge.keirin { background: var(--c-keirin); }
+      .news-badge.auto { background: var(--c-auto); }
+      .news-badge.both {
+        background: linear-gradient(90deg, var(--c-keirin) 0 50%, var(--c-auto) 50% 100%);
+      }
+
+      .news-item > .news-arrow {
+        position: absolute;
+        right: var(--space-content);
+        top: 50%;
+        margin-top: calc(-1 * var(--space-9));
+        color: var(--c-sub);
+      }
+      .news-item > .news-arrow .ic { width: 18px; height: 18px; }
+
+      .venue-grid.g3 {
+        gap: var(--space-card);
+        padding: 0 var(--space-section) var(--space-section);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .g3 .vcard-dl {
+        
+        white-space: nowrap;
+        letter-spacing: normal;
+      }
+      .g3 .vcard-r {
+        
+        flex-shrink: 0;
+      }
+      .g3 .vcard-name { flex: none;  line-height: 1.25; margin-top: var(--space-1); }
+
+      .screen-wrap:not(:only-child) .screen-label {
+        display: block;
+        background: var(--c-text);
+        color: var(--c-bg);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
+        letter-spacing: 0.04em;
+        text-transform: none;
+        line-height: 30px;
+        height: 30px;
+        padding: 0 var(--space-content);
+      }
+      .screen-wrap:not(:only-child) .phone {
+        height: calc(100vh - 30px);
+        height: calc(100dvh - 30px);
+      }
+      .pt-item {
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        column-gap: var(--space-card);
+      }
+      /* DELCA balance takes users to DELCA My Page. */
+      .delca-entry {
+        appearance: none;
+        border: 0;
+        background: transparent;
+        text-decoration: none;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        border-radius: var(--r-sm);
+        -webkit-tap-highlight-color: transparent;
+      }
+      .delca-entry.tap-pressed,
+      .delca-entry:active {
+        background: color-mix(in srgb, var(--c-text) 11%, var(--c-surface));
+      }
+      .delca-entry:focus-visible {
+        outline: var(--line-focus);
+        outline-offset: 2px;
+      }
+      .pt-item .payout-value {  margin-left: auto; }
+      .pay-toggle {
+        cursor: pointer;
+        position: relative;
+        min-height: 36px;
+        align-items: center;
+      }
+      .pay-toggle .pay-val .ic { width: 18px; height: 18px; color: var(--c-sub); }
+      .pay-toggle .eye-off,
+      .pay-toggle .pay-hidden { display: none; }
+      .pay-toggle.masked .eye-on,
+      .pay-toggle.masked .pay-shown { display: none; }
+      .pay-toggle.masked .eye-off { display: block; }
+      .pay-toggle.masked .pay-hidden { display: inline; color: var(--c-sub); letter-spacing: 0.1em; }
+
+      .tab-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--c-sub);
+        cursor: pointer;
+        font-weight: var(--fw-12-strong);
+        letter-spacing: normal;
+        
+        min-width: 0;
+
+      }
+      .tab-item .tab-icon {
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+      }
+
+      .app-header .logo {
+        display: flex;
+        align-items: center;
+        gap: var(--space-5);
+        font-size: var(--fs-18);
+        font-weight: var(--fw-18-strong);
+      }
+
+      .cta-btn {
+        color: var(--c-surface);
+        font-weight: var(--fw-14-strong);
+        
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-small);
+        background: var(--c-keirin);
+        
+        font-size: var(--fs-14);
+      }
+      .cta-btn .ic {
+        outline-color: color-mix(in srgb, var(--c-surface) 75%, transparent);
+        width: 18px;
+        height: 18px;
+      }
+      .see-all {
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
+        color: var(--c-keirin);
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        min-height: 40px;
+      }
+      .news-title {
+        font-size: var(--fs-16);
+        font-weight: var(--fw-16-strong);
+        padding-right: var(--space-24);
+        line-height: 1.45;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      .news-date { font-family: var(--ff-ui); }/* Venue names are a primary label on the compact home cards. */
+/* Avoid truncating four-character Japanese venue names on very narrow screens. */
+
+      .carno {
+        width: 22px;
+        height: 22px;
+        border-radius: var(--r-sm);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
+        flex-shrink: 0;
+        border: var(--line-thin) solid transparent;
+        font-family: var(--ff-ui);
+      }
+      .carno.w1 { background: var(--c-surface); color: var(--c-text); border-color: var(--c-sub); }
+      .carno.w2 { background: var(--c-text); color: var(--c-surface); border-color: var(--c-text); }
+      .carno.w3 { background: var(--w3); color: var(--c-surface); border-color: var(--w3); }
+      .carno.w4 { background: var(--w4); color: var(--c-surface); border-color: var(--w4); }
+      .carno.w7 { background: var(--w7); color: var(--c-surface); border-color: var(--w7); }
+      .gbadge {
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
+        padding: 0;
+        border-radius: var(--r-sm);
+        flex-shrink: 0;
+        letter-spacing: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 20px;
+      }
+      .g3 .vcard-top {
+        
+        justify-content: flex-start;
+        gap: var(--space-card);
+      }
+
+      .vcard-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        min-height: 18px;
+      }
+
+      .venue-grid.g3 .vcard-r { font-size: var(--fs-18); font-weight: var(--fw-18-strong); line-height: 1.2; }
+      .venue-grid.g3 .vcard-dl { font-size: var(--fs-18); font-weight: var(--fw-18-strong); letter-spacing: normal; line-height: 1.2; color: var(--c-text); font-family: var(--ff-ui); }
+
+      .vcard.ended .vcard-bottom { justify-content: flex-end; }
+
+      .bn-carousel { position: relative; padding-bottom: var(--space-section); }
+      .bn-track {
+        display: flex;
+        gap: var(--space-card);
+        padding: var(--space-2) var(--space-section) var(--space-card);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 0 var(--space-section);
+        scrollbar-width: none;
+      }
+      .bn-track::-webkit-scrollbar { display: none; }
+      .bn .bn-fallback { display: none; }
+      .bn.noimg img { display: none; }
+      .bn.noimg .bn-fallback { display: flex; position: absolute; inset: 0; align-items: center; justify-content: center;  }
+      .bn-dots { display: flex; justify-content: center; gap: var(--space-5); }
+      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-border); transition: width .2s; }
+      .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-primary); }
+      .pk3 .kun-ic {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
+        line-height: 1.3;
+        text-align: center;
+      }
+      .pk3 .pk-note { margin-left: auto; font-size: var(--fs-14); font-weight: var(--fw-14-strong); color: var(--c-error); white-space: nowrap; }
+
+      .date-tabs .date-tab { font-size: var(--fs-16); font-weight: var(--fw-16-strong); }
+      .pt-h .balance-sep { height: auto; align-self: stretch;  }
+      
+      .app-header .logo-img {
+        height: 32px;
+        width: auto;
+        display: block;
+      }
+
+      .venue-grid.g3 .vcard-name {
+        font-size: var(--fs-20);
+        font-weight: var(--fw-20-strong);
+        letter-spacing: normal;
+      }
+
+      .pay-toggle .pay-val {
+        gap: var(--space-small);
+        display: inline-grid;
+        grid-template-columns: max-content 18px;
+        align-items: center;
+        column-gap: var(--space-small);
+        margin-left: auto;
+      }
+      .pay-toggle .pay-val .payout-value {
+        margin-left: 0;
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: end;
+        text-align: right;
+        margin: 0;
+        white-space: nowrap;
+        letter-spacing: 0;
+      }
+      .pay-toggle .pay-val .eye-on,
+      .pay-toggle .pay-val .eye-off {
+        grid-column: 2;
+        grid-row: 1;
+      }
+      /* Visibility, not display:none, preserves the grid's maximum width. */
+      .pay-toggle .pay-val .pay-shown {
+        display: inline;
+        visibility: visible;
+      }
+      .pay-toggle .pay-val .pay-hidden {
+        display: inline;
+        visibility: hidden;
+      }
+      .pay-toggle.masked .pay-val .pay-shown {
+        display: inline;
+        visibility: hidden;
+      }
+      .pay-toggle.masked .pay-val .pay-hidden {
+        display: inline;
+        visibility: visible;
+        color: var(--c-sub);
+        letter-spacing: 0;
+      }
+
+      .app-header .icon-btn > .badge {
+        width: 13px;
+        height: 13px;
+        top: -3px;
+        right: -3px;
+      }
+
+      .mori-heading {
+        cursor: default;
+        gap: var(--space-5);
+        flex-wrap: wrap;
+      }
+      .mori-heading .vgroup-name {
+        font-size: var(--fs-20);
+        line-height: 1.3;
+        flex: 0 1 auto;
+        min-width: max-content;
+        gap: var(--space-5);
+        white-space: nowrap;
+        letter-spacing: normal;
+      }
+      .mori-page-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--space-2);
+        min-height: 40px;
+        margin-left: auto;
+        color: var(--c-keirin);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
+        text-decoration: none;
+        white-space: nowrap;
+        flex: 0 0 auto;
+      }
+      .mori-page-link .ic { width: 14px; height: 14px; }
+      .mori-page-link:focus-visible {
+        outline: var(--line-focus);
+        outline-offset: 2px;
+        border-radius: var(--r-sm);
+      }
+      /* Featured keirin races: same heading hierarchy as the venue lists. */
+
+      .pk3 .pickup-body {
+        display: flex;
+        flex-direction: column;
+        /* Anchor each description at the same top edge as the two-rider card. */
+        align-self: stretch;
+        justify-content: flex-start;
+      }
+      .pk3 .pk-explain {
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+      .bn-track .bn {
+        flex: 0 0 calc((100% - 30px) / 2);
+        scroll-snap-align: start;
+        position: relative;
+        overflow: hidden;
+        background: repeating-linear-gradient(45deg, var(--c-bg) 0 6px, var(--c-bg) 6px 12px);
+        color: var(--c-sub);
+        aspect-ratio: 1 / 1;
+      }
+      .bn-track .bn img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+      }
+      .pk3 .pk-compact-row + .pk-compact-row { margin-top: var(--space-5); }
+      .pk3 .pk-player .pk-text { flex: 0 0 auto; }
+      .news-new {
+
+        color: var(--c-error);
+        white-space: nowrap;
+      }
+
+      .featured-races-header .see-all {
+        color: var(--c-keirin);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
+        text-decoration: none;
+      }
+      .featured-races-header .see-all .ic { width: 16px; height: 16px; }
+      .featured-races-header .see-all:focus-visible {
+        outline: var(--line-focus);
+        outline-offset: 2px;
+        border-radius: var(--r-sm);
+      }
+      .pk3 {
+        padding: var(--space-10) var(--space-content) var(--space-10) var(--space-10);
+        align-items: center;
+        gap: var(--space-section);
+      }
+      .pk3 .kun {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        flex: 0 0 64px;
+        min-width: 64px;
+      }
+      .pk3 img.kun-ic {
+        display: block;
+        width: 64px;
+        height: 64px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        outline: none;
+        background: transparent;
+        object-fit: contain;
+      }
+      .pk3 .pk-compact-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        min-width: 0;
+        gap: var(--space-small);
+        
+      }
+      .pk3 .pk-player {
+        display: inline-flex;
+        align-items: center;
+        min-width: 0;
+        white-space: nowrap;
+        font-weight: var(--fw-16-strong);
+        gap: var(--space-2);
+        font-size: var(--fs-16);
+        letter-spacing: normal;
+      }
+      .pk3 .pk-player .carno {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        font-size: var(--fs-16);
+        font-weight: var(--fw-16-strong);
+      }
+      .pk3 .pk-player .pk-note {
+        margin-left: var(--space-1);
+        font-weight: var(--fw-14-strong);
+        white-space: nowrap;
+        color: var(--c-error);
+        font-size: var(--fs-14);
+        letter-spacing: normal;
+      }
+      .pk3 .pk-race-time {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        font-weight: var(--fw-14-strong);
+        color: var(--c-text);
+        font-family: var(--ff-ui);
+        font-size: var(--fs-14);
+        letter-spacing: normal;
+      }
+      
+
+      .venue-grid.g3 .vcard-dl[data-deadline] {
+        color: var(--c-text);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        padding: var(--space-2) 0;
+        border-radius: var(--r-tag);
+        gap: var(--space-3);
+        font-variant-numeric: tabular-nums;
+      }
+      .venue-grid.g3 .vcard-dl.soon {
+        color: var(--c-text);
+        background: var(--c-error-bg);
+        padding: var(--space-2) var(--space-small);
+        margin-left: auto;
+      }
+
+      /* Deadline urgency belongs to the time, not the whole row.
+         The auto-race color on the R number stays off the salmon warning fill. */
+      .venue-grid.g3 .vcard.deadline-soon .vcard-bottom {
+        background: transparent;
+        padding: 0;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: var(--space-2);
+      }
+      .venue-grid.g3 .vcard.deadline-soon .vcard-dl.soon,
+      .pk3 .pk-deadline.soon {
+        color: var(--c-text);
+        background: var(--c-error-bg);
+        border-radius: var(--r-tag);
+        padding: var(--space-2) var(--space-small);
+      }
+
+      .pk3 .pk-deadline.soon {
+        display: inline-block;
+        font-weight: var(--fw-14-strong);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+      
+
+      .venue-grid.g3 .vcard-tags {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        min-height: 16px;
+        flex-wrap: wrap;
+      }
+
+      /* All featured-rider cards share the existing single-rider card height.
+         A two-rider card uses a compact, reusable 2-row player stack. */
+      .pickup-card.pk3 {
+        height: 86px;
+        min-height: 86px;
+      }
+      .pk3 .pk-two-rider-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+        flex: 0 0 auto;
+        min-width: 0;
+      }
+      .pk3 .pk-two-rider-stack .pk-player {
+        line-height: 1;
+      }
+      .pk3.pk-two-riders .pk-compact-row {
+        margin-top: var(--space-2);
+        align-items: center;
+      }
+      /* Place each single-rider number/name/time at the Ogura 11R baseline. */
+      .pk3:not(.pk-two-riders) .pk-compact-row {
+        margin-top: var(--space-14);
+      }
+      
+      /* Equal-height home venue tiles; the previously shorter Hiratsuka card is the model. */
+      .venue-grid.g3 .vcard {
+        height: 106px;
+        min-height: 106px;
+      }
+      /* Evenly distribute the four content rows instead of pushing only
+         the R / deadline row to the bottom. Keep the 106px tile height. */
+      .venue-grid.g3 .vcard:not(.mori-photo-tile) {
+        justify-content: space-between;
+        gap: 0;
+      }
+      .venue-grid.g3 .vcard:not(.mori-photo-tile) .vcard-name,
+      .venue-grid.g3 .vcard:not(.mori-photo-tile) .vcard-bottom {
+        margin-top: 0;
+      }
+      /* Match the heart's text box to the neighboring 12px night-race label. */
+
+      /* Slightly widen the Girls heart without changing the adjacent label layout. */
+      .venue-grid.g3 .girls {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        min-width: 0;
+        
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: var(--c-error);
+        letter-spacing: normal;
+        vertical-align: middle;
+        outline: none;
+        transform: scaleX(1.15);
+        transform-origin: center;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }/* Venue card support text: one step darker, using the next existing token. */
+      
+      /* Venue day labels use shared 14px typography and a 20px line box. */
+      .venue-grid.g3 .vcard-day {
+        min-width: 0;
+        flex-shrink: 0;
+      }
+      /* Night/midnight labels are unboxed text, not compact status badges. */
+      .venue-grid.g3 .kubun {
+        display: inline;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      /* Mori's appearance tile keeps the 106px venue-card footprint.
+         Its left auto-race accent is enlarged into an explicit status strip. */
+      .venue-grid.g3 .vcard.mori-photo-tile {
+        position: relative;
+        padding: 0;
+        overflow: hidden;
+        border-left: var(--line-normal);
+        background: var(--c-surface);
+        cursor: default;
+        pointer-events: none;
+      }
+      .mori-venue-grid .mori-photo-tile .mori-today-strip {
+        position: absolute;
+        inset: 0 auto 0 0;
+        z-index: 1;
+        width: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--c-auto);
+        color: var(--c-surface);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
+        line-height: 1;
+        letter-spacing: 0.08em;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+      }
+      .mori-venue-grid .mori-photo-tile img {
+        position: absolute;
+        inset: 0 0 0 32px;
+        width: calc(100% - 32px);
+        height: 100%;
+        object-fit: contain;
+        object-position: right center;
+        display: block;
+      }
+      /* Full-height, edge-to-divider press areas: no unshaded gutters. */
+      .payout-bar.pt-h {
+        flex-direction: row;
+        gap: 0;
+        padding: 0;
+        align-items: stretch;
+      }
+      .payout-bar.pt-h .pt-item {
+        align-self: stretch;
+        align-content: center;
+        min-height: var(--h-balance);
+        padding: var(--space-7) var(--space-10);
+        border-radius: 0;
+      }
+      .payout-bar.pt-h .balance-sep {
+        align-self: stretch;
+        margin: 0;
+        height: auto;
+      }
+      .payout-bar.pt-h .pt-item:is(.tap-pressed, :active) {
+        background-color: color-mix(in srgb, var(--c-text) 18%, var(--c-surface));
+      }
+      /* The shared tap-feedback stylesheet handles press feedback on every page. */
+      .section-header + .news-item {
+        border-top: var(--line-normal);
+      }
+
+      /* Last in the cascade: protect 16px maximum-balance figures on
+         small viewports without shrinking the text or changing controls. */
+      
+    
+/* Eight pixels between the final featured card and the next section. */
+.pickup-card.pk3:has(+ .section-header) { margin-bottom: var(--space-section); }
+
+      /* Keep campaign metadata and chevrons distinct at narrow phone widths. */
+      /* Responsive adjustments: one breakpoint block per supported width. */
+      @media (max-width: 359px) {
+        /* Keep 18px R/time typography and save width via spacing instead. */
+                .venue-grid.g3 .vcard:not(.mori-photo-tile) {
+                  padding-inline: var(--space-3);
+                }
+                .venue-grid.g3 .vcard.deadline-soon .vcard-bottom {
+                  gap: 0;
+                }
+        
+        .payout-bar.pt-h { padding-inline: var(--space-card); }
+                .pt-h .balance-sep { margin-inline: var(--space-small); }
+        
+        .news-head { flex-wrap: wrap; column-gap: var(--space-small); row-gap: var(--space-small); }
+                .news-item > .news-arrow { top: auto; bottom: var(--space-content); margin-top: 0; }
+      }
+      @media (max-width: 330px) {
+        .pk3 { gap: var(--space-5); padding-left: var(--space-7); padding-right: var(--space-7); }
+                .pk3 .kun { flex-basis: 54px; min-width: 54px; }
+                .pk3 img.kun-ic { width: 54px; height: 54px; }
+                .pk3 .pk-compact-row {
+                  justify-content: flex-start;
+                  overflow-x: auto;
+                  scrollbar-width: thin;
+                }
+                .pk3 .pk-player,
+                .pk3 .pk-race-time { flex-shrink: 0; }
+        
+        .pickup-card.pk3 {
+                  height: 80px;
+                  min-height: 80px;
+                }
+                .pk3.pk-two-riders {
+                  padding-top: var(--space-7);
+                  padding-bottom: var(--space-7);
+                }
+      }
