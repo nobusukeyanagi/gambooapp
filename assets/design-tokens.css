@@ -54,7 +54,7 @@
   --c-success: #477868;
   --c-warning: #D89556;
   --c-error: #A5374C;
-  --c-error-bg: color-mix(in srgb, var(--c-error) 12%, var(--c-surface));
+  --c-error-bg: color-mix(in srgb, var(--c-error) 20%, var(--c-surface));
 
   /* ⑤ 共通色（ブランド・文字・背景・罫線。リンク色は --c-keirin を共有） */
   --c-bg: #F8F7F5;
@@ -75,8 +75,8 @@
   --c-primary-d: #8B663B;
 
   /* Distinct semantic colors are derived from canonical base colors only. */
-  --c-keirin-bg: color-mix(in srgb, var(--c-keirin) 12%, var(--c-surface));
-  --c-auto-bg: color-mix(in srgb, var(--c-auto) 12%, var(--c-surface));
+  --c-keirin-bg: color-mix(in srgb, var(--c-keirin) 20%, var(--c-surface));
+  --c-auto-bg: color-mix(in srgb, var(--c-auto) 20%, var(--c-surface));
 
   /* Shared radii, shadows, and tap dimensions */
   --r-sm: 6px;
