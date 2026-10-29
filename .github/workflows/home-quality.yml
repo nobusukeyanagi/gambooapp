@@ -1,0 +1,71 @@
+name: Verify Gamboo Home
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'SCR-01_home.html'
+      - 'assets/**'
+      - 'scripts/check-home.mjs'
+      - 'package.json'
+      - '.github/workflows/home-quality.yml'
+  workflow_dispatch:
+    inputs:
+      baseline_commit:
+        description: 'Optional SHA to compare screenshots against'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: home-quality
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout full history for optional screenshot baseline
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Install pinned verification dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install Playwright Chromium and system dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Serve current site and Git baseline
+        shell: bash
+        env:
+          BASELINE_SHA: d29aabc76e7df901ce0a7855e0d0db660e46d34c
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory . > /tmp/gamboo-current-server.log 2>&1 &
+          mkdir -p "$RUNNER_TEMP/gamboo-baseline"
+          git archive "$BASELINE_SHA" | tar -x -C "$RUNNER_TEMP/gamboo-baseline"
+          python3 -m http.server 4174 --bind 127.0.0.1 --directory "$RUNNER_TEMP/gamboo-baseline" > /tmp/gamboo-baseline-server.log 2>&1 &
+          echo "BASELINE_URL=http://127.0.0.1:4174" >> "$GITHUB_ENV"
+
+      - name: Parse CSS and compare Chromium rendering
+        env:
+          CURRENT_URL: http://127.0.0.1:4173
+          SCREENSHOT_DIR: /tmp/gamboo-screenshots
+        run: npm run check:home
+
+      - name: Store screenshots for inspection
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: home-quality-screenshots
+          path: /tmp/gamboo-screenshots
+          if-no-files-found: ignore
+          retention-days: 7
