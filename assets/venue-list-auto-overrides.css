@@ -1,0 +1,4 @@
+@charset "UTF-8";
+/* Page-specific styles extracted without declaration changes. */
+/* Auto listing retains the two-line truncation standard. */
+        .news-title, .ell2 { line-clamp: 2; }
