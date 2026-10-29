@@ -43,6 +43,7 @@
   --c-success: #477868;
   --c-warning: #D89556;
   --c-error: #A5374C;
+  --c-error-bg: color-mix(in srgb, var(--c-error) 12%, var(--c-surface));
   --c-deadline-soon-bg: #EFCBC5;
 
   /* ⑤ 共通色（ブランド・文字・背景・罫線・リンク） */
