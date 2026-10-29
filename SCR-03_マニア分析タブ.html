@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gamboo アプリ ワイヤーフレーム</title>
-    <link rel="stylesheet" href="./assets/design-tokens.css?v=42" />
-    <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=8" />
+    <link rel="stylesheet" href="./assets/design-tokens.css?v=43" />
+    <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=9" />
     <style>
       * {
         box-sizing: border-box;
@@ -110,7 +110,7 @@
       }
       .back-btn {
         font-size: var(--fs-12);
-        color: var(--c-secondary);
+        color: var(--c-keirin);
         font-weight: 600;
       }
       .page-header-title {
@@ -147,7 +147,7 @@
         border-bottom-color: var(--c-primary-d);
       }
       .race-tab.past {
-        color: var(--c-dis);
+        color: var(--c-sub);
         text-decoration: line-through;
       }
       .race-info-bar {
@@ -214,7 +214,7 @@
         justify-content: center;
         gap: 1px;
         font-size: var(--fs-12);
-        color: var(--c-dis);
+        color: var(--c-sub);
       }
       .tab-item.active {
         color: var(--c-primary-d);
@@ -337,7 +337,7 @@
       }
       .mk-dbl { color: var(--w3); }
       .mk-o { color: var(--c-success); }
-      .mk-tri { color: var(--c-link); }
+      .mk-tri { color: var(--c-keirin); }
       .mk-x { color: var(--c-text); }
 
       .item-btn {
@@ -413,7 +413,7 @@
         height: 24px;
         border-radius: 50%;
         border: none;
-        background: var(--c-surface2);
+        background: var(--c-bg);
         font-size: var(--fs-12);
         cursor: pointer;
       }
@@ -480,7 +480,7 @@
       .race-time,
       .c-status,
       .money {
-        font-family: var(--ff-num);
+        font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
         font-feature-settings: "tnum" 1;
         letter-spacing: 0;
@@ -546,7 +546,7 @@
 
       .hscroll-bar {
         height: 2px;
-        background: var(--c-surface2);
+        background: var(--c-bg);
         border-radius: var(--r-full);
         margin: 2px 26px 0 8px;
         position: relative;
@@ -587,7 +587,7 @@
 
       .imgph {
         background: repeating-linear-gradient(45deg, var(--c-bg) 0 6px, var(--c-bg) 6px 12px);
-        color: var(--c-dis);
+        color: var(--c-sub);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -716,13 +716,13 @@
         font-size: var(--fs-12);
         font-weight: 700;
         color: var(--c-sub);
-        font-family: var(--ff-num);
+        font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
       }
       .race-tab.active {
         background: var(--c-primary);
         border-color: var(--c-primary-d);
-        color: var(--c-on-primary);
+        color: var(--c-text);
         box-shadow: var(--e1);
       }
       .race-tab.active small { color: var(--c-primary-d); }
@@ -774,7 +774,7 @@
       .race-info-meta {
         font-size: var(--fs-12);
         color: var(--c-sub);
-        font-family: var(--ff-num);
+        font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
         white-space: nowrap;
       }
@@ -871,7 +871,7 @@
       .race-table td,
       .mania-table th,
       .race-table th {
-        font-family: var(--ff-num);
+        font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
         font-feature-settings: "tnum" 1;
       }
@@ -891,7 +891,7 @@
       .res-time,
       .num-hi,
       .num-blue {
-        font-family: var(--ff-num);
+        font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
         font-weight: 700;
       }
@@ -909,15 +909,15 @@
         font-size: var(--fs-14);
         margin: 0 auto;
       }
-      .f1 { background: var(--w1); color: var(--w1-t); border: var(--line-thin) solid var(--w1-bd); }
-      .f2 { background: var(--w2); color: var(--w2-t); border: var(--line-thin) solid var(--w2-bd); }
-      .f3 { background: var(--w3); color: var(--w3-t); border: var(--line-thin) solid var(--w3-bd); }
-      .f4 { background: var(--w4); color: var(--w4-t); border: var(--line-thin) solid var(--w4-bd); }
-      .f5 { background: var(--w5); color: var(--w5-t); border: var(--line-thin) solid var(--w5-bd); }
-      .f6 { background: var(--w6); color: var(--w6-t); border: var(--line-thin) solid var(--w6-bd); }
-      .f7 { background: var(--w7); color: var(--w7-t); border: var(--line-thin) solid var(--w7-bd); }
-      .f8 { background: var(--w8); color: var(--w8-t); border: var(--line-thin) solid var(--w8-bd); }
-      .f9 { background: var(--w9); color: var(--w9-t); border: var(--line-thin) solid var(--w9-bd); }
+      .f1 { background: var(--c-surface); color: var(--c-text); border: var(--line-thin) solid var(--c-sub); }
+      .f2 { background: var(--c-text); color: var(--c-surface); border: var(--line-thin) solid var(--c-text); }
+      .f3 { background: var(--w3); color: var(--c-surface); border: var(--line-thin) solid var(--w3); }
+      .f4 { background: var(--w4); color: var(--c-surface); border: var(--line-thin) solid var(--w4); }
+      .f5 { background: var(--w5); color: var(--c-text); border: var(--line-thin) solid var(--w5); }
+      .f6 { background: var(--w6); color: var(--c-surface); border: var(--line-thin) solid var(--w6); }
+      .f7 { background: var(--w7); color: var(--c-surface); border: var(--line-thin) solid var(--w7); }
+      .f8 { background: var(--w8); color: var(--c-text); border: var(--line-thin) solid var(--w8); }
+      .f9 { background: var(--w9); color: var(--c-surface); border: var(--line-thin) solid var(--w9); }
       .lineup-car {
         width: 22px;
         height: 22px;
@@ -948,7 +948,7 @@
       .mk-dbl, .mark.dbl { color: var(--c-error); }
       .mk-o, .mark.o { color: var(--c-primary-d); }
       .mk-tri, .mark.tri { color: var(--c-keirin); }
-      .mk-x, .mark.x { color: var(--c-dis); }
+      .mk-x, .mark.x { color: var(--c-sub); }
       .mark { color: var(--c-text); }
 
       .page-header-title {
@@ -963,7 +963,7 @@
       .app-header .logo .ic { width: 18px; height: 18px; }
 
       .venue-name { color: var(--c-text) !important; }
-      .action-btn.primary { background: var(--c-primary) !important; color: var(--c-on-primary) !important; }
+      .action-btn.primary { background: var(--c-primary) !important; color: var(--c-text) !important; }
       .date-tab.active,
       .top-tab.active { color: var(--c-primary-d) !important; border-bottom-color: var(--c-primary-d) !important; }
 
@@ -1013,12 +1013,12 @@
         border-radius: var(--r-sm);
         flex-shrink: 0;
       }
-      .grade-gp { background: var(--c-gp); color: var(--c-gp-t); }
-      .grade-g1 { background: var(--c-g1); color: var(--c-g1-t); }
-      .grade-g2 { background: var(--c-g2); color: var(--c-g2-t); }
-      .grade-g3 { background: var(--c-g3); color: var(--c-g3-t); }
-      .grade-f1 { background: var(--c-f1); color: var(--c-f1-t); }
-      .grade-f2 { background: var(--c-f2); color: var(--c-f2-t); }
+      .grade-gp { background: var(--c-gp); color: var(--w5); }
+      .grade-g1 { background: var(--c-g1); color: var(--c-surface); }
+      .grade-g2 { background: var(--c-g2); color: var(--c-surface); }
+      .grade-g3 { background: var(--c-g3); color: var(--c-surface); }
+      .grade-f1 { background: var(--c-f1); color: var(--c-surface); }
+      .grade-f2 { background: var(--c-f2); color: var(--c-surface); }
 
       .ri-event {
         display: flex;
@@ -1050,7 +1050,7 @@
         border-radius: var(--r-full);
         padding: 1px 9px;
         white-space: nowrap;
-        font-family: var(--ff-num);
+        font-family: var(--ff-ui);
       }
       .dl-pill.soon { color: var(--c-error); }
 
@@ -1123,7 +1123,7 @@
       }
       .ri-btn::before { content: ""; position: absolute; inset: -2px 0; }
       .ri-btn .ic { width: 18px; height: 18px; }
-      .ri-btn.vote { background: var(--c-primary); color: var(--c-on-primary); }
+      .ri-btn.vote { background: var(--c-primary); color: var(--c-text); }
       .ri-btn.live { background: var(--c-error); color: var(--c-surface); }
       .ri-btn.live .ic { outline-color: color-mix(in srgb, var(--c-surface) 75%, transparent); }
       .race-tab.active { min-width: 86px; }
@@ -1244,13 +1244,13 @@
       .race-tab.past b { color: var(--c-sub); font-weight: 800; }
       .race-tab.past small { color: var(--c-sub); font-weight: 700; }
       .race-tab.active { min-width: 90px; }
-      .race-tab.active b { color: var(--c-on-primary); }
+      .race-tab.active b { color: var(--c-text); }
       .race-tab.active small { color: var(--c-primary-d); font-weight: 800; }
       .race-tab.active.soon small { color: var(--c-error); }
-      .race-tab.canceled { background: var(--c-closed-bg); border-color: var(--c-closed-bg); color: var(--c-dis); cursor: default; }
+      .race-tab.canceled { background: var(--c-bg); border-color: var(--c-bg); color: var(--c-sub); cursor: default; }
       .race-tab.canceled b,
-      .race-tab.canceled small { color: var(--c-dis); font-weight: 800; }
-      .ri-sub { margin-top: 2px; font-size: var(--fs-12); color: var(--c-sub); font-family: var(--ff-num); }
+      .race-tab.canceled small { color: var(--c-sub); font-weight: 800; }
+      .ri-sub { margin-top: 2px; font-size: var(--fs-12); color: var(--c-sub); font-family: var(--ff-ui); }
 
       .mania-table th {
         background: var(--c-bg);
@@ -1266,13 +1266,13 @@
       .mania-table td.cls small { font-size: var(--fs-12); color: var(--c-sub); }
       .mania-table .c-item { min-width: 48px; }
       .frame-cell { width: 24px; height: 24px; border-radius: var(--r-sm); font-size: var(--fs-14); font-weight: 900; }
-      .f1 { background: var(--w1); color: var(--w1-t); border: var(--line-thin) solid var(--w1-bd); }
-      .f2 { background: var(--w2); color: var(--w2-t); border: var(--line-thin) solid var(--w2-bd); }
-      .f3 { background: var(--w3); color: var(--w3-t); border: var(--line-thin) solid var(--w3-bd); }
-      .f4 { background: var(--w4); color: var(--w4-t); border: var(--line-thin) solid var(--w4-bd); }
-      .f5 { background: var(--w5); color: var(--w5-t); border: var(--line-thin) solid var(--w5-bd); }
-      .f6 { background: var(--w6); color: var(--w6-t); border: var(--line-thin) solid var(--w6-bd); }
-      .f7 { background: var(--w7); color: var(--w7-t); border: var(--line-thin) solid var(--w7-bd); }
+      .f1 { background: var(--c-surface); color: var(--c-text); border: var(--line-thin) solid var(--c-sub); }
+      .f2 { background: var(--c-text); color: var(--c-surface); border: var(--line-thin) solid var(--c-text); }
+      .f3 { background: var(--w3); color: var(--c-surface); border: var(--line-thin) solid var(--w3); }
+      .f4 { background: var(--w4); color: var(--c-surface); border: var(--line-thin) solid var(--w4); }
+      .f5 { background: var(--w5); color: var(--c-text); border: var(--line-thin) solid var(--w5); }
+      .f6 { background: var(--w6); color: var(--c-surface); border: var(--line-thin) solid var(--w6); }
+      .f7 { background: var(--w7); color: var(--c-surface); border: var(--line-thin) solid var(--w7); }
       .mk { font-size: var(--fs-14); font-weight: 400; }
       .mania-table .c-waku,
       .mania-table .c-name { position: static; }
@@ -1308,7 +1308,7 @@
         color: var(--c-text);
       }
       .item-btn:active,
-      .item-btn.active { background: var(--c-primary); border-color: var(--c-primary-d); color: var(--c-on-primary); }
+      .item-btn.active { background: var(--c-primary); border-color: var(--c-primary-d); color: var(--c-text); }
       .rt-legend {
         position: sticky;
         left: 0;
