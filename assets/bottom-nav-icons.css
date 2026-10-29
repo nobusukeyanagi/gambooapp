@@ -5,7 +5,7 @@
 :root {
   --nav-icon-color: var(--c-sub, #646B68);
   --nav-icon-active-color: var(--c-primary-d, #8B663B);
-  --nav-icon-size: 36px;
+  --nav-icon-size: 34px;
 }
 .bottom-tab .tab-item .tab-icon {
   height: var(--nav-icon-size);
@@ -20,7 +20,7 @@
   color: var(--nav-icon-active-color);
 }
 
-/* Keep the original racing silhouettes' aspect ratios at 36px height.
+/* Keep the original racing silhouettes' aspect ratios at 34px height.
    Only the bottom-navigation racing icons are wider than the other three. */
 .bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-keirin"]) {
   width: calc(var(--nav-icon-size) * 1.25);
