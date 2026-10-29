@@ -27,5 +27,3 @@
   width: calc(var(--nav-icon-size) * 1.08333333);
 }
 
-/* Keep the two-line Auto Race label within the 60px navigation bar. */
-.bottom-tab .tab-item.tab-item { gap: 0; line-height: 1; }
