@@ -61,7 +61,8 @@
   font-size: var(--fs-12);
   white-space: normal;
   text-align: center;
-  line-height: 1.1;
+  line-height: 1;
+  gap: 0;
   overflow-wrap: anywhere;
 }
 /* If a banner image is missing, its fallback filename is legible too. */
