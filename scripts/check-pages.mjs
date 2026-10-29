@@ -16,8 +16,8 @@ const paths = [
   'SCR-03_racecardkeirin.html',
   'SCR-04_racecardkeirin.html',
   'SCR-04_データ解析ラボ.html',
-  'SCR-07_マイページ.html',
-  'SCR-11_キャンペーン.html',
+  'SCR-07_mypage.html',
+  'SCR-11_campaign.html',
   'index.html'
 ];
 const BASE = process.env.BASELINE_URL || '';
