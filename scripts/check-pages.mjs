@@ -108,20 +108,8 @@ async function checkKeirinMania(page, width) {
   if (await table.locator(".item-btn").count() !== 8) fail(width + "px mania item buttons missing");
   if (await table.locator(".mania-eval").count() !== 81) fail(width + "px all evaluation cells not present");
   if (await sheet.isVisible()) fail(width + "px detail sheet initially open");
-  console.log("MANIA DOM DEBUG", await page.evaluate(() => {
-    const inner=document.querySelector(".phone-inner");
-    return JSON.stringify({sheet:!!inner?.querySelector(".sheet"),sheetClose:!!inner?.querySelector(".sheet-close"), maniaHeading:!!inner?.querySelector(".mania-section-start"),wrap:!!inner?.querySelector(".race-table-wrap"),button:!!inner?.querySelector('[data-target="mania"]'),src:[...performance.getEntriesByType("resource")].filter(x=>x.name.includes("keirin-mania")).map(x=>x.name)});
-  }));
-  console.log("MANIA BEFORE " + width + "px", await wrap.evaluate(el => {
-    const h = el.querySelector(".mania-section-start");
-    const t = el.querySelector("table");
-    return JSON.stringify({scrollLeft:el.scrollLeft,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,
-      headingLeft:h.getBoundingClientRect().left,tableLeft:t.getBoundingClientRect().left,headingOffset:h.offsetLeft});
-  }));
   await maniaTab.click();
-  console.log("MANIA AFTER " + width + "px", await wrap.evaluate(el =>
-    JSON.stringify({scrollLeft:el.scrollLeft,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth})));
-  await page.waitForFunction(() => document.querySelector(".race-table-wrap").scrollLeft > 100, { timeout: 6000 });
+  await page.waitForFunction(() => document.querySelector(".race-table-wrap").scrollLeft > 100, null, { timeout: 6000 });
   if (!await maniaTab.evaluate(el => el.classList.contains("active"))) fail(width + "px mania tab did not activate when scrolled");
   for (let i = 0; i < 8; i++) {
     await table.locator('.item-btn[data-item="' + i + '"]').click();
@@ -137,7 +125,6 @@ async function checkKeirinMania(page, width) {
   if (!await raceTab.evaluate(el => el.classList.contains("active"))) fail(width + "px racecard menu did not return to active");
   const scroll = await wrap.evaluate(el => { el.scrollLeft = el.scrollWidth; return el.scrollLeft; });
   if (scroll <= 100) fail(width + "px table did not scroll right");
-  console.log("MANIA RIGHT DEBUG " + width + "px", await wrap.evaluate(el => JSON.stringify({scrollLeft:el.scrollLeft,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,headingOffset:el.querySelector(".mania-section-start").offsetLeft,active:document.querySelector('[data-target="mania"]').classList.contains("active")})));
   await page.waitForFunction(() => document.querySelector('.info-tab[data-target="mania"]').classList.contains('active'));
   console.log("KEIRIN MANIA OK " + width + "px (8 detail views, 9 riders, 2-way navigation)");
 }
