@@ -102,8 +102,7 @@
   height: 20px;
   flex-shrink: 0;
 }
-.app-header .header-actions .cta-btn {
-  min-height: var(--h-control);
+ .app-header .header-actions .cta-btn {
   padding: 0 10px;
   border-radius: 8px;
 }
@@ -115,3 +114,6 @@
 .icon-btn { width: var(--h-icon-button); height: var(--h-icon-button); }
 .cta-btn { min-height: var(--h-control); }
 .date-tab, .top-tab { min-height: var(--h-date-tab); font-size: var(--fs-14); }
+
+/* Shared bottom breathing room for long scrollable pages. */
+.content-end-spacer { height: var(--space-section); }
