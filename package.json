@@ -1,0 +1,16 @@
+{
+  "name": "gamboo-home-quality",
+  "private": true,
+  "version": "1.0.0",
+  "description": "CSS and browser regression checks for Gamboo Home",
+  "type": "module",
+  "scripts": {
+    "check:home": "node scripts/check-home.mjs"
+  },
+  "devDependencies": {
+    "pixelmatch": "6.0.0",
+    "playwright": "1.56.1",
+    "pngjs": "7.0.0",
+    "postcss": "8.5.6"
+  }
+}
