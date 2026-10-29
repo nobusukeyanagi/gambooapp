@@ -1,0 +1,19 @@
+@charset "UTF-8";
+/* Shared sorting-sheet UI for racecourse lists (keirin and autorace). */
+.sheet-scrim[hidden],
+.sort-sheet[hidden] {
+  display: none;
+}
+
+.sort-sheet .sort-opt {
+  width: 100%;
+  border: 0;
+  border-top: var(--line-normal);
+  background: var(--c-surface);
+  text-align: left;
+  font-family: var(--ff-ui);
+}
+
+.sort-sheet .sort-opt:not(.on) .chk {
+  visibility: hidden;
+}
