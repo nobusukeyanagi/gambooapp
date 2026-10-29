@@ -107,10 +107,10 @@
     raceTab.classList.toggle("active", name === "racecard");
     maniaTab.classList.toggle("active", name === "mania");
     if (name === "mania" && menuScroller) {
-      menuScroller.scrollTo({ left: maniaTab.offsetLeft - menuScroller.offsetLeft - 12, behavior: "smooth" });
+      menuScroller.scrollTo({ left: maniaTab.offsetLeft - menuScroller.offsetLeft - 12, behavior: "instant" });
     }
     if (name === "racecard" && menuScroller) {
-      menuScroller.scrollTo({ left: 0, behavior: "smooth" });
+      menuScroller.scrollTo({ left: 0, behavior: "instant" });
     }
   }
 
@@ -121,12 +121,12 @@
   }
 
   raceTab.addEventListener("click", () => {
-    wrap.scrollTo({ left: 0, behavior: "smooth" });
+    wrap.scrollTo({ left: 0, behavior: "instant" });
     selectTab("racecard");
   });
   maniaTab.addEventListener("click", () => {
     const offset = maniaHeading.getBoundingClientRect().left - table.getBoundingClientRect().left;
-    wrap.scrollTo({ left: Math.max(0, offset - Math.min(90, wrap.clientWidth / 4)), behavior: "smooth" });
+    wrap.scrollTo({ left: Math.max(0, offset - Math.min(90, wrap.clientWidth / 4)), behavior: "instant" });
     selectTab("mania");
   });
   wrap.addEventListener("scroll", syncTab, { passive: true });
