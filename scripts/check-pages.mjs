@@ -66,6 +66,32 @@ function compare(cur,base,key){
  console.log('COMPARE '+key+': '+pixels+' pixels ('+(100*ratio).toFixed(5)+'%)');
  if(ratio>maxDiff)fail(key+' visual difference '+(ratio*100).toFixed(5)+'%');
 }
+async function checkAutoraceSort(page, width) {
+  const trigger = page.locator('.sort-btn');
+  const sheet = page.locator('#auto-sort-sheet');
+  const scrim = page.locator('.sheet-scrim');
+  const cards = page.locator('.scroll-area > .venue-card .venue-name');
+  const headings = await page.locator('.screen-wrap').count();
+  if (headings !== 1) fail(width + 'px autorace still has ' + headings + ' mock screens');
+  if (await sheet.isVisible()) fail(width + 'px sort sheet displayed without tap');
+  await trigger.click();
+  if (!await sheet.isVisible() || await trigger.getAttribute('aria-expanded') !== 'true') fail(width + 'px sort button did not open sheet');
+  await sheet.locator('[data-sort="grade"]').click();
+  if (await sheet.isVisible()) fail(width + 'px sheet did not close after selection');
+  if (await trigger.locator('.sort-btn-label').textContent() !== 'グレード順') fail(width + 'px sort label not updated');
+  if (await cards.first().textContent() !== '川口') fail(width + 'px grade sort did not reorder cards');
+  await trigger.click();
+  await scrim.click({ position: { x: 6, y: 6 } });
+  if (await sheet.isVisible()) fail(width + 'px scrim did not dismiss sheet');
+  await trigger.click();
+  await page.keyboard.press('Escape');
+  if (await sheet.isVisible()) fail(width + 'px Escape did not dismiss sheet');
+  await trigger.click();
+  await sheet.locator('[data-sort="venue"]').click();
+  if (await trigger.locator('.sort-btn-label').textContent() !== '場番号順') fail(width + 'px venue sort label not updated');
+  console.log('AUTORACE SORT OK ' + width + 'px');
+}
+
 async function checkSharedReferences(){
  const expected=['design-tokens.css?v=53','tap-feedback.css?v=3','ui-consistency.css?v=15'];
  const all=['SCR-01_home.html',...paths];
@@ -103,6 +129,7 @@ try {
       if(b)compare(cur,await capture(b.page,scene),name);
       checked++;
     }
+    if (file === 'SCR-02_autorace.html') await checkAutoraceSort(a.page,w);
    }finally {await a.context.close();if(b)await b.context.close();}
   }
   console.log('PAGE OK '+file+' ('+checked+' scenes)');

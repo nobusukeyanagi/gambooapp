@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=10" />
     <link rel="stylesheet" href="./assets/app-base.css?v=1" />
     <link rel="stylesheet" href="./assets/venue-list.css?v=3" />
-      <link rel="stylesheet" href="./assets/venue-list-auto-overrides.css?v=1" />
+      <link rel="stylesheet" href="./assets/venue-list-auto-overrides.css?v=2" />
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
     <link rel="stylesheet" href="./assets/ui-consistency.css?v=15" />
   </head>
@@ -38,9 +38,9 @@
             <div class="scroll-area">
               <div class="list-head">
                 <div class="list-count"> </div>
-                <div class="sort-btn"><svg class="ic" aria-hidden="true"><use href="#ic-sort"></use></svg>締切が近い順<svg class="ic" aria-hidden="true"><use href="#ic-chevrond"></use></svg></div>
+                <button class="sort-btn" type="button" aria-haspopup="dialog" aria-controls="auto-sort-sheet" aria-expanded="false"><svg class="ic" aria-hidden="true"><use href="#ic-sort"></use></svg><span class="sort-btn-label">締切が近い順</span><svg class="ic" aria-hidden="true"><use href="#ic-chevrond"></use></svg></button>
               </div>
-              <div class="venue-card">
+              <div class="venue-card" data-sort-deadline="13" data-sort-grade="9" data-sort-venue="3">
                 <div class="venue-header">
                   <span class="grade-badge grade-f2">普通</span>
                   <span class="venue-name">浜松</span>
@@ -66,7 +66,7 @@
                   <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
                 </div>
               </div>
-              <div class="venue-card">
+              <div class="venue-card" data-sort-deadline="28" data-sort-grade="1" data-sort-venue="1">
                 <div class="venue-header">
                   <span class="grade-badge grade-g1">GⅠ</span>
                   <span class="venue-name">川口</span>
@@ -94,7 +94,7 @@
                   <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
                 </div>
               </div>
-              <div class="venue-card">
+              <div class="venue-card" data-sort-deadline="633" data-sort-grade="9" data-sort-venue="5">
                 <div class="venue-header">
                   <span class="grade-badge grade-f2">普通</span>
                   <span class="venue-name">山陽</span>
@@ -140,155 +140,33 @@
                 マイページ
               </div>
             </div>
+            <div class="sheet-scrim" aria-hidden="true" hidden></div>
+            <div class="sheet auto-sort-sheet" id="auto-sort-sheet" role="dialog" aria-modal="true" aria-labelledby="auto-sort-heading" tabindex="-1" hidden>
+              <div class="sheet-grip" aria-hidden="true"></div>
+              <div class="sheet-title" id="auto-sort-heading">並び順</div>
+              <div class="sort-list" role="group" aria-label="並び順を選択">
+                <button class="sort-opt on" type="button" data-sort="deadline" aria-pressed="true">
+                  <span>締切が近い順</span>
+                  <span class="chk" aria-hidden="true"><svg class="ic"><use href="#ic-check"></use></svg></span>
+                </button>
+                <button class="sort-opt" type="button" data-sort="grade" aria-pressed="false">
+                  <span>グレード順</span>
+                  <span class="chk" aria-hidden="true"><svg class="ic"><use href="#ic-check"></use></svg></span>
+                </button>
+                <button class="sort-opt" type="button" data-sort="venue" aria-pressed="false">
+                  <span>場番号順</span>
+                  <span class="chk" aria-hidden="true"><svg class="ic"><use href="#ic-check"></use></svg></span>
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
 
-      <div class="screen-wrap">
-        <div class="screen-label">SCR-02 オートレーストップ ― 並び順を開いたとき</div>
-        <div class="phone">
-          <div class="phone-inner">
-            <div class="status-bar">
-              <span>10:17</span>
-              <span>5G ●●●</span>
-            </div>
-            <div class="page-header">
-              <div class="page-header-title"><svg class="ic" aria-hidden="true"><use href="#ic-auto"></use></svg> オートレース</div>
-            </div>
-            <div class="date-tabs">
-              <div class="date-tab">昨日</div>
-              <div class="date-tab active">本日</div>
-              <div class="date-tab">明日</div>
-            </div>
-            <div class="scroll-area">
-              <div class="list-head">
-                <div class="list-count">オートレース 3場</div>
-                <div class="sort-btn"><svg class="ic" aria-hidden="true"><use href="#ic-sort"></use></svg>締切が近い順<svg class="ic" aria-hidden="true"><use href="#ic-chevrond"></use></svg></div>
-              </div>
-              <div class="venue-card">
-                <div class="venue-header">
-                  <span class="grade-badge grade-f2">普通</span>
-                  <span class="venue-name">浜松</span>
-                  <span class="venue-meta">初日</span>
-                  <span class="kubun">モーニング</span>
-                </div>
-                <div class="hscroll has-past">
-                  <div class="hscroll-cue-l"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></div>
-                  <div class="hscroll-inner">
-                    <div class="rchips">
-                      <div class="rcol"><div class="rchip closed"><b>1R</b><small>確定</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip closed"><b>2R</b><small>確定</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip closed"><b>3R</b><small>確定</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip live"><b>4R</b><small>投票締切</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip next soon"><b>5R</b><small>締切13分前</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>6R</b><small>10:58</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>7R</b><small>11:26</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>8R</b><small>11:54</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>9R</b><small>12:22</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>10R</b><small>12:50</small></div><div class="rpred">予想情報</div></div>
-                    </div>
-                  </div>
-                  <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
-                </div>
-              </div>
-              <div class="venue-card">
-                <div class="venue-header">
-                  <span class="grade-badge grade-g1">GⅠ</span>
-                  <span class="venue-name">川口</span>
-                  <span class="venue-meta">最終日</span>
-                  <span class="rebate-logo">決勝5%還元</span>
-                </div>
-                <div class="hscroll">
-                  <div class="hscroll-cue-l"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></div>
-                  <div class="hscroll-inner">
-                    <div class="rchips">
-                      <div class="rcol"><div class="rchip next"><b>1R</b><small>締切28分前</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>2R</b><small>11:15</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>3R</b><small>11:45</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>4R</b><small>12:15</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>5R</b><small>12:45</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>6R</b><small>13:15</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>7R</b><small>13:45</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>8R</b><small>14:15</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>9R</b><small>14:45</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>10R</b><small>15:15</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>11R</b><small>15:45</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip rebate"><b>12R</b><small>16:20</small><em class="rchip-rebate">5%還元</em></div><div class="rpred">予想情報</div></div>
-                    </div>
-                  </div>
-                  <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
-                </div>
-              </div>
-              <div class="venue-card">
-                <div class="venue-header">
-                  <span class="grade-badge grade-f2">普通</span>
-                  <span class="venue-name">山陽</span>
-                  <span class="venue-meta">初日</span>
-                  <span class="kubun">ミッドナイト</span>
-                </div>
-                <div class="hscroll">
-                  <div class="hscroll-cue-l"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></div>
-                  <div class="hscroll-inner">
-                    <div class="rchips">
-                      <div class="rcol"><div class="rchip"><b>1R</b><small>20:50</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>2R</b><small>21:15</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>3R</b><small>21:40</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>4R</b><small>22:05</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>5R</b><small>22:30</small></div><div class="rpred">予想情報</div></div>
-                      <div class="rcol"><div class="rchip"><b>6R</b><small>22:55</small></div><div class="rpred">予想情報</div></div>
-                    </div>
-                  </div>
-                  <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
-                </div>
-              </div>
-              <div class="content-end-spacer"></div>
-            </div>
-            <div class="bottom-tab">
-              <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-home"></use></svg></div>
-                ホーム
-              </div>
-              <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-keirin"></use></svg></div>
-                競輪
-              </div>
-              <div class="tab-item active">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-auto"></use></svg></div>
-                オートレース
-              </div>
-              <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-campaign"></use></svg></div>
-                キャンペーン
-              </div>
-              <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-mypage"></use></svg></div>
-                マイページ
-              </div>
-            </div>
-            <div class="sheet-scrim"></div>
-            <div class="sheet">
-              <div class="sheet-grip"></div>
-              <div class="sheet-title">並び順</div>
-              <div class="sort-list">
-                <div class="sort-opt on">
-                  <div>締切が近い順</div>
-                  <span class="chk"><svg class="ic" aria-hidden="true"><use href="#ic-check"></use></svg></span>
-                </div>
-                <div class="sort-opt">
-                  <div>グレード順</div>
-                  <span class="chk"></span>
-                </div>
-                <div class="sort-opt">
-                  <div>場番号順</div>
-                  <span class="chk"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <script src="./assets/scroll-controls.js?v=2" data-scroll-mode="venue-list"></script>
+    <script src="./assets/autorace-sort.js?v=1" defer></script>
       <script src="./assets/tap-feedback.js?v=3" defer></script>
 </body>
 </html>
