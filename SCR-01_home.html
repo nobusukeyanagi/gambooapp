@@ -202,14 +202,17 @@
         align-items: center;
         gap: 5px;
       }
-      .section-title::before {
+      /* Canonical heading accent bar across all home sections. */
+      .section-title::before,
+      .vgroup-name::before {
         content: "";
-        width: 3px;
-        height: 14px;
-        background: var(--c-primary);
-        border-radius: 2px;
         display: inline-block;
+        width: 4px;
+        flex: 0 0 4px;
+        height: 22px;
+        border-radius: 2px;
       }
+      .section-title::before { background: var(--c-primary); }
 
 
       .date-tabs {
@@ -1762,18 +1765,9 @@
         align-items: center;
         gap: 5px;
       }
-      .vgroup-name::before {
-        content: "";
-        width: 4px;
-        height: 14px;
-        border-radius: 2px;
-        background: var(--c-keirin);
-      }
+      .vgroup-name::before { background: var(--c-keirin); }
       .vgroup-name.auto::before { background: var(--c-auto); }
-      /* Competition headers use their actual SVG pictograms instead of accent bars. */
-      .vgroup-name.race-heading::before {
-        content: none;
-      }
+      /* Competition headers show both their accent bar and race pictogram. */
       .vgroup-name.race-heading .race-heading-icon {
         display: block;
         flex: 0 0 auto;
@@ -2226,8 +2220,6 @@
       .carno.w9 { background: var(--w9); color: var(--c-surface); border-color: var(--w9); }
 
       .app-header .logo-img { height: 28px; width: auto; display: block; }
-      .vgroup-name::before,
-      .section-title::before { width: 4px; height: 18px; }
       .gbadge {
         font-size: var(--fs-12);
         font-weight: 900;
@@ -2436,11 +2428,7 @@
         white-space: nowrap;
         letter-spacing: normal;
       }
-      .mori-heading .vgroup-name::before {
-        flex: 0 0 4px;
-        height: 22px;
-        background: var(--c-primary);
-      }
+      .mori-heading .vgroup-name::before { background: var(--c-primary); }
       .mori-page-link {
         display: inline-flex;
         align-items: center;
@@ -2497,10 +2485,7 @@
       .mori-schedule-value { color: var(--c-text); font-size: var(--fs-18); font-weight: 800; line-height: 1.3; }
 
       /* Featured keirin races: same heading hierarchy as the venue lists. */
-      .featured-races-header .section-title::before {
-        height: 22px;
-        background: var(--c-primary);
-      }
+
       .pk3 .kun { gap: 0; }
       .pk3 .pickup-body {
         display: flex;
