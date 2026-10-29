@@ -116,10 +116,6 @@
         font-family: var(--ff-ui);
       }
 
-      .maxcase {
-        outline: var(--line-thin) solid var(--c-error);
-        outline-offset: 1px;
-      }
       .ell2 {
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -137,15 +133,13 @@
       }
 
       .icon-btn::before { content: ""; position: absolute; inset: -4px; }
-      .news-arrow .ic,
       .see-all .ic { width: 16px; height: 16px; }
 
       .payout-bar {
         background: var(--c-surface);
-        padding: var(--space-card) var(--space-10) var(--space-7);
+        
         display: flex;
-        align-items: stretch;
-        gap: 0;
+
         border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
@@ -171,10 +165,10 @@
         line-height: 1.15;
       }
       .balance-sep {
-        height: 14px;
+        
         width: 1px;
         background: var(--c-border);
-        margin: var(--space-2) 0;
+        
         flex: 0 0 1px;
       }
 
@@ -200,7 +194,7 @@
       .vcard-top {
         display: flex;
         align-items: center;
-        gap: var(--space-small);
+        
         min-width: 0;
       }
       .vcard-name {
@@ -214,10 +208,10 @@
         flex: 1;
       }
       .vcard-bottom {
-        margin-top: auto;
+        
         display: flex;
         align-items: center;
-        gap: var(--space-5);
+        
       }
       .vcard-r {
 
@@ -278,8 +272,8 @@
       }
       .app-header .logo .ic { width: 18px; height: 18px; }
       .date-tab.active {
-        color: var(--c-primary-d) !important;
-        border-bottom-color: var(--c-primary-d) !important;
+        color: var(--c-primary-d);
+        border-bottom-color: var(--c-primary-d);
       }
 
       .ic {
@@ -636,19 +630,12 @@
       .pk3 .pk-note { margin-left: auto; font-size: var(--fs-14); font-weight: var(--fw-14-strong); color: var(--c-error); white-space: nowrap; }
 
       .date-tabs .date-tab { font-size: var(--fs-16); font-weight: var(--fw-16-strong); }
-      .pt-h .balance-sep { height: auto; align-self: stretch; margin: 0 var(--space-10); }
+      .pt-h .balance-sep { height: auto; align-self: stretch;  }
       
       .app-header .logo-img {
         height: 32px;
         width: auto;
         display: block;
-      }
-
-      .ic,
-      .maxcase,
-      .news-badge,
-      .kubun {
-        outline: none !important;
       }
 
       .venue-grid.g3 .vcard-name {
@@ -821,7 +808,7 @@
         width: 100%;
         min-width: 0;
         gap: var(--space-small);
-        margin-top: var(--space-small);
+        
       }
       .pk3 .pk-player {
         display: inline-flex;
@@ -904,9 +891,7 @@
         border-radius: var(--r-tag);
         padding: var(--space-2) var(--space-small);
       }
-      .venue-grid.g3 .vcard.deadline-soon .vcard-dl.soon {
-        margin-left: auto;
-      }
+
       .pk3 .pk-deadline.soon {
         display: inline-block;
         font-weight: var(--fw-14-strong);
