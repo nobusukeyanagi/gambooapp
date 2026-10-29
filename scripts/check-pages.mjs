@@ -108,8 +108,16 @@ async function checkKeirinMania(page, width) {
   if (await table.locator(".item-btn").count() !== 8) fail(width + "px mania item buttons missing");
   if (await table.locator(".mania-eval").count() !== 81) fail(width + "px all evaluation cells not present");
   if (await sheet.isVisible()) fail(width + "px detail sheet initially open");
+  console.log("MANIA BEFORE " + width + "px", await wrap.evaluate(el => {
+    const h = el.querySelector(".mania-section-start");
+    const t = el.querySelector("table");
+    return JSON.stringify({scrollLeft:el.scrollLeft,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,
+      headingLeft:h.getBoundingClientRect().left,tableLeft:t.getBoundingClientRect().left,headingOffset:h.offsetLeft});
+  }));
   await maniaTab.click();
-  await page.waitForFunction(() => document.querySelector(".race-table-wrap").scrollLeft > 100);
+  console.log("MANIA AFTER " + width + "px", await wrap.evaluate(el =>
+    JSON.stringify({scrollLeft:el.scrollLeft,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth})));
+  await page.waitForFunction(() => document.querySelector(".race-table-wrap").scrollLeft > 100, { timeout: 6000 });
   if (!await maniaTab.evaluate(el => el.classList.contains("active"))) fail(width + "px mania tab did not activate when scrolled");
   for (let i = 0; i < 8; i++) {
     await table.locator('.item-btn[data-item="' + i + '"]').click();
