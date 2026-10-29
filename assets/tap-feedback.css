@@ -2,7 +2,8 @@
 /* Shared, immediate, one-time tactile feedback for the Gamboo wireframes.
    Do not bind the effect to click; click happens after the finger is lifted. */
 .tap-pressed {
-  filter: brightness(0.89);
+  /* One immediate, clearly visible darkening for every press target. */
+  filter: brightness(0.78) !important;
   -webkit-tap-highlight-color: transparent;
 }
 .date-tabs .date-tab.tap-pressed,
