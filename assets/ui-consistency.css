@@ -10,12 +10,12 @@
 }
 :is(.section-header, .vgroup-head) :is(.section-title, .vgroup-name) {
   font-size: var(--fs-20);
-  font-weight: 900;
+  font-weight: var(--fw-20-strong);
   letter-spacing: normal;
 }
 :is(.section-header, .vgroup-head) :is(.see-all, .vgroup-link, .mori-page-link) {
   font-size: var(--fs-14);
-  font-weight: 700;
+  font-weight: var(--fw-14-strong);
 }
 :is(.section-header, .vgroup-head) :is(.see-all, .mori-page-link) .ic {
   width: 16px;
@@ -32,7 +32,7 @@
 .pk3 .pk-explain,
 .news-date {
   font-size: var(--fs-14);
-  font-weight: 400;
+  font-weight: var(--fw-14-normal);
   color: var(--c-text);
   line-height: 1.25;
   letter-spacing: normal;
@@ -100,7 +100,7 @@
   border: var(--line-control);
   border-radius: 8px;
   font-size: var(--fs-14);
-  font-weight: 700;
+  font-weight: var(--fw-14-strong);
   white-space: nowrap;
 }
 .app-header .header-actions .icon-btn .ic {
