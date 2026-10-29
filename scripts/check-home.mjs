@@ -56,6 +56,8 @@ async function auditCss() {
   }
   const html = await readFile(path.join(ROOT, PAGE), 'utf8');
   if (/<style\b/i.test(html)) fail('Home HTML still contains inline <style>');
+  if (/<script\b(?![^>]*\bsrc\s*=)[^>]*>/i.test(html)) fail('Home HTML still contains inline JavaScript');
+  if (!html.includes('src="./assets/home.js?v=')) fail('Home JavaScript link missing');
   if (!html.includes('href="./assets/home.css?v=')) fail('Home CSS link missing');
   const tokenNames = new Set();
   parsed.get('assets/design-tokens.css').walkDecls((decl) => {
@@ -180,6 +182,8 @@ async function checkCurrentPage(page, width) {
   styles.forEach((style, index) => eq(style.value, expectedComputedStyles[index][2], width + 'px ' + style.selector + '.' + style.prop));
   const loaded = await page.evaluate(() => Array.from(document.styleSheets).some((s) => s.href && s.href.includes('assets/home.css')));
   if (!loaded) fail('Stylesheet assets/home.css did not load at ' + width + 'px');
+  const scriptLoaded = await page.evaluate(() => performance.getEntriesByType('resource').some((r) => r.name.includes('/assets/home.js')));
+  if (!scriptLoaded) fail('JavaScript assets/home.js did not load at ' + width + 'px');
 }
 
 function comparePNGs(current, baseline, key) {
