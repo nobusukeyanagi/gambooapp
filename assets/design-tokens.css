@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* Gamboo color system: 5 categories / 30 semantic purposes / 27 distinct base colors.
+/* Gamboo color system: 5 categories / 30 semantic purposes / 26 distinct base colors.
  * Screens reference these tokens directly. Obsolete palette and RGBA aliases were removed.
  * Page-specific shades are derived using color-mix when needed.
  */
@@ -17,7 +17,7 @@
   /* ① 競技色 */
   --c-keirin: #427491;
   --c-auto: #A85B56;
-  --c-girls: #A15F7D;
+  --c-girls: var(--c-error); /* reuse alert red; retain girls semantic token */
 
   /* ② 枠色 */
   --w1: #FFFFFF;
