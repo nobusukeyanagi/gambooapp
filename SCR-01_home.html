@@ -844,18 +844,7 @@
         font-size: var(--fs-14);
         letter-spacing: normal;
       }
-      @media (max-width: 330px) {
-        .pk3 { gap: var(--space-5); padding-left: var(--space-7); padding-right: var(--space-7); }
-        .pk3 .kun { flex-basis: 54px; min-width: 54px; }
-        .pk3 img.kun-ic { width: 54px; height: 54px; }
-        .pk3 .pk-compact-row {
-          justify-content: flex-start;
-          overflow-x: auto;
-          scrollbar-width: thin;
-        }
-        .pk3 .pk-player,
-        .pk3 .pk-race-time { flex-shrink: 0; }
-      }
+      
 
       .venue-grid.g3 .vcard-dl[data-deadline] {
         color: var(--c-text);
@@ -898,15 +887,7 @@
         font-variant-numeric: tabular-nums;
         white-space: nowrap;
       }
-      @media (max-width: 359px) {
-        /* Keep 18px R/time typography and save width via spacing instead. */
-        .venue-grid.g3 .vcard:not(.mori-photo-tile) {
-          padding-inline: var(--space-3);
-        }
-        .venue-grid.g3 .vcard.deadline-soon .vcard-bottom {
-          gap: 0;
-        }
-      }
+      
 
       .venue-grid.g3 .vcard-tags {
         display: flex;
@@ -941,16 +922,7 @@
       .pk3:not(.pk-two-riders) .pk-compact-row {
         margin-top: var(--space-14);
       }
-      @media (max-width: 330px) {
-        .pickup-card.pk3 {
-          height: 80px;
-          min-height: 80px;
-        }
-        .pk3.pk-two-riders {
-          padding-top: var(--space-7);
-          padding-bottom: var(--space-7);
-        }
-      }
+      
       /* Equal-height home venue tiles; the previously shorter Hiratsuka card is the model. */
       .venue-grid.g3 .vcard {
         height: 106px;
@@ -1067,18 +1039,48 @@
 
       /* Last in the cascade: protect 16px maximum-balance figures on
          small viewports without shrinking the text or changing controls. */
-      @media (max-width: 359px) {
-        .payout-bar.pt-h { padding-inline: var(--space-card); }
-        .pt-h .balance-sep { margin-inline: var(--space-small); }
-      }
+      
     
 /* Eight pixels between the final featured card and the next section. */
 .pickup-card.pk3:has(+ .section-header) { margin-bottom: var(--space-section); }
 
       /* Keep campaign metadata and chevrons distinct at narrow phone widths. */
+      /* Responsive adjustments: one breakpoint block per supported width. */
       @media (max-width: 359px) {
+        /* Keep 18px R/time typography and save width via spacing instead. */
+                .venue-grid.g3 .vcard:not(.mori-photo-tile) {
+                  padding-inline: var(--space-3);
+                }
+                .venue-grid.g3 .vcard.deadline-soon .vcard-bottom {
+                  gap: 0;
+                }
+        
+        .payout-bar.pt-h { padding-inline: var(--space-card); }
+                .pt-h .balance-sep { margin-inline: var(--space-small); }
+        
         .news-head { flex-wrap: wrap; column-gap: var(--space-small); row-gap: var(--space-small); }
-        .news-item > .news-arrow { top: auto; bottom: var(--space-content); margin-top: 0; }
+                .news-item > .news-arrow { top: auto; bottom: var(--space-content); margin-top: 0; }
+      }
+      @media (max-width: 330px) {
+        .pk3 { gap: var(--space-5); padding-left: var(--space-7); padding-right: var(--space-7); }
+                .pk3 .kun { flex-basis: 54px; min-width: 54px; }
+                .pk3 img.kun-ic { width: 54px; height: 54px; }
+                .pk3 .pk-compact-row {
+                  justify-content: flex-start;
+                  overflow-x: auto;
+                  scrollbar-width: thin;
+                }
+                .pk3 .pk-player,
+                .pk3 .pk-race-time { flex-shrink: 0; }
+        
+        .pickup-card.pk3 {
+                  height: 80px;
+                  min-height: 80px;
+                }
+                .pk3.pk-two-riders {
+                  padding-top: var(--space-7);
+                  padding-bottom: var(--space-7);
+                }
       }
 </style>
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
