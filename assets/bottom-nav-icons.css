@@ -3,8 +3,6 @@
    Symbols use currentColor, so elsewhere they can take semantic colors
    such as var(--c-keirin) and var(--c-auto) without SVG changes. */
 :root {
-  --nav-icon-color: var(--c-sub, #646B68);
-  --nav-icon-active-color: var(--c-primary-d, #8B663B);
   --nav-icon-size: 32px;
 }
 .bottom-tab .tab-item .tab-icon {
@@ -13,11 +11,11 @@
 .bottom-tab .tab-item .tab-icon .ic {
   width: var(--nav-icon-size);
   height: var(--nav-icon-size);
-  color: var(--nav-icon-color);
+  color: var(--c-sub);
   fill: currentColor;
 }
 .bottom-tab .tab-item.active .tab-icon .ic {
-  color: var(--nav-icon-active-color);
+  color: var(--c-primary-d);
 }
 
 /* Keep the original racing silhouettes' aspect ratios at 32px height.
