@@ -115,8 +115,8 @@
   }
 
   function syncTab() {
-    const limit = wrap.getBoundingClientRect().right - 12;
-    const maniaVisible = wrap.scrollLeft > 0 && maniaHeading.getBoundingClientRect().left <= limit;
+    const maniaVisible = wrap.scrollLeft > 0 &&
+      wrap.scrollLeft + wrap.clientWidth >= maniaHeading.offsetLeft + 12;
     selectTab(maniaVisible ? "mania" : "racecard");
   }
 
