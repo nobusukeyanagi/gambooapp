@@ -1,0 +1,68 @@
+name: Verify Non-Home Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'SCR-*.html'
+      - 'index.html'
+      - 'assets/**'
+      - 'scripts/check-pages.mjs'
+      - '.github/workflows/pages-refactor-check.yml'
+  workflow_dispatch:
+    inputs:
+      baseline_commit:
+        description: 'Optional Git commit SHA to compare all non-home pages'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: non-home-visual
+  cancel-in-progress: true
+
+jobs:
+  visual:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout with historical baseline
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Node.js 24
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - name: Install exact dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Serve current and optional baseline
+        shell: bash
+        env:
+          BASELINE_SHA: ${{ github.event.inputs.baseline_commit }}
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory . > /tmp/gamboo-current.log 2>&1 &
+          if [ -n "$BASELINE_SHA" ]; then
+            git rev-parse --verify "$BASELINE_SHA^{commit}" >/dev/null
+            mkdir -p "$RUNNER_TEMP/baseline"
+            git archive "$BASELINE_SHA" | tar -x -C "$RUNNER_TEMP/baseline"
+            python3 -m http.server 4174 --bind 127.0.0.1 --directory "$RUNNER_TEMP/baseline" > /tmp/gamboo-baseline.log 2>&1 &
+            echo "BASELINE_URL=http://127.0.0.1:4174" >> "$GITHUB_ENV"
+          fi
+      - name: Compare all pages using Chromium
+        env:
+          CURRENT_URL: http://127.0.0.1:4173
+          SCREENSHOT_DIR: /tmp/gamboo-all-pages
+        run: node scripts/check-pages.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: all-pages-screenshots
+          path: /tmp/gamboo-all-pages
+          if-no-files-found: ignore
+          retention-days: 7
