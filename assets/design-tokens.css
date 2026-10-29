@@ -59,8 +59,8 @@
   /* ⑤ 共通色（ブランド・文字・背景・罫線。リンク色は --c-keirin を共有） */
   --c-bg: #F8F7F4; /* HSL hue 45deg; low-chroma warm white */
   --c-surface: #FFFFFF;
-  --c-border: #D1D5D1;
-  --c-border-control: #9DA5A0; /* input and interactive boundaries */
+  --c-border: #D0D4D6;
+  --c-border-control: #9CA4A8; /* input and interactive boundaries */
   /* Unified line system: 1px standard/control, 3px selected/race/focus. */
   --line-thin: 1px;
   --line-emphasis-width: 3px;
@@ -69,8 +69,8 @@
   --line-selected: var(--line-emphasis-width) solid var(--c-primary-d);
   --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
   --line-focus: var(--line-emphasis-width) solid var(--c-keirin);
-  --c-sub: #646B68;
-  --c-text: #2B3031;
+  --c-sub: #656D71;
+  --c-text: #2B3135;
   --c-primary: #E4CA7C; /* HSL hue 45deg; subdued gold */
   --c-primary-d: #86733A; /* HSL hue 45deg; legible against white */
 
