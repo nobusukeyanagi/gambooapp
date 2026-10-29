@@ -52,10 +52,10 @@
 .payout-bar.pt-h .unit {
   font-size: var(--fs-14);
 }
-/* Bottom navigation labels are not badges. On narrow screens, wrap rather
-   than shrinking below 14px or overlapping neighboring navigation items. */
+/* Bottom navigation labels: one type-scale step below standard 14px labels.
+   Allow long labels to wrap while preserving the existing tap target. */
 .bottom-tab .tab-item {
-  font-size: var(--fs-14);
+  font-size: var(--fs-12);
   white-space: normal;
   text-align: center;
   line-height: 1.1;
