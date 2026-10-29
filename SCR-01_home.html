@@ -2561,7 +2561,9 @@
       .pk3 .pickup-body {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        /* Anchor each description at the same top edge as the two-rider card. */
+        align-self: stretch;
+        justify-content: flex-start;
       }
       .pk3 .pk-explain {
         white-space: normal;
@@ -2862,6 +2864,11 @@
         letter-spacing: normal;
         vertical-align: middle;
         outline: none;
+      }
+      /* Slightly widen the Girls heart without changing the adjacent label layout. */
+      .venue-grid.g3 .girls {
+        transform: scaleX(1.15);
+        transform-origin: center;
       }
       /* Venue card support text: one step darker, using the next existing token. */
       .venue-grid.g3 .vcard-day,
@@ -3201,7 +3208,7 @@
               <div class="news-item">
                 <div class="news-head">
                   <span class="news-badge both">競輪＆オート</span>
-                  <span class="news-date">2024.04.15</span><span class="news-new">[NEW]</span>
+                  <span class="news-date">2024.04.15</span>
                 </div>
                 <div class="news-title ell2">機能リリースのお知らせ(2024年4月18日)</div>
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
