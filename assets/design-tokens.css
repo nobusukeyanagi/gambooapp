@@ -28,6 +28,14 @@
 
   /* Spacing: one source for each semantic purpose. */
   --space-section: 8px;
+  --space-1: 1px;
+  --space-2: 2px;
+  --space-3: 3px;
+  --space-5: 5px;
+  --space-7: 7px;
+  --space-9: 9px;
+  --space-10: 10px;
+  --space-14: 14px;
   --space-card: 6px;
   --space-small: 4px;
   --space-content: 12px;
