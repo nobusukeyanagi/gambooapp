@@ -1,0 +1,6 @@
+@charset "UTF-8";
+/* Page-specific styles extracted without declaration changes. */
+/* Nine-rider-only race number colors. */
+        .f7 { border: none; }
+        .f8 { background: var(--w8); color: var(--c-text); }
+        .f9 { background: var(--w9); color: var(--c-surface); }
