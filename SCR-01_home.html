@@ -3206,8 +3206,8 @@
     </div>
     <script src="./assets/scroll-controls.js?v=2"></script>
     <script>
-      // Three identical runs of slides allow the carousel to move directly
-      // from the last banner into the first banner without reversing direction.
+      // Seven repeating runs provide enough buffer that a fast swipe never
+      // collides with the physical end of the track.
       document.querySelectorAll(".bn-carousel").forEach(function (box) {
         var track = box.querySelector(".bn-track");
         var dots = Array.from(box.querySelectorAll(".bn-dots i"));
@@ -3219,27 +3219,30 @@
         var pauseUntil = 0;
         var settleTimer;
         var normalizationPending = false;
+        var copiesEachSide = 3;
+        var centerIndex = copiesEachSide * count;
+        var wheelUntil = 0;
 
-        // The middle run is the real carousel. The surrounding runs are
-        // seamless copies for both forward and backward touch swipes.
-        var leading = document.createDocumentFragment();
-        var trailing = document.createDocumentFragment();
-        originals.forEach(function (item) {
-          var first = item.cloneNode(true);
-          var last = item.cloneNode(true);
-          first.setAttribute("aria-hidden", "true");
-          last.setAttribute("aria-hidden", "true");
-          leading.appendChild(first);
-          trailing.appendChild(last);
-        });
-        track.insertBefore(leading, track.firstChild);
-        track.appendChild(trailing);
+        // Repeat to both sides, and start in the center of the track.
+        function copyRun() {
+          var fragment = document.createDocumentFragment();
+          originals.forEach(function (slide) {
+            var clone = slide.cloneNode(true);
+            clone.setAttribute("aria-hidden", "true");
+            fragment.appendChild(clone);
+          });
+          return fragment;
+        }
+        for (var n = 0; n < copiesEachSide; n++) {
+          track.insertBefore(copyRun(), track.firstChild);
+          track.appendChild(copyRun());
+        }
 
         function step() {
           return track.children[1].offsetLeft - track.children[0].offsetLeft;
         }
         function logicalIndex() {
-          var index = Math.round(track.scrollLeft / step()) - count;
+          var index = Math.round(track.scrollLeft / step()) - centerIndex;
           return ((index % count) + count) % count;
         }
         function syncDots() {
@@ -3257,26 +3260,28 @@
           track.scrollLeft = left;
           // Re-enable snap after the browser has applied the invisible jump.
           requestAnimationFrame(function () {
-            track.style.scrollSnapType = snap;
-            track.style.scrollBehavior = behavior;
-            normalizationPending = false;
-            syncDots();
+            requestAnimationFrame(function () {
+              track.style.scrollSnapType = snap;
+              track.style.scrollBehavior = behavior;
+              normalizationPending = false;
+              syncDots();
+            });
           });
         }
         function recenter() {
-          if (touching || normalizationPending) return;
+          if (touching || normalizationPending || Date.now() < wheelUntil) return;
           var stride = step();
           if (!stride) return;
           var position = Math.round(track.scrollLeft / stride);
-          if (position < count) {
-            jumpWithoutAnimation(track.scrollLeft + count * stride);
-          } else if (position >= 2 * count) {
-            jumpWithoutAnimation(track.scrollLeft - count * stride);
+          var cycles = Math.floor((position - centerIndex) / count);
+          if (cycles) {
+            // Preserve the fractional offset during the invisible rebase.
+            jumpWithoutAnimation(track.scrollLeft - cycles * count * stride);
           }
         }
         function scheduleRecenter() {
           clearTimeout(settleTimer);
-          settleTimer = setTimeout(recenter, 160);
+          settleTimer = setTimeout(recenter, 350);
         }
         track.addEventListener("scroll", function () {
           syncDots();
@@ -3294,7 +3299,11 @@
         }
         window.addEventListener("pointerup", endTouch);
         window.addEventListener("pointercancel", endTouch);
-        track.addEventListener("wheel", function () { pauseUntil = Date.now() + ms; }, { passive: true });
+        track.addEventListener("wheel", function () {
+          pauseUntil = Date.now() + ms;
+          wheelUntil = Date.now() + 280;
+          scheduleRecenter();
+        }, { passive: true });
 
         track.querySelectorAll("img").forEach(function (img) {
           img.addEventListener("error", function () { img.parentElement.classList.add("noimg"); });
@@ -3302,21 +3311,31 @@
         });
 
         // Start from the middle run, so swiping either direction works.
-        jumpWithoutAnimation(count * step());
+        jumpWithoutAnimation(centerIndex * step());
         window.addEventListener("resize", function () {
           // Read the selected dot, rather than using an old scroll offset
           // with a newly calculated responsive slide width.
           var current = dots.findIndex(function (dot) { return dot.classList.contains("on"); });
-          jumpWithoutAnimation((count + Math.max(0, current)) * step());
+          jumpWithoutAnimation((centerIndex + Math.max(0, current)) * step());
         });
         setInterval(function () {
           if (touching || normalizationPending || Date.now() < pauseUntil) return;
-          var position = Math.round(track.scrollLeft / step());
-          if (position >= 2 * count) {
-            jumpWithoutAnimation((count + (position % count)) * step());
-            position = count + (position % count);
+          var stride = step();
+          if (!stride) return;
+          var position = Math.round(track.scrollLeft / stride);
+          var cycles = Math.floor((position - centerIndex) / count);
+          var next = position + 1;
+          if (cycles) {
+            jumpWithoutAnimation(track.scrollLeft - cycles * count * stride);
+            // Wait for the snap settings to be restored before animating.
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                track.scrollTo({ left: (next - cycles * count) * stride, behavior: "smooth" });
+              });
+            });
+          } else {
+            track.scrollTo({ left: next * stride, behavior: "smooth" });
           }
-          track.scrollTo({ left: (position + 1) * step(), behavior: "smooth" });
         }, ms);
       });
     </script>
