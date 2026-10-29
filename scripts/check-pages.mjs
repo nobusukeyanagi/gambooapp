@@ -68,6 +68,27 @@ function compare(cur,base,key){
  console.log('COMPARE '+key+': '+pixels+' pixels ('+(100*ratio).toFixed(5)+'%)');
  if(ratio>maxDiff)fail(key+' visual difference '+(ratio*100).toFixed(5)+'%');
 }
+async function checkSharedReferences(){
+ const expected=['design-tokens.css?v=53','tap-feedback.css?v=3','ui-consistency.css?v=15'];
+ const all=['SCR-01_home.html',...paths];
+ for(const page of all){
+  const html=await readFile(path.join(ROOT,page),'utf8');
+  if(/<style\b/i.test(html))fail(page+': old inline <style> block detected');
+  const css=[...html.matchAll(/<link\b[^>]*href=["']\.\/assets\/([^"']+\.css\?v=\d+)["']/g)].map(m=>m[1]);
+  for(const name of expected)if(!css.includes(name))fail(page+': shared CSS direct reference missing '+name);
+  if(css.length!==new Set(css).size)fail(page+': duplicated stylesheet reference');
+  const commonLast=css.indexOf('ui-consistency.css?v=15');
+  if(commonLast!==css.length-1)fail(page+': shared UI stylesheet must load last');
+  for(const href of css){
+   const pathname=href.split('?')[0];
+   try{await readFile(path.join(ROOT,'assets',pathname));}
+   catch(e){fail(page+': dangling stylesheet reference '+href);}
+  }
+ }
+ console.log('Direct shared CSS references verified for '+all.length+' HTML files.');
+}
+await checkSharedReferences();
+
 await mkdir(OUT,{recursive:true});
 const browser=await chromium.launch({headless:true});
 try {
