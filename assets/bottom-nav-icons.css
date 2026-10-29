@@ -1,0 +1,16 @@
+@charset "UTF-8";
+/* Shared bottom-nav icons: 48x48 viewBox; consistent visual height.
+   Override either token in CSS to change icons without editing SVG paths. */
+:root {
+  --nav-icon-color: #6B7372;
+  --nav-icon-active-color: #6B7372;
+}
+.bottom-tab .tab-item .tab-icon .ic {
+  width: 26px;
+  height: 26px;
+  color: var(--nav-icon-color);
+  fill: currentColor;
+}
+.bottom-tab .tab-item.active .tab-icon .ic {
+  color: var(--nav-icon-active-color);
+}
