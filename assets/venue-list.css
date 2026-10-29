@@ -1812,7 +1812,7 @@
         height: calc(100dvh - 30px);
       }
       .rchip.live {
-        background: var(--c-deadline-soon-bg);
+        background: var(--c-error-bg);
         border-color: var(--c-error);
         color: var(--c-error);
         min-width: 70px;
