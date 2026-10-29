@@ -45,6 +45,8 @@
   function findTarget(node) {
     var el = node && node.nodeType === 1 ? node : node && node.parentElement;
     if (!el || !el.closest) return null;
+    // Informational cards can opt out without affecting their contents.
+    if (el.closest('[data-no-tap-feedback]')) return null;
     var target = el.closest(targets);
     if (!target || target.matches(':disabled, [aria-disabled="true"], .disabled')) return null;
     return target;
