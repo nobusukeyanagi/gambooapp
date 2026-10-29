@@ -82,3 +82,28 @@
   height: 20px;
   white-space: nowrap;
 }
+
+/* Header actions use the same complete-button feedback and typography on all screens. */
+.app-header .header-actions .icon-btn {
+  width: auto;
+  min-width: 0;
+  height: 40px;
+  padding: 0 8px;
+  gap: 3px;
+  background: transparent;
+  border: var(--line-control);
+  border-radius: 8px;
+  font-size: var(--fs-14);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.app-header .header-actions .icon-btn .ic {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.app-header .header-actions .cta-btn {
+  min-height: 40px;
+  padding: 0 10px;
+  border-radius: 8px;
+}
