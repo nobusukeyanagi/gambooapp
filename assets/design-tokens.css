@@ -4,7 +4,7 @@
  * Page-specific shades are derived using color-mix when needed.
  */
 :root {
-  /* Fonts / type scale */
+  /* Font / type scale (one canonical font for UI and numbers) */
   --ff-ui: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
   --fs-12: 12px;
   --fs-14: 14px;
@@ -12,16 +12,13 @@
   --fs-18: 18px;
   --fs-20: 20px;
   --fs-24: 24px;
-  --ff-num: var(--ff-ui);
 
   /* ① 競技色 */
   --c-keirin: #427491;
   --c-auto: #A85B56;
-  --c-girls: var(--c-error); /* reuse alert red; retain girls semantic token */
 
-  /* ② 枠色 */
-  --w1: #FFFFFF;
-  --w2: #2B3031;
+  /* ② 車番色（1は --c-surface、2は --c-text を直接参照） */
+
   --w3: #C9444A;
   --w4: #3577B8;
   --w5: #E2BF27;
@@ -30,9 +27,9 @@
   --w8: #E98AB4;
   --w9: #9856B2;
 
-  /* ③ グレード色 */
+  /* ③ グレード色（GP/SG黄色は --w5 と同じ色を直接参照） */
   --c-gp: #3C4145;
-  --c-grade-highlight: #E2BF27; /* SG yellow, independent from 5th lane color */
+
   --c-g1: #A65358;
   --c-g2: #4E7197;
   --c-g3: #58774A;
@@ -58,61 +55,27 @@
   --line-control: var(--line-thin) solid var(--c-border-control);
   --line-selected: var(--line-emphasis-width) solid var(--c-primary-d);
   --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
-  --line-auto: var(--line-emphasis-width) solid var(--c-auto);
-  --line-focus: var(--line-emphasis-width) solid var(--c-link);
+
+  --line-focus: var(--line-emphasis-width) solid var(--c-keirin);
   --c-sub: #646B68;
   --c-text: #2B3031;
   --c-primary: #E0B96E;
   --c-primary-d: #8B663B;
-  --c-link: #427491;
 
-  /* Supporting semantic aliases for screens, grades, labels, and states */
+  /* Distinct semantic colors are derived from canonical base colors only. */
   --c-keirin-bg: color-mix(in srgb, var(--c-keirin) 12%, var(--c-surface));
   --c-auto-bg: color-mix(in srgb, var(--c-auto) 12%, var(--c-surface));
-  --c-girls-bg: color-mix(in srgb, var(--c-girls) 12%, var(--c-surface));
-  --c-surface2: var(--c-bg);
-  --c-dis: var(--c-sub);
-  --c-secondary: var(--c-link);
-  --c-info: var(--c-link);
-  --c-primary-bg: var(--c-bg);
-  --c-on-primary: var(--c-text);
-  --c-deadline-soon: var(--c-text);
-  --c-closed-bg: var(--c-bg);
-  --c-gp-t: var(--c-grade-highlight);
-  --c-g1-t: var(--c-surface);
-  --c-g2-t: var(--c-surface);
-  --c-g3-t: var(--c-surface);
-  --c-f1-t: var(--c-surface);
-  --c-f2-t: var(--c-surface);
-  --w1-t: var(--c-text);
-  --w1-bd: var(--c-sub);
-  --w2-t: var(--c-surface);
-  --w2-bd: var(--w2);
-  --w3-t: var(--c-surface);
-  --w3-bd: var(--w3);
-  --w4-t: var(--c-surface);
-  --w4-bd: var(--w4);
-  --w5-t: var(--c-text);
-  --w5-bd: var(--w5);
-  --w6-t: var(--c-surface);
-  --w6-bd: var(--w6);
-  --w7-t: var(--c-surface);
-  --w7-bd: var(--w7);
-  --w8-t: var(--c-text);
-  --w8-bd: var(--w8);
-  --w9-t: var(--c-surface);
-  --w9-bd: var(--w9);
 
-  /* Spacing, radii, elevation and interaction sizes: unchanged */
+  /* Shared radii, shadows, and tap dimensions */
   --r-sm: 6px;
   --r-md: 12px;
   --r-lg: 20px;
   --r-full: 9999px;
-  --e0: none;
+
   --e1: 0 1px 2px color-mix(in srgb, var(--c-text) 10%, transparent);
-  --e2: 0 2px 6px color-mix(in srgb, var(--c-text) 14.000000000000002%, transparent);
+  --e2: 0 2px 6px color-mix(in srgb, var(--c-text) 14%, transparent);
   --e3: 0 8px 24px color-mix(in srgb, var(--c-text) 22%, transparent);
-  --shadow: var(--e1);
+
   --tap-min: 44px;
   --tap-dense: 36px;
 }
