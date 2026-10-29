@@ -13,6 +13,22 @@
   --fs-20: 20px;
   --fs-24: 24px;
 
+  /* Spacing: one source for each semantic purpose. */
+  --space-section: 8px;
+  --space-card: 6px;
+  --space-small: 4px;
+  --space-content: 12px;
+
+  /* Cross-screen component heights. */
+  --h-header: 50px;
+  --h-balance: 50px;
+  --h-date-tab: 50px;
+  --h-section: 44px;
+  --h-page-header: 52px;
+  --h-bottom-nav: 62px;
+  --h-control: 40px;
+  --h-icon-button: 44px;
+
   /* ① 競技色 */
   --c-keirin: #427491;
   --c-auto: #A85B56;
