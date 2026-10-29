@@ -381,23 +381,8 @@
         </div>
       </div>
     </div>
-    <script>
-      document.querySelectorAll(".race-table-wrap").forEach(function (w) {
-        function sync() { w.classList.toggle("scrolled", w.scrollLeft > 24); }
-        w.addEventListener("scroll", sync, { passive: true });
-        sync();
-      });
-    </script>
-    <script>
-      document.querySelectorAll(".hscroll-inner").forEach(function (box) {
-        var on = box.querySelector(".active");
-        if (!on) return;
-        var right = on.offsetLeft + on.offsetWidth;
-        if (right > box.clientWidth - 26) {
-          box.scrollLeft = right - box.clientWidth + 34;
-        }
-      });
-    </script>
+    
+    <script src="./assets/scroll-controls.js?v=1"></script>
       <script src="./assets/tap-feedback.js?v=3" defer></script>
 </body>
 </html>
