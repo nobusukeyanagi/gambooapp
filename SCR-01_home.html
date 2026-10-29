@@ -1867,6 +1867,17 @@
         display: flex;
         align-items: center;
         gap: 8px;
+        width: 100%;
+      }
+      .news-campaign {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: auto;
+        white-space: nowrap;
+        color: var(--c-sub);
+        font-size: var(--fs-12);
+        line-height: 1;
       }
       /* Only campaign news shows the shared SVG gift in the brand color. */
       .news-head .news-campaign-icon {
@@ -3116,7 +3127,7 @@
               <div class="news-item">
                 <div class="news-head">
                   <span class="news-badge auto">オートレース</span>
-                  <span class="news-date">2026.10.29</span><svg class="ic news-campaign-icon" role="img" aria-label="キャンペーン"><use href="./assets/bottom-nav-icons.svg?v=8#nav-campaign"></use></svg><span class="news-new">[NEW]</span>
+                  <span class="news-date">2026.10.29</span><span class="news-new">[NEW]</span><span class="news-campaign"><svg class="ic news-campaign-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-campaign"></use></svg><span>キャンペーン</span></span>
                 </div>
                 <div class="news-title ell2">【浜松SG】抽選で鈴木圭一郎選手1,000勝達成記念Tシャツ＋シールが当たる！</div>
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
