@@ -1,17 +1,7 @@
 @charset "UTF-8";
 /* Shared by SCR-02_出走表_場一覧 and SCR-02-AUTO_出走表_オート場一覧; screen differences stay in the page. */
-* {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        background: var(--c-text);
-        font-family: var(--ff-ui);
-        color: var(--c-text);
-        font-size: var(--fs-14);
-        line-height: 1.5;
-      }
+
+
       button,
       input,
       select,
@@ -19,35 +9,12 @@
         font-family: inherit;
       }
 
-      .page-title {
-        text-align: center;
-        color: var(--c-bg);
-        font-size: var(--fs-24);
-        font-weight: 700;
-        padding: 32px 16px 8px;
-        letter-spacing: 0.05em;
-      }
-      .page-sub {
-        text-align: center;
-        color: var(--c-sub);
-        font-size: var(--fs-14);
-        padding-bottom: 32px;
-      }
 
-      .screens-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 32px;
-        justify-content: center;
-        padding: 0 24px 60px;
-      }
 
-      .screen-wrap {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-      }
+
+
+
+
       .screen-label {
         color: var(--c-border);
         font-size: var(--fs-12);
@@ -56,27 +23,8 @@
         letter-spacing: 0.1em;
       }
 
-      .phone {
-        width: 375px;
-        height: 812px;
-        background: var(--c-text);
-        border-radius: 40px;
-        padding: 12px;
-        box-shadow: 0 20px 60px color-mix(in srgb, var(--c-text) 50%, transparent),
-          inset 0 0 0 1px color-mix(in srgb, var(--c-surface) 10%, transparent);
-        position: relative;
-        overflow: hidden;
-      }
-      .phone-inner {
-        width: 100%;
-        height: 100%;
-        background: var(--c-bg);
-        border-radius: 30px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-      }
+
+
 
       .status-bar {
         background: var(--c-surface);
@@ -1840,20 +1788,12 @@
       .sort-opt .chk { margin-left: auto; color: var(--c-primary-d); }
       .sort-opt .chk .ic { width: 22px; height: 22px; }
       .sort-opt.on { color: var(--c-primary-d); }
-      body { background: var(--c-bg); }
-      .page-title, .page-sub, .screen-label { display: none; }
-      .screens-grid { display: block; padding: 0; gap: 0; }
-      .screen-wrap { display: block; gap: 0; }
-      .phone {
-        width: 100%;
-        height: 100vh;
-        height: 100dvh;
-        padding: 0;
-        border-radius: 0;
-        background: none;
-        box-shadow: none;
-      }
-      .phone-inner { border-radius: 0; }
+
+
+
+
+
+
       .status-bar { display: none; }
       .screen-wrap:not(:only-child) .screen-label {
         display: block;
@@ -1900,7 +1840,7 @@
         border-radius: var(--r-sm);
         border-top: var(--line-normal);
       }
-      body { font-size: var(--fs-14); }
+
 
       .tab-item { font-size: var(--fs-12); gap: 3px; }
       .tab-item .tab-icon { height: 26px; }
