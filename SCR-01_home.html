@@ -1790,6 +1790,7 @@
         gap: var(--space-card);
         padding: 0 8px var(--space-section);
       }
+      .mori-venue-grid { row-gap: var(--space-card); }
       .g3 .vcard {
         min-height: 72px;
         /* Equal 4px vertical insets: more space between four rows while
@@ -1875,8 +1876,9 @@
         gap: 4px;
         margin-left: auto;
         white-space: nowrap;
-        color: var(--c-sub);
+        color: var(--c-primary);
         font-size: var(--fs-12);
+        font-weight: 700;
         line-height: 1;
       }
       /* Only campaign news shows the shared SVG gift in the brand color. */
@@ -3054,9 +3056,22 @@
                   <div class="vcard-name">川口</div>
                   <div class="vcard-tags"><span class="kubun">ナイター</span></div>
                   <div class="vcard-bottom">
+                    <span class="vcard-r">3R</span>
+                    <span class="vcard-dl" data-deadline="16:30"><span class="deadline-time">16:30</span></span>
+                  </div>
+                </div>
+                <div class="vcard auto">
+                  <div class="vcard-top"><span class="gbadge g-g2">GⅡ</span><span class="vcard-day">2日目</span></div>
+                  <div class="vcard-name">川口</div>
+                  <div class="vcard-tags"><span class="kubun">ナイター</span></div>
+                  <div class="vcard-bottom">
                     <span class="vcard-r">11R</span>
                     <span class="vcard-dl" data-deadline="20:40"><span class="deadline-time">20:40</span></span>
                   </div>
+                </div>
+                <div class="vcard mori-photo-tile" data-no-tap-feedback>
+                  <span class="mori-today-strip" aria-hidden="true">次回予定</span>
+                  <img src="mori.jpg" alt="森且行選手" />
                 </div>
                 <div class="vcard auto mori-next-card" data-no-tap-feedback>
                   <div class="vcard-top"><span class="gbadge g-f2">普通</span></div>
