@@ -40,6 +40,7 @@
 /* An unboxed girls heart is an icon, not a grade badge. */
 .venue-grid.g3 .girls {
   font-size: var(--fs-14);
+  font-weight: var(--fw-14-normal);
   height: auto;
   line-height: 1.25;
 }
