@@ -13,8 +13,7 @@ const paths = [
   'SCR-02_keirin.html',
   'SCR-02_autorace.html',
   'SCR-03_racecardkeirin.html',
-  'SCR-04_racecardkeirin.html',
-  'SCR-04_データ解析ラボ.html',
+  'SCR-04_racecardautorace.html',
   'SCR-07_mypage.html',
   'SCR-11_campaign.html',
   'index.html'
@@ -130,6 +129,78 @@ async function checkKeirinMania(page, width) {
   console.log("KEIRIN MANIA OK " + width + "px (8 detail views, 9 riders, 2-way navigation)");
 }
 
+async function checkAutoraceLabMerged(page, width) {
+  const entry = page.locator('.at-wrap[data-panel="entry"]');
+  const table = entry.locator('table.auto-merged');
+  const labTab = page.locator('.info-tab[data-tab="lab"]');
+  const entryTab = page.locator('.info-tab[data-tab="entry"]');
+  const sheet = page.locator(".lsheet");
+  if (await page.locator(".screen-wrap").count() !== 1)
+    fail(width + "px autorace merged screen duplication");
+  if (await page.locator('.at-wrap[data-panel="lab"]').count() !== 0)
+    fail(width + "px redundant lab panel present");
+  if (await table.locator("tbody tr").count() !== 8)
+    fail(width + "px autorace entry did not retain eight drivers");
+  if (await table.locator(".lb-btn").count() !== 9)
+    fail(width + "px lab detail buttons not preserved");
+  if (await table.locator(".lb-v").count() !== 72 || await table.locator(".lb-tot").count() !== 8)
+    fail(width + "px lab evaluation data missing");
+  if (await sheet.isVisible()) fail(width + "px lab detail sheet initially open");
+
+  await labTab.click();
+  await page.waitForFunction(() =>
+    document.querySelector('.at-wrap[data-panel="entry"]').scrollLeft > 100);
+  if (!await labTab.evaluate(el=>el.classList.contains("active")))
+    fail(width + "px lab tab not active after tap");
+  for (let i = 0; i < 9; i++) {
+    await table.locator('.lb-btn[data-item="' + i + '"]').click();
+    if (!await sheet.isVisible()) fail(width + "px detail " + i + " did not open");
+    if (await sheet.locator(".ldt tbody tr").count() !== 8)
+      fail(width + "px lab detail " + i + " lost eight drivers");
+    if (!(await sheet.locator(".lsheet-title").innerText()).trim())
+      fail(width + "px lab detail title missing " + i);
+    await sheet.locator(".lsheet-close").click();
+    if (await sheet.isVisible()) fail(width + "px lab detail " + i + " did not close");
+  }
+  await entry.locator(".rd-sw").click();
+  if (await entry.locator(".rd-sw").getAttribute("aria-checked") !== "true")
+    fail(width + "px wet track switch failed");
+  const wet = await entry.locator(".lb-tot").first().getAttribute("data-w");
+  const actual = (await entry.locator(".lb-tot").first().innerText()).trim();
+  if (wet !== actual) fail(width + "px wet track evaluations failed");
+  await entry.locator('.rd-lab[data-side="g"]').click();
+  if (await entry.locator(".rd-sw").getAttribute("aria-checked") !== "false")
+    fail(width + "px good track switch failed");
+
+  await page.locator('.info-tab[data-tab="past"]').click();
+  if (!await page.locator('.at-wrap[data-panel="past"]').isVisible())
+    fail(width + "px past-ten-races panel missing");
+  if (await page.locator('.at-wrap[data-panel="past"] tbody tr').count() !== 8)
+    fail(width + "px past-ten-races driver data missing");
+  await page.locator('.at-wrap[data-panel="past"] .dt-bar .sw').click();
+  if (!await page.locator('.at-wrap[data-panel="past"]').evaluate(el=>el.classList.contains("detail")))
+    fail(width + "px past-ten-races detail switch failed");
+
+  await page.locator('.info-tab[data-tab="vs"]').click();
+  if (!await page.locator('.at-wrap[data-panel="vs"]').isVisible())
+    fail(width + "px head-to-head panel missing");
+  if (await page.locator('.at-wrap[data-panel="vs"] tbody tr').count() !== 8)
+    fail(width + "px head-to-head driver data missing");
+
+  await entryTab.click();
+  if (!await entry.isVisible() || await entry.evaluate(el=>el.scrollLeft)!==0)
+    fail(width + "px entry menu did not return to first column");
+  if (!await entryTab.evaluate(el=>el.classList.contains("active")))
+    fail(width + "px entry tab did not reactivate");
+  await entry.evaluate(el=>{
+    el.scrollLeft=el.scrollWidth;
+    el.dispatchEvent(new Event("scroll",{bubbles:true}));
+  });
+  await page.waitForFunction(() =>
+    document.querySelector('.info-tab[data-tab="lab"]').classList.contains("active"));
+  console.log("AUTORACE LAB OK " + width + "px (9 detail views, 8 drivers, wet/dry, past/vs, 2-way scroll)");
+}
+
 async function checkAutoraceSort(page, width) {
   const trigger = page.locator('.sort-btn');
   const sheet = page.locator('#auto-sort-sheet');
@@ -195,6 +266,7 @@ try {
     }
     if (file === 'SCR-02_autorace.html') await checkAutoraceSort(a.page,w);
     if (file === 'SCR-03_racecardkeirin.html') await checkKeirinMania(a.page,w);
+    if (file === "SCR-04_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
     if (file !== "index.html") await checkNavPredictionLinks(a.page,w,file);
    }finally {await a.context.close();if(b)await b.context.close();}
   }

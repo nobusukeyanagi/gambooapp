@@ -18,14 +18,64 @@ function stickHead(root) {
         t.addEventListener("click", function () { setTimeout(function () { stickHead(t.closest(".phone-inner")); }, 0); });
       });
 ;
-document.querySelectorAll(".info-tabs .info-tab[data-tab]").forEach(function (t) {
-        t.addEventListener("click", function () {
-          var inner = t.closest(".phone-inner");
-          inner.querySelectorAll(".info-tab[data-tab]").forEach(function (x) { x.classList.toggle("active", x === t); });
-          inner.querySelectorAll(".at-wrap").forEach(function (p) { p.classList.toggle("on", p.getAttribute("data-panel") === t.getAttribute("data-tab")); });
-        });
-      });
-      document.querySelectorAll(".dt-bar .sw").forEach(function (sw) {
+(function initializeRaceTabs() {
+  "use strict";
+  var inner = document.querySelector(".phone-inner");
+  if (!inner) return;
+  var entry = inner.querySelector('.at-wrap[data-panel="entry"]');
+  var labStart = entry && entry.querySelector(".auto-lab-start");
+  var tabs = Array.from(inner.querySelectorAll(".info-tabs .info-tab[data-tab]"));
+  if (!entry || !labStart || tabs.length !== 4) return;
+
+  function activate(name) {
+    tabs.forEach(function (tab) {
+      var selected = tab.dataset.tab === name;
+      tab.classList.toggle("active", selected);
+      tab.setAttribute("aria-selected", String(selected));
+    });
+    inner.querySelectorAll(".at-wrap[data-panel]").forEach(function (panel) {
+      panel.classList.toggle("on", panel.dataset.panel === (name === "lab" ? "entry" : name));
+    });
+    entry.classList.toggle("auto-lab-visible", name === "lab");
+  }
+  function syncTab() {
+    if (!entry.classList.contains("on")) return;
+    var max = Math.max(0, entry.scrollWidth - entry.clientWidth);
+    var atEnd = entry.scrollLeft > 0 && max - entry.scrollLeft <= 12;
+    var atLab = entry.scrollLeft > 0 &&
+      (atEnd || entry.scrollLeft + entry.clientWidth >= labStart.offsetLeft + 12);
+    var name = atLab ? "lab" : "entry";
+    var active = tabs.find(function (tab) { return tab.classList.contains("active"); });
+    if (!active || (active.dataset.tab !== "entry" && active.dataset.tab !== "lab") ||
+        active.dataset.tab !== name) activate(name);
+  }
+  function choose(tab) {
+    var name = tab.dataset.tab;
+    activate(name);
+    if (name === "entry") entry.scrollTo({left: 0, behavior: "instant"});
+    if (name === "lab") {
+      var target = Math.max(0, labStart.offsetLeft - Math.min(80, entry.clientWidth / 4));
+      entry.scrollTo({left: target, behavior: "instant"});
+    }
+    stickHead(inner);
+  }
+  tabs.forEach(function (tab) {
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("tabindex", "0");
+    tab.addEventListener("click", function () { choose(tab); });
+    tab.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        choose(tab);
+      }
+    });
+  });
+  entry.addEventListener("scroll", syncTab, {passive: true});
+  window.addEventListener("resize", syncTab);
+  activate("entry");
+  syncTab();
+})();
+            document.querySelectorAll(".dt-bar .sw").forEach(function (sw) {
         sw.addEventListener("click", function () {
           var on = sw.getAttribute("aria-checked") !== "true";
           sw.setAttribute("aria-checked", on ? "true" : "false");
@@ -50,7 +100,7 @@ document.querySelectorAll(".info-tabs .info-tab[data-tab]").forEach(function (t)
         var BASE = { "◎": [20, 8, 5, 3], "○": [18, 5, 4, 3], "△": [16, 3, 3, 3], "✕": [14, 1, 2, 2], "": [12, 1, 1, 2] };
         function pct(a, b) { return b ? Math.round(a / b * 100) : 0; }
 
-        function isWet(inner) { return inner.querySelector('.at-wrap[data-panel="lab"]').classList.contains("wet"); }
+        function isWet(inner) { return inner.querySelector('.at-wrap[data-panel="entry"]').classList.contains("wet"); }
 
         function render(inner, idx) {
           var it = ITEMS[idx], wet = isWet(inner);
@@ -58,7 +108,7 @@ document.querySelectorAll(".info-tabs .info-tab[data-tab]").forEach(function (t)
           inner.querySelector(".lsheet-cond").textContent = it.c(wet) + (idx === 0 ? "" : "（" + (wet ? "湿走路" : "良走路") + "）");
           inner.querySelector(".lsheet-note").textContent = "※ " + it.n;
           inner.querySelector(".ldt thead").innerHTML = "<tr><th>車</th><th>選手名</th><th>評価</th><th>出走</th><th>1着</th><th>2着</th><th>3着</th><th>勝率</th><th>2連対率</th><th>3連対率</th></tr>";
-          var rows = inner.querySelectorAll('.at-wrap[data-panel="lab"] tbody tr');
+          var rows = inner.querySelectorAll('.at-wrap[data-panel="entry"] tbody tr');
           var html = "";
           rows.forEach(function (tr, i) {
             var v = tr.querySelectorAll(".lb-v")[idx];
@@ -84,7 +134,7 @@ document.querySelectorAll(".info-tabs .info-tab[data-tab]").forEach(function (t)
           inner.querySelectorAll(".lb-btn").forEach(function (b) { b.classList.remove("active"); });
         }
         function setWet(inner, wet) {
-          var wrap = inner.querySelector('.at-wrap[data-panel="lab"]');
+          var wrap = inner.querySelector('.at-wrap[data-panel="entry"]');
           wrap.classList.toggle("wet", wet);
           var sw = wrap.querySelector(".rd-sw");
           sw.setAttribute("aria-checked", wet ? "true" : "false");
@@ -95,7 +145,7 @@ document.querySelectorAll(".info-tabs .info-tab[data-tab]").forEach(function (t)
           });
         }
         function bind(inner) {
-          var wrap = inner.querySelector('.at-wrap[data-panel="lab"]');
+          var wrap = inner.querySelector('.at-wrap[data-panel="entry"]');
           wrap.querySelector(".rd-sw").addEventListener("click", function () { setWet(inner, !wrap.classList.contains("wet")); });
           wrap.querySelectorAll(".rd-lab").forEach(function (l) {
             l.addEventListener("click", function () { setWet(inner, l.getAttribute("data-side") === "w"); });
@@ -108,18 +158,4 @@ document.querySelectorAll(".info-tabs .info-tab[data-tab]").forEach(function (t)
         }
         var first = document.querySelector(".screen-wrap");
         bind(first.querySelector(".phone-inner"));
-        if (document.body.hasAttribute("data-demo-sheet")) {
-          var second = first.cloneNode(true);
-          second.querySelector(".screen-label").textContent = "SCR-04 データ解析ラボ 詳細（「走路状況」タップ時）";
-          first.parentNode.appendChild(second);
-          var inner2 = second.querySelector(".phone-inner");
-          inner2.querySelectorAll(".info-tab[data-tab]").forEach(function (t) {
-            t.addEventListener("click", function () {
-              inner2.querySelectorAll(".info-tab[data-tab]").forEach(function (x) { x.classList.toggle("active", x === t); });
-              inner2.querySelectorAll(".at-wrap").forEach(function (p) { p.classList.toggle("on", p.getAttribute("data-panel") === t.getAttribute("data-tab")); });
-            });
-          });
-          bind(inner2);
-          open(inner2, 0);
-        }
       })();

@@ -1,0 +1,47 @@
+@charset "UTF-8";
+/* SCR-04: data-analysis columns extend the existing auto racecard, not a second panel. */
+.at.auto-merged .auto-lab-start {
+  min-width: 700px;
+  border-left: var(--line-normal);
+  text-align: center;
+  white-space: normal;
+}
+.at.auto-merged .auto-lab-start > span {
+  display: block;
+  font-size: var(--fs-14);
+  color: var(--c-text);
+}
+.at.auto-merged .auto-lab-start .rd-bar {
+  position: static;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  min-height: 28px;
+  padding: 2px 0 0;
+  border: none;
+  background: transparent;
+}
+.at.auto-merged .auto-lab-total {
+  min-width: 72px;
+  border-left: var(--line-normal);
+}
+.at.auto-merged .lb-th {
+  min-width: 82px;
+  white-space: normal;
+}
+.at.auto-merged .lb-btn {
+  font-family: inherit;
+  white-space: nowrap;
+}
+.at-wrap[data-panel="entry"] .lb-hint {
+  display: none;
+}
+.at-wrap[data-panel="entry"].auto-lab-visible .lb-hint {
+  display: block;
+}
+.at.auto-merged .rd-lab:focus-visible,
+.at.auto-merged .lb-btn:focus-visible,
+.info-tabs .info-tab[data-tab]:focus-visible {
+  outline: 2px solid var(--c-auto);
+  outline-offset: 2px;
+}
