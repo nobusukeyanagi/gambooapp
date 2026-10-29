@@ -36,6 +36,7 @@
   --space-9: 9px;
   --space-10: 10px;
   --space-14: 14px;
+  --space-24: 24px; /* clearance for 18px notice chevron plus 6px gap */
   --space-card: 6px;
   --space-small: 4px;
   --space-content: 12px;
