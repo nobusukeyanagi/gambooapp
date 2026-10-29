@@ -65,6 +65,19 @@
   gap: 0;
   overflow-wrap: anywhere;
 }
+/* Navigable bottom tabs use native links while retaining standard tab colors. */
+.bottom-tab a.tab-item {
+  color: var(--c-sub);
+  text-decoration: none;
+}
+.bottom-tab a.tab-item.active {
+  color: var(--c-primary-d);
+}
+.bottom-tab a.tab-item:focus-visible {
+  outline: 2px solid var(--c-primary-d);
+  outline-offset: -2px;
+}
+
 /* If a banner image is missing, its fallback filename is legible too. */
 .bn.noimg .bn-fallback {
   font-size: var(--fs-14);

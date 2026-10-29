@@ -218,6 +218,15 @@ async function checkInteractions(page, width) {
   eq(await toggle.getAttribute('aria-pressed'), before === 'true' ? 'false' : 'true', width + 'px payout click');
   await toggle.press('Enter');
   eq(await toggle.getAttribute('aria-pressed'), before, width + 'px payout keyboard Enter');
+  const nav = page.locator(".bottom-tab");
+  const keirin = nav.locator('a.tab-item[href="./SCR-02_keirin.html"]');
+  const auto = nav.locator('a.tab-item[href="./SCR-02_autorace.html"]');
+  if (await keirin.count() !== 1 || (await keirin.innerText()).trim() !== "競輪予想") {
+    fail(width + "px home keirin prediction link missing");
+  }
+  if (await auto.count() !== 1 || (await auto.innerText()).trim() !== "オート予想") {
+    fail(width + "px home autorace prediction link missing");
+  }
   const mask = await toggle.evaluate((el) => el.classList.contains('masked'));
   eq(mask, before === 'true', width + 'px payout mask restored');
 }
