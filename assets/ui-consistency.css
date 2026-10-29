@@ -85,8 +85,10 @@
 
 /* Header actions use the same complete-button feedback and typography on all screens. */
 /* Both header action buttons have a modest, consistent minimum width. */
+/* Interactive header controls share the same subtle elevation as venue tiles. */
 .app-header .header-actions :is(.icon-btn, .cta-btn) {
   min-width: 80px;
+  box-shadow: var(--e1);
 }
 
 .app-header .header-actions .icon-btn {
