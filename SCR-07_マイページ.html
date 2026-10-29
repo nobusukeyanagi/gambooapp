@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gamboo アプリ ワイヤーフレーム</title>
-    <link rel="stylesheet" href="./assets/design-tokens.css?v=42" />
-    <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=8" />
+    <link rel="stylesheet" href="./assets/design-tokens.css?v=43" />
+    <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=9" />
     <style>
       * {
         box-sizing: border-box;
@@ -131,7 +131,7 @@
         width: 32px;
         height: 32px;
         border-radius: var(--r-full);
-        background: var(--c-surface2);
+        background: var(--c-bg);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -150,7 +150,7 @@
         border: var(--line-thin) solid var(--c-surface);
       }
       .cta-btn {
-        background: var(--c-secondary);
+        background: var(--c-keirin);
         color: var(--c-surface);
         font-size: var(--fs-12);
         font-weight: 700;
@@ -185,7 +185,7 @@
         justify-content: center;
         gap: 1px;
         font-size: var(--fs-12);
-        color: var(--c-dis);
+        color: var(--c-sub);
         cursor: pointer;
       }
       .tab-item.active {
@@ -199,7 +199,7 @@
         margin: 8px;
         height: 90px;
         border-radius: var(--r-md);
-        background: var(--c-surface2);
+        background: var(--c-bg);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -280,7 +280,7 @@
       }
       .see-all {
         font-size: var(--fs-12);
-        color: var(--c-secondary);
+        color: var(--c-keirin);
         font-weight: 600;
       }
 
@@ -325,14 +325,14 @@
         font-size: var(--fs-12);
         font-weight: 600;
         white-space: nowrap;
-        background: var(--c-surface2);
+        background: var(--c-bg);
         color: var(--c-sub);
         border: var(--line-normal);
         cursor: pointer;
       }
       .chip.active {
         background: var(--c-primary);
-        color: var(--c-on-primary);
+        color: var(--c-text);
         border-color: var(--c-primary-d);
       }
 
@@ -340,7 +340,7 @@
         background: var(--c-surface);
         margin: 4px 8px;
         border-radius: var(--r-md);
-        box-shadow: var(--shadow);
+        box-shadow: var(--e1);
         overflow: hidden;
       }
       .venue-header {
@@ -423,7 +423,7 @@
         color: var(--c-error);
       }
       .race-status.closed {
-        color: var(--c-dis);
+        color: var(--c-sub);
       }
 
       .comment-row {
@@ -433,13 +433,13 @@
         display: flex;
         align-items: center;
         gap: 5px;
-        background: var(--c-surface2);
+        background: var(--c-bg);
       }
       .comment-num {
         width: 16px;
         height: 16px;
         border-radius: 50%;
-        background: var(--c-secondary);
+        background: var(--c-keirin);
         color: var(--c-surface);
         font-size: var(--fs-12);
         font-weight: 700;
@@ -474,10 +474,10 @@
       }
       .action-btn.primary {
         background: var(--c-primary);
-        color: var(--c-on-primary);
+        color: var(--c-text);
       }
       .action-btn.outline {
-        background: var(--c-surface2);
+        background: var(--c-bg);
         color: var(--c-text);
         border: var(--line-normal);
       }
@@ -487,7 +487,7 @@
         padding: 8px 10px;
         background: var(--c-surface);
         border-radius: var(--r-md);
-        box-shadow: var(--shadow);
+        box-shadow: var(--e1);
         display: flex;
         align-items: center;
         gap: 10px;
@@ -535,10 +535,10 @@
         background: var(--c-primary);
       }
       .news-badge.keirin {
-        background: var(--c-secondary);
+        background: var(--c-keirin);
       }
       .news-badge.other {
-        background: var(--c-dis);
+        background: var(--c-sub);
       }
       .news-badge.keirin-auto {
         background: var(--c-sub);
@@ -549,7 +549,7 @@
       }
       .news-date {
         font-size: var(--fs-12);
-        color: var(--c-dis);
+        color: var(--c-sub);
       }
       .news-title {
         font-size: var(--fs-12);
@@ -561,7 +561,7 @@
       }
       .news-arrow {
         font-size: var(--fs-12);
-        color: var(--c-dis);
+        color: var(--c-sub);
         flex-shrink: 0;
         margin-top: 3px;
       }
@@ -578,7 +578,7 @@
         width: 40px;
         height: 40px;
         border-radius: var(--r-md);
-        background: linear-gradient(135deg, var(--c-link), var(--c-girls));
+        background: linear-gradient(135deg, var(--c-keirin), var(--c-error));
         flex-shrink: 0;
         display: flex;
         align-items: center;
@@ -603,7 +603,7 @@
       }
       .blog-meta {
         font-size: var(--fs-12);
-        color: var(--c-dis);
+        color: var(--c-sub);
         margin-top: 2px;
         display: flex;
         gap: 6px;
@@ -629,7 +629,7 @@
       }
       .back-btn {
         font-size: var(--fs-12);
-        color: var(--c-secondary);
+        color: var(--c-keirin);
         font-weight: 600;
         display: flex;
         align-items: center;
@@ -696,7 +696,7 @@
         border-bottom-color: var(--c-primary-d);
       }
       .race-tab.past {
-        color: var(--c-dis);
+        color: var(--c-sub);
         text-decoration: line-through;
       }
 
@@ -750,7 +750,7 @@
       }
       .lineup-sep {
         font-size: var(--fs-12);
-        color: var(--c-dis);
+        color: var(--c-sub);
       }
 
       .race-table-wrap {
@@ -898,10 +898,10 @@
       }
       .action-bar-btn.primary {
         background: var(--c-primary);
-        color: var(--c-on-primary);
+        color: var(--c-text);
       }
       .action-bar-btn.secondary {
-        background: var(--c-surface2);
+        background: var(--c-bg);
         color: var(--c-text);
       }
 
@@ -911,7 +911,7 @@
         border-radius: var(--r-md);
         padding: 12px;
         color: var(--c-surface);
-        box-shadow: var(--shadow);
+        box-shadow: var(--e1);
       }
       .user-card-top {
         display: flex;
@@ -984,13 +984,13 @@
         font-size: var(--fs-12);
       }
       .menu-arrow {
-        color: var(--c-dis);
+        color: var(--c-sub);
         font-size: var(--fs-12);
       }
 
       .divider {
         height: 6px;
-        background: var(--c-surface2);
+        background: var(--c-bg);
       }
 
       .num,
@@ -1002,7 +1002,7 @@
       .race-time,
       .c-status,
       .money {
-        font-family: var(--ff-num);
+        font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
         font-feature-settings: "tnum" 1;
         letter-spacing: 0;
@@ -1068,7 +1068,7 @@
 
       .hscroll-bar {
         height: 2px;
-        background: var(--c-surface2);
+        background: var(--c-bg);
         border-radius: var(--r-full);
         margin: 2px 26px 0 8px;
         position: relative;
@@ -1109,7 +1109,7 @@
 
       .imgph {
         background: repeating-linear-gradient(45deg, var(--c-bg) 0 6px, var(--c-bg) 6px 12px);
-        color: var(--c-dis);
+        color: var(--c-sub);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1303,7 +1303,7 @@
         font-weight: 800;
         color: var(--c-primary-d);
         border: var(--line-selected);
-        background: var(--c-primary-bg);
+        background: var(--c-bg);
         border-radius: var(--r-full);
         cursor: pointer;
       }
@@ -1336,7 +1336,7 @@
       .app-header .logo .ic { width: 18px; height: 18px; }
 
       .venue-name { color: var(--c-text) !important; }
-      .action-btn.primary { background: var(--c-primary) !important; color: var(--c-on-primary) !important; }
+      .action-btn.primary { background: var(--c-primary) !important; color: var(--c-text) !important; }
       .date-tab.active,
       .top-tab.active { color: var(--c-primary-d) !important; border-bottom-color: var(--c-primary-d) !important; }
 
@@ -1380,7 +1380,7 @@
         border-bottom: var(--line-normal);
       }
       .om-head .oshi-kind { margin: 0; }
-      .om-count { font-size: var(--fs-12); font-weight: 700; color: var(--c-sub); font-family: var(--ff-num); }
+      .om-count { font-size: var(--fs-12); font-weight: 700; color: var(--c-sub); font-family: var(--ff-ui); }
       .om-edit {
         margin-left: auto;
         display: inline-flex;
@@ -1411,8 +1411,8 @@
         color: var(--c-primary-d);
         white-space: nowrap;
       }
-      .om-race.none { color: var(--c-dis); font-weight: 700; }
-      .om-arrow { width: 18px; color: var(--c-dis); display: flex; }
+      .om-race.none { color: var(--c-sub); font-weight: 700; }
+      .om-arrow { width: 18px; color: var(--c-sub); display: flex; }
       .om-arrow .ic { width: 18px; height: 18px; }
       .om-empty {
         padding: 12px;
@@ -1429,7 +1429,7 @@
         font-size: var(--fs-14);
         font-weight: 800;
         color: var(--c-primary-d);
-        background: var(--c-primary-bg);
+        background: var(--c-bg);
         cursor: pointer;
       }
       .om-add .ic { width: 18px; height: 18px; }
@@ -1475,7 +1475,7 @@
         display: flex;
         padding: 4px;
         gap: 4px;
-        background: var(--c-surface2);
+        background: var(--c-bg);
         border-bottom: var(--line-normal);
       }
       .os-tab {
@@ -1503,9 +1503,9 @@
         font-weight: 800;
         line-height: 18px;
         text-align: center;
-        font-family: var(--ff-num);
+        font-family: var(--ff-ui);
       }
-      .os-tab.on .os-n { background: var(--c-primary); color: var(--c-on-primary); }
+      .os-tab.on .os-n { background: var(--c-primary); color: var(--c-text); }
       .os-panel { display: none; }
       .os-panel.on { display: block; }
       .os-sub {
@@ -1518,7 +1518,7 @@
         font-weight: 800;
         color: var(--c-sub);
       }
-      .os-sub b { color: var(--c-text); font-family: var(--ff-num); }
+      .os-sub b { color: var(--c-text); font-family: var(--ff-ui); }
       .os-chips { display: flex; gap: 6px; padding: 4px 10px 12px; }
       .os-chip {
         flex: 0 0 auto;
@@ -1535,10 +1535,10 @@
         white-space: nowrap;
         cursor: pointer;
       }
-      .os-chip.add { color: var(--c-primary-d); border-color: var(--c-primary); background: var(--c-primary-bg); }
+      .os-chip.add { color: var(--c-primary-d); border-color: var(--c-primary); background: var(--c-bg); }
       .os-chip .ic { width: 16px; height: 16px; }
       .os-chips { flex-wrap: wrap; padding: 2px 12px 10px; }
-      .os-chip.rest { color: var(--c-sub); background: var(--c-surface2); border-color: var(--c-surface2); }
+      .os-chip.rest { color: var(--c-sub); background: var(--c-bg); border-color: var(--c-bg); }
       .os-actions {
         display: flex;
         gap: 8px;
@@ -1557,7 +1557,7 @@
         font-weight: 800;
         color: var(--c-primary-d);
         border: var(--line-selected);
-        background: var(--c-primary-bg);
+        background: var(--c-bg);
         cursor: pointer;
       }
       .os-btn .ic { width: 16px; height: 16px; }
