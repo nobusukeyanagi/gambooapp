@@ -5,7 +5,7 @@
 :root {
   --nav-icon-color: var(--c-sub, #646B68);
   --nav-icon-active-color: var(--c-primary-d, #8B663B);
-  --nav-icon-size: 32px;
+  --nav-icon-size: 36px;
 }
 .bottom-tab .tab-item .tab-icon {
   height: var(--nav-icon-size);
@@ -20,7 +20,7 @@
   color: var(--nav-icon-active-color);
 }
 
-/* Keep the original racing silhouettes' aspect ratios at 32px height.
+/* Keep the original racing silhouettes' aspect ratios at 36px height.
    Only the bottom-navigation racing icons are wider than the other three. */
 .bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-keirin"]) {
   width: calc(var(--nav-icon-size) * 1.25);
@@ -28,3 +28,6 @@
 .bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-auto"]) {
   width: calc(var(--nav-icon-size) * 1.08333333);
 }
+
+/* Keep the two-line Auto Race label within the unchanged 62px navigation bar. */
+.bottom-tab .tab-item.tab-item { gap: 0; line-height: 1; }
