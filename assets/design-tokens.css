@@ -1,7 +1,7 @@
 @charset "UTF-8";
-/* Gamboo color system: 5 categories / 30 semantic purposes / 26 distinct base colors.
- * Screens reference these tokens directly. Obsolete palette and RGBA aliases were removed.
- * Page-specific shades are derived using color-mix when needed.
+/* Gamboo canonical design tokens.
+ * No duplicate-value alias tokens: screens reference the shared source directly.
+ * Derived shades and border compositions intentionally reuse base values.
  */
 :root {
   /* Font / type scale (one canonical font for UI and numbers) */
@@ -18,7 +18,6 @@
   --c-auto: #A85B56;
 
   /* ② 車番色（1は --c-surface、2は --c-text を直接参照） */
-
   --w3: #C9444A;
   --w4: #3577B8;
   --w5: #E2BF27;
@@ -27,9 +26,8 @@
   --w8: #E98AB4;
   --w9: #9856B2;
 
-  /* ③ グレード色（GP/SG黄色は --w5 と同じ色を直接参照） */
+  /* ③ グレード色（GP/SG文字の黄色は --w5 を直接参照） */
   --c-gp: #3C4145;
-
   --c-g1: #A65358;
   --c-g2: #4E7197;
   --c-g3: #58774A;
@@ -43,7 +41,7 @@
   --c-error-bg: color-mix(in srgb, var(--c-error) 12%, var(--c-surface));
   --c-deadline-soon-bg: #EFCBC5;
 
-  /* ⑤ 共通色（ブランド・文字・背景・罫線・リンク） */
+  /* ⑤ 共通色（ブランド・文字・背景・罫線。リンク色は --c-keirin を共有） */
   --c-bg: #F3F2EF;
   --c-surface: #FFFFFF;
   --c-border: #BEC2BE;
@@ -55,7 +53,6 @@
   --line-control: var(--line-thin) solid var(--c-border-control);
   --line-selected: var(--line-emphasis-width) solid var(--c-primary-d);
   --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
-
   --line-focus: var(--line-emphasis-width) solid var(--c-keirin);
   --c-sub: #646B68;
   --c-text: #2B3031;
