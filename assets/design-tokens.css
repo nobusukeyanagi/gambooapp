@@ -92,7 +92,11 @@
   --c-auto-bg: color-mix(in srgb, var(--c-auto) 20%, var(--c-surface));
 
   /* Shared radii, shadows, and tap dimensions */
+  --r-xxs: 2px; /* small accent lines */
+  --r-xs: 3px; /* compact chips */
+  --r-tag: 4px; /* compact state tags */
   --r-sm: 6px;
+  --r-control: 8px; /* header control corners */
   --r-md: 12px;
   --r-lg: 20px;
   --r-full: 9999px;
