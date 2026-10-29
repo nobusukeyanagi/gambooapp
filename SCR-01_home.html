@@ -3257,16 +3257,7 @@
       </div>
 
     </div>
-    <script>
-      document.querySelectorAll(".hscroll-inner").forEach(function (box) {
-        var on = box.querySelector(".active");
-        if (!on) return;
-        var right = on.offsetLeft + on.offsetWidth;
-        if (right > box.clientWidth - 26) {
-          box.scrollLeft = right - box.clientWidth + 34;
-        }
-      });
-    </script>
+    <script src="./assets/scroll-controls.js?v=1"></script>
     <script>
       // Three identical runs of slides allow the carousel to move directly
       // from the last banner into the first banner without reversing direction.
