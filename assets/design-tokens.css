@@ -30,38 +30,37 @@
   --h-icon-button: 44px;
 
   /* ① 競技色 */
-  --c-keirin: #427491;
-  --c-auto: #A85B56;
+  --c-keirin: #477A94;
+  --c-auto: #AC605A;
 
   /* ② 車番色（1は --c-surface、2は --c-text を直接参照） */
-  --w3: #C9444A;
-  --w4: #3577B8;
-  --w5: #E2BF27;
-  --w6: #2B8150;
-  --w7: #B05D0A; /* slightly more orange; white contrast ~4.79:1 (WCAG AA) */
-  --w8: #E98AB4;
-  --w9: #9856B2;
+  --w3: #CC4850;
+  --w4: #3179B9;
+  --w5: #E4C139;
+  --w6: #248652;
+  --w7: #B45A1D; /* vivid orange, white numeral contrast ~4.75:1 (WCAG AA) */
+  --w8: #E68FB6;
+  --w9: #A747CD;
 
   /* ③ グレード色（GP/SG文字の黄色は --w5 を直接参照） */
-  --c-gp: #3C4145;
-  --c-g1: #A65358;
-  --c-g2: #4E7197;
-  --c-g3: #58774A;
-  --c-f1: #8C6147; /* warm chestnut: white contrast >= 5:1 */
-  --c-f2: #756E60; /* cool muted taupe, distinct from FⅠ; white contrast >= 5:1 */
+  --c-gp: #44494D;
+  --c-g1: #AD5D62;
+  --c-g2: #55789B;
+  --c-g3: #607D50;
+  --c-f1: #92684C; /* muted chestnut; white numeral contrast >=4.5:1 */
+  --c-f2: #7B7568; /* muted taupe; white numeral contrast >=4.5:1 */
 
   /* ④ 状態色 */
   --c-success: #477868;
   --c-warning: #D89556;
   --c-error: #A5374C;
   --c-error-bg: color-mix(in srgb, var(--c-error) 12%, var(--c-surface));
-  --c-deadline-soon-bg: #EFCBC5;
 
   /* ⑤ 共通色（ブランド・文字・背景・罫線。リンク色は --c-keirin を共有） */
-  --c-bg: #F3F2EF;
+  --c-bg: #F8F7F5;
   --c-surface: #FFFFFF;
-  --c-border: #BEC2BE;
-  --c-border-control: #8F9692; /* input and interactive boundaries */
+  --c-border: #D1D5D1;
+  --c-border-control: #9DA5A0; /* input and interactive boundaries */
   /* Unified line system: 1px standard/control, 3px selected/race/focus. */
   --line-thin: 1px;
   --line-emphasis-width: 3px;
@@ -72,7 +71,7 @@
   --line-focus: var(--line-emphasis-width) solid var(--c-keirin);
   --c-sub: #646B68;
   --c-text: #2B3031;
-  --c-primary: #E0B96E;
+  --c-primary: #E5C17C;
   --c-primary-d: #8B663B;
 
   /* Distinct semantic colors are derived from canonical base colors only. */
