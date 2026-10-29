@@ -196,6 +196,21 @@ function comparePNGs(current, baseline, key) {
   if (ratio > 0.0005) fail(key + ' visual regression: changed ' + (ratio * 100).toFixed(4) + '%');
 }
 
+async function checkInteractions(page, width) {
+  const toggle = page.locator('.pay-toggle').first();
+  if (await toggle.count() !== 1) {
+    fail(width + 'px: pay-toggle is missing');
+    return;
+  }
+  const before = await toggle.getAttribute('aria-pressed');
+  await toggle.click();
+  eq(await toggle.getAttribute('aria-pressed'), before === 'true' ? 'false' : 'true', width + 'px payout click');
+  await toggle.press('Enter');
+  eq(await toggle.getAttribute('aria-pressed'), before, width + 'px payout keyboard Enter');
+  const mask = await toggle.evaluate((el) => el.classList.contains('masked'));
+  eq(mask, before === 'true', width + 'px payout mask restored');
+}
+
 async function auditBrowser() {
   await mkdir(OUTPUT, { recursive: true });
   const browser = await chromium.launch({ headless: true });
@@ -210,6 +225,7 @@ async function auditBrowser() {
           await writeFile(path.join(OUTPUT, String(width) + '-' + scene + '.png'), latest);
           if (before) comparePNGs(latest, await capture(before, scene), String(width) + 'px ' + scene);
         }
+        await checkInteractions(current, width);
       } finally {
         await current.close();
         if (before) await before.close();
@@ -219,7 +235,7 @@ async function auditBrowser() {
     await browser.close();
   }
   if (errors.length) throw new Error(errors.join('\n'));
-  console.log('Browser verification passed: ' + viewportWidths.length + ' widths, top/bottom views, functional computed styles.');
+  console.log('Browser verification passed: ' + viewportWidths.length + ' widths, top/bottom views, functional computed styles and payout toggle interactions.');
 }
 
 await auditCss();
