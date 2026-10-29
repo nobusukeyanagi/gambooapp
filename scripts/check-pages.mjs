@@ -124,6 +124,7 @@ async function checkKeirinMania(page, width) {
   await page.waitForFunction(() => document.querySelector(".race-table-wrap").scrollLeft === 0);
   if (!await raceTab.evaluate(el => el.classList.contains("active"))) fail(width + "px racecard menu did not return to active");
   const scroll = await wrap.evaluate(el => { el.scrollLeft = el.scrollWidth; return el.scrollLeft; });
+  await wrap.dispatchEvent("scroll");
   if (scroll <= 100) fail(width + "px table did not scroll right");
   await page.waitForFunction(() => document.querySelector('.info-tab[data-target="mania"]').classList.contains('active'));
   console.log("KEIRIN MANIA OK " + width + "px (8 detail views, 9 riders, 2-way navigation)");
