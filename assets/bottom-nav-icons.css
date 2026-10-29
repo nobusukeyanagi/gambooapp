@@ -1,9 +1,10 @@
 @charset "UTF-8";
-/* Shared bottom-nav icons: 48x48 viewBox; consistent visual height.
-   Override either token in CSS to change icons without editing SVG paths. */
+/* Bottom navigation only: all five icons use the same gray.
+   Symbols use currentColor, so elsewhere they can take semantic colors
+   such as var(--c-keirin) and var(--c-auto) without SVG changes. */
 :root {
-  --nav-icon-color: #6B7372;
-  --nav-icon-active-color: #6B7372;
+  --nav-icon-color: var(--c-sub, #646B68);
+  --nav-icon-active-color: var(--c-sub, #646B68);
 }
 .bottom-tab .tab-item .tab-icon .ic {
   width: 26px;
