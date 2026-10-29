@@ -57,7 +57,7 @@
   --c-error-bg: color-mix(in srgb, var(--c-error) 20%, var(--c-surface));
 
   /* ⑤ 共通色（ブランド・文字・背景・罫線。リンク色は --c-keirin を共有） */
-  --c-bg: #F8F7F5;
+  --c-bg: #F8F7F4; /* HSL hue 45deg; low-chroma warm white */
   --c-surface: #FFFFFF;
   --c-border: #D1D5D1;
   --c-border-control: #9DA5A0; /* input and interactive boundaries */
@@ -71,8 +71,8 @@
   --line-focus: var(--line-emphasis-width) solid var(--c-keirin);
   --c-sub: #646B68;
   --c-text: #2B3031;
-  --c-primary: #E5C17C;
-  --c-primary-d: #8B663B;
+  --c-primary: #E4CA7C; /* HSL hue 45deg; subdued gold */
+  --c-primary-d: #86733A; /* HSL hue 45deg; legible against white */
 
   /* Distinct semantic colors are derived from canonical base colors only. */
   --c-keirin-bg: color-mix(in srgb, var(--c-keirin) 20%, var(--c-surface));
