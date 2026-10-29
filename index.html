@@ -48,12 +48,12 @@
     {
         "file": "SCR-03_racecardkeirin.html",
         "code": "SCR-03",
-        "title": "出走表・競輪"
+        "title": "競輪出走表"
     },
     {
         "file": "SCR-04_racecardautorace.html",
         "code": "SCR-04",
-        "title": "出走表・オートレース"
+        "title": "オートレース出走表"
     },
     {
         "file": "SCR-07_mypage.html",
@@ -128,7 +128,7 @@
         qrLink.href = url;
         qrLink.target = '_blank';
         qrLink.rel = 'noopener noreferrer';
-        qrLink.title = `${page.code} ${page.title}を開く`;
+        qrLink.title = `${page.code}${page.title}を開く`;
         qrLink.appendChild(createQR(url));
         const code = document.createElement('div');
         code.className = 'code';
