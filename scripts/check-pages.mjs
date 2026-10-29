@@ -10,9 +10,8 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 const ROOT = process.cwd();
 const paths = [
-  'SCR-02-AUTO_出走表_オート場一覧.html',
-  'SCR-02_出走表_場一覧.html',
-  'SCR-02_出走表（場一覧）.html',
+  'SCR-02_keirin.html',
+  'SCR-02_autorace.html',
   'SCR-03_マニア分析タブ.html',
   'SCR-03_出走表詳細.html',
   'SCR-03_出走表詳細_9車立て.html',
