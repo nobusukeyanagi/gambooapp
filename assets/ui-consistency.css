@@ -46,11 +46,13 @@
 /* NEW is free-standing text, whereas the adjacent category badge stays 12px. */
 .news-new {
   font-size: var(--fs-14);
+  font-weight: var(--fw-14-strong);
 }
 /* Balance labels and currency / point units. Do not enlarge table units. */
 .payout-bar.pt-h .payout-label,
 .payout-bar.pt-h .unit {
   font-size: var(--fs-14);
+  font-weight: var(--fw-14-strong);
 }
 /* Bottom navigation labels: one type-scale step below standard 14px labels.
    Allow long labels to wrap while preserving the existing tap target. */
@@ -64,6 +66,7 @@
 /* If a banner image is missing, its fallback filename is legible too. */
 .bn.noimg .bn-fallback {
   font-size: var(--fs-14);
+  font-weight: var(--fw-14-strong);
 }
 
 /* Home venue first row: center grade and day text on the same 20px line.
@@ -94,7 +97,7 @@
 .app-header .header-actions .icon-btn {
   width: auto;
   height: var(--h-control);
-  padding: 0 8px;
+  padding: 0 var(--space-section);
   gap: var(--space-small);
   background: transparent;
   border: var(--line-control);
@@ -109,8 +112,8 @@
   flex-shrink: 0;
 }
 .app-header .header-actions .cta-btn {
-  padding: 0 10px;
-  border-radius: 8px;
+  padding: 0 var(--space-10);
+  border-radius: var(--r-control);
 }
 
 /* Canonical sizes. Legacy per-page height overrides have been removed. */
