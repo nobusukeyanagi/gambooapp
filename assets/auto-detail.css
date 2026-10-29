@@ -1055,7 +1055,7 @@
       }
 
       .bottom-tab {
-        height: 56px;
+        
         padding-bottom: 0;
       }
       .tab-item {
@@ -1092,11 +1092,11 @@
 
       .date-tab,
       .top-tab {
-        min-height: 44px;
+        
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: var(--fs-12);
+        
       }
 
       .chip {
