@@ -137,6 +137,7 @@ async function checkKeirinMania(page, width) {
   if (!await raceTab.evaluate(el => el.classList.contains("active"))) fail(width + "px racecard menu did not return to active");
   const scroll = await wrap.evaluate(el => { el.scrollLeft = el.scrollWidth; return el.scrollLeft; });
   if (scroll <= 100) fail(width + "px table did not scroll right");
+  console.log("MANIA RIGHT DEBUG " + width + "px", await wrap.evaluate(el => JSON.stringify({scrollLeft:el.scrollLeft,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,headingOffset:el.querySelector(".mania-section-start").offsetLeft,active:document.querySelector('[data-target="mania"]').classList.contains("active")})));
   await page.waitForFunction(() => document.querySelector('.info-tab[data-target="mania"]').classList.contains('active'));
   console.log("KEIRIN MANIA OK " + width + "px (8 detail views, 9 riders, 2-way navigation)");
 }
