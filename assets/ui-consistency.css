@@ -84,9 +84,13 @@
 }
 
 /* Header actions use the same complete-button feedback and typography on all screens. */
+/* Both header action buttons have a modest, consistent minimum width. */
+.app-header .header-actions :is(.icon-btn, .cta-btn) {
+  min-width: 80px;
+}
+
 .app-header .header-actions .icon-btn {
   width: auto;
-  min-width: 0;
   height: var(--h-control);
   padding: 0 8px;
   gap: var(--space-small);
@@ -102,7 +106,7 @@
   height: 20px;
   flex-shrink: 0;
 }
- .app-header .header-actions .cta-btn {
+.app-header .header-actions .cta-btn {
   padding: 0 10px;
   border-radius: 8px;
 }
