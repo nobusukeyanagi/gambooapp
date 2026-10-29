@@ -1197,7 +1197,7 @@
         background: repeating-linear-gradient(
           -45deg,
           var(--c-auto-bg) 0 5px,
-          var(--c-deadline-soon-bg) 5px 10px
+          var(--c-error-bg) 5px 10px
         );
         border-color: var(--c-error);
         color: var(--c-error);
@@ -1830,7 +1830,7 @@
       .at-wrap.detail .rc-dt { display: block; }
       .at-wrap.detail .rc-st { display: inline; }
       .at-wrap.detail .at.past .rch { min-width: 128px; }
-      .at .rc.r1 { background: var(--c-deadline-soon-bg) !important; }
+      .at .rc.r1 { background: var(--c-error-bg) !important; }
       .at .rc.r2 { background: var(--c-keirin-bg) !important; }
       .at .rc.r3 { background: var(--c-bg) !important; }
 
