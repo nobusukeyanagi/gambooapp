@@ -12,7 +12,6 @@ const ROOT = process.cwd();
 const paths = [
   'SCR-02_keirin.html',
   'SCR-02_autorace.html',
-  'SCR-03_マニア分析タブ.html',
   'SCR-03_racecardkeirin.html',
   'SCR-04_racecardkeirin.html',
   'SCR-04_データ解析ラボ.html',
@@ -96,6 +95,40 @@ async function checkNavPredictionLinks(page, width, file) {
   console.log("BOTTOM NAV OK " + file + " " + width + "px");
 }
 
+async function checkKeirinMania(page, width) {
+  const wrap = page.locator(".race-table-wrap");
+  const table = wrap.locator("table.mania-table");
+  const raceTab = page.locator('.info-tab[data-target="racecard"]');
+  const maniaTab = page.locator('.info-tab[data-target="mania"]');
+  const sheet = page.locator(".phone-inner > .sheet");
+  const overlay = page.locator(".phone-inner > .sheet-overlay");
+  const allRiders = table.locator("tbody tr");
+  if (await allRiders.count() !== 9) fail(width + "px nine riders not retained");
+  if (await table.locator(".mania-section-start").count() !== 1) fail(width + "px appended mania section missing");
+  if (await table.locator(".item-btn").count() !== 8) fail(width + "px mania item buttons missing");
+  if (await table.locator(".mania-eval").count() !== 81) fail(width + "px all evaluation cells not present");
+  if (await sheet.isVisible()) fail(width + "px detail sheet initially open");
+  await maniaTab.click();
+  await page.waitForFunction(() => document.querySelector(".race-table-wrap").scrollLeft > 100);
+  if (!await maniaTab.evaluate(el => el.classList.contains("active"))) fail(width + "px mania tab did not activate when scrolled");
+  for (let i = 0; i < 8; i++) {
+    await table.locator('.item-btn[data-item="' + i + '"]').click();
+    if (!await sheet.isVisible()) fail(width + "px detail sheet " + i + " did not open");
+    if (!await overlay.isVisible()) fail(width + "px detail overlay " + i + " did not open");
+    if (await sheet.locator(".detail-table tbody tr").count() !== 9) fail(width + "px detail data count wrong in item " + i);
+    if (!(await sheet.locator(".sheet-title").innerText()).trim()) fail(width + "px missing detail title " + i);
+    await sheet.locator(".sheet-close").click();
+    if (await sheet.isVisible()) fail(width + "px detail sheet " + i + " did not close");
+  }
+  await raceTab.click();
+  await page.waitForFunction(() => document.querySelector(".race-table-wrap").scrollLeft === 0);
+  if (!await raceTab.evaluate(el => el.classList.contains("active"))) fail(width + "px racecard menu did not return to active");
+  const scroll = await wrap.evaluate(el => { el.scrollLeft = el.scrollWidth; return el.scrollLeft; });
+  if (scroll <= 100) fail(width + "px table did not scroll right");
+  await page.waitForFunction(() => document.querySelector('.info-tab[data-target="mania"]').classList.contains('active'));
+  console.log("KEIRIN MANIA OK " + width + "px (8 detail views, 9 riders, 2-way navigation)");
+}
+
 async function checkAutoraceSort(page, width) {
   const trigger = page.locator('.sort-btn');
   const sheet = page.locator('#auto-sort-sheet');
@@ -160,6 +193,7 @@ try {
       checked++;
     }
     if (file === 'SCR-02_autorace.html') await checkAutoraceSort(a.page,w);
+    if (file === 'SCR-03_racecardkeirin.html') await checkKeirinMania(a.page,w);
     if (file !== "index.html") await checkNavPredictionLinks(a.page,w,file);
    }finally {await a.context.close();if(b)await b.context.close();}
   }

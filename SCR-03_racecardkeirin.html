@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./assets/app-base.css?v=1" />
     <link rel="stylesheet" href="./assets/keirin-detail.css?v=3" />
       <link rel="stylesheet" href="./assets/keirin-detail-9car.css?v=1" />
+    <link rel="stylesheet" href="./assets/keirin-mania.css?v=1" />
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
     <link rel="stylesheet" href="./assets/ui-consistency.css?v=16" />
   </head>
@@ -59,10 +60,10 @@
             <div class="hscroll">
               <div class="hscroll-inner">
               <div class="info-tabs">
-                <div class="info-tab active">出走表</div>
+                <button type="button" class="info-tab active" data-target="racecard">出走表</button>
                 <div class="info-tab">マル得ポイント<br />選手コメント</div>
                 <div class="info-tab">並び順成績</div>
-                <div class="info-tab">マニア分析</div>
+                <button type="button" class="info-tab" data-target="mania">マニア分析</button>
                 <div class="info-tab">アオケイ電子新聞</div>
               </div>
                 </div>
@@ -101,6 +102,7 @@
                     <th class="bl" colspan="11">直近4カ月成績</th>
                     <th class="bl" rowspan="2">今開催<br />成績</th>
                     <th class="bl" rowspan="2">前開催<br />成績</th>
+                    <th class="bl mania-section-start" colspan="9">マニア分析 評価項目</th>
                   </tr>
                   <tr>
                     <th class="bl">得点</th>
@@ -114,6 +116,15 @@
                     <th class="bl">2連</th>
                     <th class="bl">3連</th>
                     <th class="bl">着外</th>
+                    <th class="bl c-item">総合<br />評価</th>
+                    <th class="c-item bl"><button type="button" class="item-btn" data-item="0">周長</button></th>
+                    <th class="c-item"><button type="button" class="item-btn" data-item="1">見なし<br />直線</button></th>
+                    <th class="c-item"><button type="button" class="item-btn" data-item="2">レース<br />種別</button></th>
+                    <th class="c-item"><button type="button" class="item-btn" data-item="3">レース<br />日程</button></th>
+                    <th class="c-item"><button type="button" class="item-btn" data-item="4">グレード</button></th>
+                    <th class="c-item"><button type="button" class="item-btn" data-item="5">勝ち<br />上がり率</button></th>
+                    <th class="c-item"><button type="button" class="item-btn" data-item="6">車番</button></th>
+                    <th class="c-item"><button type="button" class="item-btn" data-item="7">同県<br />選手</button></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -141,6 +152,7 @@
                     <td class="bl rate">45</td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">12.4</span></div><span class="res-note">B<br />逃</span></div><div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">11.7</span></div></div></div></td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/7<br />静FⅡ</div><div class="res"><div class="res-main"><span class="res-rank">5</span><span class="res-time">12.0</span></div></div><div class="res"><div class="res-main"><span class="res-rank">②</span><span class="res-time">11.9</span></div><span class="res-note">ク</span></div><div class="res"><div class="res-main"><span class="res-rank">❹</span><span class="res-time">12.2</span></div></div></div></td>
+                  <td class="mania-eval bl"></td><td class="mania-eval" data-item="0"></td><td class="mania-eval" data-item="1"></td><td class="mania-eval" data-item="2"></td><td class="mania-eval" data-item="3"></td><td class="mania-eval" data-item="4"><span class="mk mk-o">○</span></td><td class="mania-eval" data-item="5"></td><td class="mania-eval" data-item="6"></td><td class="mania-eval" data-item="7"></td>
                   </tr>
                   <tr>
                     <td class="c-waku">2</td>
@@ -166,6 +178,7 @@
                     <td class="bl rate">42</td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">11.6</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">⑤</span><span class="res-time">12.0</span></div></div></div></td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/9<br />奈FⅡ</div><div class="res"><div class="res-main"><span class="res-rank">6</span><span class="res-time">12.5</span></div></div><div class="res"><div class="res-main"><span class="res-rank">②</span><span class="res-time">11.5</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">❼</span><span class="res-time">12.8</span></div></div></div></td>
+                  <td class="mania-eval bl"><span class="mk mk-o">○</span></td><td class="mania-eval" data-item="0"></td><td class="mania-eval" data-item="1"><span class="mk mk-tri">△</span></td><td class="mania-eval" data-item="2"><span class="mk mk-x">✕</span></td><td class="mania-eval" data-item="3"></td><td class="mania-eval" data-item="4"><span class="mk mk-dbl">◎</span></td><td class="mania-eval" data-item="5"><span class="mk mk-o">○</span></td><td class="mania-eval" data-item="6"><span class="mk mk-x">✕</span></td><td class="mania-eval" data-item="7"><span class="mk mk-x">✕</span></td>
                   </tr>
                   <tr>
                     <td class="c-waku">3</td>
@@ -191,6 +204,7 @@
                     <td class="bl rate">30</td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">4</span><span class="res-time">12.2</span></div></div><div class="res"><div class="res-main"><span class="res-rank">①</span><span class="res-time">11.8</span></div><span class="res-note">B<br />捲</span></div></div></td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res-date">9/19<br />松FⅡ</div><div class="res"><div class="res-main"><span class="res-rank">2</span><span class="res-time">12.1</span></div><span class="res-note">B<br />捲</span></div><div class="res"><div class="res-main"><span class="res-rank">①</span><span class="res-time">11.6</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">❺</span><span class="res-time">12.0</span></div></div></div></td>
+                  <td class="mania-eval bl"><span class="mk mk-dbl">◎</span></td><td class="mania-eval" data-item="0"><span class="mk mk-dbl">◎</span></td><td class="mania-eval" data-item="1"><span class="mk mk-dbl">◎</span></td><td class="mania-eval" data-item="2"><span class="mk mk-o">○</span></td><td class="mania-eval" data-item="3"><span class="mk mk-dbl">◎</span></td><td class="mania-eval" data-item="4"><span class="mk mk-x">✕</span></td><td class="mania-eval" data-item="5"><span class="mk mk-tri">△</span></td><td class="mania-eval" data-item="6"><span class="mk mk-o">○</span></td><td class="mania-eval" data-item="7"><span class="mk mk-dbl">◎</span></td>
                   </tr>
                   <tr>
                     <td class="c-waku" rowspan="2">4</td>
@@ -216,6 +230,7 @@
                     <td class="bl rate">55</td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">6</span><span class="res-time">12.5</span></div></div><div class="res"><div class="res-main"><span class="res-rank">②</span><span class="res-time">11.5</span></div><span class="res-note">差</span></div></div></td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/13<br />前FⅡ</div><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">11.8</span></div><span class="res-note">B<br />捲</span></div><div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">12.3</span></div><span class="res-note">B</span></div><div class="res"><div class="res-main"><span class="res-rank">❻</span><span class="res-time">12.5</span></div></div></div></td>
+                  <td class="mania-eval bl"><span class="mk mk-tri">△</span></td><td class="mania-eval" data-item="0"><span class="mk mk-tri">△</span></td><td class="mania-eval" data-item="1"><span class="mk mk-x">✕</span></td><td class="mania-eval" data-item="2"><span class="mk mk-tri">△</span></td><td class="mania-eval" data-item="3"><span class="mk mk-tri">△</span></td><td class="mania-eval" data-item="4"></td><td class="mania-eval" data-item="5"><span class="mk mk-x">✕</span></td><td class="mania-eval" data-item="6"><span class="mk mk-dbl">◎</span></td><td class="mania-eval" data-item="7"><span class="mk mk-tri">△</span></td>
                   </tr>
                   <tr>
                     <td class="fx c-sha"><div class="frame-cell f5">5</div><span class="sha-nm">高橋成</span></td>
@@ -240,6 +255,7 @@
                     <td class="bl rate">38</td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">12.4</span></div><span class="res-note">B<br />逃</span></div><div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">11.7</span></div></div></div></td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/3<br />塚FⅡ</div><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">12.4</span></div><span class="res-note">B<br />逃</span></div><div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">11.7</span></div></div><div class="res"><div class="res-main"><span class="res-rank">❷</span><span class="res-time">12.1</span></div><span class="res-note">B<br />捲</span></div></div></td>
+                  <td class="mania-eval bl"></td><td class="mania-eval" data-item="0"><span class="mk mk-o">○</span></td><td class="mania-eval" data-item="1"><span class="mk mk-o">○</span></td><td class="mania-eval" data-item="2"><span class="mk mk-dbl">◎</span></td><td class="mania-eval" data-item="3"><span class="mk mk-o">○</span></td><td class="mania-eval" data-item="4"><span class="mk mk-tri">△</span></td><td class="mania-eval" data-item="5"><span class="mk mk-dbl">◎</span></td><td class="mania-eval" data-item="6"></td><td class="mania-eval" data-item="7"><span class="mk mk-o">○</span></td>
                   </tr>
                   <tr>
                     <td class="c-waku" rowspan="2">5</td>
@@ -265,6 +281,7 @@
                     <td class="bl rate">67</td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">11.6</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">⑤</span><span class="res-time">12.0</span></div></div></div></td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/3<br />戸FⅡ</div><div class="res"><div class="res-main"><span class="res-rank">2</span><span class="res-time">11.9</span></div><span class="res-note">ク</span></div><div class="res"><div class="res-main"><span class="res-rank">④</span><span class="res-time">12.2</span></div></div><div class="res"><div class="res-main"><span class="res-rank">❶</span><span class="res-time">11.8</span></div><span class="res-note">B<br />捲</span></div></div></td>
+                  <td class="mania-eval bl"><span class="mk mk-x">✕</span></td><td class="mania-eval" data-item="0"></td><td class="mania-eval" data-item="1"></td><td class="mania-eval" data-item="2"></td><td class="mania-eval" data-item="3"></td><td class="mania-eval" data-item="4"></td><td class="mania-eval" data-item="5"></td><td class="mania-eval" data-item="6"></td><td class="mania-eval" data-item="7"></td>
                   </tr>
                   <tr>
                     <td class="fx c-sha"><div class="frame-cell f7">7</div><span class="sha-nm">鈴木良</span></td>
@@ -289,6 +306,7 @@
                     <td class="bl rate">20</td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">4</span><span class="res-time">12.2</span></div></div><div class="res"><div class="res-main"><span class="res-rank">①</span><span class="res-time">11.8</span></div><span class="res-note">B<br />捲</span></div></div></td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res-date">9/30<br />前FⅡ</div><div class="res"><div class="res-main"><span class="res-rank">2</span><span class="res-time">11.5</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">⑦</span><span class="res-time">12.8</span></div></div><div class="res"><div class="res-main"><span class="res-rank">❶</span><span class="res-time">12.4</span></div><span class="res-note">B<br />逃</span></div></div></td>
+                  <td class="mania-eval bl"></td><td class="mania-eval" data-item="0"><span class="mk mk-x">✕</span></td><td class="mania-eval" data-item="1"></td><td class="mania-eval" data-item="2"></td><td class="mania-eval" data-item="3"><span class="mk mk-x">✕</span></td><td class="mania-eval" data-item="4"></td><td class="mania-eval" data-item="5"></td><td class="mania-eval" data-item="6"><span class="mk mk-tri">△</span></td><td class="mania-eval" data-item="7"></td>
                   </tr>
                   <tr>
                     <td class="c-waku" rowspan="2">6</td>
@@ -314,6 +332,7 @@
                     <td class="bl rate">43</td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">6</span><span class="res-time">12.5</span></div></div><div class="res"><div class="res-main"><span class="res-rank">②</span><span class="res-time">11.5</span></div><span class="res-note">差</span></div></div></td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res-date">10/1<br />岐FⅠ</div><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">11.6</span></div><span class="res-note">差</span></div><div class="res"><div class="res-main"><span class="res-rank">⑤</span><span class="res-time">12.0</span></div></div><div class="res"><div class="res-main"><span class="res-rank">❷</span><span class="res-time">11.9</span></div><span class="res-note">ク</span></div></div></td>
+                  <td class="mania-eval bl"></td><td class="mania-eval" data-item="0"></td><td class="mania-eval" data-item="1"></td><td class="mania-eval" data-item="2"></td><td class="mania-eval" data-item="3"></td><td class="mania-eval" data-item="4"></td><td class="mania-eval" data-item="5"></td><td class="mania-eval" data-item="6"></td><td class="mania-eval" data-item="7"></td>
                   </tr>
                   <tr>
                     <td class="fx c-sha"><div class="frame-cell f9">9</div><span class="sha-nm">中村大</span></td>
@@ -338,6 +357,7 @@
                     <td class="bl rate">34</td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res"><div class="res-main"><span class="res-rank">1</span><span class="res-time">12.4</span></div><span class="res-note">B<br />逃</span></div><div class="res"><div class="res-main"><span class="res-rank">③</span><span class="res-time">11.7</span></div></div></div></td>
                     <td class="bl res-cell"><div class="res-wrap"><div class="res-date">9/27<br />岸FⅠ</div><div class="res"><div class="res-main"><span class="res-rank">3</span><span class="res-time">12.3</span></div><span class="res-note">B</span></div><div class="res"><div class="res-main"><span class="res-rank">⑥</span><span class="res-time">12.5</span></div></div><div class="res"><div class="res-main"><span class="res-rank">❷</span><span class="res-time">11.5</span></div><span class="res-note">差</span></div></div></td>
+                  <td class="mania-eval bl"></td><td class="mania-eval" data-item="0"></td><td class="mania-eval" data-item="1"></td><td class="mania-eval" data-item="2"></td><td class="mania-eval" data-item="3"></td><td class="mania-eval" data-item="4"></td><td class="mania-eval" data-item="5"></td><td class="mania-eval" data-item="6"></td><td class="mania-eval" data-item="7"></td>
                   </tr>
                 </tbody>
               </table>
@@ -349,9 +369,27 @@
                   <dt>級班</dt><dd>今期／前期</dd>
                   <dt>直近4カ月成績</dt><dd>得点＝競走得点、失違＝失格・違反、逃・捲・差・マ＝決まり手の回数、B＝バック回数。勝率・2連（2連対率）・3連（3連対率）・着外（着外率）は％</dd>
                   <dt>今開催／前開催成績</dt><dd>大きい数字＝着順、下段＝みなし上がりタイム、右肩＝B獲得（B）・決まり手。前開催は先頭に日付・場・グレード</dd>
+                  <dt>マニア分析</dt><dd>前開催成績の右側に総合評価と8項目の評価を表示。評価項目名をタップすると、条件別・全選手の詳細成績を表示</dd>
                 </dl>
               </div>
             </div>
+            <div class="sheet-overlay" hidden></div>
+            <div class="sheet" hidden>
+              <div class="sheet-handle"></div>
+              <div class="sheet-head">
+                <div class="sheet-title"></div>
+                <button class="sheet-close" aria-label="閉じる">✕</button>
+              </div>
+              <div class="sheet-cond"></div>
+              <div class="sheet-body">
+                <table class="detail-table">
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+                <div class="sheet-note"></div>
+              </div>
+            </div>
+
             <div class="bottom-tab">
               <div class="tab-item">
                 <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-home"></use></svg></div>
@@ -380,6 +418,7 @@
     </div>
     
     <script src="./assets/scroll-controls.js?v=2" data-scroll-mode="keirin-detail"></script>
+    <script src="./assets/keirin-mania.js?v=1" defer></script>
       <script src="./assets/tap-feedback.js?v=3" defer></script>
 </body>
 </html>
