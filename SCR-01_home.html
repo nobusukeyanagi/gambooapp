@@ -1930,12 +1930,13 @@
         align-items: center;
         gap: 8px;
       }
-      /* Reuse the campaign tab gift immediately to the right of each date. */
+      /* Only campaign news shows the shared SVG gift in the brand color. */
       .news-head .news-campaign-icon {
         width: 16px;
         height: 16px;
         flex: 0 0 16px;
         color: var(--c-primary-d);
+        fill: currentColor;
       }
       .news-badge {
         width: 76px;
@@ -2986,7 +2987,7 @@
                 <div class="date-tab">明日</div>
               </div>
               <div class="vgroup-head">
-                <span class="vgroup-name race-heading"><svg class="race-heading-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=7#nav-keirin"></use></svg>競輪</span>
+                <span class="vgroup-name race-heading"><svg class="race-heading-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-keirin"></use></svg>競輪</span>
               </div>
               <div class="venue-grid g3">
                 <div class="vcard">
@@ -3054,7 +3055,7 @@
               </div>
 
               <div class="vgroup-head">
-                <span class="vgroup-name auto race-heading"><svg class="race-heading-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=7#nav-auto"></use></svg>オートレース</span>
+                <span class="vgroup-name auto race-heading"><svg class="race-heading-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-auto"></use></svg>オートレース</span>
               </div>
               <div class="venue-grid g3">
                 <div class="vcard auto">
@@ -3163,8 +3164,16 @@
               </div>
               <div class="news-item">
                 <div class="news-head">
+                  <span class="news-badge auto">オートレース</span>
+                  <span class="news-date">2026.10.29</span><svg class="ic news-campaign-icon" role="img" aria-label="キャンペーン"><use href="./assets/bottom-nav-icons.svg?v=8#nav-campaign"></use></svg><span class="news-new">[NEW]</span>
+                </div>
+                <div class="news-title ell2">【浜松SG】抽選で鈴木圭一郎選手1,000勝達成記念Tシャツ＋シールが当たる！</div>
+                <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
+              </div>
+              <div class="news-item">
+                <div class="news-head">
                   <span class="news-badge point">ポイント</span>
-                  <span class="news-date">2026.04.06</span><svg class="ic news-campaign-icon" role="img" aria-label="キャンペーン"><use href="#ic-gift"></use></svg>
+                  <span class="news-date">2026.04.06</span>
                 </div>
                 <div class="news-title ell2">
                   「景品に交換」に西武園GⅢオリジナルクオカードが登場！
@@ -3174,7 +3183,7 @@
               <div class="news-item">
                 <div class="news-head">
                   <span class="news-badge keirin">競輪</span>
-                  <span class="news-date">2026.04.06</span><svg class="ic news-campaign-icon" role="img" aria-label="キャンペーン"><use href="#ic-gift"></use></svg>
+                  <span class="news-date">2026.04.06</span>
                 </div>
                 <div class="news-title ell2">【重要】一部開催のレース数変更について</div>
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
@@ -3182,7 +3191,7 @@
               <div class="news-item">
                 <div class="news-head">
                   <span class="news-badge auto">オートレース</span>
-                  <span class="news-date">2026.04.05</span><svg class="ic news-campaign-icon" role="img" aria-label="キャンペーン"><use href="#ic-gift"></use></svg>
+                  <span class="news-date">2026.04.05</span>
                 </div>
                 <div class="news-title ell2">川口オートレース場 SG日本選手権 特設ページを公開しました</div>
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
@@ -3190,7 +3199,7 @@
               <div class="news-item">
                 <div class="news-head">
                   <span class="news-badge both">競輪＆オート</span>
-                  <span class="news-date">2024.04.15</span><svg class="ic news-campaign-icon" role="img" aria-label="キャンペーン"><use href="#ic-gift"></use></svg><span class="news-new">[NEW]</span>
+                  <span class="news-date">2024.04.15</span><span class="news-new">[NEW]</span>
                 </div>
                 <div class="news-title ell2">機能リリースのお知らせ(2024年4月18日)</div>
                 <div class="news-arrow"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
@@ -3200,23 +3209,23 @@
             </div>
             <div class="bottom-tab">
               <div class="tab-item active">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=7#nav-home"></use></svg></div>
+                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-home"></use></svg></div>
                 ホーム
               </div>
               <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=7#nav-keirin"></use></svg></div>
+                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-keirin"></use></svg></div>
                 競輪
               </div>
               <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=7#nav-auto"></use></svg></div>
+                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-auto"></use></svg></div>
                 オートレース
               </div>
               <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=7#nav-campaign"></use></svg></div>
+                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-campaign"></use></svg></div>
                 キャンペーン
               </div>
               <div class="tab-item">
-                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=7#nav-mypage"></use></svg></div>
+                <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=8#nav-mypage"></use></svg></div>
                 マイページ
               </div>
             </div>
