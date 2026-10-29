@@ -55,8 +55,8 @@
           });
   
           inner.querySelector(".detail-table tbody").innerHTML = data.map(({ tr, mark, s }) => {
-            const car = tr.children[1].innerHTML;
-            const name = tr.children[2].querySelector(".rider-name").textContent;
+            const car = tr.querySelector(".c-sha").innerHTML;
+            const name = tr.querySelector(".c-name .rider-name").textContent;
             const markHtml = mark ? `<span class="mk ${MK[mark]}">${mark}</span>` : "－";
             const grp = s.map((x) => {
               const head = `<td class="dt-gs">${x.rank}位</td><td>${x.nat}位</td>`;
