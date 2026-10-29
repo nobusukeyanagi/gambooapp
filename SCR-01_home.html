@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gamboo アプリ ワイヤーフレーム</title>
     <link rel="stylesheet" href="./assets/design-tokens.css?v=42" />
-    <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=6" />
+    <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=7" />
     <style>
       * {
         box-sizing: border-box;
@@ -1823,6 +1823,22 @@
         background: var(--c-keirin);
       }
       .vgroup-name.auto::before { background: var(--c-auto); }
+      /* Competition headers use their actual SVG pictograms instead of accent bars. */
+      .vgroup-name.race-heading::before {
+        content: none;
+      }
+      .vgroup-name.race-heading .race-heading-icon {
+        display: block;
+        flex: 0 0 auto;
+        width: 25px;
+        height: 20px;
+        fill: currentColor;
+        color: var(--c-keirin);
+      }
+      .vgroup-name.race-heading.auto .race-heading-icon {
+        width: 21.6667px;
+        color: var(--c-auto);
+      }
       .vgroup-name b { font-weight: 800; color: var(--c-sub); font-size: var(--fs-12); }
       .vgroup-link {
         color: var(--c-primary-d);
@@ -2012,6 +2028,7 @@
         appearance: none;
         border: 0;
         background: transparent;
+        text-decoration: none;
         color: inherit;
         font: inherit;
         text-align: left;
@@ -2968,7 +2985,7 @@
                 <div class="date-tab">明日</div>
               </div>
               <div class="vgroup-head">
-                <span class="vgroup-name">競輪</span>
+                <span class="vgroup-name race-heading"><svg class="race-heading-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=4#nav-keirin"></use></svg>競輪</span>
               </div>
               <div class="venue-grid g3">
                 <div class="vcard">
@@ -3036,7 +3053,7 @@
               </div>
 
               <div class="vgroup-head">
-                <span class="vgroup-name auto">オートレース</span>
+                <span class="vgroup-name auto race-heading"><svg class="race-heading-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=4#nav-auto"></use></svg>オートレース</span>
               </div>
               <div class="venue-grid g3">
                 <div class="vcard auto">
@@ -3121,7 +3138,7 @@
               <div class="pickup-card pk3 pk-two-riders">
                 <div class="kun"><img class="kun-ic" src="ic_pickup03.png" alt="連勝君" width="72" height="72" /></div>
                 <div class="pickup-body">
-                  <div class="pk-explain">直近3走以上連続で勝利</div>
+                  <div class="pk-explain">直近3走以上連続で勝利している選手</div>
                   <div class="pk-compact-row">
                     <div class="pk-two-rider-stack">
                       <div class="pk-player"><span class="carno w7">7</span><span class="pk-text">鈴木良太</span><span class="pk-note">4連勝</span></div>
