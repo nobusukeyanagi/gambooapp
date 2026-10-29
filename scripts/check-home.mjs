@@ -56,6 +56,7 @@ async function auditCss() {
   }
   const html = await readFile(path.join(ROOT, PAGE), 'utf8');
   if (/<style\b/i.test(html)) fail('Home HTML still contains inline <style>');
+  if (/\sstyle\s*=\s*['\"]/i.test(html)) fail('Home HTML contains inline style attributes');
   if (/<script\b(?![^>]*\bsrc\s*=)[^>]*>/i.test(html)) fail('Home HTML still contains inline JavaScript');
   if (!html.includes('src="./assets/home.js?v=')) fail('Home JavaScript link missing');
   if (!html.includes('href="./assets/home.css?v=')) fail('Home CSS link missing');
@@ -117,6 +118,7 @@ async function auditCss() {
 const expectedComputedStyles = [
   ['.app-header .logo', 'fontSize', '18px'],
   ['.app-header .logo', 'fontWeight', '700'],
+  ['.icon-sprite', 'display', 'none'],
   ['.news-title', 'fontSize', '16px'],
   ['.news-title', 'fontWeight', '600'],
   ['.news-date', 'fontSize', '14px'],
