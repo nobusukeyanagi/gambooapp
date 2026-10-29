@@ -2,7 +2,7 @@
 
 ## 読み込み順序
 
-全11ページは以下をHTMLの `<link rel="stylesheet">` から**直接**読み込む。CSSの `@import`、他の変数を参照するだけの別名トークンは用いない。
+全10ページは以下をHTMLの `<link rel="stylesheet">` から**直接**読み込む。CSSの `@import`、他の変数を参照するだけの別名トークンは用いない。
 
 1. `assets/design-tokens.css` — 色、余白、フォント、罫線、角丸などの共通変数
 2. `assets/bottom-nav-icons.css` — ボトムナビを持つアプリ画面
@@ -20,8 +20,8 @@
 - ホーム：`home.css`
 - 競輪トップ（`SCR-02_keirin.html`）・オートレーストップ（`SCR-02_autorace.html`）：`venue-list.css`（オートのみ `venue-list-auto-overrides.css` を追加）
 - マニア分析：`mania-analysis.css`
-- 競輪出走表詳細：`keirin-detail.css`（9車立てのみ `keirin-detail-9car.css` を追加）
-- オート出走表詳細／解析ラボ：`auto-detail.css`
+- 出走表・競輪（`SCR-03_racecardkeirin.html`）：`keirin-detail.css` と `keirin-detail-9car.css`
+- 出走表・オート（`SCR-04_racecardkeirin.html`）／データ解析ラボ：`auto-detail.css`
 - マイページ：`mypage.css`
 - キャンペーン：`campaign.css`
 - QR入口：`qr-index.css`
@@ -32,6 +32,6 @@
 
 ## 検証
 
-`scripts/check-pages.mjs` と `.github/workflows/pages-refactor-check.yml` が、全11ページのCSS直接参照・ファイル存在・読み込み順を検査し、10の非ホームページについて296/390/768px、上部・下部でChromiumの画像を取得する。
+`scripts/check-pages.mjs` と `.github/workflows/pages-refactor-check.yml` が、全10ページのCSS直接参照・ファイル存在・読み込み順を検査し、9の非ホームページについて296/390/768px、上部・下部でChromiumの画像を取得する。
 
 画像比較は GitHub Actionsの `Verify Non-Home Pages` の手動起動時、`baseline_commit` にGitコミットSHAを入力する。画像の変更許容率は原則0.005%。操作状態や全OSの見た目までの完全一致を保証するものではない。

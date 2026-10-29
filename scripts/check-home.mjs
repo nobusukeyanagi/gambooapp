@@ -184,6 +184,11 @@ async function checkCurrentPage(page, width) {
   styles.forEach((style, index) => eq(style.value, expectedComputedStyles[index][2], width + 'px ' + style.selector + '.' + style.prop));
   const loaded = await page.evaluate(() => Array.from(document.styleSheets).some((s) => s.href && s.href.includes('assets/home.css')));
   if (!loaded) fail('Stylesheet assets/home.css did not load at ' + width + 'px');
+  const brokenImages = await page.evaluate(() => Array.from(document.querySelectorAll('img[src*="assets/images/"]'))
+    .filter((img) => !img.complete || img.naturalWidth === 0)
+    .map((img) => img.getAttribute('src')));
+  if (brokenImages.length) fail(width + 'px broken asset images: ' + brokenImages.join(', '));
+
   const scriptLoaded = await page.evaluate(() => performance.getEntriesByType('resource').some((r) => r.name.includes('/assets/home.js')));
   if (!scriptLoaded) fail('JavaScript assets/home.js did not load at ' + width + 'px');
 }
