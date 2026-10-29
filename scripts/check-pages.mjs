@@ -30,7 +30,7 @@ async function open(browser,host,file,w){
   const context=await browser.newContext({viewport:{width:w,height:w<=330?616:800}, deviceScaleFactor:1, reducedMotion:'reduce'});
   const page=await context.newPage();
   const errs=[];
-  page.on('pageerror', e=>errs.push(e.message));
+  page.on('pageerror', e=>{errs.push(e.message);console.log('PAGE JS ERROR '+file+' '+w+': '+e.message);});
   await page.addInitScript(()=>{
     window.setInterval = () => 0;
     // Prevent content time changes in screenshot comparisons.
@@ -108,6 +108,10 @@ async function checkKeirinMania(page, width) {
   if (await table.locator(".item-btn").count() !== 8) fail(width + "px mania item buttons missing");
   if (await table.locator(".mania-eval").count() !== 81) fail(width + "px all evaluation cells not present");
   if (await sheet.isVisible()) fail(width + "px detail sheet initially open");
+  console.log("MANIA DOM DEBUG", await page.evaluate(() => {
+    const inner=document.querySelector(".phone-inner");
+    return JSON.stringify({sheet:!!inner?.querySelector(".sheet"),sheetClose:!!inner?.querySelector(".sheet-close"), maniaHeading:!!inner?.querySelector(".mania-section-start"),wrap:!!inner?.querySelector(".race-table-wrap"),button:!!inner?.querySelector('[data-target="mania"]'),src:[...performance.getEntriesByType("resource")].filter(x=>x.name.includes("keirin-mania")).map(x=>x.name)});
+  }));
   console.log("MANIA BEFORE " + width + "px", await wrap.evaluate(el => {
     const h = el.querySelector(".mania-section-start");
     const t = el.querySelector("table");
