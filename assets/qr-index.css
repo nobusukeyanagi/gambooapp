@@ -9,7 +9,7 @@
     .hidden{display:none!important;}
     .login-view{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:linear-gradient(160deg,var(--c-bg),var(--c-bg));}
     .login-panel{width:min(100%,420px);padding:40px 36px 36px;background:var(--c-surface);border: var(--line-normal);border-radius:16px;box-shadow:0 16px 52px color-mix(in srgb, var(--c-text) 8%, transparent);}
-    .login-panel .password-heading{display:block;margin:0 0 26px;font-size:var(--fs-24);line-height:1.4;letter-spacing:normal;font-weight:700;text-align:center;color:var(--c-text);}
+    .login-panel .password-heading{display:block;margin:0 0 26px;font-size:var(--fs-20);line-height:1.4;letter-spacing:normal;font-weight:700;text-align:center;color:var(--c-text);}
     .login-panel input{height:48px;padding:0 14px;width:100%;border: var(--line-thin) solid var(--c-sub);border-radius:8px;background:var(--c-surface);color:var(--c-text);}
     .login-panel input:focus{outline: var(--line-focus);border-color:var(--c-keirin);}
     .login-panel button{margin-top:18px;width:100%;padding:12px 20px;border:0;border-radius:8px;background:var(--c-keirin);color:var(--c-surface);font-weight:700;}
