@@ -1,19 +1,24 @@
 @charset "UTF-8";
-/* Shared sorting-sheet UI for racecourse lists (keirin and autorace). */
-.sheet-scrim[hidden],
-.sort-sheet[hidden] {
-  display: none;
+/* Inline venue sorting uses the existing canonical .chip / .chip.active
+   button styles from venue-list.css, with layout-only adjustments here. */
+.venue-sort-options {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: var(--space-small);
 }
-
-.sort-sheet .sort-opt {
-  width: 100%;
-  border: 0;
-  border-top: var(--line-normal);
-  background: var(--c-surface);
-  text-align: left;
-  font-family: var(--ff-ui);
-}
-
-.sort-sheet .sort-opt:not(.on) .chk {
-  visibility: hidden;
+.venue-sort-options .chip {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: var(--tap-min);
+  padding: 0 var(--space-2);
+  font-family: inherit;
+  font-size: var(--fs-12);
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: var(--e1);
 }
