@@ -207,9 +207,14 @@ async function checkCurrentPage(page, width) {
       hasStatus: n.querySelector('.bn-status')?.textContent.trim() === '本日実施中'})));
   const expectedBanners = Array.from({length:14}, (_,i) =>
     './assets/images/' + String(i+1).padStart(2,'0') + '.webp');
-  if(banners.length !== expectedBanners.length ||
-     banners.some((banner,i) => banner.src !== expectedBanners[i] || banner.hasStatus !== (i < 5)))
-    fail(width + 'px banner order or 01-05 active labels mismatch: ' + JSON.stringify(banners));
+  // The carousel clones entire 14-slide sets on both sides for infinite scrolling.
+  // Validate every logical cycle without mistaking clones for additional assets.
+  if(banners.length < expectedBanners.length ||
+     banners.length % expectedBanners.length !== 0 ||
+     banners.some((banner,i) => banner.src !== expectedBanners[i % 14] ||
+                              banner.hasStatus !== ((i % 14) < 5)))
+    fail(width + 'px banner order or 01-05 active labels mismatch: ' +
+      JSON.stringify({count:banners.length,firstCycle:banners.slice(0,14)}));
   const dotCount = await page.locator('.bn-carousel .bn-dots i').count();
   if(dotCount !== expectedBanners.length) fail(width + 'px banner dot count: ' + dotCount);
   const scriptLoaded = await page.evaluate(() => performance.getEntriesByType('resource').some((r) => r.name.includes('/assets/home.js')));
