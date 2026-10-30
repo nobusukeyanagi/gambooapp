@@ -343,8 +343,15 @@ async function checkSharedReferences(){
  if(/--fw-\d{2}-(normal|strong)/.test(tokens))
    fail('Legacy size-specific weight token found');
  const all=['SCR-01_bet.html',...paths];
+ const pagesWithPrunedIcons=new Set(['SCR-01_bet.html','SCR-02_keirin.html','SCR-02_autorace.html']);
  for(const page of all){
   const html=await readFile(path.join(ROOT,page),'utf8');
+  if(pagesWithPrunedIcons.has(page)){
+   const declared=[...html.matchAll(/<symbol\b[^>]*\bid="([^"]+)"/g)].map(m=>m[1]);
+   const used=[...html.matchAll(/<use\b[^>]*\bhref="#([^"]+)"/g)].map(m=>m[1]);
+   if(declared.some(id=>!used.includes(id)) || used.some(id=>!declared.includes(id)))
+    fail(page+': unused or missing local SVG symbol');
+  }
   if(/<style\b/i.test(html))fail(page+': old inline <style> block detected');
   const css=[...html.matchAll(/<link\b[^>]*href=["']\.\/assets\/([^"']+\.css\?v=\d+)["']/g)].map(m=>m[1]);
   for(const name of expected)if(!css.includes(name))fail(page+': shared CSS direct reference missing '+name);
