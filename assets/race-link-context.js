@@ -45,5 +45,12 @@
     selected.classList.add("active");
     const status = selected.querySelector("small");
     if (status) status.textContent = "選択中";
+    const scroller = bar.closest(".hscroll-inner");
+    if (scroller) {
+      requestAnimationFrame(() => {
+        const selectedCenter = selected.offsetLeft + selected.offsetWidth / 2;
+        scroller.scrollLeft = Math.max(0, selectedCenter - scroller.clientWidth / 2);
+      });
+    }
   }
 })();
