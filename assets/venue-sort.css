@@ -26,6 +26,13 @@
   color: var(--c-text);
   box-shadow: var(--e1);
 }
+.venue-sort-options [data-sort="venue"] { gap: var(--space-2); }
+.venue-sort-options .sort-direction {
+  font-family: var(--ff-ui);
+  font-size: inherit;
+  font-weight: inherit;
+}
+
 .venue-sort-options .chip.active {
   background: var(--c-primary);
   color: var(--c-text);
