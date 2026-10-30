@@ -245,11 +245,13 @@ async function checkPredictionSort(page, width, isAutorace) {
       found: !!current,
       currentLeft: current?.getBoundingClientRect().left,
       clearance: arrow.hidden ? scroller.getBoundingClientRect().left : rightEdge,
+      canScroll: scroller.scrollWidth > scroller.clientWidth + 1,
       pastHidden: scroller.scrollLeft > 1
     };
   });
-  if (!initialCurrent.found || initialCurrent.currentLeft < initialCurrent.clearance - 2 ||
-      !initialCurrent.pastHidden)
+  if (!initialCurrent.found ||
+      (initialCurrent.canScroll &&
+        (initialCurrent.currentLeft < initialCurrent.clearance - 2 || !initialCurrent.pastHidden)))
     fail(width + 'px current race must start right of left arrow: ' + JSON.stringify(initialCurrent));
   if (!isAutorace) {
     const wins = page.locator('.comment-row .cr-streak');
