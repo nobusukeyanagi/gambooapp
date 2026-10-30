@@ -126,8 +126,7 @@ const expectedComputedStyles = [
   ['.news-new', 'fontSize', '14px'],
   ['.venue-grid.g3 .kubun', 'fontSize', '14px'],
   ['.venue-grid.g3 .kubun', 'fontWeight', '400'],
-  ['.venue-grid.g3 .girls', 'fontSize', '14px'],
-  ['.venue-grid.g3 .girls', 'fontWeight', '400'],
+  ['.venue-grid.g3 .girls .girls-heart-icon', 'height', '14px'],
   ['.date-tabs .date-tab', 'fontSize', '16px'],
   ['.date-tabs .date-tab', 'fontWeight', '600'],
   ['.bottom-tab', 'height', '60px'],
@@ -188,6 +187,13 @@ async function checkCurrentPage(page, width) {
     .filter((img) => !img.complete || img.naturalWidth === 0)
     .map((img) => img.getAttribute('src')));
   if (brokenImages.length) fail(width + 'px broken asset images: ' + brokenImages.join(', '));
+  const girlsIcons = await page.locator('.venue-grid.g3 .girls .girls-heart-icon use[href$="#girls-heart"]').count();
+  if (girlsIcons !== 2) fail(width + 'px expected two shared Girls SVG references, found ' + girlsIcons);
+  const girlsColors = await page.locator('.venue-grid.g3 .girls .girls-heart-icon').evaluateAll(
+    nodes => nodes.map(el => getComputedStyle(el).color));
+  if (girlsColors.some(color => color !== 'rgb(165, 55, 76)'))
+    fail(width + 'px Girls icon must use canonical error color: ' + girlsColors.join(', '));
+
 
   const scriptLoaded = await page.evaluate(() => performance.getEntriesByType('resource').some((r) => r.name.includes('/assets/home.js')));
   if (!scriptLoaded) fail('JavaScript assets/home.js did not load at ' + width + 'px');
