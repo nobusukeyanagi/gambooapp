@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'SCR-01_home.html'
+      - 'SCR-01_bet.html'
       - 'assets/**'
       - 'scripts/check-home.mjs'
       - 'package.json'
