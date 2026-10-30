@@ -1,17 +1,11 @@
-/* Shared sorting sheet for SCR-02 keirin and autorace racecourse lists. */
+/* Shared inline venue sorting for SCR-02 prediction pages. */
 (() => {
   "use strict";
 
-  const phone = document.querySelector(".phone-inner");
-  const trigger = phone?.querySelector(".sort-btn");
-  const label = trigger?.querySelector(".sort-btn-label");
-  const scrim = phone?.querySelector(".sheet-scrim");
-  const sheet = phone?.querySelector(".sort-sheet");
-  const scrollArea = phone?.querySelector(".scroll-area");
-  const options = [...(sheet?.querySelectorAll(".sort-opt") || [])];
+  const scrollArea = document.querySelector(".phone-inner > .scroll-area");
+  const options = [...document.querySelectorAll(".venue-sort-options [data-sort]")];
   const cards = [...(scrollArea?.querySelectorAll(":scope > .venue-card") || [])];
-
-  if (!trigger || !label || !scrim || !sheet || options.length !== 3 || !cards.length) return;
+  if (!scrollArea || options.length !== 3 || !cards.length) return;
 
   const originalPosition = new Map(cards.map((card, index) => [card, index]));
   const sortKey = {
@@ -20,58 +14,23 @@
     venue: "sortVenue",
   };
 
-  function setOpen(open) {
-    scrim.hidden = !open;
-    sheet.hidden = !open;
-    trigger.setAttribute("aria-expanded", String(open));
-    if (open) {
-      (sheet.querySelector(".sort-opt.on") || options[0]).focus();
-    } else {
-      trigger.focus();
-    }
-  }
-
   function applySort(option) {
-    const key = option.dataset.sort;
-    if (!(key in sortKey)) return;
+    const field = sortKey[option.dataset.sort];
+    if (!field) return;
 
     options.forEach((candidate) => {
-      const selected = candidate === option;
-      candidate.classList.toggle("on", selected);
-      candidate.setAttribute("aria-pressed", String(selected));
+      const active = candidate === option;
+      candidate.classList.toggle("active", active);
+      candidate.setAttribute("aria-pressed", String(active));
     });
-
-    label.textContent = option.querySelector("span")?.textContent.trim() || label.textContent;
-    const field = sortKey[key];
-    const sorted = [...cards].sort(
+    const ordered = [...cards].sort(
       (a, b) =>
         Number(a.dataset[field]) - Number(b.dataset[field]) ||
         originalPosition.get(a) - originalPosition.get(b)
     );
     const spacer = scrollArea.querySelector(":scope > .content-end-spacer");
-    sorted.forEach((card) => scrollArea.insertBefore(card, spacer));
-    setOpen(false);
+    ordered.forEach((card) => scrollArea.insertBefore(card, spacer));
   }
 
-  trigger.addEventListener("click", () => setOpen(sheet.hidden));
-  scrim.addEventListener("click", () => setOpen(false));
   options.forEach((option) => option.addEventListener("click", () => applySort(option)));
-
-  document.addEventListener("keydown", (event) => {
-    if (sheet.hidden) return;
-    if (event.key === "Escape") {
-      event.preventDefault();
-      setOpen(false);
-    } else if (event.key === "Tab") {
-      const first = options[0];
-      const last = options[options.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-  });
 })();
