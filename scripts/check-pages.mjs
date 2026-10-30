@@ -225,13 +225,13 @@ async function checkPredictionSort(page, width, isAutorace) {
     const venueValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
     if (venueValues.some((v, i) => i && v < venueValues[i-1]))
       fail(width + 'px north-to-south venue sorting did not reorder cards');
-    if ((await venue.innerText()).trim() !== '開催場順↓')
+    if ((await venue.locator('.sort-direction').textContent())?.trim() !== '↓')
       fail(width + 'px first venue tap should show ↓');
     await venue.click();
     const southValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
     if (southValues.some((v, i) => i && v > southValues[i-1]))
       fail(width + 'px south-to-north venue sorting did not reorder cards');
-    if ((await venue.innerText()).trim() !== '開催場順↑')
+    if ((await venue.locator('.sort-direction').textContent())?.trim() !== '↑')
       fail(width + 'px second venue tap should show ↑');
     await venue.click();
     const northValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
