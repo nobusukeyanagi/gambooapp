@@ -19,7 +19,7 @@ const ROOT = process.cwd();
 const URL_CURRENT = process.env.CURRENT_URL || 'http://127.0.0.1:4173';
 const URL_BASELINE = process.env.BASELINE_URL || '';
 const OUTPUT = process.env.SCREENSHOT_DIR || '/tmp/gamboo-home-check';
-const PAGE = 'SCR-01_home.html';
+const PAGE = 'SCR-01_bet.html';
 const cssNames = [
   'assets/design-tokens.css',
   'assets/home.css',
