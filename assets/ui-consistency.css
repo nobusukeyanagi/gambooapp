@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* Cross-screen semantic hierarchy, based on SCR-01_home.html.
+/* Cross-screen semantic hierarchy, based on SCR-01_bet.html.
    Load after per-page styles; unrelated components retain their own rules. */
 :is(.section-header, .vgroup-head) {
   display: flex;
