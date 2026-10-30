@@ -1667,8 +1667,7 @@
       .venue-header { flex-wrap: nowrap; min-height: 40px; }
       .venue-name { flex: 0 1 auto; }
       .venue-header .venue-meta { margin-right: auto; }
-      .kubun,
-      .rebate-logo {
+      .kubun {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1682,12 +1681,31 @@
         flex-shrink: 0;
         outline: none;
         outline-offset: 1px;
+        background: var(--c-text);
+        color: var(--c-surface);
       }
-      .kubun { background: var(--c-text); color: var(--c-surface); }
+      /* Campaign label: same shared gift symbol as the bet-page news,
+         directly colored with canonical dark gold. */
       .rebate-logo {
-        background: var(--c-bg);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-small);
+        min-height: 20px;
         color: var(--c-primary-d);
-        border: var(--line-selected);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
+        letter-spacing: normal;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .rebate-logo .rebate-campaign-icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+        flex: 0 0 20px;
+        color: var(--c-primary-d);
+        fill: currentColor;
       }
 
       .rchips { padding: var(--space-section) var(--space-section); overflow: visible; width: max-content; }
