@@ -203,35 +203,60 @@ async function checkAutoraceLabMerged(page, width) {
 
 async function checkPredictionSort(page, width, isAutorace) {
   const buttons = page.locator('.venue-sort-options .chip');
-  if (await buttons.count() !== (isAutorace ? 2 : 3))
+  if (await buttons.count() !== (isAutorace ? 0 : 3))
     fail(width + 'px unexpected inline sort button count');
   if (await page.locator('.sort-sheet, .sheet-scrim, .sort-btn').count())
     fail(width + 'px obsolete sheet sorting controls remain');
-  if (isAutorace && await page.locator('[data-sort="deadline"]').count())
-    fail(width + 'px autorace still has a deadline sort button');
+  if (isAutorace && await page.locator('.list-head, .venue-sort-options').count())
+    fail(width + 'px autorace sorting row must not exist');
   const cards = page.locator('.scroll-area > .venue-card');
   if (!await cards.count()) fail(width + 'px prediction cards missing');
 
-  const grade = page.locator('.venue-sort-options [data-sort="grade"]');
-  await grade.click();
-  if (await grade.getAttribute('aria-pressed') !== 'true')
-    fail(width + 'px grade sort was not selected');
-  const gradeValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortGrade)));
-  if (gradeValues.some((v, i) => i && v < gradeValues[i-1]))
-    fail(width + 'px grade sorting did not reorder cards');
+  if (!isAutorace) {
+    const grade = page.locator('.venue-sort-options [data-sort="grade"]');
+    await grade.click();
+    if (await grade.getAttribute('aria-pressed') !== 'true')
+      fail(width + 'px grade sort was not selected');
+    const gradeValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortGrade)));
+    if (gradeValues.some((v, i) => i && v < gradeValues[i-1]))
+      fail(width + 'px grade sorting did not reorder cards');
 
-  const venue = page.locator('.venue-sort-options [data-sort="venue"]');
-  await venue.click();
-  if (await venue.getAttribute('aria-pressed') !== 'true')
-    fail(width + 'px venue sort was not selected');
-  const venueValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
-  if (venueValues.some((v, i) => i && v < venueValues[i-1]))
-    fail(width + 'px venue sorting did not reorder cards');
+    const venue = page.locator('.venue-sort-options [data-sort="venue"]');
+    await venue.click();
+    if (await venue.getAttribute('aria-pressed') !== 'true')
+      fail(width + 'px venue sort was not selected');
+    const venueValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
+    if (venueValues.some((v, i) => i && v < venueValues[i-1]))
+      fail(width + 'px venue sorting did not reorder cards');
+  }
   const raceLinks = page.locator('.venue-card a.rchip');
   if (!await raceLinks.count()) fail(width + 'px linked race buttons missing');
   if (!/SCR-0[34]_racecard/.test(await raceLinks.first().getAttribute('href')))
     fail(width + 'px race button destination invalid');
   if (await page.locator('.rpred').count()) fail(width + 'px old prediction buttons remain');
+  // Current race sits beside the left-arrow strip; completed races start left
+  // of the visible region rather than obscuring the active R.
+  const initialCurrent = await page.locator('.venue-card .hscroll').first().evaluate(row => {
+    const current = row.querySelector('.rchip.next');
+    const scroller = row.querySelector('.hscroll-inner');
+    const arrow = row.querySelector('.hscroll-cue-l');
+    const rightEdge = arrow.getBoundingClientRect().right;
+    return {
+      found: !!current,
+      currentLeft: current?.getBoundingClientRect().left,
+      clearance: arrow.hidden ? scroller.getBoundingClientRect().left : rightEdge,
+      pastHidden: scroller.scrollLeft > 1
+    };
+  });
+  if (!initialCurrent.found || initialCurrent.currentLeft < initialCurrent.clearance - 2 ||
+      !initialCurrent.pastHidden)
+    fail(width + 'px current race must start right of left arrow: ' + JSON.stringify(initialCurrent));
+  if (!isAutorace) {
+    const wins = page.locator('.comment-row .cr-streak');
+    if (await wins.count() !== 1 || await wins.first().innerText() !== '3連勝')
+      fail(width + 'px consecutive wins must be shown separately');
+  }
+
 
   // Regression: one arrow tap reaches the final / first race without
   // empty viewport beyond the last R, even after sorting.
@@ -274,7 +299,7 @@ async function checkPredictionSort(page, width, isAutorace) {
 }
 
 async function checkSharedReferences(){
- const expected=['design-tokens.css?v=56','tap-feedback.css?v=3','ui-consistency.css?v=20'];
+ const expected=['design-tokens.css?v=56','tap-feedback.css?v=3','ui-consistency.css?v=21'];
  const all=['SCR-01_bet.html',...paths];
  for(const page of all){
   const html=await readFile(path.join(ROOT,page),'utf8');
@@ -282,7 +307,7 @@ async function checkSharedReferences(){
   const css=[...html.matchAll(/<link\b[^>]*href=["']\.\/assets\/([^"']+\.css\?v=\d+)["']/g)].map(m=>m[1]);
   for(const name of expected)if(!css.includes(name))fail(page+': shared CSS direct reference missing '+name);
   if(css.length!==new Set(css).size)fail(page+': duplicated stylesheet reference');
-  const commonLast=css.indexOf('ui-consistency.css?v=20');
+  const commonLast=css.indexOf('ui-consistency.css?v=21');
   if(commonLast!==css.length-1)fail(page+': shared UI stylesheet must load last');
   for(const href of css){
    const pathname=href.split('?')[0];
