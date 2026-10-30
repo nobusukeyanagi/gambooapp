@@ -63,8 +63,8 @@
 
   /* ③ グレード色（GP/SG文字の黄色は --w5 を直接参照） */
   --c-gp: #44494D;
-  --c-g1: #AD5D62;
-  --c-g2: #55789B;
+  --c-g1: #955071;
+  --c-g2: #5F69A0;
   --c-g3: #607D50;
   --c-f1: #92684C; /* muted chestnut; white numeral contrast >=4.5:1 */
   --c-f2: #7B7568; /* muted taupe; white numeral contrast >=4.5:1 */
