@@ -233,8 +233,8 @@ async function checkPredictionSort(page, width, isAutorace) {
     fail(width + 'px race button destination invalid');
   if (await page.locator('.rpred').count()) fail(width + 'px old prediction buttons remain');
 
-  // Regression: repeated arrow taps must stop at the final race with no
-  // empty viewport beyond the last R, even after a sorting operation.
+  // Regression: one arrow tap reaches the final / first race without
+  // empty viewport beyond the last R, even after sorting.
   const scrollRowIndex = await page.locator('.venue-card .hscroll').evaluateAll(rows =>
     rows.findIndex(row => {
       const scroller = row.querySelector('.hscroll-inner');
@@ -247,9 +247,7 @@ async function checkPredictionSort(page, width, isAutorace) {
       el.scrollLeft = 0;
       el.dispatchEvent(new Event('scroll'));
     });
-    await row.locator('.hscroll-cue').evaluate(button => {
-      for (let i = 0; i < 40; i++) button.click();
-    });
+    await row.locator('.hscroll-cue').evaluate(button => button.click());
     await page.waitForFunction(index => {
       const row = document.querySelectorAll('.venue-card .hscroll')[index];
       const el = row.querySelector('.hscroll-inner');
@@ -266,10 +264,11 @@ async function checkPredictionSort(page, width, isAutorace) {
     });
     if (endState.gap > 16 || endState.current > endState.max + 1)
       fail(width + 'px race scroller leaves trailing blank space: ' + JSON.stringify(endState));
-    await scroller.evaluate(el => {
-      el.scrollLeft = 0;
-      el.dispatchEvent(new Event('scroll'));
-    });
+    await row.locator('.hscroll-cue-l').evaluate(button => button.click());
+    await page.waitForFunction(index => {
+      const row = document.querySelectorAll('.venue-card .hscroll')[index];
+      return row.querySelector('.hscroll-inner').scrollLeft <= 1;
+    }, scrollRowIndex, { timeout: 6000 });
   }
   console.log('PREDICTION SORT OK ' + width + 'px');
 }
