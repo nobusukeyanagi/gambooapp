@@ -2057,7 +2057,7 @@
       .venue-card .rchip > small {
         font-family: var(--ff-ui);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-12-strong);
       }
       .comment-row { display: flex; align-items: center; }
       .comment-row .cr-name { font-weight: 900; color: var(--c-text); min-width: 0; }
