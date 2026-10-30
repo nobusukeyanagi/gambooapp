@@ -201,6 +201,17 @@ async function checkCurrentPage(page, width) {
     fail(width + 'px Girls icon must use canonical error color: ' + girlsColors.join(', '));
 
 
+  // The live banner gallery must follow the filenames and omit deleted assets.
+  const banners = await page.locator('.bn-carousel .bn-track > .bn').evaluateAll(nodes =>
+    nodes.map(n => ({src: n.querySelector('img')?.getAttribute('src'),
+      hasStatus: n.querySelector('.bn-status')?.textContent.trim() === '本日実施中'})));
+  const expectedBanners = Array.from({length:14}, (_,i) =>
+    './assets/images/' + String(i+1).padStart(2,'0') + '.webp');
+  if(banners.length !== expectedBanners.length ||
+     banners.some((banner,i) => banner.src !== expectedBanners[i] || banner.hasStatus !== (i < 5)))
+    fail(width + 'px banner order or 01-05 active labels mismatch: ' + JSON.stringify(banners));
+  const dotCount = await page.locator('.bn-carousel .bn-dots i').count();
+  if(dotCount !== expectedBanners.length) fail(width + 'px banner dot count: ' + dotCount);
   const scriptLoaded = await page.evaluate(() => performance.getEntriesByType('resource').some((r) => r.name.includes('/assets/home.js')));
   if (!scriptLoaded) fail('JavaScript assets/home.js did not load at ' + width + 'px');
 }
