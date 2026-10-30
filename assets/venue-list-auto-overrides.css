@@ -1,3 +1,0 @@
-@charset "UTF-8";
-/* Autorace-specific two-line truncation. Shared sorting styles are in venue-sort.css. */
-.news-title, .ell2 { line-clamp: 2; }
