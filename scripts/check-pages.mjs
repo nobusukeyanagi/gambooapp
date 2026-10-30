@@ -201,34 +201,42 @@ async function checkAutoraceLabMerged(page, width) {
   console.log("AUTORACE LAB OK " + width + "px (9 detail views, 8 drivers, wet/dry, past/vs, 2-way scroll)");
 }
 
-async function checkAutoraceSort(page, width) {
-  const trigger = page.locator('.sort-btn');
-  const sheet = page.locator('#auto-sort-sheet');
-  const scrim = page.locator('.sheet-scrim');
-  const cards = page.locator('.scroll-area > .venue-card .venue-name');
-  const headings = await page.locator('.screen-wrap').count();
-  if (headings !== 1) fail(width + 'px autorace still has ' + headings + ' mock screens');
-  if (await sheet.isVisible()) fail(width + 'px sort sheet displayed without tap');
-  await trigger.click();
-  if (!await sheet.isVisible() || await trigger.getAttribute('aria-expanded') !== 'true') fail(width + 'px sort button did not open sheet');
-  await sheet.locator('[data-sort="grade"]').click();
-  if (await sheet.isVisible()) fail(width + 'px sheet did not close after selection');
-  if (await trigger.locator('.sort-btn-label').textContent() !== 'グレード順') fail(width + 'px sort label not updated');
-  if (await cards.first().textContent() !== '川口') fail(width + 'px grade sort did not reorder cards');
-  await trigger.click();
-  await scrim.click({ position: { x: 6, y: 6 } });
-  if (await sheet.isVisible()) fail(width + 'px scrim did not dismiss sheet');
-  await trigger.click();
-  await page.keyboard.press('Escape');
-  if (await sheet.isVisible()) fail(width + 'px Escape did not dismiss sheet');
-  await trigger.click();
-  await sheet.locator('[data-sort="venue"]').click();
-  if (await trigger.locator('.sort-btn-label').textContent() !== '場番号順') fail(width + 'px venue sort label not updated');
-  console.log('AUTORACE SORT OK ' + width + 'px');
+async function checkPredictionSort(page, width, isAutorace) {
+  const buttons = page.locator('.venue-sort-options .chip');
+  if (await buttons.count() !== (isAutorace ? 2 : 3))
+    fail(width + 'px unexpected inline sort button count');
+  if (await page.locator('.sort-sheet, .sheet-scrim, .sort-btn').count())
+    fail(width + 'px obsolete sheet sorting controls remain');
+  if (isAutorace && await page.locator('[data-sort="deadline"]').count())
+    fail(width + 'px autorace still has a deadline sort button');
+  const cards = page.locator('.scroll-area > .venue-card');
+  if (!await cards.count()) fail(width + 'px prediction cards missing');
+
+  const grade = page.locator('.venue-sort-options [data-sort="grade"]');
+  await grade.click();
+  if (await grade.getAttribute('aria-pressed') !== 'true')
+    fail(width + 'px grade sort was not selected');
+  const gradeValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortGrade)));
+  if (gradeValues.some((v, i) => i && v < gradeValues[i-1]))
+    fail(width + 'px grade sorting did not reorder cards');
+
+  const venue = page.locator('.venue-sort-options [data-sort="venue"]');
+  await venue.click();
+  if (await venue.getAttribute('aria-pressed') !== 'true')
+    fail(width + 'px venue sort was not selected');
+  const venueValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
+  if (venueValues.some((v, i) => i && v < venueValues[i-1]))
+    fail(width + 'px venue sorting did not reorder cards');
+  const raceLinks = page.locator('.venue-card a.rchip');
+  if (!await raceLinks.count()) fail(width + 'px linked race buttons missing');
+  if (!/SCR-0[34]_racecard/.test(await raceLinks.first().getAttribute('href')))
+    fail(width + 'px race button destination invalid');
+  if (await page.locator('.rpred').count()) fail(width + 'px old prediction buttons remain');
+  console.log('PREDICTION SORT OK ' + width + 'px');
 }
 
 async function checkSharedReferences(){
- const expected=['design-tokens.css?v=53','tap-feedback.css?v=3','ui-consistency.css?v=16'];
+ const expected=['design-tokens.css?v=56','tap-feedback.css?v=3','ui-consistency.css?v=20'];
  const all=['SCR-01_bet.html',...paths];
  for(const page of all){
   const html=await readFile(path.join(ROOT,page),'utf8');
@@ -236,7 +244,7 @@ async function checkSharedReferences(){
   const css=[...html.matchAll(/<link\b[^>]*href=["']\.\/assets\/([^"']+\.css\?v=\d+)["']/g)].map(m=>m[1]);
   for(const name of expected)if(!css.includes(name))fail(page+': shared CSS direct reference missing '+name);
   if(css.length!==new Set(css).size)fail(page+': duplicated stylesheet reference');
-  const commonLast=css.indexOf('ui-consistency.css?v=16');
+  const commonLast=css.indexOf('ui-consistency.css?v=20');
   if(commonLast!==css.length-1)fail(page+': shared UI stylesheet must load last');
   for(const href of css){
    const pathname=href.split('?')[0];
@@ -264,7 +272,7 @@ try {
       if(b)compare(cur,await capture(b.page,scene),name);
       checked++;
     }
-    if (file === 'SCR-02_autorace.html') await checkAutoraceSort(a.page,w);
+    if (file === 'SCR-02_keirin.html' || file === 'SCR-02_autorace.html') await checkPredictionSort(a.page,w,file === 'SCR-02_autorace.html');
     if (file === 'SCR-03_racecardkeirin.html') await checkKeirinMania(a.page,w);
     if (file === "SCR-04_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
     if (file !== "index.html") await checkNavPredictionLinks(a.page,w,file);
