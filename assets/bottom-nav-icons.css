@@ -1,14 +1,14 @@
 @charset "UTF-8";
-/* Bottom navigation only: inactive icons gray, active icon brand color.
-   Symbols use currentColor, so elsewhere they can take semantic colors
-   such as var(--c-keirin) and var(--c-auto) without SVG changes. */
+/* One canonical racing-icon size for bottom navigation and page headings.
+   Symbols use currentColor; inactive nav icons stay gray and selected ones gold. */
 :root {
   --nav-icon-size: 32px;
 }
 .bottom-tab .tab-item .tab-icon {
   height: var(--nav-icon-size);
 }
-.bottom-tab .tab-item .tab-icon .ic {
+.bottom-tab .tab-item .tab-icon .ic,
+.page-header .page-header-title .header-race-icon {
   width: var(--nav-icon-size);
   height: var(--nav-icon-size);
   color: var(--c-sub);
@@ -18,12 +18,18 @@
   color: var(--c-primary-d);
 }
 
-/* Keep the original racing silhouettes' aspect ratios at 32px height.
-   Only the bottom-navigation racing icons are wider than the other three. */
-.bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-keirin"]) {
+/* Preserve the same non-square racing silhouettes in both locations. */
+.page-header .page-header-title .header-race-icon {
+  color: var(--c-primary-d);
+  display: block;
+  flex: 0 0 auto;
+}
+.bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-keirin"]),
+.page-header .page-header-title .header-race-icon:has(use[href$="#nav-keirin"]) {
   width: calc(var(--nav-icon-size) * 1.25);
 }
-.bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-auto"]) {
+.bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-auto"]),
+.page-header .page-header-title .header-race-icon:has(use[href$="#nav-auto"]) {
   width: calc(var(--nav-icon-size) * 1.08333333);
 }
 
