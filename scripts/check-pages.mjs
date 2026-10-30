@@ -224,7 +224,19 @@ async function checkPredictionSort(page, width, isAutorace) {
       fail(width + 'px venue sort was not selected');
     const venueValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
     if (venueValues.some((v, i) => i && v < venueValues[i-1]))
-      fail(width + 'px venue sorting did not reorder cards');
+      fail(width + 'px north-to-south venue sorting did not reorder cards');
+    if ((await venue.innerText()).trim() !== '開催場順↓')
+      fail(width + 'px first venue tap should show ↓');
+    await venue.click();
+    const southValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
+    if (southValues.some((v, i) => i && v > southValues[i-1]))
+      fail(width + 'px south-to-north venue sorting did not reorder cards');
+    if ((await venue.innerText()).trim() !== '開催場順↑')
+      fail(width + 'px second venue tap should show ↑');
+    await venue.click();
+    const northValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
+    if (northValues.some((v, i) => i && v < northValues[i-1]))
+      fail(width + 'px third venue tap should restore north-to-south');
   }
   const raceLinks = page.locator('.venue-card a.rchip');
   if (!await raceLinks.count()) fail(width + 'px linked race buttons missing');
