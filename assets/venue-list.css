@@ -2019,6 +2019,10 @@
       .venue-card > .hscroll > .hscroll-inner {
         -webkit-mask-image: none;
         mask-image: none;
+        /* The arrow strip overlays the last column only while scrolling;
+           trailing inner padding previously produced a blank final screen. */
+        padding-right: 0;
+        scroll-snap-type: none;
       }
       .venue-card > .hscroll.has-past > .hscroll-inner {
         -webkit-mask-image: none;
@@ -2056,9 +2060,6 @@
       .venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l):focus-visible {
         outline: var(--line-focus);
         outline-offset: var(--space-2);
-      }
-      .venue-card .hscroll > .hscroll-inner {
-        padding-right: calc(var(--tap-dense) + var(--space-section));
       }
       .rcol { flex: 0 0 auto; display: flex; flex-direction: column; gap: var(--space-small); }
       .rcol > .rchip { flex: 0 0 auto; }
