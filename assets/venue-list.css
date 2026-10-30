@@ -1923,11 +1923,21 @@
 
       .kubun { min-width: calc(5.82em + 10px); }
       .venue-header .venue-meta { margin-right: 0; }
-      /* Plain inline race-day and time-slot text; heart for girls' meets. */
-      .venue-header .venue-girls {
+      /* Match the unboxed Girls heart on SCR-01_bet.html. */
+      .venue-header .venue-girls,
+      .rchip .rchip-girls {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         color: var(--c-error);
         font-size: var(--fs-14);
-        font-weight: var(--fw-14-strong);
+        font-weight: var(--fw-14-normal);
+        line-height: 1.25;
+        letter-spacing: normal;
+        vertical-align: middle;
+        transform: scaleX(1.15);
+        transform-origin: center;
+        white-space: nowrap;
       }
       .venue-header .rebate-logo { margin-left: auto; }
       .rchip.rebate { border: var(--line-selected); background: var(--c-bg); }
@@ -1988,16 +1998,12 @@
       .rchip.canceled b,
       .rchip.canceled small { color: var(--c-sub); }
       .rchip .rchip-girls {
-        margin-top: 2px;
-        padding: 0 4px;
-        border-radius: 3px;
-        background: var(--c-error-bg);
-        color: var(--c-error);
-        font-size: var(--fs-12);
-        font-weight: 900;
+        margin-top: var(--space-2);
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
         font-style: normal;
-        line-height: 14px;
-        white-space: nowrap;
       }
       .rchip .rchip-rebate { font-size: var(--fs-12); }
       .comment-row { display: flex; align-items: center; }
