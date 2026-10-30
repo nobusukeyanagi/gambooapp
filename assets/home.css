@@ -290,14 +290,14 @@ button,
       .vgroup-name.race-heading .race-heading-icon {
         display: block;
         flex: 0 0 auto;
-        width: 47.5px;
-        height: 38px;
+        width: 45px;
+        height: 36px;
         fill: currentColor;
         color: var(--c-keirin);
       }
       .vgroup-name.race-heading.auto .race-heading-icon {
-        width: 41.1667px;
-        height: 38px;
+        width: 39px;
+        height: 36px;
         color: var(--c-auto);
       }
       .vgroup-name b { font-weight: var(--fw-12-strong); color: var(--c-sub); font-size: var(--fs-12); }
