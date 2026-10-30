@@ -41,7 +41,7 @@
    The 1.15 aspect ratio replaces font-dependent horizontal scaling. */
 :is(.girls, .venue-girls, .rchip-girls) > .girls-heart-icon {
   display: block;
-  width: calc(var(--fs-14) * 1.15);
+  width: calc(var(--fs-14) * 1.08);
   height: var(--fs-14);
   flex: 0 0 auto;
   fill: currentColor;
