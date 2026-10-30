@@ -20,9 +20,21 @@
 
 /* Preserve the same non-square racing silhouettes in both locations. */
 .page-header .page-header-title .header-race-icon {
-  color: var(--c-primary-d);
   display: block;
   flex: 0 0 auto;
+}
+/* Prediction headers: white background, sport-colored shared SVG and dark text. */
+.page-header:has(.header-race-icon) {
+  background: var(--c-surface);
+}
+.page-header .page-header-title:has(.header-race-icon) {
+  color: var(--c-text);
+}
+.page-header .page-header-title .header-race-icon:has(use[href$="#nav-keirin"]) {
+  color: var(--c-keirin);
+}
+.page-header .page-header-title .header-race-icon:has(use[href$="#nav-auto"]) {
+  color: var(--c-auto);
 }
 .bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-keirin"]),
 .page-header .page-header-title .header-race-icon:has(use[href$="#nav-keirin"]) {
