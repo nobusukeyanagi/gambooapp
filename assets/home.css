@@ -758,7 +758,7 @@ button,
         box-sizing: border-box;
         width: 100%;
         padding: var(--space-2) var(--space-7);
-        border-radius: var(--r-sm);
+        border-radius: var(--r-full);
         background: var(--c-error);
         color: var(--c-surface);
         font-size: var(--fs-14);
