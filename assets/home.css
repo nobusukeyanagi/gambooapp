@@ -752,8 +752,11 @@ button,
         position: absolute;
         top: 0;
         left: 0;
-        display: inline-flex;
+        display: flex;
         align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 100%;
         padding: var(--space-2) var(--space-7);
         border-radius: var(--r-sm);
         background: var(--c-error);
