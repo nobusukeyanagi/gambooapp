@@ -312,9 +312,6 @@ button,
       .g3 .vcard-bottom { gap: var(--space-small); justify-content: space-between; }
       .bn {
         flex: 0 0 290px;
-        aspect-ratio: 2 / 1;
-        border-radius: var(--r-md);
-        box-shadow: var(--e1);
         font-size: var(--fs-12);
         font-weight: var(--fw-12-strong);
         text-align: center;
@@ -606,7 +603,17 @@ button,
       .bn-track::-webkit-scrollbar { display: none; }
       .bn .bn-fallback { display: none; }
       .bn.noimg img { display: none; }
-      .bn.noimg .bn-fallback { display: flex; position: absolute; inset: 0; align-items: center; justify-content: center;  }
+      .bn.noimg .bn-fallback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: var(--r-md);
+        box-shadow: var(--e1);
+        background: var(--c-bg);
+        color: var(--c-sub);
+      }
       .bn-dots { display: flex; justify-content: center; gap: var(--space-5); }
       .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-border); transition: width .2s; }
       .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-primary); }
@@ -733,19 +740,36 @@ button,
         white-space: normal;
         overflow-wrap: anywhere;
       }
+      /* Reserve a fixed label row for every banner, whether labeled or not. */
       .bn-track .bn {
         flex: 0 0 calc((100% - 30px) / 2);
         scroll-snap-align: start;
         position: relative;
-        overflow: hidden;
-        background: repeating-linear-gradient(45deg, var(--c-bg) 0 6px, var(--c-bg) 6px 12px);
-        color: var(--c-sub);
-        aspect-ratio: 1 / 1;
+        padding-top: calc(var(--fs-14) * 1.25 + var(--space-section));
+        min-width: 0;
+      }
+      .bn-status {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-flex;
+        align-items: center;
+        padding: var(--space-2) var(--space-7);
+        border-radius: var(--r-sm);
+        background: var(--c-error);
+        color: var(--c-surface);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
+        line-height: 1.25;
+        white-space: nowrap;
       }
       .bn-track .bn img {
-        width: 100%;
-        height: 100%;
         display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: var(--r-md);
+        box-shadow: var(--e1);
         object-fit: cover;
         object-position: center;
       }
