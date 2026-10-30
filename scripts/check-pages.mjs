@@ -232,6 +232,45 @@ async function checkPredictionSort(page, width, isAutorace) {
   if (!/SCR-0[34]_racecard/.test(await raceLinks.first().getAttribute('href')))
     fail(width + 'px race button destination invalid');
   if (await page.locator('.rpred').count()) fail(width + 'px old prediction buttons remain');
+
+  // Regression: repeated arrow taps must stop at the final race with no
+  // empty viewport beyond the last R, even after a sorting operation.
+  const scrollRowIndex = await page.locator('.venue-card .hscroll').evaluateAll(rows =>
+    rows.findIndex(row => {
+      const scroller = row.querySelector('.hscroll-inner');
+      return scroller && scroller.scrollWidth > scroller.clientWidth + 1;
+    }));
+  if (scrollRowIndex >= 0) {
+    const row = page.locator('.venue-card .hscroll').nth(scrollRowIndex);
+    const scroller = row.locator('.hscroll-inner');
+    await scroller.evaluate(el => {
+      el.scrollLeft = 0;
+      el.dispatchEvent(new Event('scroll'));
+    });
+    await row.locator('.hscroll-cue').evaluate(button => {
+      for (let i = 0; i < 40; i++) button.click();
+    });
+    await page.waitForFunction(index => {
+      const row = document.querySelectorAll('.venue-card .hscroll')[index];
+      const el = row.querySelector('.hscroll-inner');
+      const max = Math.max(0, el.scrollWidth - el.clientWidth);
+      return el.scrollLeft >= max - 1;
+    }, scrollRowIndex, { timeout: 6000 });
+    const endState = await scroller.evaluate(el => {
+      const last = el.querySelector('.rchips > .rcol:last-child');
+      return {
+        gap: el.getBoundingClientRect().right - last.getBoundingClientRect().right,
+        max: Math.max(0, el.scrollWidth - el.clientWidth),
+        current: el.scrollLeft
+      };
+    });
+    if (endState.gap > 16 || endState.current > endState.max + 1)
+      fail(width + 'px race scroller leaves trailing blank space: ' + JSON.stringify(endState));
+    await scroller.evaluate(el => {
+      el.scrollLeft = 0;
+      el.dispatchEvent(new Event('scroll'));
+    });
+  }
   console.log('PREDICTION SORT OK ' + width + 'px');
 }
 
