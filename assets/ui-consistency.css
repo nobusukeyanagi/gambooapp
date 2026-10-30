@@ -37,10 +37,17 @@
   line-height: 1.25;
   letter-spacing: normal;
 }
-/* An unboxed girls heart is an icon, not a grade badge. */
+/* One shared filled SVG for every Girls mark (home, venue labels and R rows).
+   The 1.15 aspect ratio replaces font-dependent horizontal scaling. */
+:is(.girls, .venue-girls, .rchip-girls) > .girls-heart-icon {
+  display: block;
+  width: calc(var(--fs-14) * 1.15);
+  height: var(--fs-14);
+  flex: 0 0 auto;
+  fill: currentColor;
+  color: var(--c-error);
+}
 .venue-grid.g3 .girls {
-  font-size: var(--fs-14);
-  font-weight: var(--fw-14-normal);
   height: auto;
   line-height: 1.25;
 }
