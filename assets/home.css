@@ -628,7 +628,6 @@ button,
       }
       .pk3 .pk-note { margin-left: auto; font-size: var(--fs-14); font-weight: var(--fw-14-strong); color: var(--c-error); white-space: nowrap; }
 
-      .date-tabs .date-tab { font-size: var(--fs-16); font-weight: var(--fw-16-strong); }
       .pt-h .balance-sep { height: auto; align-self: stretch;  }
       
       .app-header .logo-img {
