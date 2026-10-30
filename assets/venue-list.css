@@ -1043,7 +1043,7 @@
         color: var(--c-sub);
       }
       .rchip.closed {
-        background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
+        background: var(--c-bg);
         color: var(--c-sub);
       }
       .rchip.closed small {
@@ -1426,7 +1426,7 @@
       }
 
       .rchip.closed {
-        background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
+        background: var(--c-bg);
         color: var(--c-sub);
       }
       .rchip.closed b { color: var(--c-sub); font-weight: var(--fw-16-strong); }
@@ -1693,8 +1693,8 @@
         gap: var(--space-small);
         min-height: 20px;
         color: var(--c-primary-d);
-        font-size: var(--fs-12);
-        font-weight: var(--fw-12-strong);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
         letter-spacing: normal;
         white-space: nowrap;
         flex-shrink: 0;
@@ -1752,7 +1752,7 @@
       .comment-row .cr-r {
         font-size: var(--fs-12);
         font-weight: var(--fw-12-strong);
-        color: var(--c-sub);
+        color: var(--c-text);
       }
       .carno {
         width: 22px;
@@ -1829,7 +1829,7 @@
         height: calc(100dvh - 30px);
       }
       .rchip.live {
-        background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
+        background: var(--c-bg);
         color: var(--c-error);
         min-width: 70px;
       }
@@ -2061,7 +2061,7 @@
         outline: var(--line-control);
         outline-offset: var(--space-2);
       }
-      .rchip.canceled { background: var(--c-bg); border-color: var(--c-bg); color: var(--c-sub); cursor: default; box-shadow: none; }
+      .rchip.canceled { background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface)); border-color: var(--c-bg); color: var(--c-sub); cursor: default; box-shadow: none; }
       .rchip.canceled b,
       .rchip.canceled small { color: var(--c-sub); }
       .rcol > .rchip-girls {
@@ -2088,6 +2088,32 @@
         font-size: var(--fs-12);
         font-weight: var(--fw-12-strong);
       }
+      /* Scheduled times are always dark; completed / closed / canceled
+         statuses retain their existing semantic text colors. */
+      .venue-card .rchip:not(.closed):not(.live):not(.canceled) > small {
+        color: var(--c-text);
+      }
+      /* One warning above Odawara's upcoming 4R, not inside its button.
+         Reserve one common top row so all R buttons keep the same baseline. */
+      .venue-card .rchips:has(.rchip-warning) {
+        padding-top: calc(var(--space-section) + var(--fs-12) + var(--space-small));
+      }
+      .venue-card .rcol:has(> .rchip-warning) {
+        position: relative;
+      }
+      .venue-card .rchip-warning {
+        position: absolute;
+        top: calc(-1 * (var(--fs-12) + var(--space-small)));
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--c-error);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
+        line-height: 1.25;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+
       .comment-row { display: flex; align-items: center; }
       /* Match SCR-01_bet featured rider typography: 16px names / numbers
          and 14px note + character labels, with wins in warning red. */
