@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/design-tokens.css?v=56" />
     <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=12" />
     <link rel="stylesheet" href="./assets/app-base.css?v=1" />
-    <link rel="stylesheet" href="./assets/venue-list.css?v=6" />
+    <link rel="stylesheet" href="./assets/venue-list.css?v=8" />
     <link rel="stylesheet" href="./assets/venue-sort.css?v=4" />
       <link rel="stylesheet" href="./assets/venue-list-auto-overrides.css?v=2" />
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
@@ -50,7 +50,7 @@
                   <span class="venue-meta">初日・モーニング</span>
                 </div>
                 <div class="hscroll has-past">
-                  <div class="hscroll-cue-l"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></div>
+                  <button type="button" class="hscroll-cue-l" aria-label="前のレースへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></button>
                   <div class="hscroll-inner">
                     <div class="rchips">
                       <div class="rcol"><a class="rchip closed" href="./SCR-04_racecardautorace.html?venue=%E6%B5%9C%E6%9D%BE&day=%E5%88%9D%E6%97%A5&race=1" aria-label="浜松 1Rの予想情報"><b>1R</b><small>確定</small></a></div>
@@ -65,7 +65,7 @@
                       <div class="rcol"><a class="rchip" href="./SCR-04_racecardautorace.html?venue=%E6%B5%9C%E6%9D%BE&day=%E5%88%9D%E6%97%A5&race=10" aria-label="浜松 10Rの予想情報"><b>10R</b><small>12:50</small></a></div>
                     </div>
                   </div>
-                  <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
+                  <button type="button" class="hscroll-cue" aria-label="次のレースへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></button>
                 </div>
               </div>
               <div class="venue-card" data-sort-deadline="28" data-sort-grade="1" data-sort-venue="1">
@@ -76,7 +76,7 @@
                   <span class="rebate-logo">決勝5%還元</span>
                 </div>
                 <div class="hscroll">
-                  <div class="hscroll-cue-l"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></div>
+                  <button type="button" class="hscroll-cue-l" aria-label="前のレースへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></button>
                   <div class="hscroll-inner">
                     <div class="rchips">
                       <div class="rcol"><a class="rchip next" href="./SCR-04_racecardautorace.html?venue=%E5%B7%9D%E5%8F%A3&day=%E6%9C%80%E7%B5%82%E6%97%A5&race=1" aria-label="川口 1Rの予想情報"><b>1R</b><small>締切28分前</small></a></div>
@@ -93,7 +93,7 @@
                       <div class="rcol"><a class="rchip rebate" href="./SCR-04_racecardautorace.html?venue=%E5%B7%9D%E5%8F%A3&day=%E6%9C%80%E7%B5%82%E6%97%A5&race=12" aria-label="川口 12Rの予想情報"><b>12R</b><small>16:20</small><em class="rchip-rebate">5%還元</em></a></div>
                     </div>
                   </div>
-                  <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
+                  <button type="button" class="hscroll-cue" aria-label="次のレースへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></button>
                 </div>
               </div>
               <div class="venue-card" data-sort-deadline="633" data-sort-grade="9" data-sort-venue="5">
@@ -103,7 +103,7 @@
                   <span class="venue-meta">初日・ミッドナイト</span>
                 </div>
                 <div class="hscroll">
-                  <div class="hscroll-cue-l"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></div>
+                  <button type="button" class="hscroll-cue-l" aria-label="前のレースへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></button>
                   <div class="hscroll-inner">
                     <div class="rchips">
                       <div class="rcol"><a class="rchip" href="./SCR-04_racecardautorace.html?venue=%E5%B1%B1%E9%99%BD&day=%E5%88%9D%E6%97%A5&race=1" aria-label="山陽 1Rの予想情報"><b>1R</b><small>20:50</small></a></div>
@@ -114,7 +114,7 @@
                       <div class="rcol"><a class="rchip" href="./SCR-04_racecardautorace.html?venue=%E5%B1%B1%E9%99%BD&day=%E5%88%9D%E6%97%A5&race=6" aria-label="山陽 6Rの予想情報"><b>6R</b><small>22:55</small></a></div>
                     </div>
                   </div>
-                  <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
+                  <button type="button" class="hscroll-cue" aria-label="次のレースへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></button>
                 </div>
               </div>
               <div class="content-end-spacer"></div>
@@ -146,7 +146,7 @@
       </div>
 
     </div>
-    <script src="./assets/scroll-controls.js?v=2" data-scroll-mode="venue-list"></script>
+    <script src="./assets/scroll-controls.js?v=3" data-scroll-mode="venue-list"></script>
     <script src="./assets/venue-sort.js?v=3" defer></script>
       <script src="./assets/tap-feedback.js?v=3" defer></script>
 </body>
