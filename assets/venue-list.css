@@ -2064,21 +2064,38 @@
       .rchip.canceled { background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface)); border-color: var(--c-bg); color: var(--c-sub); cursor: default; box-shadow: none; }
       .rchip.canceled b,
       .rchip.canceled small { color: var(--c-sub); }
-      .rcol > .rchip-girls {
-        align-self: center;
-        margin-top: 0;
-        padding: 0;
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-        font-style: normal;
+      /* All R buttons use three aligned rows, including optional in-button
+         Girls / campaign marks on the final line. */
+      .venue-card .rchip {
+        display: grid;
+        grid-template-rows: 20px 16px 18px;
+        align-content: center;
+        justify-items: center;
+        min-height: 70px;
       }
-      .rcol > .rchip-rebate {
+      .venue-card .rchip > b { grid-row: 1; }
+      .venue-card .rchip > small { grid-row: 2; white-space: nowrap; }
+      .venue-card .rchip > :is(.rchip-bottom-icon, .rchip-rebate) {
+        grid-row: 3;
         align-self: center;
-        margin-top: 0;
+      }
+      .venue-card .rchip-bottom-icon {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        width: 20px;
+        height: 18px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+      .venue-card .rchip-campaign-icon {
+        display: block;
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+        color: var(--c-primary-d);
       }
       .rchip .rchip-rebate { font-size: var(--fs-12); }
       /* ODAWARA 1R's closed-state line is the typography reference for every
@@ -2139,12 +2156,23 @@
         flex: 0 0 auto;
       }
       .comment-row .cr-kun {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
         margin-left: auto;
         padding-left: var(--space-small);
         font-size: var(--fs-14);
         font-weight: var(--fw-14-strong);
         color: var(--c-text);
         white-space: nowrap;
+        flex: 0 0 auto;
+      }
+      .comment-row .cr-kun-icon {
+        display: block;
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+        object-fit: contain;
       }
       .comment-row.multi { align-items: flex-start; }
       .comment-row.multi .cr-r { line-height: 22px; }
