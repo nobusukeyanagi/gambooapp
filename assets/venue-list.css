@@ -1922,7 +1922,14 @@
       .wx span { font-size: var(--fs-14); }
 
       .kubun { min-width: calc(5.82em + 10px); }
-      .venue-header .venue-meta { margin-right: 0; }
+      .venue-header .venue-meta {
+        margin-right: 0;
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-normal);
+        color: var(--c-text);
+        line-height: 1.25;
+        letter-spacing: normal;
+      }
       /* Match the unboxed Girls heart on SCR-01_bet.html. */
       .venue-header .venue-girls,
       .rchip .rchip-girls {
@@ -1987,6 +1994,34 @@
       }
       .rchip.live small::before { display: none; }
       .rchips { gap: 6px; align-items: stretch; }
+      /* Full-height tappable scroll arrows, restricted to SCR-02 race rows. */
+      .venue-card .hscroll > .hscroll-cue,
+      .venue-card .hscroll > .hscroll-cue-l {
+        top: var(--space-small);
+        bottom: var(--space-small);
+        margin-top: 0;
+        height: auto;
+        width: var(--tap-dense);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: auto;
+        cursor: pointer;
+        border-radius: var(--r-control);
+        padding: 0;
+        font-family: var(--ff-ui);
+        -webkit-tap-highlight-color: transparent;
+      }
+      .venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l)[hidden] {
+        display: none;
+      }
+      .venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l):focus-visible {
+        outline: var(--line-focus);
+        outline-offset: var(--space-2);
+      }
+      .venue-card .hscroll > .hscroll-inner {
+        padding-right: calc(var(--tap-dense) + var(--space-section));
+      }
       .rcol { flex: 0 0 auto; display: flex; }
       .rcol > .rchip { flex: 1 1 auto; }
       .rcol > a.rchip { text-decoration: none; }
