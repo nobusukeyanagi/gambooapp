@@ -2052,6 +2052,13 @@
         justify-content: center;
       }
       .rchip .rchip-rebate { font-size: var(--fs-12); }
+      /* ODAWARA 1R's closed-state line is the typography reference for every
+         race time/status. Keep each race state responsible for color only. */
+      .venue-card .rchip > small {
+        font-family: var(--ff-ui);
+        font-size: var(--fs-12);
+        font-weight: 700;
+      }
       .comment-row { display: flex; align-items: center; }
       .comment-row .cr-name { font-weight: 900; color: var(--c-text); min-width: 0; }
       .comment-row .cr-kun { margin-left: auto; padding-left: 8px; white-space: nowrap; font-weight: 800; color: var(--c-primary-d); }
