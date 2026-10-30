@@ -1426,7 +1426,7 @@
 
       .rchip.closed {
         background: var(--c-surface);
-        border-color: var(--c-border);
+        border-color: var(--c-border-control);
         color: var(--c-sub);
       }
       .rchip.closed b { color: var(--c-sub); font-weight: 800; }
@@ -1997,16 +1997,18 @@
       /* Full-height tappable scroll arrows, restricted to SCR-02 race rows. */
       .venue-card .hscroll > .hscroll-cue,
       .venue-card .hscroll > .hscroll-cue-l {
-        top: var(--space-small);
-        bottom: var(--space-small);
+        top: 0;
+        bottom: 0;
         margin-top: 0;
         height: auto;
+        min-height: var(--tap-min);
         width: var(--tap-dense);
         display: flex;
         align-items: center;
         justify-content: center;
         pointer-events: auto;
         cursor: pointer;
+        appearance: none;
         border-radius: var(--r-control);
         padding: 0;
         font-family: var(--ff-ui);
