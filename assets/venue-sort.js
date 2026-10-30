@@ -5,7 +5,7 @@
   const scrollArea = document.querySelector(".phone-inner > .scroll-area");
   const options = [...document.querySelectorAll(".venue-sort-options [data-sort]")];
   const cards = [...(scrollArea?.querySelectorAll(":scope > .venue-card") || [])];
-  if (!scrollArea || options.length !== 3 || !cards.length) return;
+  if (!scrollArea || options.length < 2 || options.length > 3 || !cards.length) return;
 
   const originalPosition = new Map(cards.map((card, index) => [card, index]));
   const sortKey = {
@@ -33,4 +33,7 @@
   }
 
   options.forEach((option) => option.addEventListener("click", () => applySort(option)));
+  // Keep the selected sort button consistent with the initially displayed order.
+  const selected = options.find((option) => option.classList.contains("active"));
+  if (selected) applySort(selected);
 })();
