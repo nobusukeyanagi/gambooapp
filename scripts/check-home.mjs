@@ -106,9 +106,9 @@ async function auditCss() {
           sourceOf.set(key + ' | ' + decl.prop, filename);
         }
       });
-      const size = fontSize.match(/--fs-(12|14|16|18|20|24)/);
-      const weight = fontWeight.match(/--fw-(12|14|16|18|20|24)-(normal|strong)/);
-      if (size && weight && size[1] !== weight[1]) fail('Font size/weight mismatch: ' + filename + ' ' + rule.selector);
+      if (fontWeight && /var\(--fw-/.test(fontWeight) &&
+          !/var\(--fw-(normal|strong)\)/.test(fontWeight))
+        fail('Non-canonical font weight token: ' + filename + ' ' + rule.selector);
     });
   }
   if (errors.length) throw new Error(errors.join('\n'));
@@ -117,7 +117,7 @@ async function auditCss() {
 
 const expectedComputedStyles = [
   ['.app-header .logo', 'fontSize', '18px'],
-  ['.app-header .logo', 'fontWeight', '700'],
+  ['.app-header .logo', 'fontWeight', '600'],
   ['.icon-sprite', 'display', 'none'],
   ['.news-title', 'fontSize', '16px'],
   ['.news-title', 'fontWeight', '600'],
@@ -129,6 +129,8 @@ const expectedComputedStyles = [
   ['.venue-grid.g3 .girls .girls-heart-icon', 'height', '14px'],
   ['.date-tabs .date-tab', 'fontSize', '16px'],
   ['.date-tabs .date-tab', 'fontWeight', '600'],
+  ['.venue-grid.g3 .vcard-r', 'fontWeight', '600'],
+  ['.venue-grid.g3 .vcard-dl', 'fontWeight', '600'],
   ['.bottom-tab', 'height', '60px'],
   ['.bottom-tab .tab-item', 'rowGap', '0px'],
   ['.bottom-tab .tab-icon .ic', 'height', '32px'],

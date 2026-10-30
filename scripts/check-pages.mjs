@@ -238,6 +238,11 @@ async function checkPredictionSort(page, width, isAutorace) {
     if (northValues.some((v, i) => i && v < northValues[i-1]))
       fail(width + 'px third venue tap should restore north-to-south');
   }
+  // Guard the canonical 600-weight for race numbers, times and statuses.
+  const raceWeights = await page.locator('.venue-card .rchip:not(.canceled) > b, .venue-card .rchip > small')
+    .evaluateAll(nodes => [...new Set(nodes.map(n => getComputedStyle(n).fontWeight))]);
+  if (raceWeights.some(weight => weight !== '600'))
+    fail(width + 'px race button fonts must be 600: ' + raceWeights.join(','));
   const raceLinks = page.locator('.venue-card a.rchip');
   if (!await raceLinks.count()) fail(width + 'px linked race buttons missing');
   if (!/SCR-0[34]_racecard/.test(await raceLinks.first().getAttribute('href')))
@@ -310,7 +315,12 @@ async function checkPredictionSort(page, width, isAutorace) {
 }
 
 async function checkSharedReferences(){
- const expected=['design-tokens.css?v=57','tap-feedback.css?v=3'];
+ const expected=['design-tokens.css?v=58','tap-feedback.css?v=3'];
+ const tokens=await readFile(path.join(ROOT,'assets','design-tokens.css'),'utf8');
+ if(!/--fw-normal:\s*400\s*;/.test(tokens)||!/--fw-strong:\s*600\s*;/.test(tokens))
+   fail('Canonical typography weights must be 400 and 600');
+ if(/--fw-\d{2}-(normal|strong)/.test(tokens))
+   fail('Legacy size-specific weight token found');
  const all=['SCR-01_bet.html',...paths];
  for(const page of all){
   const html=await readFile(path.join(ROOT,page),'utf8');
