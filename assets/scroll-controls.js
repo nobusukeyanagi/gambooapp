@@ -11,17 +11,24 @@
     });
   }
   document.querySelectorAll(".hscroll-inner").forEach(function (box) {
-    var active = mode === "venue-list"
-      ? box.querySelector(".rchip.live") || box.querySelector(".rchip.next, .race-tab.active, .active")
-      : box.querySelector(".active");
-    if (!active) return;
-    var outer = box.parentElement;
-    if (mode === "venue-list" && outer && outer.classList.contains("has-past")) {
-      box.scrollLeft = Math.max(0, active.offsetLeft - box.offsetLeft - 34);
-    } else {
-      var right = active.offsetLeft + active.offsetWidth;
-      if (right > box.clientWidth - 26) box.scrollLeft = right - box.clientWidth + 34;
+    if (mode === "venue-list" && box.closest(".venue-card")) {
+      // Show the next purchasable race at the left of the visible R bar.
+      // Closed/confirmed and already-closed "live" races stay off-screen
+      // to the left. Reserve the left arrow strip so it never hides this R.
+      var current = box.querySelector(".rchip.next") ||
+        box.querySelector(".rchip:not(.closed):not(.live):not(.canceled)");
+      if (!current) return;
+      var arrow = box.parentElement.querySelector(".hscroll-cue-l");
+      var clearance = arrow ? arrow.getBoundingClientRect().width + 8 : 0;
+      var offset = current.getBoundingClientRect().left - box.getBoundingClientRect().left;
+      var max = Math.max(0, box.scrollWidth - box.clientWidth);
+      box.scrollLeft = Math.max(0, Math.min(max, box.scrollLeft + offset - clearance));
+      return;
     }
+    var active = box.querySelector(".active");
+    if (!active) return;
+    var right = active.offsetLeft + active.offsetWidth;
+    if (right > box.clientWidth - 26) box.scrollLeft = right - box.clientWidth + 34;
   });
   /* SCR-02 race rows: arrows are full-height, keyboard accessible scroll controls. */
   if (mode === "venue-list") {
