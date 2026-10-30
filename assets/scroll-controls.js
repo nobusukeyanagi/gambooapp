@@ -23,4 +23,30 @@
       if (right > box.clientWidth - 26) box.scrollLeft = right - box.clientWidth + 34;
     }
   });
+  /* SCR-02 race rows: arrows are full-height, keyboard accessible scroll controls. */
+  if (mode === "venue-list") {
+    document.querySelectorAll(".venue-card .hscroll").forEach(function (outer) {
+      var box = outer.querySelector(".hscroll-inner");
+      var left = outer.querySelector(".hscroll-cue-l");
+      var right = outer.querySelector(".hscroll-cue");
+      if (!box || !left || !right) return;
+
+      function sync() {
+        var max = Math.max(0, box.scrollWidth - box.clientWidth);
+        left.hidden = box.scrollLeft <= 1;
+        right.hidden = box.scrollLeft >= max - 1;
+      }
+      function scroll(direction) {
+        var distance = Math.max(0, box.clientWidth - 2 * 36);
+        box.scrollBy({ left: direction * distance, behavior: "smooth" });
+      }
+      left.addEventListener("click", function () { scroll(-1); });
+      right.addEventListener("click", function () { scroll(1); });
+      box.addEventListener("scroll", sync, { passive: true });
+      if (typeof ResizeObserver !== "undefined") {
+        new ResizeObserver(sync).observe(box);
+      }
+      requestAnimationFrame(sync);
+    });
+  }
 })();
