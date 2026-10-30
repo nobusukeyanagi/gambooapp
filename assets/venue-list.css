@@ -936,7 +936,7 @@
       }
 
       .page-header-title {
-        font-size: var(--fs-16);
+        font-size: var(--fs-16); font-weight: var(--fw-16-strong);
       }
       .header-right {
         display: flex;
@@ -1610,10 +1610,10 @@
       .app-header .logo { display: flex; align-items: center; gap: var(--space-5); }
       .app-header .logo .ic { width: 18px; height: 18px; }
 
-      .venue-name { color: var(--c-text) !important; }
-      .action-btn.primary { background: var(--c-primary) !important; color: var(--c-text) !important; }
+      .venue-name { color: var(--c-text); }
+      .action-btn.primary { background: var(--c-primary); color: var(--c-text); }
       .date-tab.active,
-      .top-tab.active { color: var(--c-primary-d) !important; border-bottom-color: var(--c-primary-d) !important; }
+      .top-tab.active { color: var(--c-primary-d); border-bottom-color: var(--c-primary-d); }
 
       .ic {
         outline: none;
@@ -1761,8 +1761,8 @@
       .carno.w9 { background: var(--w9); color: var(--c-surface); border-color: var(--w9); }
 
       .action-btn.disabled {
-        background: var(--c-bg) !important;
-        color: var(--c-sub) !important;
+        background: var(--c-bg);
+        color: var(--c-sub);
         box-shadow: none;
         cursor: default;
       }
@@ -1857,23 +1857,23 @@
       .page-header-title { font-size: var(--fs-18); }
       .page-header .back-btn .ic { width: 28px; height: 28px; }
       .section-header { padding: var(--space-14) var(--space-content) var(--space-section); }
-      .section-title { font-size: var(--fs-16); }
+      .section-title { font-size: var(--fs-16); font-weight: var(--fw-16-strong); }
       .see-all { font-size: var(--fs-14); min-height: 40px; }
-      .chip { min-height: 40px; padding: 0 var(--space-14); font-size: var(--fs-14); }
+      .chip { min-height: 40px; padding: 0 var(--space-14); font-size: var(--fs-14); font-weight: var(--fw-14-strong); }
       .info-tabs .info-tab { min-height: 52px; font-size: var(--fs-14); }
       .race-tab { min-width: 62px; min-height: 54px; }
       .race-tab b { font-size: var(--fs-16); }
       .race-tab small { font-size: var(--fs-12); }
       .race-tab.active { min-width: 92px; }
       .rchip { min-width: 62px; min-height: 54px; }
-      .rchip b { font-size: var(--fs-16); }
+      .rchip b { font-size: var(--fs-16); font-weight: var(--fw-16-strong); }
       .rchip small { font-size: var(--fs-12); }
       .rchip.next { min-width: 90px; }
       .action-btn { min-height: 50px; font-size: var(--fs-14); }
       .action-btn .ic { width: 18px; height: 18px; }
       .sort-btn { font-size: var(--fs-14); min-height: 46px; }
       .list-head .list-count { font-size: var(--fs-14); }
-      .comment-row { font-size: var(--fs-14); }
+      .comment-row { font-size: var(--fs-14); font-weight: var(--fw-14-strong); }
       .comment-row .cr-r { font-size: var(--fs-14); }
       .menu-item { min-height: 56px; }
       .menu-text { font-size: var(--fs-16); }
@@ -1890,10 +1890,10 @@
       .vgroup-name { font-size: var(--fs-16); }
       .vgroup-link { font-size: var(--fs-14); }
       .gbadge { font-size: var(--fs-12); }
-      .venue-name { font-size: var(--fs-20); }
+      .venue-name { font-size: var(--fs-20); font-weight: var(--fw-20-strong); }
       .venue-header { min-height: 48px; }
       .venue-meta { font-size: var(--fs-14); }
-      .grade-badge { font-size: var(--fs-14); }
+      .grade-badge { font-size: var(--fs-14); font-weight: var(--fw-14-strong); }
       .ri-event { font-size: var(--fs-14); }
       .ri-race { font-size: var(--fs-20); }
       .ri-race span { font-size: var(--fs-16); }
