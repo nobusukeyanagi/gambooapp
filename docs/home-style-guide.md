@@ -6,7 +6,7 @@
 
 ## CSS の責務と読込順
 
-`SCR-01_home.html` の `<head>` で次の順に読み込む。
+`SCR-01_bet.html` の `<head>` で次の順に読み込む。
 
 1. `assets/design-tokens.css`：フォント、サイズ、太さ、余白、色、罫線、角丸、影、コントロール寸法の**唯一の定義元**。
 2. `assets/bottom-nav-icons.css`：ボトムナビのSVGアイコンサイズ・形状と有効/無効状態。
