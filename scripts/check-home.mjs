@@ -131,6 +131,8 @@ const expectedComputedStyles = [
   ['.date-tabs .date-tab', 'fontWeight', '600'],
   ['.venue-grid.g3 .vcard-r', 'fontWeight', '600'],
   ['.venue-grid.g3 .vcard-dl', 'fontWeight', '600'],
+  ['.venue-grid.g3 .vcard', 'borderTopColor', 'rgb(208, 212, 214)'],
+  ['.app-header .header-actions .icon-btn', 'borderTopColor', 'rgb(208, 212, 214)'],
   ['.bottom-tab', 'height', '60px'],
   ['.bottom-tab .tab-item', 'rowGap', '0px'],
   ['.bottom-tab .tab-icon .ic', 'height', '32px'],

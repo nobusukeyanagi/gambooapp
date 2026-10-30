@@ -293,7 +293,8 @@ button, input, select, textarea {
 .rchip {
   flex: 0 0 auto;
   border-radius: var(--r-control);
-  border: var(--line-control);
+  border: var(--line-normal);
+  box-shadow: var(--e1);
   background: var(--c-surface);
   color: var(--c-text);
   display: flex;
@@ -323,7 +324,6 @@ button, input, select, textarea {
 
 .rchip.next {
   background: var(--c-surface);
-  border-color: var(--c-border-control);
   color: var(--c-text);
 }
 
@@ -943,7 +943,6 @@ button, input, select, textarea {
   border-color: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
   color: var(--c-sub);
   cursor: default;
-  box-shadow: none;
 }
 
 .rchip.canceled b, .rchip.canceled small {
@@ -1024,7 +1023,6 @@ button, input, select, textarea {
 .venue-card .rchip.next.soon {
   background: var(--c-surface);
   border: var(--line-thin) solid var(--c-error);
-  box-shadow: none;
 }
 
 .venue-card .rchip > .rchip-warning {

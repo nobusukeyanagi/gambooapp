@@ -126,7 +126,7 @@ body { font-weight: var(--fw-normal); }
   padding: 0 var(--space-section);
   gap: var(--space-small);
   background: transparent;
-  border: var(--line-control);
+  border: var(--line-normal);
   border-radius: var(--r-control);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);

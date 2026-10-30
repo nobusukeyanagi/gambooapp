@@ -243,6 +243,22 @@ async function checkPredictionSort(page, width, isAutorace) {
     .evaluateAll(nodes => [...new Set(nodes.map(n => getComputedStyle(n).fontWeight))]);
   if (raceWeights.some(weight => weight !== '600'))
     fail(width + 'px race button fonts must be 600: ' + raceWeights.join(','));
+  // Normal white race buttons share the home venue card's light border and
+  // every race button has the canonical subtle shadow, including urgent/canceled.
+  const raceStyles = await page.locator('.venue-card .rchip').evaluateAll(nodes =>
+    nodes.map(n => ({classes: n.className, background: getComputedStyle(n).backgroundColor,
+      border: getComputedStyle(n).borderTopColor, shadow: getComputedStyle(n).boxShadow})));
+  if (!raceStyles.length) fail(width + 'px race button styles missing');
+  for (const st of raceStyles) {
+    if (st.shadow === 'none') fail(width + 'px race button missing shadow: ' + st.classes);
+    if (st.background === 'rgb(255, 255, 255)' && !st.classes.includes('soon') &&
+        st.border !== 'rgb(208, 212, 214)')
+      fail(width + 'px white race button border should match home venue: ' + JSON.stringify(st));
+  }
+  const sortBorders = await page.locator('.venue-sort-options .chip:not(.active)')
+    .evaluateAll(nodes => nodes.map(n => getComputedStyle(n).borderTopColor));
+  if (sortBorders.some(c => c !== 'rgb(208, 212, 214)'))
+    fail(width + 'px white sort button border mismatches home venue');
   const raceLinks = page.locator('.venue-card a.rchip');
   if (!await raceLinks.count()) fail(width + 'px linked race buttons missing');
   if (!/SCR-0[34]_racecard/.test(await raceLinks.first().getAttribute('href')))

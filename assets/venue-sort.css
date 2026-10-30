@@ -20,7 +20,7 @@
   font-weight: var(--fw-strong);
   line-height: 1.2;
   white-space: nowrap;
-  border: var(--line-control);
+  border: var(--line-normal);
   border-radius: var(--r-control);
   background: var(--c-surface);
   color: var(--c-text);
