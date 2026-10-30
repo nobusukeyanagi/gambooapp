@@ -142,28 +142,28 @@
 /* Shared bottom breathing room for long scrollable pages. */
 .content-end-spacer { height: var(--space-section); }
 
-/* SCR-01_bet.html is the 50px reference for the first and second fixed rows.
-   Keep these heights independent from page-specific content and controls. */
+/* SCR-01_bet.html reference: a 50px header and a 50px payout row
+   plus a 1px bottom border (51px total). Match both actual outer heights. */
 .phone-inner > .date-tabs {
-  height: var(--h-balance);
-  min-height: var(--h-balance);
+  height: calc(var(--h-balance) + var(--line-thin));
+  min-height: calc(var(--h-balance) + var(--line-thin));
 }
 .phone-inner > .date-tabs > .date-tab {
   height: 100%;
   min-height: 0;
 }
 .phone-inner > .hscroll > .hscroll-inner > .race-tabs {
-  height: var(--h-balance);
+  height: calc(var(--h-balance) + var(--line-thin));
   padding: var(--space-small) var(--space-section);
   align-items: center;
 }
 .phone-inner > .hscroll .race-tab {
-  height: calc(var(--h-balance) - 2 * var(--space-small) - var(--line-thin));
+  height: calc(var(--h-balance) - 2 * var(--space-small));
   min-height: 0;
   padding: var(--space-2) var(--space-5);
 }
 .phone-inner > .filter-chips {
-  height: var(--h-balance);
+  height: calc(var(--h-balance) + var(--line-thin));
   align-items: center;
   padding: 0 var(--space-10);
   flex-shrink: 0;
