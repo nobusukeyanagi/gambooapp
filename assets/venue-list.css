@@ -2054,14 +2054,18 @@
       .rchip.canceled { background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface)); border-color: var(--c-bg); color: var(--c-sub); cursor: default; box-shadow: none; }
       .rchip.canceled b,
       .rchip.canceled small { color: var(--c-sub); }
-      /* Uniform R buttons: alert, R number, scheduled time, optional logo.
-         Fixed rows keep every button aligned within the horizontal bar. */
+      /* All race buttons match the near-deadline button's 90px width.
+         Fixed rows align alerts, race number, 16px time and icons. */
       .venue-card .rchip {
         display: grid;
-        grid-template-rows: 16px 20px 16px 18px;
+        grid-template-rows: 16px 20px 20px 18px;
         align-content: center;
         justify-items: center;
-        min-height: 80px;
+        box-sizing: border-box;
+        width: 90px;
+        min-width: 90px;
+        max-width: 90px;
+        min-height: 84px;
       }
       .venue-card .rchip > b { grid-row: 2; }
       .venue-card .rchip > small { grid-row: 3; white-space: nowrap; }
@@ -2094,12 +2098,24 @@
         fill: currentColor;
         color: var(--c-primary-d);
       }
+      .venue-card .rchip-featured-icon {
+        display: block;
+        width: 16px;
+        height: 16px;
+        object-fit: contain;
+      }
       /* ODAWARA 1R's closed-state line is the typography reference for every
          race time/status. Keep each race state responsible for color only. */
       .venue-card .rchip > small {
         font-family: var(--ff-ui);
         font-size: var(--fs-12);
         font-weight: var(--fw-12-strong);
+      }
+      /* Scheduled start times share the 16px R-number typography.
+         Confirmed/closed/canceled text and countdowns remain 12px. */
+      .venue-card .rchip > small.rchip-time {
+        font-size: var(--fs-16);
+        font-weight: var(--fw-16-strong);
       }
       /* Scheduled times are always dark; completed / closed / canceled
          statuses retain their existing semantic text colors. */
@@ -2120,6 +2136,11 @@
         font-weight: var(--fw-12-strong);
         line-height: 1.25;
         white-space: nowrap;
+      }
+      .venue-card .rchip.next.soon > small:not(.rchip-time) {
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
+        color: var(--c-error);
       }
 
       .comment-row { display: flex; align-items: center; }
