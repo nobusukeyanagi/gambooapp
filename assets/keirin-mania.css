@@ -17,7 +17,7 @@
       .mk {
         font-size: var(--fs-16);
         line-height: 1;
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .mk-dbl { color: var(--w3); }
       .mk-o { color: var(--c-success); }
@@ -46,7 +46,7 @@
         background: linear-gradient(var(--c-primary), var(--c-primary));
         border-color: var(--c-primary);
         color: var(--c-surface);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .hint {
         font-size: var(--fs-12);
@@ -90,7 +90,7 @@
       }
       .sheet-title {
         font-size: var(--fs-14);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .sheet-close {
         width: 24px;
@@ -123,7 +123,7 @@
       .detail-table th {
         background: var(--c-bg);
         color: var(--c-sub);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         padding: 4px 3px;
         border-bottom: var(--line-normal);
         position: sticky;
@@ -138,7 +138,7 @@
       }
       .detail-table td.dn {
         text-align: left;
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .detail-table .frame-cell {
         width: 16px;
@@ -147,7 +147,7 @@
       }
       .rate-hi {
         color: var(--c-error);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .sheet-note {
         font-size: var(--fs-12);
@@ -172,7 +172,7 @@
       .detail-table .dt-car { left: 0; width: 26px; min-width: 26px; }
       .detail-table .dt-name { left: 26px; min-width: 64px; border-right: var(--line-normal); }
       .detail-table td.rt { min-width: 64px; padding: 3px 4px 4px; text-align: right; vertical-align: top; }
-      .detail-table .rt-v { display: block; font-weight: 700; color: var(--c-text); line-height: 1.2; }
+      .detail-table .rt-v { display: block; font-weight: var(--fw-strong); color: var(--c-text); line-height: 1.2; }
       .detail-table .rt-n { display: block; font-size: var(--fs-12); color: var(--c-sub); line-height: 1.2; }
       .detail-table .rt-bar { display: block; height: 6px; margin-top: 2px; background: var(--w6); border-radius: 1px; }
       .detail-table .rt-out .rt-bar { background: var(--c-keirin); }
@@ -187,7 +187,7 @@
         background: var(--c-surface);
         box-shadow: var(--e1);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-text);
       }
       .item-btn:active,

@@ -3,7 +3,7 @@
 .screen-label {
         color: var(--c-border);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         text-transform: uppercase;
         letter-spacing: 0.1em;
       }
@@ -22,7 +22,7 @@
       }
       .status-bar span {
         font-size: var(--fs-12);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         color: var(--c-text);
       }
 
@@ -39,14 +39,14 @@
       }
       .logo {
         font-size: var(--fs-16);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         color: var(--c-primary-d);
         letter-spacing: normal;
       }
       .logo span {
         color: var(--c-text);
         font-size: var(--fs-12);
-        font-weight: 400;
+        font-weight: var(--fw-normal);
       }
       .header-actions {
         display: flex;
@@ -79,7 +79,7 @@
         background: var(--c-keirin);
         color: var(--c-surface);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         padding: 4px 8px;
         border-radius: var(--r-full);
         white-space: nowrap;
@@ -151,12 +151,12 @@
         color: var(--c-text);
         padding: 1px 6px;
         border-radius: 3px;
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         margin-bottom: 4px;
       }
       .hero-title {
         font-size: var(--fs-14);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         line-height: 1.2;
       }
       .hero-sub {
@@ -190,7 +190,7 @@
       }
       .section-title {
         font-size: var(--fs-14);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-text);
         display: flex;
         align-items: center;
@@ -207,7 +207,7 @@
       .see-all {
         font-size: var(--fs-12);
         color: var(--c-keirin);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
       }
 
       .date-tabs {
@@ -223,7 +223,7 @@
         align-items: center;
         justify-content: center;
         font-size: var(--fs-12);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         border-bottom: var(--line-emphasis-width) solid transparent;
         cursor: pointer;
@@ -249,7 +249,7 @@
         padding: 3px 10px;
         border-radius: var(--r-full);
         font-size: var(--fs-12);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         white-space: nowrap;
         background: var(--c-bg);
         color: var(--c-sub);
@@ -278,7 +278,7 @@
       }
       .venue-name {
         font-size: var(--fs-16);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         flex: 1;
       }
       .venue-meta {
@@ -288,7 +288,7 @@
 
       .grade-badge {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         padding: 1px 5px;
         border-radius: 3px;
         color: var(--c-text);
@@ -314,7 +314,7 @@
 
       .rebate-badge {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         background: var(--c-bg);
         color: var(--c-warning);
         border: var(--line-normal);
@@ -331,7 +331,7 @@
       }
       .race-num {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         min-width: 20px;
       }
@@ -343,7 +343,7 @@
       .race-status {
         font-size: var(--fs-12);
         color: var(--c-success);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
       }
       .race-status.closing {
         color: var(--c-error);
@@ -368,7 +368,7 @@
         background: var(--c-keirin);
         color: var(--c-surface);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -391,7 +391,7 @@
         height: 32px;
         border-radius: var(--r-full);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -420,7 +420,7 @@
       }
       .pickup-venue {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         min-width: 52px;
         text-align: center;
         line-height: 1.3;
@@ -430,7 +430,7 @@
       }
       .pickup-reason-main {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-error);
       }
       .pickup-reason-sub {
@@ -449,7 +449,7 @@
       }
       .news-badge {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         padding: 2px 5px;
         border-radius: 3px;
         color: var(--c-surface);
@@ -516,7 +516,7 @@
       }
       .blog-author {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .blog-text {
         font-size: var(--fs-12);
@@ -539,7 +539,7 @@
         font-size: var(--fs-12);
         padding: 0px 3px;
         border-radius: 2px;
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
 
       .page-header {
@@ -555,14 +555,14 @@
       .back-btn {
         font-size: var(--fs-12);
         color: var(--c-keirin);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         display: flex;
         align-items: center;
         gap: 2px;
       }
       .page-header-title {
         font-size: var(--fs-14);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .page-header-action {
         font-size: var(--fs-18);
@@ -577,7 +577,7 @@
       }
       .race-info-title {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .race-info-meta {
         font-size: var(--fs-12);
@@ -587,7 +587,7 @@
       .race-countdown {
         font-size: var(--fs-12);
         color: var(--c-success);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
 
       .race-tabs {
@@ -608,7 +608,7 @@
         align-items: center;
         justify-content: center;
         font-size: var(--fs-12);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         border-bottom: var(--line-emphasis-width) solid transparent;
         padding: 0 6px;
@@ -635,7 +635,7 @@
         flex: 1;
         padding: 4px 2px;
         font-size: var(--fs-12);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         white-space: normal;
         text-align: center;
@@ -671,7 +671,7 @@
         align-items: center;
         justify-content: center;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .lineup-sep {
         font-size: var(--fs-12);
@@ -695,7 +695,7 @@
         padding: 4px 5px;
         text-align: center;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         border-bottom: var(--line-normal);
         position: sticky;
@@ -729,7 +729,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         font-size: var(--fs-12);
         border-radius: 3px;
       }
@@ -764,16 +764,16 @@
       }
       .score {
         font-family: var(--ff-ui);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-text);
       }
       .score-hi {
         color: var(--c-error);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
       }
       .rider-name {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         text-align: left;
       }
       .rider-meta {
@@ -782,7 +782,7 @@
       }
       .leg-tag {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         padding: 1px 4px;
         border-radius: 3px;
       }
@@ -814,7 +814,7 @@
         height: 36px;
         border-radius: var(--r-full);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -856,7 +856,7 @@
       }
       .user-name {
         font-size: var(--fs-14);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .user-rank {
         font-size: var(--fs-12);
@@ -878,7 +878,7 @@
       }
       .point-value {
         font-size: var(--fs-14);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         font-family: var(--ff-ui);
       }
 
@@ -887,7 +887,7 @@
       }
       .menu-section-title {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
       }
       .menu-item {
@@ -941,7 +941,7 @@
       }
       .unit {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         margin-left: 1px;
         font-family: var(--ff-ui);
       }
@@ -1046,7 +1046,7 @@
       .tab-item {
         gap: 2px;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         letter-spacing: normal;
         white-space: nowrap;
         min-width: 0;
@@ -1149,7 +1149,7 @@
         gap: 4px;
         color: var(--c-sub);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         text-align: center;
         line-height: 1.5;
       }
@@ -1158,7 +1158,7 @@
       .cp-body { padding: 9px 10px 10px; background: var(--c-surface); }
       .cp-title {
         font-size: var(--fs-14);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         color: var(--c-text);
         line-height: 1.35;
         margin-bottom: 4px;
@@ -1176,14 +1176,14 @@
         gap: 4px;
       }
       .cp-period .ic { width: 13px; height: 13px; }
-      .cp-period b { color: var(--c-error); font-weight: 800; }
+      .cp-period b { color: var(--c-error); font-weight: var(--fw-strong); }
       .cp-actions { display: flex; gap: 7px; }
       .cp-btn {
         flex: 1;
         min-height: var(--tap-min);
         border-radius: var(--r-full);
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1280,7 +1280,7 @@
         background: var(--c-text);
         color: var(--c-bg);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         letter-spacing: 0.04em;
         text-transform: none;
         line-height: 30px;

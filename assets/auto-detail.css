@@ -18,7 +18,7 @@
       .screen-label {
         color: var(--c-border);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         text-transform: uppercase;
         letter-spacing: 0.1em;
       }
@@ -37,7 +37,7 @@
       }
       .status-bar span {
         font-size: var(--fs-12);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         color: var(--c-text);
       }
 
@@ -54,14 +54,14 @@
       }
       .logo {
         font-size: var(--fs-16);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         color: var(--c-primary-d);
         letter-spacing: normal;
       }
       .logo span {
         color: var(--c-text);
         font-size: var(--fs-12);
-        font-weight: 400;
+        font-weight: var(--fw-normal);
       }
       .header-actions {
         display: flex;
@@ -94,7 +94,7 @@
         background: var(--c-keirin);
         color: var(--c-surface);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         padding: 4px 8px;
         border-radius: var(--r-full);
         white-space: nowrap;
@@ -166,12 +166,12 @@
         color: var(--c-text);
         padding: 1px 6px;
         border-radius: 3px;
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         margin-bottom: 4px;
       }
       .hero-title {
         font-size: var(--fs-14);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         line-height: 1.2;
       }
       .hero-sub {
@@ -205,7 +205,7 @@
       }
       .section-title {
         font-size: var(--fs-14);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-text);
         display: flex;
         align-items: center;
@@ -222,7 +222,7 @@
       .see-all {
         font-size: var(--fs-12);
         color: var(--c-keirin);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
       }
 
       .date-tabs {
@@ -238,7 +238,7 @@
         align-items: center;
         justify-content: center;
         font-size: var(--fs-12);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         border-bottom: var(--line-emphasis-width) solid transparent;
         cursor: pointer;
@@ -264,7 +264,7 @@
         padding: 3px 10px;
         border-radius: var(--r-full);
         font-size: var(--fs-12);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         white-space: nowrap;
         background: var(--c-bg);
         color: var(--c-sub);
@@ -293,7 +293,7 @@
       }
       .venue-name {
         font-size: var(--fs-16);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         flex: 1;
       }
       .venue-meta {
@@ -303,7 +303,7 @@
 
       .grade-badge {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         padding: 1px 5px;
         border-radius: 3px;
         color: var(--c-text);
@@ -329,7 +329,7 @@
 
       .rebate-badge {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         background: var(--c-bg);
         color: var(--c-warning);
         border: var(--line-normal);
@@ -346,7 +346,7 @@
       }
       .race-num {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         min-width: 20px;
       }
@@ -358,7 +358,7 @@
       .race-status {
         font-size: var(--fs-12);
         color: var(--c-success);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
       }
       .race-status.closing {
         color: var(--c-error);
@@ -383,7 +383,7 @@
         background: var(--c-keirin);
         color: var(--c-surface);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -406,7 +406,7 @@
         height: 32px;
         border-radius: var(--r-full);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -435,7 +435,7 @@
       }
       .pickup-venue {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         min-width: 52px;
         text-align: center;
         line-height: 1.3;
@@ -445,7 +445,7 @@
       }
       .pickup-reason-main {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-error);
       }
       .pickup-reason-sub {
@@ -464,7 +464,7 @@
       }
       .news-badge {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         padding: 2px 5px;
         border-radius: 3px;
         color: var(--c-surface);
@@ -531,7 +531,7 @@
       }
       .blog-author {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .blog-text {
         font-size: var(--fs-12);
@@ -554,7 +554,7 @@
         font-size: var(--fs-12);
         padding: 0px 3px;
         border-radius: 2px;
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
 
       .page-header {
@@ -570,14 +570,14 @@
       .back-btn {
         font-size: var(--fs-12);
         color: var(--c-keirin);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         display: flex;
         align-items: center;
         gap: 2px;
       }
       .page-header-title {
         font-size: var(--fs-14);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .page-header-action {
         font-size: var(--fs-18);
@@ -592,7 +592,7 @@
       }
       .race-info-title {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .race-info-meta {
         font-size: var(--fs-12);
@@ -602,7 +602,7 @@
       .race-countdown {
         font-size: var(--fs-12);
         color: var(--c-success);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
 
       .race-tabs {
@@ -623,7 +623,7 @@
         align-items: center;
         justify-content: center;
         font-size: var(--fs-12);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         border-bottom: var(--line-emphasis-width) solid transparent;
         padding: 0 6px;
@@ -650,7 +650,7 @@
         flex: 1;
         padding: 4px 2px;
         font-size: var(--fs-12);
-        font-weight: 600;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         white-space: normal;
         text-align: center;
@@ -686,7 +686,7 @@
         align-items: center;
         justify-content: center;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .lineup-sep {
         font-size: var(--fs-12);
@@ -710,7 +710,7 @@
         padding: 4px 5px;
         text-align: center;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         border-bottom: var(--line-normal);
         position: sticky;
@@ -744,7 +744,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         font-size: var(--fs-12);
         border-radius: 3px;
       }
@@ -779,16 +779,16 @@
       }
       .score {
         font-family: var(--ff-ui);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-text);
       }
       .score-hi {
         color: var(--c-error);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
       }
       .rider-name {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         text-align: left;
       }
       .rider-meta {
@@ -797,7 +797,7 @@
       }
       .leg-tag {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         padding: 1px 4px;
         border-radius: 3px;
       }
@@ -829,7 +829,7 @@
         height: 36px;
         border-radius: var(--r-full);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -871,7 +871,7 @@
       }
       .user-name {
         font-size: var(--fs-14);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .user-rank {
         font-size: var(--fs-12);
@@ -893,7 +893,7 @@
       }
       .point-value {
         font-size: var(--fs-14);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         font-family: var(--ff-ui);
       }
 
@@ -902,7 +902,7 @@
       }
       .menu-section-title {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
       }
       .menu-item {
@@ -956,7 +956,7 @@
       }
       .unit {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         margin-left: 1px;
         font-family: var(--ff-ui);
       }
@@ -1061,7 +1061,7 @@
       .tab-item {
         gap: 2px;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         letter-spacing: normal;
         white-space: nowrap;
         min-width: 0;
@@ -1168,10 +1168,10 @@
         padding: 3px 6px;
         text-decoration: none;
       }
-      .race-tab b { font-size: var(--fs-14); font-weight: 900; }
+      .race-tab b { font-size: var(--fs-14); font-weight: var(--fw-strong); }
       .race-tab small {
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
@@ -1189,8 +1189,8 @@
         color: var(--c-sub);
         text-decoration: none;
       }
-      .race-tab.past b { font-weight: 800; }
-      .race-tab.past small { color: var(--c-keirin); font-weight: 800; }
+      .race-tab.past b { font-weight: var(--fw-strong); }
+      .race-tab.past small { color: var(--c-keirin); font-weight: var(--fw-strong); }
 
       .race-tab.canceled {
         background: repeating-linear-gradient(
@@ -1203,7 +1203,7 @@
         cursor: default;
       }
       .race-tab.canceled b { color: var(--c-error); }
-      .race-tab.canceled small { color: var(--c-error); font-weight: 900; }
+      .race-tab.canceled small { color: var(--c-error); font-weight: var(--fw-strong); }
 
       .race-info-bar {
         background: var(--c-surface);
@@ -1213,7 +1213,7 @@
       }
       .race-info-title {
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         line-height: 1.35;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -1236,7 +1236,7 @@
       }
       .race-countdown {
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         color: var(--c-warning);
         display: inline-flex;
         align-items: center;
@@ -1261,7 +1261,7 @@
         align-items: center;
         justify-content: center;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         white-space: nowrap;
         text-align: center;
@@ -1299,7 +1299,7 @@
       }
       .rider-name {
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         text-align: left;
         line-height: 1.2;
         white-space: nowrap;
@@ -1349,7 +1349,7 @@
       .num-blue {
         font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .num-blue { color: var(--c-keirin); }
       .num-hi { color: var(--c-error); }
@@ -1361,7 +1361,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         font-size: var(--fs-14);
         margin: 0 auto;
       }
@@ -1379,7 +1379,7 @@
         height: 22px;
         border-radius: var(--r-sm);
         font-size: var(--fs-12);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1403,7 +1403,7 @@
         background: var(--c-bg);
         color: var(--c-sub);
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         padding: 5px 5px;
         border-bottom: var(--line-normal);
       }
@@ -1447,7 +1447,7 @@
         font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
       }
-      .race-table .res-mini .rk { font-weight: 900; }
+      .race-table .res-mini .rk { font-weight: var(--fw-strong); }
       .race-table .res-mini .rk.win { color: var(--c-error); }
       .race-table .res-mini .rk.in { color: var(--c-keirin); }
       .race-table .res-mini .rk.out { color: var(--c-sub); }
@@ -1527,7 +1527,7 @@
 
       .grade-badge {
         font-size: var(--fs-12);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         padding: 1px 6px;
         border-radius: var(--r-sm);
         flex-shrink: 0;
@@ -1545,7 +1545,7 @@
         gap: 6px;
         min-width: 0;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
       }
       .ri-race {
@@ -1555,15 +1555,15 @@
         column-gap: 8px;
         margin-top: 3px;
         font-size: var(--fs-16);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         line-height: 1.3;
       }
-      .ri-race span { font-size: var(--fs-14); font-weight: 700; }
+      .ri-race span { font-size: var(--fs-14); font-weight: var(--fw-strong); }
       .race-info-bar .race-info-row { margin-top: 4px; }
       .race-info-bar .race-info-meta { font-size: var(--fs-12); color: var(--c-text); }
       .dl-pill {
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         color: var(--c-success);
         border: var(--line-thin) solid currentColor;
         border-radius: var(--r-full);
@@ -1603,7 +1603,7 @@
         background: var(--c-text);
         color: var(--c-bg);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         letter-spacing: 0.04em;
         text-transform: none;
         line-height: 30px;
@@ -1623,14 +1623,14 @@
         background: var(--c-bg);
         border-bottom: var(--line-normal);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         flex-shrink: 0;
       }
       .wx span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
       .wx i {
         font-style: normal;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
         background: var(--c-surface);
         border: var(--line-normal);
@@ -1663,7 +1663,7 @@
         color: var(--c-sub);
         font-family: var(--ff-ui);
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         line-height: 1.25;
         padding: 5px 6px;
         border-bottom: var(--line-normal);
@@ -1703,7 +1703,7 @@
         align-items: center;
         justify-content: center;
         font-size: var(--fs-16);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         border: var(--line-thin) solid transparent;
       }
       .wk.mini { width: 22px; height: 22px; font-size: var(--fs-14); }
@@ -1720,7 +1720,7 @@
       .rn b {
         display: block;
         font-size: var(--fs-14);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         overflow: hidden;
         text-overflow: ellipsis;
       }
@@ -1731,10 +1731,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .rn .rk .s { color: var(--c-success); font-weight: 800; }
-      .rn .rk .a { color: var(--c-primary-d); font-weight: 800; }
+      .rn .rk .s { color: var(--c-success); font-weight: var(--fw-strong); }
+      .rn .rk .a { color: var(--c-primary-d); font-weight: var(--fw-strong); }
 
-      .at .hd { font-size: var(--fs-18); font-weight: 900; }
+      .at .hd { font-size: var(--fs-18); font-weight: var(--fw-strong); }
       .at .pt { padding-right: 2px; }
       .at .pm { padding-left: 2px; min-width: 20px; }
       .at .sm { color: var(--c-sub); font-size: var(--fs-12); }
@@ -1760,7 +1760,7 @@
         min-height: 44px;
         padding: 0 12px;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         background: var(--c-surface);
         border-bottom: var(--line-normal);
       }
@@ -1800,7 +1800,7 @@
         align-items: center;
         justify-content: center;
         font-size: var(--fs-14);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         flex-shrink: 0;
       }
       .rc-rank.sp {
@@ -1811,7 +1811,7 @@
       }
       .rc-hd {
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         background: var(--c-bg);
         border-radius: 3px;
         padding: 3px 5px;
@@ -1834,15 +1834,15 @@
       .at .rc.r3 { background: var(--c-bg) !important; }
 
       .at .sc { min-width: 64px; }
-      .at .sc b { font-size: var(--fs-18); font-weight: 900; margin-left: 4px; }
-      .at .sc.lo b { color: var(--c-sub); font-weight: 700; }
+      .at .sc b { font-size: var(--fs-18); font-weight: var(--fw-strong); margin-left: 4px; }
+      .at .sc.lo b { color: var(--c-sub); font-weight: var(--fw-strong); }
       .at .vsn { min-width: 44px; }
-      .at .wl { font-size: var(--fs-14); font-weight: 800; letter-spacing: 0.04em; }
+      .at .wl { font-size: var(--fs-14); font-weight: var(--fw-strong); letter-spacing: 0.04em; }
       .at .wl.w { color: var(--c-error); }
       .at .wl.l { color: var(--c-keirin); }
       .at .wl.e { color: var(--c-sub); }
       .at .pw { text-align: left; min-width: 64px; }
-      .at .pw span { display: block; font-size: var(--fs-12); font-weight: 700; }
+      .at .pw span { display: block; font-size: var(--fs-12); font-weight: var(--fw-strong); }
       .at .pw i { display: block; height: 8px; border-radius: 2px; margin-top: 2px; }
       .at .pw i.p { background: var(--w8); }
       .at .pw i.y { background: var(--w5); }
@@ -1863,16 +1863,16 @@
         background: var(--c-surface);
         border-bottom: var(--line-normal);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
       }
       .rd-lab { color: var(--c-sub); cursor: pointer; }
-      .rd-lab.on { color: var(--c-text); font-weight: 900; }
+      .rd-lab.on { color: var(--c-text); font-weight: var(--fw-strong); }
       .lb-th { padding: 5px 4px 4px; vertical-align: top; }
       .lb-th small {
         display: block;
         margin-top: 3px;
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-sub);
       }
       .lb-btn {
@@ -1889,7 +1889,7 @@
         box-shadow: var(--e1);
         font-family: var(--ff-ui);
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         line-height: 1.15;
         color: var(--c-text);
         cursor: pointer;
@@ -1940,7 +1940,7 @@
         justify-content: space-between;
         padding: 2px 8px 6px 14px;
       }
-      .lsheet-title { font-size: var(--fs-16); font-weight: 900; }
+      .lsheet-title { font-size: var(--fs-16); font-weight: var(--fw-strong); }
       .lsheet-close {
         width: 44px;
         height: 44px;
@@ -1959,7 +1959,7 @@
         background: var(--c-bg);
         border-radius: var(--r-sm);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         color: var(--c-primary-d);
       }
       .lsheet-body { flex: 1; overflow: auto; }
@@ -1971,7 +1971,7 @@
         color: var(--c-sub);
         font-family: var(--ff-ui);
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         padding: 6px 4px;
         border-bottom: var(--line-normal);
         white-space: nowrap;
@@ -1982,9 +1982,9 @@
         text-align: center;
         white-space: nowrap;
       }
-      .ldt td.dn { text-align: left; font-family: var(--ff-ui); font-weight: 800; }
+      .ldt td.dn { text-align: left; font-family: var(--ff-ui); font-weight: var(--fw-strong); }
       .ldt .wk { width: 22px; height: 24px; font-size: var(--fs-14); }
-      .ldt .hi { color: var(--c-error); font-weight: 900; }
+      .ldt .hi { color: var(--c-error); font-weight: var(--fw-strong); }
       .lsheet-note { padding: 8px 12px 12px; font-size: var(--fs-12); color: var(--c-sub); }
       .lb-btn {
         min-width: 76px;
@@ -1995,7 +1995,7 @@
         background: var(--c-surface);
         box-shadow: var(--e1);
         font-size: var(--fs-12);
-        font-weight: 700;
+        font-weight: var(--fw-strong);
         white-space: nowrap;
       }
       .lb-btn.active { background: var(--c-primary); border-color: var(--c-primary-d); color: var(--c-text); }
@@ -2023,7 +2023,7 @@
         gap: 4px;
         border-radius: var(--r-full);
         font-size: var(--fs-14);
-        font-weight: 900;
+        font-weight: var(--fw-strong);
         cursor: pointer;
         box-shadow: var(--e2);
       }
@@ -2038,10 +2038,10 @@
       .at .bl { border-left: var(--line-normal); }
       .at .pt { border-right: 0 !important; }
       .at .rate { line-height: 1.2; min-width: 64px; }
-      .at .rate b { display: block; font-size: var(--fs-16); font-weight: 900; color: var(--c-text); }
+      .at .rate b { display: block; font-size: var(--fs-16); font-weight: var(--fw-strong); color: var(--c-text); }
       .at .rate small { display: block; font-size: var(--fs-12); color: var(--c-sub); }
-      .rate2 b { display: block; font-size: var(--fs-14); font-weight: 900; }
-      .rate2 small { display: block; font-size: var(--fs-12); color: var(--c-sub); font-weight: 400; }
+      .rate2 b { display: block; font-size: var(--fs-14); font-weight: var(--fw-strong); }
+      .rate2 small { display: block; font-size: var(--fs-12); color: var(--c-sub); font-weight: var(--fw-normal); }
 
 
       .tab-item { font-size: var(--fs-12); gap: 3px; }
@@ -2129,19 +2129,19 @@
 
       .race-tabs { gap: 6px; padding: 8px; }
       .race-tab { min-width: 62px; min-height: 54px; padding: 3px 5px; gap: 0; line-height: 1.15; }
-      .race-tab b { font-size: var(--fs-16); font-weight: 900; }
-      .race-tab small { font-size: var(--fs-12); font-weight: 400; color: var(--c-sub); }
-      .race-tab.past b { color: var(--c-sub); font-weight: 800; }
-      .race-tab.past small { color: var(--c-sub); font-weight: 700; }
+      .race-tab b { font-size: var(--fs-16); font-weight: var(--fw-strong); }
+      .race-tab small { font-size: var(--fs-12); font-weight: var(--fw-normal); color: var(--c-sub); }
+      .race-tab.past b { color: var(--c-sub); font-weight: var(--fw-strong); }
+      .race-tab.past small { color: var(--c-sub); font-weight: var(--fw-strong); }
       .race-tab.active { min-width: 90px; }
       .race-tab.active b { color: var(--c-text); }
-      .race-tab.active small { color: var(--c-primary-d); font-weight: 800; }
+      .race-tab.active small { color: var(--c-primary-d); font-weight: var(--fw-strong); }
       .race-tab.active.soon small { color: var(--c-error); }
       .race-tab.canceled { background: var(--c-bg); border-color: var(--c-bg); color: var(--c-sub); cursor: default; }
       .race-tab.canceled b,
-      .race-tab.canceled small { color: var(--c-sub); font-weight: 800; }
+      .race-tab.canceled small { color: var(--c-sub); font-weight: var(--fw-strong); }
       .ri-sub { margin-top: 2px; font-size: var(--fs-12); color: var(--c-sub); font-family: var(--ff-ui); }
-      .at th { background: var(--c-bg); font-weight: 700; }
+      .at th { background: var(--c-bg); font-weight: var(--fw-strong); }
       .at th.grp { background: var(--c-bg); color: var(--c-sub); }
       .at th.fx1,
       .at th.fx2 { background: var(--c-bg); }
@@ -2152,7 +2152,7 @@
       .at .fx2 { left: 40px; }
       .wk { width: 24px; height: 24px; font-size: var(--fs-14); }
       .ldt .wk { width: 24px; height: 24px; }
-      .lb-btn { background: var(--c-surface); border: var(--line-normal); box-shadow: var(--e1); color: var(--c-text); font-weight: 700; }
+      .lb-btn { background: var(--c-surface); border: var(--line-normal); box-shadow: var(--e1); color: var(--c-text); font-weight: var(--fw-strong); }
       .lb-btn:active,
       .lb-btn.active { background: var(--c-primary); border-color: var(--c-primary-d); color: var(--c-text); }
       .at td.fx2 { position: static; }
@@ -2162,7 +2162,7 @@
         margin-top: 2px;
         font-family: var(--ff-ui);
         font-size: var(--fs-12);
-        font-weight: 800;
+        font-weight: var(--fw-strong);
         line-height: 1.1;
         letter-spacing: normal;
         white-space: nowrap;

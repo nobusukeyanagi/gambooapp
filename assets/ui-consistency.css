@@ -1,4 +1,8 @@
 @charset "UTF-8";
+/* Two typography weights across every screen; semantic emphasis must not
+   silently fall back to browser-default 700/900. */
+body { font-weight: var(--fw-normal); }
+:where(b, strong, h1, h2, h3, h4, h5, h6) { font-weight: var(--fw-strong); }
 /* Cross-screen semantic hierarchy, based on SCR-01_bet.html.
    Load after per-page styles; unrelated components retain their own rules. */
 :is(.section-header, .vgroup-head) {
@@ -10,12 +14,12 @@
 }
 :is(.section-header, .vgroup-head) :is(.section-title, .vgroup-name) {
   font-size: var(--fs-20);
-  font-weight: var(--fw-20-strong);
+  font-weight: var(--fw-strong);
   letter-spacing: normal;
 }
 :is(.section-header, .vgroup-head) :is(.see-all, .vgroup-link, .mori-page-link) {
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
 }
 :is(.section-header, .vgroup-head) :is(.see-all, .mori-page-link) .ic {
   width: 16px;
@@ -32,7 +36,7 @@
 .pk3 .pk-explain,
 .news-date {
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-normal);
+  font-weight: var(--fw-normal);
   color: var(--c-text);
   line-height: 1.25;
   letter-spacing: normal;
@@ -54,13 +58,13 @@
 /* NEW is free-standing text, whereas the adjacent category badge stays 12px. */
 .news-new {
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
 }
 /* Balance labels and currency / point units. Do not enlarge table units. */
 .payout-bar.pt-h .payout-label,
 .payout-bar.pt-h .unit {
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
 }
 /* Bottom navigation labels: one type-scale step below standard 14px labels.
    Allow long labels to wrap while preserving the existing tap target. */
@@ -88,7 +92,7 @@
 /* If a banner image is missing, its fallback filename is legible too. */
 .bn.noimg .bn-fallback {
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
 }
 
 /* Home venue first row: center grade and day text on the same 20px line.
@@ -125,7 +129,7 @@
   border: var(--line-control);
   border-radius: var(--r-control);
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
   white-space: nowrap;
 }
 .app-header .header-actions .icon-btn .ic {
@@ -152,7 +156,7 @@
 /* Day navigation: one exact font definition, shared by bet and prediction pages. */
 .date-tabs .date-tab {
   font-size: var(--fs-16);
-  font-weight: var(--fw-16-strong);
+  font-weight: var(--fw-strong);
 }
 
 /* SCR-01_bet.html reference: a 50px header and a 50px payout row

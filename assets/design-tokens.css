@@ -11,17 +11,9 @@
   --fs-16: 16px;
   --fs-18: 18px;
   --fs-20: 20px;
-  /* Typography weight: size-specific normal / strong (canonical values). */
-  --fw-12-normal: 400;
-  --fw-12-strong: 600;
-  --fw-14-normal: 400;
-  --fw-14-strong: 600;
-  --fw-16-normal: 400;
-  --fw-16-strong: 600;
-  --fw-18-normal: 500;
-  --fw-18-strong: 700;
-  --fw-20-normal: 600;
-  --fw-20-strong: 700;
+  /* Unified typography weights for all font sizes. */
+  --fw-normal: 400;
+  --fw-strong: 600;
 
   /* Spacing: one source for each semantic purpose. */
   --space-section: 8px;

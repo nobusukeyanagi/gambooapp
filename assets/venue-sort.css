@@ -17,7 +17,7 @@
   padding: 0 var(--space-2);
   font-family: var(--ff-ui);
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
   line-height: 1.2;
   white-space: nowrap;
   border: var(--line-control);

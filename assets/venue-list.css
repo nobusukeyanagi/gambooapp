@@ -10,7 +10,7 @@ button, input, select, textarea {
 .screen-label {
   color: var(--c-border);
   font-size: var(--fs-12);
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -26,7 +26,7 @@ button, input, select, textarea {
 
 .status-bar span {
   font-size: var(--fs-12);
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
   color: var(--c-text);
 }
 
@@ -86,7 +86,7 @@ button, input, select, textarea {
   align-items: center;
   justify-content: center;
   font-size: var(--fs-12);
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
   color: var(--c-sub);
   border-bottom: var(--line-emphasis-width) solid transparent;
   cursor: pointer;
@@ -145,7 +145,7 @@ button, input, select, textarea {
 
 .page-header-title {
   font-size: var(--fs-16);
-  font-weight: var(--fw-16-strong);
+  font-weight: var(--fw-strong);
 }
 
 .chip.drop::after {
@@ -236,7 +236,7 @@ button, input, select, textarea {
 }
 
 .tab-item {
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
   letter-spacing: normal;
   white-space: nowrap;
   min-width: 0;
@@ -318,7 +318,7 @@ button, input, select, textarea {
 
 .rchip.closed b {
   color: var(--c-sub);
-  font-weight: var(--fw-16-strong);
+  font-weight: var(--fw-strong);
 }
 
 .rchip.next {
@@ -408,7 +408,7 @@ button, input, select, textarea {
 
 .race-status.closed {
   color: var(--c-sub);
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
 }
 
 .post-text .ic, .blog-list-title .ic, .news-title .ic, .pickup-reason-main .ic, .section-note .ic, .spec-inline .ic, .cp-note .ic {
@@ -486,7 +486,7 @@ button, input, select, textarea {
   min-height: 20px;
   color: var(--c-primary-d);
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
   letter-spacing: normal;
   white-space: nowrap;
   flex-shrink: 0;
@@ -516,12 +516,12 @@ button, input, select, textarea {
 
 .rchip.closed small {
   color: var(--c-sub);
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
 }
 
 .rchip.next small {
   color: var(--c-text);
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
 }
 
 .rchip.next.soon small {
@@ -568,7 +568,7 @@ button, input, select, textarea {
 }
 
 .comment-row .cr-r {
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
   color: var(--c-text);
 }
 
@@ -580,7 +580,7 @@ button, input, select, textarea {
   align-items: center;
   justify-content: center;
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
   flex-shrink: 0;
   border: var(--line-thin) solid transparent;
   font-family: var(--ff-ui);
@@ -654,7 +654,7 @@ button, input, select, textarea {
   background: var(--c-text);
   color: var(--c-bg);
   font-size: var(--fs-12);
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
   letter-spacing: 0.04em;
   text-transform: none;
   line-height: 30px;
@@ -678,7 +678,7 @@ button, input, select, textarea {
 
 .rchip.live small {
   color: var(--c-error);
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
@@ -737,7 +737,7 @@ button, input, select, textarea {
   min-height: 40px;
   padding: 0 var(--space-14);
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
 }
 
 .race-tab.active {
@@ -751,7 +751,7 @@ button, input, select, textarea {
 
 .rchip b {
   font-size: var(--fs-16);
-  font-weight: var(--fw-16-strong);
+  font-weight: var(--fw-strong);
 }
 
 .rchip small {
@@ -777,7 +777,7 @@ button, input, select, textarea {
 
 .comment-row {
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
 }
 
 .comment-row .cr-r {
@@ -786,7 +786,7 @@ button, input, select, textarea {
 
 .venue-name {
   font-size: var(--fs-20);
-  font-weight: var(--fw-20-strong);
+  font-weight: var(--fw-strong);
 }
 
 .venue-header {
@@ -799,13 +799,13 @@ button, input, select, textarea {
 
 .grade-badge {
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
 }
 
 .venue-header .venue-meta {
   margin-right: 0;
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-normal);
+  font-weight: var(--fw-normal);
   color: var(--c-text);
   line-height: 1.25;
   letter-spacing: normal;
@@ -824,7 +824,7 @@ button, input, select, textarea {
 }
 
 .comment-text .cr-name {
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
   color: var(--c-text);
   margin-right: var(--space-small);
 }
@@ -1014,7 +1014,7 @@ button, input, select, textarea {
 .venue-card .rchip > small {
   font-family: var(--ff-ui);
   font-size: var(--fs-16);
-  font-weight: var(--fw-16-strong);
+  font-weight: var(--fw-strong);
 }
 
 .venue-card .rchip:not(.closed):not(.live):not(.canceled) > small {
@@ -1031,14 +1031,14 @@ button, input, select, textarea {
   grid-row: 1;
   color: var(--c-error);
   font-size: var(--fs-12);
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
   line-height: 1.25;
   white-space: nowrap;
 }
 
 .venue-card .rchip.next.soon > small:not(.rchip-time) {
   font-size: var(--fs-12);
-  font-weight: var(--fw-12-strong);
+  font-weight: var(--fw-strong);
   color: var(--c-error);
 }
 
@@ -1064,12 +1064,12 @@ button, input, select, textarea {
   height: 22px;
   min-width: 22px;
   font-size: var(--fs-16);
-  font-weight: var(--fw-16-strong);
+  font-weight: var(--fw-strong);
 }
 
 .comment-row .cr-name {
   font-size: var(--fs-16);
-  font-weight: var(--fw-16-strong);
+  font-weight: var(--fw-strong);
   color: var(--c-text);
   min-width: 0;
 }
@@ -1077,7 +1077,7 @@ button, input, select, textarea {
 .comment-row .cr-streak {
   margin-left: var(--space-1);
   font-size: var(--fs-14);
-  font-weight: var(--fw-14-strong);
+  font-weight: var(--fw-strong);
   color: var(--c-error);
   white-space: nowrap;
   flex: 0 0 auto;
@@ -1090,7 +1090,7 @@ button, input, select, textarea {
   margin-left: auto;
   padding-left: var(--space-small);
   font-size: var(--fs-16);
-  font-weight: var(--fw-16-strong);
+  font-weight: var(--fw-strong);
   color: var(--c-text);
   line-height: 22px;
   white-space: nowrap;
