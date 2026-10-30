@@ -2089,8 +2089,37 @@
         font-weight: var(--fw-12-strong);
       }
       .comment-row { display: flex; align-items: center; }
-      .comment-row .cr-name { font-weight: var(--fw-14-strong); color: var(--c-text); min-width: 0; }
-      .comment-row .cr-kun { margin-left: auto; padding-left: var(--space-section); white-space: nowrap; font-weight: var(--fw-14-strong); color: var(--c-primary-d); }
+      /* Match SCR-01_bet featured rider typography: 16px names / numbers
+         and 14px note + character labels, with wins in warning red. */
+      .comment-row .carno {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        font-size: var(--fs-16);
+        font-weight: var(--fw-16-strong);
+      }
+      .comment-row .cr-name {
+        font-size: var(--fs-16);
+        font-weight: var(--fw-16-strong);
+        color: var(--c-text);
+        min-width: 0;
+      }
+      .comment-row .cr-streak {
+        margin-left: var(--space-1);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
+        color: var(--c-error);
+        white-space: nowrap;
+        flex: 0 0 auto;
+      }
+      .comment-row .cr-kun {
+        margin-left: auto;
+        padding-left: var(--space-small);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
+        color: var(--c-text);
+        white-space: nowrap;
+      }
       .comment-row.multi { align-items: flex-start; }
       .comment-row.multi .cr-r { line-height: 22px; }
       .cr-lines { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-card); }
