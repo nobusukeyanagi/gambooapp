@@ -5,7 +5,7 @@
  */
 :root {
   /* Font / type scale (one canonical font for UI and numbers) */
-  --ff-ui: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "ヒラギノ角ゴ ProN W3", "ヒラギノ角ゴシック", "Noto Sans JP", "Noto Sans CJK JP", "Meiryo", "メイリオ", sans-serif;
+  --ff-ui: "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴシック", "ヒラギノ角ゴ ProN W3", "Yu Gothic", "Meiryo", "メイリオ", sans-serif;
   --fs-12: 12px;
   --fs-14: 14px;
   --fs-16: 16px;
