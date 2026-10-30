@@ -1044,7 +1044,6 @@
       }
       .rchip.closed {
         background: var(--c-bg);
-        border-color: var(--c-bg);
         color: var(--c-sub);
       }
       .rchip.closed small {
@@ -1427,7 +1426,7 @@
       }
 
       .rchip.closed {
-        background: var(--c-surface);
+        background: var(--c-bg);
         color: var(--c-sub);
       }
       .rchip.closed b { color: var(--c-sub); font-weight: var(--fw-16-strong); }
@@ -1812,8 +1811,7 @@
         height: calc(100dvh - 30px);
       }
       .rchip.live {
-        background: var(--c-error-bg);
-        border-color: var(--c-error);
+        background: var(--c-bg);
         color: var(--c-error);
         min-width: 70px;
       }
@@ -1833,12 +1831,11 @@
         background: var(--c-error);
       }
       .comment-row {
-        margin: 0 var(--space-section) var(--space-2);
+        margin: 0;
         padding: var(--space-7) var(--space-10);
-        background: var(--c-surface);
-        border: var(--line-normal);
-        border-radius: var(--r-sm);
-        border-top: var(--line-normal);
+        background: transparent;
+        border: 0;
+        border-radius: 0;
       }
 
 
@@ -1996,6 +1993,19 @@
       }
       .rchip.live small::before { display: none; }
       .rchips { gap: var(--space-card); align-items: stretch; }
+      /* The race selector is one continuous bar between two standard dividers. */
+      .venue-card > .hscroll {
+        border-bottom: var(--line-normal);
+        background: var(--c-surface);
+      }
+      .venue-card > .hscroll > .hscroll-inner {
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+      .venue-card > .hscroll.has-past > .hscroll-inner {
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
       /* Full-height tappable scroll arrows, restricted to SCR-02 race rows. */
       .venue-card .hscroll > .hscroll-cue,
       .venue-card .hscroll > .hscroll-cue-l {
@@ -2011,11 +2021,17 @@
         pointer-events: auto;
         cursor: pointer;
         appearance: none;
-        border-radius: var(--r-control);
+        background: var(--c-bg);
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
         padding: 0;
         font-family: var(--ff-ui);
         -webkit-tap-highlight-color: transparent;
       }
+      /* Side divisions make the arrows full-height strips, not floating buttons. */
+      .venue-card .hscroll > .hscroll-cue { right: 0; border-left: var(--line-normal); }
+      .venue-card .hscroll > .hscroll-cue-l { left: 0; border-right: var(--line-normal); }
       .venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l)[hidden] {
         display: none;
       }
