@@ -2044,6 +2044,10 @@
         font-family: var(--ff-ui);
         -webkit-tap-highlight-color: transparent;
       }
+      .venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l) .ic {
+        width: 18px;
+        height: 18px;
+      }
       /* Side divisions make the arrows full-height strips, not floating buttons. */
       .venue-card .hscroll > .hscroll-cue { right: 0; border-left: var(--line-normal); }
       .venue-card .hscroll > .hscroll-cue-l { left: 0; border-right: var(--line-normal); }
@@ -2064,19 +2068,19 @@
       .rchip.canceled { background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface)); border-color: var(--c-bg); color: var(--c-sub); cursor: default; box-shadow: none; }
       .rchip.canceled b,
       .rchip.canceled small { color: var(--c-sub); }
-      /* All R buttons use three aligned rows, including optional in-button
-         Girls / campaign marks on the final line. */
+      /* Uniform R buttons: alert, R number, scheduled time, optional logo.
+         Fixed rows keep every button aligned within the horizontal bar. */
       .venue-card .rchip {
         display: grid;
-        grid-template-rows: 20px 16px 18px;
+        grid-template-rows: 16px 20px 16px 18px;
         align-content: center;
         justify-items: center;
-        min-height: 70px;
+        min-height: 80px;
       }
-      .venue-card .rchip > b { grid-row: 1; }
-      .venue-card .rchip > small { grid-row: 2; white-space: nowrap; }
+      .venue-card .rchip > b { grid-row: 2; }
+      .venue-card .rchip > small { grid-row: 3; white-space: nowrap; }
       .venue-card .rchip > :is(.rchip-bottom-icon, .rchip-rebate) {
-        grid-row: 3;
+        grid-row: 4;
         align-self: center;
       }
       .venue-card .rchip-bottom-icon {
@@ -2110,25 +2114,20 @@
       .venue-card .rchip:not(.closed):not(.live):not(.canceled) > small {
         color: var(--c-text);
       }
-      /* One warning above Odawara's upcoming 4R, not inside its button.
-         Reserve one common top row so all R buttons keep the same baseline. */
-      .venue-card .rchips:has(.rchip-warning) {
-        padding-top: calc(var(--space-section) + var(--fs-12) + var(--space-small));
+      /* The urgent R is white with a warning-red border.
+         Its red warning label sits inside the topmost R-button row. */
+      .venue-card .rchip.next.soon {
+        background: var(--c-surface);
+        border: var(--line-thin) solid var(--c-error);
+        box-shadow: none;
       }
-      .venue-card .rcol:has(> .rchip-warning) {
-        position: relative;
-      }
-      .venue-card .rchip-warning {
-        position: absolute;
-        top: calc(-1 * (var(--fs-12) + var(--space-small)));
-        left: 50%;
-        transform: translateX(-50%);
+      .venue-card .rchip > .rchip-warning {
+        grid-row: 1;
         color: var(--c-error);
         font-size: var(--fs-12);
         font-weight: var(--fw-12-strong);
         line-height: 1.25;
         white-space: nowrap;
-        pointer-events: none;
       }
 
       .comment-row { display: flex; align-items: center; }
@@ -2161,17 +2160,18 @@
         gap: var(--space-1);
         margin-left: auto;
         padding-left: var(--space-small);
-        font-size: var(--fs-14);
-        font-weight: var(--fw-14-strong);
+        font-size: var(--fs-16);
+        font-weight: var(--fw-16-strong);
         color: var(--c-text);
+        line-height: 22px;
         white-space: nowrap;
         flex: 0 0 auto;
       }
       .comment-row .cr-kun-icon {
         display: block;
-        width: 16px;
-        height: 16px;
-        flex: 0 0 16px;
+        width: 22px;
+        height: 22px;
+        flex: 0 0 22px;
         object-fit: contain;
       }
       .comment-row.multi { align-items: flex-start; }
