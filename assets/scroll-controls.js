@@ -31,17 +31,54 @@
       var right = outer.querySelector(".hscroll-cue");
       if (!box || !left || !right) return;
 
+      // Scroll in R-column increments rather than one almost-full viewport.
+      // The last target is capped at the actual content end: no empty tail.
+      var requestedLeft = box.scrollLeft;
+      var isButtonScrolling = false;
+      function maxLeft() {
+        return Math.max(0, box.scrollWidth - box.clientWidth);
+      }
       function sync() {
-        var max = Math.max(0, box.scrollWidth - box.clientWidth);
-        left.hidden = box.scrollLeft <= 1;
-        right.hidden = box.scrollLeft >= max - 1;
+        var max = maxLeft();
+        var current = Math.max(0, Math.min(max, box.scrollLeft));
+        left.hidden = current <= 1;
+        right.hidden = current >= max - 1;
+        if (isButtonScrolling && Math.abs(current - requestedLeft) <= 1) {
+          isButtonScrolling = false;
+        }
+        if (!isButtonScrolling) requestedLeft = current;
       }
       function scroll(direction) {
-        var distance = Math.max(0, box.clientWidth - 2 * 36);
-        box.scrollBy({ left: direction * distance, behavior: "smooth" });
+        var columns = Array.from(box.querySelectorAll(".rchips > .rcol"));
+        if (!columns.length) return;
+        var max = maxLeft();
+        var base = Math.max(0, Math.min(max, isButtonScrolling ? requestedLeft : box.scrollLeft));
+        var firstLeft = columns[0].getBoundingClientRect().left;
+        var offsets = columns.map(function (col) {
+          return col.getBoundingClientRect().left - firstLeft;
+        });
+        var index = 0;
+        offsets.forEach(function (offset, i) {
+          if (offset <= base + 1) index = i;
+        });
+        // Two race buttons per tap, including variable-width active races.
+        var nextIndex = Math.max(0, Math.min(columns.length - 1, index + direction * 2));
+        var target = Math.max(0, Math.min(max, offsets[nextIndex]));
+        if (Math.abs(target - base) < 1) return;
+        requestedLeft = target;
+        isButtonScrolling = true;
+        box.scrollTo({ left: target, behavior: "smooth" });
       }
       left.addEventListener("click", function () { scroll(-1); });
       right.addEventListener("click", function () { scroll(1); });
+      // Direct finger/trackpad movement takes priority over button targets.
+      box.addEventListener("pointerdown", function () {
+        isButtonScrolling = false;
+        requestedLeft = box.scrollLeft;
+      }, { passive: true });
+      box.addEventListener("wheel", function () {
+        isButtonScrolling = false;
+      }, { passive: true });
       box.addEventListener("scroll", sync, { passive: true });
       if (typeof ResizeObserver !== "undefined") {
         new ResizeObserver(sync).observe(box);
