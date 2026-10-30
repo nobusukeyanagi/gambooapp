@@ -554,7 +554,7 @@
         background: var(--c-error);
         color: var(--c-surface);
         font-size: var(--fs-12);
-        padding: 0px var(--space-3);
+        padding: 0 var(--space-3);
         border-radius: var(--r-xxs);
         font-weight: var(--fw-12-strong);
       }
@@ -1190,7 +1190,7 @@
         height: 2px;
         background: var(--c-bg);
         border-radius: var(--r-full);
-        margin: var(--space-2) 26px 0 var(--space-section);
+        margin: var(--space-2) calc(var(--space-24) + var(--space-2)) 0 var(--space-section);
         position: relative;
       }
       .hscroll-bar > i {
@@ -1264,7 +1264,7 @@
         justify-content: center;
         gap: var(--space-small);
         
-        padding: 0 11px;
+        padding: 0 var(--space-10);
         font-size: var(--fs-12);
         background: var(--c-keirin);
       }
@@ -1767,13 +1767,13 @@
         cursor: default;
       }
 
-      .sort-list { margin: 0 -12px; }
+      .sort-list { margin: 0 calc(-1 * var(--space-content)); }
       .sort-opt {
         display: flex;
         align-items: center;
         gap: var(--space-10);
         min-height: 52px;
-        padding: 0 16px;
+        padding: 0 var(--space-14);
         border-top: var(--line-normal);
         font-size: var(--fs-14);
         font-weight: var(--fw-14-strong);
