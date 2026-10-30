@@ -2104,18 +2104,17 @@
         height: 16px;
         object-fit: contain;
       }
-      /* ODAWARA 1R's closed-state line is the typography reference for every
-         race time/status. Keep each race state responsible for color only. */
+      /* Race statuses (確定・締切・投票締切・中止) and scheduled start
+         times all use the 16px R-number font. Longer countdowns are
+         intentionally 12px to fit inside the shared 90px button. */
       .venue-card .rchip > small {
         font-family: var(--ff-ui);
-        font-size: var(--fs-12);
-        font-weight: var(--fw-12-strong);
-      }
-      /* Scheduled start times share the 16px R-number typography.
-         Confirmed/closed/canceled text and countdowns remain 12px. */
-      .venue-card .rchip > small.rchip-time {
         font-size: var(--fs-16);
         font-weight: var(--fw-16-strong);
+      }
+      .venue-card .rchip > small.rchip-countdown {
+        font-size: var(--fs-12);
+        font-weight: var(--fw-12-strong);
       }
       /* Scheduled times are always dark; completed / closed / canceled
          statuses retain their existing semantic text colors. */
