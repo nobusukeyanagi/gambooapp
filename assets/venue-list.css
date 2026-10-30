@@ -1043,7 +1043,7 @@
         color: var(--c-sub);
       }
       .rchip.closed {
-        background: var(--c-bg);
+        background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
         color: var(--c-sub);
       }
       .rchip.closed small {
@@ -1426,7 +1426,7 @@
       }
 
       .rchip.closed {
-        background: var(--c-bg);
+        background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
         color: var(--c-sub);
       }
       .rchip.closed b { color: var(--c-sub); font-weight: var(--fw-16-strong); }
@@ -1811,7 +1811,7 @@
         height: calc(100dvh - 30px);
       }
       .rchip.live {
-        background: var(--c-bg);
+        background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
         color: var(--c-error);
         min-width: 70px;
       }
