@@ -956,29 +956,24 @@ button,
       .venue-grid.g3 .vcard:not(.mori-photo-tile) .vcard-bottom {
         margin-top: 0;
       }
-      /* Match the heart's text box to the neighboring 12px night-race label. */
-
-      /* Slightly widen the Girls heart without changing the adjacent label layout. */
+      /* The canonical Girls SVG is unboxed; its exact geometry and color
+         are defined in shared ui-consistency.css. */
       .venue-grid.g3 .girls {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         width: auto;
         min-width: 0;
-        
         padding: 0;
         border: 0;
         border-radius: 0;
         background: transparent;
-        color: var(--c-error);
-        letter-spacing: normal;
         vertical-align: middle;
         outline: none;
-        transform: scaleX(1.15);
-        transform-origin: center;
         white-space: nowrap;
         flex-shrink: 0;
-      }/* Venue card support text: one step darker, using the next existing token. */
+      }
+      /* Venue card support text: one step darker, using the next existing token. */
       
       /* Venue day labels use shared 14px typography and a 20px line box. */
       .venue-grid.g3 .vcard-day {
