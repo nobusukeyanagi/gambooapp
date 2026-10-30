@@ -1055,7 +1055,7 @@
         color: var(--c-surface);
       }
       .rchip.next small {
-        color: var(--c-surface);
+        color: var(--c-text);
         font-weight: var(--fw-12-strong);
       }
 
@@ -1442,7 +1442,7 @@
         box-shadow: var(--e1);
       }
       .rchip.next b { color: var(--c-text); }
-      .rchip.next small { color: var(--c-primary-d); font-weight: var(--fw-12-strong); }
+      .rchip.next small { color: var(--c-text); font-weight: var(--fw-12-strong); }
 
       .rchip.pre {
         background: var(--c-bg);
@@ -1713,8 +1713,8 @@
       .rchip small { font-size: var(--fs-12); }
       .rchip.closed small { color: var(--c-sub); font-weight: var(--fw-12-strong); }
       .rchip.next { min-width: 78px; }
-      .rchip.next small { color: var(--c-primary-d); font-weight: var(--fw-12-strong); }
-      .rchip.next.soon small { color: var(--c-error); }
+      .rchip.next small { color: var(--c-text); font-weight: var(--fw-12-strong); }
+      .rchip.next.soon small { color: var(--c-text); }
 
       .hscroll.has-past > .hscroll-inner {
         -webkit-mask-image: linear-gradient(to right, color-mix(in srgb, var(--c-text) 15%, transparent) 0, var(--c-text) 28px, var(--c-text) calc(100% - 28px), color-mix(in srgb, var(--c-text) 15%, transparent) 100%);
