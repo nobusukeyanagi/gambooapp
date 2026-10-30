@@ -129,6 +129,8 @@ const expectedComputedStyles = [
   ['.venue-grid.g3 .girls .girls-heart-icon', 'height', '14px'],
   ['.date-tabs .date-tab', 'fontSize', '16px'],
   ['.date-tabs .date-tab', 'fontWeight', '600'],
+  ['.date-tabs .date-tab:not(.active)', 'color', 'rgb(43, 49, 53)'],
+  ['.date-tabs .date-tab.active', 'color', 'rgb(134, 115, 58)'],
   ['.venue-grid.g3 .vcard-r', 'fontWeight', '600'],
   ['.venue-grid.g3 .vcard-dl', 'fontWeight', '600'],
   ['.venue-grid.g3 .vcard', 'borderTopColor', 'rgb(208, 212, 214)'],

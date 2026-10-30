@@ -239,6 +239,11 @@ async function checkPredictionSort(page, width, isAutorace) {
       fail(width + 'px third venue tap should restore north-to-south');
   }
   // Guard the canonical 600-weight for race numbers, times and statuses.
+  const dayColors = await page.locator('.date-tabs .date-tab').evaluateAll(nodes =>
+    nodes.map(node => ({active: node.classList.contains('active'),
+      color: getComputedStyle(node).color})));
+  if (dayColors.some(item => item.color !== (item.active ? 'rgb(134, 115, 58)' : 'rgb(43, 49, 53)')))
+    fail(width + 'px date tabs must use dark unselected text and gold active text');
   const raceWeights = await page.locator('.venue-card .rchip:not(.canceled) > b, .venue-card .rchip > small')
     .evaluateAll(nodes => [...new Set(nodes.map(n => getComputedStyle(n).fontWeight))]);
   if (raceWeights.some(weight => weight !== '600'))

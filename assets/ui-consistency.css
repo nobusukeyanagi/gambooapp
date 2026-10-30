@@ -158,6 +158,10 @@ body { font-weight: var(--fw-normal); }
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
 }
+/* Unselected day tabs use dark UI text; selected day tabs retain gold. */
+.date-tabs .date-tab:not(.active) {
+  color: var(--c-text);
+}
 
 /* SCR-01_bet.html reference: a 50px header and a 50px payout row
    plus a 1px bottom border (51px total). Match both actual outer heights. */
