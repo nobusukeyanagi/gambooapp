@@ -1923,6 +1923,12 @@
 
       .kubun { min-width: calc(5.82em + 10px); }
       .venue-header .venue-meta { margin-right: 0; }
+      /* Plain inline race-day and time-slot text; heart for girls' meets. */
+      .venue-header .venue-girls {
+        color: var(--c-error);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-14-strong);
+      }
       .venue-header .rebate-logo { margin-left: auto; }
       .rchip.rebate { border: var(--line-selected); background: var(--c-bg); }
       .rchip .rchip-rebate {
@@ -1971,25 +1977,13 @@
       }
       .rchip.live small::before { display: none; }
       .rchips { gap: 6px; align-items: stretch; }
-      .rcol { flex: 0 0 auto; display: flex; flex-direction: column; gap: 4px; }
+      .rcol { flex: 0 0 auto; display: flex; }
       .rcol > .rchip { flex: 1 1 auto; }
-      .rpred {
-        min-height: 34px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 4px;
-        border: var(--line-normal);
-        border-radius: var(--r-md);
-        background: var(--c-bg);
-        color: var(--c-text);
-        font-size: var(--fs-12);
-        font-weight: 800;
-        letter-spacing: normal;
-        white-space: nowrap;
-        cursor: pointer;
+      .rcol > a.rchip { text-decoration: none; }
+      .rcol > a.rchip:focus-visible {
+        outline: var(--line-control);
+        outline-offset: var(--space-2);
       }
-      .rpred.off { background: var(--c-bg); border-color: var(--c-bg); color: var(--c-sub); cursor: default; }
       .rchip.canceled { background: var(--c-bg); border-color: var(--c-bg); color: var(--c-sub); cursor: default; box-shadow: none; }
       .rchip.canceled b,
       .rchip.canceled small { color: var(--c-sub); }
