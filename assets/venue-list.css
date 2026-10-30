@@ -1946,20 +1946,13 @@
         line-height: 1.25;
         letter-spacing: normal;
       }
-      /* Match the unboxed Girls heart on SCR-01_bet.html. */
+      /* Girls labels and below-R marks use the same shared SVG. */
       .venue-header .venue-girls,
       .rcol > .rchip-girls {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        color: var(--c-error);
-        font-size: var(--fs-14);
-        font-weight: var(--fw-14-normal);
-        line-height: 1.25;
-        letter-spacing: normal;
         vertical-align: middle;
-        transform: scaleX(1.15);
-        transform-origin: center;
         white-space: nowrap;
       }
       .venue-header .rebate-logo { margin-left: auto; }
