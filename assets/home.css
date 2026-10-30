@@ -745,7 +745,7 @@ button,
         flex: 0 0 calc((100% - 30px) / 2);
         scroll-snap-align: start;
         position: relative;
-        padding-top: calc(var(--fs-14) * 1.25 + var(--space-section));
+        padding-top: calc(var(--fs-14) + var(--space-section) + var(--space-small));
         min-width: 0;
       }
       .bn-status {
