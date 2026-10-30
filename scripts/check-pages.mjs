@@ -310,7 +310,7 @@ async function checkPredictionSort(page, width, isAutorace) {
 }
 
 async function checkSharedReferences(){
- const expected=['design-tokens.css?v=56','tap-feedback.css?v=3'];
+ const expected=['design-tokens.css?v=57','tap-feedback.css?v=3'];
  const all=['SCR-01_bet.html',...paths];
  for(const page of all){
   const html=await readFile(path.join(ROOT,page),'utf8');
