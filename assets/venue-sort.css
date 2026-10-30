@@ -1,6 +1,5 @@
 @charset "UTF-8";
-/* Inline venue sorting uses the existing canonical .chip / .chip.active
-   button styles from venue-list.css, with layout-only adjustments here. */
+/* SCR-02 shared inline sorting. Canonical control palette, radius, lines and fonts. */
 .venue-sort-options {
   display: flex;
   align-items: stretch;
@@ -10,15 +9,29 @@
 }
 .venue-sort-options .chip {
   display: inline-flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   flex: 1 1 0;
   min-width: 0;
   min-height: var(--tap-min);
   padding: 0 var(--space-2);
-  font-family: inherit;
-  font-size: var(--fs-12);
+  font-family: var(--ff-ui);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-14-strong);
   line-height: 1.2;
   white-space: nowrap;
+  border: var(--line-control);
+  border-radius: var(--r-control);
+  background: var(--c-surface);
+  color: var(--c-text);
   box-shadow: var(--e1);
+}
+.venue-sort-options .chip.active {
+  background: var(--c-primary);
+  color: var(--c-text);
+  border-color: var(--c-primary-d);
+}
+.venue-sort-options .chip:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: var(--space-2);
 }
