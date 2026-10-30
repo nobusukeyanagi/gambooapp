@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg">
-  <!-- Clean, straight-edged betting-ticket icon. -->
+  <!-- Original stacked-ticket artwork, with only the outer contours straightened. -->
   <symbol id="nav-ticket" viewBox="0 0 48 48">
-    <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">
-      <path d="M18 8h17l5 5v10l-5 5H18z"/>
-      <path d="M8 14h21l5 5v12l-5 5H8z"/>
-      <path d="M13 19h12"/>
-      <path d="M13 23h9"/>
-      <path d="M13 27h6"/>
-      <circle cx="21" cy="12" r="0.9" fill="currentColor" stroke="none"/>
-      <circle cx="25" cy="12" r="0.9" fill="currentColor" stroke="none"/>
-      <circle cx="29" cy="12" r="0.9" fill="currentColor" stroke="none"/>
-      <circle cx="33" cy="12" r="0.9" fill="currentColor" stroke="none"/>
-      <circle cx="12" cy="18" r="0.9" fill="currentColor" stroke="none"/>
-      <circle cx="16" cy="18" r="0.9" fill="currentColor" stroke="none"/>
-      <circle cx="20" cy="18" r="0.9" fill="currentColor" stroke="none"/>
-      <circle cx="24" cy="18" r="0.9" fill="currentColor" stroke="none"/>
+    <g transform="translate(1.5 6)" fill="currentColor" fill-rule="evenodd">
+      <path d="M37 5 L39 5 L44 25 L11 33 L11 30 L38 22 Z"/>
+      <path d="M0 9 L33 1 L38 21 L5 29 Z M21,21 18,23 14,23 13,24 10,24 9,25 6,25 5,24 6,23 12,22 13,21 16,21 17,20 20,20Z M22,19 24,18 25,20 24,21Z M20,19 19,20 13,21 12,22 9,22 8,23 6,23 5,22 8,20 11,20 12,19 15,19 16,18 19,18Z M27,17 28,19 26,20 25,19Z M32,18 33,16 35,17 33,19Z M28,18 30,16 32,18 31,19 29,19Z M25,16 26,14 28,15 26,17Z M23,14 25,16 23,18 21,16Z M28,14 30,13 31,15 29,16Z M20,16 19,18 16,18 15,19 12,19 11,20 8,20 7,21 5,21 4,20 5,19 4,18 5,16 13,15 14,14 17,14 18,13 19,14 18,16 15,16 14,17 7,18 10,18 11,17 14,17 15,16 18,16 19,15Z M31,13 33,12 34,14 32,15Z M21,12 23,11 24,13 22,14Z M27,12 28,10 30,11 28,13Z M24,11 26,10 27,12 25,13Z M30,10 32,9 33,11 31,12Z M20,9 22,8 23,10 21,11Z M19,11 16,13 8,14 7,15 4,15 3,14 3,12 4,11 7,11 8,10 11,10 12,9 16,9 17,8Z M23,8 25,7 26,9 24,10Z M26,7 28,6 29,8 27,9Z M31,5 32,7 30,8 29,7Z"/>
     </g>
   </symbol>
   <symbol id="nav-keirin" viewBox="0 0 60 48">
