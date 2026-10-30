@@ -2138,6 +2138,16 @@
         color: var(--c-error);
       }
 
+      /* R numbers inherit competition colors even when completed or closed.
+         Canceled R numbers remain gray, as do their status labels. */
+      .sport-keirin .venue-card .rchip > b { color: var(--c-keirin); }
+      .sport-auto .venue-card .rchip > b { color: var(--c-auto); }
+      .venue-card .rchip.canceled > b { color: var(--c-sub); }
+
+      /* Confirmed, closed and voting-closed statuses use neutral dark text
+         regardless of grade. Countdown warnings remain red. */
+      .venue-card .rchip:is(.closed, .live) > small { color: var(--c-text); }
+
       .comment-row { display: flex; align-items: center; }
       /* Match SCR-01_bet featured rider typography: 16px names / numbers
          and 14px note + character labels, with wins in warning red. */
