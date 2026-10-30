@@ -236,7 +236,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   if (await page.locator('.rpred').count()) fail(width + 'px old prediction buttons remain');
   // Current race sits beside the left-arrow strip; completed races start left
   // of the visible region rather than obscuring the active R.
-  const initialCurrent = await page.locator('.venue-card .hscroll').first().evaluate(row => {
+  const initialCurrent = await page.locator('.venue-card .hscroll.has-past').first().evaluate(row => {
     const current = row.querySelector('.rchip.next');
     const scroller = row.querySelector('.hscroll-inner');
     const arrow = row.querySelector('.hscroll-cue-l');
