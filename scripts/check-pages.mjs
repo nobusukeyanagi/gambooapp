@@ -229,7 +229,7 @@ async function checkAutoraceSort(page, width) {
 
 async function checkSharedReferences(){
  const expected=['design-tokens.css?v=53','tap-feedback.css?v=3','ui-consistency.css?v=16'];
- const all=['SCR-01_home.html',...paths];
+ const all=['SCR-01_bet.html',...paths];
  for(const page of all){
   const html=await readFile(path.join(ROOT,page),'utf8');
   if(/<style\b/i.test(html))fail(page+': old inline <style> block detected');
