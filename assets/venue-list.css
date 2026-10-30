@@ -1956,20 +1956,6 @@
         white-space: nowrap;
       }
       .venue-header .rebate-logo { margin-left: auto; }
-      .rchip.rebate { border: var(--line-control); background: var(--c-surface); }
-      .rchip .rchip-rebate,
-      .rcol > .rchip-rebate {
-        margin-top: var(--space-2);
-        padding: 0 var(--space-small);
-        border-radius: var(--r-xs);
-        background: var(--c-primary-d);
-        color: var(--c-surface);
-        font-size: var(--fs-12);
-        font-weight: var(--fw-12-strong);
-        font-style: normal;
-        line-height: 14px;
-        white-space: nowrap;
-      }
       .comment-text .cr-name { font-weight: var(--fw-14-strong); color: var(--c-text); margin-right: var(--space-small); }
 
       .page-header { justify-content: center; }
@@ -2079,7 +2065,7 @@
       }
       .venue-card .rchip > b { grid-row: 2; }
       .venue-card .rchip > small { grid-row: 3; white-space: nowrap; }
-      .venue-card .rchip > :is(.rchip-bottom-icon, .rchip-bottom-icons, .rchip-rebate) {
+      .venue-card .rchip > :is(.rchip-bottom-icon, .rchip-bottom-icons) {
         grid-row: 4;
         align-self: center;
       }
@@ -2108,7 +2094,6 @@
         fill: currentColor;
         color: var(--c-primary-d);
       }
-      .rchip .rchip-rebate { font-size: var(--fs-12); }
       /* ODAWARA 1R's closed-state line is the typography reference for every
          race time/status. Keep each race state responsible for color only. */
       .venue-card .rchip > small {
