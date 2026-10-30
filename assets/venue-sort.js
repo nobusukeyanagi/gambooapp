@@ -28,8 +28,19 @@
         Number(a.dataset[field]) - Number(b.dataset[field]) ||
         originalPosition.get(a) - originalPosition.get(b)
     );
+    // Reattaching an already ordered card resets its child race bar's scrollLeft.
+    // In particular this used to undo the initial "next race" scroll on SCR-02.
+    const currentOrder = [...scrollArea.querySelectorAll(":scope > .venue-card")];
+    if (ordered.every((card, index) => card === currentOrder[index])) return;
+    const savedScroll = new Map(cards.map((card) => {
+      const bar = card.querySelector(".hscroll-inner");
+      return [card, { bar, left: bar?.scrollLeft ?? 0 }];
+    }));
     const spacer = scrollArea.querySelector(":scope > .content-end-spacer");
     ordered.forEach((card) => scrollArea.insertBefore(card, spacer));
+    savedScroll.forEach(({ bar, left }) => {
+      if (bar) bar.scrollLeft = left;
+    });
   }
 
   options.forEach((option) => option.addEventListener("click", () => applySort(option)));
