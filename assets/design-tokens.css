@@ -11,7 +11,6 @@
   --fs-16: 16px;
   --fs-18: 18px;
   --fs-20: 20px;
-  --fs-24: 24px;
   /* Typography weight: size-specific normal / strong (canonical values). */
   --fw-12-normal: 400;
   --fw-12-strong: 600;
@@ -23,8 +22,6 @@
   --fw-18-strong: 700;
   --fw-20-normal: 600;
   --fw-20-strong: 700;
-  --fw-24-normal: 600;
-  --fw-24-strong: 800;
 
   /* Spacing: one source for each semantic purpose. */
   --space-section: 8px;
