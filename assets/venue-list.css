@@ -1050,9 +1050,9 @@
         color: var(--c-sub);
       }
       .rchip.next {
-        background: var(--c-primary);
-        border-color: var(--c-primary-d);
-        color: var(--c-surface);
+        background: var(--c-surface);
+        border-color: var(--c-border-control);
+        color: var(--c-text);
       }
       .rchip.next small {
         color: var(--c-text);
@@ -1436,10 +1436,9 @@
       }
 
       .rchip.next {
-        background: var(--c-primary);
-        border-color: var(--c-primary-d);
+        background: var(--c-surface);
+        border-color: var(--c-border-control);
         color: var(--c-text);
-        box-shadow: var(--e1);
       }
       .rchip.next b { color: var(--c-text); }
       .rchip.next small { color: var(--c-text); font-weight: var(--fw-12-strong); }
@@ -1883,7 +1882,8 @@
       .rchip { min-width: 62px; min-height: 54px; }
       .rchip b { font-size: var(--fs-16); font-weight: var(--fw-16-strong); }
       .rchip small { font-size: var(--fs-12); }
-      .rchip.next { min-width: 90px; }
+      .rchip.next { min-width: 62px; }
+      .rchip.next.soon { min-width: 90px; }
       .action-btn { min-height: 50px; font-size: var(--fs-14); }
       .action-btn .ic { width: 18px; height: 18px; }
       .sort-btn { font-size: var(--fs-14); min-height: 46px; }
@@ -1956,7 +1956,7 @@
         white-space: nowrap;
       }
       .venue-header .rebate-logo { margin-left: auto; }
-      .rchip.rebate { border: var(--line-selected); background: var(--c-bg); }
+      .rchip.rebate { border: var(--line-control); background: var(--c-surface); }
       .rchip .rchip-rebate,
       .rcol > .rchip-rebate {
         margin-top: var(--space-2);
@@ -2079,9 +2079,16 @@
       }
       .venue-card .rchip > b { grid-row: 2; }
       .venue-card .rchip > small { grid-row: 3; white-space: nowrap; }
-      .venue-card .rchip > :is(.rchip-bottom-icon, .rchip-rebate) {
+      .venue-card .rchip > :is(.rchip-bottom-icon, .rchip-bottom-icons, .rchip-rebate) {
         grid-row: 4;
         align-self: center;
+      }
+      .venue-card .rchip-bottom-icons {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-small);
+        height: 18px;
       }
       .venue-card .rchip-bottom-icon {
         display: inline-flex;
