@@ -2,7 +2,7 @@
 
 ## 読み込み順序
 
-全7ページは以下をHTMLの `<link rel="stylesheet">` から**直接**読み込む。CSSの `@import`、他の変数を参照するだけの別名トークンは用いない。
+アプリ7画面とQR入口（計8HTML）は以下をHTMLの `<link rel="stylesheet">` から**直接**読み込む。CSSの `@import`、他の変数を参照するだけの別名トークンは用いない。
 
 1. `assets/design-tokens.css` — 色、余白、フォント、罫線、角丸などの共通変数
 2. `assets/bottom-nav-icons.css` — ボトムナビを持つアプリ画面
@@ -18,20 +18,20 @@
 ## ページ専用CSS
 
 - ホーム：`home.css`
-- 競輪トップ（`SCR-02_keirin.html`）・オートレーストップ（`SCR-02_autorace.html`）：`venue-list.css`（オートのみ `venue-list-auto-overrides.css` を追加）
+- 競輪予想（`SCR-02_keirin.html`）・オートレース予想（`SCR-02_autorace.html`）：`venue-list.css` と `venue-sort.css`。共通の並び替え制御に `venue-sort.js` を使用。未使用だったオート専用 `venue-list-auto-overrides.css` は廃止
 - 出走表・競輪（`SCR-03_racecardkeirin.html`）：`keirin-detail.css` と `keirin-detail-9car.css`、マニア分析統合用 `keirin-mania.css`／`keirin-mania.js`
 - 出走表・オートレース（`SCR-04_racecardautorace.html`）：`auto-detail.css` と統合列用 `autorace-lab-merged.css`、操作用 `auto-detail.js`
 - マイページ：`mypage.css`
 - キャンペーン：`campaign.css`
 - QR入口：`qr-index.css`
 
-## 今回の対応範囲
+## 現行対応範囲
 
-ページ内の `<style>` を撤廃して専用CSSへ分離した。共通UIの確定値に上書きされる古い高さ・サイズ指定は削除した。今後ページごとに段階的なデザイン改修を実施する予定のため、それ以外のページ固有スタイルは機械的に書き換えず保留している。特にフォントウェイトの数値直書き、個別のインライン `style` 属性、複雑な旧セレクターは今後のページ別検証の対象である。
+ページ内の `<style>` は撤廃して専用CSSへ分離済み。2026-10-30、予想2画面の `venue-list.css` に残っていた旧画面専用・上書き重複指定を整理し、2画面で一つの共通スタイルを利用する。R番号は競技共通の本文色、中止Rのみ補助文字色とする。還元ラベルは大会名と「5%還元」の2行表示。フォントは `design-tokens.css` で Noto Sans JP を第一候補とし、フォント実体がない端末ではフォールバックする。ほかの画面固有CSSは機能・デザイン維持のため一括削除せず段階的に確認する。
 
 ## 検証
 
-`scripts/check-pages.mjs` と `.github/workflows/pages-refactor-check.yml` が、全7ページのCSS直接参照・ファイル存在・読み込み順を検査し、6の非ホームページについて296/390/768px、上部・下部でChromiumの画像を取得する。
+`scripts/check-pages.mjs` と `.github/workflows/pages-refactor-check.yml` が、アプリ7画面とQR入口（計8HTML）のCSS直接参照・ファイル存在・読み込み順を検査し、6の非ホームページについて296/390/768px、上部・下部でChromiumの画像を取得する。
 
 画像比較は GitHub Actionsの `Verify Non-Home Pages` の手動起動時、`baseline_commit` にGitコミットSHAを入力する。画像の変更許容率は原則0.005%。操作状態や全OSの見た目までの完全一致を保証するものではない。
 
