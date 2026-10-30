@@ -25,7 +25,7 @@
   <symbol id="nav-campaign" viewBox="0 0 48 48"><g fill="currentColor"><path fill-rule="evenodd" d="M24 16c-4.8-1.6-12.6-2.6-12.6-7 0-2.1 1.6-3.5 3.7-3.5 3.7 0 7.1 4.7 8.9 7.3 1.8-2.6 5.2-7.3 8.9-7.3 2.1 0 3.7 1.4 3.7 3.5 0 4.4-7.8 5.4-12.6 7Zm-4-3.2c-1.5-2.2-3-3.8-4.7-3.8-.7 0-1.1.3-1.1.8 0 1.1 2.2 2.3 5.8 3Zm8 0c3.6-.7 5.8-1.9 5.8-3 0-.5-.4-.8-1.1-.8-1.7 0-3.2 1.6-4.7 3.8Z"/><rect x="4" y="17" width="17" height="7" rx="1.7"/><rect x="27" y="17" width="17" height="7" rx="1.7"/><rect x="22" y="16" width="4" height="26" rx=".6"/><path d="M6.5 26.5H21V42H9a2.5 2.5 0 0 1-2.5-2.5v-13Z"/><path d="M27 26.5h14.5v13A2.5 2.5 0 0 1 39 42H27V26.5Z"/></g></symbol>
   <!-- Canonical filled Girls heart: geometry is independent of system fonts. -->
   <symbol id="girls-heart" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M12 21.35 10.55 20.03C5.4 15.36 2 12.27 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09A5.97 5.97 0 0 1 16.5 3C19.58 3 22 5.42 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35Z"/>
+    <path fill="currentColor" d="M12 21.35 10.55 20.03C5.4 15.36 2 12.27 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 3.1C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35Z"/>
   </symbol>
   <symbol id="nav-mypage" viewBox="0 0 48 48"><g fill="currentColor"><circle cx="24" cy="15" r="8.7"/><path d="M24 25c-10.9 0-18 6-18 14.7 0 1.4 1.1 2.3 2.4 2.3h31.2c1.3 0 2.4-.9 2.4-2.3C42 31 34.9 25 24 25Z"/></g></symbol>
 </svg>
