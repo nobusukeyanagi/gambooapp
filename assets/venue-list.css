@@ -1932,7 +1932,7 @@
       }
       /* Match the unboxed Girls heart on SCR-01_bet.html. */
       .venue-header .venue-girls,
-      .rchip .rchip-girls {
+      .rcol > .rchip-girls {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1948,7 +1948,8 @@
       }
       .venue-header .rebate-logo { margin-left: auto; }
       .rchip.rebate { border: var(--line-selected); background: var(--c-bg); }
-      .rchip .rchip-rebate {
+      .rchip .rchip-rebate,
+      .rcol > .rchip-rebate {
         margin-top: 2px;
         padding: 0 4px;
         border-radius: 3px;
@@ -2024,8 +2025,8 @@
       .venue-card .hscroll > .hscroll-inner {
         padding-right: calc(var(--tap-dense) + var(--space-section));
       }
-      .rcol { flex: 0 0 auto; display: flex; }
-      .rcol > .rchip { flex: 1 1 auto; }
+      .rcol { flex: 0 0 auto; display: flex; flex-direction: column; gap: var(--space-small); }
+      .rcol > .rchip { flex: 0 0 auto; }
       .rcol > a.rchip { text-decoration: none; }
       .rcol > a.rchip:focus-visible {
         outline: var(--line-control);
@@ -2034,13 +2035,21 @@
       .rchip.canceled { background: var(--c-bg); border-color: var(--c-bg); color: var(--c-sub); cursor: default; box-shadow: none; }
       .rchip.canceled b,
       .rchip.canceled small { color: var(--c-sub); }
-      .rchip .rchip-girls {
-        margin-top: var(--space-2);
+      .rcol > .rchip-girls {
+        align-self: center;
+        margin-top: 0;
         padding: 0;
         border: 0;
         border-radius: 0;
         background: transparent;
         font-style: normal;
+      }
+      .rcol > .rchip-rebate {
+        align-self: center;
+        margin-top: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
       .rchip .rchip-rebate { font-size: var(--fs-12); }
       .comment-row { display: flex; align-items: center; }
