@@ -189,3 +189,30 @@ body { font-weight: var(--fw-normal); }
   padding: 0 var(--space-10);
   flex-shrink: 0;
 }
+
+/* Shared section headers align with the 50px centered prediction headers. */
+.page-header.page-header-simple {
+  background: var(--c-surface);
+  justify-content: center;
+  padding: 0 var(--space-content);
+  border-bottom: var(--line-normal);
+}
+.page-header.page-header-simple > .page-header-title {
+  flex: 0 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-card);
+  min-width: 0;
+  font-size: var(--fs-18);
+  font-weight: var(--fw-strong);
+  color: var(--c-text);
+}
+.page-header.page-header-simple .page-header-title > .header-page-icon {
+  display: block;
+  width: var(--nav-icon-size);
+  height: var(--nav-icon-size);
+  color: var(--c-primary-d);
+  fill: currentColor;
+  flex: 0 0 auto;
+}

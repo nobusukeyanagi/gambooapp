@@ -63,6 +63,34 @@ function compare(cur,base,key){
  console.log('COMPARE '+key+': '+pixels+' pixels ('+(100*ratio).toFixed(5)+'%)');
  if(ratio>maxDiff)fail(key+' visual difference '+(ratio*100).toFixed(5)+'%');
 }
+async function checkCompactSectionHeader(page, width, file) {
+  if(!['SCR-11_campaign.html','SCR-07_mypage.html'].includes(file)) return;
+  const name=file==='SCR-11_campaign.html'?'キャンペーン':'マイページ';
+  const header=page.locator('.phone-inner > .page-header.page-header-simple');
+  if(await header.count()!==1) return fail(file+' '+width+'px missing shared section header');
+  if((await header.locator('.page-header-title').innerText()).trim()!==name)
+    fail(file+' '+width+'px header name mismatch');
+  if(await header.locator('.header-page-icon').count()!==1 ||
+     await header.locator('.header-actions, .page-header-action, .icon-btn').count())
+    fail(file+' '+width+'px obsolete header actions or missing icon');
+  const st=await header.evaluate(el=>{
+    const title=el.querySelector('.page-header-title'),icon=el.querySelector('.header-page-icon');
+    const r=el.getBoundingClientRect(),t=title.getBoundingClientRect(),i=icon.getBoundingClientRect();
+    return {h:r.height,bg:getComputedStyle(el).backgroundColor,
+      border:getComputedStyle(el).borderBottomColor,
+      size:getComputedStyle(title).fontSize,weight:getComputedStyle(title).fontWeight,
+      titleColor:getComputedStyle(title).color,iconColor:getComputedStyle(icon).color,
+      iconW:i.width,iconH:i.height,
+      offset:Math.abs((r.left+r.right-t.left-t.right)/2)};
+  });
+  if(st.h!==50 || st.bg!=='rgb(255, 255, 255)' ||
+     st.border!=='rgb(208, 212, 214)' || st.size!=='18px' ||
+     st.weight!=='600' || st.titleColor!=='rgb(43, 49, 53)' ||
+     st.iconColor!=='rgb(134, 115, 58)' ||
+     st.iconW!==32 || st.iconH!==32 || st.offset>1)
+    fail(file+' '+width+'px header mismatch: '+JSON.stringify(st));
+}
+
 async function checkNavPredictionLinks(page, width, file) {
   const navs = page.locator(".bottom-tab");
   const count = await navs.count();
@@ -386,6 +414,7 @@ try {
       if(b)compare(cur,await capture(b.page,scene),name);
       checked++;
     }
+    await checkCompactSectionHeader(a.page,w,file);
     if (file === 'SCR-02_keirin.html' || file === 'SCR-02_autorace.html') await checkPredictionSort(a.page,w,file === 'SCR-02_autorace.html');
     if (file === 'SCR-03_racecardkeirin.html') await checkKeirinMania(a.page,w);
     if (file === "SCR-04_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
