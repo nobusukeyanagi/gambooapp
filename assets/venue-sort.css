@@ -37,6 +37,6 @@
 }
 
 /* Preserve three equal tappable controls on narrower smartphones. */
-@media (max-width: 360px) {
+@media (max-width: 359px) {
   .venue-sort-options .chip { font-size: var(--fs-12); }
 }
