@@ -35,3 +35,8 @@
   outline: var(--line-focus);
   outline-offset: var(--space-2);
 }
+
+/* Preserve three equal tappable controls on narrower smartphones. */
+@media (max-width: 360px) {
+  .venue-sort-options .chip { font-size: var(--fs-12); }
+}
