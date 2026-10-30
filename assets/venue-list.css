@@ -2051,7 +2051,7 @@
         outline: var(--line-control);
         outline-offset: var(--space-2);
       }
-      .rchip.canceled { background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface)); border-color: var(--c-bg); color: var(--c-sub); cursor: default; box-shadow: none; }
+      .rchip.canceled { background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface)); border-color: color-mix(in srgb, var(--c-border) 30%, var(--c-surface)); color: var(--c-sub); cursor: default; box-shadow: none; }
       .rchip.canceled b,
       .rchip.canceled small { color: var(--c-sub); }
       /* All race buttons match the near-deadline button's 90px width.
