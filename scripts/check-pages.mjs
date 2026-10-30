@@ -32,8 +32,7 @@ async function open(browser,host,file,w){
   page.on('pageerror', e=>{errs.push(e.message);console.log('PAGE JS ERROR '+file+' '+w+': '+e.message);});
   await page.addInitScript(()=>{
     window.setInterval = () => 0;
-    // Prevent content time changes in screenshot comparisons.
-    window.requestAnimationFrame = (callback)=>0;
+    // Preserve animation-frame callbacks for scroll arrow sync and waitForFunction.
   });
   await page.goto(host+'/'+encodeURIComponent(file),{waitUntil:'load',timeout:60000});
   await page.evaluate(async()=>{
@@ -203,16 +202,14 @@ async function checkAutoraceLabMerged(page, width) {
 
 async function checkPredictionSort(page, width, isAutorace) {
   const buttons = page.locator('.venue-sort-options .chip');
-  if (await buttons.count() !== (isAutorace ? 0 : 3))
+  if (await buttons.count() !== 3)
     fail(width + 'px unexpected inline sort button count');
   if (await page.locator('.sort-sheet, .sheet-scrim, .sort-btn').count())
     fail(width + 'px obsolete sheet sorting controls remain');
-  if (isAutorace && await page.locator('.list-head, .venue-sort-options').count())
-    fail(width + 'px autorace sorting row must not exist');
   const cards = page.locator('.scroll-area > .venue-card');
   if (!await cards.count()) fail(width + 'px prediction cards missing');
 
-  if (!isAutorace) {
+  {
     const grade = page.locator('.venue-sort-options [data-sort="grade"]');
     await grade.click();
     if (await grade.getAttribute('aria-pressed') !== 'true')
@@ -301,7 +298,7 @@ async function checkPredictionSort(page, width, isAutorace) {
 }
 
 async function checkSharedReferences(){
- const expected=['design-tokens.css?v=56','tap-feedback.css?v=3','ui-consistency.css?v=21'];
+ const expected=['design-tokens.css?v=56','tap-feedback.css?v=3'];
  const all=['SCR-01_bet.html',...paths];
  for(const page of all){
   const html=await readFile(path.join(ROOT,page),'utf8');
@@ -309,7 +306,9 @@ async function checkSharedReferences(){
   const css=[...html.matchAll(/<link\b[^>]*href=["']\.\/assets\/([^"']+\.css\?v=\d+)["']/g)].map(m=>m[1]);
   for(const name of expected)if(!css.includes(name))fail(page+': shared CSS direct reference missing '+name);
   if(css.length!==new Set(css).size)fail(page+': duplicated stylesheet reference');
-  const commonLast=css.indexOf('ui-consistency.css?v=21');
+  const commonRefs=css.filter(name=>/^ui-consistency\.css\?v=\d+$/.test(name));
+  if(commonRefs.length!==1)fail(page+': shared UI stylesheet must be directly referenced exactly once');
+  const commonLast=css.findIndex(name=>/^ui-consistency\.css\?v=\d+$/.test(name));
   if(commonLast!==css.length-1)fail(page+': shared UI stylesheet must load last');
   for(const href of css){
    const pathname=href.split('?')[0];
