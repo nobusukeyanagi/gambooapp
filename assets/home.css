@@ -248,7 +248,6 @@ button,
       .date-tab {
         flex: 1;
         
-        color: var(--c-sub);
         border-bottom: var(--line-emphasis-width) solid transparent;
         cursor: pointer;
         display: flex;
