@@ -2105,16 +2105,12 @@
         object-fit: contain;
       }
       /* Race statuses (確定・締切・投票締切・中止) and scheduled start
-         times all use the 16px R-number font. Longer countdowns are
-         intentionally 12px to fit inside the shared 90px button. */
+         times all use the 16px R-number font. Countdown warnings above
+         each R use the shared 12px .rchip-warning style. */
       .venue-card .rchip > small {
         font-family: var(--ff-ui);
         font-size: var(--fs-16);
         font-weight: var(--fw-16-strong);
-      }
-      .venue-card .rchip > small.rchip-countdown {
-        font-size: var(--fs-12);
-        font-weight: var(--fw-12-strong);
       }
       /* Scheduled times are always dark; completed / closed / canceled
          statuses retain their existing semantic text colors. */
