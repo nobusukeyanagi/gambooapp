@@ -397,11 +397,21 @@ async function checkMyPage(page, width) {
     fail(width+'px removed sections/entries still displayed');
   const settings=await page.locator('.scroll-area > .menu-item .menu-text').allTextContents();
   const expectedSettings=[
-    '競輪・オート表示順','友達を探す','パスワード変更','メールアドレス変更',
+    '競輪・オートレース表示順変更','友達を探す','パスワード変更','メールアドレス変更',
     'メールマガジン変更','ログイン通知設定','外部アカウント連携'
   ];
   if(settings.length!==7||settings.some((label,i)=>label.trim()!==expectedSettings[i]))
     fail(width+'px settings must contain exactly seven ordered entries: '+JSON.stringify(settings));
+  const firstSetting=await page.locator('.scroll-area > .settings-first').evaluate(el=>{
+    const style=getComputedStyle(el);return {label:el.querySelector('.menu-text')?.textContent.trim(),
+      topWidth:style.borderTopWidth,topColor:style.borderTopColor,
+      bottomWidth:style.borderBottomWidth};
+  });
+  if(firstSetting.label!=='競輪・オートレース表示順変更'||
+     firstSetting.topWidth!=='1px'||
+     firstSetting.topColor!=='rgb(208, 212, 214)'||
+     firstSetting.bottomWidth!=='1px')
+    fail(width+'px first setting needs top rule and new label: '+JSON.stringify(firstSetting));
   const results=await page.locator('.mypage-result-actions > a').evaluateAll(links=>links.map(el=>{
     const r=el.getBoundingClientRect(),cs=getComputedStyle(el),icon=el.querySelector('.mypage-result-icon');
     return {name:el.textContent.trim(),href:el.getAttribute('href'),
@@ -410,7 +420,8 @@ async function checkMyPage(page, width) {
       bg:cs.backgroundColor,border:cs.borderTopWidth,radius:cs.borderRadius,shadow:cs.boxShadow};
   }));
   if(results.length!==2 || results[0].name!=='競輪'||results[1].name!=='オートレース'||
-     results[0].href!=='#mypage-results-keirin'||results[1].href!=='#mypage-results-auto'||
+     results[0].href!=='https://gamboo.jp/member/achievement/keirin'||
+     results[1].href!=='https://gamboo.jp/member/achievement/autorace'||
      !results[0].icon?.endsWith('#nav-keirin')||!results[1].icon?.endsWith('#nav-auto')||
      results[0].iconColor!=='rgb(71, 122, 148)'||
      results[1].iconColor!=='rgb(172, 96, 90)'||
@@ -419,10 +430,8 @@ async function checkMyPage(page, width) {
        btn.border!=='1px'||btn.radius!=='8px'||btn.shadow==='none')||
      Math.abs(results[0].y-results[1].y)>1 ||results[0].x>=results[1].x)
     fail(width+'px My Results needs two canonical Keirin/Auto buttons: '+JSON.stringify(results));
-  for(const id of ['mypage-member','mypage-profile','mypage-results-keirin','mypage-results-auto']) {
-    const link=id.startsWith('mypage-results-')
-      ? page.locator('.mypage-result-actions a[href="#'+id+'"]')
-      : page.locator('.user-card-actions a[href="#'+id+'"]');
+  for(const id of ['mypage-member','mypage-profile']) {
+    const link=page.locator('.user-card-actions a[href="#'+id+'"]');
     if(await link.count()!==1) {
       fail(width+'px user/result shortcut missing '+id);
       continue;
@@ -508,13 +517,16 @@ async function checkMyPage(page, width) {
       const icon=el.querySelector('.favorite-sport-icon');
       const cards=[...el.querySelectorAll('.favorite-player-card')].map(a=>{
         const r=a.getBoundingClientRect(),style=getComputedStyle(a),
-          title=a.querySelector('.favorite-player-name')?.textContent.trim(),
-          aff=a.querySelector('.favorite-player-affiliation')?.textContent.trim();
+          nameEl=a.querySelector('.favorite-player-name'),
+          affEl=a.querySelector('.favorite-player-affiliation'),
+          title=nameEl?.textContent.trim(),aff=affEl?.textContent.trim();
         return {name:title,affiliation:aff,href:a.getAttribute('href'),
           storedName:a.dataset.playerName,storedAffiliation:a.dataset.playerAffiliation,
           width:r.width,height:r.height,display:style.display,
           border:style.borderTopWidth,radius:style.borderRadius,
-          color:style.color,background:style.backgroundColor};
+          color:style.color,background:style.backgroundColor,
+          nameFits:nameEl?.scrollWidth<=nameEl?.clientWidth+1,
+          affiliationFits:affEl?.scrollWidth<=affEl?.clientWidth+1};
       });
       const r=el.getBoundingClientRect();
       return {
@@ -538,9 +550,9 @@ async function checkMyPage(page, width) {
      !sports[1].icon?.endsWith('#nav-auto')||
      sports.some(x=>x.display==='none'||x.labels.join('|')!=='激推しメン|推しメン'||
        x.super!==1||x.oldActions!==0)||
-     sports[0].regular!==6||sports[1].regular!==4)
+     sports[0].regular!==10||sports[1].regular!==5)
     fail(width+'px both sports must show Keirin then Auto with sport-color icons, no tabs/actions: '+JSON.stringify(sports));
-  if(await page.locator('.favorites-stack .favorite-player-card').count()!==12||
+  if(await page.locator('.favorites-stack .favorite-player-card').count()!==17||
      await page.locator('.favorites-stack .os-tab,.favorites-stack .os-panel,.favorites-stack .os-actions').count())
     fail(width+'px favourites must be linked player cards, not sport tabs/buttons');
   for(const section of sports) {
@@ -550,12 +562,58 @@ async function checkMyPage(page, width) {
          card.storedName!==card.name||
          card.storedAffiliation!==card.affiliation||
          card.href!=='#favorite-'+kind+'-'+section.sport||
-         card.width<=0||card.height<60||card.border!=='1px'||
+         card.width<=0||card.height!==44||!card.nameFits||!card.affiliationFits||
+         card.border!=='1px'||
          card.radius!=='8px'||card.background!=='rgb(255, 255, 255)')
         fail(width+'px selected athlete cards need affiliation and correct editor route: '+
           JSON.stringify({sport:section.sport,card}));
     }
   }
+  // Verify all 17 riders and their affiliations against the supplied image.
+  const rosters={
+    keirin:{
+      super:[['南　修二','大阪府・88期']],
+      list:[
+        ['吉田　惠理','北海道・130期'],['小原　乃亜','岩手県・130期'],
+        ['川上　いちご','千葉県・130期'],['栗山　百花','神奈川県・130期'],
+        ['古山　稀絵','静岡県・130期'],['鈴木　媛子','愛知県・130期'],
+        ['仲井　リコ','岐阜県・130期'],['アニー　紗世子','和歌山県・130期'],
+        ['露谷　菜々花','高知県・130期'],['齊藤　萌','福岡県・130期']
+      ]
+    },
+    auto:{
+      super:[['山田　達也','川口・28期']],
+      list:[['篠崎　実','川口・09期'],['宍戸　幸雄','伊勢崎・14期'],
+            ['鈴木　章夫','浜松・02期'],['花元　初美','飯塚・08期'],
+            ['別府　末彦','山陽・09期']]
+    }
+  };
+  for(const section of sports) {
+    const expected=[...rosters[section.sport].super,...rosters[section.sport].list];
+    const actual=section.cards.map(card=>[card.name,card.affiliation]);
+    if(JSON.stringify(actual)!==JSON.stringify(expected))
+      fail(width+'px player names/affiliations must match reference image: '+JSON.stringify({sport:section.sport,actual,expected}));
+  }
+  const threeCol=await page.locator('.favorite-sport--keirin .favorite-group--regular .favorite-player-card').evaluateAll(nodes=>
+    nodes.slice(0,6).map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}}));
+  if(threeCol.length!==6||
+     !(threeCol[0].x<threeCol[1].x&&threeCol[1].x<threeCol[2].x)||
+     Math.abs(threeCol[0].y-threeCol[2].y)>1||
+     Math.abs(threeCol[3].y-threeCol[5].y)>1||
+     !(threeCol[3].y>threeCol[0].y+20))
+    fail(width+'px favorites must use a 3-column layout: '+JSON.stringify(threeCol));
+  const superAccent=await page.locator('.favorite-sport').evaluateAll(nodes=>nodes.map(el=>{
+    const a=el.querySelector('.favorite-group--super .favorite-player-card');
+    const style=getComputedStyle(a);
+    return {color:style.borderLeftColor,width:style.borderLeftWidth};
+  }));
+  if(superAccent.length!==2||superAccent[0].color!=='rgb(71, 122, 148)'||
+     superAccent[1].color!=='rgb(172, 96, 90)'||
+     superAccent.some(x=>x.width!=='3px'))
+    fail(width+'px featured athlete left band must use each competition color: '+JSON.stringify(superAccent));
+  if((await page.locator('.favorites-stack').innerText()).includes('ほか12名'))
+    fail(width+'px legacy count placeholder must be removed');
+
   // Every selected player opens their own correct Keirin/Auto × Super/Regular editor.
   for(const [sport,kind] of [
     ['keirin','super'],['keirin','list'],['auto','super'],['auto','list']]) {
