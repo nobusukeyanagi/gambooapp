@@ -187,6 +187,19 @@ async function checkCurrentPage(page, width) {
     return el ? { selector, prop, value: getComputedStyle(el)[prop] } : { selector, prop, value: null };
   }), expectedComputedStyles);
   styles.forEach((style, index) => eq(style.value, expectedComputedStyles[index][2], width + 'px ' + style.selector + '.' + style.prop));
+  // Regression: the sport heading must immediately precede the autorace grid.
+  const autoHeading=await page.locator('[data-home-venues="autorace"]').evaluate(grid => {
+    const previous=grid.previousElementSibling;
+    const heading=previous?.querySelector('.vgroup-name.auto.race-heading');
+    return {
+      adjacent:previous?.classList.contains('vgroup-head') || false,
+      text:heading?.textContent?.trim() || '',
+      icon:heading?.querySelector('use')?.getAttribute('href') || ''
+    };
+  });
+  if (!autoHeading.adjacent || autoHeading.text!=='オートレース' ||
+      !autoHeading.icon.endsWith('#nav-auto'))
+    fail(width+'px autorace section heading and bottom-nav icon were lost: '+JSON.stringify(autoHeading));
   const initial = await page.evaluate(() => {
     const read = sport => [...document.querySelectorAll('[data-home-venues="'+sport+'"] > .vcard')]
       .map(card => ({
