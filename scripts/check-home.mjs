@@ -208,15 +208,27 @@ async function checkCurrentPage(page, width) {
       tabIndex: n.tabIndex,
       hasStatus: n.querySelector('.bn-status')?.textContent.trim() === '本日実施中'})));
   const expectedBannerLinks = [
-    ...Array(10).fill('https://gamboo.jp/campaign/'),
+    // 01: provisional verified historical 1,000-yen registration detail;
+    // replace with the matching Nov 2026 campaign once its exact URL is confirmed.
+    'https://gamboo.jp/topics/?tid=20260811_registration_nfe',
+    'https://gamboo.jp/topics/?tid=20261029_hamamatsuSG_vkr',
+    'https://gamboo.jp/topics/?tid=20261029_hamamatsu_xrh',
+    'https://gamboo.jp/topics/?tid=20261029_hamamatsu_tlf',
+    'https://gamboo.jp/topics/?tid=202610_keirinmonthly_emx',
+    'https://gamboo.jp/topics/?tid=20261031_hofu_xrh',
+    'https://gamboo.jp/topics/?tid=20261101_hard1st_wlx',
+    'https://gamboo.jp/topics/?tid=20261101_keirinauto1st_qsk',
+    'https://gamboo.jp/topics/?tid=202611_keirinmonthly_srl',
+    'https://gamboo.jp/topics/?tid=20261105_yokkaichi_wdz',
     'https://gamboo.jp/about/gamboobet/dokanto',
     'https://gamboo.jp/keirin/topics/?tid=aokei_yosou',
     'https://gamboo.jp/topics/?tid=mori_point2015',
     'https://gamboo.jp/point/topics/?tid=hiroba-game'
   ];
   if (banners.some((banner,i) =>
-    banner.tag !== 'A' || banner.href !== expectedBannerLinks[i % 14] || !banner.label))
-    fail(width + 'px banner links or accessible names are incorrect');
+    banner.tag !== 'A' || banner.href !== expectedBannerLinks[i % 14] || !banner.label ||
+    (i % 14 < 10 && (banner.href.includes('/campaign/') || banner.label.includes('キャンペーン一覧')))))
+    fail(width + 'px banner links must target individual campaign details, never the listing');
   if (banners.some((banner,i) => (i < 3 * 14 || i >= 4 * 14) && banner.tabIndex !== -1))
     fail(width + 'px cloned banners must be removed from keyboard tab order');
   const statusSize = await page.locator('.bn-carousel .bn-status').first()
