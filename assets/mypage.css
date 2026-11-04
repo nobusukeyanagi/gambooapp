@@ -113,25 +113,28 @@
 }
 .favorite-player-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-card);
 }
-.favorite-player-grid--super { grid-template-columns: minmax(0,1fr); }
 .favorite-player-card {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   min-width: 0;
-  min-height: calc(var(--h-control) + var(--fs-20));
-  padding: var(--space-10);
+  height: var(--tap-min);
+  min-height: var(--tap-min);
+  padding: var(--space-2);
   border: var(--line-control);
   border-radius: var(--r-control);
   background: var(--c-surface);
   box-shadow: var(--e1);
   color: var(--c-text);
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
+  overflow: hidden;
 }
 .favorite-player-grid--super .favorite-player-card {
   border-left: var(--line-emphasis-width) solid var(--c-primary);
@@ -143,16 +146,22 @@
 }
 .favorite-player-name {
   display: block;
-  font-size: var(--fs-14);
+  max-width: 100%;
+  font-size: clamp(9px, 3vw, var(--fs-12));
+  line-height: 1.15;
   font-weight: var(--fw-strong);
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  letter-spacing: -0.04em;
 }
 .favorite-player-affiliation {
   display: block;
-  font-size: var(--fs-12);
+  max-width: 100%;
+  font-size: clamp(8px, 2.6vw, 10px);
+  line-height: 1.15;
   font-weight: var(--fw-normal);
   color: var(--c-sub);
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  letter-spacing: -0.06em;
 }
 .favorite-more-count {
   margin-top: var(--space-section);
