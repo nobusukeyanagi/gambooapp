@@ -394,7 +394,7 @@ body { font-weight: var(--fw-normal); }
   flex-basis: var(--fs-18);
 }
 /* Restore the neutral grey bell mark; deposit icon remains white. */
-.shared-app-header .header-actions .header-notification .ic {
+.shared-app-header .header-actions .header-notification {
   color: var(--c-sub);
 }
 .shared-app-header .header-actions .badge {
