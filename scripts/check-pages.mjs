@@ -330,6 +330,18 @@ async function checkMyPage(page, width) {
   await toggle.press('Enter');
   if(await toggle.getAttribute('aria-pressed')!=='true')
     fail(width+'px refund keyboard toggle must restore mask');
+  if((await page.locator('.user-name').innerText()).trim()!=='ユーザー さん')
+    fail(width+'px profile username must be ユーザー さん');
+  const values=await page.evaluate(()=>{
+    const read=selector=>{
+      const s=getComputedStyle(document.querySelector(selector));
+      return [s.fontSize,s.fontWeight,s.color].join('/');
+    };
+    return ['.payout-label','.payout-value','.unit'].map(c=>
+      [read('.user-points '+c),read('.payout-bar '+c)]);
+  });
+  if(values.some(pair=>pair[0]!==pair[1]))
+    fail(width+'px Gamboo points must match balance bar text: '+JSON.stringify(values));
   const pointRows=await page.locator('.user-card .pt3-row').count();
   if(pointRows!==1 || (await page.locator('.user-card .point-label').allTextContents()).map(x=>x.trim()).join('|')!=='Gambooポイント')
     fail(width+'px profile card should retain only Gamboo points');
@@ -345,7 +357,11 @@ async function checkMyPage(page, width) {
       const a=el.getBoundingClientRect(),cs=getComputedStyle(el);
       return {name:el.textContent.trim(),href:el.getAttribute('href'),
         x:a.x,y:a.y,w:a.width,h:a.height,display:cs.display,
-        font:cs.fontSize, border:cs.borderTopWidth};
+        font:cs.fontSize, border:cs.borderTopWidth,
+        lines:el.querySelectorAll(':scope > span').length,
+        fits:[...el.querySelectorAll(':scope > span')].every(x=>{
+          const r=x.getBoundingClientRect();return r.left>=a.left-1&&r.right<=a.right+1;
+        })};
     }));
   const expectedActions=[
     ['Gambooポイント履歴','https://gamboo.jp/point/'],
@@ -358,7 +374,7 @@ async function checkMyPage(page, width) {
   if(pointActions.length!==6 ||
      pointActions.some((a,i)=>a.name!==expectedActions[i][0]||
        a.href!==expectedActions[i][1]||a.h<60||a.w<60||
-       a.font!=='12px'||a.border!=='1px') ||
+       a.font!=='14px'||a.border!=='1px'||a.lines!==2||!a.fits) ||
      Math.abs(pointActions[0]?.y-pointActions[1]?.y)>1 ||
      Math.abs(pointActions[1]?.y-pointActions[2]?.y)>1 ||
      Math.abs(pointActions[3]?.y-pointActions[4]?.y)>1 ||
@@ -387,32 +403,47 @@ async function checkMyPage(page, width) {
     fail(width+'px canonical profile control styles mismatch: '+JSON.stringify(controls));
 }
 
-async function checkCompactSectionHeader(page, width, file) {
-  if(!['SCR-11_campaign.html','SCR-07_mypage.html'].includes(file)) return;
-  const name=file==='SCR-11_campaign.html'?'キャンペーン':'マイページ';
-  const header=page.locator('.phone-inner > .page-header.page-header-simple');
-  if(await header.count()!==1) return fail(file+' '+width+'px missing shared section header');
-  if((await header.locator('.page-header-title').innerText()).trim()!==name)
-    fail(file+' '+width+'px header name mismatch');
-  if(await header.locator('.header-page-icon').count()!==1 ||
-     await header.locator('.header-actions, .page-header-action, .icon-btn').count())
-    fail(file+' '+width+'px obsolete header actions or missing icon');
-  const st=await header.evaluate(el=>{
-    const title=el.querySelector('.page-header-title'),icon=el.querySelector('.header-page-icon');
-    const r=el.getBoundingClientRect(),t=title.getBoundingClientRect(),i=icon.getBoundingClientRect();
-    return {h:r.height,bg:getComputedStyle(el).backgroundColor,
-      border:getComputedStyle(el).borderBottomColor,
-      size:getComputedStyle(title).fontSize,weight:getComputedStyle(title).fontWeight,
-      titleColor:getComputedStyle(title).color,iconColor:getComputedStyle(icon).color,
-      iconW:i.width,iconH:i.height,
-      offset:Math.abs((r.left+r.right-t.left-t.right)/2)};
+async function checkCompactSectionHeader(page,width,file) {
+  const header=page.locator('.phone-inner > .shared-app-header');
+  if(await header.count()!==1)
+    return fail(file+' '+width+'px must use canonical shared header');
+  const names={
+    'SCR-01_bet.html':['車券購入','nav-ticket'],
+    'SCR-02_keirin.html':['競輪予想','nav-keirin'],
+    'SCR-02_autorace.html':['オートレース予想','nav-auto'],
+    'SCR-03_racecardkeirin.html':['大垣 最終日',null],
+    'SCR-04_racecardautorace.html':['川口 2日目',null],
+    'SCR-07_mypage.html':['マイページ','nav-mypage'],
+    'SCR-11_campaign.html':['キャンペーン','nav-campaign']
+  };
+  const expected=names[file];
+  if(!expected)return;
+  const data=await header.evaluate(el=>{
+    const headerRect=el.getBoundingClientRect();
+    const title=el.querySelector('.page-header-title'), rect=title.getBoundingClientRect();
+    const controls=[...el.querySelectorAll('.header-actions > *')].map(btn=>{
+      const r=btn.getBoundingClientRect(),s=getComputedStyle(btn);
+      return {name:btn.textContent.trim(),x:r.left,right:r.right,w:r.width,h:r.height,
+        font:s.fontSize,weight:s.fontWeight,icon:btn.querySelector('use')?.getAttribute('href')};
+    });
+    return {height:headerRect.height,left:headerRect.left,right:headerRect.right,
+      title:title.textContent.trim(),titleX:rect.left,titleRight:rect.right,
+      font:getComputedStyle(title).fontSize,weight:getComputedStyle(title).fontWeight,
+      titleIcon:title.querySelector('use')?.getAttribute('href')||null,
+      back:!!el.querySelector('.back-btn'),controls};
   });
-  if(st.h!==50 || st.bg!=='rgb(255, 255, 255)' ||
-     st.border!=='rgb(208, 212, 214)' || st.size!=='18px' ||
-     st.weight!=='600' || st.titleColor!=='rgb(43, 49, 53)' ||
-     st.iconColor!=='rgb(134, 115, 58)' ||
-     st.iconW!==32 || st.iconH!==32 || st.offset>1)
-    fail(file+' '+width+'px header mismatch: '+JSON.stringify(st));
+  const [bell,deposit]=data.controls;
+  if(data.height!==50 || data.title!==expected[0] || data.font!=='18px' ||
+     data.weight!=='600' || data.back!==!expected[1] ||
+     (expected[1] ? !data.titleIcon?.endsWith('#'+expected[1]) : !!data.titleIcon) ||
+     data.controls.length!==2 || bell.name!=='通知' || deposit.name!=='入金' ||
+     !bell.icon?.endsWith('#header-bell') || !deposit.icon?.endsWith('#header-card') ||
+     data.controls.some(x=>x.h!==40||x.w<64||x.font!=='14px'||x.weight!=='600') ||
+     data.titleX<data.left-1 || data.titleRight>bell.x+1 ||
+     bell.right>deposit.x || deposit.right>data.right+1)
+    fail(file+' '+width+'px canonical header title/buttons differ: '+JSON.stringify(data));
+  if(await page.locator('.phone-inner > .status-bar').count())
+    fail(file+' '+width+'px simulated status bar remains');
 }
 
 async function checkNavPredictionLinks(page, width, file) {
@@ -1162,6 +1193,12 @@ async function checkSharedReferences(){
   if(page!=='index.html' && (html.includes('bottom-nav-icons.svg?v=15') ||
      !html.includes('bottom-nav-icons.svg?v=16')))
     fail(page+': stale shared campaign gift icon cache reference');
+  if(page!=='index.html' &&
+    (!html.includes('ui-consistency.css?v=28') ||
+     !html.includes('header-icons.svg?v=1#header-bell') ||
+     !html.includes('header-icons.svg?v=1#header-card') ||
+     !html.includes('shared-app-header')))
+    fail(page+': canonical header references missing');
   if(pagesWithPrunedIcons.has(page)){
    const declared=[...html.matchAll(/<symbol\b[^>]*\bid="([^"]+)"/g)].map(m=>m[1]);
    const used=[...html.matchAll(/<use\b[^>]*\bhref="#([^"]+)"/g)].map(m=>m[1]);
