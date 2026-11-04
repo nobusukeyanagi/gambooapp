@@ -220,3 +220,163 @@ body { font-weight: var(--fw-normal); }
   fill: currentColor;
   flex: 0 0 auto;
 }
+
+/* Canonical outline action: the campaign “詳細を見る” button and all point
+   shortcuts share exactly the same source for colors, border, shadow and type. */
+.cp-btn, .point-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-height: var(--tap-min);
+  margin-top: 0;
+  padding: 0 var(--space-small);
+  border: var(--line-control);
+  border-radius: var(--r-control);
+  background: var(--c-surface);
+  box-shadow: var(--e1);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  color: var(--c-text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Seven production screens have one header layout and the same two controls.
+   Left label can wrap at 296px while the 40px notification/deposit buttons
+   remain visible at the right without reducing the shared 50px header. */
+.shared-app-header {
+  height: var(--h-header);
+  min-height: var(--h-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-small);
+  padding: 0 var(--space-section);
+  border-bottom: var(--line-normal);
+  background: var(--c-surface);
+  flex-shrink: 0;
+}
+.shared-app-header.page-header-simple {
+  justify-content: space-between;
+  padding: 0 var(--space-section);
+}
+.shared-app-header .header-main {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: var(--space-2);
+  justify-content: flex-start;
+}
+.shared-app-header .page-header-title,
+.shared-app-header .header-main > .page-header-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  flex: 1 1 auto;
+  gap: var(--space-5);
+  text-align: left;
+  color: var(--c-text);
+  font-size: var(--fs-18);
+  font-weight: var(--fw-strong);
+  line-height: 1.12;
+}
+.shared-app-header .header-title-text {
+  display: block;
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-wrap: anywhere;
+}
+.shared-app-header :is(.header-page-icon, .header-race-icon) {
+  display: block;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  color: var(--c-primary-d);
+  fill: currentColor;
+}
+.shared-app-header .header-race-icon:has(use[href$="#nav-keirin"]) {
+  color: var(--c-keirin);
+}
+.shared-app-header .header-race-icon:has(use[href$="#nav-auto"]) {
+  color: var(--c-auto);
+}
+.shared-app-header .back-btn,
+.shared-app-header.page-header .back-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: var(--h-control);
+  flex: 0 0 28px;
+  margin: 0;
+  color: var(--c-text);
+}
+.shared-app-header .back-btn .ic {
+  width: var(--fs-20);
+  height: var(--fs-20);
+}
+.shared-app-header .header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--space-small);
+  align-items: center;
+  margin-left: auto;
+}
+.shared-app-header .header-actions :is(.icon-btn, .cta-btn) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  gap: var(--space-2);
+  min-width: 64px;
+  height: var(--h-control);
+  min-height: var(--h-control);
+  padding: 0 var(--space-card);
+  border-radius: var(--r-control);
+  box-shadow: var(--e1);
+  font-family: var(--ff-ui);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+}
+.shared-app-header .header-actions .icon-btn {
+  width: auto;
+  border: var(--line-normal);
+  background: var(--c-surface);
+  color: var(--c-primary-d);
+}
+.shared-app-header .header-actions .cta-btn {
+  border: var(--line-control);
+  background: var(--c-keirin);
+  color: var(--c-surface);
+}
+.shared-app-header .header-actions .ic {
+  width: var(--fs-18);
+  height: var(--fs-18);
+  display: block;
+  flex: 0 0 var(--fs-18);
+  color: inherit;
+  fill: currentColor;
+}
+.shared-app-header .header-actions .badge {
+  display: block;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 13px;
+  height: 13px;
+  border: var(--line-thin) solid var(--c-surface);
+  border-radius: var(--r-full);
+  background: var(--c-error);
+}
+.shared-app-header .header-actions :is(.icon-btn, .cta-btn):focus-visible {
+  outline: var(--line-focus);
+  outline-offset: var(--space-2);
+}
