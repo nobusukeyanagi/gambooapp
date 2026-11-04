@@ -160,24 +160,7 @@
 .cp-card[data-status="closed"] .cp-period {
   color: var(--c-sub);
 }
-.cp-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  min-height: var(--tap-min);
-  margin-top: 0;
-  padding: 0 var(--space-small);
-  border: var(--line-control);
-  border-radius: var(--r-control);
-  background: var(--c-surface);
-  box-shadow: var(--e1);
-  font-size: var(--fs-14);
-  font-weight: var(--fw-strong);
-  color: var(--c-text);
-  text-decoration: none;
-  white-space: nowrap;
-}
+/* Campaign and point shortcut buttons share their complete visual design in ui-consistency.css. */
 .campaign-empty {
   margin: var(--space-section);
   padding: var(--space-24) var(--space-content);
