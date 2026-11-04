@@ -109,6 +109,19 @@ async function checkCampaignPage(page, width) {
       layout.periodBottom > layout.buttonTop ||
       layout.bodyOrder.join('|') !== 'cp-title|cp-period|cp-btn')
     fail(width + 'px campaign layout, font or deadline position mismatch: '+JSON.stringify(layout));
+  const detailAppearance = await page.locator('#campaign-list > .cp-card .cp-btn').evaluateAll(els =>
+    els.map(el => ({
+      border: getComputedStyle(el).borderTopColor,
+      borderWidth: getComputedStyle(el).borderTopWidth,
+      background: getComputedStyle(el).backgroundColor,
+      shadow: getComputedStyle(el).boxShadow,
+      radius: getComputedStyle(el).borderRadius
+    })));
+  if (detailAppearance.length !== 16 || detailAppearance.some(a =>
+      a.border !== 'rgb(156, 164, 168)' || a.borderWidth !== '1px' ||
+      a.background !== 'rgb(255, 255, 255)' || a.shadow === 'none' || a.radius !== '8px'))
+    fail(width+'px campaign detail buttons must use white background with a shared control border: '+
+      JSON.stringify(detailAppearance));
   const tabAppearance = await page.locator('.campaign-tabs.date-tabs > .date-tab').evaluateAll(els =>
     els.map(el => {
       const st=getComputedStyle(el);
@@ -488,22 +501,24 @@ async function checkPredictionSort(page, width, isAutorace) {
     .evaluateAll(nodes => [...new Set(nodes.map(n => getComputedStyle(n).fontWeight))]);
   if (raceWeights.some(weight => weight !== '600'))
     fail(width + 'px race button fonts must be 600: ' + raceWeights.join(','));
-  // Normal white race buttons share the home venue card's light border and
-  // every race button has the canonical subtle shadow, including urgent/canceled.
+  // Action buttons use the visible control boundary; cards use the lighter
+  // passive border. Urgent/canceled states retain their semantic exceptions.
+  // Every race button retains the canonical subtle shadow.
   const raceStyles = await page.locator('.venue-card .rchip').evaluateAll(nodes =>
     nodes.map(n => ({classes: n.className, background: getComputedStyle(n).backgroundColor,
       border: getComputedStyle(n).borderTopColor, shadow: getComputedStyle(n).boxShadow})));
   if (!raceStyles.length) fail(width + 'px race button styles missing');
   for (const st of raceStyles) {
     if (st.shadow === 'none') fail(width + 'px race button missing shadow: ' + st.classes);
-    if (st.background === 'rgb(255, 255, 255)' && !st.classes.includes('soon') &&
-        st.border !== 'rgb(208, 212, 214)')
-      fail(width + 'px white race button border should match home venue: ' + JSON.stringify(st));
+    if (!st.classes.includes('canceled') && !st.classes.includes('soon') &&
+        st.border !== 'rgb(156, 164, 168)')
+      fail(width + 'px race buttons must have a control border unless in a special state: ' +
+        JSON.stringify(st));
   }
   const sortBorders = await page.locator('.venue-sort-options .chip:not(.active)')
     .evaluateAll(nodes => nodes.map(n => getComputedStyle(n).borderTopColor));
-  if (sortBorders.some(c => c !== 'rgb(208, 212, 214)'))
-    fail(width + 'px white sort button border mismatches home venue');
+  if (sortBorders.some(c => c !== 'rgb(156, 164, 168)'))
+    fail(width + 'px inactive sort buttons must use the control border');
   // Regression of 3px urgent border, 44px arrow target and 14px sort label.
   const warningLabels = await page.locator('.venue-card .rchip.next.soon .rchip-warning').allTextContents();
   if (warningLabels.length !== 1 || warningLabels[0].trim() !== '締切13分前')

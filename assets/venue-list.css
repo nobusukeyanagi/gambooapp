@@ -144,7 +144,7 @@ button, input, select, textarea {
 .rchip {
   flex: 0 0 auto;
   border-radius: var(--r-control);
-  border: var(--line-normal);
+  border: var(--line-control);
   box-shadow: var(--e1);
   background: var(--c-surface);
   color: var(--c-text);
