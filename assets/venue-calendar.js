@@ -1,13 +1,29 @@
 /* SCR-02 three-day fixed preset. The 11/3 race data is kept in the
-   original HTML; adjacent days have verified meeting/day/grade/race counts.
-   Other dates' unverified individual cutoff/rider details are not invented. */
+   original HTML; adjacent days have verified meeting/day/grade/race counts
+   and Girls race numbers/types. Unverified individual cutoff/rider details
+   for adjacent dates are not invented. */
 (function () {
   "use strict";
   const referenceDay = "2026-11-03";
   // Gamboo points policy: all keirin finals, all grade-autorace races.
   // Race numbers/types below match published Nov 2 and Nov 4 final lists.
   const rebateRaces={"2026-11-02":{"熊本":[7],"浜松":"all"},"2026-11-04":{"豊橋":[10,11,12],"静岡":[6,7],"奈良":[7],"武雄":[6,7]}};
-  const girlsFinals={"2026-11-04":{"豊橋":[11],"静岡":[6],"武雄":[6]}};
+  // Verified racecards, including qualifying and consolation rather than only finals.
+  // Single source for the venue header, R badge, and race-type text.
+  const girlsRaceTypes={
+    "2026-11-02":{
+      "小田原":{6:"ガールズ予選２",7:"ガールズ予選２"},
+      "豊橋":{6:"ガールズ予選１",7:"ガールズ予選１"},
+      "静岡":{1:"ガールズ予選１",2:"ガールズ予選１"},
+      "武雄":{1:"ガールズ予選１",2:"ガールズ予選１"}
+    },
+    "2026-11-04":{
+      "豊橋":{5:"ガールズ一般",11:"ガールズ決勝"},
+      "別府":{5:"ガールズ予選１",6:"ガールズ予選１"},
+      "静岡":{1:"ガールズ一般",6:"ガールズ決勝"},
+      "武雄":{1:"ガールズ一般",6:"ガールズ決勝"}
+    }
+  };
   const finalTypes={"2026-11-02":{"熊本":{"7":"A級チャレンジ決勝"}},"2026-11-04":{"豊橋":{"10":"A級決勝","11":"ガールズ決勝","12":"S級決勝"},"静岡":{"6":"ガールズ決勝","7":"A級決勝"},"奈良":{"7":"A級チャレンジ決勝"},"武雄":{"6":"ガールズ決勝","7":"A級チャレンジ決勝"}}};
   const giftIcon='<span class="rchip-bottom-icons"><span class="rchip-bottom-icon rchip-campaign" role="img" aria-label="キャンペーン"><svg class="rchip-campaign-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="./assets/bottom-nav-icons.svg?v=16#nav-campaign"></use></svg></span></span>';
   const rebateBand='<span class="rchip-rebate">5%還元</span>';
@@ -35,7 +51,8 @@
     'aria-hidden="true" focusable="false"><use href="./assets/bottom-nav-icons.svg?v=16#girls-heart"></use></svg></span>';
 
   function buildCard(record, date) {
-    const [venue,grade,day,period,raceCount,firstClosing,girls] = record;
+    const [venue,grade,day,period,raceCount,firstClosing] = record;
+    const venueGirls=kind==="keirin" && !!girlsRaceTypes[date]?.[venue];
     const [gradeClass,gradeOrder] = gradeMeta[grade];
     const minutes = firstClosing ? firstClosing.split(":").reduce((h,m)=>Number(h)*60+Number(m)) : 9999;
     const past = date < referenceDay;
@@ -61,16 +78,17 @@
       '<span class="grade-badge ' + gradeClass + '">' + grade + '</span>' +
       '<span class="venue-title"><span class="venue-name">' + venue + '</span>' +
       '<span class="venue-meta"><span class="venue-day">' + day + '</span>' +
-      (period ? '・' + period : '') + (girls ? girlSvg : '') +
+      (period ? '・' + period : '') + (venueGirls ? girlSvg : '') +
       '</span></span>' + headerCampaign + '</div></div>';
     let chips = "";
     for (let race=1;race<=raceCount;race++) {
       const rebate=isEligible(race);
-      const girlsFinal=!!girlsFinals[date]?.[venue]?.includes(race);
-      const raceType=finalTypes[date]?.[venue]?.[race] || '';
-      const bottomIcons=(rebate||girlsFinal) ?
+      const girlsRaceType=kind==="keirin" ? (girlsRaceTypes[date]?.[venue]?.[race] || '') : '';
+      const girlsRace=!!girlsRaceType;
+      const raceType=girlsRaceType || finalTypes[date]?.[venue]?.[race] || '';
+      const bottomIcons=(rebate||girlsRace) ?
         '<span class="rchip-bottom-icons">' +
-        (girlsFinal ? girlsRaceIcon : '') +
+        (girlsRace ? girlsRaceIcon : '') +
         (rebate ? giftIcon.slice('<span class="rchip-bottom-icons">'.length, -'</span>'.length) : '') +
         '</span>' : '';
       chips += '<div class="rcol"><div class="rchip ' +
@@ -79,6 +97,7 @@
         (raceType ? ' data-race-type="' + raceType + '"' : '') +
         ' role="group" aria-label="' +
         venue + ' ' + race + 'R ' + date + ' ' + dayState +
+        (girlsRace ? ' ' + girlsRaceType : '') +
         (rebate ? ' 5%還元' : '') + '（レース詳細は未収録）">' +
         (rebate ? rebateBand : '') + '<b>' + race + 'R</b><small>' +
         dayState + '</small>' + bottomIcons + '</div></div>';
