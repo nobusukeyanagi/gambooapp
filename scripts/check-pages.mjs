@@ -515,14 +515,22 @@ async function checkPredictionSort(page, width, isAutorace) {
   // passive border. Urgent/canceled states retain their semantic exceptions.
   // Every race button retains the canonical subtle shadow.
   const raceStyles = await page.locator('.venue-card .rchip').evaluateAll(nodes =>
-    nodes.map(n => ({classes: n.className, background: getComputedStyle(n).backgroundColor,
-      border: getComputedStyle(n).borderTopColor, shadow: getComputedStyle(n).boxShadow})));
+    nodes.map(n => ({
+      classes:n.className,
+      hasRebate:!!n.querySelector(':scope > .rchip-rebate'),
+      background:getComputedStyle(n).backgroundColor,
+      border:getComputedStyle(n).borderTopColor,
+      borderWidth:getComputedStyle(n).borderTopWidth,
+      shadow:getComputedStyle(n).boxShadow
+    })));
   if (!raceStyles.length) fail(width + 'px race button styles missing');
   for (const st of raceStyles) {
     if (st.shadow === 'none') fail(width + 'px race button missing shadow: ' + st.classes);
-    if (!st.classes.includes('canceled') && !st.classes.includes('soon') &&
-        st.border !== 'rgb(156, 164, 168)')
-      fail(width + 'px race buttons must have a control border unless in a special state: ' +
+    if (st.classes.includes('canceled') || st.classes.includes('soon')) continue;
+    const expectedBorder=st.hasRebate?'rgb(134, 115, 58)':'rgb(156, 164, 168)';
+    const expectedWidth=st.hasRebate?'3px':'1px';
+    if(st.border!==expectedBorder || st.borderWidth!==expectedWidth)
+      fail(width + 'px rebate buttons need gold 3px borders; other actions use grey 1px: '+
         JSON.stringify(st));
   }
   const sortBorders = await page.locator('.venue-sort-options .chip:not(.active)')
