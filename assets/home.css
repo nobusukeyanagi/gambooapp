@@ -568,6 +568,7 @@ button,
         border-radius: var(--r-sm);
         flex-shrink: 0;
         letter-spacing: 0;
+        white-space: nowrap;
         display: inline-flex;
         align-items: center;
         justify-content: center;

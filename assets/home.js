@@ -159,7 +159,14 @@ document.querySelectorAll(".pay-toggle").forEach(function (el) {
 (function () {
   "use strict";
   var schedule = {"2026-11-02":{"keirin":[{"venue":"防府","grade":"GⅢ","day":"3日目","period":"","girls":false,"race":"","deadline":""},{"venue":"久留米","grade":"FⅠ","day":"2日目","period":"ナイター","girls":false,"race":"","deadline":""},{"venue":"豊橋","grade":"FⅠ","day":"初日","period":"ナイター","girls":true,"race":"","deadline":""},{"venue":"熊本","grade":"FⅡ","day":"最終日","period":"モーニング","girls":false,"race":"","deadline":""},{"venue":"小田原","grade":"FⅡ","day":"2日目","period":"モーニング","girls":true,"race":"","deadline":""},{"venue":"静岡","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"奈良","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":false,"race":"","deadline":""},{"venue":"武雄","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"浜松","grade":"SG","day":"5日目","period":"","girls":false,"race":"","deadline":""},{"venue":"川口","grade":"普通","day":"2日目","period":"ナイター","girls":false,"race":"","deadline":""}]},"2026-11-03":{"keirin":[{"venue":"青森","grade":"FⅠ","day":"初日","period":"","girls":false,"race":"4R","deadline":"12:13"},{"venue":"防府","grade":"GⅢ","day":"最終日","period":"","girls":false,"race":"4R","deadline":"12:26"},{"venue":"豊橋","grade":"FⅠ","day":"2日目","period":"ナイター","girls":true,"race":"1R","deadline":"15:45"},{"venue":"久留米","grade":"FⅠ","day":"最終日","period":"ナイター","girls":false,"race":"1R","deadline":"15:59"},{"venue":"静岡","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":true,"race":"1R","deadline":"20:36"},{"venue":"奈良","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":false,"race":"1R","deadline":"20:44"},{"venue":"武雄","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":true,"race":"1R","deadline":"20:52"},{"venue":"小田原","grade":"FⅡ","day":"最終日","period":"モーニング","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"浜松","grade":"SG","day":"最終日","period":"","girls":false,"race":"5R","deadline":"12:13"},{"venue":"川口","grade":"普通","day":"3日目","period":"ナイター","girls":false,"race":"1R","deadline":"18:48"}]},"2026-11-04":{"keirin":[{"venue":"青森","grade":"FⅠ","day":"2日目","period":"","girls":false,"race":"","deadline":""},{"venue":"取手","grade":"FⅡ","day":"初日","period":"モーニング","girls":false,"race":"","deadline":""},{"venue":"大宮","grade":"FⅠ","day":"初日","period":"","girls":false,"race":"","deadline":""},{"venue":"豊橋","grade":"FⅠ","day":"最終日","period":"ナイター","girls":true,"race":"","deadline":""},{"venue":"静岡","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"奈良","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":false,"race":"","deadline":""},{"venue":"武雄","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"別府","grade":"FⅡ","day":"初日","period":"ナイター","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"川口","grade":"普通","day":"最終日","period":"ナイター","girls":false,"race":"","deadline":""},{"venue":"山陽","grade":"普通","day":"初日","period":"","girls":false,"race":"","deadline":""}]}};
-  var gradeStyles = {"SG":["g-sg","SG"],"GⅢ":["g-g3","GⅢ"],"FⅠ":["g-f1","FⅠ"],"FⅡ":["g-f2","FⅡ"],"普通":["g-f2","普通"]};
+  var gradeStyles = {"GP":["g-gp","GP"],"SG":["g-sg","SG"],"GⅠ":["g-g1","GⅠ"],"特GⅠ":["g-g1","特GⅠ"],"GⅡ":["g-g2","GⅡ"],"GⅢ":["g-g3","GⅢ"],"FⅠ":["g-f1","FⅠ"],"FⅡ":["g-f2","FⅡ"],"普通":["g-f2","普通"]};
+  // Track numbers define the canonical north-to-south order within a grade.
+  var gradePriority = {"GP":0,"SG":1,"GⅠ":2,"特GⅠ":2,"GⅡ":3,"GⅢ":4,"FⅠ":5,"FⅡ":6,"普通":7};
+  var venueNumber = {"函館":11,"青森":12,"いわき平":13,"取手":23,"大宮":25,"京王閣":27,"小田原":36,"静岡":38,"豊橋":45,"奈良":53,"玉野":61,"防府":63,"小倉":81,"久留米":82,"武雄":84,"別府":86,"熊本":87,"伊勢崎":1,"川口":2,"浜松":3,"山陽":4,"飯塚":5};
+  function byGradeThenVenue(a,b) {
+    return (gradePriority[a.grade] ?? 99) - (gradePriority[b.grade] ?? 99) ||
+      (venueNumber[a.venue] ?? 999) - (venueNumber[b.venue] ?? 999);
+  }
   var girlsHeart = "<span class=\"girls\" role=\"img\" aria-label=\"ガールズ\"><svg class=\"girls-heart-icon\" viewBox=\"0 0 24 24\" preserveAspectRatio=\"none\" aria-hidden=\"true\" focusable=\"false\"><use href=\"./assets/bottom-nav-icons.svg?v=15#girls-heart\"></use></svg></span>";
   var referenceDay = "2026-11-03";
   var referenceMinutes = 12 * 60;
@@ -217,7 +224,7 @@ document.querySelectorAll(".pay-toggle").forEach(function (el) {
       var sport = index === 0 ? "keirin" : "autorace";
       grid.querySelectorAll(".vcard:not([data-demo])").forEach(function (tile) { tile.remove(); });
       var fragment = document.createDocumentFragment();
-      data[sport].forEach(function (entry) {
+      data[sport].slice().sort(byGradeThenVenue).forEach(function (entry) {
         var tile = makeTile(entry, sport, date);
         if (tile) fragment.appendChild(tile);
       });

@@ -213,7 +213,7 @@ async function checkCurrentPage(page, width) {
       }));
     return {keirin:read('keirin'),auto:read('autorace')};
   });
-  const keirinNames=['京王閣','小倉','玉野','青森','防府','豊橋','久留米','静岡','奈良','武雄','小田原'];
+  const keirinNames=['京王閣','小倉','玉野','防府','青森','豊橋','久留米','小田原','静岡','奈良','武雄'];
   const autoNames=['浜松','川口'];
   if (initial.keirin.map(x=>x.name).join('|')!==keirinNames.join('|') ||
       initial.auto.map(x=>x.name).join('|')!==autoNames.join('|') ||
@@ -237,6 +237,59 @@ async function checkCurrentPage(page, width) {
   for(const [grade,color] of Object.entries(expectedColors))
     if(gradeColors[grade]!==color)
       fail(width+'px grade '+grade+' palette mismatch: '+JSON.stringify(gradeColors));
+  // Venue cards use light standard borders and 3px sport-color left accent.
+  const cardBorders=await page.locator('[data-home-venues] > .vcard:not([data-demo])')
+    .evaluateAll(nodes=>nodes.map(el=>{
+      const st=getComputedStyle(el);
+      return {border:st.borderTopColor,width:st.borderTopWidth,leftWidth:st.borderLeftWidth};
+    }));
+  if(cardBorders.length!==10 || cardBorders.some(x=>
+      x.border!=='rgb(208, 212, 214)' || x.width!=='1px' || x.leftWidth!=='3px'))
+    fail(width+'px venue card line-normal / sport accent border wrong: '+JSON.stringify(cardBorders));
+
+  // Measure the actual text width of 特GⅠ in a 36×20px badge at this viewport.
+  const specialBadge=await page.locator('[data-home-venues="keirin"] .vcard[data-demo] .vcard-top').first().evaluate(top=>{
+    const badge=document.createElement('span');
+    badge.className='gbadge g-g1';
+    badge.textContent='特GⅠ';
+    top.append(badge);
+    const box=badge.getBoundingClientRect();
+    const range=document.createRange();
+    range.selectNodeContents(badge);
+    const glyph=range.getBoundingClientRect();
+    const style=getComputedStyle(badge);
+    const result={width:box.width,height:box.height,whiteSpace:style.whiteSpace,
+      font:style.fontSize,fits:glyph.left>=box.left-0.5 && glyph.right<=box.right+0.5 &&
+        glyph.top>=box.top-0.5 && glyph.bottom<=box.bottom+0.5};
+    badge.remove();
+    return result;
+  });
+  if(specialBadge.width!==36 || specialBadge.height!==20 ||
+     specialBadge.whiteSpace!=='nowrap' || specialBadge.font!=='12px' ||
+     !specialBadge.fits)
+    fail(width+'px special GⅠ text outside badge: '+JSON.stringify(specialBadge));
+
+  const mori=await page.locator('.mori-venue-grid > .vcard').evaluateAll(cards=>
+    cards.map(card=>({
+      race:card.dataset.moriRace||'',
+      venue:card.querySelector('.vcard-name')?.textContent?.trim(),
+      grade:card.querySelector('.gbadge')?.textContent?.trim(),
+      number:card.querySelector('.vcard-r')?.textContent?.trim(),
+      deadline:card.querySelector('.vcard-dl')?.dataset.deadline||'',
+      state:card.querySelector('.vcard-dl')?.textContent?.trim(),
+      next:card.dataset.moriNext||'',
+      day:card.querySelector('.vcard-day')?.textContent?.trim(),
+      photo:card.classList.contains('mori-photo-tile')
+    })));
+  if(mori.length!==5 || !mori[0].photo || !mori[3].photo ||
+     mori[1].race!=='2' || mori[1].venue!=='浜松' || mori[1].grade!=='SG' ||
+     mori[1].number!=='2R' || mori[1].state!=='確定' ||
+     mori[2].race!=='10' || mori[2].venue!=='浜松' || mori[2].grade!=='SG' ||
+     mori[2].number!=='10R' || mori[2].deadline!=='14:45' ||
+     mori[4].next!=='2026-11-07' || mori[4].venue!=='川口' ||
+     mori[4].day!=='初日' || mori[4].state!=='11/7')
+    fail(width+'px Mori 11/3 demo / 11/7 next entry changed: '+JSON.stringify(mori));
+
   const noon={青森:['4R','12:13'],防府:['4R','12:26'],
     豊橋:['1R','15:45'],久留米:['1R','15:59'],静岡:['1R','20:36'],
     奈良:['1R','20:44'],武雄:['1R','20:52'],浜松:['5R','12:13'],
@@ -365,14 +418,14 @@ async function checkInteractions(page, width) {
   await dateTabs.nth(0).click();
   await checkDummyVisibility(false,'Nov 2');
   eq((await readNames('keirin')).join('|'),
-    '防府|久留米|豊橋|熊本|小田原|静岡|奈良|武雄',width+'px Nov 2 real keirin');
+    '防府|豊橋|久留米|小田原|静岡|奈良|武雄|熊本',width+'px Nov 2 grade and track-number order');
   eq((await readNames('autorace')).join('|'),'浜松|川口',width+'px Nov 2 real autorace');
   if (await page.locator('[data-home-venues] > .vcard:not([data-demo]) .vcard-dl[data-deadline]').count())
     fail(width+'px yesterday must not have next-race cutoffs');
   await dateTabs.nth(2).click();
   await checkDummyVisibility(false,'Nov 4');
   eq((await readNames('keirin')).join('|'),
-    '青森|取手|大宮|豊橋|静岡|奈良|武雄|別府',width+'px Nov 4 real keirin');
+    '青森|大宮|豊橋|取手|静岡|奈良|武雄|別府',width+'px Nov 4 grade and track-number order');
   eq((await readNames('autorace')).join('|'),'川口|山陽',width+'px Nov 4 real autorace');
   if (await page.locator('[data-home-venues="keirin"] > .vcard:not([data-demo]) .vcard-dl').filter({hasText:'発売前'}).count()!==8)
     fail(width+'px tomorrow entries should display not yet on sale in Nov 3 snapshot');
@@ -390,7 +443,7 @@ async function checkInteractions(page, width) {
   await dateTabs.nth(1).click();
   await checkDummyVisibility(true,'Nov 3 restored');
   eq((await readNames('keirin')).join('|'),
-    '青森|防府|豊橋|久留米|静岡|奈良|武雄|小田原',width+'px Nov 3 restored');
+    '防府|青森|豊橋|久留米|小田原|静岡|奈良|武雄',width+'px Nov 3 grade and track-number order');
   eq(await dateTabs.nth(1).getAttribute('aria-selected'),'true',width+'px today selected');
   eq(await page.locator('[data-home-venues="keirin"] > .vcard[data-demo]').count(),3,
     width+'px fixed demo cards remain after date switching');
