@@ -210,12 +210,36 @@
 .profile-race-icon:has(use[href$="#nav-keirin"]) { width:calc(var(--fs-20) * 1.25); }
 .profile-race-icon:has(use[href$="#nav-auto"]) { width:calc(var(--fs-20) * 1.0833333); }
 
-/* Account, vote accounts, history, content and support menu rows. */
+/* My Results: keep the campaign's .cp-btn design as the direct source. */
+.mypage-result-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-section);
+  padding: var(--space-card) var(--space-content) var(--space-section);
+}
+.mypage-result-actions .mypage-result-action {
+  display: inline-flex;
+  min-width: 0;
+  min-height: var(--h-control);
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-card);
+  text-align: center;
+}
+.mypage-result-icon {
+  width: var(--fs-20);
+  height: var(--fs-20);
+  flex: 0 0 var(--fs-20);
+  fill: currentColor;
+}
+.mypage-result-icon.keirin { color: var(--c-keirin); }
+.mypage-result-icon.auto { color: var(--c-auto); }
+
+/* Existing settings menu-row styling. */
 .divider { height:var(--space-card); background:var(--c-bg); }
 .menu-item { display:flex; align-items:center; gap:var(--space-section); min-height:56px; padding:var(--space-10) var(--space-content); background:var(--c-surface); border-bottom:var(--line-normal); }
 .menu-icon { flex:0 0 var(--fs-20); display:flex; align-items:center; justify-content:center; color:var(--c-sub); }
 .menu-icon .ic { width:var(--fs-20); height:var(--fs-20); }
 .menu-text { flex:1; min-width:0; font-size:var(--fs-16); }
 .menu-arrow { flex:0 0 auto; color:var(--c-sub); font-size:var(--fs-20); }
-.danger-text { color:var(--c-error); }
 .content-end-spacer { height:var(--space-section); }
