@@ -70,6 +70,7 @@ body { font-weight: var(--fw-normal); }
    Allow long labels to wrap while preserving the existing tap target. */
 .bottom-tab .tab-item {
   font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
   white-space: normal;
   text-align: center;
   line-height: 1;
@@ -223,7 +224,7 @@ body { font-weight: var(--fw-normal); }
 
 /* Canonical outline action: the campaign “詳細を見る” button and all point
    shortcuts share exactly the same source for colors, border, shadow and type. */
-.cp-btn, .point-action {
+.cp-btn, .point-action, .oshi-act, .os-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -318,10 +319,16 @@ body { font-weight: var(--fw-normal); }
   width: var(--fs-20);
   height: var(--fs-20);
 }
+/* All page-title text begins at the same horizontal coordinate as SCR-02
+   keirin prediction. Detail headers use a back icon rather than a sport icon,
+   so compensate for the 3px difference in their intrinsic content spacing. */
+.shared-app-header .header-main:has(.back-btn) > .page-header-title {
+  margin-left: var(--space-3);
+}
 .shared-app-header .header-actions {
   display: flex;
   flex: 0 0 auto;
-  gap: var(--space-small);
+  gap: var(--space-card);
   align-items: center;
   margin-left: auto;
 }
@@ -331,11 +338,11 @@ body { font-weight: var(--fw-normal); }
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  gap: var(--space-2);
-  min-width: 64px;
+  gap: var(--space-small);
+  min-width: 80px;
   height: var(--h-control);
   min-height: var(--h-control);
-  padding: 0 var(--space-card);
+  padding: 0;
   border-radius: var(--r-control);
   box-shadow: var(--e1);
   font-family: var(--ff-ui);
@@ -348,22 +355,29 @@ body { font-weight: var(--fw-normal); }
 }
 .shared-app-header .header-actions .icon-btn {
   width: auto;
+  padding: 0 var(--space-section);
   border: var(--line-normal);
-  background: var(--c-surface);
+  background: transparent;
   color: var(--c-primary-d);
 }
 .shared-app-header .header-actions .cta-btn {
-  border: var(--line-control);
+  padding: 0 var(--space-10);
+  border: 0;
   background: var(--c-keirin);
   color: var(--c-surface);
 }
 .shared-app-header .header-actions .ic {
+  display: block;
   width: var(--fs-20);
   height: var(--fs-20);
-  display: block;
   flex: 0 0 var(--fs-20);
   color: inherit;
   fill: currentColor;
+}
+.shared-app-header .header-actions .cta-btn .ic {
+  width: var(--fs-18);
+  height: var(--fs-18);
+  flex-basis: var(--fs-18);
 }
 .shared-app-header .header-actions .badge {
   display: block;
