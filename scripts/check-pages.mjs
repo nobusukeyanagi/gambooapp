@@ -68,64 +68,84 @@ async function checkCampaignPage(page, width) {
   const closed = page.locator('#campaign-tab-closed');
   const pagination = page.locator('.campaign-pagination');
   const cards = page.locator('#campaign-list > .cp-card');
-  if (await cards.count() !== 12) fail(width + 'px expected 12 campaign demo entries');
+  const snapshot = '2026-11-03T12:00:00';
+  if (await cards.count() !== 16) fail(width + 'px expected 16 entries from supplied pages 1 and 2');
   if (await page.locator('.filter-chips, .cp-actions, .cp-btn.primary, .cp-btn.done').count())
-    fail(width + 'px obsolete campaign filters or entry controls found');
-  if (await pagination.isVisible()) fail(width + 'px archive pagination visible before selecting ended');
+    fail(width + 'px obsolete campaign controls remain');
+  const sourceValues = await cards.evaluateAll(els => els.map(el => ({
+    status: el.dataset.status, deadline: el.dataset.deadline,
+    href: el.querySelector('.cp-btn')?.getAttribute('href'),
+    image: el.querySelector('.cp-banner')?.getAttribute('src'),
+    title: el.querySelector('.cp-title')?.textContent?.trim()
+  })));
+  for (const item of sourceValues) {
+    if (item.status !== (item.deadline >= snapshot ? 'open' : 'closed'))
+      fail(width + 'px incorrectly classified campaign deadline: ' + JSON.stringify(item));
+    if (!item.href?.startsWith('https://gamboo.jp/') || !item.image?.startsWith('https://gamboo.jp/images/%2fcampaign%2f') || !item.title)
+      fail(width + 'px missing original campaign image/title/detail URL: '+JSON.stringify(item));
+  }
+  if (await pagination.isVisible()) fail(width + 'px closed pagination visible before selecting ended');
   if (await open.getAttribute('aria-selected') !== 'true')
-    fail(width + 'px open campaign tab should be initially selected');
+    fail(width + 'px ongoing campaign tab should initially be selected');
   const initialVisible = await cards.evaluateAll(els => els.filter(el => !el.hidden).length);
-  if (initialVisible !== 2) fail(width + 'px expected two ongoing demo banners, got ' + initialVisible);
+  if (initialVisible !== 8) fail(width + 'px expected eight ongoing campaigns, got ' + initialVisible);
   const layout = await cards.first().evaluate(el => {
     const image = el.querySelector('.cp-banner');
     const body = el.querySelector('.cp-body');
-    const rect = el.getBoundingClientRect(), a=image.getBoundingClientRect(), b=body.getBoundingClientRect();
-    return {imageWidth:a.width,imageHeight:a.height,bodyWidth:b.width,cardWidth:rect.width,
-      title:getComputedStyle(el.querySelector('.cp-title')).fontSize};
+    const title = body.querySelector('.cp-title');
+    const period = body.querySelector('.cp-period');
+    const button = body.querySelector('.cp-btn');
+    const a=image.getBoundingClientRect(), b=body.getBoundingClientRect();
+    return {imageWidth:a.width,imageHeight:a.height,bodyWidth:b.width,
+      titleSize:getComputedStyle(title).fontSize,periodSize:getComputedStyle(period).fontSize,
+      titleWeight:getComputedStyle(title).fontWeight,
+      bodyOrder:[...body.children].map(el => el.className),
+      periodBottom:period.getBoundingClientRect().bottom,
+      buttonTop:button.getBoundingClientRect().top};
   });
   if (Math.abs(layout.imageWidth-layout.imageHeight) > 1 ||
       Math.abs(layout.imageWidth-layout.bodyWidth) > 2 ||
-      layout.title !== '14px')
-    fail(width + 'px campaign card should use equal-width columns and square banner: '+JSON.stringify(layout));
+      layout.titleSize !== '14px' || layout.periodSize !== '14px' ||
+      layout.periodBottom > layout.buttonTop ||
+      layout.bodyOrder.join('|') !== 'cp-title|cp-period|cp-btn')
+    fail(width + 'px campaign layout, font or deadline position mismatch: '+JSON.stringify(layout));
   const icon=await page.locator('.page-header .header-page-icon use').getAttribute('href');
-  if (!icon?.endsWith('#nav-campaign'))
-    fail(width + 'px campaign header must reference same bottom-nav SVG');
+  if (!icon?.endsWith('#nav-campaign')) fail(width + 'px campaign header SVG mismatch');
   await closed.click();
   if (!await pagination.isVisible() || await closed.getAttribute('aria-selected') !== 'true')
-    fail(width + 'px archive tab/pagination did not open');
-  const visibleClosed = await cards.evaluateAll(els =>
-    els.filter(el => !el.hidden).map(el => el.dataset.status));
-  if (visibleClosed.length !== 10 || visibleClosed.some(status => status !== 'closed'))
-    fail(width + 'px archive card filtering failed');
+    fail(width + 'px archive pagination did not open');
+  const archiveValues = await cards.evaluateAll(els => els.filter(el => !el.hidden).map(el => el.dataset.status));
+  if (archiveValues.length !== 8 || archiveValues.some(status => status !== 'closed'))
+    fail(width + 'px expected eight ended campaigns');
   const previous=page.locator('.campaign-page-arrow[data-page="prev"]');
   const next=page.locator('.campaign-page-arrow[data-page="next"]');
   if (!await previous.isDisabled() || !await next.isDisabled())
-    fail(width + 'px paging buttons should disable for one-page archive');
+    fail(width + 'px archive arrows should be disabled with eight items');
 
-  // Test the 20-per-page rule without introducing fictitious visible campaigns.
+  // Exercise two pages by adding synthetic fixture clones; never persist them in HTML.
   await page.evaluate(() => {
     const list=document.getElementById('campaign-list');
-    const original=list.querySelector('.cp-card[data-status="closed"]');
+    const sample=list.querySelector('.cp-card[data-status="closed"]');
     for(let i=0;i<20;i++){
-      const clone=original.cloneNode(true);
+      const clone=sample.cloneNode(true);
       clone.dataset.testFixture='true';
       list.insertBefore(clone,list.querySelector('.campaign-empty'));
     }
   });
   await open.click();
-  await closed.click(); // Rebuild filtered set after fixture injection.
+  await closed.click(); // Forces render to read 28 archived entries.
   const firstCount=await cards.evaluateAll(els => els.filter(el => !el.hidden).length);
   if (firstCount !== 20 || await next.isDisabled() || !await previous.isDisabled())
-    fail(width + 'px archive first page must show 20 entries with next enabled');
+    fail(width + 'px archive page one should show 20 items');
   await next.click();
   const secondCount=await cards.evaluateAll(els => els.filter(el => !el.hidden).length);
-  if (secondCount !== 10 || !await next.isDisabled() || await previous.isDisabled() ||
+  if (secondCount !== 8 || !await next.isDisabled() || await previous.isDisabled() ||
       (await page.locator('.campaign-page-info').innerText()).trim() !== '2 / 2')
-    fail(width + 'px archive second page missing, wrong count or arrows');
+    fail(width + 'px archive page two should show eight items');
   await previous.click();
   if ((await page.locator('.campaign-page-info').innerText()).trim() !== '1 / 2')
-    fail(width + 'px previous archive page did not restore first page');
-  console.log('CAMPAIGN PAGE OK '+width+'px (square 50/50 cards, 20-item archive paging)');
+    fail(width + 'px previous arrow did not restore page one');
+  console.log('CAMPAIGN PAGE OK ' + width + 'px (16 source entries, deadline state, 20-per-page)');
 }
 
 async function checkCompactSectionHeader(page, width, file) {
