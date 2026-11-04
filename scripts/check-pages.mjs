@@ -301,11 +301,26 @@ async function checkMyPage(page, width) {
       preceding:el.previousElementSibling?.classList.contains('page-header'),
       following:el.nextElementSibling?.classList.contains('scroll-area')};
   });
-  if(bar.height!==51 || bar.bg!=='rgb(255, 255, 255)' ||
-     bar.border!=='rgb(208, 212, 214)' || bar.items!==2 ||
-     bar.names.join('|')!=='デルカ|払戻金' || bar.fonts.join('|')!=='16px|16px' ||
+  const home=await page.context().newPage();
+  let homeBar;
+  try {
+    await home.goto(new URL('./SCR-01_bet.html',page.url()).href,{waitUntil:'load'});
+    homeBar=await home.locator('.phone-inner > .payout-bar.pt-h').evaluate(el=>{
+      const s=getComputedStyle(el);
+      return {height:el.getBoundingClientRect().height,bg:s.backgroundColor,
+        border:s.borderBottomColor,items:el.querySelectorAll('.pt-item').length,
+        names:[...el.querySelectorAll('.payout-label')].map(x=>x.textContent.trim()),
+        fonts:[...el.querySelectorAll('.payout-value.pay-shown,.delca-entry .payout-value')].map(x=>getComputedStyle(x).fontSize)};
+    });
+  } finally {await home.close();}
+  if(Math.abs(bar.height-homeBar.height)>0.5 ||
+     bar.bg!==homeBar.bg || bar.border!==homeBar.border ||
+     bar.items!==homeBar.items ||
+     bar.names.join('|')!==homeBar.names.join('|') ||
+     bar.fonts.join('|')!==homeBar.fonts.join('|') ||
      !bar.preceding || !bar.following)
-    fail(width+'px SCR-07 balance bar must match SCR-01 directly below header: '+JSON.stringify(bar));
+    fail(width+'px SCR-07 payout bar must match SCR-01 actual layout: '+
+      JSON.stringify({mypage:bar,home:homeBar}));
   const toggle=balanceBar.locator('.pay-toggle');
   if(await toggle.count()!==1||await toggle.getAttribute('aria-pressed')!=='true')
     fail(width+'px refund initial masked state missing');
