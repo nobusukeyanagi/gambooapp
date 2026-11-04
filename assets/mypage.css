@@ -30,7 +30,7 @@
 }
 .user-points { display:block; padding:0 var(--space-content); background:var(--c-surface); }
 .pt3-row + .pt3-row { border-top:var(--line-normal); }
-.point-expiring { min-height:var(--tap-dense); }
+.pt3-row.point-expiring { min-height:var(--tap-dense); }
 .point-expiring .point-label { color:var(--c-sub); font-size:var(--fs-14); font-weight:var(--fw-normal); }
 .point-expiring .point-value { color:var(--c-error); font-size:var(--fs-14); font-weight:var(--fw-strong); font-family:var(--ff-ui); white-space:nowrap; }
 .point-expiring .unit { color:var(--c-error); font-size:var(--fs-12); font-weight:var(--fw-strong); }
