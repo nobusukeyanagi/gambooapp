@@ -459,60 +459,95 @@ async function checkMyPage(page, width) {
      !(pointActions[2]?.x>pointActions[1]?.x && pointActions[1]?.x>pointActions[0]?.x))
     fail(width+'px points shortcuts must form exactly two rows of three linked buttons: '+JSON.stringify(pointActions));
 
-  const unified=page.locator('.favorites-unified');
-  if(await unified.count()!==1||
-     await page.locator('.scroll-area .os-seg').count()!==1||
-     await page.locator('.favorites-unified .os-panel').count()!==2)
-    fail(width+'px featured and regular favourites must be unified');
-  for(const [id,sport] of [
-    ['favorite-super-keirin','keirin'],['favorite-super-auto','auto'],
-    ['favorite-list-keirin','keirin'],['favorite-list-auto','auto']]) {
-    await page.locator('.os-tab[data-os="'+sport+'"]').click();
-    const link=page.locator('.os-panel.on a[href="#'+id+'"]').first();
-    if(await link.count()!==1)fail(width+'px missing independent favourites route '+id);
-    else {
-      await link.click();
-      const target=page.locator('.favorite-route:target');
-      if(await target.count()!==1||await target.getAttribute('id')!==id)
-        fail(width+'px route '+id+' must show separate setting screen');
-      await target.locator('a[href="#favorites-section"]').first().click();
-      if(await page.locator('.favorite-route:target').count())
-        fail(width+'px route '+id+' did not close');
+  // The two competition sections are always visible, top to bottom; no tabs.
+  const sports=await page.locator('.favorites-stack > .favorite-sport').evaluateAll(nodes=>
+    nodes.map(el=>{
+      const icon=el.querySelector('.favorite-sport-icon');
+      const cards=[...el.querySelectorAll('.favorite-player-card')].map(a=>{
+        const r=a.getBoundingClientRect(),style=getComputedStyle(a),
+          title=a.querySelector('.favorite-player-name')?.textContent.trim(),
+          aff=a.querySelector('.favorite-player-affiliation')?.textContent.trim();
+        return {name:title,affiliation:aff,href:a.getAttribute('href'),
+          storedName:a.dataset.playerName,storedAffiliation:a.dataset.playerAffiliation,
+          width:r.width,height:r.height,display:style.display,
+          border:style.borderTopWidth,radius:style.borderRadius,
+          color:style.color,background:style.backgroundColor};
+      });
+      const r=el.getBoundingClientRect();
+      return {
+        sport:el.dataset.sport,y:r.y,height:r.height,display:getComputedStyle(el).display,
+        heading:el.querySelector('.favorite-sport-heading').textContent.trim(),
+        icon:icon.querySelector('use')?.getAttribute('href'),
+        iconColor:getComputedStyle(icon).color,
+        labels:[...el.querySelectorAll('.favorite-group-heading')].map(x=>x.textContent.trim()),
+        super:el.querySelectorAll('.favorite-group--super .favorite-player-card').length,
+        regular:el.querySelectorAll('.favorite-group--regular .favorite-player-card').length,
+        oldActions:el.querySelectorAll('.os-tab,.oshi-act,.os-btn,.os-chip,.os-seg').length,
+        cards
+      };
+    }));
+  if(sports.length!==2||sports[0]?.sport!=='keirin'||sports[1]?.sport!=='auto'||
+     sports[0].heading!=='競輪'||sports[1].heading!=='オートレース'||
+     !(sports[1].y>sports[0].y+sports[0].height-1)||
+     sports[0].iconColor!=='rgb(71, 122, 148)'||
+     sports[1].iconColor!=='rgb(172, 96, 90)'||
+     !sports[0].icon?.endsWith('#nav-keirin')||
+     !sports[1].icon?.endsWith('#nav-auto')||
+     sports.some(x=>x.display==='none'||x.labels.join('|')!=='激推しメン|推しメン'||
+       x.super!==1||x.oldActions!==0)||
+     sports[0].regular!==6||sports[1].regular!==4)
+    fail(width+'px both sports must show Keirin then Auto with sport-color icons, no tabs/actions: '+JSON.stringify(sports));
+  if(await page.locator('.favorites-stack .favorite-player-card').count()!==12||
+     await page.locator('.favorites-stack .os-tab,.favorites-stack .os-panel,.favorites-stack .os-actions').count())
+    fail(width+'px favourites must be linked player cards, not sport tabs/buttons');
+  for(const section of sports) {
+    for(const card of section.cards) {
+      const kind=card.href?.includes('-super-')?'super':'list';
+      if(!card.name||!card.affiliation||card.storedName!==card.name||
+         card.storedAffiliation!==card.affiliation||
+         card.href!=='#favorite-'+kind+'-'+section.sport||
+         card.width<=0||card.height<60||card.border!=='1px'||
+         card.radius!=='8px'||card.background!=='rgb(255, 255, 255)')
+        fail(width+'px selected athlete cards need affiliation and correct editor route: '+
+          JSON.stringify({sport:section.sport,card}));
     }
   }
-  for (const sport of ['auto','keirin']) {
-    await page.locator('.os-tab[data-os="'+sport+'"]').click();
-    const active=await page.locator('.os-panel.on').getAttribute('data-os');
-    const selected=await page.locator('.os-tab[data-os="'+sport+'"]').getAttribute('aria-selected');
-    if(active!==sport || selected!=='true')
-      fail(width+'px favourites tab failed for '+sport+' (panel '+active+', selected '+selected+')');
+  // Every selected player opens their own correct Keirin/Auto × Super/Regular editor.
+  for(const [sport,kind] of [
+    ['keirin','super'],['keirin','list'],['auto','super'],['auto','list']]) {
+    const selector='.favorite-sport[data-sport="'+sport+'"] .favorite-group--'+
+      (kind==='super'?'super':'regular')+' .favorite-player-card';
+    const card=page.locator(selector).first();
+    const details=await card.evaluate(el=>({name:el.dataset.playerName,
+      affiliation:el.dataset.playerAffiliation}));
+    await card.click();
+    const target=page.locator('.favorite-route:target');
+    const expectedId='favorite-'+kind+'-'+sport;
+    if(await target.count()!==1||await target.getAttribute('id')!==expectedId)
+      fail(width+'px player card must open '+expectedId);
+    else {
+      const selected=await target.locator('.favorite-route-selected').innerText();
+      if(selected!==details.name+'　'+details.affiliation)
+        fail(width+'px editor must show selected player and affiliation: '+selected);
+      await target.locator('a[href="#favorites-section"]').first().click();
+      if(await page.locator('.favorite-route:target').count())
+        fail(width+'px edit route must close on return');
+    }
   }
-  const controls=await page.locator('.os-panel.on .oshi-act, .os-panel.on .os-btn')
-    .evaluateAll(nodes=>nodes.map(el=>{
-      const st=getComputedStyle(el);
-      return {height:el.getBoundingClientRect().height,
-        radius:st.borderRadius,weight:st.fontWeight,font:st.fontSize,
-        border:st.borderTopWidth,bg:st.backgroundColor};
+  const cmp=await page.locator('.point-action, .user-card-action').evaluateAll(nodes=>
+    nodes.map(el=>{const st=getComputedStyle(el);
+      return {name:el.textContent.trim(),color:st.color,font:st.fontSize,
+        weight:st.fontWeight,border:st.borderTopColor,radius:st.borderRadius,
+        shadow:st.boxShadow,bg:st.backgroundColor};
     }));
-  if(controls.length!==3 || controls.some(c=>
-      c.height<44 || c.radius!=='8px' || c.weight!=='600' || c.font!=='14px' ||
-      c.border!=='1px' || c.bg!=='rgb(255, 255, 255)'))
-    fail(width+'px canonical profile control styles mismatch: '+JSON.stringify(controls));
-  const cmp=await page.locator('.oshi-act, .os-panel.on .os-btn, .point-action, .user-card-action').evaluateAll(nodes=>
-    nodes.map(el=>{const s=getComputedStyle(el);
-      return {name:el.textContent.trim(),color:s.color,
-        font:s.fontSize,weight:s.fontWeight,
-        border:s.borderTopColor,radius:s.borderRadius,shadow:s.boxShadow,
-        bg:s.backgroundColor};
-    }));
-  if(cmp.length!==12||cmp.some(item=>
-      item.color!=='rgb(43, 49, 53)' ||
-      item.font!=='14px' || item.weight!=='600' ||
-      item.border!=='rgb(156, 164, 168)' ||
-      item.radius!=='8px' || item.bg!=='rgb(255, 255, 255)' ||
+  if(cmp.length!==8||cmp.some(item=>
+      item.color!=='rgb(43, 49, 53)'||
+      item.font!=='14px'||item.weight!=='600'||
+      item.border!=='rgb(156, 164, 168)'||
+      item.radius!=='8px'||item.bg!=='rgb(255, 255, 255)'||
       item.shadow==='none'))
-    fail(width+'px all SCR-07 buttons must follow campaign detail button style: '+
-      JSON.stringify(cmp));
+    fail(width+'px remaining SCR-07 action buttons must match campaign style: '+JSON.stringify(cmp));
+
 }
 
 async function checkCompactSectionHeader(page,width,file) {
