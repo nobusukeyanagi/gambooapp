@@ -187,6 +187,38 @@ async function checkCurrentPage(page, width) {
     return el ? { selector, prop, value: getComputedStyle(el)[prop] } : { selector, prop, value: null };
   }), expectedComputedStyles);
   styles.forEach((style, index) => eq(style.value, expectedComputedStyles[index][2], width + 'px ' + style.selector + '.' + style.prop));
+  const initial = await page.evaluate(() => {
+    const read = sport => [...document.querySelectorAll('[data-home-venues="'+sport+'"] > .vcard')]
+      .map(card => ({
+        name:card.dataset.venue || card.querySelector('.vcard-name').textContent.trim(),
+        grade:card.querySelector('.gbadge').textContent.trim(),
+        dummy:card.dataset.demo === 'true',
+        race:card.querySelector('.vcard-r')?.textContent.trim(),
+        time:card.querySelector('.vcard-dl')?.dataset.deadline,
+        ended:card.classList.contains('ended'),
+        soon:card.classList.contains('deadline-soon')
+      }));
+    return {keirin:read('keirin'),auto:read('autorace')};
+  });
+  const keirinNames=['京王閣','小倉','玉野','青森','防府','豊橋','久留米','静岡','奈良','武雄','小田原'];
+  const autoNames=['浜松','川口'];
+  if (initial.keirin.map(x=>x.name).join('|')!==keirinNames.join('|') ||
+      initial.auto.map(x=>x.name).join('|')!==autoNames.join('|') ||
+      initial.keirin.slice(0,3).some((x,i)=>!x.dummy || x.grade!==['SG','GⅠ','GⅡ'][i]) ||
+      initial.keirin.slice(3).some(x=>x.dummy))
+    fail(width+'px actual Nov 3 venues and top three grade demo cards invalid: '+JSON.stringify(initial));
+  const noon={青森:['4R','12:13'],防府:['4R','12:26'],
+    豊橋:['1R','15:45'],久留米:['1R','15:59'],静岡:['1R','20:36'],
+    奈良:['1R','20:44'],武雄:['1R','20:52'],浜松:['5R','12:13'],
+    川口:['1R','18:48']};
+  for (const [name,[race,time]] of Object.entries(noon)) {
+    const card=[...initial.keirin,...initial.auto].find(x=>x.name===name);
+    if (!card || card.race!==race || card.time!==time ||
+        (card.soon !== (time==='12:13')))
+      fail(width+'px Nov 3 12:00 current race mismatch for '+name+': '+JSON.stringify(card));
+  }
+  if (!initial.keirin.find(x=>x.name==='小田原')?.ended)
+    fail(width+'px Odawara must be complete at noon');
   const loaded = await page.evaluate(() => Array.from(document.styleSheets).some((s) => s.href && s.href.includes('assets/home.css')));
   if (!loaded) fail('Stylesheet assets/home.css did not load at ' + width + 'px');
   const brokenImages = await page.evaluate(() => Array.from(document.querySelectorAll('img[src*="assets/images/"]'))
@@ -194,7 +226,7 @@ async function checkCurrentPage(page, width) {
     .map((img) => img.getAttribute('src')));
   if (brokenImages.length) fail(width + 'px broken asset images: ' + brokenImages.join(', '));
   const girlsIcons = await page.locator('.venue-grid.g3 .girls .girls-heart-icon use[href$="#girls-heart"]').count();
-  if (girlsIcons !== 2) fail(width + 'px expected two shared Girls SVG references, found ' + girlsIcons);
+  if (girlsIcons !== 5) fail(width + 'px expected one dummy and four active Girls icons, found ' + girlsIcons);
   const girlsColors = await page.locator('.venue-grid.g3 .girls .girls-heart-icon').evaluateAll(
     nodes => nodes.map(el => getComputedStyle(el).color));
   if (girlsColors.some(color => color !== 'rgb(165, 55, 76)'))
@@ -285,6 +317,26 @@ async function checkInteractions(page, width) {
   if (await auto.count() !== 1 || (await auto.innerText()).trim() !== "オート予想") {
     fail(width + "px home autorace prediction link missing");
   }
+  const dateTabs=page.locator('.scroll-area > .date-tabs [data-date]');
+  const readNames=async (kind) => page.locator('[data-home-venues="'+kind+'"] > .vcard:not([data-demo]) .vcard-name').allTextContents();
+  await dateTabs.nth(0).click();
+  eq((await readNames('keirin')).join('|'),
+    '防府|久留米|豊橋|熊本|小田原|静岡|奈良|武雄',width+'px Nov 2 real keirin');
+  eq((await readNames('autorace')).join('|'),'浜松|川口',width+'px Nov 2 real autorace');
+  if (await page.locator('[data-home-venues] > .vcard:not([data-demo]) .vcard-dl[data-deadline]').count())
+    fail(width+'px yesterday must not have next-race cutoffs');
+  await dateTabs.nth(2).click();
+  eq((await readNames('keirin')).join('|'),
+    '青森|取手|大宮|豊橋|静岡|奈良|武雄|別府',width+'px Nov 4 real keirin');
+  eq((await readNames('autorace')).join('|'),'川口|山陽',width+'px Nov 4 real autorace');
+  if (await page.locator('[data-home-venues="keirin"] > .vcard:not([data-demo]) .vcard-dl').filter({hasText:'発売前'}).count()!==8)
+    fail(width+'px tomorrow entries should display not yet on sale in Nov 3 snapshot');
+  await dateTabs.nth(1).click();
+  eq((await readNames('keirin')).join('|'),
+    '青森|防府|豊橋|久留米|静岡|奈良|武雄|小田原',width+'px Nov 3 restored');
+  eq(await dateTabs.nth(1).getAttribute('aria-selected'),'true',width+'px today selected');
+  eq(await page.locator('[data-home-venues="keirin"] > .vcard[data-demo]').count(),3,
+    width+'px fixed demo cards remain after date switching');
   const mask = await toggle.evaluate((el) => el.classList.contains('masked'));
   eq(mask, before === 'true', width + 'px payout mask restored');
 }

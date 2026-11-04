@@ -153,33 +153,94 @@ document.querySelectorAll(".pay-toggle").forEach(function (el) {
 
 ;
 
-/* Demo-only reference clock. Kept independent from the removed OS
-         status bar so that the five-minute closing warnings still render. */
-      (function () {
-        var demoClock = "20:28";
-        var deadlineItems = Array.from(document.querySelectorAll(".venue-grid.g3 .vcard-dl[data-deadline]"));
-        function minutes(value) {
-          var match = /^(\d{1,2}):(\d{2})$/.exec((value || "").trim());
-          if (!match || +match[1] > 23 || +match[2] > 59) return null;
-          return +match[1] * 60 + +match[2];
-        }
-        function updateDeadlineWarnings() {
-          var now = minutes(demoClock);
-          deadlineItems.forEach(function (el) {
-            var cutoff = minutes(el.dataset.deadline);
-            var diff = now !== null && cutoff !== null ? cutoff - now : -1;
-            var soon = diff > 0 && diff <= 5;
-            el.classList.toggle("soon", soon);
-            el.closest(".vcard").classList.toggle("deadline-soon", soon);
-            if (soon) {
-              el.setAttribute("aria-label", "締切まで" + diff + "分 " + el.dataset.deadline);
-              el.setAttribute("title", "締切まで" + diff + "分");
-            } else {
-              el.removeAttribute("aria-label");
-              el.removeAttribute("title");
-            }
-          });
-        }
-        updateDeadlineWarnings();
-        setInterval(updateDeadlineWarnings, 30000);
-      })();
+
+/* Static three-day racing calendar, viewed from 2026-11-03 12:00 JST.
+   The first three keirin cards remain intentionally fictional grade samples. */
+(function () {
+  "use strict";
+  var schedule = {"2026-11-02":{"keirin":[{"venue":"防府","grade":"GⅢ","day":"3日目","period":"","girls":false,"race":"","deadline":""},{"venue":"久留米","grade":"FⅠ","day":"2日目","period":"ナイター","girls":false,"race":"","deadline":""},{"venue":"豊橋","grade":"FⅠ","day":"初日","period":"ナイター","girls":true,"race":"","deadline":""},{"venue":"熊本","grade":"FⅡ","day":"最終日","period":"モーニング","girls":false,"race":"","deadline":""},{"venue":"小田原","grade":"FⅡ","day":"2日目","period":"モーニング","girls":true,"race":"","deadline":""},{"venue":"静岡","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"奈良","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":false,"race":"","deadline":""},{"venue":"武雄","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"浜松","grade":"SG","day":"5日目","period":"","girls":false,"race":"","deadline":""},{"venue":"川口","grade":"普通","day":"2日目","period":"ナイター","girls":false,"race":"","deadline":""}]},"2026-11-03":{"keirin":[{"venue":"青森","grade":"FⅠ","day":"初日","period":"","girls":false,"race":"4R","deadline":"12:13"},{"venue":"防府","grade":"GⅢ","day":"最終日","period":"","girls":false,"race":"4R","deadline":"12:26"},{"venue":"豊橋","grade":"FⅠ","day":"2日目","period":"ナイター","girls":true,"race":"1R","deadline":"15:45"},{"venue":"久留米","grade":"FⅠ","day":"最終日","period":"ナイター","girls":false,"race":"1R","deadline":"15:59"},{"venue":"静岡","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":true,"race":"1R","deadline":"20:36"},{"venue":"奈良","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":false,"race":"1R","deadline":"20:44"},{"venue":"武雄","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":true,"race":"1R","deadline":"20:52"},{"venue":"小田原","grade":"FⅡ","day":"最終日","period":"モーニング","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"浜松","grade":"SG","day":"最終日","period":"","girls":false,"race":"5R","deadline":"12:13"},{"venue":"川口","grade":"普通","day":"3日目","period":"ナイター","girls":false,"race":"1R","deadline":"18:48"}]},"2026-11-04":{"keirin":[{"venue":"青森","grade":"FⅠ","day":"2日目","period":"","girls":false,"race":"","deadline":""},{"venue":"取手","grade":"FⅡ","day":"初日","period":"モーニング","girls":false,"race":"","deadline":""},{"venue":"大宮","grade":"FⅠ","day":"初日","period":"","girls":false,"race":"","deadline":""},{"venue":"豊橋","grade":"FⅠ","day":"最終日","period":"ナイター","girls":true,"race":"","deadline":""},{"venue":"静岡","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"奈良","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":false,"race":"","deadline":""},{"venue":"武雄","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"別府","grade":"FⅡ","day":"初日","period":"ナイター","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"川口","grade":"普通","day":"最終日","period":"ナイター","girls":false,"race":"","deadline":""},{"venue":"山陽","grade":"普通","day":"初日","period":"","girls":false,"race":"","deadline":""}]}};
+  var gradeStyles = {"SG":["g-gp","SG"],"GⅢ":["g-g3","GⅢ"],"FⅠ":["g-f1","FⅠ"],"FⅡ":["g-f2","FⅡ"],"普通":["g-f2","普通"]};
+  var girlsHeart = "<span class=\"girls\" role=\"img\" aria-label=\"ガールズ\"><svg class=\"girls-heart-icon\" viewBox=\"0 0 24 24\" preserveAspectRatio=\"none\" aria-hidden=\"true\" focusable=\"false\"><use href=\"./assets/bottom-nav-icons.svg?v=15#girls-heart\"></use></svg></span>";
+  var referenceDay = "2026-11-03";
+  var referenceMinutes = 12 * 60;
+  var tabs = Array.from(document.querySelectorAll(".scroll-area > .date-tabs [data-date]"));
+  var keirinGrid = document.querySelector('[data-home-venues="keirin"]');
+  var autoGrid = document.querySelector('[data-home-venues="autorace"]');
+  if (tabs.length !== 3 || !keirinGrid || !autoGrid) return;
+  function makeTile(data, sport, date) {
+    var grade = gradeStyles[data.grade];
+    if (!grade) return null;
+    var today = date === referenceDay, upcoming = today && Boolean(data.deadline);
+    var ended = date < referenceDay || (today && !upcoming);
+    var tile = document.createElement("div");
+    tile.className = "vcard" + (sport === "autorace" ? " auto" : "") + (ended ? " ended" : "");
+    tile.dataset.venue = data.venue;
+    tile.dataset.scheduleDate = date;
+    var tags = (data.period ? '<span class="kubun">' + data.period + '</span>' : '') +
+      (data.girls ? girlsHeart : '');
+    var status = upcoming
+      ? '<span class="vcard-r">' + data.race + '</span><span class="vcard-dl" data-deadline="' +
+        data.deadline + '"><span class="deadline-time">' + data.deadline + '</span></span>'
+      : '<span class="vcard-dl">' + (ended ? '発売終了' : '発売前') + '</span>';
+    tile.innerHTML =
+      '<div class="vcard-top"><span class="gbadge ' + grade[0] + '">' + grade[1] +
+      '</span><span class="vcard-day">' + data.day + '</span></div>' +
+      '<div class="vcard-name">' + data.venue + '</div>' +
+      '<div class="vcard-tags">' + tags + '</div>' +
+      '<div class="vcard-bottom">' + status + '</div>';
+    return tile;
+  }
+  function markSoon(grid) {
+    grid.querySelectorAll(".vcard:not([data-demo]) .vcard-dl[data-deadline]").forEach(function (item) {
+      var pieces = item.dataset.deadline.split(":");
+      var remain = (+pieces[0] * 60 + +pieces[1]) - referenceMinutes;
+      var soon = remain > 0 && remain <= 20;
+      item.classList.toggle("soon", soon);
+      item.closest(".vcard").classList.toggle("deadline-soon", soon);
+      if (soon) {
+        item.setAttribute("aria-label", "締切まで" + remain + "分 " + item.dataset.deadline);
+        item.setAttribute("title", "締切まで" + remain + "分");
+      } else {
+        item.removeAttribute("aria-label");
+        item.removeAttribute("title");
+      }
+    });
+  }
+  function showDay(date) {
+    var data = schedule[date];
+    if (!data) return;
+    [keirinGrid, autoGrid].forEach(function (grid, index) {
+      var sport = index === 0 ? "keirin" : "autorace";
+      grid.querySelectorAll(".vcard:not([data-demo])").forEach(function (tile) { tile.remove(); });
+      var fragment = document.createDocumentFragment();
+      data[sport].forEach(function (entry) {
+        var tile = makeTile(entry, sport, date);
+        if (tile) fragment.appendChild(tile);
+      });
+      grid.appendChild(fragment);
+      grid.dataset.snapshot = date + "T12:00:00+09:00";
+      markSoon(grid);
+    });
+    tabs.forEach(function (tab) {
+      var active = tab.dataset.date === date;
+      tab.classList.toggle("active", active);
+      tab.setAttribute("aria-selected", String(active));
+      tab.tabIndex = active ? 0 : -1;
+    });
+  }
+  tabs.forEach(function (tab, index) {
+    tab.addEventListener("click", function () { showDay(tab.dataset.date); });
+    tab.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        tab.click();
+      } else if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
+        var next = tabs[(index + (event.key === "ArrowRight" ? 1 : 2)) % 3];
+        next.click();
+        next.focus();
+      }
+    });
+  });
+  showDay(referenceDay);
+})();
