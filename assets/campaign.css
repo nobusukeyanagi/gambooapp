@@ -156,6 +156,10 @@
   text-align: center;
   font-variant-numeric: tabular-nums;
 }
+/* Closed campaigns retain the deadline layout; their date is no longer an alert. */
+.cp-card[data-status="closed"] .cp-period {
+  color: var(--c-sub);
+}
 .cp-btn {
   display: flex;
   align-items: center;

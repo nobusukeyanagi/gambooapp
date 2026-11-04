@@ -167,7 +167,7 @@ document.querySelectorAll(".pay-toggle").forEach(function (el) {
     return (gradePriority[a.grade] ?? 99) - (gradePriority[b.grade] ?? 99) ||
       (venueNumber[a.venue] ?? 999) - (venueNumber[b.venue] ?? 999);
   }
-  var girlsHeart = "<span class=\"girls\" role=\"img\" aria-label=\"ガールズ\"><svg class=\"girls-heart-icon\" viewBox=\"0 0 24 24\" preserveAspectRatio=\"none\" aria-hidden=\"true\" focusable=\"false\"><use href=\"./assets/bottom-nav-icons.svg?v=15#girls-heart\"></use></svg></span>";
+  var girlsHeart = "<span class=\"girls\" role=\"img\" aria-label=\"ガールズ\"><svg class=\"girls-heart-icon\" viewBox=\"0 0 24 24\" preserveAspectRatio=\"none\" aria-hidden=\"true\" focusable=\"false\"><use href=\"./assets/bottom-nav-icons.svg?v=16#girls-heart\"></use></svg></span>";
   var referenceDay = "2026-11-03";
   var referenceMinutes = 12 * 60;
   var tabs = Array.from(document.querySelectorAll(".scroll-area > .date-tabs [data-date]"));

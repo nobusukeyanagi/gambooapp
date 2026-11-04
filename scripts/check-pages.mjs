@@ -200,12 +200,18 @@ async function checkCampaignPage(page, width) {
   const deadlineStyles = await cards.evaluateAll(els => els.map(el => {
     const period=el.querySelector('.cp-period'),cs=getComputedStyle(period);
     const p=period.getBoundingClientRect(),b=el.querySelector('.cp-body').getBoundingClientRect();
-    return {font:cs.fontSize,weight:cs.fontWeight,color:cs.color,align:cs.textAlign,
+    return {status:el.dataset.status,font:cs.fontSize,weight:cs.fontWeight,
+      color:cs.color,align:cs.textAlign,
+      childColors:[...period.children].map(child=>getComputedStyle(child).color),
       centerOffset:Math.abs((p.left+p.right-b.left-b.right)/2)};
   }));
-  if (deadlineStyles.some(s => s.font !== '14px' || s.weight !== '600' ||
-       s.color !== 'rgb(165, 55, 76)' || s.align !== 'center' || s.centerOffset > 1))
-    fail(width + 'px deadline must be centered, red and bold: ' + JSON.stringify(deadlineStyles));
+  if (deadlineStyles.length!==16 || deadlineStyles.some(s =>
+       s.font !== '14px' || s.weight !== '600' ||
+       s.color !== (s.status==='closed'?'rgb(101, 109, 113)':'rgb(165, 55, 76)') ||
+       s.childColors.some(color=>color!==s.color) ||
+       s.align !== 'center' || s.centerOffset > 1))
+    fail(width + 'px active deadlines must be red and ended deadlines grey: '+
+      JSON.stringify(deadlineStyles));
   const icon=await page.locator('.page-header .header-page-icon use').getAttribute('href');
   if (!icon?.endsWith('#nav-campaign')) fail(width + 'px campaign header SVG mismatch');
   await closed.click();
@@ -217,9 +223,13 @@ async function checkCampaignPage(page, width) {
   if (closedTab.color !== 'rgb(134, 115, 58)' ||
       closedTab.border !== 'rgb(134, 115, 58)')
     fail(width + 'px ended campaign date tab must have gold active underline: '+JSON.stringify(closedTab));
-  const archiveValues = await cards.evaluateAll(els => els.filter(el => !el.hidden).map(el => el.dataset.status));
-  if (archiveValues.length !== 8 || archiveValues.some(status => status !== 'closed'))
-    fail(width + 'px expected eight ended campaigns');
+  const archiveValues = await cards.evaluateAll(els => els.filter(el => !el.hidden).map(el => ({
+    status:el.dataset.status,color:getComputedStyle(el.querySelector('.cp-period')).color
+  })));
+  if (archiveValues.length !== 8 || archiveValues.some(item =>
+      item.status !== 'closed' || item.color !== 'rgb(101, 109, 113)'))
+    fail(width + 'px expected eight ended campaigns with grey deadlines: '+
+      JSON.stringify(archiveValues));
   const previous=page.locator('.campaign-page-arrow[data-page="prev"]');
   const next=page.locator('.campaign-page-arrow[data-page="next"]');
   if (!await previous.isDisabled() || !await next.isDisabled())
@@ -766,6 +776,11 @@ async function checkPredictionSort(page, width, isAutorace) {
 async function checkSharedReferences(){
  const expected=['design-tokens.css?v=59','tap-feedback.css?v=3'];
  const tokens=await readFile(path.join(ROOT,'assets','design-tokens.css'),'utf8');
+ const icons=await readFile(path.join(ROOT,'assets','bottom-nav-icons.svg'),'utf8');
+ const gift=icons.split('<symbol id="nav-campaign"')[1]?.split('</symbol>')[0];
+ if(!gift || !gift.includes('<rect x="5.5" y="17" width="15.5" height="7" rx="1.7"/>') ||
+    !gift.includes('<rect x="27" y="17" width="15.5" height="7" rx="1.7"/>'))
+   fail('Shared gift icon lid must be symmetric and only 1px wider than gift body on each side');
  if(!/--fw-normal:\s*400\s*;/.test(tokens)||!/--fw-strong:\s*600\s*;/.test(tokens))
    fail('Canonical typography weights must be 400 and 600');
  if(/--fw-\d{2}-(normal|strong)/.test(tokens))
@@ -774,6 +789,9 @@ async function checkSharedReferences(){
  const pagesWithPrunedIcons=new Set(['SCR-01_bet.html','SCR-02_keirin.html','SCR-02_autorace.html']);
  for(const page of all){
   const html=await readFile(path.join(ROOT,page),'utf8');
+  if(page!=='index.html' && (html.includes('bottom-nav-icons.svg?v=15') ||
+     !html.includes('bottom-nav-icons.svg?v=16')))
+    fail(page+': stale shared campaign gift icon cache reference');
   if(pagesWithPrunedIcons.has(page)){
    const declared=[...html.matchAll(/<symbol\b[^>]*\bid="([^"]+)"/g)].map(m=>m[1]);
    const used=[...html.matchAll(/<use\b[^>]*\bhref="#([^"]+)"/g)].map(m=>m[1]);
