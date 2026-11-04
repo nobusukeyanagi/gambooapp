@@ -22,6 +22,8 @@
           originals.forEach(function (slide) {
             var clone = slide.cloneNode(true);
             clone.setAttribute("aria-hidden", "true");
+            // Cloned slides retain pointer links, but only original links enter tab navigation.
+            clone.tabIndex = -1;
             fragment.appendChild(clone);
           });
           return fragment;

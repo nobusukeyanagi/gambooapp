@@ -204,7 +204,25 @@ async function checkCurrentPage(page, width) {
   // The live banner gallery must follow the filenames and omit deleted assets.
   const banners = await page.locator('.bn-carousel .bn-track > .bn').evaluateAll(nodes =>
     nodes.map(n => ({src: n.querySelector('img')?.getAttribute('src'),
+      href: n.getAttribute('href'), tag: n.tagName, label: n.getAttribute('aria-label'),
+      tabIndex: n.tabIndex,
       hasStatus: n.querySelector('.bn-status')?.textContent.trim() === '本日実施中'})));
+  const expectedBannerLinks = [
+    ...Array(10).fill('https://gamboo.jp/campaign/'),
+    'https://gamboo.jp/about/gamboobet/dokanto',
+    'https://gamboo.jp/keirin/topics/?tid=aokei_yosou',
+    'https://gamboo.jp/topics/?tid=mori_point2015',
+    'https://gamboo.jp/point/topics/?tid=hiroba-game'
+  ];
+  if (banners.some((banner,i) =>
+    banner.tag !== 'A' || banner.href !== expectedBannerLinks[i % 14] || !banner.label))
+    fail(width + 'px banner links or accessible names are incorrect');
+  if (banners.some((banner,i) => (i < 3 * 14 || i >= 4 * 14) && banner.tabIndex !== -1))
+    fail(width + 'px cloned banners must be removed from keyboard tab order');
+  const statusSize = await page.locator('.bn-carousel .bn-status').first()
+    .evaluate(el => getComputedStyle(el).fontSize);
+  if (statusSize !== '16px')
+    fail(width + 'px banner status text should be 16px: ' + statusSize);
   const expectedBanners = Array.from({length:14}, (_,i) =>
     './assets/images/' + String(i+1).padStart(2,'0') + '.webp');
   // The carousel clones entire 14-slide sets on both sides for infinite scrolling.

@@ -316,6 +316,8 @@ button,
         text-align: center;
         line-height: 1.5;
         cursor: pointer;
+        color: inherit;
+        text-decoration: none;
       }
 
       .pickup-body { min-width: 0; flex: 1; }
@@ -743,7 +745,7 @@ button,
         flex: 0 0 calc((100% - 30px) / 2);
         scroll-snap-align: start;
         position: relative;
-        padding-top: calc(var(--fs-14) + var(--space-section) + var(--space-small));
+        padding-top: calc(var(--fs-16) + var(--space-section) + var(--space-small));
         min-width: 0;
       }
       .bn-status {
@@ -759,10 +761,14 @@ button,
         border-radius: var(--r-full);
         background: var(--c-error);
         color: var(--c-surface);
-        font-size: var(--fs-14);
+        font-size: var(--fs-16);
         font-weight: var(--fw-strong);
         line-height: 1.25;
         white-space: nowrap;
+      }
+      .bn-track .bn:focus-visible {
+        outline: var(--line-focus);
+        outline-offset: var(--space-2);
       }
       .bn-track .bn img {
         display: block;
