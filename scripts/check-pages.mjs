@@ -850,7 +850,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   };
   if(await dateTabs.count()!==3)fail(width+'px prediction date tabs must be interactive');
   for(const date of ['2026-11-02','2026-11-04']){
-    await dateTabs.locator('[data-date="'+date+'"]').click();
+    await page.locator('.phone-inner > .date-tabs [data-date="'+date+'"]').click();
     const actual=await page.locator('.scroll-area > .venue-card').evaluateAll(cards=>cards.map(card=>({
       venue:card.dataset.venue,
       grade:card.querySelector('.grade-badge')?.textContent?.trim(),
@@ -874,7 +874,7 @@ async function checkPredictionSort(page, width, isAutorace) {
          v.speculativeLinks!==0 || v.arrowsReady!=='true'))
       fail(width+'px '+date+' must show actual meetings with no featured-rider data: '+
         JSON.stringify(actual));
-    if(await dateTabs.locator('[data-date="'+date+'"]').getAttribute('aria-selected')!=='true')
+    if(await page.locator('.phone-inner > .date-tabs [data-date="'+date+'"]').getAttribute('aria-selected')!=='true')
       fail(width+'px '+date+' did not activate');
     if(await page.locator('.venue-card [data-demo-canceled="true"]').count())
       fail(width+'px '+date+' must not inherit the Nov 3 Aomori cancellation demo');
@@ -882,14 +882,14 @@ async function checkPredictionSort(page, width, isAutorace) {
     if(sorted.some((v,i)=>i>0 && v<sorted[i-1]))
       fail(width+'px '+date+' must preserve north-to-south sort on selected venue tab');
   }
-  await dateTabs.locator('[data-date="2026-11-03"]').click();
+  await page.locator('.phone-inner > .date-tabs [data-date="2026-11-03"]').click();
   if(await page.locator('.scroll-area > .venue-card').count()!==(isAutorace?2:8))
     fail(width+'px Nov 3 original venues did not return');
   if(!isAutorace && (
       await page.locator('.venue-card .comment-row').count()!==29 ||
       await page.locator('.venue-card[data-venue="青森"] .rchip[data-demo-canceled]').count()!==1))
     fail(width+'px original featured riders or cancellation demo not restored after date changes');
-  if(await dateTabs.locator('[data-date="2026-11-03"]').getAttribute('aria-selected')!=='true')
+  if(await page.locator('.phone-inner > .date-tabs [data-date="2026-11-03"]').getAttribute('aria-selected')!=='true')
     fail(width+'px restored today tab is not active');
   console.log('PREDICTION SORT OK ' + width + 'px');
 }
