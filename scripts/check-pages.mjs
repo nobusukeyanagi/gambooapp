@@ -358,11 +358,42 @@ async function checkPredictionSort(page, width, isAutorace) {
   const cards = page.locator('.scroll-area > .venue-card');
   if (!await cards.count()) fail(width + 'px prediction cards missing');
 
+  // Fix geometry across all selection states, including when the arrow is visible.
+  const readSortGeometry = async () => page.locator('.venue-sort-options .chip').evaluateAll(els =>
+    els.map(el => {
+      const r = el.getBoundingClientRect();
+      return {left:r.left,width:r.width,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth};
+    }));
+  const initialGeometry = await readSortGeometry();
+  if (Math.max(...initialGeometry.map(r=>r.width)) -
+      Math.min(...initialGeometry.map(r=>r.width)) > 0.5)
+    fail(width + 'px prediction sort controls must have equal width: '+JSON.stringify(initialGeometry));
+  const checkFixedSortGeometry = async (state) => {
+    const next = await readSortGeometry();
+    if (next.some((r,i) => Math.abs(r.width - initialGeometry[i].width) > 0.5 ||
+          Math.abs(r.left - initialGeometry[i].left) > 0.5 ||
+          r.scrollWidth > r.clientWidth + 1))
+      fail(width + 'px prediction sort control geometry changed at '+state+': '+JSON.stringify(next));
+  };
+  const checkVenueTextCentered = async (glyph) => {
+    const offset = await page.locator('.venue-sort-options [data-sort="venue"]').evaluate(button => {
+      const range = document.createRange();
+      range.selectNodeContents(button.firstChild);
+      const a = range.getBoundingClientRect();
+      const b = button.querySelector('.sort-direction').getBoundingClientRect();
+      const r = button.getBoundingClientRect();
+      return Math.abs((Math.min(a.left,b.left) + Math.max(a.right,b.right) - r.left - r.right) / 2);
+    });
+    if (offset > 1) fail(width + 'px venue sorting label and '+glyph+' not centered: '+offset);
+  };
+  await checkFixedSortGeometry('initial');
+
   {
     const grade = page.locator('.venue-sort-options [data-sort="grade"]');
     await grade.click();
     if (await grade.getAttribute('aria-pressed') !== 'true')
       fail(width + 'px grade sort was not selected');
+    await checkFixedSortGeometry('grade');
     const gradeValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortGrade)));
     if (gradeValues.some((v, i) => i && v < gradeValues[i-1]))
       fail(width + 'px grade sorting did not reorder cards');
@@ -376,16 +407,22 @@ async function checkPredictionSort(page, width, isAutorace) {
       fail(width + 'px north-to-south venue sorting did not reorder cards');
     if ((await venue.locator('.sort-direction').textContent())?.trim() !== '↓')
       fail(width + 'px first venue tap should show ↓');
+    await checkFixedSortGeometry('venue down');
+    await checkVenueTextCentered('↓');
     await venue.click();
     const southValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
     if (southValues.some((v, i) => i && v > southValues[i-1]))
       fail(width + 'px south-to-north venue sorting did not reorder cards');
     if ((await venue.locator('.sort-direction').textContent())?.trim() !== '↑')
       fail(width + 'px second venue tap should show ↑');
+    await checkFixedSortGeometry('venue up');
+    await checkVenueTextCentered('↑');
     await venue.click();
     const northValues = await cards.evaluateAll(els => els.map(e => Number(e.dataset.sortVenue)));
     if (northValues.some((v, i) => i && v < northValues[i-1]))
       fail(width + 'px third venue tap should restore north-to-south');
+    await checkFixedSortGeometry('venue down again');
+    await checkVenueTextCentered('↓');
   }
   // Guard the canonical 600-weight for race numbers, times and statuses.
   const dayColors = await page.locator('.date-tabs .date-tab').evaluateAll(nodes =>
