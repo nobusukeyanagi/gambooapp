@@ -95,7 +95,8 @@ button, input, select, textarea {
   display: flex;
   align-items: center;
   gap: var(--space-small);
-  width: max-content;
+  width: 100%;
+  min-width: max-content;
   white-space: nowrap;
   transform-origin: left center;
 }
@@ -129,7 +130,7 @@ button, input, select, textarea {
 }
 .venue-header-line > .rebate-logo {
   flex: 0 0 auto;
-  margin-left: var(--space-3);
+  margin-left: auto;
 }
 @media (max-width: 360px) {
   .venue-header-line > .grade-badge { width: 32px; font-size: var(--fs-12); }
@@ -140,42 +141,6 @@ button, input, select, textarea {
     width: 16px; height: 16px; flex-basis: 16px;
   }
 }
-.grade-badge {
-  grid-column: 1;
-  grid-row: 1 / 3;
-}
-.venue-header > .venue-title {
-  grid-column: 2;
-  grid-row: 1;
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-small);
-  min-width: 0;
-  white-space: nowrap;
-}
-.venue-header .venue-name { flex: 0 0 auto; }
-.venue-header .venue-meta {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  min-width: max-content;
-  white-space: nowrap;
-  color: var(--c-text);
-  font-size: var(--fs-14);
-  font-weight: var(--fw-normal);
-  line-height: 1.25;
-}
-.venue-header .venue-day {
-  display: inline;
-  flex: 0 0 auto;
-  white-space: nowrap;
-}
-.venue-header > .rebate-logo {
-  grid-column: 2;
-  grid-row: 2;
-  justify-self: end;
-}
-
 .grade-badge {
   border-radius: var(--r-sm);
   flex-shrink: 0;
