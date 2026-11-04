@@ -309,9 +309,9 @@ body { font-weight: var(--fw-normal); }
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 28px;
+  width: var(--h-control);
   height: var(--h-control);
-  flex: 0 0 28px;
+  flex: 0 0 var(--h-control);
   margin: 0;
   color: var(--c-text);
 }
@@ -319,11 +319,25 @@ body { font-weight: var(--fw-normal); }
   width: var(--fs-20);
   height: var(--fs-20);
 }
-/* All page-title text begins at the same horizontal coordinate as SCR-02
-   keirin prediction. Detail headers use a back icon rather than a sport icon,
-   so compensate for the 3px difference in their intrinsic content spacing. */
-.shared-app-header .header-main:has(.back-btn) > .page-header-title {
-  margin-left: var(--space-3);
+/* Shared header title position: the SCR-02 Keirin text starts 53px
+   from the screen left edge (8px inset + 40px icon + 5px gap).
+   Standard icons retain their original aspect ratios inside a fixed slot. */
+.shared-app-header .header-icon-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-control);
+  height: var(--h-control);
+  flex: 0 0 var(--h-control);
+}
+.shared-app-header .header-main:has(.back-btn) {
+  gap: var(--space-5);
+}
+/* The eight-character auto racing title needs two lines on 296px screens. */
+@media (max-width: 320px) {
+  .shared-app-header .page-header-title:has(use[href$="#nav-auto"]) .header-title-text {
+    font-size: var(--fs-16);
+  }
 }
 .shared-app-header .header-actions {
   display: flex;
@@ -378,6 +392,10 @@ body { font-weight: var(--fw-normal); }
   width: var(--fs-18);
   height: var(--fs-18);
   flex-basis: var(--fs-18);
+}
+/* Restore the neutral grey bell mark; deposit icon remains white. */
+.shared-app-header .header-actions .header-notification .ic {
+  color: var(--c-sub);
 }
 .shared-app-header .header-actions .badge {
   display: block;
