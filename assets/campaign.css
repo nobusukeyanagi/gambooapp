@@ -184,7 +184,7 @@
   align-items: center;
   justify-content: center;
   min-width: 0;
-  font-weight: var(--fw-strong);
+  
   cursor: pointer;
 }
 .tab-item .tab-icon {
