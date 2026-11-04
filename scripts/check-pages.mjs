@@ -453,8 +453,10 @@ async function checkPredictionSort(page, width, isAutorace) {
     fail(width + 'px current race must start right of left arrow: ' + JSON.stringify(initialCurrent));
   if (!isAutorace) {
     const wins = page.locator('.comment-row .cr-streak');
-    if (await wins.count() !== 1 || await wins.first().innerText() !== '3連勝')
-      fail(width + 'px consecutive wins must be shown separately');
+    const labels = await wins.allTextContents();
+    if (labels.length < 2 || !labels.every(label => /^[3-9]連勝$/.test(label.trim())) ||
+        !labels.includes('3連勝') || !labels.includes('4連勝'))
+      fail(width + 'px consecutive-win labels must reflect the 2026-11-03 race data: ' + labels.join(','));
   }
 
 
