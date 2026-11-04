@@ -30,10 +30,10 @@
             <div class="page-header">
               <div class="page-header-title"><svg class="ic header-race-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-auto"></use></svg>オートレース予想</div>
             </div>
-            <div class="date-tabs">
-              <div class="date-tab">昨日</div>
-              <div class="date-tab active" title="2026年11月3日（火祝）12:00時点">本日開催</div>
-              <div class="date-tab">明日</div>
+            <div class="date-tabs" role="tablist" aria-label="開催日">
+              <div class="date-tab" role="tab" data-date="2026-11-02" aria-selected="false" tabindex="-1" title="2026年11月2日（月）">昨日</div>
+              <div class="date-tab active" role="tab" data-date="2026-11-03" aria-selected="true" tabindex="0" title="2026年11月3日（火祝）12:00時点">本日開催</div>
+              <div class="date-tab" role="tab" data-date="2026-11-04" aria-selected="false" tabindex="-1" title="2026年11月4日（水）">明日</div>
             </div>
             <div class="scroll-area">
               <div class="list-head">
@@ -124,8 +124,9 @@
       </div>
 
     </div>
-    <script src="./assets/scroll-controls.js?v=6" data-scroll-mode="venue-list"></script>
-    <script src="./assets/venue-sort.js?v=5" defer></script>
+    <script src="./assets/scroll-controls.js?v=7" data-scroll-mode="venue-list"></script>
+    <script src="./assets/venue-sort.js?v=6" defer></script>
+    <script src="./assets/venue-calendar.js?v=1" defer></script>
 
       <script src="./assets/tap-feedback.js?v=3" defer></script>
 </body>

@@ -4,10 +4,10 @@
 
   const scrollArea = document.querySelector(".phone-inner > .scroll-area");
   const options = [...document.querySelectorAll(".venue-sort-options [data-sort]")];
-  const cards = [...(scrollArea?.querySelectorAll(":scope > .venue-card") || [])];
+  let cards = [...(scrollArea?.querySelectorAll(":scope > .venue-card") || [])];
   if (!scrollArea || options.length < 2 || options.length > 3 || !cards.length) return;
 
-  const originalPosition = new Map(cards.map((card, index) => [card, index]));
+  let originalPosition = new Map(cards.map((card, index) => [card, index]));
   const sortKey = {
     deadline: "sortDeadline",
     grade: "sortGrade",
@@ -18,14 +18,15 @@
   let currentSort = options.find((option) => option.classList.contains("active"))?.dataset.sort;
   let southFirst = false;
 
-  function applySort(option, fromClick = false) {
+  function applySort(option, fromClick = false, preserveDirection = false) {
     const sort = option.dataset.sort;
     const field = sortKey[sort];
     if (!field) return;
 
     // First venue tap sorts north-to-south (↓); subsequent taps toggle (↑).
-    southFirst = sort === "venue" && fromClick && currentSort === "venue"
-      ? !southFirst : false;
+    southFirst = preserveDirection && sort === "venue" ? southFirst
+      : sort === "venue" && fromClick && currentSort === "venue"
+        ? !southFirst : false;
     currentSort = sort;
     if (directionLabel) directionLabel.textContent =
       sort === "venue" ? (southFirst ? "↑" : "↓") : "";
@@ -65,6 +66,12 @@
   }
 
   options.forEach((option) => option.addEventListener("click", () => applySort(option, true)));
+  document.addEventListener("gamboo:venues-changed", () => {
+    cards=[...scrollArea.querySelectorAll(":scope > .venue-card")];
+    originalPosition=new Map(cards.map((card,index)=>[card,index]));
+    const selected=options.find(option=>option.classList.contains("active"));
+    if(selected && cards.length) applySort(selected,false,true);
+  });
   // Keep the selected sort button consistent with the initially displayed order.
   const selected = options.find((option) => option.classList.contains("active"));
   if (selected) applySort(selected);

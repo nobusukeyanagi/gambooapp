@@ -32,11 +32,13 @@
   });
   /* SCR-02 race rows: arrows are full-height, keyboard accessible scroll controls. */
   if (mode === "venue-list") {
-    document.querySelectorAll(".venue-card .hscroll").forEach(function (outer) {
+    function initializeVenueRow(outer) {
+      if (outer.dataset.arrowsReady === "true") return;
       var box = outer.querySelector(".hscroll-inner");
       var left = outer.querySelector(".hscroll-cue-l");
       var right = outer.querySelector(".hscroll-cue");
       if (!box || !left || !right) return;
+      outer.dataset.arrowsReady = "true";
 
       // A single arrow tap jumps all the way to the first / last R.
       // Use the scroll container's real maximum, never an oversized offset.
@@ -59,6 +61,11 @@
         new ResizeObserver(sync).observe(box);
       }
       requestAnimationFrame(sync);
-    });
+    }
+    function initializeVenueRows() {
+      document.querySelectorAll(".venue-card .hscroll").forEach(initializeVenueRow);
+    }
+    initializeVenueRows();
+    document.addEventListener("gamboo:venues-changed", initializeVenueRows);
   }
 })();
