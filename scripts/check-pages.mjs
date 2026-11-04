@@ -747,7 +747,7 @@ async function checkPredictionSort(page, width, isAutorace) {
 }
 
 async function checkSharedReferences(){
- const expected=['design-tokens.css?v=58','tap-feedback.css?v=3'];
+ const expected=['design-tokens.css?v=59','tap-feedback.css?v=3'];
  const tokens=await readFile(path.join(ROOT,'assets','design-tokens.css'),'utf8');
  if(!/--fw-normal:\s*400\s*;/.test(tokens)||!/--fw-strong:\s*600\s*;/.test(tokens))
    fail('Canonical typography weights must be 400 and 600');
