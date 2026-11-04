@@ -22,9 +22,9 @@
 .user-name { font-size:var(--fs-18); font-weight:var(--fw-strong); color:var(--c-text); }
 .user-points { display:block; padding:var(--space-2) var(--space-content); background:var(--c-surface); }
 .pt3-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-10); min-height:var(--h-balance); padding:var(--space-10) 0; }
-.point-label { flex:1; min-width:0; font-size:var(--fs-14); font-weight:var(--fw-normal); color:var(--c-text); }
-.point-value { color:var(--c-text); font-size:var(--fs-20); font-weight:var(--fw-strong); font-family:var(--ff-ui); font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap; }
-.point-value .unit { margin-left:var(--space-2); font-size:var(--fs-14); font-weight:var(--fw-normal); }
+.point-label { flex:1; min-width:0; }
+.point-value { text-align:right; }
+
 
 /* Reuse canonical token values for all profile action controls. */
 .oshi-act, .os-btn { display:inline-flex; align-items:center; justify-content:center; gap:var(--space-small); min-height:var(--h-control); padding:0 var(--space-14); border:var(--line-control); border-radius:var(--r-control); background:var(--c-surface); box-shadow:var(--e1); color:var(--c-primary-d); font-size:var(--fs-14); font-weight:var(--fw-strong); white-space:nowrap; cursor:pointer; }
@@ -41,24 +41,17 @@
   background: var(--c-surface);
 }
 .point-action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   min-width: 0;
   min-height: calc(var(--h-control) + var(--fs-20));
-  padding: var(--space-5) var(--space-3);
-  border: var(--line-control);
-  border-radius: var(--r-control);
-  background: var(--c-surface);
-  box-shadow: var(--e1);
-  color: var(--c-primary-d);
-  font-size: var(--fs-12);
-  font-weight: var(--fw-strong);
-  line-height: 1.3;
+  padding: var(--space-5) var(--space-2);
+  line-height: 1.25;
+  white-space: normal;
   text-align: center;
-  text-decoration: none;
   overflow-wrap: anywhere;
+  letter-spacing: -0.04em;
 }
+.point-action > span { display: block; white-space: nowrap; }
 .point-action:focus-visible {
   outline: var(--line-focus);
   outline-offset: var(--space-2);
