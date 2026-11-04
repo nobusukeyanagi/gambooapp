@@ -358,10 +358,10 @@ body { font-weight: var(--fw-normal); }
   color: var(--c-surface);
 }
 .shared-app-header .header-actions .ic {
-  width: var(--fs-18);
-  height: var(--fs-18);
+  width: var(--fs-20);
+  height: var(--fs-20);
   display: block;
-  flex: 0 0 var(--fs-18);
+  flex: 0 0 var(--fs-20);
   color: inherit;
   fill: currentColor;
 }
