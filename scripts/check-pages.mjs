@@ -547,14 +547,21 @@ async function checkPredictionSort(page, width, isAutorace) {
         color:style.color,
         background:style.backgroundColor,
         square:style.borderRadius,
-        centerOffset:Math.abs((box.left+box.right-bounds.left-bounds.right)/2)
+        centerOffset:Math.abs((box.left+box.right-bounds.left-bounds.right)/2),
+        topInset:box.top-bounds.top,
+        leftInset:box.left-bounds.left,
+        rightInset:bounds.right-box.right,
+        border:getComputedStyle(chip).borderTopWidth
       };
     }));
   if (warningLabels.length !== 1 || warningLabels.some(w =>
     w.text !== '13分前' || w.aria !== '締切13分前' ||
     w.row !== '1' || w.font !== '12px' || w.weight !== '600' ||
     w.color !== 'rgb(255, 255, 255)' || w.background !== 'rgb(165, 55, 76)' ||
-    w.square !== '0px' || w.height !== 16 || w.width < 70 ||
+    w.height !== 18 || w.width >= 90 || w.width < 80 ||
+    Math.abs(w.topInset-parseFloat(w.border)) > 1 ||
+    Math.abs(w.leftInset-parseFloat(w.border)) > 1 ||
+    Math.abs(w.rightInset-parseFloat(w.border)) > 1 ||
     w.centerOffset > 1))
     fail(width + 'px urgent first-row red band must display white 13分前: '+
       JSON.stringify(warningLabels));
@@ -564,6 +571,22 @@ async function checkPredictionSort(page, width, isAutorace) {
   if (urgent.some(s => s.width !== '3px' || s.color !== 'rgb(165, 55, 76)' ||
      s.boxWidth !== 90))
     fail(width + 'px urgent button border or canonical width mismatch: ' + JSON.stringify(urgent));
+  if (!isAutorace) {
+    const canceled=await page.locator('.venue-card[data-venue="青森"] .rchip[data-demo-canceled]')
+      .evaluateAll(nodes=>nodes.map(chip=>({
+        race:chip.querySelector('b')?.textContent, status:chip.querySelector('small')?.textContent,
+        tag:chip.tagName, noLink:!chip.hasAttribute('href'),
+        color:getComputedStyle(chip).color,
+        bg:getComputedStyle(chip).backgroundColor,
+        border:getComputedStyle(chip).borderTopColor
+      })));
+    if(canceled.length!==1 || canceled[0].race!=='6R' ||
+       canceled[0].status!=='中止' || canceled[0].tag!=='SPAN' ||
+       !canceled[0].noLink || canceled[0].bg==='rgb(255, 255, 255)' ||
+       canceled[0].bg!==canceled[0].border)
+      fail(width+'px Nov 3 Aomori 6R must be a non-clickable canceled demo: '+
+        JSON.stringify(canceled));
+  }
   const arrowWidths = await page.locator('.venue-card .hscroll > .hscroll-cue, .venue-card .hscroll > .hscroll-cue-l')
     .evaluateAll(nodes => nodes.map(el => getComputedStyle(el).width));
   if (arrowWidths.some(v => v !== '44px'))
