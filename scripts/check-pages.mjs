@@ -414,6 +414,9 @@ async function checkPredictionSort(page, width, isAutorace) {
   if (sortBorders.some(c => c !== 'rgb(208, 212, 214)'))
     fail(width + 'px white sort button border mismatches home venue');
   // Regression of 3px urgent border, 44px arrow target and 14px sort label.
+  const warningLabels = await page.locator('.venue-card .rchip.next.soon .rchip-warning').allTextContents();
+  if (warningLabels.length !== 1 || warningLabels[0].trim() !== '締切13分前')
+    fail(width + 'px 12:00 snapshot must show 13 minutes remaining on the 12:13 race');
   const urgent = await page.locator('.venue-card .rchip.next.soon').evaluateAll(nodes =>
     nodes.map(el => ({width:getComputedStyle(el).borderTopWidth,color:getComputedStyle(el).borderTopColor})));
   if (urgent.some(s => s.width !== '3px' || s.color !== 'rgb(165, 55, 76)'))
@@ -454,9 +457,26 @@ async function checkPredictionSort(page, width, isAutorace) {
   if (!isAutorace) {
     const wins = page.locator('.comment-row .cr-streak');
     const labels = await wins.allTextContents();
-    if (!labels.length || !labels.every(label => /^[3-9]連勝$/.test(label.trim())) ||
-        !labels.includes('4連勝'))
-      fail(width + 'px active featured race must retain its consecutive-win label: ' + labels.join(','));
+    if (labels.length !== 5 ||
+        labels.slice().sort().join('|') !== ['3連勝','3連勝','3連勝','4連勝','5連勝'].sort().join('|'))
+      fail(width + 'px all five consecutive-win labels must be visible: ' + labels.join(','));
+    const featuredRows = await page.locator('.venue-card .comment-row').evaluateAll(nodes =>
+      nodes.map(node => ({venue:node.closest('.venue-card').dataset.venue,
+        count:Number(node.dataset.featuredCount),
+        race:Number(node.dataset.featuredRace)})));
+    if (featuredRows.length !== 29 ||
+        featuredRows.reduce((n,row) => n + row.count, 0) !== 30 ||
+        featuredRows.filter(row => row.count === 2).length !== 1)
+      fail(width + 'px all 30 featured riders in 29 races must be shown: ' + JSON.stringify(featuredRows));
+    const expectedByVenue = {青森:5,小田原:4,静岡:2,豊橋:7,奈良:1,防府:6,久留米:3,武雄:1};
+    const actualByVenue = Object.fromEntries(Object.keys(expectedByVenue).map(venue =>
+      [venue, featuredRows.filter(row => row.venue === venue).length]));
+    if (Object.keys(expectedByVenue).some(venue => expectedByVenue[venue] !== actualByVenue[venue]))
+      fail(width + 'px featured race coverage differs from official list: ' + JSON.stringify(actualByVenue));
+    if (await page.locator('.venue-card[data-venue="小田原"] .comment-row[data-featured-race="2"] .cr-kun').count() !== 2)
+      fail(width + 'px Odawara 2R must retain both special rider titles');
+    if (await page.locator('.venue-card[data-venue="防府"] .comment-row[data-featured-race="10"] .cr-name').count() !== 2)
+      fail(width + 'px Hofu 10R must retain both featured riders');
     const allStreaks = await page.locator('.venue-card .rchip[data-streak]').evaluateAll(
       nodes => nodes.map(node => node.dataset.streak).sort());
     if (allStreaks.join('|') !== ['3連勝','3連勝','3連勝','4連勝','5連勝'].sort().join('|'))
