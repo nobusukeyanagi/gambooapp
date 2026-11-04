@@ -116,8 +116,8 @@ async function auditCss() {
 }
 
 const expectedComputedStyles = [
-  ['.app-header .logo', 'fontSize', '18px'],
-  ['.app-header .logo', 'fontWeight', '600'],
+  ['.app-header .page-header-title', 'fontSize', '18px'],
+  ['.app-header .page-header-title', 'fontWeight', '600'],
   ['.icon-sprite', 'display', 'none'],
   ['.news-title', 'fontSize', '16px'],
   ['.news-title', 'fontWeight', '600'],
@@ -414,6 +414,14 @@ function comparePNGs(current, baseline, key) {
 }
 
 async function checkInteractions(page, width) {
+  const header=page.locator('.app-header.shared-app-header');
+  if(await header.count()!==1 ||
+     (await header.locator('.header-title-text').innerText()).trim()!=='車券購入' ||
+     !(await header.locator('.header-page-icon use').getAttribute('href')).endsWith('#nav-ticket') ||
+     await header.locator('.header-notification').count()!==1 ||
+     await header.locator('.header-deposit').count()!==1)
+    fail(width+'px SCR-01 must show the ticket icon/title and both header actions');
+
   const toggle = page.locator('.pay-toggle').first();
   if (await toggle.count() !== 1) {
     fail(width + 'px: pay-toggle is missing');
