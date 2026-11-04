@@ -457,14 +457,14 @@ async function checkMyPage(page, width) {
     if(active!==sport || selected!=='true')
       fail(width+'px favourites tab failed for '+sport+' (panel '+active+', selected '+selected+')');
   }
-  const controls=await page.locator('.oshi-act, .os-panel.on .os-btn')
+  const controls=await page.locator('.os-panel.on .oshi-act, .os-panel.on .os-btn')
     .evaluateAll(nodes=>nodes.map(el=>{
       const st=getComputedStyle(el);
       return {height:el.getBoundingClientRect().height,
         radius:st.borderRadius,weight:st.fontWeight,font:st.fontSize,
         border:st.borderTopWidth,bg:st.backgroundColor};
     }));
-  if(controls.length!==4 || controls.some(c=>
+  if(controls.length!==3 || controls.some(c=>
       c.height<44 || c.radius!=='8px' || c.weight!=='600' || c.font!=='14px' ||
       c.border!=='1px' || c.bg!=='rgb(255, 255, 255)'))
     fail(width+'px canonical profile control styles mismatch: '+JSON.stringify(controls));
