@@ -454,9 +454,13 @@ async function checkPredictionSort(page, width, isAutorace) {
   if (!isAutorace) {
     const wins = page.locator('.comment-row .cr-streak');
     const labels = await wins.allTextContents();
-    if (labels.length < 2 || !labels.every(label => /^[3-9]連勝$/.test(label.trim())) ||
-        !labels.includes('3連勝') || !labels.includes('4連勝'))
-      fail(width + 'px consecutive-win labels must reflect the 2026-11-03 race data: ' + labels.join(','));
+    if (!labels.length || !labels.every(label => /^[3-9]連勝$/.test(label.trim())) ||
+        !labels.includes('4連勝'))
+      fail(width + 'px active featured race must retain its consecutive-win label: ' + labels.join(','));
+    const allStreaks = await page.locator('.venue-card .rchip[data-streak]').evaluateAll(
+      nodes => nodes.map(node => node.dataset.streak).sort());
+    if (allStreaks.join('|') !== ['3連勝','3連勝','3連勝','4連勝','5連勝'].sort().join('|'))
+      fail(width + 'px missing 2026-11-03 featured-race streak data: ' + allStreaks.join(','));
   }
 
 
