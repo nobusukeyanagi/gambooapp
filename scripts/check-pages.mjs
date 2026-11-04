@@ -536,6 +536,12 @@ async function checkPredictionSort(page, width, isAutorace) {
     fail(width + 'px sort buttons must be 14px: ' + JSON.stringify(sortSizes));
   if (isAutorace && await page.locator('.grade-badge.grade-f2').filter({hasText:'普通'}).count())
     fail(width + 'px normal grade incorrectly classified as F2');
+  if (isAutorace) {
+    const sg=await page.locator('.venue-card .grade-badge.grade-sg').evaluateAll(nodes=>
+      nodes.map(el=>({name:el.textContent.trim(),color:getComputedStyle(el).backgroundColor})));
+    if(sg.length!==1 || sg[0].name!=='SG' || sg[0].color!=='rgb(43, 49, 53)')
+      fail(width+'px auto SG grade badge must be black: '+JSON.stringify(sg));
+  }
   const raceLinks = page.locator('.venue-card a.rchip');
   if (!await raceLinks.count()) fail(width + 'px linked race buttons missing');
   if (!/SCR-0[34]_racecard/.test(await raceLinks.first().getAttribute('href')))
@@ -564,6 +570,40 @@ async function checkPredictionSort(page, width, isAutorace) {
         fits: row ? row.scrollWidth <= chip.clientWidth : null
       };
     }));
+  const topRebates=await page.locator('.venue-card .rchip[data-race-type]').evaluateAll(nodes=>
+    nodes.map(chip=>{
+      const hasCampaign=!!chip.querySelector('.rchip-campaign');
+      const label=chip.querySelector(':scope > .rchip-rebate');
+      const style=label?getComputedStyle(label):null;
+      const rect=label?.getBoundingClientRect();
+      const button=chip.getBoundingClientRect();
+      return {hasCampaign,count:chip.querySelectorAll(':scope > .rchip-rebate').length,
+        text:label?.textContent.trim(),color:style?.color,font:style?.fontSize,
+        row:style?.gridRowStart,display:style?.display,
+        aligned:rect?Math.abs((rect.left+rect.right-button.left-button.right)/2):null,
+        countdown:!!chip.querySelector(':scope > .rchip-warning')};
+    }));
+  if(topRebates.some(v=>v.count!==(v.hasCampaign?1:0) ||
+      (v.hasCampaign && (v.text!=='5%還元' ||
+        v.color!=='rgb(134, 115, 58)' || v.font!=='12px' || v.row!=='1' ||
+        v.aligned>1 || (v.countdown && v.display!=='none')))))
+    fail(width+'px first-row 5% rebate missing or misstyled: '+
+      JSON.stringify(topRebates.filter(v=>v.hasCampaign||v.count)));
+  // Temporary DOM-only warning fixture: urgent text must hide the 5% rebate.
+  const countdownPriority=await page.locator('.rchip:has(.rchip-campaign)').first().evaluate(chip=>{
+    const rebate=chip.querySelector('.rchip-rebate');
+    const warning=document.createElement('span');
+    warning.className='rchip-warning';
+    warning.textContent='締切5分前';
+    chip.prepend(warning);
+    const hidden=getComputedStyle(rebate).display==='none';
+    const shown=getComputedStyle(warning).display!=='none';
+    warning.remove();
+    return {hidden,shown,restored:getComputedStyle(rebate).display!=='none'};
+  });
+  if(!countdownPriority.hidden || !countdownPriority.shown || !countdownPriority.restored)
+    fail(width+'px countdown must override final-race rebate: '+
+      JSON.stringify(countdownPriority));
   const expectedFinals=isAutorace?1:5;
   if (finalIcons.filter(r=>r.isFinal).length !== expectedFinals ||
       finalIcons.some(r=>r.count !== (r.isFinal?1:0)) ||

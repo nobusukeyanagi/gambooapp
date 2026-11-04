@@ -220,6 +220,7 @@ button,
       .vcard-dl .ic { width: 12px; height: 12px; }
 
       .g-gp { background: var(--c-gp); color: var(--w5); }
+      .g-sg { background: var(--c-text); color: var(--w5); }
       .g-g1 { background: var(--c-g1); color: var(--c-surface); }
       .g-g2 { background: var(--c-g2); color: var(--c-surface); }
       .g-g3 { background: var(--c-g3); color: var(--c-surface); }
@@ -589,7 +590,8 @@ button,
       .venue-grid.g3 .vcard-r { font-size: var(--fs-18); font-weight: var(--fw-strong); line-height: 1.2; }
       .venue-grid.g3 .vcard-dl { font-size: var(--fs-18); font-weight: var(--fw-strong); letter-spacing: normal; line-height: 1.2; color: var(--c-text); font-family: var(--ff-ui); }
 
-      .vcard.ended .vcard-bottom { justify-content: flex-end; }
+      .vcard:is(.ended, .presale) .vcard-bottom { justify-content: flex-end; }
+      .venue-grid.g3 > .vcard[data-demo][hidden] { display: none; }
 
       .bn-carousel { position: relative; padding-bottom: var(--space-section); }
       .bn-track {

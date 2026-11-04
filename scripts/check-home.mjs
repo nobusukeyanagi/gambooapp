@@ -217,9 +217,26 @@ async function checkCurrentPage(page, width) {
   const autoNames=['浜松','川口'];
   if (initial.keirin.map(x=>x.name).join('|')!==keirinNames.join('|') ||
       initial.auto.map(x=>x.name).join('|')!==autoNames.join('|') ||
-      initial.keirin.slice(0,3).some((x,i)=>!x.dummy || x.grade!==['SG','GⅠ','GⅡ'][i]) ||
+      initial.keirin.slice(0,3).some((x,i)=>!x.dummy || x.grade!==['GP','GⅠ','GⅡ'][i]) ||
       initial.keirin.slice(3).some(x=>x.dummy))
     fail(width+'px actual Nov 3 venues and top three grade demo cards invalid: '+JSON.stringify(initial));
+  const gradeColors=await page.evaluate(()=>{
+    const paint=sel=>getComputedStyle(document.querySelector(sel)).backgroundColor;
+    return {
+      gp:paint('[data-home-venues="keirin"] .g-gp'),
+      sg:paint('[data-home-venues="autorace"] .g-sg'),
+      gi:paint('[data-home-venues="keirin"] .g-g1'),
+      gii:paint('[data-home-venues="keirin"] .g-g2'),
+      giii:paint('[data-home-venues="keirin"] .g-g3')
+    };
+  });
+  const expectedColors={
+    gp:'rgb(68, 73, 77)',sg:'rgb(43, 49, 53)',gi:'rgb(157, 63, 71)',
+    gii:'rgb(70, 110, 152)',giii:'rgb(79, 120, 76)'
+  };
+  for(const [grade,color] of Object.entries(expectedColors))
+    if(gradeColors[grade]!==color)
+      fail(width+'px grade '+grade+' palette mismatch: '+JSON.stringify(gradeColors));
   const noon={青森:['4R','12:13'],防府:['4R','12:26'],
     豊橋:['1R','15:45'],久留米:['1R','15:59'],静岡:['1R','20:36'],
     奈良:['1R','20:44'],武雄:['1R','20:52'],浜松:['5R','12:13'],
@@ -332,19 +349,46 @@ async function checkInteractions(page, width) {
   }
   const dateTabs=page.locator('.scroll-area > .date-tabs [data-date]');
   const readNames=async (kind) => page.locator('[data-home-venues="'+kind+'"] > .vcard:not([data-demo]) .vcard-name').allTextContents();
+  const demos=page.locator('[data-home-venues="keirin"] > .vcard[data-demo]');
+  async function checkDummyVisibility(visible,day) {
+    const state=await demos.evaluateAll(nodes=>nodes.map(el=>({
+      hidden:el.hidden,display:getComputedStyle(el).display
+    })));
+    if (state.length!==3 || state.some(x=>x.hidden===visible ||
+        (visible ? x.display==='none':x.display!=='none')))
+      fail(width+'px '+day+' dummy cards visibility: '+JSON.stringify(state));
+    const count=await page.locator('[data-home-venues="keirin"] > .vcard:visible').count();
+    if (count!==(visible?11:8))
+      fail(width+'px '+day+' should have '+(visible?11:8)+' keirin cards; got '+count);
+  }
+  await checkDummyVisibility(true,'Nov 3 initially');
   await dateTabs.nth(0).click();
+  await checkDummyVisibility(false,'Nov 2');
   eq((await readNames('keirin')).join('|'),
     '防府|久留米|豊橋|熊本|小田原|静岡|奈良|武雄',width+'px Nov 2 real keirin');
   eq((await readNames('autorace')).join('|'),'浜松|川口',width+'px Nov 2 real autorace');
   if (await page.locator('[data-home-venues] > .vcard:not([data-demo]) .vcard-dl[data-deadline]').count())
     fail(width+'px yesterday must not have next-race cutoffs');
   await dateTabs.nth(2).click();
+  await checkDummyVisibility(false,'Nov 4');
   eq((await readNames('keirin')).join('|'),
     '青森|取手|大宮|豊橋|静岡|奈良|武雄|別府',width+'px Nov 4 real keirin');
   eq((await readNames('autorace')).join('|'),'川口|山陽',width+'px Nov 4 real autorace');
   if (await page.locator('[data-home-venues="keirin"] > .vcard:not([data-demo]) .vcard-dl').filter({hasText:'発売前'}).count()!==8)
     fail(width+'px tomorrow entries should display not yet on sale in Nov 3 snapshot');
+  const presales=await page.locator('[data-home-venues] > .vcard.presale').evaluateAll(nodes=>
+    nodes.map(el=>{
+      const bottom=el.querySelector('.vcard-bottom');
+      const bounds=bottom.getBoundingClientRect();
+      const label=el.querySelector('.vcard-dl').getBoundingClientRect();
+      return {justify:getComputedStyle(bottom).justifyContent,
+        diff:Math.abs(bounds.right-label.right)};
+    }));
+  if (presales.length!==10 ||
+      presales.some(x=>x.justify!=='flex-end' || x.diff>1))
+    fail(width+'px presale must align right like ended: '+JSON.stringify(presales));
   await dateTabs.nth(1).click();
+  await checkDummyVisibility(true,'Nov 3 restored');
   eq((await readNames('keirin')).join('|'),
     '青森|防府|豊橋|久留米|静岡|奈良|武雄|小田原',width+'px Nov 3 restored');
   eq(await dateTabs.nth(1).getAttribute('aria-selected'),'true',width+'px today selected');

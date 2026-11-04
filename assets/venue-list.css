@@ -224,6 +224,10 @@ button, input, select, textarea {
   background: var(--c-gp);
   color: var(--w5);
 }
+.grade-sg {
+  background: var(--c-text);
+  color: var(--w5);
+}
 
 .grade-g1 {
   background: var(--c-g1);
@@ -542,6 +546,18 @@ button, input, select, textarea {
   max-width: 90px;
   min-height: 84px;
 }
+
+.venue-card .rchip > .rchip-rebate {
+  grid-row: 1;
+  color: var(--c-primary-d);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1.25;
+  white-space: nowrap;
+}
+/* A countdown has priority over the 5% rebate in the same first row. */
+.venue-card .rchip:has(> .rchip-warning) > .rchip-rebate,
+.venue-card .rchip.next.soon > .rchip-rebate { display: none; }
 
 .venue-card .rchip > b {
   grid-row: 2;

@@ -52,11 +52,12 @@
   --w8: #E68FB6;
   --w9: #A747CD;
 
-  /* ③ グレード色（GP/SG文字の黄色は --w5 を直接参照） */
+  /* ③ グレード色。GPは既存色、SGは黒(--c-text)。
+     GI/特GI=赤、GII=青、GIII=緑。GP/SG文字は --w5。 */
   --c-gp: #44494D;
-  --c-g1: #955071;
-  --c-g2: #5F69A0;
-  --c-g3: #607D50;
+  --c-g1: #9D3F47;
+  --c-g2: #466E98;
+  --c-g3: #4F784C;
   --c-f1: #92684C; /* muted chestnut; white numeral contrast >=4.5:1 */
   --c-f2: #7B7568; /* muted taupe; white numeral contrast >=4.5:1 */
 
