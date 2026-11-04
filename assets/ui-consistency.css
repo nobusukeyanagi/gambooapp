@@ -61,8 +61,8 @@ body { font-weight: var(--fw-normal); }
   font-weight: var(--fw-strong);
 }
 /* Balance labels and currency / point units. Do not enlarge table units. */
-.payout-bar.pt-h .payout-label,
-.payout-bar.pt-h .unit {
+:is(.payout-bar.pt-h, .user-points) .payout-label,
+:is(.payout-bar.pt-h, .user-points) .unit {
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
 }
