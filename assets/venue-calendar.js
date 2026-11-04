@@ -4,6 +4,21 @@
 (function () {
   "use strict";
   const referenceDay = "2026-11-03";
+  // Gamboo points policy: all keirin finals, all grade-autorace races.
+  // Race numbers/types below match published Nov 2 and Nov 4 final lists.
+  const rebateRaces={"2026-11-02":{"熊本":[7],"浜松":"all"},"2026-11-04":{"豊橋":[10,11,12],"静岡":[6,7],"奈良":[7],"武雄":[6,7]}};
+  const girlsFinals={"2026-11-04":{"豊橋":[11],"静岡":[6],"武雄":[6]}};
+  const finalTypes={"2026-11-02":{"熊本":{"7":"A級チャレンジ決勝"}},"2026-11-04":{"豊橋":{"10":"A級決勝","11":"ガールズ決勝","12":"S級決勝"},"静岡":{"6":"ガールズ決勝","7":"A級決勝"},"奈良":{"7":"A級チャレンジ決勝"},"武雄":{"6":"ガールズ決勝","7":"A級チャレンジ決勝"}}};
+  const giftIcon='<span class="rchip-bottom-icons"><span class="rchip-bottom-icon rchip-campaign" role="img" aria-label="キャンペーン"><svg class="rchip-campaign-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="./assets/bottom-nav-icons.svg?v=16#nav-campaign"></use></svg></span></span>';
+  const rebateBand='<span class="rchip-rebate">5%還元</span>';
+  const campaignLogo='<span class="rebate-logo" aria-label="5%還元"><svg class="rebate-campaign-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="./assets/bottom-nav-icons.svg?v=16#nav-campaign"></use></svg><span class="rebate-label">5%還元</span></span>';
+  const keirinLogo=campaignLogo.replace('aria-label="5%還元"',
+    'aria-label="決勝5%還元"').replace('<span class="rebate-label">5%還元</span>',
+    '<span class="rebate-label"><span>決勝</span><span>5%還元</span></span>');
+  const girlsRaceIcon='<span class="rchip-bottom-icon rchip-girls" role="img" aria-label="ガールズ">' +
+    '<svg class="girls-heart-icon" viewBox="0 0 24 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
+    '<use href="./assets/bottom-nav-icons.svg?v=16#girls-heart"></use></svg></span>';
+
   const kind = location.pathname.includes("autorace") ? "autorace" : "keirin";
   const meetings = {"keirin":{"2026-11-02":[["小田原","FⅡ","2日目","モーニング",7,"08:45",true],["熊本","FⅡ","最終日","モーニング",7,"08:55",false],["防府","GⅢ","3日目","",12,"11:00",false],["豊橋","FⅠ","初日","ナイター",12,"15:44",true],["久留米","FⅠ","2日目","ナイター",12,"15:56",false],["静岡","FⅡ","初日","ミッドナイト",7,"20:36",true],["奈良","FⅡ","初日","ミッドナイト",7,"20:44",false],["武雄","FⅡ","初日","ミッドナイト",7,"20:52",true]],"2026-11-04":[["取手","FⅡ","初日","モーニング",7,"08:45",false],["大宮","FⅠ","初日","",12,"11:00",false],["青森","FⅠ","2日目","",12,"11:12",false],["豊橋","FⅠ","最終日","ナイター",12,"15:40",true],["別府","FⅡ","初日","ナイター",11,"15:54",true],["静岡","FⅡ","最終日","ミッドナイト",7,"20:36",true],["奈良","FⅡ","最終日","ミッドナイト",7,"20:44",false],["武雄","FⅡ","最終日","ミッドナイト",7,"20:52",true]]},"autorace":{"2026-11-02":[["浜松","SG","5日目","",12,"",false],["川口","普通","2日目","ナイター",8,"",false]],"2026-11-04":[["川口","普通","最終日","ナイター",8,"",false],["山陽","普通","初日","",12,"",false]]}};
   const gradeMeta = {"GP":["grade-gp",0],"SG":["grade-sg",0],"GⅠ":["grade-g1",1],"特GⅠ":["grade-g1",1],"GⅡ":["grade-g2",2],"GⅢ":["grade-g3",3],"FⅠ":["grade-f1",5],"FⅡ":["grade-f2",6],"普通":["grade-normal",9]};
@@ -38,20 +53,35 @@
     // unrelated hardcoded 11/3 racecard data.
     const sport = kind === "autorace" ? "auto" : "keirin";
     const dayState = past ? "確定" : "発売前";
-    const heading = '<div class="venue-header"><span class="grade-badge ' +
-      gradeClass + '">' + grade + '</span><span class="venue-title">' +
-      '<span class="venue-name">' + venue + '</span><span class="venue-meta">' +
-      '<span class="venue-day">' + day + '</span>' +
+    const eligible=rebateRaces[date]?.[venue];
+    const isEligible=race => eligible==='all' || Array.isArray(eligible) && eligible.includes(race);
+    const hasCampaign=!!eligible;
+    const headerCampaign=hasCampaign ? (kind==='autorace' ? campaignLogo : keirinLogo) : '';
+    const heading = '<div class="venue-header"><div class="venue-header-line">' +
+      '<span class="grade-badge ' + gradeClass + '">' + grade + '</span>' +
+      '<span class="venue-title"><span class="venue-name">' + venue + '</span>' +
+      '<span class="venue-meta"><span class="venue-day">' + day + '</span>' +
       (period ? '・' + period : '') + (girls ? girlSvg : '') +
-      '</span></span></div>';
+      '</span></span>' + headerCampaign + '</div></div>';
     let chips = "";
     for (let race=1;race<=raceCount;race++) {
+      const rebate=isEligible(race);
+      const girlsFinal=!!girlsFinals[date]?.[venue]?.includes(race);
+      const raceType=finalTypes[date]?.[venue]?.[race] || '';
+      const bottomIcons=(rebate||girlsFinal) ?
+        '<span class="rchip-bottom-icons">' +
+        (girlsFinal ? girlsRaceIcon : '') +
+        (rebate ? giftIcon.slice('<span class="rchip-bottom-icons">'.length, -'</span>'.length) : '') +
+        '</span>' : '';
       chips += '<div class="rcol"><div class="rchip ' +
         (past ? 'closed' : 'presale-preview') + ' archive-preview" ' +
-        'data-race-number="' + race + '" role="group" aria-label="' +
+        'data-race-number="' + race + '"' +
+        (raceType ? ' data-race-type="' + raceType + '"' : '') +
+        ' role="group" aria-label="' +
         venue + ' ' + race + 'R ' + date + ' ' + dayState +
-        '（レース詳細は未収録）"><b>' + race + 'R</b><small>' +
-        dayState + '</small></div></div>';
+        (rebate ? ' 5%還元' : '') + '（レース詳細は未収録）">' +
+        (rebate ? rebateBand : '') + '<b>' + race + 'R</b><small>' +
+        dayState + '</small>' + bottomIcons + '</div></div>';
     }
     card.innerHTML = heading +
       '<div class="hscroll"><button type="button" class="hscroll-cue-l" ' +
@@ -101,6 +131,30 @@
       }
     });
   });
+  // Fit the complete one-line header at every phone width (including 296px).
+  // Natural 12/14/16/20px typography is unchanged; only the horizontal
+  // footprint is compressed where the full label row would overflow.
+  function fitHeaders() {
+    scrollArea.querySelectorAll(':scope > .venue-card .venue-header').forEach(header=>{
+      const line=header.querySelector(':scope > .venue-header-line');
+      if(!line) return;
+      const css=getComputedStyle(header);
+      const available=header.clientWidth - parseFloat(css.paddingLeft) -
+        parseFloat(css.paddingRight);
+      const natural=line.scrollWidth;
+      const scale=Math.min(1, available/Math.max(1,natural));
+      line.style.transform=scale < 0.999 ? 'scaleX('+scale.toFixed(5)+')' : '';
+      header.dataset.fitScale=scale.toFixed(5);
+    });
+  }
+  const observer=typeof ResizeObserver==='function' ?
+    new ResizeObserver(fitHeaders) : null;
+  observer?.observe(scrollArea);
+  window.addEventListener('resize',fitHeaders,{passive:true});
+  document.fonts?.ready.then(fitHeaders);
+  document.addEventListener('gamboo:venues-changed',fitHeaders);
+  fitHeaders();
+
   // Preserve today's original markup, scroller positions and 11/3 annotations.
   scrollArea.dataset.meetingDate=referenceDay;
 })();
