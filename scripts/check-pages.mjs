@@ -621,13 +621,15 @@ async function checkPredictionSort(page, width, isAutorace) {
     nodes.map(chip => {
       const type=chip.dataset.raceType;
       const isFinal=(type.endsWith('決勝') && !type.includes('準決勝')) || type==='優勝戦';
+       const eligible=isAutorace?
+         chip.closest('.venue-card')?.dataset.venue==='浜松' : isFinal;
       const row=chip.querySelector('.rchip-bottom-icons');
       const icons=[...(row?.querySelectorAll(':scope > .rchip-bottom-icon') || [])];
       const campaigns=icons.filter(icon=>icon.classList.contains('rchip-campaign'));
       const svg=campaigns[0]?.querySelector('svg.rchip-campaign-icon');
       const svgStyle=svg ? getComputedStyle(svg) : null;
       const rowBox=row?.getBoundingClientRect();
-      return {type,isFinal,count:campaigns.length,
+      return {type,isFinal,eligible,count:campaigns.length,
         iconOrder:icons.map(icon=>icon.classList.contains('rchip-girls')?'girls':
           icon.classList.contains('rchip-campaign')?'campaign':
           icon.classList.contains('rchip-featured')?'featured':'unknown'),
@@ -649,21 +651,24 @@ async function checkPredictionSort(page, width, isAutorace) {
       return {gift,count:chip.querySelectorAll(':scope > .rchip-rebate').length,
         text:band?.textContent.trim(),background:st?.backgroundColor,color:st?.color,
         font:st?.fontSize,weight:st?.fontWeight,position:st?.position,
-        height:rect?.height,border:border.borderTopColor,
+        height:rect?.height,display:st?.display,warning:!!chip.querySelector('.rchip-warning'),
+        border:border.borderTopColor,
         borderWidth:border.borderTopWidth,
         inset:rect?{top:rect.top-box.top,left:rect.left-box.left,
           right:box.right-rect.right}:null,
         centered:rect?Math.abs(rect.left+rect.right-box.left-box.right)/2:null};
     }));
   if(topRebates.some(x=>x.count!==(x.gift?1:0) ||
-     (x.gift && (x.text!=='5%還元' ||
-       x.background!=='rgb(134, 115, 58)' || x.color!=='rgb(255, 255, 255)' ||
-       x.font!=='12px' || x.weight!=='600' || x.position!=='absolute' ||
-       x.height!==18 || x.border!=='rgb(134, 115, 58)' ||
-       x.borderWidth!=='3px' || x.centered>1 ||
-       Math.abs(x.inset.top-3)>1 || Math.abs(x.inset.left-3)>1 ||
-       Math.abs(x.inset.right-3)>1))))
-    fail(width+'px gold rebate frame and full-width white-on-gold band mismatch: '+
+      (x.gift && (x.text!=='5%還元' ||
+        (x.warning ?
+          (x.display!=='none' || x.border!=='rgb(165, 55, 76)') :
+          (x.background!=='rgb(134, 115, 58)' || x.color!=='rgb(255, 255, 255)' ||
+           x.font!=='12px' || x.weight!=='600' || x.position!=='absolute' ||
+           x.height!==18 || x.border!=='rgb(134, 115, 58)' ||
+           x.borderWidth!=='3px' || x.centered>1 ||
+           Math.abs(x.inset.top-3)>1 || Math.abs(x.inset.left-3)>1 ||
+           Math.abs(x.inset.right-3)>1))))))
+    fail(width+'px Gamboo promotional band priority/geometry invalid: '+
       JSON.stringify(topRebates.filter(x=>x.gift||x.count)));
   // Temporary DOM-only warning fixture: urgent text must hide the 5% rebate.
   const countdownPriority=await page.locator('.rchip:has(.rchip-campaign)').first().evaluate(chip=>{
@@ -693,18 +698,18 @@ async function checkPredictionSort(page, width, isAutorace) {
       !countdownPriority.hidden || !countdownPriority.shown || !countdownPriority.restored)
     fail(width+'px urgent countdown must replace gold frame/band while retaining gift: '+
       JSON.stringify(countdownPriority));
-  const expectedFinals=isAutorace?1:5;
-  if (finalIcons.filter(r=>r.isFinal).length !== expectedFinals ||
-      finalIcons.some(r=>r.count !== (r.isFinal?1:0)) ||
-      finalIcons.filter(r=>r.isFinal).some(r=>
+  const expectedPromotions=isAutorace?12:5;
+  if (finalIcons.filter(r=>r.eligible).length !== expectedPromotions ||
+      finalIcons.some(r=>r.count !== (r.eligible?1:0)) ||
+      finalIcons.filter(r=>r.eligible).some(r=>
         !r.source?.endsWith('#nav-campaign') ||
         r.color !== 'rgb(134, 115, 58)' || r.width !== '16px' || r.height !== '16px' ||
         !r.fits || r.centered > 1 ||
         r.iconOrder.join('|') !== r.iconOrder.slice().sort(
           (a,b)=>['girls','campaign','featured'].indexOf(a)-
             ['girls','campaign','featured'].indexOf(b)).join('|')))
-    fail(width + 'px final race campaign icon, placement, or ordering is invalid: '+
-      JSON.stringify(finalIcons.filter(r=>r.isFinal || r.count)));
+    fail(width+'px Gamboo SG races and keirin finals need gift icons: '+
+      JSON.stringify(finalIcons.filter(r=>r.eligible || r.count)));
   if (!isAutorace && !finalIcons.some(r=>r.type==='ガールズ決勝' &&
       r.iconOrder.join('|')==='girls|campaign|featured'))
     fail(width + 'px girls final must show girls, campaign, featured in that order');
