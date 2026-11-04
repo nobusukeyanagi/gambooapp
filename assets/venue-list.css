@@ -543,6 +543,7 @@ button, input, select, textarea {
 
 .venue-card .rchip {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 16px 20px 20px 18px;
   align-content: center;
   justify-items: center;
@@ -626,12 +627,25 @@ button, input, select, textarea {
   border: var(--line-emphasis-width) solid var(--c-error);
 }
 
+/* First row is the warning strip. Keep the four-row race button geometry.
+   The 20-minute alert wins over any first-row campaign rebate. */
 .venue-card .rchip > .rchip-warning {
   grid-row: 1;
-  color: var(--c-error);
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: stretch;
+  align-self: stretch;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border-radius: 0;
+  background: var(--c-error);
+  color: var(--c-surface);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
-  line-height: 1.25;
+  line-height: 1;
   white-space: nowrap;
 }
 

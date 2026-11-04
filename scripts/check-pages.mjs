@@ -530,13 +530,40 @@ async function checkPredictionSort(page, width, isAutorace) {
   if (sortBorders.some(c => c !== 'rgb(156, 164, 168)'))
     fail(width + 'px inactive sort buttons must use the control border');
   // Regression of 3px urgent border, 44px arrow target and 14px sort label.
-  const warningLabels = await page.locator('.venue-card .rchip.next.soon .rchip-warning').allTextContents();
-  if (warningLabels.length !== 1 || warningLabels[0].trim() !== '締切13分前')
-    fail(width + 'px 12:00 snapshot must show 13 minutes remaining on the 12:13 race');
+  const warningLabels = await page.locator('.venue-card .rchip.next.soon .rchip-warning')
+    .evaluateAll(nodes => nodes.map(label => {
+      const chip=label.closest('.rchip');
+      const style=getComputedStyle(label);
+      const box=label.getBoundingClientRect();
+      const bounds=chip.getBoundingClientRect();
+      return {
+        text:label.textContent.trim(),
+        aria:label.getAttribute('aria-label'),
+        row:style.gridRowStart,
+        width:box.width,
+        height:box.height,
+        font:style.fontSize,
+        weight:style.fontWeight,
+        color:style.color,
+        background:style.backgroundColor,
+        square:style.borderRadius,
+        centerOffset:Math.abs((box.left+box.right-bounds.left-bounds.right)/2)
+      };
+    }));
+  if (warningLabels.length !== 1 || warningLabels.some(w =>
+    w.text !== '13分前' || w.aria !== '締切13分前' ||
+    w.row !== '1' || w.font !== '12px' || w.weight !== '600' ||
+    w.color !== 'rgb(255, 255, 255)' || w.background !== 'rgb(165, 55, 76)' ||
+    w.square !== '0px' || w.height !== 16 || w.width < 70 ||
+    w.centerOffset > 1))
+    fail(width + 'px urgent first-row red band must display white 13分前: '+
+      JSON.stringify(warningLabels));
   const urgent = await page.locator('.venue-card .rchip.next.soon').evaluateAll(nodes =>
-    nodes.map(el => ({width:getComputedStyle(el).borderTopWidth,color:getComputedStyle(el).borderTopColor})));
-  if (urgent.some(s => s.width !== '3px' || s.color !== 'rgb(165, 55, 76)'))
-    fail(width + 'px urgent border mismatch: ' + JSON.stringify(urgent));
+    nodes.map(el => ({width:getComputedStyle(el).borderTopWidth,color:getComputedStyle(el).borderTopColor,
+      boxWidth:el.getBoundingClientRect().width})));
+  if (urgent.some(s => s.width !== '3px' || s.color !== 'rgb(165, 55, 76)' ||
+     s.boxWidth !== 90))
+    fail(width + 'px urgent button border or canonical width mismatch: ' + JSON.stringify(urgent));
   const arrowWidths = await page.locator('.venue-card .hscroll > .hscroll-cue, .venue-card .hscroll > .hscroll-cue-l')
     .evaluateAll(nodes => nodes.map(el => getComputedStyle(el).width));
   if (arrowWidths.some(v => v !== '44px'))
@@ -604,10 +631,12 @@ async function checkPredictionSort(page, width, isAutorace) {
     const rebate=chip.querySelector('.rchip-rebate');
     const warning=document.createElement('span');
     warning.className='rchip-warning';
-    warning.textContent='締切5分前';
+    warning.textContent='5分前';
     chip.prepend(warning);
     const hidden=getComputedStyle(rebate).display==='none';
-    const shown=getComputedStyle(warning).display!=='none';
+    const styles=getComputedStyle(warning);
+    const shown=styles.display!=='none' && styles.backgroundColor==='rgb(165, 55, 76)' &&
+      styles.color==='rgb(255, 255, 255)' && styles.gridRowStart==='1';
     warning.remove();
     return {hidden,shown,restored:getComputedStyle(rebate).display!=='none'};
   });
