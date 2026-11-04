@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/design-tokens.css?v=59" />
     <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=12" />
     <link rel="stylesheet" href="./assets/app-base.css?v=1" />
-    <link rel="stylesheet" href="./assets/mypage.css?v=15" />
+    <link rel="stylesheet" href="./assets/mypage.css?v=16" />
     <link rel="stylesheet" href="./assets/payout-bar.css?v=1" />
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
     <link rel="stylesheet" href="./assets/ui-consistency.css?v=31" />
@@ -89,51 +89,88 @@
               <div class="section-header" id="favorites-section">
                 <div class="section-title">激推しメン・推しメン</div>
               </div>
-                            <div class="os-card favorites-unified">
-                <div class="os-seg" role="tablist" aria-label="推しメンの競技">
-                  <button type="button" class="os-tab on" data-os="keirin" role="tab" aria-selected="true"><svg class="ic profile-race-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-keirin"></use></svg>競輪<span class="os-n">18</span></button>
-                  <button type="button" class="os-tab" data-os="auto" role="tab" aria-selected="false"><svg class="ic profile-race-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-auto"></use></svg>オート<span class="os-n">4</span></button>
-                </div>
-                <div class="os-panel on" data-os="keirin" role="tabpanel">
-                  <div class="favorite-group">
-                    <div class="favorite-group-heading"><span>激推しメン</span></div>
-                    <div class="favorite-super-content">
-                      <div class="favorite-person">
-                        <div class="favorite-person-name">早川 拓真</div>
-                        <div class="favorite-person-meta">栃木 SS 113期</div>
-                      </div>
-                      <a class="oshi-act" href="#favorite-super-keirin" aria-label="競輪の激推しメンを変更">変更する<svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></a>
+              <div class="favorites-stack" aria-label="競輪とオートレースの激推しメン・推しメン">
+                <section class="favorite-sport favorite-sport--keirin" data-sport="keirin">
+                  <div class="favorite-sport-heading">
+                    <svg class="ic profile-race-icon favorite-sport-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-keirin"></use></svg>
+                    <span>競輪</span>
+                  </div>
+                  <div class="favorite-group favorite-group--super">
+                    <div class="favorite-group-heading">激推しメン</div>
+                    <div class="favorite-player-grid favorite-player-grid--super">
+                      <a class="favorite-player-card" href="#favorite-super-keirin" data-player-name="早川 拓真" data-player-affiliation="栃木・SS・113期" aria-label="早川 拓真・栃木・SS・113期の激推しメン編集">
+                      <span class="favorite-player-name">早川 拓真</span>
+                      <span class="favorite-player-affiliation">栃木・SS・113期</span>
+                    </a>
                     </div>
                   </div>
-                  <div class="favorite-group favorite-group-list">
-                    <div class="favorite-group-heading"><span>推しメン</span></div>
-                    <div class="os-chips"><span class="os-chip">早川 拓真</span><span class="os-chip">西村 健吾</span><span class="os-chip">小林 大翔</span><span class="os-chip">佐伯 陸</span><span class="os-chip">大川 智也</span><span class="os-chip">松浦 慎吾</span><span class="os-chip rest">ほか12名</span></div>
-                    <div class="os-actions">
-                      <a class="os-btn" href="#favorite-list-keirin" aria-label="競輪の推しメンを追加"><svg class="ic" aria-hidden="true"><use href="#ic-add"></use></svg>追加する</a>
-                      <a class="os-btn" href="#favorite-list-keirin" aria-label="競輪の推しメン一覧を編集"><svg class="ic" aria-hidden="true"><use href="#ic-edit"></use></svg>一覧・編集</a>
+                  <div class="favorite-group favorite-group--regular">
+                    <div class="favorite-group-heading">推しメン</div>
+                    <div class="favorite-player-grid">
+                      <a class="favorite-player-card" href="#favorite-list-keirin" data-player-name="早川 拓真" data-player-affiliation="栃木・SS・113期" aria-label="早川 拓真・栃木・SS・113期の推しメン編集">
+                      <span class="favorite-player-name">早川 拓真</span>
+                      <span class="favorite-player-affiliation">栃木・SS・113期</span>
+                    </a>
+                      <a class="favorite-player-card" href="#favorite-list-keirin" data-player-name="西村 健吾" data-player-affiliation="所属未設定" aria-label="西村 健吾・所属未設定の推しメン編集">
+                      <span class="favorite-player-name">西村 健吾</span>
+                      <span class="favorite-player-affiliation">所属未設定</span>
+                    </a>
+                      <a class="favorite-player-card" href="#favorite-list-keirin" data-player-name="小林 大翔" data-player-affiliation="所属未設定" aria-label="小林 大翔・所属未設定の推しメン編集">
+                      <span class="favorite-player-name">小林 大翔</span>
+                      <span class="favorite-player-affiliation">所属未設定</span>
+                    </a>
+                      <a class="favorite-player-card" href="#favorite-list-keirin" data-player-name="佐伯 陸" data-player-affiliation="所属未設定" aria-label="佐伯 陸・所属未設定の推しメン編集">
+                      <span class="favorite-player-name">佐伯 陸</span>
+                      <span class="favorite-player-affiliation">所属未設定</span>
+                    </a>
+                      <a class="favorite-player-card" href="#favorite-list-keirin" data-player-name="大川 智也" data-player-affiliation="所属未設定" aria-label="大川 智也・所属未設定の推しメン編集">
+                      <span class="favorite-player-name">大川 智也</span>
+                      <span class="favorite-player-affiliation">所属未設定</span>
+                    </a>
+                      <a class="favorite-player-card" href="#favorite-list-keirin" data-player-name="松浦 慎吾" data-player-affiliation="所属未設定" aria-label="松浦 慎吾・所属未設定の推しメン編集">
+                      <span class="favorite-player-name">松浦 慎吾</span>
+                      <span class="favorite-player-affiliation">所属未設定</span>
+                    </a>
+                    </div>
+                    <div class="favorite-more-count">ほか12名（選手情報未設定）</div>
+                  </div>
+                </section>
+                <section class="favorite-sport favorite-sport--auto" data-sport="auto">
+                  <div class="favorite-sport-heading">
+                    <svg class="ic profile-race-icon favorite-sport-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-auto"></use></svg>
+                    <span>オートレース</span>
+                  </div>
+                  <div class="favorite-group favorite-group--super">
+                    <div class="favorite-group-heading">激推しメン</div>
+                    <div class="favorite-player-grid favorite-player-grid--super">
+                      <a class="favorite-player-card" href="#favorite-super-auto" data-player-name="森下 翔" data-player-affiliation="浜松・S-21・24期" aria-label="森下 翔・浜松・S-21・24期の激推しメン編集">
+                      <span class="favorite-player-name">森下 翔</span>
+                      <span class="favorite-player-affiliation">浜松・S-21・24期</span>
+                    </a>
                     </div>
                   </div>
-                </div>
-                <div class="os-panel" data-os="auto" role="tabpanel">
-                  <div class="favorite-group">
-                    <div class="favorite-group-heading"><span>激推しメン</span></div>
-                    <div class="favorite-super-content">
-                      <div class="favorite-person">
-                        <div class="favorite-person-name">森下 翔</div>
-                        <div class="favorite-person-meta">浜松 S-21 24期</div>
-                      </div>
-                      <a class="oshi-act" href="#favorite-super-auto" aria-label="オートの激推しメンを変更">変更する<svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></a>
+                  <div class="favorite-group favorite-group--regular">
+                    <div class="favorite-group-heading">推しメン</div>
+                    <div class="favorite-player-grid">
+                      <a class="favorite-player-card" href="#favorite-list-auto" data-player-name="森下 翔" data-player-affiliation="浜松・S-21・24期" aria-label="森下 翔・浜松・S-21・24期の推しメン編集">
+                      <span class="favorite-player-name">森下 翔</span>
+                      <span class="favorite-player-affiliation">浜松・S-21・24期</span>
+                    </a>
+                      <a class="favorite-player-card" href="#favorite-list-auto" data-player-name="森且行" data-player-affiliation="川口" aria-label="森且行・川口の推しメン編集">
+                      <span class="favorite-player-name">森且行</span>
+                      <span class="favorite-player-affiliation">川口</span>
+                    </a>
+                      <a class="favorite-player-card" href="#favorite-list-auto" data-player-name="青山 周平" data-player-affiliation="伊勢崎" aria-label="青山 周平・伊勢崎の推しメン編集">
+                      <span class="favorite-player-name">青山 周平</span>
+                      <span class="favorite-player-affiliation">伊勢崎</span>
+                    </a>
+                      <a class="favorite-player-card" href="#favorite-list-auto" data-player-name="坂口 拓也" data-player-affiliation="所属未設定" aria-label="坂口 拓也・所属未設定の推しメン編集">
+                      <span class="favorite-player-name">坂口 拓也</span>
+                      <span class="favorite-player-affiliation">所属未設定</span>
+                    </a>
                     </div>
                   </div>
-                  <div class="favorite-group favorite-group-list">
-                    <div class="favorite-group-heading"><span>推しメン</span></div>
-                    <div class="os-chips"><span class="os-chip">森下 翔</span><span class="os-chip">森且行</span><span class="os-chip">青山 周平</span><span class="os-chip">坂口 拓也</span></div>
-                    <div class="os-actions">
-                      <a class="os-btn" href="#favorite-list-auto" aria-label="オートの推しメンを追加"><svg class="ic" aria-hidden="true"><use href="#ic-add"></use></svg>追加する</a>
-                      <a class="os-btn" href="#favorite-list-auto" aria-label="オートの推しメン一覧を編集"><svg class="ic" aria-hidden="true"><use href="#ic-edit"></use></svg>一覧・編集</a>
-                    </div>
-                  </div>
-                </div>
+                </section>
               </div>
 
               <div class="divider"></div>
@@ -232,6 +269,7 @@
               <div class="favorite-route-content">
                 <div class="favorite-route-card">
                   <h2>競輪・激推しメンの変更</h2>
+                  <p class="favorite-route-selected" aria-live="polite"></p>
                   <p>競輪の激推しメン（1名）を変更する専用画面</p>
                   <p class="favorite-route-note">画面遷移先のモックです。実際の登録・変更機能は未接続です。</p>
                   <a class="cp-btn" href="#favorites-section">マイページに戻る</a>
@@ -247,6 +285,7 @@
               <div class="favorite-route-content">
                 <div class="favorite-route-card">
                   <h2>オート・激推しメンの変更</h2>
+                  <p class="favorite-route-selected" aria-live="polite"></p>
                   <p>オートの激推しメン（1名）を変更する専用画面</p>
                   <p class="favorite-route-note">画面遷移先のモックです。実際の登録・変更機能は未接続です。</p>
                   <a class="cp-btn" href="#favorites-section">マイページに戻る</a>
@@ -262,6 +301,7 @@
               <div class="favorite-route-content">
                 <div class="favorite-route-card">
                   <h2>競輪・推しメンの管理</h2>
+                  <p class="favorite-route-selected" aria-live="polite"></p>
                   <p>競輪の推しメン（最大30名）を追加・編集する専用画面</p>
                   <p class="favorite-route-note">画面遷移先のモックです。実際の登録・変更機能は未接続です。</p>
                   <a class="cp-btn" href="#favorites-section">マイページに戻る</a>
@@ -277,6 +317,7 @@
               <div class="favorite-route-content">
                 <div class="favorite-route-card">
                   <h2>オート・推しメンの管理</h2>
+                  <p class="favorite-route-selected" aria-live="polite"></p>
                   <p>オートの推しメン（最大30名）を追加・編集する専用画面</p>
                   <p class="favorite-route-note">画面遷移先のモックです。実際の登録・変更機能は未接続です。</p>
                   <a class="cp-btn" href="#favorites-section">マイページに戻る</a>
@@ -290,11 +331,15 @@
     <script src="./assets/scroll-controls.js?v=2"></script>
     <script src="./assets/payout-bar.js?v=1"></script>
     <script>
-      document.querySelectorAll(".os-tab").forEach(function (t) {
-        t.addEventListener("click", function () {
-          var card = t.closest(".os-card");
-          card.querySelectorAll(".os-tab").forEach(function (x) { var selected = x === t; x.classList.toggle("on", selected); x.setAttribute("aria-selected", String(selected)); });
-          card.querySelectorAll(".os-panel").forEach(function (p) { p.classList.toggle("on", p.getAttribute("data-os") === t.getAttribute("data-os")); });
+      // A card selects a specific player, then opens its own sport/category editor.
+      // The prototype shows the selected player but does not save any changes.
+      document.querySelectorAll(".favorite-player-card").forEach(function (card) {
+        card.addEventListener("click", function () {
+          var route = document.getElementById(card.getAttribute("href").slice(1));
+          var label = route && route.querySelector(".favorite-route-selected");
+          if (label) {
+            label.textContent = card.dataset.playerName + "　" + card.dataset.playerAffiliation;
+          }
         });
       });
     </script>
