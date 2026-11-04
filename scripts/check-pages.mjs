@@ -263,9 +263,9 @@ async function checkCampaignPage(page, width) {
 
 async function checkMyPage(page, width) {
   const headings=await page.locator('.scroll-area > .section-header > .section-title').allTextContents();
-  if (headings.length!==4 ||
+  if (headings.length!==3 ||
       headings.map(x=>x.trim()).join('|')!==
-        '激推しメン・推しメン|設定|成績・履歴|サポート')
+        '激推しメン・推しメン|マイ成績|設定')
     fail(width+'px mypage section headings changed: '+headings);
   const headingStyle=await page.locator('.scroll-area > .section-header > .section-title').first()
     .evaluate(el=>{
@@ -317,8 +317,8 @@ async function checkMyPage(page, width) {
      memberAction.y<Math.max(hero.nameBottom,hero.imageBottom)||
      hero.links.some(btn=>btn.height<44||btn.font!=='14px'||btn.weight!=='600'||
        btn.bg!=='rgb(255, 255, 255)'||btn.radius!=='8px'||btn.right>hero.right+1)||
-     await page.locator('#mypage-member .menu-text').innerText()!=='会員情報'||
-     await page.locator('#mypage-profile .menu-text').innerText()!=='プロフィール')
+     await page.locator('#mypage-member .favorite-route-card h2').textContent()!=='会員情報'||
+     await page.locator('#mypage-profile .favorite-route-card h2').textContent()!=='プロフィール')
     fail(width+'px dual member/profile buttons must align below the name: '+JSON.stringify(hero));
   const avatarImage=await avatar.evaluate(el=>({complete:el.complete,naturalWidth:el.naturalWidth,naturalHeight:el.naturalHeight,visible:el.getBoundingClientRect().width>0}));
   if (!avatarImage.complete || avatarImage.naturalWidth!==130 || avatarImage.naturalHeight!==130 || !avatarImage.visible)
@@ -391,9 +391,52 @@ async function checkMyPage(page, width) {
      (await page.locator('.scroll-area').innerText()).includes('登録中'))
     fail(width+'px favourites description text should be removed');
   const menuText=await page.locator('.scroll-area').innerText();
-  if(['デルカ・投票口座','コンテンツ','ウイン履歴','投稿ブログ管理','デルカチャージ','KEIRIN.JP 口座登録']
-    .some(label=>menuText.includes(label)))
-    fail(width+'px deleted page menus or entries still displayed');
+  if(['デルカ・投票口座','コンテンツ','ウイン履歴','成績・履歴','サポート',
+      'マイ成績（競輪）','マイ成績（オートレース）','投稿ブログ管理','デルカチャージ',
+      'KEIRIN.JP 口座登録'].some(label=>menuText.includes(label)))
+    fail(width+'px removed sections/entries still displayed');
+  const settings=await page.locator('.scroll-area > .menu-item .menu-text').allTextContents();
+  const expectedSettings=[
+    '競輪・オート表示順','友達を探す','パスワード変更','メールアドレス変更',
+    'メールマガジン変更','ログイン通知設定','外部アカウント連携'
+  ];
+  if(settings.length!==7||settings.some((label,i)=>label.trim()!==expectedSettings[i]))
+    fail(width+'px settings must contain exactly seven ordered entries: '+JSON.stringify(settings));
+  const results=await page.locator('.mypage-result-actions > a').evaluateAll(links=>links.map(el=>{
+    const r=el.getBoundingClientRect(),cs=getComputedStyle(el),icon=el.querySelector('.mypage-result-icon');
+    return {name:el.textContent.trim(),href:el.getAttribute('href'),
+      width:r.width,height:r.height,x:r.x,y:r.y,icon:icon.querySelector('use')?.getAttribute('href'),
+      iconColor:getComputedStyle(icon).color,font:cs.fontSize,weight:cs.fontWeight,
+      bg:cs.backgroundColor,border:cs.borderTopWidth,radius:cs.borderRadius,shadow:cs.boxShadow};
+  }));
+  if(results.length!==2 || results[0].name!=='競輪'||results[1].name!=='オートレース'||
+     results[0].href!=='#mypage-results-keirin'||results[1].href!=='#mypage-results-auto'||
+     !results[0].icon?.endsWith('#nav-keirin')||!results[1].icon?.endsWith('#nav-auto')||
+     results[0].iconColor!=='rgb(71, 122, 148)'||
+     results[1].iconColor!=='rgb(172, 96, 90)'||
+     results.some(btn=>btn.width<70||btn.height<44||btn.font!=='14px'||
+       btn.weight!=='600'||btn.bg!=='rgb(255, 255, 255)'||
+       btn.border!=='1px'||btn.radius!=='8px'||btn.shadow==='none')||
+     Math.abs(results[0].y-results[1].y)>1 ||results[0].x>=results[1].x)
+    fail(width+'px My Results needs two canonical Keirin/Auto buttons: '+JSON.stringify(results));
+  for(const id of ['mypage-member','mypage-profile','mypage-results-keirin','mypage-results-auto']) {
+    const link=id.startsWith('mypage-results-')
+      ? page.locator('.mypage-result-actions a[href="#'+id+'"]')
+      : page.locator('.user-card-actions a[href="#'+id+'"]');
+    if(await link.count()!==1) {
+      fail(width+'px user/result shortcut missing '+id);
+      continue;
+    }
+    await link.click();
+    const route=page.locator('.favorite-route:target');
+    if(await route.count()!==1 || await route.getAttribute('id')!==id)
+      fail(width+'px shortcut must open its independent mock '+id);
+    else {
+      await route.locator('.favorite-route-card a').click();
+      if(await page.locator('.favorite-route:target').count())
+        fail(width+'px shortcut return should close '+id);
+    }
+  }
 
   const pointPositions=await page.locator('.user-card').evaluate(el=>{
     const rows=[...el.querySelectorAll('.pt3-row')],
@@ -503,7 +546,8 @@ async function checkMyPage(page, width) {
   for(const section of sports) {
     for(const card of section.cards) {
       const kind=card.href?.includes('-super-')?'super':'list';
-      if(!card.name||!card.affiliation||card.storedName!==card.name||
+      if(!card.name||!card.affiliation||!card.name.includes('　')||card.name.includes(' ')||
+         card.storedName!==card.name||
          card.storedAffiliation!==card.affiliation||
          card.href!=='#favorite-'+kind+'-'+section.sport||
          card.width<=0||card.height<60||card.border!=='1px'||
