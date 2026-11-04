@@ -22,15 +22,47 @@
 .user-name { font-size:var(--fs-18); font-weight:var(--fw-strong); color:var(--c-text); }
 .user-points { display:block; padding:var(--space-2) var(--space-content); background:var(--c-surface); }
 .pt3-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-10); min-height:var(--h-balance); padding:var(--space-10) 0; }
-.pt3-row + .pt3-row { border-top:var(--line-normal); }
 .point-label { flex:1; min-width:0; font-size:var(--fs-14); font-weight:var(--fw-normal); color:var(--c-text); }
 .point-value { color:var(--c-text); font-size:var(--fs-20); font-weight:var(--fw-strong); font-family:var(--ff-ui); font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap; }
 .point-value .unit { margin-left:var(--space-2); font-size:var(--fs-14); font-weight:var(--fw-normal); }
-.point-use { display:flex; justify-content:flex-end; margin-top:0; padding:var(--space-2) var(--space-content) var(--space-content); background:var(--c-surface); }
 
 /* Reuse canonical token values for all profile action controls. */
-.point-use > span, .oshi-act, .os-btn { display:inline-flex; align-items:center; justify-content:center; gap:var(--space-small); min-height:var(--h-control); padding:0 var(--space-14); border:var(--line-control); border-radius:var(--r-control); background:var(--c-surface); box-shadow:var(--e1); color:var(--c-primary-d); font-size:var(--fs-14); font-weight:var(--fw-strong); white-space:nowrap; cursor:pointer; }
-.point-use .ic, .oshi-act .ic, .os-btn .ic { width:var(--fs-16); height:var(--fs-16); }
+.oshi-act, .os-btn { display:inline-flex; align-items:center; justify-content:center; gap:var(--space-small); min-height:var(--h-control); padding:0 var(--space-14); border:var(--line-control); border-radius:var(--r-control); background:var(--c-surface); box-shadow:var(--e1); color:var(--c-primary-d); font-size:var(--fs-14); font-weight:var(--fw-strong); white-space:nowrap; cursor:pointer; }
+.oshi-act .ic, .os-btn .ic { width:var(--fs-16); height:var(--fs-16); }
+
+/* Six permanent Gamboo point shortcuts: three columns, two rows at every
+   supported phone size, with readable wrapping for longer Japanese labels. */
+.point-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, auto));
+  gap: var(--space-card);
+  padding: var(--space-10) var(--space-content) var(--space-content);
+  background: var(--c-surface);
+}
+.point-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: calc(var(--h-control) + var(--fs-20));
+  padding: var(--space-5) var(--space-3);
+  border: var(--line-control);
+  border-radius: var(--r-control);
+  background: var(--c-surface);
+  box-shadow: var(--e1);
+  color: var(--c-primary-d);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.point-action:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: var(--space-2);
+}
 
 /* SCR-01-style headings: shared .section-header supplies 20px/600 and 44px.
    The 4px x 22px left bar uses the same gold/radius values as home. */
