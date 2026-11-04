@@ -9,6 +9,11 @@
   flex-shrink: 0;
   fill: currentColor;
 }
+.page-header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
 .scroll-area {
   flex: 1;
   min-height: 0;
