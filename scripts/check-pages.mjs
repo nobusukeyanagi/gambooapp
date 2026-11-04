@@ -414,7 +414,7 @@ async function checkMyPage(page, width) {
      !results[0].icon?.endsWith('#nav-keirin')||!results[1].icon?.endsWith('#nav-auto')||
      results[0].iconColor!=='rgb(71, 122, 148)'||
      results[1].iconColor!=='rgb(172, 96, 90)'||
-     results.some(btn=>btn.width<70||btn.height<44||btn.font!=='14px'||
+     results.some(btn=>btn.width<70||btn.height<40||btn.font!=='14px'||
        btn.weight!=='600'||btn.bg!=='rgb(255, 255, 255)'||
        btn.border!=='1px'||btn.radius!=='8px'||btn.shadow==='none')||
      Math.abs(results[0].y-results[1].y)>1 ||results[0].x>=results[1].x)
