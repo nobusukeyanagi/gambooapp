@@ -307,9 +307,10 @@ button, input, select, textarea {
 }
 
 .comment-row .cr-r {
-  /* Reserve the width of an 11R label for all race numbers.
+  /* Reserve the widest two-digit R label width for all race numbers.
      Keep the label right-aligned so every car number begins on one axis. */
-  flex: 0 0 3ch;
+  flex: 0 0 calc(3ch + var(--space-3));
+  min-width: 0;
   text-align: right;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
