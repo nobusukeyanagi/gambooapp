@@ -81,15 +81,16 @@ button, input, select, textarea {
 
 /* Venue headings */
 
-/* Venue name and meeting day always occupy the same row. The optional
-   session label sits below; a finals rebate remains on the right. */
+/* The complete meeting descriptor (day, session and Girls heart) must be
+   a single unbroken run to the right of the venue name, even on 296px phones.
+   The right-side final rebate takes the second line on compact headers. */
 .venue-header {
   padding: var(--space-section) var(--space-10) var(--space-card);
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) max-content;
+  grid-template-columns: 40px minmax(0, 1fr);
   grid-template-rows: auto auto;
   align-items: center;
-  column-gap: var(--space-card);
+  column-gap: var(--space-small);
   row-gap: var(--space-2);
   border-bottom: var(--line-normal);
   min-height: 48px;
@@ -101,34 +102,32 @@ button, input, select, textarea {
 .venue-header > .venue-title {
   grid-column: 2;
   grid-row: 1;
-  display: inline-flex;
+  display: flex;
   align-items: baseline;
-  gap: var(--space-card);
+  gap: var(--space-small);
   min-width: 0;
   white-space: nowrap;
+}
+.venue-header .venue-name { flex: 0 0 auto; }
+.venue-header .venue-meta {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-width: max-content;
+  white-space: nowrap;
+  color: var(--c-text);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-normal);
+  line-height: 1.25;
 }
 .venue-header .venue-day {
-  display: inline-block;
-  flex-shrink: 0;
+  display: inline;
+  flex: 0 0 auto;
   white-space: nowrap;
-  color: var(--c-text);
-  font-size: var(--fs-14);
-  font-weight: var(--fw-normal);
-  line-height: 1.25;
-}
-.venue-header > .venue-extra {
-  grid-column: 2 / 4;
-  grid-row: 2;
-  min-width: 0;
-  white-space: nowrap;
-  font-size: var(--fs-14);
-  font-weight: var(--fw-normal);
-  color: var(--c-text);
-  line-height: 1.25;
 }
 .venue-header > .rebate-logo {
-  grid-column: 3;
-  grid-row: 1;
+  grid-column: 2;
+  grid-row: 2;
   justify-self: end;
 }
 

@@ -729,44 +729,46 @@ async function checkPredictionSort(page, width, isAutorace) {
       (initialCurrent.canScroll &&
         (initialCurrent.currentLeft < initialCurrent.clearance - 2 || !initialCurrent.pastHidden)))
     fail(width + 'px current race must start right of left arrow: ' + JSON.stringify(initialCurrent));
-  // Name and day must sit on the same row for all SCR-02 venue headers.
+  // A venue name and its complete descriptor, including night/morning and
+  // Girls, remain a single unbroken line at all three mobile widths.
   const headers=await page.locator('.venue-card .venue-header').evaluateAll(nodes=>
     nodes.map(header=>{
       const venue=header.closest('.venue-card').dataset.venue;
       const title=header.querySelector(':scope > .venue-title');
       const name=title?.querySelector('.venue-name');
-      const day=title?.querySelector('.venue-day');
+      const meta=title?.querySelector('.venue-meta');
+      const day=meta?.querySelector('.venue-day');
       const nameBox=name?.getBoundingClientRect();
+      const metaBox=meta?.getBoundingClientRect();
       const dayBox=day?.getBoundingClientRect();
       const bounds=header.getBoundingClientRect();
       const logo=header.querySelector(':scope > .rebate-logo');
       const logoBox=logo?.getBoundingClientRect();
-      const extra=header.querySelector(':scope > .venue-extra');
-      const extraBox=extra?.getBoundingClientRect();
       const rows=logo?[...logo.querySelectorAll('.rebate-label > span')]:[];
       const rowRects=rows.map(el=>el.getBoundingClientRect());
-      return {venue,day:day?.textContent?.trim(),
+      const girls=meta?.querySelector('.venue-girls')?.getBoundingClientRect();
+      return {venue,day:day?.textContent?.trim(),text:meta?.textContent?.trim(),
         titlePresent:!!title && title.parentElement===header,
         dayRight:!!dayBox && !!nameBox && dayBox.left>=nameBox.right-1,
-        sameRow:!!dayBox && !!nameBox && dayBox.top>=nameBox.top-2 &&
-          dayBox.bottom<=nameBox.bottom+3,
-        noWrap:day?getComputedStyle(day).whiteSpace==='nowrap':false,
-        within:header.scrollWidth<=header.clientWidth+1 &&
-          (!dayBox || dayBox.right<=bounds.right+1),
-        extraBelow:!extraBox || extraBox.top>=nameBox.bottom-2,
-        logoPresent:!!logo,
-        logoLabel:logo?.textContent.trim(),
+        together:!!metaBox && !!dayBox &&
+          dayBox.top>=metaBox.top-2 && dayBox.bottom<=metaBox.bottom+2 &&
+          (!girls || (girls.top>=metaBox.top-2 && girls.bottom<=metaBox.bottom+2)),
+        noWrap:meta?getComputedStyle(meta).whiteSpace==='nowrap':false,
+        fits:header.scrollWidth<=header.clientWidth+1 &&
+          (!metaBox || metaBox.right<=bounds.right+1) &&
+          (!title || title.scrollWidth<=title.clientWidth+1),
+        logoPresent:!!logo,logoLabel:logo?.textContent.trim(),
         logoSymbol:logo?.querySelector('use')?.getAttribute('href'),
         logoColor:logo?getComputedStyle(logo).color:null,
-        logoRight:!logoBox || (logoBox.left>=dayBox.right-1 &&
+        logoBelow:!logoBox || (logoBox.top>=metaBox.bottom-2 &&
           logoBox.right<=bounds.right+1),
         logoLines:rows.map(el=>el.textContent.trim()),
         logoLineBreak:rowRects.length===2 && rowRects[0].bottom<=rowRects[1].top+1};
     }));
   if(headers.length!==(isAutorace?2:8) || headers.some(h=>
-      !h.titlePresent || !h.day || !h.dayRight || !h.sameRow ||
-      !h.noWrap || !h.within || !h.extraBelow))
-    fail(width+'px venue day must always align right of venue name: '+
+      !h.titlePresent || !h.day || !h.dayRight || !h.together ||
+      !h.noWrap || !h.fits))
+    fail(width+'px meeting day, session and Girls must stay on one line next to the name: '+
       JSON.stringify(headers));
   if (!isAutorace) {
     const expected=new Set(['防府','久留米','小田原']);
@@ -774,10 +776,10 @@ async function checkPredictionSort(page, width, isAutorace) {
        ? !h.logoPresent || h.logoLabel!=='決勝5%還元' ||
          !h.logoSymbol?.endsWith('#nav-campaign') ||
          h.logoColor!=='rgb(134, 115, 58)' ||
-         !h.logoRight || h.day!=='最終日' ||
+         !h.logoBelow || h.day!=='最終日' ||
          h.logoLines.join('|')!=='決勝|5%還元' || !h.logoLineBreak
        : h.logoPresent))
-      fail(width+'px finale refund label must remain right of name/day: '+
+      fail(width+'px finale refund label must stay at header right without splitting day/period: '+
         JSON.stringify(headers));
     const wins = page.locator('.comment-row .cr-streak');
     const labels = await wins.allTextContents();
