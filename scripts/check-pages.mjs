@@ -285,6 +285,8 @@ async function checkMyPage(page, width) {
   const avatar=page.locator('.user-avatar > img.user-avatar-photo');
   if (await avatar.count()!==1 || await avatar.getAttribute('src')!=='./assets/images/buta.png?v=2')
     fail(width+'px mypage avatar image reference must be buta.png');
+  const avatarRadius=await page.locator('.user-avatar').evaluate(el=>getComputedStyle(el).borderRadius);
+  if(avatarRadius!=='12px')fail(width+'px avatar must use canonical --r-md (12px): '+avatarRadius);
   const avatarImage=await avatar.evaluate(el=>({complete:el.complete,naturalWidth:el.naturalWidth,naturalHeight:el.naturalHeight,visible:el.getBoundingClientRect().width>0}));
   if (!avatarImage.complete || avatarImage.naturalWidth!==130 || avatarImage.naturalHeight!==130 || !avatarImage.visible)
     fail(width+'px uploaded buta.png must load as the original 130x130 image: '+JSON.stringify(avatarImage));
@@ -342,6 +344,17 @@ async function checkMyPage(page, width) {
   });
   if(values.some(pair=>pair[0]!==pair[1]))
     fail(width+'px Gamboo points must match balance bar text: '+JSON.stringify(values));
+  const pointPositions=await page.locator('.user-card').evaluate(el=>{
+    const row=el.querySelector('.pt3-row').getBoundingClientRect();
+    const first=el.querySelector('.point-action').getBoundingClientRect();
+    const actions=el.querySelector('.point-actions');
+    return {rowHeight:row.height,gap:first.y-row.bottom,
+      topPadding:getComputedStyle(actions).paddingTop};
+  });
+  if(pointPositions.rowHeight>42 ||pointPositions.rowHeight<40||
+     pointPositions.gap>9 ||pointPositions.gap<4 ||
+     pointPositions.topPadding!=='6px')
+    fail(width+'px Gamboo points should be compact with shortcuts raised: '+JSON.stringify(pointPositions));
   const pointRows=await page.locator('.user-card .pt3-row').count();
   if(pointRows!==1 || (await page.locator('.user-card .point-label').allTextContents()).map(x=>x.trim()).join('|')!=='Gambooポイント')
     fail(width+'px profile card should retain only Gamboo points');
@@ -364,7 +377,7 @@ async function checkMyPage(page, width) {
         })};
     }));
   const expectedActions=[
-    ['Gambooポイント履歴','https://gamboo.jp/point/'],
+    ['Gambooポイント履歴','https://gamboo.jp/point/history'],
     ['現金に交換','https://gamboo.jp/point/exchange/'],
     ['デルカに交換','https://gamboo.jp/point/exchange/deruca/'],
     ['景品に交換','https://gamboo.jp/point/topics/?tid=goods-exchange'],
@@ -373,7 +386,7 @@ async function checkMyPage(page, width) {
   ];
   if(pointActions.length!==6 ||
      pointActions.some((a,i)=>a.name!==expectedActions[i][0]||
-       a.href!==expectedActions[i][1]||a.h<60||a.w<60||
+       a.href!==expectedActions[i][1]||a.h<68||a.w<60||
        a.font!=='14px'||a.border!=='1px'||a.lines!==2||!a.fits) ||
      Math.abs(pointActions[0]?.y-pointActions[1]?.y)>1 ||
      Math.abs(pointActions[1]?.y-pointActions[2]?.y)>1 ||
@@ -398,9 +411,24 @@ async function checkMyPage(page, width) {
         border:st.borderTopWidth,bg:st.backgroundColor};
     }));
   if(controls.length!==4 || controls.some(c=>
-      c.height<40 || c.radius!=='8px' || c.weight!=='600' || c.font!=='14px' ||
+      c.height<44 || c.radius!=='8px' || c.weight!=='600' || c.font!=='14px' ||
       c.border!=='1px' || c.bg!=='rgb(255, 255, 255)'))
     fail(width+'px canonical profile control styles mismatch: '+JSON.stringify(controls));
+  const cmp=await page.locator('.oshi-act, .os-panel.on .os-btn, .point-action').evaluateAll(nodes=>
+    nodes.map(el=>{const s=getComputedStyle(el);
+      return {name:el.textContent.trim(),color:s.color,
+        font:s.fontSize,weight:s.fontWeight,
+        border:s.borderTopColor,radius:s.borderRadius,shadow:s.boxShadow,
+        bg:s.backgroundColor};
+    }));
+  if(cmp.length!==10||cmp.some(item=>
+      item.color!=='rgb(43, 49, 53)' ||
+      item.font!=='14px' || item.weight!=='600' ||
+      item.border!=='rgb(156, 164, 168)' ||
+      item.radius!=='8px' || item.bg!=='rgb(255, 255, 255)' ||
+      item.shadow==='none'))
+    fail(width+'px all SCR-07 buttons must follow campaign detail button style: '+
+      JSON.stringify(cmp));
 }
 
 async function checkCompactSectionHeader(page,width,file) {
@@ -421,14 +449,18 @@ async function checkCompactSectionHeader(page,width,file) {
   if(!expected)return;
   const data=await header.evaluate(el=>{
     const headerRect=el.getBoundingClientRect();
+    const label=el.querySelector('.header-title-text').getBoundingClientRect();
     const title=el.querySelector('.page-header-title'), rect=title.getBoundingClientRect();
     const controls=[...el.querySelectorAll('.header-actions > *')].map(btn=>{
       const r=btn.getBoundingClientRect(),s=getComputedStyle(btn);
       return {name:btn.textContent.trim(),x:r.left,right:r.right,w:r.width,h:r.height,
-        font:s.fontSize,weight:s.fontWeight,icon:btn.querySelector('use')?.getAttribute('href')};
+        font:s.fontSize,weight:s.fontWeight,icon:btn.querySelector('use')?.getAttribute('href'),
+        iconWidth:btn.querySelector('svg')?.getBoundingClientRect().width,
+        borderWidth:s.borderTopWidth,borderColor:s.borderTopColor,
+        bg:s.backgroundColor,paddingLeft:s.paddingLeft};
     });
     return {height:headerRect.height,left:headerRect.left,right:headerRect.right,
-      title:title.textContent.trim(),titleX:rect.left,titleRight:rect.right,
+      title:title.textContent.trim(),titleX:rect.left,titleRight:rect.right,titleTextX:label.x,
       font:getComputedStyle(title).fontSize,weight:getComputedStyle(title).fontWeight,
       titleIcon:title.querySelector('use')?.getAttribute('href')||null,
       back:!!el.querySelector('.back-btn'),controls};
@@ -439,12 +471,22 @@ async function checkCompactSectionHeader(page,width,file) {
      (expected[1] ? !data.titleIcon?.endsWith('#'+expected[1]) : !!data.titleIcon) ||
      data.controls.length!==2 || bell.name!=='通知' || deposit.name!=='入金' ||
      !bell.icon?.endsWith('#header-bell') || !deposit.icon?.endsWith('#header-card') ||
-     data.controls.some(x=>x.h!==40||x.w<64||x.font!=='14px'||x.weight!=='600') ||
+     data.controls.some(x=>x.h!==40||x.w<80||x.font!=='14px'||x.weight!=='600') ||
+     bell.iconWidth!==20 || deposit.iconWidth!==18 ||
+     bell.borderWidth!=='1px'||bell.borderColor!=='rgb(208, 212, 214)'||
+     bell.paddingLeft!=='8px'||deposit.paddingLeft!=='10px' ||
+     deposit.borderWidth!=='0px'||deposit.bg!=='rgb(71, 122, 148)' ||
+     Math.abs(data.titleTextX-41)>1 ||
      data.titleX<data.left-1 || data.titleRight>bell.x+1 ||
      bell.right>deposit.x || deposit.right>data.right+1)
     fail(file+' '+width+'px canonical header title/buttons differ: '+JSON.stringify(data));
   if(await page.locator('.phone-inner > .status-bar').count())
     fail(file+' '+width+'px simulated status bar remains');
+  const navFonts=await page.locator('.bottom-tab a.tab-item').evaluateAll(nodes=>
+    nodes.map(el=>getComputedStyle(el).fontWeight));
+  if(navFonts.length!==5 ||navFonts.some(x=>x!=='600'))
+    fail(file+' '+width+'px bottom nav must use shared 600 weight on every page: '+navFonts);
+
 }
 
 async function checkNavPredictionLinks(page, width, file) {
@@ -1195,7 +1237,7 @@ async function checkSharedReferences(){
      !html.includes('bottom-nav-icons.svg?v=16')))
     fail(page+': stale shared campaign gift icon cache reference');
   if(page!=='index.html' &&
-    (!html.includes('ui-consistency.css?v=28') ||
+    (!html.includes('ui-consistency.css?v=29') ||
      !html.includes('header-icons.svg?v=1#header-bell') ||
      !html.includes('header-icons.svg?v=1#header-card') ||
      !html.includes('shared-app-header')))
