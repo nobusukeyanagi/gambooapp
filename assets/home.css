@@ -884,14 +884,12 @@ button,
         font-variant-numeric: tabular-nums;
       }
       .venue-grid.g3 .vcard-dl.soon {
-        color: var(--c-text);
-        background: var(--c-error-bg);
         padding: var(--space-2) var(--space-small);
         margin-left: auto;
       }
 
-      /* Deadline urgency belongs to the time, not the whole row.
-         The auto-race color on the R number stays off the salmon warning fill. */
+      /* Urgency is confined to the deadline badge. Keep R numbers, rider
+         labels and card surfaces unchanged; match the SCR-02 alert palette. */
       .venue-grid.g3 .vcard.deadline-soon .vcard-bottom {
         background: transparent;
         padding: 0;
@@ -901,8 +899,8 @@ button,
       }
       .venue-grid.g3 .vcard.deadline-soon .vcard-dl.soon,
       .pk3 .pk-deadline.soon {
-        color: var(--c-text);
-        background: var(--c-error-bg);
+        color: var(--c-surface);
+        background: var(--c-error);
         border-radius: var(--r-tag);
         padding: var(--space-2) var(--space-small);
       }
