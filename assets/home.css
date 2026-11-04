@@ -97,11 +97,6 @@ button,
         background: var(--c-text);
       }
 
-      .payout-value small {
-        font-size: var(--fs-12);
-        font-weight: var(--fw-strong);
-        margin-left: var(--space-1);
-      }
       .unit {
 
         margin-left: var(--space-1);
@@ -126,43 +121,6 @@ button,
 
       .icon-btn::before { content: ""; position: absolute; inset: -4px; }
       .see-all .ic { width: 16px; height: 16px; }
-
-      .payout-bar {
-        background: var(--c-surface);
-        
-        display: flex;
-
-        border-bottom: var(--line-normal);
-        flex-shrink: 0;
-      }
-      .payout-label {
-        
-        color: var(--c-sub);
-        
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .payout-value {
-        font-family: var(--ff-ui);
-        font-variant-numeric: tabular-nums;
-        font-feature-settings: "tnum" 1;
-        letter-spacing: 0;
-        text-align: right;
-        white-space: nowrap;
-        font-size: var(--fs-16);
-        font-weight: var(--fw-strong);
-        color: var(--c-text);
-        flex: none;
-        line-height: 1.15;
-      }
-      .balance-sep {
-        
-        width: 1px;
-        background: var(--c-border);
-        
-        flex: 0 0 1px;
-      }
 
       .venue-grid {
         display: grid;
@@ -428,51 +386,6 @@ button,
         height: calc(100vh - 30px);
         height: calc(100dvh - 30px);
       }
-      .pt-item {
-        flex: 1 1 0;
-        min-width: 0;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        justify-content: space-between;
-        column-gap: var(--space-card);
-      }
-      /* DELCA balance takes users to DELCA My Page. */
-      .delca-entry {
-        appearance: none;
-        border: 0;
-        background: transparent;
-        text-decoration: none;
-        color: inherit;
-        font: inherit;
-        text-align: left;
-        cursor: pointer;
-        border-radius: var(--r-sm);
-        -webkit-tap-highlight-color: transparent;
-      }
-      .delca-entry.tap-pressed,
-      .delca-entry:active {
-        background: color-mix(in srgb, var(--c-text) 11%, var(--c-surface));
-      }
-      .delca-entry:focus-visible {
-        outline: var(--line-focus);
-        outline-offset: 2px;
-      }
-      .pt-item .payout-value {  margin-left: auto; }
-      .pay-toggle {
-        cursor: pointer;
-        position: relative;
-        min-height: 36px;
-        align-items: center;
-      }
-      .pay-toggle .pay-val .ic { width: 18px; height: 18px; color: var(--c-sub); }
-      .pay-toggle .eye-off,
-      .pay-toggle .pay-hidden { display: none; }
-      .pay-toggle.masked .eye-on,
-      .pay-toggle.masked .pay-shown { display: none; }
-      .pay-toggle.masked .eye-off { display: block; }
-      .pay-toggle.masked .pay-hidden { display: inline; color: var(--c-sub); letter-spacing: 0.1em; }
-
       .tab-item {
         flex: 1;
         display: flex;
@@ -632,7 +545,7 @@ button,
       }
       .pk3 .pk-note { margin-left: auto; font-size: var(--fs-14); font-weight: var(--fw-strong); color: var(--c-error); white-space: nowrap; }
 
-      .pt-h .balance-sep { height: auto; align-self: stretch;  }
+
       
       .app-header .logo-img {
         height: 32px;
@@ -644,49 +557,6 @@ button,
         font-size: var(--fs-20);
         font-weight: var(--fw-strong);
         letter-spacing: normal;
-      }
-
-      .pay-toggle .pay-val {
-        gap: var(--space-small);
-        display: inline-grid;
-        grid-template-columns: max-content 18px;
-        align-items: center;
-        column-gap: var(--space-small);
-        margin-left: auto;
-      }
-      .pay-toggle .pay-val .payout-value {
-        margin-left: 0;
-        grid-column: 1;
-        grid-row: 1;
-        justify-self: end;
-        text-align: right;
-        margin: 0;
-        white-space: nowrap;
-        letter-spacing: 0;
-      }
-      .pay-toggle .pay-val .eye-on,
-      .pay-toggle .pay-val .eye-off {
-        grid-column: 2;
-        grid-row: 1;
-      }
-      /* Visibility, not display:none, preserves the grid's maximum width. */
-      .pay-toggle .pay-val .pay-shown {
-        display: inline;
-        visibility: visible;
-      }
-      .pay-toggle .pay-val .pay-hidden {
-        display: inline;
-        visibility: hidden;
-      }
-      .pay-toggle.masked .pay-val .pay-shown {
-        display: inline;
-        visibility: hidden;
-      }
-      .pay-toggle.masked .pay-val .pay-hidden {
-        display: inline;
-        visibility: visible;
-        color: var(--c-sub);
-        letter-spacing: 0;
       }
 
       .app-header .icon-btn > .badge {
@@ -1029,28 +899,6 @@ button,
         object-position: right center;
         display: block;
       }
-      /* Full-height, edge-to-divider press areas: no unshaded gutters. */
-      .payout-bar.pt-h {
-        flex-direction: row;
-        gap: 0;
-        padding: 0;
-        align-items: stretch;
-      }
-      .payout-bar.pt-h .pt-item {
-        align-self: stretch;
-        align-content: center;
-        min-height: var(--h-balance);
-        padding: var(--space-7) var(--space-10);
-        border-radius: 0;
-      }
-      .payout-bar.pt-h .balance-sep {
-        align-self: stretch;
-        margin: 0;
-        height: auto;
-      }
-      .payout-bar.pt-h .pt-item:is(.tap-pressed, :active) {
-        background-color: color-mix(in srgb, var(--c-text) 18%, var(--c-surface));
-      }
       /* The shared tap-feedback stylesheet handles press feedback on every page. */
       .section-header + .news-item {
         border-top: var(--line-normal);
@@ -1074,8 +922,8 @@ button,
                   gap: 0;
                 }
         
-        .payout-bar.pt-h { padding-inline: var(--space-card); }
-                .pt-h .balance-sep { margin-inline: var(--space-small); }
+
+
         
         .news-head { flex-wrap: wrap; column-gap: var(--space-small); row-gap: var(--space-small); }
                 .news-item > .news-arrow { top: auto; bottom: var(--space-content); margin-top: 0; }
