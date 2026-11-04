@@ -648,17 +648,34 @@ async function checkPredictionSort(page, width, isAutorace) {
         const rect = header.getBoundingClientRect();
         const logoRect = mark?.getBoundingClientRect();
         const nameRect = header.querySelector('.venue-name').getBoundingClientRect();
+        const day=header.querySelector('.venue-day');
+        const dayRect=day?.getBoundingClientRect();
+        const meta=header.querySelector('.venue-meta');
+        const rows=mark?[...mark.querySelectorAll('.rebate-label > span')]:[];
+        const rowRects=rows.map(el=>el.getBoundingClientRect());
         return {venue, hasMark:!!mark, label:mark?.textContent?.trim(),
           symbol:mark?.querySelector('use')?.getAttribute('href'),
           color:mark?getComputedStyle(mark).color:null,
           within:!mark || logoRect.left >= nameRect.right - 1 &&
-            logoRect.right <= rect.right + 1};
+            logoRect.right <= rect.right + 1,
+          dayText:day?.textContent?.trim(),
+          dayNoWrap:day?getComputedStyle(day).whiteSpace==='nowrap' &&
+            getComputedStyle(meta).whiteSpace==='nowrap' &&
+            dayRect.height<=parseFloat(getComputedStyle(day).lineHeight)+1:false,
+          dayWithin:!day || dayRect.right<=rect.right+1,
+          rebateRows:rows.map(el=>el.textContent.trim()),
+          linesDistinct:rowRects.length===2 &&
+            rowRects[0].bottom<=rowRects[1].top+1,
+          horizontalFit:header.scrollWidth<=header.clientWidth+1};
       }));
     const expected=new Set(['防府','久留米','小田原']);
     if (rebate.length !== 8 || rebate.some(r => expected.has(r.venue)
        ? !r.hasMark || r.label !== '決勝5%還元' ||
          !r.symbol?.endsWith('#nav-campaign') ||
-         r.color !== 'rgb(134, 115, 58)' || !r.within
+         r.color !== 'rgb(134, 115, 58)' || !r.within ||
+         r.dayText !== '最終日' || !r.dayNoWrap || !r.dayWithin ||
+         r.rebateRows.join('|')!=='決勝|5%還元' ||
+         !r.linesDistinct || !r.horizontalFit
        : r.hasMark))
       fail(width+'px final 5% rebate must appear in the header right of only the three venues: '+
         JSON.stringify(rebate));
