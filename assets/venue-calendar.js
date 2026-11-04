@@ -39,9 +39,11 @@
     const sport = kind === "autorace" ? "auto" : "keirin";
     const dayState = past ? "確定" : "発売前";
     const heading = '<div class="venue-header"><span class="grade-badge ' +
-      gradeClass + '">' + grade + '</span><span class="venue-name">' + venue +
-      '</span><span class="venue-meta">' + day +
-      (period ? '・' + period : '') + (girls ? girlSvg : '') + '</span></div>';
+      gradeClass + '">' + grade + '</span><span class="venue-title">' +
+      '<span class="venue-name">' + venue + '</span><span class="venue-day">' +
+      day + '</span></span>' +
+      ((period || girls) ? '<span class="venue-extra">' +
+        (period || '') + (girls ? girlSvg : '') + '</span>' : '') + '</div>';
     let chips = "";
     for (let race=1;race<=raceCount;race++) {
       chips += '<div class="rcol"><div class="rchip ' +
