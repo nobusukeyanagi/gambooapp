@@ -263,9 +263,9 @@ async function checkCampaignPage(page, width) {
 
 async function checkMyPage(page, width) {
   const headings=await page.locator('.scroll-area > .section-header > .section-title').allTextContents();
-  if (headings.length!==6 ||
+  if (headings.length!==4 ||
       headings.map(x=>x.trim()).join('|')!==
-        '激推しメン・推しメン|デルカ・投票口座|アカウント|成績・履歴|コンテンツ|サポート')
+        '激推しメン・推しメン|設定|成績・履歴|サポート')
     fail(width+'px mypage section headings changed: '+headings);
   const headingStyle=await page.locator('.scroll-area > .section-header > .section-title').first()
     .evaluate(el=>{
@@ -279,7 +279,7 @@ async function checkMyPage(page, width) {
     fail(width+'px mypage section headings must match SCR-01: '+JSON.stringify(headingStyle));
   const icons=await page.locator('.scroll-area .profile-race-icon use').evaluateAll(nodes=>
     nodes.map(n=>n.getAttribute('href')?.split('#')[1]));
-  if (icons.filter(x=>x==='nav-keirin').length!==2 ||
+  if (icons.filter(x=>x==='nav-keirin').length!==1 ||
       icons.filter(x=>x==='nav-auto').length!==1)
     fail(width+'px mypage racing icons must use canonical SVG: '+JSON.stringify(icons));
   const avatar=page.locator('.user-avatar > img.user-avatar-photo');
@@ -288,26 +288,38 @@ async function checkMyPage(page, width) {
   const avatarRadius=await page.locator('.user-avatar').evaluate(el=>getComputedStyle(el).borderRadius);
   if(avatarRadius!=='12px')fail(width+'px avatar must use canonical --r-md (12px): '+avatarRadius);
   const hero=await page.locator('.user-card-top').evaluate(el=>{
-    const outer=el.getBoundingClientRect(),image=el.querySelector('.user-avatar').getBoundingClientRect(),
+    const card=el.getBoundingClientRect(),image=el.querySelector('.user-avatar').getBoundingClientRect(),
       name=el.querySelector('.user-name').getBoundingClientRect(),
-      button=el.querySelector('.profile-shortcut'),br=button.getBoundingClientRect(),
-      style=getComputedStyle(el),btnStyle=getComputedStyle(button);
-    return {height:outer.height,bg:style.backgroundColor,accent:style.borderTopColor,
-      accentWidth:style.borderTopWidth,imageW:image.width,imageH:image.height,
-      imageInset:image.left-outer.left,buttonName:button.textContent.trim(),
-      buttonHref:button.getAttribute('href'),buttonH:br.height,
-      buttonFont:btnStyle.fontSize,buttonBg:btnStyle.backgroundColor,
-      buttonRight:br.right,right:outer.right,buttonLeft:br.left,nameRight:name.right};
+      links=[...el.querySelectorAll('.user-card-actions a')].map(a=>{
+        const r=a.getBoundingClientRect(),style=getComputedStyle(a);
+        return {title:a.textContent.trim(),href:a.getAttribute('href'),
+          x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height,
+          font:style.fontSize,weight:style.fontWeight,bg:style.backgroundColor,
+          radius:style.borderRadius};
+      }),style=getComputedStyle(el);
+    return {height:card.height,left:card.left,right:card.right,
+      background:style.backgroundColor,gold:style.borderTopColor,
+      goldWidth:style.borderTopWidth,
+      imageWidth:image.width,imageHeight:image.height,imageInset:image.x-card.x,
+      imageBottom:image.bottom,nameBottom:name.bottom,
+      nameX:name.x,nameRight:name.right,links};
   });
-  if(hero.height<70||hero.height>86||hero.bg!=='rgb(255, 255, 255)'||
-     hero.accent!=='rgb(228, 202, 124)'||hero.accentWidth!=='3px'||
-     hero.imageW!==54||hero.imageH!==54||hero.imageInset<8||
-     hero.buttonHref!=='#mypage-profile'||hero.buttonName!=='プロフィール'||
-     hero.buttonH<44||hero.buttonFont!=='14px'||
-     hero.buttonBg!=='rgb(255, 255, 255)'||
-     hero.buttonRight>hero.right+1||hero.buttonLeft<hero.nameRight-1||
+  const [memberAction,profileAction]=hero.links;
+  if(hero.height<110||hero.height>145||hero.background!=='rgb(255, 255, 255)'||
+     hero.gold!=='rgb(228, 202, 124)'||hero.goldWidth!=='3px'||
+     hero.imageWidth!==54||hero.imageHeight!==54||hero.imageInset<8||
+     hero.links.length!==2||
+     memberAction.title!=='会員情報'||memberAction.href!=='#mypage-member'||
+     profileAction.title!=='プロフィール'||profileAction.href!=='#mypage-profile'||
+     memberAction.x>=profileAction.x||memberAction.right>profileAction.x||
+     Math.abs(memberAction.y-profileAction.y)>1||
+     Math.abs(memberAction.height-profileAction.height)>1||
+     memberAction.y<Math.max(hero.nameBottom,hero.imageBottom)||
+     hero.links.some(btn=>btn.height<44||btn.font!=='14px'||btn.weight!=='600'||
+       btn.bg!=='rgb(255, 255, 255)'||btn.radius!=='8px'||btn.right>hero.right+1)||
+     await page.locator('#mypage-member .menu-text').innerText()!=='会員情報'||
      await page.locator('#mypage-profile .menu-text').innerText()!=='プロフィール')
-    fail(width+'px white profile card with inset avatar/brand accent invalid: '+JSON.stringify(hero));
+    fail(width+'px dual member/profile buttons must align below the name: '+JSON.stringify(hero));
   const avatarImage=await avatar.evaluate(el=>({complete:el.complete,naturalWidth:el.naturalWidth,naturalHeight:el.naturalHeight,visible:el.getBoundingClientRect().width>0}));
   if (!avatarImage.complete || avatarImage.naturalWidth!==130 || avatarImage.naturalHeight!==130 || !avatarImage.visible)
     fail(width+'px uploaded buta.png must load as the original 130x130 image: '+JSON.stringify(avatarImage));
@@ -365,6 +377,24 @@ async function checkMyPage(page, width) {
   });
   if(values.some(pair=>pair[0]!==pair[1]))
     fail(width+'px Gamboo points must match balance bar text: '+JSON.stringify(values));
+  const expiryStyles=await page.locator('.user-card .pt3-row').evaluateAll(rows=>
+    rows.map(row=>['.point-label','.point-value','.unit'].map(selector=>{
+      const s=getComputedStyle(row.querySelector(selector));
+      return [s.fontSize,s.fontWeight,s.color,s.fontFamily].join('|');
+    })));
+  if(expiryStyles.length!==2||expiryStyles[0].some((s,i)=>s!==expiryStyles[1][i]))
+    fail(width+'px expiring balance typography must exactly match Gamboo points: '+
+      JSON.stringify(expiryStyles));
+  if(await page.locator('.user-card .favorite-intro, .favorite-group-heading small').count()||
+     (await page.locator('.scroll-area').innerText()).includes('競技を選んで、') ||
+     (await page.locator('.scroll-area').innerText()).includes('1名登録・') ||
+     (await page.locator('.scroll-area').innerText()).includes('登録中'))
+    fail(width+'px favourites description text should be removed');
+  const menuText=await page.locator('.scroll-area').innerText();
+  if(['デルカ・投票口座','コンテンツ','ウイン履歴','投稿ブログ管理','デルカチャージ','KEIRIN.JP 口座登録']
+    .some(label=>menuText.includes(label)))
+    fail(width+'px deleted page menus or entries still displayed');
+
   const pointPositions=await page.locator('.user-card').evaluate(el=>{
     const rows=[...el.querySelectorAll('.pt3-row')],
       rects=rows.map(x=>x.getBoundingClientRect()),
@@ -378,12 +408,12 @@ async function checkMyPage(page, width) {
       expiryColor:getComputedStyle(expiry.querySelector('.point-value')).color};
   });
   if(pointPositions.heights.length!==2||pointPositions.heights[0]!==40||
-     pointPositions.heights[1]!==36||pointPositions.gap>9||pointPositions.gap<4||
+     pointPositions.heights[1]!==40||pointPositions.gap>9||pointPositions.gap<4||
      pointPositions.topPadding!=='6px'||
      pointPositions.labels.join('|')!=='Gambooポイント|今月失効予定のポイント'||
      pointPositions.amounts.map(x=>x.replace(/\\s/g,'')).join('|')!=='9,999,999pt|123,456pt'||
-     pointPositions.expiryColor!=='rgb(165, 55, 76)')
-    fail(width+'px compact points and expiring balance invalid: '+JSON.stringify(pointPositions));
+     pointPositions.expiryColor!=='rgb(43, 49, 53)')
+    fail(width+'px points and expiry must have identical 40px row style: '+JSON.stringify(pointPositions));
   if(await page.locator('.user-card .pt3-row').count()!==2)
     fail(width+'px both Gamboo points and expiring points must be shown');
   if(await page.locator('.user-card .point-value.maxcase,.user-card .point-item,.user-card .point-use').count())
@@ -468,14 +498,14 @@ async function checkMyPage(page, width) {
       c.height<44 || c.radius!=='8px' || c.weight!=='600' || c.font!=='14px' ||
       c.border!=='1px' || c.bg!=='rgb(255, 255, 255)'))
     fail(width+'px canonical profile control styles mismatch: '+JSON.stringify(controls));
-  const cmp=await page.locator('.oshi-act, .os-panel.on .os-btn, .point-action, .profile-shortcut').evaluateAll(nodes=>
+  const cmp=await page.locator('.oshi-act, .os-panel.on .os-btn, .point-action, .user-card-action').evaluateAll(nodes=>
     nodes.map(el=>{const s=getComputedStyle(el);
       return {name:el.textContent.trim(),color:s.color,
         font:s.fontSize,weight:s.fontWeight,
         border:s.borderTopColor,radius:s.borderRadius,shadow:s.boxShadow,
         bg:s.backgroundColor};
     }));
-  if(cmp.length!==11||cmp.some(item=>
+  if(cmp.length!==12||cmp.some(item=>
       item.color!=='rgb(43, 49, 53)' ||
       item.font!=='14px' || item.weight!=='600' ||
       item.border!=='rgb(156, 164, 168)' ||
