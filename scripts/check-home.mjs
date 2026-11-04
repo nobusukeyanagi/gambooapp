@@ -302,6 +302,39 @@ async function checkCurrentPage(page, width) {
   }
   if (!initial.keirin.find(x=>x.name==='小田原')?.ended)
     fail(width+'px Odawara must be complete at noon');
+  // SCR-01 warning palette matches SCR-02: caution red background, white text.
+  // The 20-minute cutoff is handled by the existing home.js scheduler.
+  const urgentPaint=await page.evaluate(()=>{
+    const read=selector=>[...document.querySelectorAll(selector)].map(el=>{
+      const st=getComputedStyle(el), rect=el.getBoundingClientRect();
+      const parent=el.closest('.vcard-bottom, .pk-race-time');
+      return {
+        text:el.textContent.trim(), fg:st.color,bg:st.backgroundColor,
+        bgParent:parent?getComputedStyle(parent).backgroundColor:'',
+        width:rect.width
+      };
+    });
+    return {
+      venues:read('.venue-grid.g3 .vcard.deadline-soon .vcard-dl.soon'),
+      featured:read('.pk3 .pk-deadline.soon'),
+      regular:read('.venue-grid.g3 .vcard:not(.deadline-soon) .vcard-dl[data-deadline]'),
+      numbers:[...document.querySelectorAll('.venue-grid.g3 .vcard.deadline-soon .vcard-r')]
+        .map(el=>getComputedStyle(el).color)
+    };
+  });
+  const expectedAlertColor='rgb(165, 55, 76)';
+  const expectedAlertText='rgb(255, 255, 255)';
+  if (urgentPaint.venues.length!==2 || urgentPaint.featured.length!==1 ||
+      [...urgentPaint.venues,...urgentPaint.featured].some(p=>
+        p.bg!==expectedAlertColor || p.fg!==expectedAlertText || p.width<=0))
+    fail(width+'px SCR-01 venue/featured deadline badges must be solid caution red with white text: '+
+      JSON.stringify(urgentPaint));
+  if (urgentPaint.regular.some(p=>p.bg===expectedAlertColor || p.fg===expectedAlertText) ||
+      urgentPaint.numbers.some(color=>color===expectedAlertText) ||
+      urgentPaint.venues.some(p=>p.bgParent===expectedAlertColor))
+    fail(width+'px SCR-01 urgency must not color regular deadlines, R numbers or whole rows: '+
+      JSON.stringify(urgentPaint));
+
   const loaded = await page.evaluate(() => Array.from(document.styleSheets).some((s) => s.href && s.href.includes('assets/home.css')));
   if (!loaded) fail('Stylesheet assets/home.css did not load at ' + width + 'px');
   const brokenImages = await page.evaluate(() => Array.from(document.querySelectorAll('img[src*="assets/images/"]'))
