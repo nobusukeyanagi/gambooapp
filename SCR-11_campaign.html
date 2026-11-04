@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="./assets/design-tokens.css?v=58" />
     <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=12" />
     <link rel="stylesheet" href="./assets/app-base.css?v=1" />
-    <link rel="stylesheet" href="./assets/campaign.css?v=7" />
+    <link rel="stylesheet" href="./assets/venue-sort.css?v=9" />
+    <link rel="stylesheet" href="./assets/campaign.css?v=8" />
     <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
     <link rel="stylesheet" href="./assets/ui-consistency.css?v=26" />
   </head>
@@ -21,9 +22,11 @@
             <div class="page-header page-header-simple">
               <div class="page-header-title"><svg class="ic header-page-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=15#nav-campaign"></use></svg>キャンペーン</div>
             </div>
-            <div class="campaign-tabs" role="tablist" aria-label="キャンペーンの受付状態">
-              <button type="button" class="campaign-tab active" role="tab" id="campaign-tab-open" data-status="open" aria-selected="true" aria-controls="campaign-list">受付中</button>
-              <button type="button" class="campaign-tab" role="tab" id="campaign-tab-closed" data-status="closed" aria-selected="false" aria-controls="campaign-list">受付終了</button>
+            <div class="campaign-tabs">
+              <div class="venue-sort-options" role="tablist" aria-label="キャンペーンの受付状態">
+                <button type="button" class="chip campaign-tab active" role="tab" id="campaign-tab-open" data-status="open" aria-selected="true" aria-controls="campaign-list">受付中</button>
+                <button type="button" class="chip campaign-tab" role="tab" id="campaign-tab-closed" data-status="closed" aria-selected="false" aria-controls="campaign-list">受付終了</button>
+              </div>
             </div>
             <div class="campaign-pagination" aria-label="受付終了のページ送り" hidden>
               <button type="button" class="campaign-page-arrow" data-page="prev" aria-label="前のページ" disabled>＜</button>
@@ -31,7 +34,7 @@
               <button type="button" class="campaign-page-arrow" data-page="next" aria-label="次のページ" disabled>＞</button>
             </div>
             <main class="scroll-area" id="campaign-list" role="tabpanel" aria-labelledby="campaign-tab-open" tabindex="-1">
-                            <article class="cp-card" data-status="open" data-deadline="2026-11-30T23:59:00">
+              <article class="cp-card" data-status="open" data-deadline="2026-11-30T23:59:00">
                 <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f202611_keirinmonthly_srl_300x300.webp" alt="【エントリー不要】11月の競輪の決勝レースはもれなく5%還元！" loading="lazy" />
                 <div class="cp-body">
                   <div class="cp-title">【エントリー不要】11月の競輪の決勝レースはもれなく5%還元！</div>

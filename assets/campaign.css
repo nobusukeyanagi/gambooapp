@@ -24,35 +24,25 @@
 }
 .scroll-area::-webkit-scrollbar { display: none; }
 
-/* Native state tabs follow the date-tab pattern. */
+/* Reuse the actual prediction sorting buttons via venue-sort.css.
+   This wrapper only positions the two controls on the second header row. */
 .campaign-tabs {
   display: flex;
+  align-items: center;
   flex-shrink: 0;
   height: var(--h-date-tab);
+  padding: var(--space-3) var(--space-section);
   background: var(--c-surface);
   border-bottom: var(--line-normal);
 }
-.campaign-tab {
+.campaign-tabs .venue-sort-options > .chip {
   flex: 1 1 0;
-  min-width: 0;
-  font-family: var(--ff-ui);
-  font-size: var(--fs-16);
-  font-weight: var(--fw-strong);
-  color: var(--c-text);
-  background: transparent;
-  border: 0;
-  border-bottom: var(--line-emphasis-width) solid transparent;
   cursor: pointer;
 }
-.campaign-tab.active {
-  color: var(--c-primary-d);
-  border-bottom-color: var(--c-primary-d);
-}
-.campaign-tab:focus-visible,
 .campaign-page-arrow:focus-visible,
 .cp-btn:focus-visible {
   outline: var(--line-focus);
-  outline-offset: calc(-1 * var(--space-2));
+  outline-offset: var(--space-2);
 }
 
 /* Third bar appears only when viewing completed campaigns. */
@@ -112,6 +102,7 @@
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
+  align-self: start;
   object-fit: cover;
   border-radius: var(--r-sm);
 }
@@ -123,10 +114,6 @@
   padding: 0;
 }
 .cp-title {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
   color: var(--c-text);
@@ -137,21 +124,22 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
+  justify-content: center;
   gap: var(--space-2);
   margin-top: auto;
   font-size: var(--fs-14);
-  font-weight: var(--fw-normal);
+  font-weight: var(--fw-strong);
   line-height: 1.25;
-  color: var(--c-sub);
+  color: var(--c-error);
+  text-align: center;
   font-variant-numeric: tabular-nums;
 }
-.cp-period-label { font-weight: var(--fw-strong); }
 .cp-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  min-height: var(--h-control);
+  min-height: var(--tap-min);
   margin-top: 0;
   padding: 0 var(--space-small);
   border: var(--line-normal);

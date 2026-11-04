@@ -117,8 +117,6 @@ button, input, select, textarea {
 }
 
 .page-header-title {
-  font-size: var(--fs-16);
-  font-weight: var(--fw-strong);
   display: flex;
   align-items: center;
   justify-content: center;

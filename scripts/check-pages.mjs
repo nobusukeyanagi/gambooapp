@@ -109,6 +109,42 @@ async function checkCampaignPage(page, width) {
       layout.periodBottom > layout.buttonTop ||
       layout.bodyOrder.join('|') !== 'cp-title|cp-period|cp-btn')
     fail(width + 'px campaign layout, font or deadline position mismatch: '+JSON.stringify(layout));
+  const appearance = await page.locator('.campaign-tabs .venue-sort-options > .chip').evaluateAll(els =>
+    els.map(el => ({
+      font: getComputedStyle(el).fontSize,
+      weight: getComputedStyle(el).fontWeight,
+      height: el.getBoundingClientRect().height,
+      radius: getComputedStyle(el).borderRadius,
+      border: getComputedStyle(el).borderTopWidth,
+      shadow: getComputedStyle(el).boxShadow,
+      active: el.classList.contains('active'),
+      background: getComputedStyle(el).backgroundColor
+    })));
+  if (appearance.length !== 2 || appearance.some(a => a.font !== '14px' || a.weight !== '600' ||
+      a.height !== 44 || a.radius !== '8px' || a.border !== '1px' || a.shadow === 'none') ||
+      appearance[0].background !== 'rgb(228, 202, 124)' ||
+      appearance[1].background !== 'rgb(255, 255, 255)')
+    fail(width + 'px campaign toolbar must inherit canonical prediction sorting buttons: ' + JSON.stringify(appearance));
+  const titleChecks = await cards.evaluateAll(els => els.map(el => {
+    const title = el.querySelector('.cp-title');
+    const style = getComputedStyle(title);
+    const image=el.querySelector('.cp-banner');
+    const img=image.getBoundingClientRect();
+    return {title:title.textContent.trim(),display:style.display,clamp:style.webkitLineClamp,
+      titleOverflow:title.scrollHeight > title.clientHeight + 1,
+      imageSquare:Math.abs(img.width-img.height) < 1};
+  }));
+  if (titleChecks.some(c => c.titleOverflow || c.clamp !== 'none' || !c.imageSquare))
+    fail(width + 'px full campaign title or square banner layout failed: ' + JSON.stringify(titleChecks));
+  const deadlineStyles = await cards.evaluateAll(els => els.map(el => {
+    const period=el.querySelector('.cp-period'),cs=getComputedStyle(period);
+    const p=period.getBoundingClientRect(),b=el.querySelector('.cp-body').getBoundingClientRect();
+    return {font:cs.fontSize,weight:cs.fontWeight,color:cs.color,align:cs.textAlign,
+      centerOffset:Math.abs((p.left+p.right-b.left-b.right)/2)};
+  }));
+  if (deadlineStyles.some(s => s.font !== '14px' || s.weight !== '600' ||
+       s.color !== 'rgb(165, 55, 76)' || s.align !== 'center' || s.centerOffset > 1))
+    fail(width + 'px deadline must be centered, red and bold: ' + JSON.stringify(deadlineStyles));
   const icon=await page.locator('.page-header .header-page-icon use').getAttribute('href');
   if (!icon?.endsWith('#nav-campaign')) fail(width + 'px campaign header SVG mismatch');
   await closed.click();
@@ -514,6 +550,12 @@ try {
       checked++;
     }
     await checkCompactSectionHeader(a.page,w,file);
+    if (file === 'SCR-02_keirin.html' || file === 'SCR-02_autorace.html') {
+      const h = await a.page.locator('.phone-inner > .page-header .page-header-title')
+        .evaluate(el => ({size:getComputedStyle(el).fontSize,weight:getComputedStyle(el).fontWeight}));
+      if (h.size !== '18px' || h.weight !== '600')
+        fail(file + ' ' + w + 'px shared header title must be 18px/600: '+JSON.stringify(h));
+    }
     if (file === 'SCR-11_campaign.html') await checkCampaignPage(a.page,w);
     if (file === 'SCR-02_keirin.html' || file === 'SCR-02_autorace.html') await checkPredictionSort(a.page,w,file === 'SCR-02_autorace.html');
     if (file === 'SCR-03_racecardkeirin.html') await checkKeirinMania(a.page,w);

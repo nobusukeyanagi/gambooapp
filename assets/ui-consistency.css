@@ -190,7 +190,13 @@ body { font-weight: var(--fw-normal); }
   flex-shrink: 0;
 }
 
-/* Shared section headers align with the 50px centered prediction headers. */
+/* A single 18px / 600 header title rule for prediction, details,
+   campaign and profile pages. The body typography stays on the shared scale. */
+.phone-inner > .page-header .page-header-title {
+  font-size: var(--fs-18);
+  font-weight: var(--fw-strong);
+}
+/* Shared compact headings use the same centered title as prediction pages. */
 .page-header.page-header-simple {
   background: var(--c-surface);
   justify-content: center;
@@ -204,8 +210,6 @@ body { font-weight: var(--fw-normal); }
   justify-content: center;
   gap: var(--space-card);
   min-width: 0;
-  font-size: var(--fs-18);
-  font-weight: var(--fw-strong);
   color: var(--c-text);
 }
 .page-header.page-header-simple .page-header-title > .header-page-icon {
