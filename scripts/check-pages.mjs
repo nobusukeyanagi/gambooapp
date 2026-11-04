@@ -473,6 +473,21 @@ async function checkPredictionSort(page, width, isAutorace) {
       [venue, featuredRows.filter(row => row.venue === venue).length]));
     if (Object.keys(expectedByVenue).some(venue => expectedByVenue[venue] !== actualByVenue[venue]))
       fail(width + 'px featured race coverage differs from official list: ' + JSON.stringify(actualByVenue));
+    // All car numbers, including the second rider in a multi-rider race,
+    // must align horizontally with the 11R row's car number.
+    const carPositions = await page.locator('.venue-card > .comment-row').evaluateAll(rows =>
+      rows.flatMap(row => Array.from(row.querySelectorAll('.carno')).map(number => ({
+        race: row.dataset.featuredRace,
+        x: number.getBoundingClientRect().left,
+        labelWidth: row.querySelector('.cr-r').getBoundingClientRect().width,
+        labelAlign: getComputedStyle(row.querySelector('.cr-r')).textAlign
+      }))));
+    const reference11 = carPositions.find(row => row.race === '11');
+    if (!reference11 || carPositions.length !== 30 ||
+        carPositions.some(row => Math.abs(row.x - reference11.x) > 1 ||
+          Math.abs(row.labelWidth - reference11.labelWidth) > 0.5 ||
+          row.labelAlign !== 'right'))
+      fail(width + 'px featured rider car numbers must match the 11R position: ' + JSON.stringify(carPositions));
     if (await page.locator('.venue-card[data-venue="小田原"] .comment-row[data-featured-race="2"] .cr-kun').count() !== 2)
       fail(width + 'px Odawara 2R must retain both special rider titles');
     if (await page.locator('.venue-card[data-venue="防府"] .comment-row[data-featured-race="10"] .cr-name').count() !== 2)
