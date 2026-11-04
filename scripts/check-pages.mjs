@@ -283,8 +283,30 @@ async function checkMyPage(page, width) {
       icons.filter(x=>x==='nav-auto').length!==2)
     fail(width+'px mypage racing icons must use canonical SVG: '+JSON.stringify(icons));
   const avatar=page.locator('.user-avatar > img.user-avatar-photo');
-  if (await avatar.count()!==1 || await avatar.getAttribute('src')!=='./assets/images/buta.png')
+  if (await avatar.count()!==1 || await avatar.getAttribute('src')!=='./assets/images/buta.png?v=2')
     fail(width+'px mypage avatar image reference must be buta.png');
+  const avatarImage=await avatar.evaluate(el=>({complete:el.complete,naturalWidth:el.naturalWidth,naturalHeight:el.naturalHeight,visible:el.getBoundingClientRect().width>0}));
+  if (!avatarImage.complete || avatarImage.naturalWidth!==130 || avatarImage.naturalHeight!==130 || !avatarImage.visible)
+    fail(width+'px uploaded buta.png must load as the original 130x130 image: '+JSON.stringify(avatarImage));
+  if (await page.locator('.phone-inner > .status-bar').count())
+    fail(width+'px SCR-07 must not show simulated 9:33/5G status bar');
+  const balances=await page.locator('.user-card').evaluate(el=>{
+    const card=getComputedStyle(el),head=getComputedStyle(el.querySelector('.user-card-top')),
+      body=getComputedStyle(el.querySelector('.user-points'));
+    const rows=[...el.querySelectorAll('.pt3-row')].map(row=>{
+      const label=getComputedStyle(row.querySelector('.point-label')),
+        value=getComputedStyle(row.querySelector('.point-value'));
+      return {height:row.getBoundingClientRect().height,font:value.fontSize,
+        label:label.color,value:value.color,bg:getComputedStyle(row).backgroundColor};
+    });
+    return {card:card.backgroundColor,header:head.backgroundColor,body:body.backgroundColor,rows};
+  });
+  if (balances.card!=='rgb(255, 255, 255)' || balances.header!=='rgb(228, 202, 124)' ||
+      balances.body!=='rgb(255, 255, 255)' ||
+      balances.rows.length!==3 || balances.rows.some(r=>r.height<50 ||
+        r.font!=='20px'||r.value!=='rgb(43, 49, 53)'))
+    fail(width+'px balance panel readability styles mismatch: '+JSON.stringify(balances));
+
   if (await page.locator('.point-value.maxcase, .point-item').count())
     fail(width+'px mypage legacy framed point values remain');
   const p=await page.locator('.point-value').first().evaluate(el=>{
