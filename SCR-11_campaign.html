@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="./assets/design-tokens.css?v=59" />
     <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=12" />
     <link rel="stylesheet" href="./assets/app-base.css?v=1" />
-    <link rel="stylesheet" href="./assets/campaign.css?v=11" />
+    <link rel="stylesheet" href="./assets/campaign.css?v=12" />
     <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
-    <link rel="stylesheet" href="./assets/ui-consistency.css?v=27" />
+    <link rel="stylesheet" href="./assets/ui-consistency.css?v=28" />
   </head>
   <body>
     <div class="page-title">SCR-11キャンペーン</div>
@@ -18,8 +18,19 @@
       <div class="screen-wrap">
         <div class="phone">
           <div class="phone-inner">
-            <div class="page-header page-header-simple">
-              <div class="page-header-title"><svg class="ic header-page-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-campaign"></use></svg>キャンペーン</div>
+            <div class="page-header page-header-simple shared-app-header">
+              <div class="header-main">
+                
+                <div class="page-header-title"><svg class="ic header-page-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-campaign"></use></svg><span class="header-title-text">キャンペーン</span></div>
+              </div>
+              <div class="header-actions">
+                <div class="icon-btn header-notification" role="button" tabindex="0" aria-label="通知">
+                  <svg class="ic" aria-hidden="true"><use href="./assets/header-icons.svg?v=1#header-bell"></use></svg><span>通知</span><span class="badge" aria-hidden="true"></span>
+                </div>
+                <div class="cta-btn header-deposit" role="button" tabindex="0" aria-label="入金">
+                  <svg class="ic" aria-hidden="true"><use href="./assets/header-icons.svg?v=1#header-card"></use></svg><span>入金</span>
+                </div>
+              </div>
             </div>
             <div class="campaign-tabs date-tabs" role="tablist" aria-label="キャンペーンの受付状態">
               <button type="button" class="campaign-tab date-tab active" role="tab" id="campaign-tab-open" data-status="open" aria-selected="true" aria-controls="campaign-list">受付中</button>
