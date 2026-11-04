@@ -263,6 +263,35 @@ button, input, select, textarea {
   padding: var(--space-card) var(--space-section) 0 var(--space-content);
 }
 
+/* A two-row header preserves grade, venue name and day/night metadata while
+   placing the finals rebate at the top right even at the 296px mobile width. */
+.venue-header:has(> .rebate-logo) {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) max-content;
+  grid-template-rows: auto auto;
+  column-gap: var(--space-card);
+  row-gap: var(--space-2);
+  align-items: center;
+}
+.venue-header:has(> .rebate-logo) > .grade-badge {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+.venue-header:has(> .rebate-logo) > .venue-name {
+  grid-column: 2;
+  grid-row: 1;
+}
+.venue-header:has(> .rebate-logo) > .venue-meta {
+  grid-column: 2 / 4;
+  grid-row: 2;
+  margin-right: 0;
+}
+.venue-header:has(> .rebate-logo) > .rebate-logo {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+}
+
 .rebate-logo {
   display: inline-flex;
   align-items: center;

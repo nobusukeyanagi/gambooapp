@@ -601,6 +601,27 @@ async function checkPredictionSort(page, width, isAutorace) {
         (initialCurrent.currentLeft < initialCurrent.clearance - 2 || !initialCurrent.pastHidden)))
     fail(width + 'px current race must start right of left arrow: ' + JSON.stringify(initialCurrent));
   if (!isAutorace) {
+    const rebate = await page.locator('.venue-card .venue-header').evaluateAll(headers =>
+      headers.map(header => {
+        const venue = header.closest('.venue-card').dataset.venue;
+        const mark = header.querySelector(':scope > .rebate-logo');
+        const rect = header.getBoundingClientRect();
+        const logoRect = mark?.getBoundingClientRect();
+        const nameRect = header.querySelector('.venue-name').getBoundingClientRect();
+        return {venue, hasMark:!!mark, label:mark?.textContent?.trim(),
+          symbol:mark?.querySelector('use')?.getAttribute('href'),
+          color:mark?getComputedStyle(mark).color:null,
+          within:!mark || logoRect.left >= nameRect.right - 1 &&
+            logoRect.right <= rect.right + 1};
+      }));
+    const expected=new Set(['防府','久留米','小田原']);
+    if (rebate.length !== 8 || rebate.some(r => expected.has(r.venue)
+       ? !r.hasMark || r.label !== '決勝5%還元' ||
+         !r.symbol?.endsWith('#nav-campaign') ||
+         r.color !== 'rgb(134, 115, 58)' || !r.within
+       : r.hasMark))
+      fail(width+'px final 5% rebate must appear in the header right of only the three venues: '+
+        JSON.stringify(rebate));
     const wins = page.locator('.comment-row .cr-streak');
     const labels = await wins.allTextContents();
     if (labels.length !== 5 ||
