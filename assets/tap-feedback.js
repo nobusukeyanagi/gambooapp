@@ -20,7 +20,7 @@
     '.sort-btn', '.sort-opt', '.rchip', '.compact-row', '.op-btn', '.rpred',
     '.item-btn', '.sheet-close', '.ri-btn', '.sw', '.rd-lab', '.lb-btn',
     '.lsheet-close', '.oshi-act', '.om-edit', '.om-row', '.om-add',
-    '.os-tab', '.os-chip', '.os-btn', '.cp-card', '.cp-btn',
+    '.os-tab', '.os-chip', '.os-btn', '.cp-btn',
     '.point-use span', '.seg span', '.header-payout'
   ].join(',');
 

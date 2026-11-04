@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="./assets/design-tokens.css?v=58" />
     <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=12" />
     <link rel="stylesheet" href="./assets/app-base.css?v=1" />
-    <link rel="stylesheet" href="./assets/venue-sort.css?v=10" />
-    <link rel="stylesheet" href="./assets/campaign.css?v=8" />
+    <link rel="stylesheet" href="./assets/campaign.css?v=9" />
     <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
     <link rel="stylesheet" href="./assets/ui-consistency.css?v=27" />
   </head>
@@ -22,11 +21,9 @@
             <div class="page-header page-header-simple">
               <div class="page-header-title"><svg class="ic header-page-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=15#nav-campaign"></use></svg>キャンペーン</div>
             </div>
-            <div class="campaign-tabs">
-              <div class="venue-sort-options" role="tablist" aria-label="キャンペーンの受付状態">
-                <button type="button" class="chip campaign-tab active" role="tab" id="campaign-tab-open" data-status="open" aria-selected="true" aria-controls="campaign-list">受付中</button>
-                <button type="button" class="chip campaign-tab" role="tab" id="campaign-tab-closed" data-status="closed" aria-selected="false" aria-controls="campaign-list">受付終了</button>
-              </div>
+            <div class="campaign-tabs date-tabs" role="tablist" aria-label="キャンペーンの受付状態">
+              <button type="button" class="campaign-tab date-tab active" role="tab" id="campaign-tab-open" data-status="open" aria-selected="true" aria-controls="campaign-list">受付中</button>
+              <button type="button" class="campaign-tab date-tab" role="tab" id="campaign-tab-closed" data-status="closed" aria-selected="false" aria-controls="campaign-list">受付終了</button>
             </div>
             <div class="campaign-pagination" aria-label="受付終了のページ送り" hidden>
               <button type="button" class="campaign-page-arrow" data-page="prev" aria-label="前のページ" disabled>＜</button>
@@ -35,7 +32,7 @@
             </div>
             <main class="scroll-area" id="campaign-list" role="tabpanel" aria-labelledby="campaign-tab-open" tabindex="-1">
               <article class="cp-card" data-status="open" data-deadline="2026-11-30T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f202611_keirinmonthly_srl_300x300.webp" alt="【エントリー不要】11月の競輪の決勝レースはもれなく5%還元！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=202611_keirinmonthly_srl" target="_blank" rel="noopener noreferrer" aria-label="【エントリー不要】11月の競輪の決勝レースはもれなく5%還元！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f202611_keirinmonthly_srl_300x300.webp" alt="【エントリー不要】11月の競輪の決勝レースはもれなく5%還元！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【エントリー不要】11月の競輪の決勝レースはもれなく5%還元！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>11/30 23:59</span></div>
@@ -43,7 +40,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="open" data-deadline="2026-11-25T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f2026-yokkaichi_300x300.webp" alt="【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/11～13FI・11/23～25MN】" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=yokkaichi20261111" target="_blank" rel="noopener noreferrer" aria-label="【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/11～13FI・11/23～25MN】の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f2026-yokkaichi_300x300.webp" alt="【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/11～13FI・11/23～25MN】" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/11～13FI・11/23～25MN】</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>11/25 23:59</span></div>
@@ -51,7 +48,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="open" data-deadline="2026-11-08T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261105_yokkaichi_wdz_300x300.webp" alt="【四日市GIII】抽選で谷口遼平選手GIII優勝記念タオルが当たる！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261105_yokkaichi_wdz" target="_blank" rel="noopener noreferrer" aria-label="【四日市GIII】抽選で谷口遼平選手GIII優勝記念タオルが当たる！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261105_yokkaichi_wdz_300x300.webp" alt="【四日市GIII】抽選で谷口遼平選手GIII優勝記念タオルが当たる！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【四日市GIII】抽選で谷口遼平選手GIII優勝記念タオルが当たる！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>11/8 23:59</span></div>
@@ -59,7 +56,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="open" data-deadline="2026-11-08T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f2026-yokkaichi_300x300.webp" alt="【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/5～8GIII】" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=yokkaichi20261105" target="_blank" rel="noopener noreferrer" aria-label="【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/5～8GIII】の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f2026-yokkaichi_300x300.webp" alt="【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/5～8GIII】" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/5～8GIII】</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>11/8 23:59</span></div>
@@ -67,7 +64,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="open" data-deadline="2026-11-03T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261029_hamamatsuSG_vkr_300x300.webp" alt="【浜松SG】抽選で鈴木圭一郎選手1,000勝達成記念Tシャツ＋シールが当たる！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261029_hamamatsuSG_vkr" target="_blank" rel="noopener noreferrer" aria-label="【浜松SG】抽選で鈴木圭一郎選手1,000勝達成記念Tシャツ＋シールが当たる！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261029_hamamatsuSG_vkr_300x300.webp" alt="【浜松SG】抽選で鈴木圭一郎選手1,000勝達成記念Tシャツ＋シールが当たる！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【浜松SG】抽選で鈴木圭一郎選手1,000勝達成記念Tシャツ＋シールが当たる！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>11/3 23:59</span></div>
@@ -75,7 +72,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="open" data-deadline="2026-11-03T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261029_hamamatsu_xrh_300x300.webp" alt="【浜松SG】静岡県の名産品が当たる！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261029_hamamatsu_xrh" target="_blank" rel="noopener noreferrer" aria-label="【浜松SG】静岡県の名産品が当たる！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261029_hamamatsu_xrh_300x300.webp" alt="【浜松SG】静岡県の名産品が当たる！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【浜松SG】静岡県の名産品が当たる！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>11/3 23:59</span></div>
@@ -83,7 +80,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="open" data-deadline="2026-11-03T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261029_hamamatsu_tlf_300x300.webp" alt="【エントリー不要】浜松SGがおトク！もれなく5%還元！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261029_hamamatsu_tlf" target="_blank" rel="noopener noreferrer" aria-label="【エントリー不要】浜松SGがおトク！もれなく5%還元！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261029_hamamatsu_tlf_300x300.webp" alt="【エントリー不要】浜松SGがおトク！もれなく5%還元！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【エントリー不要】浜松SGがおトク！もれなく5%還元！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>11/3 23:59</span></div>
@@ -91,7 +88,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="open" data-deadline="2026-11-03T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261031_hofu_xrh_300x300.webp" alt="防府GIIIキャンペーン！抽選で山口県の名産品が当たる！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261031_hofu_xrh" target="_blank" rel="noopener noreferrer" aria-label="防府GIIIキャンペーン！抽選で山口県の名産品が当たる！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261031_hofu_xrh_300x300.webp" alt="防府GIIIキャンペーン！抽選で山口県の名産品が当たる！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">防府GIIIキャンペーン！抽選で山口県の名産品が当たる！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>11/3 23:59</span></div>
@@ -99,7 +96,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="closed" data-deadline="2026-11-01T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261101_hard1st_wlx_300x300.webp" alt="選べる体験型デジタルギフト「アソビュー！ギフト」をプレゼント！(11月)" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261101_hard1st_wlx" target="_blank" rel="noopener noreferrer" aria-label="選べる体験型デジタルギフト「アソビュー！ギフト」をプレゼント！(11月)の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261101_hard1st_wlx_300x300.webp" alt="選べる体験型デジタルギフト「アソビュー！ギフト」をプレゼント！(11月)" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">選べる体験型デジタルギフト「アソビュー！ギフト」をプレゼント！(11月)</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>11/1 23:59</span></div>
@@ -107,7 +104,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="closed" data-deadline="2026-11-01T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261101_keirinauto1st_qsk_300x300.webp" alt="抽選で100名様に松阪牛しゃぶしゃぶセットをプレゼント！(11/1)" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261101_keirinauto1st_qsk" target="_blank" rel="noopener noreferrer" aria-label="抽選で100名様に松阪牛しゃぶしゃぶセットをプレゼント！(11/1)の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261101_keirinauto1st_qsk_300x300.webp" alt="抽選で100名様に松阪牛しゃぶしゃぶセットをプレゼント！(11/1)" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">抽選で100名様に松阪牛しゃぶしゃぶセットをプレゼント！(11/1)</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>11/1 23:59</span></div>
@@ -115,7 +112,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="closed" data-deadline="2026-10-31T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f202610_keirinmonthly_emx_300x300.webp" alt="【エントリー不要】10月の競輪の決勝レースはもれなく5%還元！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=202610_keirinmonthly_emx" target="_blank" rel="noopener noreferrer" aria-label="【エントリー不要】10月の競輪の決勝レースはもれなく5%還元！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f202610_keirinmonthly_emx_300x300.webp" alt="【エントリー不要】10月の競輪の決勝レースはもれなく5%還元！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【エントリー不要】10月の競輪の決勝レースはもれなく5%還元！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>10/31 23:59</span></div>
@@ -123,7 +120,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="closed" data-deadline="2026-10-25T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261021_isesakigii_jst_300x300.webp" alt="【伊勢崎GII】抽選で群馬県の名産品が当たる！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261021_isesakigii_jst" target="_blank" rel="noopener noreferrer" aria-label="【伊勢崎GII】抽選で群馬県の名産品が当たる！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261021_isesakigii_jst_300x300.webp" alt="【伊勢崎GII】抽選で群馬県の名産品が当たる！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【伊勢崎GII】抽選で群馬県の名産品が当たる！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>10/25 23:59</span></div>
@@ -131,7 +128,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="closed" data-deadline="2026-10-25T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261021_isesaki_fea_300x300.webp" alt="【エントリー不要】伊勢崎GIIがおトク！もれなく5%還元！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261021_isesaki_fea" target="_blank" rel="noopener noreferrer" aria-label="【エントリー不要】伊勢崎GIIがおトク！もれなく5%還元！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261021_isesaki_fea_300x300.webp" alt="【エントリー不要】伊勢崎GIIがおトク！もれなく5%還元！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【エントリー不要】伊勢崎GIIがおトク！もれなく5%還元！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>10/25 23:59</span></div>
@@ -139,7 +136,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="closed" data-deadline="2026-10-25T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261022_kumamoto_rlg_300x300.webp" alt="熊本GIIIキャンペーン！抽選でご当地名産品が当たる！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261022_kumamoto_rlg" target="_blank" rel="noopener noreferrer" aria-label="熊本GIIIキャンペーン！抽選でご当地名産品が当たる！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261022_kumamoto_rlg_300x300.webp" alt="熊本GIIIキャンペーン！抽選でご当地名産品が当たる！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">熊本GIIIキャンペーン！抽選でご当地名産品が当たる！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>10/25 23:59</span></div>
@@ -147,7 +144,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="closed" data-deadline="2026-10-23T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f2026-yokkaichi_300x300.webp" alt="【2026/10/21～23FI】エブリデイ四日市ナイターキャンペーン" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/enq/?qid=entry_yokkaichi20261021" target="_blank" rel="noopener noreferrer" aria-label="【2026/10/21～23FI】エブリデイ四日市ナイターキャンペーンの詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f2026-yokkaichi_300x300.webp" alt="【2026/10/21～23FI】エブリデイ四日市ナイターキャンペーン" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">【2026/10/21～23FI】エブリデイ四日市ナイターキャンペーン</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>10/23 23:59</span></div>
@@ -155,7 +152,7 @@
                 </div>
               </article>
               <article class="cp-card" data-status="closed" data-deadline="2026-10-20T23:59:00">
-                <img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261017_keiokaku_flz_300x300.webp" alt="京王閣GIIIキャンペーン！抽選でご当地名産品が当たる！" loading="lazy" />
+                <a class="cp-banner-link" href="https://gamboo.jp/topics/?tid=20261017_keiokaku_flz" target="_blank" rel="noopener noreferrer" aria-label="京王閣GIIIキャンペーン！抽選でご当地名産品が当たる！の詳細を見る"><img class="cp-banner" src="https://gamboo.jp/images/%2fcampaign%2f20261017_keiokaku_flz_300x300.webp" alt="京王閣GIIIキャンペーン！抽選でご当地名産品が当たる！" loading="lazy" /></a>
                 <div class="cp-body">
                   <div class="cp-title">京王閣GIIIキャンペーン！抽選でご当地名産品が当たる！</div>
                   <div class="cp-period"><span class="cp-period-label">期限</span><span>10/20 23:59</span></div>
@@ -193,6 +190,6 @@
       </div>
     </div>
     <script src="./assets/campaign.js?v=1" defer></script>
-    <script src="./assets/tap-feedback.js?v=3" defer></script>
+    <script src="./assets/tap-feedback.js?v=4" defer></script>
   </body>
 </html>

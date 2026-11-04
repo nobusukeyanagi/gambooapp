@@ -109,22 +109,70 @@ async function checkCampaignPage(page, width) {
       layout.periodBottom > layout.buttonTop ||
       layout.bodyOrder.join('|') !== 'cp-title|cp-period|cp-btn')
     fail(width + 'px campaign layout, font or deadline position mismatch: '+JSON.stringify(layout));
-  const appearance = await page.locator('.campaign-tabs .venue-sort-options > .chip').evaluateAll(els =>
-    els.map(el => ({
-      font: getComputedStyle(el).fontSize,
-      weight: getComputedStyle(el).fontWeight,
-      height: el.getBoundingClientRect().height,
-      radius: getComputedStyle(el).borderRadius,
-      border: getComputedStyle(el).borderTopWidth,
-      shadow: getComputedStyle(el).boxShadow,
-      active: el.classList.contains('active'),
-      background: getComputedStyle(el).backgroundColor
-    })));
-  if (appearance.length !== 2 || appearance.some(a => a.font !== '14px' || a.weight !== '600' ||
-      a.height !== 44 || a.radius !== '8px' || a.border !== '1px' || a.shadow === 'none') ||
-      appearance[0].background !== 'rgb(228, 202, 124)' ||
-      appearance[1].background !== 'rgb(255, 255, 255)')
-    fail(width + 'px campaign toolbar must inherit canonical prediction sorting buttons: ' + JSON.stringify(appearance));
+  const tabAppearance = await page.locator('.campaign-tabs.date-tabs > .date-tab').evaluateAll(els =>
+    els.map(el => {
+      const st=getComputedStyle(el);
+      return {font:st.fontSize,weight:st.fontWeight,height:el.getBoundingClientRect().height,
+        bottomWidth:st.borderBottomWidth,bottomColor:st.borderBottomColor,color:st.color,
+        background:st.backgroundColor,shadow:st.boxShadow,
+        radius:st.borderRadius};
+    }));
+  if (tabAppearance.length !== 2 || tabAppearance.some(a =>
+      a.font !== '16px' || a.weight !== '600' || a.height !== 50 ||
+      a.bottomWidth !== '3px' || a.background !== 'rgba(0, 0, 0, 0)' ||
+      a.shadow !== 'none' || a.radius !== '0px') ||
+      tabAppearance[0].color !== 'rgb(134, 115, 58)' ||
+      tabAppearance[0].bottomColor !== 'rgb(134, 115, 58)' ||
+      tabAppearance[1].color !== 'rgb(43, 49, 53)' ||
+      tabAppearance[1].bottomColor !== 'rgba(0, 0, 0, 0)')
+    fail(width + 'px campaign status tabs must look like the canonical date tabs: '+
+      JSON.stringify(tabAppearance));
+  const links = await cards.evaluateAll(els => els.map(el => {
+    const imageAnchor=el.querySelector('.cp-banner-link');
+    const image=el.querySelector('.cp-banner');
+    const detail=el.querySelector('.cp-btn');
+    const title=el.querySelector('.cp-title'), period=el.querySelector('.cp-period');
+    return {count:el.querySelectorAll('a').length,
+      bannerTarget:imageAnchor?.getAttribute('href'),
+      detailTarget:detail?.getAttribute('href'),
+      bannerOpens:imageAnchor?.getAttribute('target'),
+      bannerRel:imageAnchor?.getAttribute('rel'),
+      bannerChild:image?.parentElement===imageAnchor,
+      titlePlain:!title.closest('a'),periodPlain:!period.closest('a')};
+  }));
+  if (links.length !== 16 || links.some(l =>
+      l.count !== 2 || !l.bannerTarget || l.bannerTarget!==l.detailTarget ||
+      l.bannerOpens !== '_blank' || !l.bannerRel.includes('noopener') ||
+      !l.bannerChild || !l.titlePlain || !l.periodPlain))
+    fail(width + 'px only the campaign banner and detail button should navigate: '+
+      JSON.stringify(links));
+  // The global press handler must never darken the entire campaign card.
+  const feedbackState = await cards.first().evaluate(card => {
+    const test = (target) => {
+      target.dispatchEvent(new PointerEvent('pointerdown',{
+        bubbles:true,pointerType:'touch',pointerId:102
+      }));
+      const result = {
+        card:card.classList.contains('tap-pressed'),
+        pressed:target.closest('a')?.classList.contains('tap-pressed') || false
+      };
+      document.dispatchEvent(new Event('pointercancel'));
+      return result;
+    };
+    return {
+      title:test(card.querySelector('.cp-title')),
+      deadline:test(card.querySelector('.cp-period')),
+      blank:test(card),
+      banner:test(card.querySelector('.cp-banner')),
+      button:test(card.querySelector('.cp-btn'))
+    };
+  });
+  if (feedbackState.title.card || feedbackState.title.pressed ||
+      feedbackState.deadline.card || feedbackState.blank.card ||
+      feedbackState.banner.card || !feedbackState.banner.pressed ||
+      feedbackState.button.card || !feedbackState.button.pressed)
+    fail(width + 'px campaign card should never darken, only its interactive links: '+
+      JSON.stringify(feedbackState));
   const titleChecks = await cards.evaluateAll(els => els.map(el => {
     const title = el.querySelector('.cp-title');
     const style = getComputedStyle(title);
@@ -150,6 +198,12 @@ async function checkCampaignPage(page, width) {
   await closed.click();
   if (!await pagination.isVisible() || await closed.getAttribute('aria-selected') !== 'true')
     fail(width + 'px archive pagination did not open');
+  const closedTab=await closed.evaluate(el => ({
+    color:getComputedStyle(el).color,border:getComputedStyle(el).borderBottomColor
+  }));
+  if (closedTab.color !== 'rgb(134, 115, 58)' ||
+      closedTab.border !== 'rgb(134, 115, 58)')
+    fail(width + 'px ended campaign date tab must have gold active underline: '+JSON.stringify(closedTab));
   const archiveValues = await cards.evaluateAll(els => els.filter(el => !el.hidden).map(el => el.dataset.status));
   if (archiveValues.length !== 8 || archiveValues.some(status => status !== 'closed'))
     fail(width + 'px expected eight ended campaigns');

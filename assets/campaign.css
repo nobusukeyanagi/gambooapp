@@ -24,25 +24,38 @@
 }
 .scroll-area::-webkit-scrollbar { display: none; }
 
-/* Reuse the actual prediction sorting buttons via venue-sort.css.
-   This wrapper only positions the two controls on the second header row. */
+/* Match the common "Yesterday / Today / Tomorrow" date tab structure.
+   Shared font sizes, weights and row heights are taken directly from ui-consistency.css. */
 .campaign-tabs {
   display: flex;
-  align-items: center;
   flex-shrink: 0;
-  height: var(--h-date-tab);
-  padding: var(--space-3) var(--space-section);
   background: var(--c-surface);
   border-bottom: var(--line-normal);
 }
-.campaign-tabs .venue-sort-options > .chip {
+.campaign-tabs .date-tab {
   flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-bottom: var(--line-emphasis-width) solid transparent;
+  background: transparent;
+  color: var(--c-text);
+  font-family: inherit;
   cursor: pointer;
 }
+.campaign-tabs .date-tab.active {
+  color: var(--c-primary-d);
+  border-bottom-color: var(--c-primary-d);
+}
+.campaign-tabs .date-tab:focus-visible,
 .campaign-page-arrow:focus-visible,
+.cp-banner-link:focus-visible,
 .cp-btn:focus-visible {
   outline: var(--line-focus);
-  outline-offset: var(--space-2);
+  outline-offset: calc(-1 * var(--space-2));
 }
 
 /* Third bar appears only when viewing completed campaigns. */
@@ -97,6 +110,15 @@
   box-shadow: var(--e1);
 }
 .cp-card[hidden] { display: none; }
+.cp-banner-link {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  align-self: start;
+  overflow: hidden;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+}
 .cp-banner {
   display: block;
   width: 100%;
