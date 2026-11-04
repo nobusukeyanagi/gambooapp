@@ -394,7 +394,7 @@ button,
         justify-content: center;
         color: var(--c-sub);
         cursor: pointer;
-        font-weight: var(--fw-strong);
+        
         letter-spacing: normal;
         
         min-width: 0;
