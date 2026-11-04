@@ -16,18 +16,18 @@
 /* A gold identity band over a clean white balance table; no value boxes. */
 .user-card { margin:var(--space-section); padding:0; background:var(--c-surface); border:var(--line-normal); border-radius:var(--r-md); box-shadow:var(--e1); overflow:hidden; }
 .user-card-top { display:flex; align-items:center; gap:var(--space-section); margin-bottom:0; padding:var(--space-content); background:var(--c-primary); }
-.user-avatar { display:flex; align-items:center; justify-content:center; width:var(--h-control); height:var(--h-control); flex:0 0 var(--h-control); overflow:hidden; border-radius:var(--r-full); background:var(--c-surface); color:var(--c-primary-d); }
+.user-avatar { display:flex; align-items:center; justify-content:center; width:var(--h-control); height:var(--h-control); flex:0 0 var(--h-control); overflow:hidden; border-radius:var(--r-md); background:var(--c-surface); color:var(--c-primary-d); }
 .user-avatar-photo { display:block; width:100%; height:100%; object-fit:cover; }
 .user-avatar [hidden] { display:none; }
 .user-name { font-size:var(--fs-18); font-weight:var(--fw-strong); color:var(--c-text); }
-.user-points { display:block; padding:var(--space-2) var(--space-content); background:var(--c-surface); }
-.pt3-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-10); min-height:var(--h-balance); padding:var(--space-10) 0; }
+.user-points { display:block; padding:0 var(--space-content); background:var(--c-surface); }
+.pt3-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-10); min-height:var(--h-control); padding:0; }
 .point-label { flex:1; min-width:0; }
 .point-value { text-align:right; }
 
 
 /* Reuse canonical token values for all profile action controls. */
-.oshi-act, .os-btn { display:inline-flex; align-items:center; justify-content:center; gap:var(--space-small); min-height:var(--h-control); padding:0 var(--space-14); border:var(--line-control); border-radius:var(--r-control); background:var(--c-surface); box-shadow:var(--e1); color:var(--c-primary-d); font-size:var(--fs-14); font-weight:var(--fw-strong); white-space:nowrap; cursor:pointer; }
+.oshi-act, .os-btn { gap:var(--space-small); }
 .oshi-act .ic, .os-btn .ic { width:var(--fs-16); height:var(--fs-16); }
 
 /* Six permanent Gamboo point shortcuts: three columns, two rows at every
@@ -37,13 +37,13 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, auto));
   gap: var(--space-card);
-  padding: var(--space-10) var(--space-content) var(--space-content);
+  padding: var(--space-card) var(--space-content) var(--space-content);
   background: var(--c-surface);
 }
 .point-actions .point-action {
   flex-direction: column;
   min-width: 0;
-  min-height: calc(var(--h-control) + var(--fs-20));
+  min-height: calc(var(--h-control) + var(--fs-20) + var(--space-section));
   padding: var(--space-5) var(--space-2);
   line-height: 1.25;
   white-space: normal;
