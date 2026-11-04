@@ -287,6 +287,29 @@ async function checkMyPage(page, width) {
     fail(width+'px mypage avatar image reference must be buta.png');
   const avatarRadius=await page.locator('.user-avatar').evaluate(el=>getComputedStyle(el).borderRadius);
   if(avatarRadius!=='12px')fail(width+'px avatar must use canonical --r-md (12px): '+avatarRadius);
+  const hero=await page.locator('.user-card-top').evaluate(el=>{
+    const r=el.getBoundingClientRect(),image=el.querySelector('.user-avatar').getBoundingClientRect(),
+      name=el.querySelector('.user-name').getBoundingClientRect(),
+      link=el.querySelector('.profile-shortcut'),btn=link?.getBoundingClientRect(),
+      s=link&&getComputedStyle(link);
+    return {
+      height:r.height,left:r.left,right:r.right,
+      imageHeight:image.height,imageTop:image.top,imageBottom:image.bottom,
+      nameRight:name.right,nameLeft:name.left,
+      buttonName:link?.textContent.trim(),buttonHref:link?.getAttribute('href'),
+      buttonLeft:btn?.left,buttonRight:btn?.right,buttonH:btn?.height,
+      buttonFont:s?.fontSize,buttonWeight:s?.fontWeight,
+      buttonBg:s?.backgroundColor,buttonRadius:s?.borderRadius
+    };
+  });
+  if (hero.height!==64||Math.abs(hero.imageHeight-hero.height)>1||
+      Math.abs(hero.imageTop-(await page.locator('.user-card-top').boundingBox()).y)>1||
+      hero.buttonHref!=='#mypage-profile'||hero.buttonName!=='プロフィール'||
+      hero.buttonH<44||hero.buttonFont!=='14px'||hero.buttonWeight!=='600'||
+      hero.buttonBg!=='rgb(255, 255, 255)'||hero.buttonRadius!=='8px'||
+      hero.buttonRight>hero.right+1||hero.buttonLeft<hero.nameRight-1||
+      await page.locator('#mypage-profile .menu-text').innerText()!=='プロフィール')
+    fail(width+'px SCR-07 profile band/avatar/button geometry mismatch: '+JSON.stringify(hero));
   const avatarImage=await avatar.evaluate(el=>({complete:el.complete,naturalWidth:el.naturalWidth,naturalHeight:el.naturalHeight,visible:el.getBoundingClientRect().width>0}));
   if (!avatarImage.complete || avatarImage.naturalWidth!==130 || avatarImage.naturalHeight!==130 || !avatarImage.visible)
     fail(width+'px uploaded buta.png must load as the original 130x130 image: '+JSON.stringify(avatarImage));
@@ -414,14 +437,14 @@ async function checkMyPage(page, width) {
       c.height<44 || c.radius!=='8px' || c.weight!=='600' || c.font!=='14px' ||
       c.border!=='1px' || c.bg!=='rgb(255, 255, 255)'))
     fail(width+'px canonical profile control styles mismatch: '+JSON.stringify(controls));
-  const cmp=await page.locator('.oshi-act, .os-panel.on .os-btn, .point-action').evaluateAll(nodes=>
+  const cmp=await page.locator('.oshi-act, .os-panel.on .os-btn, .point-action, .profile-shortcut').evaluateAll(nodes=>
     nodes.map(el=>{const s=getComputedStyle(el);
       return {name:el.textContent.trim(),color:s.color,
         font:s.fontSize,weight:s.fontWeight,
         border:s.borderTopColor,radius:s.borderRadius,shadow:s.boxShadow,
         bg:s.backgroundColor};
     }));
-  if(cmp.length!==10||cmp.some(item=>
+  if(cmp.length!==11||cmp.some(item=>
       item.color!=='rgb(43, 49, 53)' ||
       item.font!=='14px' || item.weight!=='600' ||
       item.border!=='rgb(156, 164, 168)' ||
@@ -456,6 +479,7 @@ async function checkCompactSectionHeader(page,width,file) {
       return {name:btn.textContent.trim(),x:r.left,right:r.right,w:r.width,h:r.height,
         font:s.fontSize,weight:s.fontWeight,icon:btn.querySelector('use')?.getAttribute('href'),
         iconWidth:btn.querySelector('svg')?.getBoundingClientRect().width,
+        iconColor:getComputedStyle(btn.querySelector('svg')).color,
         borderWidth:s.borderTopWidth,borderColor:s.borderTopColor,
         bg:s.backgroundColor,paddingLeft:s.paddingLeft};
     });
@@ -476,7 +500,8 @@ async function checkCompactSectionHeader(page,width,file) {
      bell.borderWidth!=='1px'||bell.borderColor!=='rgb(208, 212, 214)'||
      bell.paddingLeft!=='8px'||deposit.paddingLeft!=='10px' ||
      deposit.borderWidth!=='0px'||deposit.bg!=='rgb(71, 122, 148)' ||
-     Math.abs(data.titleTextX-41)>1 ||
+     Math.abs(data.titleTextX-53)>1 ||
+     bell.iconColor!=='rgb(101, 109, 113)' ||
      data.titleX<data.left-1 || data.titleRight>bell.x+1 ||
      bell.right>deposit.x || deposit.right>data.right+1)
     fail(file+' '+width+'px canonical header title/buttons differ: '+JSON.stringify(data));
