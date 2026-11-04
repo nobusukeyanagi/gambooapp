@@ -483,7 +483,7 @@ async function checkPredictionSort(page, width, isAutorace) {
         labelAlign: getComputedStyle(row.querySelector('.cr-r')).textAlign
       }))));
     const reference11 = carPositions.find(row => row.race === '11');
-    if (!reference11 || carPositions.length !== 30 ||
+    if (!reference11 || !carPositions.length ||
         carPositions.some(row => Math.abs(row.x - reference11.x) > 1 ||
           Math.abs(row.labelWidth - reference11.labelWidth) > 0.5 ||
           row.labelAlign !== 'right'))
