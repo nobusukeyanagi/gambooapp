@@ -44,10 +44,6 @@
 .point-value { text-align:right; }
 
 
-/* Reuse canonical token values for all profile action controls. */
-.oshi-act, .os-btn { gap:var(--space-small); }
-.oshi-act .ic, .os-btn .ic { width:var(--fs-16); height:var(--fs-16); }
-
 /* Six permanent Gamboo point shortcuts: three columns, two rows at every
    supported phone size, with readable wrapping for longer Japanese labels. */
 .point-actions {
@@ -81,29 +77,89 @@
 .section-header .section-title::before { content:""; display:inline-block; flex:0 0 4px; width:4px; height:22px; border-radius:var(--r-xxs); background:var(--c-primary); }
 
 
-/* One sport selector controls both featured and regular favorites. */
-.favorites-unified { margin-top:var(--space-card); }
-.favorite-group { padding:var(--space-10) var(--space-content); }
-.favorite-group + .favorite-group { border-top:var(--line-normal); }
-.favorite-group-heading {
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:space-between;
-  gap:var(--space-card);
-  margin-bottom:var(--space-section);
-  font-size:var(--fs-14);
-  font-weight:var(--fw-strong);
-  color:var(--c-text);
+/* Both sports are always visible; each icon uses its shared competition color. */
+.favorites-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-section);
+  margin: var(--space-card) var(--space-10) var(--space-section);
 }
-.favorite-super-content { display:flex; align-items:center; gap:var(--space-section); }
-.favorite-person { flex:1 1 auto; min-width:0; }
-.favorite-person-name { font-size:var(--fs-16); font-weight:var(--fw-strong); }
-.favorite-person-meta { font-size:var(--fs-12); color:var(--c-sub); }
-.favorite-super-content .oshi-act { flex:0 0 auto; gap:var(--space-small); min-height:var(--tap-min); }
-.favorite-super-content .oshi-act .ic { width:var(--fs-16); height:var(--fs-16); }
-.favorite-group .os-chips { padding:0 0 var(--space-section); }
-.favorite-group .os-actions { padding:var(--space-section) 0 0; }
+.favorite-sport {
+  min-width: 0;
+  overflow: hidden;
+  border: var(--line-normal);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+}
+.favorite-sport-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-section);
+  min-height: var(--h-control);
+  padding: var(--space-card) var(--space-content);
+  border-bottom: var(--line-normal);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+}
+.favorite-sport-icon { color: var(--c-keirin); }
+.favorite-sport--auto .favorite-sport-icon { color: var(--c-auto); }
+.favorite-group { padding: var(--space-10) var(--space-content) var(--space-content); }
+.favorite-group + .favorite-group { border-top: var(--line-normal); }
+.favorite-group-heading {
+  margin-bottom: var(--space-section);
+  color: var(--c-text);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+}
+.favorite-player-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: var(--space-card);
+}
+.favorite-player-grid--super { grid-template-columns: minmax(0,1fr); }
+.favorite-player-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: 0;
+  min-height: calc(var(--h-control) + var(--fs-20));
+  padding: var(--space-10);
+  border: var(--line-control);
+  border-radius: var(--r-control);
+  background: var(--c-surface);
+  box-shadow: var(--e1);
+  color: var(--c-text);
+  text-decoration: none;
+  cursor: pointer;
+}
+.favorite-player-grid--super .favorite-player-card {
+  border-left: var(--line-emphasis-width) solid var(--c-primary);
+}
+.favorite-player-card:hover { border-color: var(--c-primary-d); }
+.favorite-player-card:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: var(--space-2);
+}
+.favorite-player-name {
+  display: block;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  overflow-wrap: anywhere;
+}
+.favorite-player-affiliation {
+  display: block;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+  color: var(--c-sub);
+  overflow-wrap: anywhere;
+}
+.favorite-more-count {
+  margin-top: var(--space-section);
+  color: var(--c-sub);
+  font-size: var(--fs-12);
+}
+
 /* Hash-based demonstration destinations: each action is independently routed.
    Registration persistence is intentionally not implied in this static mock. */
 .favorite-route {
@@ -153,22 +209,6 @@
 .profile-race-icon { width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
 .profile-race-icon:has(use[href$="#nav-keirin"]) { width:calc(var(--fs-20) * 1.25); }
 .profile-race-icon:has(use[href$="#nav-auto"]) { width:calc(var(--fs-20) * 1.0833333); }
-
-/* Favourites tabs, chips and actions. */
-.os-card { margin:var(--space-card) var(--space-10) var(--space-section); background:var(--c-surface); border:var(--line-normal); border-radius:var(--r-md); overflow:hidden; }
-.os-seg { display:flex; gap:var(--space-small); padding:var(--space-small); border-bottom:var(--line-normal); background:var(--c-bg); }
-.os-tab { appearance:none; flex:1; min-width:0; min-height:var(--h-control); display:flex; align-items:center; justify-content:center; gap:var(--space-small); padding:0 var(--space-small); border:var(--line-thin) solid transparent; border-radius:var(--r-control); background:transparent; color:var(--c-sub); font:var(--fw-strong) var(--fs-14) var(--ff-ui); cursor:pointer; }
-.os-tab.on { border-color:var(--c-border); background:var(--c-surface); color:var(--c-text); box-shadow:var(--e1); }
-.os-tab:focus-visible { outline:var(--line-focus); outline-offset:var(--space-2); }
-.os-n { min-width:var(--fs-20); padding:0 var(--space-card); border-radius:var(--r-full); background:var(--c-border); color:var(--c-text); font-size:var(--fs-12); font-weight:var(--fw-strong); line-height:var(--fs-20); text-align:center; }
-.os-tab.on .os-n { background:var(--c-primary); }
-.os-panel { display:none; }
-.os-panel.on { display:block; }
-.os-chips { display:flex; flex-wrap:wrap; gap:var(--space-card); padding:var(--space-2) var(--space-content) var(--space-10); }
-.os-chip { flex:0 0 auto; display:inline-flex; align-items:center; min-height:var(--h-control); padding:0 var(--space-content); border:var(--line-normal); border-radius:var(--r-full); background:var(--c-surface); font-size:var(--fs-14); font-weight:var(--fw-strong); white-space:nowrap; }
-.os-chip.rest { border-color:var(--c-bg); background:var(--c-bg); color:var(--c-sub); }
-.os-actions { display:flex; gap:var(--space-section); padding:var(--space-10) var(--space-content) var(--space-content); border-top:var(--line-normal); }
-.os-btn { flex:1; min-width:0; }
 
 /* Account, vote accounts, history, content and support menu rows. */
 .divider { height:var(--space-card); background:var(--c-bg); }
