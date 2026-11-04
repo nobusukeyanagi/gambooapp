@@ -649,6 +649,9 @@ button, input, select, textarea {
   white-space: nowrap;
 }
 
+/* Adjacent-date snapshots are informational until individual race data is verified. */
+.venue-card .rchip.archive-preview { cursor: default; }
+
 .venue-card .rchip.next.soon > small:not(.rchip-time) {
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);

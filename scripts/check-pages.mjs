@@ -556,7 +556,7 @@ async function checkPredictionSort(page, width, isAutorace) {
     }));
   if (warningLabels.length !== 1 || warningLabels.some(w =>
     w.text !== '13分前' || w.aria !== '締切13分前' ||
-    w.row !== '1' || w.font !== '12px' || w.weight !== '600' ||
+    w.row !== 'auto' || w.font !== '12px' || w.weight !== '600' ||
     w.color !== 'rgb(255, 255, 255)' || w.background !== 'rgb(165, 55, 76)' ||
     w.height !== 18 || w.width >= 90 || w.width < 80 ||
     Math.abs(w.topInset-parseFloat(w.border)) > 1 ||
@@ -655,12 +655,14 @@ async function checkPredictionSort(page, width, isAutorace) {
     const warning=document.createElement('span');
     warning.className='rchip-warning';
     warning.textContent='5分前';
+    chip.classList.add('next','soon');
     chip.prepend(warning);
     const hidden=getComputedStyle(rebate).display==='none';
     const styles=getComputedStyle(warning);
     const shown=styles.display!=='none' && styles.backgroundColor==='rgb(165, 55, 76)' &&
-      styles.color==='rgb(255, 255, 255)' && styles.gridRowStart==='1';
+      styles.color==='rgb(255, 255, 255)' && styles.gridRowStart==='auto';
     warning.remove();
+    chip.classList.remove('next','soon');
     return {hidden,shown,restored:getComputedStyle(rebate).display!=='none'};
   });
   if(!countdownPriority.hidden || !countdownPriority.shown || !countdownPriority.restored)
@@ -822,6 +824,73 @@ async function checkPredictionSort(page, width, isAutorace) {
       return row.querySelector('.hscroll-inner').scrollLeft <= 1;
     }, scrollRowIndex, { timeout: 6000 });
   }
+  // 11/2 and 11/4: verified venues, grades, race counts and one-direction
+  // tab switching. No speculative riders, race start times or detail links.
+  const dateTabs=page.locator('.phone-inner > .date-tabs [data-date]');
+  const expectedSchedules=isAutorace?{
+    '2026-11-02':{
+      '浜松':['SG','5日目',12],'川口':['普通','2日目',8]
+    },
+    '2026-11-04':{
+      '川口':['普通','最終日',8],'山陽':['普通','初日',12]
+    }
+  }:{
+    '2026-11-02':{
+      '小田原':['FⅡ','2日目',7],'熊本':['FⅡ','最終日',7],
+      '防府':['GⅢ','3日目',12],'豊橋':['FⅠ','初日',12],
+      '久留米':['FⅠ','2日目',12],'静岡':['FⅡ','初日',7],
+      '奈良':['FⅡ','初日',7],'武雄':['FⅡ','初日',7]
+    },
+    '2026-11-04':{
+      '取手':['FⅡ','初日',7],'大宮':['FⅠ','初日',12],
+      '青森':['FⅠ','2日目',12],'豊橋':['FⅠ','最終日',12],
+      '別府':['FⅡ','初日',11],'静岡':['FⅡ','最終日',7],
+      '奈良':['FⅡ','最終日',7],'武雄':['FⅡ','最終日',7]
+    }
+  };
+  if(await dateTabs.count()!==3)fail(width+'px prediction date tabs must be interactive');
+  for(const date of ['2026-11-02','2026-11-04']){
+    await dateTabs.locator('[data-date="'+date+'"]').click();
+    const actual=await page.locator('.scroll-area > .venue-card').evaluateAll(cards=>cards.map(card=>({
+      venue:card.dataset.venue,
+      grade:card.querySelector('.grade-badge')?.textContent?.trim(),
+      day:card.querySelector('.venue-meta')?.textContent?.trim(),
+      races:card.querySelectorAll('.rchip').length,
+      statuses:[...new Set([...card.querySelectorAll('.rchip small')].map(el=>el.textContent.trim()))],
+      forecastRows:card.querySelectorAll('.comment-row').length,
+      featuredIcons:card.querySelectorAll('.rchip-featured').length,
+      speculativeLinks:card.querySelectorAll('.rchips a.rchip').length,
+      arrowsReady:card.querySelector('.hscroll')?.dataset.arrowsReady
+    })));
+    const expected=expectedSchedules[date];
+    const names=actual.map(x=>x.venue).sort().join('|');
+    if(names!==Object.keys(expected).sort().join('|')||
+       actual.some(v=>
+         v.grade!==expected[v.venue]?.[0] ||
+         !v.day?.startsWith(expected[v.venue]?.[1]) ||
+         v.races!==expected[v.venue]?.[2] ||
+         v.statuses.join('|')!==(date<'2026-11-03'?'確定':'発売前') ||
+         v.forecastRows!==0 || v.featuredIcons!==0 ||
+         v.speculativeLinks!==0 || v.arrowsReady!=='true'))
+      fail(width+'px '+date+' must show actual meetings with no featured-rider data: '+
+        JSON.stringify(actual));
+    if(await dateTabs.locator('[data-date="'+date+'"]').getAttribute('aria-selected')!=='true')
+      fail(width+'px '+date+' did not activate');
+    if(await page.locator('.venue-card [data-demo-canceled="true"]').count())
+      fail(width+'px '+date+' must not inherit the Nov 3 Aomori cancellation demo');
+    const sorted=await cards.evaluateAll(nodes=>nodes.map(card=>Number(card.dataset.sortVenue)));
+    if(sorted.some((v,i)=>i>0 && v<sorted[i-1]))
+      fail(width+'px '+date+' must preserve north-to-south sort on selected venue tab');
+  }
+  await dateTabs.locator('[data-date="2026-11-03"]').click();
+  if(await page.locator('.scroll-area > .venue-card').count()!==(isAutorace?2:8))
+    fail(width+'px Nov 3 original venues did not return');
+  if(!isAutorace && (
+      await page.locator('.venue-card .comment-row').count()!==29 ||
+      await page.locator('.venue-card[data-venue="青森"] .rchip[data-demo-canceled]').count()!==1))
+    fail(width+'px original featured riders or cancellation demo not restored after date changes');
+  if(await dateTabs.locator('[data-date="2026-11-03"]').getAttribute('aria-selected')!=='true')
+    fail(width+'px restored today tab is not active');
   console.log('PREDICTION SORT OK ' + width + 'px');
 }
 
