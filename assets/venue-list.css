@@ -39,7 +39,7 @@ button, input, select, textarea {
   justify-content: center;
   color: var(--c-sub);
   cursor: pointer;
-  font-weight: var(--fw-strong);
+  
   letter-spacing: normal;
   white-space: nowrap;
   min-width: 0;
