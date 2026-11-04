@@ -261,6 +261,57 @@ async function checkCampaignPage(page, width) {
   console.log('CAMPAIGN PAGE OK ' + width + 'px (16 source entries, deadline state, 20-per-page)');
 }
 
+async function checkMyPage(page, width) {
+  const headings=await page.locator('.scroll-area > .section-header > .section-title').allTextContents();
+  if (headings.length!==7 ||
+      headings.map(x=>x.trim()).join('|')!==
+        '激推しメン|推しメン|デルカ・投票口座|アカウント|成績・履歴|コンテンツ|サポート')
+    fail(width+'px mypage section headings changed: '+headings);
+  const headingStyle=await page.locator('.scroll-area > .section-header > .section-title').first()
+    .evaluate(el=>{
+      const text=getComputedStyle(el),bar=getComputedStyle(el,'::before');
+      return {font:text.fontSize,weight:text.fontWeight,
+        accent:bar.backgroundColor,barW:bar.width,barH:bar.height};
+    });
+  if (headingStyle.font!=='20px' || headingStyle.weight!=='600' ||
+      headingStyle.accent!=='rgb(228, 202, 124)' ||
+      headingStyle.barW!=='4px' || headingStyle.barH!=='22px')
+    fail(width+'px mypage section headings must match SCR-01: '+JSON.stringify(headingStyle));
+  const icons=await page.locator('.scroll-area .profile-race-icon use').evaluateAll(nodes=>
+    nodes.map(n=>n.getAttribute('href')?.split('#')[1]));
+  if (icons.filter(x=>x==='nav-keirin').length!==3 ||
+      icons.filter(x=>x==='nav-auto').length!==2)
+    fail(width+'px mypage racing icons must use canonical SVG: '+JSON.stringify(icons));
+  const avatar=page.locator('.user-avatar > img.user-avatar-photo');
+  if (await avatar.count()!==1 || await avatar.getAttribute('src')!=='./assets/images/buta.png')
+    fail(width+'px mypage avatar image reference must be buta.png');
+  if (await page.locator('.point-value.maxcase, .point-item').count())
+    fail(width+'px mypage legacy framed point values remain');
+  const p=await page.locator('.point-value').first().evaluate(el=>{
+    const x=getComputedStyle(el);return {outline:x.outlineStyle,border:x.borderStyle};
+  });
+  if(p.outline!=='none' || p.border!=='none')
+    fail(width+'px mypage points must have no individual border: '+JSON.stringify(p));
+  for (const sport of ['auto','keirin']) {
+    await page.locator('.os-tab[data-os="'+sport+'"]').click();
+    const active=await page.locator('.os-panel.on').getAttribute('data-os');
+    const selected=await page.locator('.os-tab[data-os="'+sport+'"]').getAttribute('aria-selected');
+    if(active!==sport || selected!=='true')
+      fail(width+'px favourites tab failed for '+sport+' (panel '+active+', selected '+selected+')');
+  }
+  const controls=await page.locator('.oshi-act, .os-btn, .point-use > span')
+    .evaluateAll(nodes=>nodes.map(el=>{
+      const st=getComputedStyle(el);
+      return {height:el.getBoundingClientRect().height,
+        radius:st.borderRadius,weight:st.fontWeight,font:st.fontSize,
+        border:st.borderTopWidth,bg:st.backgroundColor};
+    }));
+  if(controls.length!==7 || controls.some(c=>
+      c.height<40 || c.radius!=='8px' || c.weight!=='600' || c.font!=='14px' ||
+      c.border!=='1px' || c.bg!=='rgb(255, 255, 255)'))
+    fail(width+'px canonical profile control styles mismatch: '+JSON.stringify(controls));
+}
+
 async function checkCompactSectionHeader(page, width, file) {
   if(!['SCR-11_campaign.html','SCR-07_mypage.html'].includes(file)) return;
   const name=file==='SCR-11_campaign.html'?'キャンペーン':'マイページ';
@@ -1084,6 +1135,7 @@ try {
         fail(file + ' ' + w + 'px shared header title must be 18px/600: '+JSON.stringify(h));
     }
     if (file === 'SCR-11_campaign.html') await checkCampaignPage(a.page,w);
+    if (file === 'SCR-07_mypage.html') await checkMyPage(a.page,w);
     if (file === 'SCR-02_keirin.html' || file === 'SCR-02_autorace.html') await checkPredictionSort(a.page,w,file === 'SCR-02_autorace.html');
     if (file === 'SCR-03_racecardkeirin.html') await checkKeirinMania(a.page,w);
     if (file === "SCR-04_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
