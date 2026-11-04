@@ -13,13 +13,14 @@
 .bottom-tab .tab-icon { display:flex; align-items:center; justify-content:center; }
 .ic { display:block; width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
 
-/* A gold identity band over a clean white balance table; no value boxes. */
+/* Inset avatar on a white identity card with a restrained gold accent line. */
 .user-card { margin:var(--space-section); padding:0; background:var(--c-surface); border:var(--line-normal); border-radius:var(--r-md); box-shadow:var(--e1); overflow:hidden; }
-.user-card-top { display:flex; align-items:center; gap:var(--space-card); height:calc(var(--h-control) + var(--space-24)); margin-bottom:0; padding:0 var(--space-card) 0 0; background:var(--c-primary); }
-.user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-24)); height:100%; flex:0 0 calc(var(--h-control) + var(--space-24)); overflow:hidden; border-radius:var(--r-md); background:var(--c-surface); color:var(--c-primary-d); }
+.user-card-top { display:flex; align-items:center; gap:var(--space-section); min-height:72px; padding:var(--space-section) var(--space-content); background:var(--c-surface); border-top:var(--line-emphasis-width) solid var(--c-primary); border-bottom:var(--line-normal); }
+.user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-14)); height:calc(var(--h-control) + var(--space-14)); flex:0 0 calc(var(--h-control) + var(--space-14)); overflow:hidden; border-radius:var(--r-md); background:var(--c-primary); box-shadow:var(--e1); color:var(--c-primary-d); }
 .user-avatar-photo { display:block; width:100%; height:100%; object-fit:cover; }
 .user-avatar [hidden] { display:none; }
 .user-name { flex:1 1 0; min-width:0; font-size:var(--fs-18); font-weight:var(--fw-strong); line-height:1.2; overflow-wrap:anywhere; color:var(--c-text); }
+@media (max-width:359px){ .user-name { font-size:var(--fs-14); } }
 /* Profile shortcut uses the exact shared campaign-action button properties.
    Only its horizontal inset is reduced to fit beside the name at 296px. */
 .user-card-top .profile-shortcut {
@@ -28,6 +29,11 @@
   text-align: center;
 }
 .user-points { display:block; padding:0 var(--space-content); background:var(--c-surface); }
+.pt3-row + .pt3-row { border-top:var(--line-normal); }
+.point-expiring { min-height:var(--tap-dense); }
+.point-expiring .point-label { color:var(--c-sub); font-size:var(--fs-14); font-weight:var(--fw-normal); }
+.point-expiring .point-value { color:var(--c-error); font-size:var(--fs-14); font-weight:var(--fw-strong); font-family:var(--ff-ui); white-space:nowrap; }
+.point-expiring .unit { color:var(--c-error); font-size:var(--fs-12); font-weight:var(--fw-strong); }
 .pt3-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-10); min-height:var(--h-control); padding:0; }
 .point-label { flex:1; min-width:0; }
 .point-value { text-align:right; }
@@ -68,20 +74,86 @@
    The 4px x 22px left bar uses the same gold/radius values as home. */
 .section-header .section-title { display:inline-flex; align-items:center; gap:var(--space-5); color:var(--c-text); }
 .section-header .section-title::before { content:""; display:inline-block; flex:0 0 4px; width:4px; height:22px; border-radius:var(--r-xxs); background:var(--c-primary); }
-.profile-section-desc { padding:var(--space-2) var(--space-10) 0; font-size:var(--fs-14); color:var(--c-sub); }
+
+
+/* One sport selector controls both featured and regular favorites. */
+.favorite-intro {
+  padding:var(--space-2) var(--space-content);
+  font-size:var(--fs-12);
+  color:var(--c-sub);
+}
+.favorites-unified { margin-top:var(--space-card); }
+.favorite-group { padding:var(--space-10) var(--space-content); }
+.favorite-group + .favorite-group { border-top:var(--line-normal); }
+.favorite-group-heading {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--space-card);
+  margin-bottom:var(--space-section);
+  font-size:var(--fs-14);
+  font-weight:var(--fw-strong);
+  color:var(--c-text);
+}
+.favorite-group-heading small { font-size:var(--fs-12); color:var(--c-sub); font-weight:var(--fw-normal); }
+.favorite-super-content { display:flex; align-items:center; gap:var(--space-section); }
+.favorite-person { flex:1 1 auto; min-width:0; }
+.favorite-person-name { font-size:var(--fs-16); font-weight:var(--fw-strong); }
+.favorite-person-meta { font-size:var(--fs-12); color:var(--c-sub); }
+.favorite-super-content .oshi-act { flex:0 0 auto; gap:var(--space-small); min-height:var(--tap-min); }
+.favorite-super-content .oshi-act .ic { width:var(--fs-16); height:var(--fs-16); }
+.favorite-group .os-chips { padding:0 0 var(--space-section); }
+.favorite-group .os-actions { padding:var(--space-section) 0 0; }
+/* Hash-based demonstration destinations: each action is independently routed.
+   Registration persistence is intentionally not implied in this static mock. */
+.favorite-route {
+  position:absolute;
+  inset:0;
+  display:none;
+  z-index:10;
+  overflow-y:auto;
+  background:var(--c-bg);
+}
+.favorite-route:target { display:block; }
+.favorite-route-header {
+  display:flex;
+  align-items:center;
+  gap:var(--space-section);
+  height:var(--h-header);
+  padding:0 var(--space-content);
+  background:var(--c-surface);
+  border-bottom:var(--line-normal);
+  font-size:var(--fs-18);
+  font-weight:var(--fw-strong);
+}
+.favorite-route-back {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:var(--h-control);
+  height:var(--h-control);
+  flex:0 0 var(--h-control);
+  color:var(--c-text);
+  text-decoration:none;
+  font-size:var(--fs-20);
+}
+.favorite-route-content { padding:var(--space-section); }
+.favorite-route-card {
+  padding:var(--space-content);
+  background:var(--c-surface);
+  border:var(--line-normal);
+  border-radius:var(--r-md);
+}
+.favorite-route-card h2 { font-size:var(--fs-18); font-weight:var(--fw-strong); }
+.favorite-route-card p { margin-top:var(--space-section); font-size:var(--fs-14); }
+.favorite-route-card .favorite-route-note { color:var(--c-sub); font-size:var(--fs-12); }
+.favorite-route-card .cp-btn { display:flex; margin-top:var(--space-section); }
 
 /* Featured riders: exact shared racing SVGs with their canonical aspect ratios. */
-.oshi-row { display:flex; gap:var(--space-section); padding:var(--space-card) var(--space-10); }
-.oshi { flex:1; min-width:0; padding:var(--space-10) var(--space-section); border:var(--line-normal); border-radius:var(--r-md); background:var(--c-surface); box-shadow:var(--e1); text-align:center; }
-.oshi-kind { display:inline-flex; align-items:center; justify-content:center; gap:var(--space-small); margin-bottom:var(--space-small); font-size:var(--fs-14); font-weight:var(--fw-strong); white-space:nowrap; }
-.oshi-kind.keirin { color:var(--c-keirin); }
-.oshi-kind.auto { color:var(--c-auto); }
 .profile-race-icon { width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
 .profile-race-icon:has(use[href$="#nav-keirin"]) { width:calc(var(--fs-20) * 1.25); }
 .profile-race-icon:has(use[href$="#nav-auto"]) { width:calc(var(--fs-20) * 1.0833333); }
-.oshi-name { margin-bottom:var(--space-2); font-size:var(--fs-16); font-weight:var(--fw-strong); }
-.oshi-meta { font-size:var(--fs-12); color:var(--c-sub); }
-.oshi .oshi-act { margin-top:var(--space-7); }
 
 /* Favourites tabs, chips and actions. */
 .os-card { margin:var(--space-card) var(--space-10) var(--space-section); background:var(--c-surface); border:var(--line-normal); border-radius:var(--r-md); overflow:hidden; }
@@ -93,8 +165,6 @@
 .os-tab.on .os-n { background:var(--c-primary); }
 .os-panel { display:none; }
 .os-panel.on { display:block; }
-.os-sub { display:flex; align-items:center; justify-content:space-between; min-height:var(--tap-dense); padding:var(--space-card) var(--space-content) var(--space-2); font-size:var(--fs-12); font-weight:var(--fw-strong); color:var(--c-sub); }
-.os-sub b { color:var(--c-text); }
 .os-chips { display:flex; flex-wrap:wrap; gap:var(--space-card); padding:var(--space-2) var(--space-content) var(--space-10); }
 .os-chip { flex:0 0 auto; display:inline-flex; align-items:center; min-height:var(--h-control); padding:0 var(--space-content); border:var(--line-normal); border-radius:var(--r-full); background:var(--c-surface); font-size:var(--fs-14); font-weight:var(--fw-strong); white-space:nowrap; }
 .os-chip.rest { border-color:var(--c-bg); background:var(--c-bg); color:var(--c-sub); }
@@ -108,6 +178,5 @@
 .menu-icon .ic { width:var(--fs-20); height:var(--fs-20); }
 .menu-text { flex:1; min-width:0; font-size:var(--fs-16); }
 .menu-arrow { flex:0 0 auto; color:var(--c-sub); font-size:var(--fs-20); }
-.ext-tag { display:inline-block; margin-left:var(--space-card); padding:0 var(--space-5); border:var(--line-normal); border-radius:var(--r-xs); font-size:var(--fs-12); font-weight:var(--fw-strong); color:var(--c-sub); }
 .danger-text { color:var(--c-error); }
 .content-end-spacer { height:var(--space-section); }
