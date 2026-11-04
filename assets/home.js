@@ -136,22 +136,6 @@
 
 ;
 
-document.querySelectorAll(".pay-toggle").forEach(function (el) {
-
-        el.addEventListener("click", function () {
-          var m = !el.classList.contains("masked");
-          el.classList.toggle("masked", m);
-          el.setAttribute("aria-pressed", m ? "true" : "false");
-        });
-        el.addEventListener("keydown", function (event) {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            el.click();
-          }
-        });
-      });
-
-;
 
 
 /* Static three-day racing calendar, viewed from 2026-11-03 12:00 JST.
