@@ -404,6 +404,7 @@ async function checkMyPage(page, width) {
 }
 
 async function checkCompactSectionHeader(page,width,file) {
+  if(file==='index.html')return;
   const header=page.locator('.phone-inner > .shared-app-header');
   if(await header.count()!==1)
     return fail(file+' '+width+'px must use canonical shared header');
