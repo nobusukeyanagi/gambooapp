@@ -540,6 +540,46 @@ async function checkPredictionSort(page, width, isAutorace) {
   if (!await raceLinks.count()) fail(width + 'px linked race buttons missing');
   if (!/SCR-0[34]_racecard/.test(await raceLinks.first().getAttribute('href')))
     fail(width + 'px race button destination invalid');
+  // Every genuine final (keirin 決勝 or auto 優勝戦) has the exact shared
+  // bottom-navigation campaign symbol, including races already completed.
+  // Semifinals must not inherit that icon.
+  const finalIcons = await page.locator('.venue-card .rchip[data-race-type]').evaluateAll(nodes =>
+    nodes.map(chip => {
+      const type=chip.dataset.raceType;
+      const isFinal=(type.endsWith('決勝') && !type.includes('準決勝')) || type==='優勝戦';
+      const row=chip.querySelector('.rchip-bottom-icons');
+      const icons=[...(row?.querySelectorAll(':scope > .rchip-bottom-icon') || [])];
+      const campaigns=icons.filter(icon=>icon.classList.contains('rchip-campaign'));
+      const svg=campaigns[0]?.querySelector('svg.rchip-campaign-icon');
+      const svgStyle=svg ? getComputedStyle(svg) : null;
+      const rowBox=row?.getBoundingClientRect();
+      return {type,isFinal,count:campaigns.length,
+        iconOrder:icons.map(icon=>icon.classList.contains('rchip-girls')?'girls':
+          icon.classList.contains('rchip-campaign')?'campaign':
+          icon.classList.contains('rchip-featured')?'featured':'unknown'),
+        source:svg?.querySelector('use')?.getAttribute('href'),
+        color:svgStyle?.color,width:svgStyle?.width,height:svgStyle?.height,
+        centered: rowBox ? Math.abs((rowBox.left+rowBox.right) / 2 -
+          (chip.getBoundingClientRect().left+chip.getBoundingClientRect().right) / 2) : null,
+        fits: row ? row.scrollWidth <= chip.clientWidth : null
+      };
+    }));
+  const expectedFinals=isAutorace?1:5;
+  if (finalIcons.filter(r=>r.isFinal).length !== expectedFinals ||
+      finalIcons.some(r=>r.count !== (r.isFinal?1:0)) ||
+      finalIcons.filter(r=>r.isFinal).some(r=>
+        !r.source?.endsWith('#nav-campaign') ||
+        r.color !== 'rgb(134, 115, 58)' || r.width !== '16px' || r.height !== '16px' ||
+        !r.fits || r.centered > 1 ||
+        r.iconOrder.join('|') !== r.iconOrder.slice().sort(
+          (a,b)=>['girls','campaign','featured'].indexOf(a)-
+            ['girls','campaign','featured'].indexOf(b)).join('|')))
+    fail(width + 'px final race campaign icon, placement, or ordering is invalid: '+
+      JSON.stringify(finalIcons.filter(r=>r.isFinal || r.count)));
+  if (!isAutorace && !finalIcons.some(r=>r.type==='ガールズ決勝' &&
+      r.iconOrder.join('|')==='girls|campaign|featured'))
+    fail(width + 'px girls final must show girls, campaign, featured in that order');
+
   if (await page.locator('.rpred').count()) fail(width + 'px old prediction buttons remain');
   // Current race sits beside the left-arrow strip; completed races start left
   // of the visible region rather than obscuring the active R.
