@@ -136,8 +136,11 @@
   cursor: pointer;
   overflow: hidden;
 }
-.favorite-player-grid--super .favorite-player-card {
-  border-left: var(--line-emphasis-width) solid var(--c-primary);
+.favorite-sport--keirin .favorite-player-grid--super .favorite-player-card {
+  border-left: var(--line-emphasis-width) solid var(--c-keirin);
+}
+.favorite-sport--auto .favorite-player-grid--super .favorite-player-card {
+  border-left: var(--line-emphasis-width) solid var(--c-auto);
 }
 .favorite-player-card:hover { border-color: var(--c-primary-d); }
 .favorite-player-card:focus-visible {
@@ -247,6 +250,7 @@
 /* Existing settings menu-row styling. */
 .divider { height:var(--space-card); background:var(--c-bg); }
 .menu-item { display:flex; align-items:center; gap:var(--space-section); min-height:56px; padding:var(--space-10) var(--space-content); background:var(--c-surface); border-bottom:var(--line-normal); }
+.settings-first { border-top: var(--line-normal); }
 .menu-icon { flex:0 0 var(--fs-20); display:flex; align-items:center; justify-content:center; color:var(--c-sub); }
 .menu-icon .ic { width:var(--fs-20); height:var(--fs-20); }
 .menu-text { flex:1; min-width:0; font-size:var(--fs-16); }
