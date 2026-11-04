@@ -621,7 +621,7 @@ async function checkPredictionSort(page, width, isAutorace) {
     nodes.map(chip => {
       const type=chip.dataset.raceType;
       const isFinal=(type.endsWith('決勝') && !type.includes('準決勝')) || type==='優勝戦';
-       const eligible=isAutorace?
+       const eligible=location.pathname.includes('autorace') ?
          chip.closest('.venue-card')?.dataset.venue==='浜松' : isFinal;
       const row=chip.querySelector('.rchip-bottom-icons');
       const icons=[...(row?.querySelectorAll(':scope > .rchip-bottom-icon') || [])];
