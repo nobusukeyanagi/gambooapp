@@ -932,6 +932,14 @@ async function checkPredictionSort(page, width, isAutorace) {
         Number(chip.dataset.raceNumber)),
       campaignRaces:[...card.querySelectorAll('.rchip:has(.rchip-campaign)')].map(chip=>
         Number(chip.dataset.raceNumber)),
+      girlsRaces:[...card.querySelectorAll('.rchip:has(.rchip-girls)')].map(chip=>
+        Number(chip.dataset.raceNumber)),
+      girlsTypes:[...card.querySelectorAll('.rchip:has(.rchip-girls)')].map(chip=>
+        chip.dataset.raceType),
+      venueGirls:!!card.querySelector('.venue-meta .venue-girls'),
+      girlsIconValid:[...card.querySelectorAll('.rchip-girls')].every(icon=>
+        icon.getAttribute('aria-label')==='ガールズ' &&
+        icon.querySelector('.girls-heart-icon use')?.getAttribute('href')?.endsWith('#girls-heart')),
       races:card.querySelectorAll('.rchip').length,
       statuses:[...new Set([...card.querySelectorAll('.rchip small')].map(el=>el.textContent.trim()))],
       forecastRows:card.querySelectorAll('.comment-row').length,
@@ -947,6 +955,32 @@ async function checkPredictionSort(page, width, isAutorace) {
       '2026-11-02':{'熊本':[7]},
       '2026-11-04':{'豊橋':[10,11,12],'静岡':[6,7],'奈良':[7],'武雄':[6,7]}
     };
+    const girlsByDay=isAutorace?{}:{
+      '2026-11-02':{
+        '小田原':{races:[6,7],types:['ガールズ予選２','ガールズ予選２']},
+        '豊橋':{races:[6,7],types:['ガールズ予選１','ガールズ予選１']},
+        '静岡':{races:[1,2],types:['ガールズ予選１','ガールズ予選１']},
+        '武雄':{races:[1,2],types:['ガールズ予選１','ガールズ予選１']}
+      },
+      '2026-11-04':{
+        '豊橋':{races:[5,11],types:['ガールズ一般','ガールズ決勝']},
+        '別府':{races:[5,6],types:['ガールズ予選１','ガールズ予選１']},
+        '静岡':{races:[1,6],types:['ガールズ一般','ガールズ決勝']},
+        '武雄':{races:[1,6],types:['ガールズ一般','ガールズ決勝']}
+      }
+    };
+    const expectedGirlsForDay=girlsByDay[date]||{};
+    if(actual.some(v=>{
+      const expectedGirlsForVenue=expectedGirlsForDay[v.venue];
+      const races=expectedGirlsForVenue?.races||[];
+      const types=expectedGirlsForVenue?.types||[];
+      return v.girlsRaces.join('|')!==races.join('|') ||
+        v.girlsTypes.join('|')!==types.join('|') ||
+        v.venueGirls!==!!races.length || !v.girlsIconValid;
+    }))
+      fail(width+'px '+date+' Girls icon placement/types missing or extra: '+
+        JSON.stringify(actual.map(v=>({venue:v.venue,girls:v.girlsRaces,types:v.girlsTypes,
+          header:v.venueGirls,valid:v.girlsIconValid}))));
     const names=actual.map(x=>x.venue).sort().join('|');
     if(names!==Object.keys(expected).sort().join('|')||
        actual.some(v=>
