@@ -290,30 +290,68 @@ async function checkMyPage(page, width) {
     fail(width+'px uploaded buta.png must load as the original 130x130 image: '+JSON.stringify(avatarImage));
   if (await page.locator('.phone-inner > .status-bar').count())
     fail(width+'px SCR-07 must not show simulated 9:33/5G status bar');
-  const balances=await page.locator('.user-card').evaluate(el=>{
-    const card=getComputedStyle(el),head=getComputedStyle(el.querySelector('.user-card-top')),
-      body=getComputedStyle(el.querySelector('.user-points'));
-    const rows=[...el.querySelectorAll('.pt3-row')].map(row=>{
-      const label=getComputedStyle(row.querySelector('.point-label')),
-        value=getComputedStyle(row.querySelector('.point-value'));
-      return {height:row.getBoundingClientRect().height,font:value.fontSize,
-        label:label.color,value:value.color,bg:getComputedStyle(row).backgroundColor};
-    });
-    return {card:card.backgroundColor,header:head.backgroundColor,body:body.backgroundColor,rows};
+  // DELCA and refund use the exact SCR-01 markup and directly shared styles.
+  const balanceBar=page.locator('.phone-inner > .payout-bar.pt-h');
+  const bar=await balanceBar.evaluate(el=>{
+    const s=getComputedStyle(el),a=el.querySelectorAll('.pt-item');
+    return {height:el.getBoundingClientRect().height,bg:s.backgroundColor,
+      border:s.borderBottomColor,items:a.length,
+      names:[...el.querySelectorAll('.payout-label')].map(x=>x.textContent.trim()),
+      fonts:[...el.querySelectorAll('.payout-value.pay-shown,.delca-entry .payout-value')].map(x=>getComputedStyle(x).fontSize),
+      preceding:el.previousElementSibling?.classList.contains('page-header'),
+      following:el.nextElementSibling?.classList.contains('scroll-area')};
   });
-  if (balances.card!=='rgb(255, 255, 255)' || balances.header!=='rgb(228, 202, 124)' ||
-      balances.body!=='rgb(255, 255, 255)' ||
-      balances.rows.length!==3 || balances.rows.some(r=>r.height<50 ||
-        r.font!=='20px'||r.value!=='rgb(43, 49, 53)'))
-    fail(width+'px balance panel readability styles mismatch: '+JSON.stringify(balances));
-
-  if (await page.locator('.point-value.maxcase, .point-item').count())
-    fail(width+'px mypage legacy framed point values remain');
-  const p=await page.locator('.point-value').first().evaluate(el=>{
+  if(bar.height!==51 || bar.bg!=='rgb(255, 255, 255)' ||
+     bar.border!=='rgb(208, 212, 214)' || bar.items!==2 ||
+     bar.names.join('|')!=='デルカ|払戻金' || bar.fonts.join('|')!=='16px|16px' ||
+     !bar.preceding || !bar.following)
+    fail(width+'px SCR-07 balance bar must match SCR-01 directly below header: '+JSON.stringify(bar));
+  const toggle=balanceBar.locator('.pay-toggle');
+  if(await toggle.count()!==1||await toggle.getAttribute('aria-pressed')!=='true')
+    fail(width+'px refund initial masked state missing');
+  await toggle.click();
+  if(await toggle.getAttribute('aria-pressed')!=='false')
+    fail(width+'px refund click must reveal amount');
+  await toggle.press('Enter');
+  if(await toggle.getAttribute('aria-pressed')!=='true')
+    fail(width+'px refund keyboard toggle must restore mask');
+  const pointRows=await page.locator('.user-card .pt3-row').count();
+  if(pointRows!==1 || (await page.locator('.user-card .point-label').allTextContents()).map(x=>x.trim()).join('|')!=='Gambooポイント')
+    fail(width+'px profile card should retain only Gamboo points');
+  if(await page.locator('.user-card .point-value.maxcase,.user-card .point-item,.user-card .point-use').count())
+    fail(width+'px legacy point boxes or the single old button still remain');
+  const pointStyle=await page.locator('.user-card .point-value').first().evaluate(el=>{
     const x=getComputedStyle(el);return {outline:x.outlineStyle,border:x.borderStyle};
   });
-  if(p.outline!=='none' || p.border!=='none')
-    fail(width+'px mypage points must have no individual border: '+JSON.stringify(p));
+  if(pointStyle.outline!=='none'||pointStyle.border!=='none')
+    fail(width+'px Gamboo point value must have no individual border: '+JSON.stringify(pointStyle));
+  const pointActions=await page.locator('.point-actions > a.point-action').evaluateAll(nodes=>
+    nodes.map(el=>{
+      const a=el.getBoundingClientRect(),cs=getComputedStyle(el);
+      return {name:el.textContent.trim(),href:el.getAttribute('href'),
+        x:a.x,y:a.y,w:a.width,h:a.height,display:cs.display,
+        font:cs.fontSize, border:cs.borderTopWidth};
+    }));
+  const expectedActions=[
+    ['Gambooポイント履歴','https://gamboo.jp/point/'],
+    ['現金に交換','https://gamboo.jp/point/exchange/'],
+    ['デルカに交換','https://gamboo.jp/point/exchange/deruca/'],
+    ['景品に交換','https://gamboo.jp/point/topics/?tid=goods-exchange'],
+    ['ウインに交換','https://gamboo.jp/point/exchange/winpoint/'],
+    ['Pexポイントに交換','https://gamboo.jp/point/exchange/pex/']
+  ];
+  if(pointActions.length!==6 ||
+     pointActions.some((a,i)=>a.name!==expectedActions[i][0]||
+       a.href!==expectedActions[i][1]||a.h<60||a.w<60||
+       a.font!=='12px'||a.border!=='1px') ||
+     Math.abs(pointActions[0]?.y-pointActions[1]?.y)>1 ||
+     Math.abs(pointActions[1]?.y-pointActions[2]?.y)>1 ||
+     Math.abs(pointActions[3]?.y-pointActions[4]?.y)>1 ||
+     Math.abs(pointActions[4]?.y-pointActions[5]?.y)>1 ||
+     !(pointActions[3]?.y>pointActions[0]?.y+20) ||
+     !(pointActions[2]?.x>pointActions[1]?.x && pointActions[1]?.x>pointActions[0]?.x))
+    fail(width+'px points shortcuts must form exactly two rows of three linked buttons: '+JSON.stringify(pointActions));
+
   for (const sport of ['auto','keirin']) {
     await page.locator('.os-tab[data-os="'+sport+'"]').click();
     const active=await page.locator('.os-panel.on').getAttribute('data-os');
@@ -321,14 +359,14 @@ async function checkMyPage(page, width) {
     if(active!==sport || selected!=='true')
       fail(width+'px favourites tab failed for '+sport+' (panel '+active+', selected '+selected+')');
   }
-  const controls=await page.locator('.oshi-act, .os-panel.on .os-btn, .point-use > span')
+  const controls=await page.locator('.oshi-act, .os-panel.on .os-btn')
     .evaluateAll(nodes=>nodes.map(el=>{
       const st=getComputedStyle(el);
       return {height:el.getBoundingClientRect().height,
         radius:st.borderRadius,weight:st.fontWeight,font:st.fontSize,
         border:st.borderTopWidth,bg:st.backgroundColor};
     }));
-  if(controls.length!==5 || controls.some(c=>
+  if(controls.length!==4 || controls.some(c=>
       c.height<40 || c.radius!=='8px' || c.weight!=='600' || c.font!=='14px' ||
       c.border!=='1px' || c.bg!=='rgb(255, 255, 255)'))
     fail(width+'px canonical profile control styles mismatch: '+JSON.stringify(controls));
