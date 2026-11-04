@@ -15,25 +15,31 @@
 
 /* Inset avatar on a white identity card with a restrained gold accent line. */
 .user-card { margin:var(--space-section); padding:0; background:var(--c-surface); border:var(--line-normal); border-radius:var(--r-md); box-shadow:var(--e1); overflow:hidden; }
-.user-card-top { display:flex; align-items:center; gap:var(--space-section); min-height:72px; padding:var(--space-section) var(--space-content); background:var(--c-surface); border-top:var(--line-emphasis-width) solid var(--c-primary); border-bottom:var(--line-normal); }
+.user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-14)) minmax(0, 1fr); align-items:center; column-gap:var(--space-section); row-gap:var(--space-10); padding:var(--space-section) var(--space-content); background:var(--c-surface); border-top:var(--line-emphasis-width) solid var(--c-primary); border-bottom:var(--line-normal); }
 .user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-14)); height:calc(var(--h-control) + var(--space-14)); flex:0 0 calc(var(--h-control) + var(--space-14)); overflow:hidden; border-radius:var(--r-md); background:var(--c-primary); box-shadow:var(--e1); color:var(--c-primary-d); }
 .user-avatar-photo { display:block; width:100%; height:100%; object-fit:cover; }
 .user-avatar [hidden] { display:none; }
-.user-name { flex:1 1 0; min-width:0; font-size:var(--fs-18); font-weight:var(--fw-strong); line-height:1.2; overflow-wrap:anywhere; color:var(--c-text); }
-@media (max-width:359px){ .user-name { font-size:var(--fs-14); } }
-/* Profile shortcut uses the exact shared campaign-action button properties.
-   Only its horizontal inset is reduced to fit beside the name at 296px. */
-.user-card-top .profile-shortcut {
-  flex: 0 0 auto;
-  padding-inline: var(--space-card);
-  text-align: center;
+.user-name { grid-column:2; min-width:0; font-size:var(--fs-18); font-weight:var(--fw-strong); line-height:1.2; overflow-wrap:anywhere; color:var(--c-text); }
+
+/* The two quick links occupy their own row so neither can collide with the name.
+   Campaign .cp-btn supplies the canonical visual style without duplication. */
+.user-card-actions {
+  display:grid;
+  grid-column:1 / -1;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--space-card);
+}
+.user-card-actions .user-card-action {
+  display:flex;
+  width:100%;
+  min-width:0;
+  align-items:center;
+  justify-content:center;
+  padding-inline:var(--space-card);
 }
 .user-points { display:block; padding:0 var(--space-content); background:var(--c-surface); }
 .pt3-row + .pt3-row { border-top:var(--line-normal); }
 .pt3-row.point-expiring { min-height:var(--tap-dense); }
-.point-expiring .point-label { color:var(--c-sub); font-size:var(--fs-14); font-weight:var(--fw-normal); }
-.point-expiring .point-value { color:var(--c-error); font-size:var(--fs-14); font-weight:var(--fw-strong); font-family:var(--ff-ui); white-space:nowrap; }
-.point-expiring .unit { color:var(--c-error); font-size:var(--fs-12); font-weight:var(--fw-strong); }
 .pt3-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-10); min-height:var(--h-control); padding:0; }
 .point-label { flex:1; min-width:0; }
 .point-value { text-align:right; }
@@ -77,11 +83,6 @@
 
 
 /* One sport selector controls both featured and regular favorites. */
-.favorite-intro {
-  padding:var(--space-2) var(--space-content);
-  font-size:var(--fs-12);
-  color:var(--c-sub);
-}
 .favorites-unified { margin-top:var(--space-card); }
 .favorite-group { padding:var(--space-10) var(--space-content); }
 .favorite-group + .favorite-group { border-top:var(--line-normal); }
@@ -96,7 +97,6 @@
   font-weight:var(--fw-strong);
   color:var(--c-text);
 }
-.favorite-group-heading small { font-size:var(--fs-12); color:var(--c-sub); font-weight:var(--fw-normal); }
 .favorite-super-content { display:flex; align-items:center; gap:var(--space-section); }
 .favorite-person { flex:1 1 auto; min-width:0; }
 .favorite-person-name { font-size:var(--fs-16); font-weight:var(--fw-strong); }
