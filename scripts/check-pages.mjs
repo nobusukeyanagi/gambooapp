@@ -734,58 +734,73 @@ async function checkPredictionSort(page, width, isAutorace) {
       (initialCurrent.canScroll &&
         (initialCurrent.currentLeft < initialCurrent.clearance - 2 || !initialCurrent.pastHidden)))
     fail(width + 'px current race must start right of left arrow: ' + JSON.stringify(initialCurrent));
-  // A venue name and its complete descriptor, including night/morning and
-  // Girls, remain a single unbroken line at all three mobile widths.
+  // All heading fields occupy one line. The rebate must sit at the right edge.
   const headers=await page.locator('.venue-card .venue-header').evaluateAll(nodes=>
     nodes.map(header=>{
-      const venue=header.closest('.venue-card').dataset.venue;
-      const title=header.querySelector(':scope > .venue-title');
+      const line=header.querySelector(':scope > .venue-header-line');
+      const title=line?.querySelector(':scope > .venue-title');
+      const badge=line?.querySelector(':scope > .grade-badge');
       const name=title?.querySelector('.venue-name');
       const meta=title?.querySelector('.venue-meta');
       const day=meta?.querySelector('.venue-day');
-      const nameBox=name?.getBoundingClientRect();
-      const metaBox=meta?.getBoundingClientRect();
-      const dayBox=day?.getBoundingClientRect();
-      const bounds=header.getBoundingClientRect();
-      const logo=header.querySelector(':scope > .rebate-logo');
-      const logoBox=logo?.getBoundingClientRect();
-      const rows=logo?[...logo.querySelectorAll('.rebate-label > span')]:[];
-      const rowRects=rows.map(el=>el.getBoundingClientRect());
-      const girls=meta?.querySelector('.venue-girls')?.getBoundingClientRect();
-      return {venue,day:day?.textContent?.trim(),text:meta?.textContent?.trim(),
-        titlePresent:!!title && title.parentElement===header,
-        dayRight:!!dayBox && !!nameBox && dayBox.left>=nameBox.right-1,
-        together:!!metaBox && !!dayBox &&
-          dayBox.top>=metaBox.top-2 && dayBox.bottom<=metaBox.bottom+2 &&
-          (!girls || (girls.top>=metaBox.top-2 && girls.bottom<=metaBox.bottom+2)),
-        noWrap:meta?getComputedStyle(meta).whiteSpace==='nowrap':false,
-        fits:header.scrollWidth<=header.clientWidth+1 &&
-          (!metaBox || metaBox.right<=bounds.right+1) &&
-          (!title || title.scrollWidth<=title.clientWidth+1),
-        logoPresent:!!logo,logoLabel:logo?.textContent.trim(),
-        logoSymbol:logo?.querySelector('use')?.getAttribute('href'),
+      const heart=meta?.querySelector('.venue-girls');
+      const logo=line?.querySelector(':scope > .rebate-logo');
+      const label=logo?.querySelector('.rebate-label');
+      const hb=header.getBoundingClientRect();
+      const lb=line?.getBoundingClientRect();
+      const nb=name?.getBoundingClientRect();
+      const mb=meta?.getBoundingClientRect();
+      const db=day?.getBoundingClientRect();
+      const rb=logo?.getBoundingClientRect();
+      const boxes=[badge,name,meta,day,heart,logo].filter(Boolean)
+        .map(el=>el.getBoundingClientRect());
+      const style=getComputedStyle(header);
+      const paddingRight=parseFloat(style.paddingRight);
+      const available=header.clientWidth-parseFloat(style.paddingLeft)-paddingRight;
+      const scale=Number(header.dataset.fitScale);
+      return {venue:header.closest('.venue-card').dataset.venue,
+        title:!!title,badge:!!badge,name:!!name,
+        day:day?.textContent?.trim(),
+        label:logo?.textContent?.trim(),hasLogo:!!logo,
+        symbol:logo?.querySelector('use')?.getAttribute('href'),
         logoColor:logo?getComputedStyle(logo).color:null,
-        logoBelow:!logoBox || (logoBox.top>=metaBox.bottom-2 &&
-          logoBox.right<=bounds.right+1),
-        logoLines:rows.map(el=>el.textContent.trim()),
-        logoLineBreak:rowRects.length===2 && rowRects[0].bottom<=rowRects[1].top+1};
+        logoSingle:!label||getComputedStyle(label).flexDirection==='row',
+        dayRight:!!db&&!!nb&&db.left>=nb.right-1,
+        allOneLine:!!nb&&boxes.every(box=>
+          Math.abs((box.top+box.bottom-nb.top-nb.bottom)/2)<=6),
+        nowrap:meta?getComputedStyle(meta).whiteSpace==='nowrap':false,
+        fits:!!lb&&lb.left>=hb.left-1&&lb.right<=hb.right-1 &&
+          (!mb||mb.right<=lb.right+1),
+        rightAligned:!rb||Math.abs(rb.right-(hb.right-paddingRight))<=2,
+        scaleOk:!!line&&Number.isFinite(scale)&&scale>0&&scale<=1.001&&
+          line.scrollWidth*scale<=available+2
+      };
     }));
-  if(headers.length!==(isAutorace?2:8) || headers.some(h=>
-      !h.titlePresent || !h.day || !h.dayRight || !h.together ||
-      !h.noWrap || !h.fits))
-    fail(width+'px meeting day, session and Girls must stay on one line next to the name: '+
+  if(headers.length!==(isAutorace?2:8)||headers.some(h=>
+      !h.title||!h.badge||!h.name||!h.day||!h.dayRight||
+      !h.allOneLine||!h.nowrap||!h.fits||!h.rightAligned||
+      !h.logoSingle||!h.scaleOk))
+    fail(width+'px heading must fit grade, venue, day, session, Girls and right rebate in one line: '+
       JSON.stringify(headers));
   if (!isAutorace) {
-    const expected=new Set(['防府','久留米','小田原']);
-    if(headers.some(h=>expected.has(h.venue)
-       ? !h.logoPresent || h.logoLabel!=='決勝5%還元' ||
-         !h.logoSymbol?.endsWith('#nav-campaign') ||
-         h.logoColor!=='rgb(134, 115, 58)' ||
-         !h.logoBelow || h.day!=='最終日' ||
-         h.logoLines.join('|')!=='決勝|5%還元' || !h.logoLineBreak
-       : h.logoPresent))
-      fail(width+'px finale refund label must stay at header right without splitting day/period: '+
+    const eligible=new Set(['防府','久留米','小田原']);
+    if(headers.some(h=>eligible.has(h.venue)
+       ? !h.hasLogo||h.label!=='決勝5%還元'||
+         !h.symbol?.endsWith('#nav-campaign')||
+         h.logoColor!=='rgb(134, 115, 58)'||h.day!=='最終日'
+       : h.hasLogo))
+      fail(width+'px keirin three rebate venues must have right-aligned icon: '+
         JSON.stringify(headers));
+  } else {
+    if(headers.some(h=>h.venue==='浜松'
+       ? !h.hasLogo||h.label!=='5%還元'||
+         !h.symbol?.endsWith('#nav-campaign')||
+         h.logoColor!=='rgb(134, 115, 58)'
+       : h.hasLogo))
+      fail(width+'px autorace SG venue refund must be right-aligned: '+
+        JSON.stringify(headers));
+  }
+  if (!isAutorace) {
     const wins = page.locator('.comment-row .cr-streak');
     const labels = await wins.allTextContents();
     if (labels.length !== 5 ||
@@ -900,6 +915,23 @@ async function checkPredictionSort(page, width, isAutorace) {
       day:card.querySelector('.venue-day')?.textContent?.trim(),
       dayRight:card.querySelector('.venue-day')?.getBoundingClientRect().left >=
         card.querySelector('.venue-name')?.getBoundingClientRect().right - 1,
+      headerFit:(()=>{
+        const header=card.querySelector('.venue-header');
+        const line=header?.querySelector('.venue-header-line');
+        return !!line&&line.getBoundingClientRect().right<=header.getBoundingClientRect().right-1;
+      })(),
+      refundLabel:card.querySelector('.venue-header .rebate-logo')?.textContent?.trim()||'',
+      refundRight:(()=>{
+        const header=card.querySelector('.venue-header');
+        const logo=header.querySelector('.rebate-logo');
+        return !logo||Math.abs(logo.getBoundingClientRect().right-
+          (header.getBoundingClientRect().right-
+            parseFloat(getComputedStyle(header).paddingRight)))<=2;
+      })(),
+      rebateRaces:[...card.querySelectorAll('.rchip:has(> .rchip-rebate)')].map(chip=>
+        Number(chip.dataset.raceNumber)),
+      campaignRaces:[...card.querySelectorAll('.rchip:has(.rchip-campaign)')].map(chip=>
+        Number(chip.dataset.raceNumber)),
       races:card.querySelectorAll('.rchip').length,
       statuses:[...new Set([...card.querySelectorAll('.rchip small')].map(el=>el.textContent.trim()))],
       forecastRows:card.querySelectorAll('.comment-row').length,
@@ -908,11 +940,23 @@ async function checkPredictionSort(page, width, isAutorace) {
       arrowsReady:card.querySelector('.hscroll')?.dataset.arrowsReady
     })));
     const expected=expectedSchedules[date];
+    const promoByDay=isAutorace?{
+      '2026-11-02':{'浜松':Array.from({length:12},(_,i)=>i+1)},
+      '2026-11-04':{}
+    }:{
+      '2026-11-02':{'熊本':[7]},
+      '2026-11-04':{'豊橋':[10,11,12],'静岡':[6,7],'奈良':[7],'武雄':[6,7]}
+    };
     const names=actual.map(x=>x.venue).sort().join('|');
     if(names!==Object.keys(expected).sort().join('|')||
        actual.some(v=>
          v.grade!==expected[v.venue]?.[0] ||
          !v.day?.startsWith(expected[v.venue]?.[1]) || !v.dayRight ||
+         !v.headerFit || !v.refundRight ||
+         v.rebateRaces.join('|')!==(promoByDay[date][v.venue]||[]).join('|') ||
+         v.campaignRaces.join('|')!==(promoByDay[date][v.venue]||[]).join('|') ||
+         v.refundLabel!==(promoByDay[date][v.venue]?.length?
+           (isAutorace?'5%還元':'決勝5%還元'):'') ||
          v.races!==expected[v.venue]?.[2] ||
          v.statuses.join('|')!==(date<'2026-11-03'?'確定':'発売前') ||
          v.forecastRows!==0 || v.featuredIcons!==0 ||
