@@ -40,7 +40,7 @@
   padding: var(--space-10) var(--space-content) var(--space-content);
   background: var(--c-surface);
 }
-.point-action {
+.point-actions .point-action {
   flex-direction: column;
   min-width: 0;
   min-height: calc(var(--h-control) + var(--fs-20));
