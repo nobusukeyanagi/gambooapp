@@ -1257,7 +1257,7 @@
       .tab-item {
         gap: 2px;
         font-size: var(--fs-12);
-        font-weight: var(--fw-strong);
+        
         letter-spacing: normal;
         white-space: nowrap;
         min-width: 0;
