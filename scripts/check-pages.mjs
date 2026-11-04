@@ -632,26 +632,36 @@ async function checkPredictionSort(page, width, isAutorace) {
     }));
   const topRebates=await page.locator('.venue-card .rchip[data-race-type]').evaluateAll(nodes=>
     nodes.map(chip=>{
-      const hasCampaign=!!chip.querySelector('.rchip-campaign');
-      const label=chip.querySelector(':scope > .rchip-rebate');
-      const style=label?getComputedStyle(label):null;
-      const rect=label?.getBoundingClientRect();
-      const button=chip.getBoundingClientRect();
-      return {hasCampaign,count:chip.querySelectorAll(':scope > .rchip-rebate').length,
-        text:label?.textContent.trim(),color:style?.color,font:style?.fontSize,
-        row:style?.gridRowStart,display:style?.display,
-        aligned:rect?Math.abs((rect.left+rect.right-button.left-button.right)/2):null,
-        countdown:!!chip.querySelector(':scope > .rchip-warning')};
+      const gift=!!chip.querySelector('.rchip-campaign');
+      const band=chip.querySelector(':scope > .rchip-rebate');
+      const st=band?getComputedStyle(band):null;
+      const border=getComputedStyle(chip);
+      const rect=band?.getBoundingClientRect();
+      const box=chip.getBoundingClientRect();
+      return {gift,count:chip.querySelectorAll(':scope > .rchip-rebate').length,
+        text:band?.textContent.trim(),background:st?.backgroundColor,color:st?.color,
+        font:st?.fontSize,weight:st?.fontWeight,position:st?.position,
+        height:rect?.height,border:border.borderTopColor,
+        borderWidth:border.borderTopWidth,
+        inset:rect?{top:rect.top-box.top,left:rect.left-box.left,
+          right:box.right-rect.right}:null,
+        centered:rect?Math.abs(rect.left+rect.right-box.left-box.right)/2:null};
     }));
-  if(topRebates.some(v=>v.count!==(v.hasCampaign?1:0) ||
-      (v.hasCampaign && (v.text!=='5%還元' ||
-        v.color!=='rgb(134, 115, 58)' || v.font!=='12px' || v.row!=='1' ||
-        v.aligned>1 || (v.countdown && v.display!=='none')))))
-    fail(width+'px first-row 5% rebate missing or misstyled: '+
-      JSON.stringify(topRebates.filter(v=>v.hasCampaign||v.count)));
+  if(topRebates.some(x=>x.count!==(x.gift?1:0) ||
+     (x.gift && (x.text!=='5%還元' ||
+       x.background!=='rgb(134, 115, 58)' || x.color!=='rgb(255, 255, 255)' ||
+       x.font!=='12px' || x.weight!=='600' || x.position!=='absolute' ||
+       x.height!==18 || x.border!=='rgb(134, 115, 58)' ||
+       x.borderWidth!=='3px' || x.centered>1 ||
+       Math.abs(x.inset.top-3)>1 || Math.abs(x.inset.left-3)>1 ||
+       Math.abs(x.inset.right-3)>1))))
+    fail(width+'px gold rebate frame and full-width white-on-gold band mismatch: '+
+      JSON.stringify(topRebates.filter(x=>x.gift||x.count)));
   // Temporary DOM-only warning fixture: urgent text must hide the 5% rebate.
   const countdownPriority=await page.locator('.rchip:has(.rchip-campaign)').first().evaluate(chip=>{
     const rebate=chip.querySelector('.rchip-rebate');
+    const gift=chip.querySelector('.rchip-campaign');
+    const goldBorder=getComputedStyle(chip).borderTopColor;
     const warning=document.createElement('span');
     warning.className='rchip-warning';
     warning.textContent='5分前';
@@ -660,13 +670,20 @@ async function checkPredictionSort(page, width, isAutorace) {
     const hidden=getComputedStyle(rebate).display==='none';
     const styles=getComputedStyle(warning);
     const shown=styles.display!=='none' && styles.backgroundColor==='rgb(165, 55, 76)' &&
-      styles.color==='rgb(255, 255, 255)' && styles.gridRowStart==='auto';
+      styles.color==='rgb(255, 255, 255)' && styles.position==='absolute';
+    const redBorder=getComputedStyle(chip).borderTopColor;
+    const giftVisible=getComputedStyle(gift).display!=='none' &&
+      getComputedStyle(gift.parentElement).gridRowStart==='4';
     warning.remove();
     chip.classList.remove('next','soon');
-    return {hidden,shown,restored:getComputedStyle(rebate).display!=='none'};
+    return {goldBorder,redBorder,hidden,shown,giftVisible,
+      restored:getComputedStyle(rebate).display!=='none'};
   });
-  if(!countdownPriority.hidden || !countdownPriority.shown || !countdownPriority.restored)
-    fail(width+'px countdown must override final-race rebate: '+
+  if(countdownPriority.goldBorder!=='rgb(134, 115, 58)' ||
+      countdownPriority.redBorder!=='rgb(165, 55, 76)' ||
+      !countdownPriority.giftVisible ||
+      !countdownPriority.hidden || !countdownPriority.shown || !countdownPriority.restored)
+    fail(width+'px urgent countdown must replace gold frame/band while retaining gift: '+
       JSON.stringify(countdownPriority));
   const expectedFinals=isAutorace?1:5;
   if (finalIcons.filter(r=>r.isFinal).length !== expectedFinals ||
@@ -704,45 +721,56 @@ async function checkPredictionSort(page, width, isAutorace) {
       (initialCurrent.canScroll &&
         (initialCurrent.currentLeft < initialCurrent.clearance - 2 || !initialCurrent.pastHidden)))
     fail(width + 'px current race must start right of left arrow: ' + JSON.stringify(initialCurrent));
+  // Name and day must sit on the same row for all SCR-02 venue headers.
+  const headers=await page.locator('.venue-card .venue-header').evaluateAll(nodes=>
+    nodes.map(header=>{
+      const venue=header.closest('.venue-card').dataset.venue;
+      const title=header.querySelector(':scope > .venue-title');
+      const name=title?.querySelector('.venue-name');
+      const day=title?.querySelector('.venue-day');
+      const nameBox=name?.getBoundingClientRect();
+      const dayBox=day?.getBoundingClientRect();
+      const bounds=header.getBoundingClientRect();
+      const logo=header.querySelector(':scope > .rebate-logo');
+      const logoBox=logo?.getBoundingClientRect();
+      const extra=header.querySelector(':scope > .venue-extra');
+      const extraBox=extra?.getBoundingClientRect();
+      const rows=logo?[...logo.querySelectorAll('.rebate-label > span')]:[];
+      const rowRects=rows.map(el=>el.getBoundingClientRect());
+      return {venue,day:day?.textContent?.trim(),
+        titlePresent:!!title && title.parentElement===header,
+        dayRight:!!dayBox && !!nameBox && dayBox.left>=nameBox.right-1,
+        sameRow:!!dayBox && !!nameBox && dayBox.top>=nameBox.top-2 &&
+          dayBox.bottom<=nameBox.bottom+3,
+        noWrap:day?getComputedStyle(day).whiteSpace==='nowrap':false,
+        within:header.scrollWidth<=header.clientWidth+1 &&
+          (!dayBox || dayBox.right<=bounds.right+1),
+        extraBelow:!extraBox || extraBox.top>=nameBox.bottom-2,
+        logoPresent:!!logo,
+        logoLabel:logo?.textContent.trim(),
+        logoSymbol:logo?.querySelector('use')?.getAttribute('href'),
+        logoColor:logo?getComputedStyle(logo).color:null,
+        logoRight:!logoBox || (logoBox.left>=dayBox.right-1 &&
+          logoBox.right<=bounds.right+1),
+        logoLines:rows.map(el=>el.textContent.trim()),
+        logoLineBreak:rowRects.length===2 && rowRects[0].bottom<=rowRects[1].top+1};
+    }));
+  if(headers.length!==(isAutorace?2:8) || headers.some(h=>
+      !h.titlePresent || !h.day || !h.dayRight || !h.sameRow ||
+      !h.noWrap || !h.within || !h.extraBelow))
+    fail(width+'px venue day must always align right of venue name: '+
+      JSON.stringify(headers));
   if (!isAutorace) {
-    const rebate = await page.locator('.venue-card .venue-header').evaluateAll(headers =>
-      headers.map(header => {
-        const venue = header.closest('.venue-card').dataset.venue;
-        const mark = header.querySelector(':scope > .rebate-logo');
-        const rect = header.getBoundingClientRect();
-        const logoRect = mark?.getBoundingClientRect();
-        const nameRect = header.querySelector('.venue-name').getBoundingClientRect();
-        const day=header.querySelector('.venue-day');
-        const dayRect=day?.getBoundingClientRect();
-        const meta=header.querySelector('.venue-meta');
-        const rows=mark?[...mark.querySelectorAll('.rebate-label > span')]:[];
-        const rowRects=rows.map(el=>el.getBoundingClientRect());
-        return {venue, hasMark:!!mark, label:mark?.textContent?.trim(),
-          symbol:mark?.querySelector('use')?.getAttribute('href'),
-          color:mark?getComputedStyle(mark).color:null,
-          within:!mark || logoRect.left >= nameRect.right - 1 &&
-            logoRect.right <= rect.right + 1,
-          dayText:day?.textContent?.trim(),
-          dayNoWrap:day?getComputedStyle(day).whiteSpace==='nowrap' &&
-            getComputedStyle(meta).whiteSpace==='nowrap' &&
-            dayRect.height<=parseFloat(getComputedStyle(day).lineHeight)+1:false,
-          dayWithin:!day || dayRect.right<=rect.right+1,
-          rebateRows:rows.map(el=>el.textContent.trim()),
-          linesDistinct:rowRects.length===2 &&
-            rowRects[0].bottom<=rowRects[1].top+1,
-          horizontalFit:header.scrollWidth<=header.clientWidth+1};
-      }));
     const expected=new Set(['防府','久留米','小田原']);
-    if (rebate.length !== 8 || rebate.some(r => expected.has(r.venue)
-       ? !r.hasMark || r.label !== '決勝5%還元' ||
-         !r.symbol?.endsWith('#nav-campaign') ||
-         r.color !== 'rgb(134, 115, 58)' || !r.within ||
-         r.dayText !== '最終日' || !r.dayNoWrap || !r.dayWithin ||
-         r.rebateRows.join('|')!=='決勝|5%還元' ||
-         !r.linesDistinct || !r.horizontalFit
-       : r.hasMark))
-      fail(width+'px final 5% rebate must appear in the header right of only the three venues: '+
-        JSON.stringify(rebate));
+    if(headers.some(h=>expected.has(h.venue)
+       ? !h.logoPresent || h.logoLabel!=='決勝5%還元' ||
+         !h.logoSymbol?.endsWith('#nav-campaign') ||
+         h.logoColor!=='rgb(134, 115, 58)' ||
+         !h.logoRight || h.day!=='最終日' ||
+         h.logoLines.join('|')!=='決勝|5%還元' || !h.logoLineBreak
+       : h.logoPresent))
+      fail(width+'px finale refund label must remain right of name/day: '+
+        JSON.stringify(headers));
     const wins = page.locator('.comment-row .cr-streak');
     const labels = await wins.allTextContents();
     if (labels.length !== 5 ||
@@ -854,7 +882,9 @@ async function checkPredictionSort(page, width, isAutorace) {
     const actual=await page.locator('.scroll-area > .venue-card').evaluateAll(cards=>cards.map(card=>({
       venue:card.dataset.venue,
       grade:card.querySelector('.grade-badge')?.textContent?.trim(),
-      day:card.querySelector('.venue-meta')?.textContent?.trim(),
+      day:card.querySelector('.venue-day')?.textContent?.trim(),
+      dayRight:card.querySelector('.venue-day')?.getBoundingClientRect().left >=
+        card.querySelector('.venue-name')?.getBoundingClientRect().right - 1,
       races:card.querySelectorAll('.rchip').length,
       statuses:[...new Set([...card.querySelectorAll('.rchip small')].map(el=>el.textContent.trim()))],
       forecastRows:card.querySelectorAll('.comment-row').length,
@@ -867,7 +897,7 @@ async function checkPredictionSort(page, width, isAutorace) {
     if(names!==Object.keys(expected).sort().join('|')||
        actual.some(v=>
          v.grade!==expected[v.venue]?.[0] ||
-         !v.day?.startsWith(expected[v.venue]?.[1]) ||
+         !v.day?.startsWith(expected[v.venue]?.[1]) || !v.dayRight ||
          v.races!==expected[v.venue]?.[2] ||
          v.statuses.join('|')!==(date<'2026-11-03'?'確定':'発売前') ||
          v.forecastRows!==0 || v.featuredIcons!==0 ||
