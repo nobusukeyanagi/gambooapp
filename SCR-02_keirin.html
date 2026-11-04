@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./assets/venue-list.css?v=46" />
     <link rel="stylesheet" href="./assets/venue-sort.css?v=11" />
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
-    <link rel="stylesheet" href="./assets/ui-consistency.css?v=27" />
+    <link rel="stylesheet" href="./assets/ui-consistency.css?v=28" />
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><defs><symbol id="ic-chevron" viewBox="0 0 24 24"><path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></symbol><symbol id="ic-chevronl" viewBox="0 0 24 24"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></symbol></defs></svg>
@@ -23,12 +23,19 @@
         <div class="screen-label">SCR-02競輪予想</div>
         <div class="phone">
           <div class="phone-inner">
-            <div class="status-bar">
-              <span>12:00</span>
-              <span>5G ●●●</span>
-            </div>
-            <div class="page-header">
-              <div class="page-header-title"><svg class="ic header-race-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-keirin"></use></svg>競輪予想</div>
+            <div class="page-header shared-app-header">
+              <div class="header-main">
+                
+                <div class="page-header-title"><svg class="ic header-race-icon" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-keirin"></use></svg><span class="header-title-text">競輪予想</span></div>
+              </div>
+              <div class="header-actions">
+                <div class="icon-btn header-notification" role="button" tabindex="0" aria-label="通知">
+                  <svg class="ic" aria-hidden="true"><use href="./assets/header-icons.svg?v=1#header-bell"></use></svg><span>通知</span><span class="badge" aria-hidden="true"></span>
+                </div>
+                <div class="cta-btn header-deposit" role="button" tabindex="0" aria-label="入金">
+                  <svg class="ic" aria-hidden="true"><use href="./assets/header-icons.svg?v=1#header-card"></use></svg><span>入金</span>
+                </div>
+              </div>
             </div>
             <div class="date-tabs" role="tablist" aria-label="開催日">
               <div class="date-tab" role="tab" data-date="2026-11-02" aria-selected="false" tabindex="-1" title="2026年11月2日（月）">昨日</div>
