@@ -39,7 +39,6 @@
 }
 .user-points { display:block; padding:0 var(--space-content); background:var(--c-surface); }
 .pt3-row + .pt3-row { border-top:var(--line-normal); }
-.pt3-row.point-expiring { min-height:var(--tap-dense); }
 .pt3-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-10); min-height:var(--h-control); padding:0; }
 .point-label { flex:1; min-width:0; }
 .point-value { text-align:right; }
