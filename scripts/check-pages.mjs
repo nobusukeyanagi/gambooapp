@@ -292,6 +292,20 @@ async function checkPredictionSort(page, width, isAutorace) {
     .evaluateAll(nodes => nodes.map(n => getComputedStyle(n).borderTopColor));
   if (sortBorders.some(c => c !== 'rgb(208, 212, 214)'))
     fail(width + 'px white sort button border mismatches home venue');
+  // Regression of 3px urgent border, 44px arrow target and 14px sort label.
+  const urgent = await page.locator('.venue-card .rchip.next.soon').evaluateAll(nodes =>
+    nodes.map(el => ({width:getComputedStyle(el).borderTopWidth,color:getComputedStyle(el).borderTopColor})));
+  if (urgent.some(s => s.width !== '3px' || s.color !== 'rgb(165, 55, 76)'))
+    fail(width + 'px urgent border mismatch: ' + JSON.stringify(urgent));
+  const arrowWidths = await page.locator('.venue-card .hscroll > .hscroll-cue, .venue-card .hscroll > .hscroll-cue-l')
+    .evaluateAll(nodes => nodes.map(el => getComputedStyle(el).width));
+  if (arrowWidths.some(v => v !== '44px'))
+    fail(width + 'px scroll arrows must be 44px wide: ' + JSON.stringify(arrowWidths));
+  const sortSizes = await buttons.evaluateAll(nodes => nodes.map(el => getComputedStyle(el).fontSize));
+  if (sortSizes.some(v => v !== '14px'))
+    fail(width + 'px sort buttons must be 14px: ' + JSON.stringify(sortSizes));
+  if (isAutorace && await page.locator('.grade-badge.grade-f2').filter({hasText:'普通'}).count())
+    fail(width + 'px normal grade incorrectly classified as F2');
   const raceLinks = page.locator('.venue-card a.rchip');
   if (!await raceLinks.count()) fail(width + 'px linked race buttons missing');
   if (!/SCR-0[34]_racecard/.test(await raceLinks.first().getAttribute('href')))

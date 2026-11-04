@@ -85,7 +85,7 @@ body { font-weight: var(--fw-normal); }
   color: var(--c-primary-d);
 }
 .bottom-tab a.tab-item:focus-visible {
-  outline: 2px solid var(--c-primary-d);
+  outline: var(--line-focus);
   outline-offset: -2px;
 }
 

@@ -11,7 +11,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 1 1 0;
+  flex: 1 1 auto;
   min-width: 0;
   min-height: var(--tap-min);
   padding: 0 var(--space-2);
@@ -43,7 +43,4 @@
   outline-offset: var(--space-2);
 }
 
-/* Preserve three equal tappable controls on narrower smartphones. */
-@media (max-width: 359px) {
-  .venue-sort-options .chip { font-size: var(--fs-12); }
-}
+/* Preserve 14px labels at narrow viewport widths. */
