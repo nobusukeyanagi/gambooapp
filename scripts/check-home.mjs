@@ -414,6 +414,16 @@ function comparePNGs(current, baseline, key) {
 }
 
 async function checkInteractions(page, width) {
+  const oldButtons=await page.locator('.app-header.shared-app-header .header-actions > *').evaluateAll(nodes=>
+    nodes.map(el=>{const s=getComputedStyle(el),r=el.getBoundingClientRect();
+      return {width:r.width,height:r.height,padding:s.paddingLeft,
+        gap:s.columnGap,font:s.fontSize,icon:el.querySelector('svg')?.getBoundingClientRect().width};
+    }));
+  if(oldButtons.length!==2 ||
+     oldButtons.some(el=>el.width<80||el.height!==40||el.font!=='14px') ||
+     oldButtons[0].padding!=='8px' ||oldButtons[1].padding!=='10px' ||
+     oldButtons[0].icon!==20 ||oldButtons[1].icon!==18)
+    fail(width+'px restored original SCR-01 notification/deposit geometry mismatch: '+JSON.stringify(oldButtons));
   const header=page.locator('.app-header.shared-app-header');
   if(await header.count()!==1 ||
      (await header.locator('.header-title-text').innerText()).trim()!=='車券購入' ||
