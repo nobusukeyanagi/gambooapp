@@ -74,7 +74,7 @@
 .profile-race-icon:has(use[href$="#nav-auto"]) { width:calc(var(--fs-20) * 1.0833333); }
 .oshi-name { margin-bottom:var(--space-2); font-size:var(--fs-16); font-weight:var(--fw-strong); }
 .oshi-meta { font-size:var(--fs-12); color:var(--c-sub); }
-.oshi-act { margin-top:var(--space-7); }
+.oshi .oshi-act { margin-top:var(--space-7); }
 
 /* Favourites tabs, chips and actions. */
 .os-card { margin:var(--space-card) var(--space-10) var(--space-section); background:var(--c-surface); border:var(--line-normal); border-radius:var(--r-md); overflow:hidden; }
