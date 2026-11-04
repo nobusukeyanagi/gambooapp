@@ -4,7 +4,6 @@
   const pageSize = 20;
   const tabs = Array.from(document.querySelectorAll(".campaign-tab"));
   const list = document.getElementById("campaign-list");
-  const items = Array.from(list?.querySelectorAll(".cp-card") || []);
   const pagination = document.querySelector(".campaign-pagination");
   const prev = pagination?.querySelector('[data-page="prev"]');
   const next = pagination?.querySelector('[data-page="next"]');
@@ -16,6 +15,7 @@
   let page = 0;
 
   function render() {
+    const items = Array.from(list.querySelectorAll(".cp-card"));
     const filtered = items.filter((item) => item.dataset.status === status);
     const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
     page = Math.max(0, Math.min(page, totalPages - 1));

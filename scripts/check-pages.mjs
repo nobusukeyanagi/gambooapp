@@ -93,8 +93,9 @@ async function checkCampaignPage(page, width) {
   await closed.click();
   if (!await pagination.isVisible() || await closed.getAttribute('aria-selected') !== 'true')
     fail(width + 'px archive tab/pagination did not open');
-  const visibleClosed = await cards.evaluateAll(els => els.filter(el => !el.hidden));
-  if (visibleClosed.length !== 10 || visibleClosed.some(el => el.dataset.status !== 'closed'))
+  const visibleClosed = await cards.evaluateAll(els =>
+    els.filter(el => !el.hidden).map(el => el.dataset.status));
+  if (visibleClosed.length !== 10 || visibleClosed.some(status => status !== 'closed'))
     fail(width + 'px archive card filtering failed');
   const previous=page.locator('.campaign-page-arrow[data-page="prev"]');
   const next=page.locator('.campaign-page-arrow[data-page="next"]');
