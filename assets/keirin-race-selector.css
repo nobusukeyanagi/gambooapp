@@ -375,17 +375,27 @@
 }
 .race-detail-scroll .lineup-bar .lineup-row {
   margin: 0;
-  gap: 2px;
+  gap: var(--space-1);
   flex-wrap: nowrap;
   white-space: nowrap;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 .race-detail-scroll .lineup-bar .lineup-car {
   width: 20px;
   height: 20px;
-  flex: 0 0 20px;
+  flex: 1 1 16px;
+  min-width: 16px;
+  max-width: 20px;
   font-size: var(--fs-12);
 }
-.race-detail-scroll .lineup-bar .lineup-sep { margin: 0; }
+.race-detail-scroll .lineup-bar .lineup-sep {
+  flex: 0 0 auto;
+  font-size: 10px;
+  margin: 0;
+}
+.race-detail-scroll .lineup-bar .lineup-dir { flex: 0 0 auto; }
 .race-detail-scroll .aokei-paper-btn {
   flex: 0 0 80px;
   width: 80px;
