@@ -27,7 +27,7 @@
   min-width: 58px;
   text-align: center;
   white-space: nowrap;
-  font-size: var(--fs-14);
+  font-size: var(--fs-16);
   font-weight: var(--fw-strong);
   font-variant-numeric: tabular-nums;
 }
@@ -42,7 +42,7 @@
   text-align: left;
   white-space: normal;
   overflow-wrap: break-word;
-  font-size: var(--fs-14);
+  font-size: var(--fs-12);
   font-weight: var(--fw-normal);
   line-height: 1.35;
 }
