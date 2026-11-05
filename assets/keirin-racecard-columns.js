@@ -21,13 +21,13 @@
       sub("選手コメント","bl marutoku-comment-heading"),
       ...["競走得点","失違","逃","捲","差","マ","B","勝","2連対","3連対","着外"].map((s,i)=>
         sub(s,i===0?"bl recent-section-start":(i===1||i===7?"bl":""))),
-      ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり<br>平均/最高"].map((s,i)=>sub(s,i===0?"bl meeting-current-label meeting-section-start":"")),
+      ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり"].map((s,i)=>sub(s,i===0?"bl meeting-current-label meeting-section-start":"")),
       sub("並び","bl position-col position-current position-section-start"),
       ...placeGroups.flatMap((g)=>ranks.map((r,i)=>sub('<span class="position-group-name">'+escape(g)+'</span><span class="position-result-name">'+r+'</span>','position-col'+(i===0?' position-first':'')))),
       sub("イン粘り<br>回数","bl position-col position-count"),
       sub("追い上げ<br>回数","position-col position-count"),
-      sub("G指数","bl gindex-section-start mania-section-heading"),
-      sub("総合<br>評価","bl c-item mania-section-start"),
+      sub("G指数","bl gindex-section-start"),
+      sub("総合<br>評価","bl c-item mania-section-start mania-section-heading"),
       ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレード","競輪場","車番","同県選手"].map((s,i)=>
         sub('<button type="button" class="item-btn" data-item="'+i+'">'+s+'</button>','c-item'+(i===0?" bl":"")))
     ];
@@ -84,8 +84,9 @@
       '<td class="bl score">'+escape(rider.score)+'</td>'+
       rider.stats.map((v,k)=>'<td'+(k===0||k===6?' class="bl"':'')+'>'+escape(v)+'</td>').join("")+
       histories.map((v,k)=>renderMeeting(v,k)).join("")+
-      '<td class="meeting-cell meeting-avg">' + (rider.avgBest?.length ?
-        escape(rider.avgBest[0]) + "<br>/" + escape(rider.avgBest[1]) : "—") + "</td>" +
+      '<td class="meeting-cell meeting-avg">' + (rider.avgBest?.length === 2 ?
+        '<span class="meeting-avg-line">平均' + escape(rider.avgBest[0]) + '</span>' +
+        '<span class="meeting-avg-line">最高' + escape(rider.avgBest[1]) + '</span>' : "—") + "</td>" +
       '<td class="position-stat position-current position-first '+emphasis+'">'+escape(position.position)+'</td>'+
       buildCounts.join("")+
       '<td class="position-stat position-count bl">'+totals[0]+'</td>'+
