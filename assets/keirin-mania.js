@@ -200,29 +200,40 @@
 
   const wrap = inner.querySelector(".race-table-wrap");
   const table = wrap?.querySelector("table.mania-table");
+  const recentHeading = wrap?.querySelector(".recent-section-start");
+  const meetingHeading = wrap?.querySelector(".meeting-section-start");
+  const gIndexHeading = wrap?.querySelector(".gindex-section-start");
   const pointHeading = wrap?.querySelector(".marutoku-section-start");
   const commentHeading = wrap?.querySelector(".marutoku-comment-heading");
   const positionHeading = wrap?.querySelector(".position-section-start");
   const maniaHeading = wrap?.querySelector(".mania-section-start");
   const menuScroller = inner.querySelector(".info-tabs")?.closest(".hscroll-inner");
-  const raceTab = inner.querySelector('.info-tab[data-target="racecard"]');
+  const recentTab = inner.querySelector('.info-tab[data-target="recent"]');
+  const meetingTab = inner.querySelector('.info-tab[data-target="meeting"]');
+  const gIndexTab = inner.querySelector('.info-tab[data-target="gindex"]');
   const pointTab = inner.querySelector('.info-tab[data-target="marutoku"]');
   const commentTab = inner.querySelector('.info-tab[data-target="comment"]');
   const positionTab = inner.querySelector('.info-tab[data-target="position"]');
   const maniaTab = inner.querySelector('.info-tab[data-target="mania"]');
-  if (!wrap || !table || !pointHeading || !commentHeading || !positionHeading ||
-      !maniaHeading || !raceTab || !pointTab || !commentTab || !positionTab || !maniaTab) return;
+  if (!wrap || !table || !recentHeading || !meetingHeading || !gIndexHeading ||
+      !pointHeading || !commentHeading || !positionHeading || !maniaHeading ||
+      !recentTab || !meetingTab || !gIndexTab || !pointTab || !commentTab ||
+      !positionTab || !maniaTab) return;
 
   const tabsByName = {
-    racecard: raceTab, marutoku: pointTab,
-    comment: commentTab, position: positionTab, mania: maniaTab
+    recent: recentTab, meeting: meetingTab, marutoku: pointTab,
+    comment: commentTab, position: positionTab,
+    gindex: gIndexTab, mania: maniaTab
   };
   const headingsByName = {
+    recent: recentHeading, meeting: meetingHeading,
     marutoku: pointHeading, comment: commentHeading,
-    position: positionHeading, mania: maniaHeading
+    position: positionHeading, gindex: gIndexHeading,
+    mania: maniaHeading
   };
   let current = "";
   let navigationTarget = null;
+  let selectedByUser = null;
   const scrollBehavior = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
     ? "instant" : "smooth";
   const columnOffset = (heading) =>
@@ -235,7 +246,7 @@
     );
     if (!menuScroller) return;
     const active = tabsByName[name];
-    const scrollLeft = name === "racecard" ? 0 :
+    const scrollLeft = name === "recent" ? 0 :
       Math.max(0, active.offsetLeft - menuScroller.offsetLeft -
         Math.min(44, menuScroller.clientWidth / 5));
     menuScroller.scrollTo({
@@ -245,36 +256,44 @@
   }
   function scrollTableTo(name) {
     const maxLeft = Math.max(0, wrap.scrollWidth - wrap.clientWidth);
-    const offset = name === "racecard" ? 0 :
-      columnOffset(headingsByName[name]) - Math.min(70, wrap.clientWidth / 4);
+    const offset = columnOffset(headingsByName[name]) -
+      Math.min(70, wrap.clientWidth / 4);
     const left = Math.max(0, Math.min(maxLeft, offset));
     navigationTarget = left;
+    selectedByUser = name;
     selectTab(name, true);
     wrap.scrollTo({ left, behavior: scrollBehavior });
     if (Math.abs(wrap.scrollLeft - left) <= 2) navigationTarget = null;
   }
   function syncTab() {
-    // During a menu-initiated smooth scroll, keep the clicked menu selected.
-    // Without this guard, intermediate columns would override the selection.
+    // Retain the tapped menu while animated scrolling is in progress and
+    // after reaching the column (especially G-index, physically near the
+    // start but intentionally sixth in the menu order).
+    if (selectedByUser !== null) return;
     if (navigationTarget !== null) {
       if (Math.abs(wrap.scrollLeft - navigationTarget) > 2) return;
       navigationTarget = null;
     }
     const atRightEdge = wrap.scrollWidth - wrap.clientWidth - wrap.scrollLeft <= 12;
     const threshold = wrap.scrollLeft + Math.min(70, wrap.clientWidth / 4) + 12;
-    let name = "racecard";
+    let name = "recent";
     if (atRightEdge || threshold >= columnOffset(maniaHeading)) name = "mania";
     else if (threshold >= columnOffset(positionHeading)) name = "position";
     else if (threshold >= columnOffset(commentHeading)) name = "comment";
     else if (threshold >= columnOffset(pointHeading)) name = "marutoku";
+    else if (threshold >= columnOffset(meetingHeading)) name = "meeting";
     selectTab(name);
   }
   Object.entries(tabsByName).forEach(([name, tab]) => {
     tab.addEventListener("click", () => scrollTableTo(name));
   });
   // Manual gestures cancel the selection hold and resume automatic tab sync.
-  wrap.addEventListener("pointerdown", () => { navigationTarget = null; }, { passive: true });
-  wrap.addEventListener("wheel", () => { navigationTarget = null; }, { passive: true });
+  function clearManualSelection() {
+    navigationTarget = null;
+    selectedByUser = null;
+  }
+  wrap.addEventListener("pointerdown", clearManualSelection, { passive: true });
+  wrap.addEventListener("wheel", clearManualSelection, { passive: true });
   // Original source has three interchangeable values for each of the four
   // positions in the "イン粘り+追上" group. Preserve all three modes.
   const switchButton = inner.querySelector(".position-switch");
