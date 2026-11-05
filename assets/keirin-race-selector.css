@@ -174,12 +174,12 @@
   display: grid;
   grid-template-columns: 68px minmax(0, 1fr) 80px;
   grid-template-areas:
-    "number meeting meeting"
-    "number event event"
+    "number meeting live"
+    "number event live"
     "number kind live"
     "clock clock clock"
     "detail detail detail";
-  grid-template-rows: 24px 24px 40px auto auto;
+  grid-template-rows: 24px 24px 24px auto auto;
   column-gap: var(--space-card);
   row-gap: var(--space-2);
   min-width: 0;
@@ -342,6 +342,14 @@
 }
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live .ic {
   color: var(--c-surface);
+}
+
+/* SCR-03 menu arrows remain visible at both scroll extremes. */
+.race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l)[disabled] {
+  display: flex;
+  opacity: 1;
+  color: var(--c-sub);
+  cursor: default;
 }
 
 /* Horizontal menu is explicitly one-axis: dragging cannot move it vertically. */
