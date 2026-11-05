@@ -76,7 +76,7 @@
     }
     function initializeVenueRows() {
       var selector = mode === "keirin-detail"
-        ? ".keirin-race-selector"
+        ? ".keirin-race-selector, .race-menu-scroll"
         : ".venue-card .hscroll";
       document.querySelectorAll(selector).forEach(initializeVenueRow);
     }
