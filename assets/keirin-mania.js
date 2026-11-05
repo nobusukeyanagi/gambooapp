@@ -35,7 +35,7 @@
   function renderRace5(inner) {
     // Populate SCR-03's existing racecard rows and real analysis detail tables.
     // The structured race header, menu and lineup controls remain intact.
-    const raceNumber = inner.querySelector(".ri-race-purchase");
+    const raceNumber = inner.querySelector(".ri-race-number");
     if (raceNumber) raceNumber.textContent = DATA.race + "R";
     const raceLink = inner.querySelector(".ri-race");
     if (raceLink) raceLink.setAttribute("aria-label", DATA.race + "Rの車券購入画面へ");
@@ -67,7 +67,6 @@
     const tbody = inner.querySelector(".mania-table tbody");
     if (!tbody) return;
     const waku = [1, 2, 3, 4, 4, 5, 5, 6, 6];
-    const family = ["松尾", "貴志", "小林", "岡田", "森川", "浮島", "西村", "佐藤", "山口"];
     const legClasses = {"追":"leg-chase","逃":"leg-escape","両":"leg-both"};
     const card = ([rank,time,note]) => {
       const n = note ? '<span class="res-note">' + escapeHTML(note).replace(/^B /, "B<br />") + '</span>' : "";
@@ -83,7 +82,7 @@
       const cells = [
         number,
         '<td class="fx c-sha"><div class="frame-cell f' + rider.car + '">' + rider.car +
-          '</div><span class="sha-nm">' + family[i] + '</span></td>',
+          '</div><span class="sha-nm">' + escapeHTML(rider.name.slice(0, 3)) + '</span></td>',
         '<td class="c-name"><div class="rider-name">' + escapeHTML(rider.name) +
           '</div><div class="rider-meta">' + escapeHTML(rider.meta) + '</div></td>',
         '<td><span class="g-val">' + escapeHTML(rider.g) + '</span></td>',
@@ -223,7 +222,12 @@
     position: positionHeading, mania: maniaHeading
   };
   let current = "";
-  function selectTab(name) {
+  let navigationTarget = null;
+  const scrollBehavior = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ? "instant" : "smooth";
+  const columnOffset = (heading) =>
+    heading.getBoundingClientRect().left - table.getBoundingClientRect().left;
+  function selectTab(name, animate = false) {
     if (name === current) return;
     current = name;
     Object.entries(tabsByName).forEach(([key, tab]) =>
@@ -233,36 +237,44 @@
     const active = tabsByName[name];
     const scrollLeft = name === "racecard" ? 0 :
       Math.max(0, active.offsetLeft - menuScroller.offsetLeft -
-        Math.min(40, menuScroller.clientWidth / 6));
-    menuScroller.scrollTo({ left: scrollLeft, behavior: "instant" });
+        Math.min(44, menuScroller.clientWidth / 5));
+    menuScroller.scrollTo({
+      left: scrollLeft,
+      behavior: animate ? scrollBehavior : "instant"
+    });
   }
   function scrollTableTo(name) {
-    if (name === "racecard") {
-      wrap.scrollTo({ left: 0, behavior: "instant" });
-    } else {
-      const heading = headingsByName[name];
-      const offset = heading.getBoundingClientRect().left -
-        table.getBoundingClientRect().left;
-      wrap.scrollTo({
-        left: Math.max(0, offset - Math.min(70, wrap.clientWidth / 4)),
-        behavior: "instant"
-      });
-    }
-    selectTab(name);
+    const maxLeft = Math.max(0, wrap.scrollWidth - wrap.clientWidth);
+    const offset = name === "racecard" ? 0 :
+      columnOffset(headingsByName[name]) - Math.min(70, wrap.clientWidth / 4);
+    const left = Math.max(0, Math.min(maxLeft, offset));
+    navigationTarget = left;
+    selectTab(name, true);
+    wrap.scrollTo({ left, behavior: scrollBehavior });
+    if (Math.abs(wrap.scrollLeft - left) <= 2) navigationTarget = null;
   }
   function syncTab() {
+    // During a menu-initiated smooth scroll, keep the clicked menu selected.
+    // Without this guard, intermediate columns would override the selection.
+    if (navigationTarget !== null) {
+      if (Math.abs(wrap.scrollLeft - navigationTarget) > 2) return;
+      navigationTarget = null;
+    }
     const atRightEdge = wrap.scrollWidth - wrap.clientWidth - wrap.scrollLeft <= 12;
     const threshold = wrap.scrollLeft + Math.min(70, wrap.clientWidth / 4) + 12;
     let name = "racecard";
-    if (atRightEdge || threshold >= maniaHeading.offsetLeft) name = "mania";
-    else if (threshold >= positionHeading.offsetLeft) name = "position";
-    else if (threshold >= commentHeading.offsetLeft) name = "comment";
-    else if (threshold >= pointHeading.offsetLeft) name = "marutoku";
+    if (atRightEdge || threshold >= columnOffset(maniaHeading)) name = "mania";
+    else if (threshold >= columnOffset(positionHeading)) name = "position";
+    else if (threshold >= columnOffset(commentHeading)) name = "comment";
+    else if (threshold >= columnOffset(pointHeading)) name = "marutoku";
     selectTab(name);
   }
   Object.entries(tabsByName).forEach(([name, tab]) => {
     tab.addEventListener("click", () => scrollTableTo(name));
   });
+  // Manual gestures cancel the selection hold and resume automatic tab sync.
+  wrap.addEventListener("pointerdown", () => { navigationTarget = null; }, { passive: true });
+  wrap.addEventListener("wheel", () => { navigationTarget = null; }, { passive: true });
   // Original source has three interchangeable values for each of the four
   // positions in the "イン粘り+追上" group. Preserve all three modes.
   const switchButton = inner.querySelector(".position-switch");
