@@ -1357,7 +1357,6 @@
         justify-content: center;
         gap: 1px;
         border: var(--line-normal);
-        border-radius: var(--r-md);
         background: var(--c-surface);
         color: var(--c-text);
         cursor: pointer;
@@ -1759,7 +1758,6 @@
         align-items: center;
         justify-content: center;
         gap: 4px;
-        border-radius: var(--r-full);
         font-size: var(--fs-14);
         font-weight: var(--fw-strong);
         cursor: pointer;
