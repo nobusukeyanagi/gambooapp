@@ -34,7 +34,7 @@
     // Grouped first-row labels share the same physical columns as the
     // second-row labels. Un-grouped columns span both header rows.
     const groups = new Map([
-      [6,  {span:6, label:"マル得ポイント", klass:"bl marutoku-section-start"}],
+      [6,  {span:5, label:"マル得ポイント", klass:"bl marutoku-section-start"}],
       [14, {span:4, label:"決まり手", klass:""}],
       [33, {span:4, label:"ラインの先頭", klass:"position-first"}],
       [37, {span:4, label:"2番手", klass:"position-first"}],
