@@ -1850,9 +1850,9 @@
       .race-table td { font-size: var(--fs-16); }
       .rider-name { font-size: var(--fs-14); }
       .mania-table .c-name { min-width: 88px; width: 88px; }
-      .at td { font-size: var(--fs-14); }
+      .at td { font-size: var(--fs-16); }
       .rn b { font-size: var(--fs-14); }
-      .at .hd { font-size: var(--fs-20); }
+      .at .hd { font-size: var(--fs-16); }
       .at .fx2 { min-width: 108px; max-width: 108px; }
       .wx span { font-size: var(--fs-14); }
 
