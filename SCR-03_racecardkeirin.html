@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./assets/keirin-mania.css?v=3" />
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
     <link rel="stylesheet" href="./assets/ui-consistency.css?v=32" />
-    <link rel="stylesheet" href="./assets/keirin-race-selector.css?v=4" />
+    <link rel="stylesheet" href="./assets/keirin-race-selector.css?v=5" />
     <link rel="stylesheet" href="./assets/keirin-marutoku.css?v=1" />
     <link rel="stylesheet" href="./assets/keirin-position.css?v=1" />
   </head>
@@ -66,8 +66,7 @@
               <div class="ri-main">
                 <div class="ri-meeting"><span class="grade-badge grade-g3">GⅢ</span><span>防府</span><span>最終日</span></div>
                 <a class="ri-race" href="./SCR-01_bet.html" aria-label="5Rの車券購入画面へ">
-                  <span class="ri-race-purchase">5R</span>
-                  <span class="ri-race-purchase-caption">車券購入</span>
+                  <span class="ri-race-purchase"><span class="ri-race-number">5R</span><span class="ri-race-purchase-caption">車券購入</span></span>
                 </a>
                 <div class="ri-event"><span class="ell">周防国府杯争奪戦</span></div>
                 <div class="ri-kind">Ｓ級 選抜</div>
@@ -84,6 +83,7 @@
               </div>
             </div>
             <div class="hscroll race-menu-scroll">
+              <button type="button" class="hscroll-cue-l" aria-label="前のメニューへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></button>
               <div class="hscroll-inner">
               <div class="info-tabs">
                 <button type="button" class="info-tab active" data-target="racecard">出走表</button>
@@ -93,11 +93,11 @@
                 <button type="button" class="info-tab" data-target="mania">マニア分析</button>
               </div>
                 </div>
-              <div class="hscroll-cue"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></div>
+              <button type="button" class="hscroll-cue" aria-label="次のメニューへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></button>
             </div>
             <div class="lineup-bar">
               <div class="lineup-main">
-                <div class="lineup-title">並び予想</div>
+                <div class="lineup-title">並び予想　提供：アオケイ</div>
                 <div class="lineup-row">
                 <span class="lineup-dir">←</span>
                 <div class="lineup-car f2">2</div>
@@ -191,7 +191,7 @@
                 <tbody>
                   <tr>
                     <td class="c-waku">1</td>
-                    <td class="fx c-sha"><div class="frame-cell f1">1</div><span class="sha-nm">松尾</span></td>
+                    <td class="fx c-sha"><div class="frame-cell f1">1</div><span class="sha-nm">松尾透</span></td>
                     <td class="c-name"><div class="rider-name">松尾透</div><div class="rider-meta">福岡(小倉)/96/41</div></td>
                     <td><span class="g-val">48.16</span></td>
                     <td class="bl cls">S2<small>/S2</small></td>
@@ -252,7 +252,7 @@
                   </tr>
                   <tr>
                     <td class="c-waku">2</td>
-                    <td class="fx c-sha"><div class="frame-cell f2">2</div><span class="sha-nm">貴志</span></td>
+                    <td class="fx c-sha"><div class="frame-cell f2">2</div><span class="sha-nm">貴志修</span></td>
                     <td class="c-name"><div class="rider-name">貴志修己</div><div class="rider-meta">和歌山(和歌山)/117/30</div></td>
                     <td><span class="g-val">52.96</span></td>
                     <td class="bl cls">S2<small>/S2</small></td>
@@ -313,7 +313,7 @@
                   </tr>
                   <tr>
                     <td class="c-waku">3</td>
-                    <td class="fx c-sha"><div class="frame-cell f3">3</div><span class="sha-nm">小林</span></td>
+                    <td class="fx c-sha"><div class="frame-cell f3">3</div><span class="sha-nm">小林大</span></td>
                     <td class="c-name"><div class="rider-name">小林大介</div><div class="rider-meta">群馬(前橋)/79/48</div></td>
                     <td><span class="g-val">45.69</span></td>
                     <td class="bl cls">S2<small>/S2</small></td>
@@ -374,7 +374,7 @@
                   </tr>
                   <tr>
                     <td class="c-waku" rowspan="2">4</td>
-                    <td class="fx c-sha"><div class="frame-cell f4">4</div><span class="sha-nm">岡田</span></td>
+                    <td class="fx c-sha"><div class="frame-cell f4">4</div><span class="sha-nm">岡田亮</span></td>
                     <td class="c-name"><div class="rider-name">岡田亮太</div><div class="rider-meta">東京(立川)/117/26</div></td>
                     <td><span class="g-val">45.33</span></td>
                     <td class="bl cls">S2<small>/S2</small></td>
@@ -434,7 +434,7 @@
                     <td class="mania-eval" data-item="7">—</td>
                   </tr>
                   <tr>
-                    <td class="fx c-sha"><div class="frame-cell f5">5</div><span class="sha-nm">森川</span></td>
+                    <td class="fx c-sha"><div class="frame-cell f5">5</div><span class="sha-nm">森川大</span></td>
                     <td class="c-name"><div class="rider-name">森川大輔</div><div class="rider-meta">岐阜(岐阜)/92/39</div></td>
                     <td><span class="g-val">53.54</span></td>
                     <td class="bl cls">S2<small>/S2</small></td>
@@ -495,7 +495,7 @@
                   </tr>
                   <tr>
                     <td class="c-waku" rowspan="2">5</td>
-                    <td class="fx c-sha"><div class="frame-cell f6">6</div><span class="sha-nm">浮島</span></td>
+                    <td class="fx c-sha"><div class="frame-cell f6">6</div><span class="sha-nm">浮島知</span></td>
                     <td class="c-name"><div class="rider-name">浮島知稀</div><div class="rider-meta">群馬(-)/123/26</div></td>
                     <td><span class="g-val">43.30</span></td>
                     <td class="bl cls">S2<small>/S2</small></td>
@@ -555,7 +555,7 @@
                     <td class="mania-eval" data-item="7">—</td>
                   </tr>
                   <tr>
-                    <td class="fx c-sha"><div class="frame-cell f7">7</div><span class="sha-nm">西村</span></td>
+                    <td class="fx c-sha"><div class="frame-cell f7">7</div><span class="sha-nm">西村行</span></td>
                     <td class="c-name"><div class="rider-name">西村行貴</div><div class="rider-meta">東京(松戸)/92/42</div></td>
                     <td><span class="g-val">45.65</span></td>
                     <td class="bl cls">S2<small>/A1</small></td>
@@ -616,7 +616,7 @@
                   </tr>
                   <tr>
                     <td class="c-waku" rowspan="2">6</td>
-                    <td class="fx c-sha"><div class="frame-cell f8">8</div><span class="sha-nm">佐藤</span></td>
+                    <td class="fx c-sha"><div class="frame-cell f8">8</div><span class="sha-nm">佐藤真</span></td>
                     <td class="c-name"><div class="rider-name">佐藤真一</div><div class="rider-meta">東京(京王閣)/79/52</div></td>
                     <td><span class="g-val">44.78</span></td>
                     <td class="bl cls">S2<small>/S2</small></td>
@@ -676,7 +676,7 @@
                     <td class="mania-eval" data-item="7">—</td>
                   </tr>
                   <tr>
-                    <td class="fx c-sha"><div class="frame-cell f9">9</div><span class="sha-nm">山口</span></td>
+                    <td class="fx c-sha"><div class="frame-cell f9">9</div><span class="sha-nm">山口貴</span></td>
                     <td class="c-name"><div class="rider-name">山口貴弘</div><div class="rider-meta">佐賀(武雄)/92/42</div></td>
                     <td><span class="g-val">48.41</span></td>
                     <td class="bl cls">S2<small>/S2</small></td>
@@ -798,8 +798,8 @@
     </div>
     
     <script src="./assets/sport-display-order.js?v=1"></script>
-    <script src="./assets/scroll-controls.js?v=3" data-scroll-mode="keirin-detail"></script>
-    <script src="./assets/keirin-mania.js?v=11" defer></script>
+    <script src="./assets/scroll-controls.js?v=4" data-scroll-mode="keirin-detail"></script>
+    <script src="./assets/keirin-mania.js?v=12" defer></script>
     <script src="./assets/keirin-race-selector.js?v=3" defer></script>
       <script src="./assets/race-link-context.js?v=4" defer></script>
       <script src="./assets/tap-feedback.js?v=3" defer></script>
