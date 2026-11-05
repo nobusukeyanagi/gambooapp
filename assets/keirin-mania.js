@@ -165,21 +165,41 @@
     recent: recentHeading, meeting: meetingHeading,
     position: positionHeading, gindex: gindexHeading, mania: maniaHeading
   };
-  // The eight menu sections cover contiguous table-header columns.
-  const headerCells = Array.from(table.tHead?.rows[0]?.cells || []);
+  // Map both header rows to their logical column indices. Rowspans and
+  // colspans must not change the eight menu sections' original boundaries.
+  const grid = [];
+  const headerCells = [];
+  Array.from(table.tHead?.rows || []).forEach((row, rowIndex) => {
+    if (!grid[rowIndex]) grid[rowIndex] = [];
+    let column = 0;
+    Array.from(row.cells).forEach((cell) => {
+      while (grid[rowIndex][column]) column++;
+      const span = cell.colSpan || 1;
+      const rowSpan = cell.rowSpan || 1;
+      headerCells.push({ cell, from: column, until: column + span });
+      for (let r = rowIndex; r < rowIndex + rowSpan; r++) {
+        if (!grid[r]) grid[r] = [];
+        for (let c = column; c < column + span; c++) grid[r][c] = true;
+      }
+      column += span;
+    });
+  });
   const headerBounds = Object.keys(headingsByName).map((key) => ({
-    key, start: headerCells.indexOf(headingsByName[key])
+    key, start: headerCells.find((item) => item.cell === headingsByName[key])?.from ?? -1
   }));
   if (headerBounds.some((entry) => entry.start < 0)) return;
+  const columnCount = Math.max(0, ...headerCells.map((entry) => entry.until));
   function highlightHeader(name) {
     const index = headerBounds.findIndex((entry) => entry.key === name);
     if (index < 0) return;
     const from = headerBounds[index].start;
     const until = index + 1 < headerBounds.length
-      ? headerBounds[index + 1].start : headerCells.length;
-    // Frame and vehicle-number headers must always retain their normal color.
-    headerCells.forEach((cell, column) =>
-      cell.classList.toggle("section-selected", column >= 2 && column >= from && column < until)
+      ? headerBounds[index + 1].start : columnCount;
+    // Group cells illuminate whenever their span overlaps the active section.
+    // Frame and vehicle-number headers always retain their normal color.
+    headerCells.forEach(({cell, from: start, until: end}) =>
+      cell.classList.toggle("section-selected",
+        start >= 2 && start < until && end > from)
     );
   }
   let current = "";
