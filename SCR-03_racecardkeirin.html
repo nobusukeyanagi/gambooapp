@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./assets/keirin-mania.css?v=3" />
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
     <link rel="stylesheet" href="./assets/ui-consistency.css?v=32" />
-    <link rel="stylesheet" href="./assets/keirin-race-selector.css?v=6" />
+    <link rel="stylesheet" href="./assets/keirin-race-selector.css?v=7" />
     <link rel="stylesheet" href="./assets/keirin-marutoku.css?v=1" />
     <link rel="stylesheet" href="./assets/keirin-position.css?v=1" />
   </head>
@@ -86,10 +86,12 @@
               <button type="button" class="hscroll-cue-l" aria-label="前のメニューへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></button>
               <div class="hscroll-inner">
               <div class="info-tabs">
-                <button type="button" class="info-tab active" data-target="racecard">出走表</button>
+                <button type="button" class="info-tab active" data-target="recent">直近4ヵ月成績</button>
+                <button type="button" class="info-tab" data-target="meeting">開催成績</button>
                 <button type="button" class="info-tab" data-target="marutoku">マル得P</button>
                 <button type="button" class="info-tab" data-target="comment">選手コメント</button>
                 <button type="button" class="info-tab" data-target="position">並び順成績</button>
+                <button type="button" class="info-tab" data-target="gindex">G指数</button>
                 <button type="button" class="info-tab" data-target="mania">マニア分析</button>
               </div>
                 </div>
@@ -124,11 +126,11 @@
                     <th class="c-waku" rowspan="2">枠</th>
                     <th class="fx c-sha" rowspan="2">車番</th>
                     <th class="c-name" rowspan="2">選手名</th>
-                    <th rowspan="2">G指数</th>
+                    <th class="gindex-section-start" rowspan="2">G指数</th>
                     <th class="bl" rowspan="2">級班</th>
                     <th class="bl" rowspan="2">脚質</th>
-                    <th class="bl" colspan="11">直近4カ月成績</th>
-                    <th class="bl" rowspan="2">今開催<br />成績</th>
+                    <th class="bl recent-section-start" colspan="11">直近4ヵ月成績</th>
+                    <th class="bl meeting-section-start" rowspan="2">今開催<br />成績</th>
                     <th class="bl" rowspan="2">前開催<br />成績</th>
                     <th class="bl marutoku-section-start" colspan="5">マル得ポイント</th>
                     <th class="bl marutoku-comment-heading" rowspan="2">選手コメント</th>
@@ -743,7 +745,7 @@
                 <dl>
                   <dt>選手名</dt><dd>下段は 府県（ホーム）／期／年齢</dd>
                   <dt>級班</dt><dd>今期／前期</dd>
-                  <dt>直近4カ月成績</dt><dd>得点＝競走得点、失違＝失格・違反、逃・捲・差・マ＝決まり手の回数、B＝バック回数。勝率・2連（2連対率）・3連（3連対率）・着外（着外率）は％</dd>
+                  <dt>直近4ヵ月成績</dt><dd>得点＝競走得点、失違＝失格・違反、逃・捲・差・マ＝決まり手の回数、B＝バック回数。勝率・2連（2連対率）・3連（3連対率）・着外（着外率）は％</dd>
                   <dt>今開催／前開催成績</dt><dd>大きい数字＝着順、下段＝みなし上がりタイム、右肩＝B獲得（B）・決まり手。前開催は先頭に日付・場・グレード</dd>
                   <dt>マル得ポイント</dt><dd>1着P・2着P・3着P・総合P・印を表示</dd>
                   <dt>選手コメント</dt><dd>選手のコメントを表示</dd>
@@ -799,7 +801,7 @@
     
     <script src="./assets/sport-display-order.js?v=1"></script>
     <script src="./assets/scroll-controls.js?v=4" data-scroll-mode="keirin-detail"></script>
-    <script src="./assets/keirin-mania.js?v=12" defer></script>
+    <script src="./assets/keirin-mania.js?v=13" defer></script>
     <script src="./assets/keirin-race-selector.js?v=3" defer></script>
       <script src="./assets/race-link-context.js?v=4" defer></script>
       <script src="./assets/tap-feedback.js?v=3" defer></script>
