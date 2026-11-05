@@ -1,0 +1,52 @@
+@charset "UTF-8";
+/* SCR-03 Hofu 5R: the Marutoku point totals and rider comments follow
+   previous-meeting results, before the existing mania-analysis section. */
+.race-detail-scroll .mania-table th.marutoku-section-start,
+.race-detail-scroll .mania-table th.marutoku-comment-heading {
+  text-align: center;
+  min-width: 0;
+  background: var(--c-bg);
+}
+.race-detail-scroll .mania-table th.marutoku-score-label {
+  min-width: 58px;
+  white-space: nowrap;
+  background: var(--c-bg);
+}
+.race-detail-scroll .mania-table th.marutoku-score-label:first-of-type {
+  border-left: var(--line-normal);
+}
+.race-detail-scroll .mania-table tbody td.marutoku-value {
+  min-width: 58px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  font-variant-numeric: tabular-nums;
+}
+.race-detail-scroll .mania-table tbody td.marutoku-mark {
+  min-width: 48px;
+  text-align: center;
+}
+.race-detail-scroll .mania-table tbody td.marutoku-comment {
+  width: 160px;
+  min-width: 160px;
+  max-width: 180px;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: break-word;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-normal);
+  line-height: 1.35;
+}
+/* The original source distinguishes emphasized figures by orange, yellow
+   and green. Keep the highlights subtle and token-based, with white rows
+   remaining the default throughout the racecard. */
+.race-detail-scroll .mania-table tbody tr td.marutoku-point-orange {
+  background: color-mix(in srgb, var(--c-warning) 20%, var(--c-surface));
+}
+.race-detail-scroll .mania-table tbody tr td.marutoku-point-yellow {
+  background: color-mix(in srgb, var(--c-primary) 25%, var(--c-surface));
+}
+.race-detail-scroll .mania-table tbody tr td.marutoku-point-green {
+  background: color-mix(in srgb, var(--c-success) 14%, var(--c-surface));
+}
