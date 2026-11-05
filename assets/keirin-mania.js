@@ -1,6 +1,7 @@
 /* SCR-03 merged racecard: preserve all eight mania-analysis detail views and sync the menu with the table's horizontal scroll. */
 (() => {
   "use strict";
+  function initializeHofu5() {
   const inner = document.querySelector(".phone-inner");
   if (!inner) return;
   const DATA = window.GambooKeirinHofu5Data;
@@ -30,6 +31,82 @@
       '</span>' + (match[2] ? '<span class="rt-n">' + escapeHTML(match[2]) + '</span>' : "") +
       '<span class="rt-bar" style="width:' + percent + '%"></span></td>';
   };
+
+  function renderRace5(inner) {
+    // Populate the existing SCR-03 design with the aligned 5R data;
+    // no page structure, headers, or stylesheet is replaced.
+    const race = inner.querySelector(".ri-race");
+    if (race) {
+      const number = [...race.childNodes].find((node) => node.nodeType === Node.TEXT_NODE);
+      if (number) number.textContent = "5R";
+      const grade = race.querySelector("span");
+      if (grade) grade.textContent = DATA.stage;
+    }
+    const schedule = inner.querySelector(".race-info-meta");
+    if (schedule) schedule.textContent = "締切 " + DATA.deadline + " ／ 発走 " + DATA.start;
+    inner.querySelectorAll(".race-tabs .race-tab").forEach((tab, index) => {
+      tab.classList.toggle("active", index === DATA.race - 1);
+      const time = tab.querySelector("small");
+      if (time) time.textContent = index === DATA.race - 1 ? DATA.start : "—";
+    });
+    const lineup = inner.querySelector(".lineup-row");
+    if (lineup) {
+      lineup.innerHTML = '<span class="lineup-dir">←</span>' +
+        DATA.lineup.map((part) =>
+          part.map((car) => '<div class="lineup-car f' + car + '">' + car + '</div>').join("")
+        ).join('<span class="lineup-sep">•</span>');
+      lineup.title = "情報元：アオケイ";
+    }
+    const tbody = inner.querySelector(".mania-table tbody");
+    if (!tbody) return;
+    const waku = [1, 2, 3, 4, 4, 5, 5, 6, 6];
+    const family = ["松尾", "貴志", "小林", "岡田", "森川", "浮島", "西村", "佐藤", "山口"];
+    const legClasses = {"追":"leg-chase","逃":"leg-escape","両":"leg-both"};
+    const card = ([rank,time,note]) => {
+      const n = note ? '<span class="res-note">' + escapeHTML(note).replace(/^B /, "B<br />") + '</span>' : "";
+      return '<div class="res"><div class="res-main"><span class="res-rank">' + escapeHTML(rank) +
+        '</span>' + (time ? '<span class="res-time">' + escapeHTML(time) + '</span>' : "") +
+        '</div>' + n + '</div>';
+    };
+    tbody.innerHTML = DATA.basics.map((rider,i) => {
+      const grade = rider.grade.split("/");
+      const group = waku[i];
+      const number = (i === 0 || waku[i - 1] !== group) ?
+        '<td class="c-waku"' + ([3,5,7].includes(i) ? ' rowspan="2"' : "") + '>' + group + '</td>' : "";
+      const cells = [
+        number,
+        '<td class="fx c-sha"><div class="frame-cell f' + rider.car + '">' + rider.car +
+          '</div><span class="sha-nm">' + family[i] + '</span></td>',
+        '<td class="c-name"><div class="rider-name">' + escapeHTML(rider.name) +
+          '</div><div class="rider-meta">' + escapeHTML(rider.meta) + '</div></td>',
+        '<td><span class="g-val">' + escapeHTML(rider.g) + '</span></td>',
+        '<td class="bl c-mania">' + rating(rider.ratings.overall) + '</td>',
+        '<td class="bl cls">' + escapeHTML(grade[0]) + '<small>/' + escapeHTML(grade[1]) + '</small></td>',
+        '<td class="bl"><span class="leg-tag ' + (legClasses[rider.leg] || "leg-both") +
+          '">' + escapeHTML(rider.leg) + '</span></td>',
+        '<td class="bl score">' + escapeHTML(rider.score) + '</td>',
+        ...rider.stats.map((v,n) => '<td' +
+          (n === 0 || n === 1 || n === 5 ? ' class="bl"' :
+            n >= 6 ? ' class="' + (n === 6 ? "bl " : "") + 'rate"' : "") + '>' + escapeHTML(v) + '</td>'),
+        '<td class="bl res-cell"><div class="res-wrap">' + rider.current.map(card).join("") + '</div></td>',
+        '<td class="bl res-cell"><div class="res-wrap"><div class="res-date">' +
+          escapeHTML(rider.prevDate).replace(" ", "<br />") + '</div>' +
+          rider.previous.map(card).join("") + '</div></td>',
+        '<td class="mania-eval bl">' + rating(rider.ratings.overall) + '</td>',
+        ...rider.ratings.items.map((value,n) =>
+          '<td class="mania-eval' + (n === 0 ? " bl" : "") + '" data-item="' + n + '">' +
+          rating(value) + '</td>')
+      ];
+      return '<tr>' + cells.join("") + '</tr>';
+    }).join("");
+    const description = [...inner.querySelectorAll("dt")].find((el) => el.textContent.trim() === "マニア分析");
+    if (description?.nextElementSibling?.tagName === "DD") {
+      description.nextElementSibling.textContent =
+        "防府5Rの実データに基づく評価。項目名をタップすると条件別の詳細成績を表示";
+    }
+  }
+
+  renderRace5(inner);
 
   function renderSheet(inner, idx) {
     const item = ITEMS[idx];
@@ -126,4 +203,19 @@
   wrap.addEventListener("scroll", syncTab, { passive: true });
   window.addEventListener("resize", syncTab);
   syncTab();
+  }
+  if (window.GambooKeirinHofu5Data) {
+    initializeHofu5();
+  } else {
+    // The existing page links to this script without a separate data import.
+    // Load the dataset before initializing the view and detail interactions.
+    const loader = document.createElement("script");
+    loader.src = "./assets/keirin-hofu5-data.js?v=1";
+    loader.onload = initializeHofu5;
+    loader.onerror = () => {
+      // Preserve the original page structure if the data asset cannot load.
+      console.error("防府5Rのレースデータを読み込めませんでした。");
+    };
+    document.head.appendChild(loader);
+  }
 })();
