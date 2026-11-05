@@ -5,45 +5,60 @@
   border-spacing: 0;
   width: max-content;
 }
+/* Section names now appear only in the menu; the single remaining
+   header row contains the 65 column names and the seven scroll anchors. */
 .race-detail-scroll .mania-table thead tr:first-child th {
   background: var(--c-bg);
-  font-size: var(--fs-14);
+  font-size: var(--fs-12);
   font-weight: var(--fw-strong);
   white-space: nowrap;
   text-align: center;
   padding: var(--space-small) var(--space-card);
   border-bottom: var(--line-normal);
 }
-.race-detail-scroll .mania-table thead tr:nth-child(2) th {
-  background: var(--c-bg);
-  font-size: var(--fs-12);
-  white-space: nowrap;
-  text-align: center;
-}
-.race-detail-scroll .mania-table thead tr:nth-child(2) th.c-name {
+.race-detail-scroll .mania-table thead tr:first-child th.c-name {
   text-align: left;
 }
-.race-detail-scroll .mania-table .player-section-start,
-.race-detail-scroll .mania-table .marutoku-section-start,
-.race-detail-scroll .mania-table .marutoku-comment-heading,
-.race-detail-scroll .mania-table .recent-section-start,
-.race-detail-scroll .mania-table .meeting-section-start,
-.race-detail-scroll .mania-table .position-section-start,
-.race-detail-scroll .mania-table .mania-section-heading {
+.race-detail-scroll .mania-table :is(
+  .player-section-start,.marutoku-section-start,
+  .marutoku-comment-heading,.recent-section-start,
+  .meeting-section-start,.position-section-start,
+  .mania-section-heading
+) {
   border-left: var(--line-normal);
 }
 .race-detail-scroll .mania-table .meeting-cell {
   box-sizing: border-box;
-  min-width: 172px;
+  min-width: 248px;
   text-align: left;
   padding: var(--space-card);
   white-space: nowrap;
   background: var(--c-surface);
 }
+.race-detail-scroll .mania-table .meeting-cell .meeting-entry {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-card);
+  min-height: 100%;
+}
+.race-detail-scroll .mania-table .meeting-cell .res-date {
+  box-sizing: border-box;
+  display: block;
+  flex: 0 0 88px;
+  width: 88px;
+  margin: 0;
+  align-self: center;
+  white-space: nowrap;
+  line-height: 1.3;
+  color: var(--c-text);
+  font-size: var(--fs-12);
+}
 .race-detail-scroll .mania-table .meeting-cell .res-wrap {
   display: flex;
+  flex: 0 0 auto;
   flex-wrap: nowrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   column-gap: var(--space-2);
 }
@@ -69,12 +84,6 @@
 .race-detail-scroll .mania-table .meeting-cell .res-time,
 .race-detail-scroll .mania-table .meeting-cell .res-note {
   font-size: var(--fs-12);
-}
-.race-detail-scroll .mania-table .meeting-cell .res-date {
-  white-space: nowrap;
-  margin-bottom: var(--space-2);
-  line-height: 1.25;
-  color: var(--c-sub);
 }
 .race-detail-scroll .mania-table .meeting-avg {
   min-width: 102px;
