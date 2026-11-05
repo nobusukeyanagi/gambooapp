@@ -61,7 +61,7 @@
       lineup.innerHTML = '<span class="lineup-dir">←</span>' +
         DATA.lineup.map((part) =>
           part.map((car) => '<div class="lineup-car f' + car + '">' + car + '</div>').join("")
-        ).join('<span class="lineup-sep">•</span>');
+        ).join('<span class="lineup-sep" aria-label="ラインの区切り">・</span>');
       lineup.title = "情報元：アオケイ";
     }
     const racecard = inner.querySelector("table.mania-table");
@@ -168,8 +168,13 @@
   let selectedByUser = null;
   const scrollBehavior = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
     ? "instant" : "smooth";
+  // The vehicle-number column remains sticky at the left edge. Align the
+  // selected section's first data column immediately after that fixed column.
+  const stickyColumnWidth = () =>
+    table.querySelector("thead th.c-sha")?.getBoundingClientRect().width || 0;
   const columnOffset = (heading) =>
-    heading.getBoundingClientRect().left - table.getBoundingClientRect().left;
+    wrap.scrollLeft + heading.getBoundingClientRect().left -
+    wrap.getBoundingClientRect().left;
   function selectTab(name, animate = false) {
     if (name === current) return;
     current = name;
@@ -188,8 +193,8 @@
   }
   function scrollTableTo(name) {
     const maxLeft = Math.max(0, wrap.scrollWidth - wrap.clientWidth);
-    const offset = name === "player" ? 0 : columnOffset(headingsByName[name]) -
-      Math.min(70, wrap.clientWidth / 4);
+    const offset = name === "player" ? 0 :
+      columnOffset(headingsByName[name]) - stickyColumnWidth();
     const left = Math.max(0, Math.min(maxLeft, offset));
     navigationTarget = left;
     selectedByUser = name;
@@ -206,7 +211,7 @@
       navigationTarget = null;
     }
     const atRightEdge = wrap.scrollWidth - wrap.clientWidth - wrap.scrollLeft <= 12;
-    const threshold = wrap.scrollLeft + Math.min(70, wrap.clientWidth / 4) + 12;
+    const threshold = wrap.scrollLeft + stickyColumnWidth() + 2;
     let name = "player";
     if (atRightEdge || threshold >= columnOffset(maniaHeading)) name = "mania";
     else if (threshold >= columnOffset(positionHeading)) name = "position";
