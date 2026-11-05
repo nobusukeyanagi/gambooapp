@@ -215,6 +215,14 @@
   gap: var(--space-2);
   min-width: 0;
   margin: 0;
+  color: var(--c-text);
+  text-decoration: none;
+  cursor: pointer;
+}
+.race-detail-scroll .race-info-bar .ri-race:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: var(--space-2);
+  border-radius: var(--r-control);
 }
 .race-detail-scroll .ri-race .ri-race-purchase {
   display: flex;
@@ -242,10 +250,6 @@
   font-weight: var(--fw-strong);
   line-height: 1.2;
   white-space: nowrap;
-}
-.race-detail-scroll .ri-race .ri-race-purchase:focus-visible {
-  outline: var(--line-focus);
-  outline-offset: var(--space-2);
 }
 .race-detail-scroll .race-info-bar .ri-event {
   grid-area: event;
