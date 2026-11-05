@@ -63,7 +63,7 @@
     card.dataset.sortDeadline = String(minutes);
     card.dataset.sortGrade = String(gradeOrder);
     card.dataset.sortVenue = String(venueRanks[venue]);
-    card.dataset.snapshot = referenceDay + "T12:00:00+09:00";
+    card.dataset.snapshot = referenceDay + "T12:30:00+09:00";
 
     // A past day's R is complete; a future day's is not on sale at the
     // reference snapshot. Use a non-link display to avoid opening the
