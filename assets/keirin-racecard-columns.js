@@ -1,0 +1,104 @@
+/* Shared column renderer for SCR-03 防府5R: section order and cells stay aligned. */
+(() => {
+  "use strict";
+  const escape = (x) => String(x ?? "").replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  const waku = [1,2,3,4,4,5,5,6,6];
+  const legCss = {"追":"leg-chase","逃":"leg-escape","両":"leg-both"};
+  const marker = (x) => !x ? "" :
+    '<span class="mk ' + ({"◎":"mk-dbl","○":"mk-o","△":"mk-tri","×":"mk-x"}[x]||"") +
+    '">' + escape(x) + '</span>';
+  const placeGroups = ["ラインの先頭","2番手","3番手以降","単騎","競り"];
+  const ranks = ["1着","2着","3着","着外"];
+  const groupHead = (name, count, klass) =>
+    '<th class="bl ' + klass + '" colspan="' + count + '">' + name + '</th>';
+  const sub = (s, klass) => '<th' + (klass ? ' class="' + klass + '"' : '') + '>' + s + '</th>';
+  const makeHead = () => {
+    const groups = [
+      groupHead("選手情報",6,"player-section-start"),
+      groupHead("マル得/ポイント",5,"marutoku-section-start"),
+      groupHead("選手コメント",1,"marutoku-comment-heading"),
+      groupHead("直近4ヵ月/基本成績",11,"recent-section-start"),
+      groupHead("直近7開催/着順・タイム",9,"meeting-section-start"),
+      groupHead("直近20走/並び別成績",23,"position-section-start"),
+      groupHead("マニア分析",10,"mania-section-heading")
+    ];
+    const subheads = [
+      sub("枠","c-waku"),sub("車番","fx c-sha"),sub("選手名","c-name"),
+      sub("級班","bl"),sub("脚質","bl"),sub("ギア比","bl"),
+      ...["1着P","2着P","3着P","総合P","印"].map((s,i)=>sub(s,(i===0?"bl ":"")+"marutoku-score-label")),
+      sub("選手コメント","bl marutoku-comment-label"),
+      ...["競走得点","失違","逃","捲","差","マ","B","勝","2連対","3連対","着外"].map((s,i)=>sub(s,i===0?"bl":"")),
+      ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり<br>平均/最高"].map((s,i)=>sub(s,i===0?"bl meeting-current-label":"")),
+      sub("並び","bl position-col position-current"),
+      ...placeGroups.flatMap((g)=>ranks.map((r,i)=>sub('<span class="position-group-name">'+escape(g)+'</span><span class="position-result-name">'+r+'</span>','position-col'+(i===0?' position-first':'')))),
+      sub("イン粘り<br>回数","bl position-col position-count"),
+      sub("追い上げ<br>回数","position-col position-count"),
+      sub("G指数","bl gindex-section-start"),
+      sub("総合<br>評価","bl c-item mania-section-start"),
+      ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレード","競輪場","車番","同県選手"].map((s,i)=>
+        sub('<button type="button" class="item-btn" data-item="'+i+'">'+s+'</button>','c-item'+(i===0?" bl":"")))
+    ];
+    return '<thead><tr>'+groups.join("")+'</tr><tr>'+subheads.join("")+'</tr></thead>';
+  };
+  const raceCard = (record) => {
+    const rank=record[0],time=record[1],note=record[2];
+    return '<span class="res"><span class="res-main"><span class="res-rank">'+escape(rank)+'</span>'+
+      (time?'<span class="res-time">'+escape(time)+'</span>':"")+'</span>'+
+      (note?'<span class="res-note">'+escape(note).replace(/^B /,"B<br>")+'</span>':"")+'</span>';
+  };
+  const renderMeeting = (period,index) => {
+    if(!period||(!period.results?.length&&!period.date))
+      return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'">—</td>';
+    return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'">'+
+      (period.date?'<div class="res-date">'+escape(period.date)+'</div>':"")+
+      '<div class="res-wrap">'+(period.results||[]).map(raceCard).join("")+'</div></td>';
+  };
+  const renderRow = (DATA,rider,i) => {
+    const p=DATA.marutoku[i],position=DATA.positionStats.rows[i];
+    const grade=rider.grade.split("/");
+    const prev=rider.history||[];
+    const histories=Array.from({length:8},(_,x)=>
+      prev[x]||(x===0?{date:"",results:rider.current}:x===1?{date:rider.prevDate,results:rider.previous}:null));
+    const emphasis=position.position==="先頭"?"position-highlight-lead":
+      position.position==="番手"?"position-highlight-follow":"position-highlight-other";
+    const buildCounts=position.counts.map((v,k)=>{
+      const group=Math.floor(k/4);
+      const highlighted=(group===0&&position.position==="先頭")||
+        (group===1&&position.position==="番手")||
+        (group===2&&position.position==="3番手")||
+        (group===3&&position.position==="単騎");
+      const classes=["position-stat",k%4===0?"position-first":"",v===0?"position-zero":"",highlighted?emphasis:""].filter(Boolean);
+      return '<td class="'+classes.join(" ")+'">'+escape(v)+'</td>';
+    });
+    const totals=[1,2].map(mode=>position.switches[mode].reduce((sum,n)=>sum+Number(n||0),0));
+    return '<tr>'+
+      '<td class="c-waku">'+waku[i]+'</td>'+
+      '<td class="fx c-sha"><div class="frame-cell f'+rider.car+'">'+rider.car+
+        '</div><span class="sha-nm">'+escape(rider.name.slice(0,3))+'</span></td>'+
+      '<td class="c-name"><div class="rider-name">'+escape(rider.name)+
+        '</div><div class="rider-meta">'+escape(rider.meta)+'</div></td>'+
+      '<td class="bl cls">'+escape(grade[0])+'<small>/'+escape(grade[1])+'</small></td>'+
+      '<td class="bl"><span class="leg-tag '+(legCss[rider.leg]||"leg-both")+'">'+escape(rider.leg)+'</span></td>'+
+      '<td class="bl">'+escape(rider.gear||"—")+'</td>'+
+      p.points.map((v,k)=>'<td class="'+(k===0?"bl ":"")+'marutoku-value'+
+        (p.emphasis[k]?" marutoku-point-"+p.emphasis[k]:"")+'">'+escape(v)+'</td>').join("")+
+      '<td class="marutoku-mark">'+marker(p.mark)+'</td>'+
+      '<td class="bl marutoku-comment">'+escape(p.comment)+'</td>'+
+      '<td class="bl score">'+escape(rider.score)+'</td>'+
+      rider.stats.map((v,k)=>'<td'+(k===0||k===6?' class="bl"':'')+'>'+escape(v)+'</td>').join("")+
+      histories.map((v,k)=>renderMeeting(v,k)).join("")+
+      '<td class="position-stat position-current position-first '+emphasis+'">'+escape(position.position)+'</td>'+
+      buildCounts.join("")+
+      '<td class="position-stat position-count bl">'+totals[0]+'</td>'+
+      '<td class="position-stat position-count">'+totals[1]+'</td>'+
+      '<td class="bl c-g"><span class="g-val">'+escape(rider.g)+'</span></td>'+
+      '<td class="mania-eval bl">'+marker(rider.ratings.overall)+'</td>'+
+      rider.ratings.items.map((v,k)=>'<td class="mania-eval'+(k===0?' bl':'')+
+        '" data-item="'+k+'">'+marker(v)+'</td>').join("")+
+      '</tr>';
+  };
+  const toHTML=DATA=>makeHead()+'<tbody>'+DATA.basics.map((r,i)=>renderRow(DATA,r,i)).join("")+'</tbody>';
+  const render=(table,DATA)=>{if(table&&DATA)table.innerHTML=toHTML(DATA);};
+  window.GambooKeirinRacecardColumns={toHTML,render};
+})();
