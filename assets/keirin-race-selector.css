@@ -405,8 +405,18 @@
   text-align: center;
   touch-action: pan-x;
 }
+.race-detail-scroll .race-menu-scroll .info-tab > span {
+  display: block;
+  line-height: 1.25;
+  white-space: normal;
+  text-align: center;
+}
+.race-detail-scroll .race-menu-scroll .info-tab[data-target="player"] { min-width: 82px; }
+.race-detail-scroll .race-menu-scroll .info-tab[data-target="marutoku"] { min-width: 90px; }
+.race-detail-scroll .race-menu-scroll .info-tab[data-target="comment"] { min-width: 100px; }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="recent"] { min-width: 112px; }
-.race-detail-scroll .race-menu-scroll .info-tab[data-target="meeting"] { min-width: 82px; }
+.race-detail-scroll .race-menu-scroll .info-tab[data-target="meeting"] { min-width: 108px; }
+.race-detail-scroll .race-menu-scroll .info-tab[data-target="position"] { min-width: 108px; }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="mania"] { min-width: 90px; }
 
 /* The lineup has exactly two rows and a right-hand newspaper control. */
