@@ -1,0 +1,83 @@
+@charset "UTF-8";
+/* SCR-03: genuine 2026-11-03 Hofu 5R lineup-position statistics.
+   Inserted immediately before the existing mania-analysis section. */
+.race-detail-scroll .mania-table th.position-section-start {
+  background: var(--c-bg);
+  text-align: center;
+  white-space: nowrap;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table th.position-col {
+  min-width: 48px;
+  width: 48px;
+  padding: var(--space-3) var(--space-2);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-size: var(--fs-12);
+  background: var(--c-bg);
+}
+.race-detail-scroll .mania-table th.position-col.position-first,
+.race-detail-scroll .mania-table td.position-first {
+  border-left: var(--line-normal);
+}
+.race-detail-scroll .mania-table th.position-col.position-current,
+.race-detail-scroll .mania-table td.position-current {
+  min-width: 66px;
+  width: 66px;
+}
+.race-detail-scroll .mania-table th.position-col .position-group-name,
+.race-detail-scroll .mania-table th.position-col .position-result-name {
+  display: block;
+  font-size: var(--fs-12);
+  line-height: 1.3;
+  font-weight: var(--fw-normal);
+}
+.race-detail-scroll .mania-table th.position-col .position-group-name {
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table th.position-col .position-switch {
+  appearance: none;
+  border: 0;
+  background: none;
+  color: var(--c-keirin);
+  font: inherit;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1.3;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+.race-detail-scroll .mania-table th.position-col .position-switch:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: var(--space-2);
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat,
+.race-detail-scroll .mania-table tbody tr:nth-child(even) td.position-stat {
+  text-align: center;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-normal);
+  font-variant-numeric: tabular-nums;
+  background: var(--c-surface);
+  color: var(--c-text);
+}
+.race-detail-scroll .mania-table tbody td.position-stat.position-zero {
+  color: var(--c-sub);
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-highlight-lead {
+  background: color-mix(in srgb, var(--c-warning) 20%, var(--c-surface));
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-highlight-follow {
+  background: color-mix(in srgb, var(--c-success) 15%, var(--c-surface));
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-highlight-other {
+  background: color-mix(in srgb, var(--c-primary) 25%, var(--c-surface));
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-current {
+  font-weight: var(--fw-strong);
+  white-space: nowrap;
+}
