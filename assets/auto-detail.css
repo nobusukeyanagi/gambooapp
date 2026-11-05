@@ -2111,7 +2111,7 @@
       .point-use span { min-height: 40px; font-size: var(--fs-14); }
 
       .mania-table td,
-      .race-table td { font-size: var(--fs-14); }
+      .race-table td { font-size: var(--fs-16); }
       .rider-name { font-size: var(--fs-14); }
       .mania-table .c-name { min-width: 88px; width: 88px; }
       .at td { font-size: var(--fs-16); }
