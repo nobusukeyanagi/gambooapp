@@ -286,6 +286,13 @@
   line-height: 1.2;
   white-space: nowrap;
 }
+/* Override the legacy ".ri-race span" 16px rule for both caption lines. */
+.race-detail-scroll .ri-race .ri-race-purchase-caption > span {
+  display: block;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  line-height: 1.2;
+}
 .race-detail-scroll .race-info-bar .ri-event {
   grid-area: event;
   align-self: center;
