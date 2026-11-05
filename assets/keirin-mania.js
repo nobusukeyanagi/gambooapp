@@ -132,36 +132,36 @@
 
   const wrap = inner.querySelector(".race-table-wrap");
   const table = wrap?.querySelector("table.mania-table");
-  const recentHeading = wrap?.querySelector(".recent-section-start");
-  const meetingHeading = wrap?.querySelector(".meeting-section-start");
-  const gIndexHeading = wrap?.querySelector(".gindex-section-start");
+  // Navigation order follows the first row of the racecard table.
+  const playerHeading = wrap?.querySelector(".player-section-start");
   const pointHeading = wrap?.querySelector(".marutoku-section-start");
   const commentHeading = wrap?.querySelector(".marutoku-comment-heading");
+  const recentHeading = wrap?.querySelector(".recent-section-start");
+  const meetingHeading = wrap?.querySelector(".meeting-section-start");
   const positionHeading = wrap?.querySelector(".position-section-start");
-  const maniaHeading = wrap?.querySelector(".mania-section-start");
+  const maniaHeading = wrap?.querySelector(".mania-section-heading");
   const menuScroller = inner.querySelector(".info-tabs")?.closest(".hscroll-inner");
-  const recentTab = inner.querySelector('.info-tab[data-target="recent"]');
-  const meetingTab = inner.querySelector('.info-tab[data-target="meeting"]');
-  const gIndexTab = inner.querySelector('.info-tab[data-target="gindex"]');
+  const playerTab = inner.querySelector('.info-tab[data-target="player"]');
   const pointTab = inner.querySelector('.info-tab[data-target="marutoku"]');
   const commentTab = inner.querySelector('.info-tab[data-target="comment"]');
+  const recentTab = inner.querySelector('.info-tab[data-target="recent"]');
+  const meetingTab = inner.querySelector('.info-tab[data-target="meeting"]');
   const positionTab = inner.querySelector('.info-tab[data-target="position"]');
   const maniaTab = inner.querySelector('.info-tab[data-target="mania"]');
-  if (!wrap || !table || !recentHeading || !meetingHeading || !gIndexHeading ||
-      !pointHeading || !commentHeading || !positionHeading || !maniaHeading ||
-      !recentTab || !meetingTab || !gIndexTab || !pointTab || !commentTab ||
+  if (!wrap || !table || !playerHeading || !pointHeading || !commentHeading ||
+      !recentHeading || !meetingHeading || !positionHeading || !maniaHeading ||
+      !playerTab || !pointTab || !commentTab || !recentTab || !meetingTab ||
       !positionTab || !maniaTab) return;
 
   const tabsByName = {
-    recent: recentTab, meeting: meetingTab, marutoku: pointTab,
-    comment: commentTab, position: positionTab,
-    gindex: gIndexTab, mania: maniaTab
+    player: playerTab, marutoku: pointTab, comment: commentTab,
+    recent: recentTab, meeting: meetingTab,
+    position: positionTab, mania: maniaTab
   };
   const headingsByName = {
+    player: playerHeading, marutoku: pointHeading, comment: commentHeading,
     recent: recentHeading, meeting: meetingHeading,
-    marutoku: pointHeading, comment: commentHeading,
-    position: positionHeading, gindex: gIndexHeading,
-    mania: maniaHeading
+    position: positionHeading, mania: maniaHeading
   };
   let current = "";
   let navigationTarget = null;
@@ -178,7 +178,7 @@
     );
     if (!menuScroller) return;
     const active = tabsByName[name];
-    const scrollLeft = name === "recent" ? 0 :
+    const scrollLeft = name === "player" ? 0 :
       Math.max(0, active.offsetLeft - menuScroller.offsetLeft -
         Math.min(44, menuScroller.clientWidth / 5));
     menuScroller.scrollTo({
@@ -188,7 +188,7 @@
   }
   function scrollTableTo(name) {
     const maxLeft = Math.max(0, wrap.scrollWidth - wrap.clientWidth);
-    const offset = columnOffset(headingsByName[name]) -
+    const offset = name === "player" ? 0 : columnOffset(headingsByName[name]) -
       Math.min(70, wrap.clientWidth / 4);
     const left = Math.max(0, Math.min(maxLeft, offset));
     navigationTarget = left;
@@ -198,9 +198,8 @@
     if (Math.abs(wrap.scrollLeft - left) <= 2) navigationTarget = null;
   }
   function syncTab() {
-    // Retain the tapped menu while animated scrolling is in progress and
-    // after reaching the column (especially G-index, physically near the
-    // start but intentionally sixth in the menu order).
+    // Keep the tapped section selected while the table scrolls smoothly.
+    // All menu items now follow the physical order of the table columns.
     if (selectedByUser !== null) return;
     if (navigationTarget !== null) {
       if (Math.abs(wrap.scrollLeft - navigationTarget) > 2) return;
@@ -208,9 +207,8 @@
     }
     const atRightEdge = wrap.scrollWidth - wrap.clientWidth - wrap.scrollLeft <= 12;
     const threshold = wrap.scrollLeft + Math.min(70, wrap.clientWidth / 4) + 12;
-    let name = "recent";
+    let name = "player";
     if (atRightEdge || threshold >= columnOffset(maniaHeading)) name = "mania";
-    else if (threshold >= columnOffset(gIndexHeading)) name = "gindex";
     else if (threshold >= columnOffset(positionHeading)) name = "position";
     else if (threshold >= columnOffset(meetingHeading)) name = "meeting";
     else if (threshold >= columnOffset(recentHeading)) name = "recent";
