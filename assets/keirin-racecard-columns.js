@@ -53,6 +53,8 @@
   const renderRow = (DATA,rider,i) => {
     const p=DATA.marutoku[i],position=DATA.positionStats.rows[i];
     const grade=rider.grade.split("/");
+    // Display name / prefecture(home) / training class and age on three lines.
+    const [home, cohort, age] = String(rider.meta || "").split("/");
     const prev=rider.history||[];
     const histories=Array.from({length:8},(_,x)=>
       prev[x]||(x===0?{date:"",results:rider.current}:x===1?{date:rider.prevDate,results:rider.previous}:null));
@@ -73,7 +75,8 @@
       '<td class="fx c-sha"><div class="frame-cell f'+rider.car+'">'+rider.car+
         '</div><span class="sha-nm">'+escape(rider.name.slice(0,3))+'</span></td>'+
       '<td class="c-name"><div class="rider-name">'+escape(rider.name)+
-        '</div><div class="rider-meta">'+escape(rider.meta)+'</div></td>'+
+        '</div><div class="rider-meta rider-home">'+escape(home)+
+        '</div><div class="rider-meta rider-age">'+escape(cohort)+'期 '+escape(age)+'歳</div></td>'+
       '<td class="bl cls">'+escape(grade[0])+'<small>/'+escape(grade[1])+'</small></td>'+
       '<td class="bl"><span class="leg-tag '+(legCss[rider.leg]||"leg-both")+'">'+escape(rider.leg)+'</span></td>'+
       '<td class="bl">'+escape(rider.gear||"—")+'</td>'+
