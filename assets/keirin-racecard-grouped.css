@@ -1,0 +1,111 @@
+@charset "UTF-8";
+/* SCR-03: one consolidated seven-section racecard. Shared design tokens
+   and the existing fixed car-number column stay authoritative. */
+.race-detail-scroll .mania-table {
+  border-spacing: 0;
+  width: max-content;
+}
+.race-detail-scroll .mania-table thead tr:first-child th {
+  background: var(--c-bg);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  white-space: nowrap;
+  text-align: center;
+  padding: var(--space-small) var(--space-card);
+  border-bottom: var(--line-normal);
+}
+.race-detail-scroll .mania-table thead tr:nth-child(2) th {
+  background: var(--c-bg);
+  font-size: var(--fs-12);
+  white-space: nowrap;
+  text-align: center;
+}
+.race-detail-scroll .mania-table thead tr:nth-child(2) th.c-name {
+  text-align: left;
+}
+.race-detail-scroll .mania-table .player-section-start,
+.race-detail-scroll .mania-table .marutoku-section-start,
+.race-detail-scroll .mania-table .marutoku-comment-heading,
+.race-detail-scroll .mania-table .recent-section-start,
+.race-detail-scroll .mania-table .meeting-section-start,
+.race-detail-scroll .mania-table .position-section-start,
+.race-detail-scroll .mania-table .mania-section-heading {
+  border-left: var(--line-normal);
+}
+.race-detail-scroll .mania-table .meeting-cell {
+  box-sizing: border-box;
+  min-width: 172px;
+  text-align: left;
+  padding: var(--space-card);
+  white-space: nowrap;
+  background: var(--c-surface);
+}
+.race-detail-scroll .mania-table .meeting-cell .res-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  column-gap: var(--space-2);
+}
+.race-detail-scroll .mania-table .meeting-cell .res {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  width: 34px;
+  gap: var(--space-1);
+  align-items: flex-start;
+  font-size: var(--fs-12);
+  line-height: 1.2;
+}
+.race-detail-scroll .mania-table .meeting-cell .res-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+}
+.race-detail-scroll .mania-table .meeting-cell .res-rank {
+  font-size: var(--fs-18);
+}
+.race-detail-scroll .mania-table .meeting-cell .res-time,
+.race-detail-scroll .mania-table .meeting-cell .res-note {
+  font-size: var(--fs-12);
+}
+.race-detail-scroll .mania-table .meeting-cell .res-date {
+  white-space: nowrap;
+  margin-bottom: var(--space-2);
+  line-height: 1.25;
+  color: var(--c-sub);
+}
+.race-detail-scroll .mania-table .meeting-avg {
+  min-width: 102px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+.race-detail-scroll .mania-table .position-count {
+  min-width: 68px;
+  width: 68px;
+  text-align: center;
+}
+.race-detail-scroll .mania-table tbody tr td,
+.race-detail-scroll .mania-table tbody tr:nth-child(even) td {
+  background: var(--c-surface);
+}
+.race-detail-scroll .mania-table tbody tr td.marutoku-point-orange {
+  background: color-mix(in srgb, var(--c-warning) 20%, var(--c-surface));
+}
+.race-detail-scroll .mania-table tbody tr td.marutoku-point-yellow {
+  background: color-mix(in srgb, var(--c-primary) 25%, var(--c-surface));
+}
+.race-detail-scroll .mania-table tbody tr td.marutoku-point-green {
+  background: color-mix(in srgb, var(--c-success) 14%, var(--c-surface));
+}
+.race-detail-scroll .mania-table tbody tr td.position-highlight-lead {
+  background: color-mix(in srgb, var(--c-warning) 20%, var(--c-surface));
+}
+.race-detail-scroll .mania-table tbody tr td.position-highlight-follow {
+  background: color-mix(in srgb, var(--c-success) 15%, var(--c-surface));
+}
+.race-detail-scroll .mania-table tbody tr td.position-highlight-other {
+  background: color-mix(in srgb, var(--c-primary) 25%, var(--c-surface));
+}
