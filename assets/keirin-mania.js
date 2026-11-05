@@ -33,8 +33,8 @@
   };
 
   function renderRace5(inner) {
-    // Populate the existing SCR-03 design with the aligned 5R data;
-    // no page structure, headers, or stylesheet is replaced.
+    // Populate SCR-03's existing racecard rows and real analysis detail tables.
+    // The structured race header, menu and lineup controls remain intact.
     const race = inner.querySelector(".ri-race");
     if (race) {
       const number = [...race.childNodes].find((node) => node.nodeType === Node.TEXT_NODE);
@@ -42,8 +42,17 @@
       const grade = race.querySelector("span");
       if (grade) grade.textContent = DATA.stage;
     }
-    const schedule = inner.querySelector(".race-info-meta");
-    if (schedule) schedule.textContent = "締切 " + DATA.deadline + " ／ 発走 " + DATA.start;
+    // Update only the values, retaining the five-row SCR-03 summary layout.
+    const deadline = inner.querySelector(".race-info-meta .race-deadline");
+    const startTime = inner.querySelector(".race-info-meta .race-start");
+    if (deadline) {
+      deadline.textContent = DATA.deadline;
+      deadline.setAttribute("datetime", DATA.deadline);
+    }
+    if (startTime) {
+      startTime.textContent = DATA.start;
+      startTime.setAttribute("datetime", DATA.start);
+    }
     inner.querySelectorAll(".race-tabs .race-tab").forEach((tab, index) => {
       tab.classList.toggle("active", index === DATA.race - 1);
       // Race times are sourced from SCR-02; do not overwrite 1–12R with placeholders.
@@ -79,7 +88,6 @@
         '<td class="c-name"><div class="rider-name">' + escapeHTML(rider.name) +
           '</div><div class="rider-meta">' + escapeHTML(rider.meta) + '</div></td>',
         '<td><span class="g-val">' + escapeHTML(rider.g) + '</span></td>',
-        '<td class="bl c-mania">' + rating(rider.ratings.overall) + '</td>',
         '<td class="bl cls">' + escapeHTML(grade[0]) + '<small>/' + escapeHTML(grade[1]) + '</small></td>',
         '<td class="bl"><span class="leg-tag ' + (legClasses[rider.leg] || "leg-both") +
           '">' + escapeHTML(rider.leg) + '</span></td>',
