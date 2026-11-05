@@ -25,6 +25,37 @@
 .race-detail-scroll .mania-table thead tr:first-child th.c-name {
   text-align: center;
 }
+/* Three compact name-cell lines without expanding the 46px rider rows. */
+.race-detail-scroll .mania-table tbody tr td.c-name {
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+}
+.race-detail-scroll .mania-table td.c-name .rider-name {
+  line-height: 1.1;
+}
+.race-detail-scroll .mania-table td.c-name .rider-meta {
+  display: block;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+/* Only the active menu section's column headings are dark gold.
+   All other header cells retain their ordinary background and text. */
+.race-detail-scroll .mania-table thead tr:first-child th.section-selected {
+  background: var(--c-primary-d);
+  color: var(--c-surface);
+}
+.race-detail-scroll .mania-table thead tr:first-child th.section-selected .item-btn {
+  background: var(--c-primary-d);
+  border: var(--line-thin) solid var(--c-surface);
+  box-shadow: none;
+  color: var(--c-surface);
+}
+.race-detail-scroll .mania-table thead tr:first-child th.section-selected .item-btn.active {
+  background: var(--c-primary);
+  color: var(--c-text);
+}
+
 /* First grid line must appear to the left of the frame ("枠") column. */
 .race-detail-scroll .mania-table :is(th,td).c-waku {
   border-left: var(--line-normal);
