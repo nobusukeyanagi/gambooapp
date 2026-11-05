@@ -13,6 +13,7 @@
      rather than freezing stale 12:00 status, 5%-rebate bands, and "next" flags. */
   const snapshotDay = "2026-11-03";
   const snapshotMinutes = 12 * 60 + 30;
+  const imminentWindowMinutes = 30;
   const snapshotISO = snapshotDay + "T12:30:00+09:00";
   const tab = document.querySelector('.date-tab[data-date="' + snapshotDay + '"]');
   if (tab) tab.title = tab.title.replace("12:00時点", "12:30時点");
@@ -56,7 +57,7 @@
           remainingMin = remaining;
           firstPending = chip;
         }
-        const urgent = remaining <= 20;
+        const urgent = remaining <= imminentWindowMinutes;
         if (status) {
           status.textContent = cutoff;
           status.classList.add("rchip-time");
