@@ -48,8 +48,12 @@
       }
       function sync() {
         var current = Math.max(0, Math.min(maxLeft(), box.scrollLeft));
-        left.hidden = current <= 1;
-        right.hidden = current >= maxLeft() - 1;
+        var alwaysVisible = outer.classList.contains("race-menu-scroll");
+        left.hidden = !alwaysVisible && current <= 1;
+        right.hidden = !alwaysVisible && current >= maxLeft() - 1;
+        // SCR-03 menu chevrons are permanent, but cannot scroll beyond the end.
+        left.disabled = alwaysVisible && current <= 1;
+        right.disabled = alwaysVisible && current >= maxLeft() - 1;
       }
       left.addEventListener("click", function () {
         box.scrollTo({ left: 0, behavior: "smooth" });
