@@ -88,6 +88,8 @@
       '<td class="bl score">'+escape(rider.score)+'</td>'+
       rider.stats.map((v,k)=>'<td'+(k===0||k===6?' class="bl"':'')+'>'+escape(v)+'</td>').join("")+
       histories.map((v,k)=>renderMeeting(v,k)).join("")+
+      '<td class="meeting-cell meeting-avg">' + (rider.avgBest?.length ?
+        escape(rider.avgBest[0]) + "<br>/" + escape(rider.avgBest[1]) : "—") + "</td>" +
       '<td class="position-stat position-current position-first '+emphasis+'">'+escape(position.position)+'</td>'+
       buildCounts.join("")+
       '<td class="position-stat position-count bl">'+totals[0]+'</td>'+
