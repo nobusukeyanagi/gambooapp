@@ -44,12 +44,11 @@
 .point-value { text-align:right; }
 
 
-/* Six permanent Gamboo point shortcuts: three columns, two rows at every
-   supported phone size, with readable wrapping for longer Japanese labels. */
+/* One full-width game shortcut above six point links, three columns x two rows.
+   All buttons retain the shared .point-action styling. */
 .point-actions {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, auto));
   gap: var(--space-card);
   padding: var(--space-card) var(--space-content) var(--space-content);
   background: var(--c-surface);
@@ -64,6 +63,15 @@
   text-align: center;
   overflow-wrap: anywhere;
   letter-spacing: -0.04em;
+}
+/* Full-width button is the same 44px height as 会員情報 / プロフィール. */
+.point-actions .point-game-action {
+  grid-column: 1 / -1;
+  height: var(--tap-min);
+  min-height: var(--tap-min);
+  padding: 0 var(--space-small);
+  line-height: normal;
+  letter-spacing: normal;
 }
 .point-action > span { display: block; white-space: nowrap; }
 .point-action:focus-visible {
