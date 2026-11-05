@@ -165,6 +165,22 @@
     recent: recentHeading, meeting: meetingHeading,
     position: positionHeading, gindex: gindexHeading, mania: maniaHeading
   };
+  // The eight menu sections cover contiguous table-header columns.
+  const headerCells = Array.from(table.tHead?.rows[0]?.cells || []);
+  const headerBounds = Object.keys(headingsByName).map((key) => ({
+    key, start: headerCells.indexOf(headingsByName[key])
+  }));
+  if (headerBounds.some((entry) => entry.start < 0)) return;
+  function highlightHeader(name) {
+    const index = headerBounds.findIndex((entry) => entry.key === name);
+    if (index < 0) return;
+    const from = headerBounds[index].start;
+    const until = index + 1 < headerBounds.length
+      ? headerBounds[index + 1].start : headerCells.length;
+    headerCells.forEach((cell, column) =>
+      cell.classList.toggle("section-selected", column >= from && column < until)
+    );
+  }
   let current = "";
   let navigationTarget = null;
   let selectedByUser = null;
@@ -183,6 +199,7 @@
     Object.entries(tabsByName).forEach(([key, tab]) =>
       tab.classList.toggle("active", key === name)
     );
+    highlightHeader(name);
     if (!menuScroller) return;
     const active = tabsByName[name];
     const scrollLeft = name === "player" ? 0 :
