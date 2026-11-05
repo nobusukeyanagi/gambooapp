@@ -31,7 +31,6 @@
         width: 44px;
         height: 28px;
         margin: 0 auto;
-        border-radius: 4px;
         border: var(--line-selected);
         background: linear-gradient(var(--c-bg), var(--c-primary));
         box-shadow: 0 1px 2px color-mix(in srgb, var(--c-text) 20%, transparent);
@@ -95,7 +94,7 @@
       .sheet-close {
         width: 24px;
         height: 24px;
-        border-radius: 50%;
+        border-radius: var(--r-full);
         border: none;
         background: var(--c-bg);
         font-size: var(--fs-12);
@@ -182,7 +181,6 @@
       .item-btn {
         width: 46px;
         height: 30px;
-        border-radius: 6px;
         border: var(--line-normal);
         background: var(--c-surface);
         box-shadow: var(--e1);
