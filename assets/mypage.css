@@ -182,6 +182,11 @@
   white-space: nowrap;
   letter-spacing: -0.04em;
 }
+/* 推しメン only: increase the displayed player name one type step (12px → 14px);
+   retain narrow-screen proportional sizing and keep 激推しメン unchanged. */
+.favorite-group--regular .favorite-player-name {
+  font-size: clamp(11px, calc(3vw + 2px), var(--fs-14));
+}
 .favorite-player-affiliation {
   display: block;
   max-width: 100%;
