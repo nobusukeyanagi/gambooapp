@@ -177,8 +177,9 @@
     const from = headerBounds[index].start;
     const until = index + 1 < headerBounds.length
       ? headerBounds[index + 1].start : headerCells.length;
+    // Frame and vehicle-number headers must always retain their normal color.
     headerCells.forEach((cell, column) =>
-      cell.classList.toggle("section-selected", column >= from && column < until)
+      cell.classList.toggle("section-selected", column >= 2 && column >= from && column < until)
     );
   }
   let current = "";
