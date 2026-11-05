@@ -66,8 +66,8 @@
       tab.title = entry.raceType + " ／ 締切 " + entry.cutoff + " ／ 発走 " + entry.startTime;
       const startTime = tab.querySelector("small");
       if (startTime) startTime.textContent = entry.startTime;
-      // Urgent red takes priority over a gold rebate, as on SCR-02.
-      updateBand(tab, entry.soon ? entry.countdown : (entry.rebate ? "5%還元" : ""));
+      // Keep the urgent red outline without a countdown label; rebate only has a gold band.
+      updateBand(tab, entry.soon ? "" : (entry.rebate ? "5%還元" : ""));
     });
   };
   refresh().catch((error) => {
