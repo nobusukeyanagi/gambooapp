@@ -31,6 +31,7 @@
   padding-bottom: var(--space-1);
 }
 .race-detail-scroll .mania-table td.c-name .rider-name {
+  font-size: var(--fs-16);
   line-height: 1;
   margin-bottom: var(--space-2);
 }
@@ -202,7 +203,7 @@
 .race-detail-scroll .mania-table .meeting-avg-line {
   display: block;
   white-space: nowrap;
-  font-size: var(--fs-14);
+  font-size: var(--fs-16);
 }
 .race-detail-scroll .mania-table .position-count {
   min-width: 68px;
@@ -260,4 +261,9 @@
   margin: 0;
   padding: 0;
   text-align: left;
+}
+
+/* Box-table main symbols and figures follow the shared 16px tier. */
+.race-detail-scroll .mania-table :is(.mark, .mk, .rate2 b, .rn b) {
+  font-size: var(--fs-16);
 }
