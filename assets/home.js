@@ -138,11 +138,11 @@
 
 
 
-/* Static three-day racing calendar, viewed from 2026-11-03 12:00 JST.
+/* Static three-day racing calendar, viewed from 2026-11-03 12:30 JST.
    The first three keirin cards remain intentionally fictional grade samples. */
 (function () {
   "use strict";
-  var schedule = {"2026-11-02":{"keirin":[{"venue":"防府","grade":"GⅢ","day":"3日目","period":"","girls":false,"race":"","deadline":""},{"venue":"久留米","grade":"FⅠ","day":"2日目","period":"ナイター","girls":false,"race":"","deadline":""},{"venue":"豊橋","grade":"FⅠ","day":"初日","period":"ナイター","girls":true,"race":"","deadline":""},{"venue":"熊本","grade":"FⅡ","day":"最終日","period":"モーニング","girls":false,"race":"","deadline":""},{"venue":"小田原","grade":"FⅡ","day":"2日目","period":"モーニング","girls":true,"race":"","deadline":""},{"venue":"静岡","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"奈良","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":false,"race":"","deadline":""},{"venue":"武雄","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"浜松","grade":"SG","day":"5日目","period":"","girls":false,"race":"","deadline":""},{"venue":"川口","grade":"普通","day":"2日目","period":"ナイター","girls":false,"race":"","deadline":""}]},"2026-11-03":{"keirin":[{"venue":"青森","grade":"FⅠ","day":"初日","period":"","girls":false,"race":"4R","deadline":"12:13"},{"venue":"防府","grade":"GⅢ","day":"最終日","period":"","girls":false,"race":"4R","deadline":"12:26"},{"venue":"豊橋","grade":"FⅠ","day":"2日目","period":"ナイター","girls":true,"race":"1R","deadline":"15:45"},{"venue":"久留米","grade":"FⅠ","day":"最終日","period":"ナイター","girls":false,"race":"1R","deadline":"15:59"},{"venue":"静岡","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":true,"race":"1R","deadline":"20:36"},{"venue":"奈良","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":false,"race":"1R","deadline":"20:44"},{"venue":"武雄","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":true,"race":"1R","deadline":"20:52"},{"venue":"小田原","grade":"FⅡ","day":"最終日","period":"モーニング","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"浜松","grade":"SG","day":"最終日","period":"","girls":false,"race":"5R","deadline":"12:13"},{"venue":"川口","grade":"普通","day":"3日目","period":"ナイター","girls":false,"race":"1R","deadline":"18:48"}]},"2026-11-04":{"keirin":[{"venue":"青森","grade":"FⅠ","day":"2日目","period":"","girls":false,"race":"","deadline":""},{"venue":"取手","grade":"FⅡ","day":"初日","period":"モーニング","girls":false,"race":"","deadline":""},{"venue":"大宮","grade":"FⅠ","day":"初日","period":"","girls":false,"race":"","deadline":""},{"venue":"豊橋","grade":"FⅠ","day":"最終日","period":"ナイター","girls":true,"race":"","deadline":""},{"venue":"静岡","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"奈良","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":false,"race":"","deadline":""},{"venue":"武雄","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"別府","grade":"FⅡ","day":"初日","period":"ナイター","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"川口","grade":"普通","day":"最終日","period":"ナイター","girls":false,"race":"","deadline":""},{"venue":"山陽","grade":"普通","day":"初日","period":"","girls":false,"race":"","deadline":""}]}};
+  var schedule = {"2026-11-02":{"keirin":[{"venue":"防府","grade":"GⅢ","day":"3日目","period":"","girls":false,"race":"","deadline":""},{"venue":"久留米","grade":"FⅠ","day":"2日目","period":"ナイター","girls":false,"race":"","deadline":""},{"venue":"豊橋","grade":"FⅠ","day":"初日","period":"ナイター","girls":true,"race":"","deadline":""},{"venue":"熊本","grade":"FⅡ","day":"最終日","period":"モーニング","girls":false,"race":"","deadline":""},{"venue":"小田原","grade":"FⅡ","day":"2日目","period":"モーニング","girls":true,"race":"","deadline":""},{"venue":"静岡","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"奈良","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":false,"race":"","deadline":""},{"venue":"武雄","grade":"FⅡ","day":"初日","period":"ミッドナイト","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"浜松","grade":"SG","day":"5日目","period":"","girls":false,"race":"","deadline":""},{"venue":"川口","grade":"普通","day":"2日目","period":"ナイター","girls":false,"race":"","deadline":""}]},"2026-11-03":{"keirin":[{"venue":"青森","grade":"FⅠ","day":"初日","period":"","girls":false,"race":"5R","deadline":"12:39"},{"venue":"防府","grade":"GⅢ","day":"最終日","period":"","girls":false,"race":"5R","deadline":"12:52"},{"venue":"豊橋","grade":"FⅠ","day":"2日目","period":"ナイター","girls":true,"race":"1R","deadline":"15:45"},{"venue":"久留米","grade":"FⅠ","day":"最終日","period":"ナイター","girls":false,"race":"1R","deadline":"15:59"},{"venue":"静岡","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":true,"race":"1R","deadline":"20:36"},{"venue":"奈良","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":false,"race":"1R","deadline":"20:44"},{"venue":"武雄","grade":"FⅡ","day":"2日目","period":"ミッドナイト","girls":true,"race":"1R","deadline":"20:52"},{"venue":"小田原","grade":"FⅡ","day":"最終日","period":"モーニング","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"浜松","grade":"SG","day":"最終日","period":"","girls":false,"race":"6R","deadline":"12:42"},{"venue":"川口","grade":"普通","day":"3日目","period":"ナイター","girls":false,"race":"1R","deadline":"18:48"}]},"2026-11-04":{"keirin":[{"venue":"青森","grade":"FⅠ","day":"2日目","period":"","girls":false,"race":"","deadline":""},{"venue":"取手","grade":"FⅡ","day":"初日","period":"モーニング","girls":false,"race":"","deadline":""},{"venue":"大宮","grade":"FⅠ","day":"初日","period":"","girls":false,"race":"","deadline":""},{"venue":"豊橋","grade":"FⅠ","day":"最終日","period":"ナイター","girls":true,"race":"","deadline":""},{"venue":"静岡","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"奈良","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":false,"race":"","deadline":""},{"venue":"武雄","grade":"FⅡ","day":"最終日","period":"ミッドナイト","girls":true,"race":"","deadline":""},{"venue":"別府","grade":"FⅡ","day":"初日","period":"ナイター","girls":true,"race":"","deadline":""}],"autorace":[{"venue":"川口","grade":"普通","day":"最終日","period":"ナイター","girls":false,"race":"","deadline":""},{"venue":"山陽","grade":"普通","day":"初日","period":"","girls":false,"race":"","deadline":""}]}};
   var gradeStyles = {"GP":["g-gp","GP"],"SG":["g-sg","SG"],"GⅠ":["g-g1","GⅠ"],"特GⅠ":["g-g1","特GⅠ"],"GⅡ":["g-g2","GⅡ"],"GⅢ":["g-g3","GⅢ"],"FⅠ":["g-f1","FⅠ"],"FⅡ":["g-f2","FⅡ"],"普通":["g-f2","普通"]};
   // Track numbers define the canonical north-to-south order within a grade.
   var gradePriority = {"GP":0,"SG":1,"GⅠ":2,"特GⅠ":2,"GⅡ":3,"GⅢ":4,"FⅠ":5,"FⅡ":6,"普通":7};
@@ -153,7 +153,7 @@
   }
   var girlsHeart = "<span class=\"girls\" role=\"img\" aria-label=\"ガールズ\"><svg class=\"girls-heart-icon\" viewBox=\"0 0 24 24\" preserveAspectRatio=\"none\" aria-hidden=\"true\" focusable=\"false\"><use href=\"./assets/bottom-nav-icons.svg?v=16#girls-heart\"></use></svg></span>";
   var referenceDay = "2026-11-03";
-  var referenceMinutes = 12 * 60;
+  var referenceMinutes = 12 * 60 + 30;
   var tabs = Array.from(document.querySelectorAll(".scroll-area > .date-tabs [data-date]"));
   var keirinGrid = document.querySelector('[data-home-venues="keirin"]');
   var autoGrid = document.querySelector('[data-home-venues="autorace"]');
@@ -189,8 +189,10 @@
       var soon = remain > 0 && remain <= 20;
       item.classList.toggle("soon", soon);
       item.closest(".vcard").classList.toggle("deadline-soon", soon);
+      var text = item.querySelector(".deadline-time");
+      if (text) text.textContent = soon ? remain + "分前" : item.dataset.deadline;
       if (soon) {
-        item.setAttribute("aria-label", "締切まで" + remain + "分 " + item.dataset.deadline);
+        item.setAttribute("aria-label", "締切" + remain + "分前（" + item.dataset.deadline + "）");
         item.setAttribute("title", "締切まで" + remain + "分");
       } else {
         item.removeAttribute("aria-label");
@@ -213,7 +215,7 @@
         if (tile) fragment.appendChild(tile);
       });
       grid.appendChild(fragment);
-      grid.dataset.snapshot = date + "T12:00:00+09:00";
+      grid.dataset.snapshot = date + "T12:30:00+09:00";
       markSoon(grid);
     });
     tabs.forEach(function (tab) {
@@ -237,5 +239,7 @@
       }
     });
   });
+  var mainTab = tabs.find(function (tab) { return tab.dataset.date === referenceDay; });
+  if (mainTab) mainTab.title = mainTab.title.replace("12:00時点", "12:30時点");
   showDay(referenceDay);
 })();
