@@ -19,7 +19,8 @@
       sub("級班","bl"),sub("脚質","bl"),sub("ギア比","bl"),
       ...["1着P","2着P","3着P","総合P","印"].map((s,i)=>sub(s,(i===0?"bl marutoku-section-start ":"")+"marutoku-score-label")),
       sub("選手コメント","bl marutoku-comment-heading"),
-      ...["競走得点","失違","逃","捲","差","マ","B","勝","2連対","3連対","着外"].map((s,i)=>sub(s,i===0?"bl recent-section-start":"")),
+      ...["競走得点","失違","逃","捲","差","マ","B","勝","2連対","3連対","着外"].map((s,i)=>
+        sub(s,i===0?"bl recent-section-start":(i===1||i===7?"bl":""))),
       ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり<br>平均/最高"].map((s,i)=>sub(s,i===0?"bl meeting-current-label meeting-section-start":"")),
       sub("並び","bl position-col position-current position-section-start"),
       ...placeGroups.flatMap((g)=>ranks.map((r,i)=>sub('<span class="position-group-name">'+escape(g)+'</span><span class="position-result-name">'+r+'</span>','position-col'+(i===0?' position-first':'')))),
@@ -33,10 +34,12 @@
     return '<thead><tr>'+subheads.join("")+'</tr></thead>';
   };
   const raceCard = (record) => {
-    const rank=record[0],time=record[1],note=record[2];
+    // Keep B and the winning move on the same line (e.g. "B捲", "B逃").
+    const rank=record[0],time=record[1],
+      note=String(record[2]||"").replace(/\s+/g,"");
     return '<span class="res"><span class="res-main"><span class="res-rank">'+escape(rank)+'</span>'+
       (time?'<span class="res-time">'+escape(time)+'</span>':"")+'</span>'+
-      (note?'<span class="res-note">'+escape(note).replace(/^B /,"B<br>")+'</span>':"")+'</span>';
+      (note?'<span class="res-note">'+escape(note)+'</span>':"")+'</span>';
   };
   const renderMeeting = (period,index) => {
     if(!period||(!period.results?.length&&!period.date))
