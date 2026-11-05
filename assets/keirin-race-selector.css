@@ -346,14 +346,6 @@
   color: var(--c-surface);
 }
 
-/* SCR-03 menu arrows remain visible at both scroll extremes. */
-.race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l)[disabled] {
-  display: flex;
-  opacity: 1;
-  color: var(--c-sub);
-  cursor: default;
-}
-
 /* Horizontal menu is explicitly one-axis: dragging cannot move it vertically. */
 .race-detail-scroll .race-menu-scroll {
   position: relative;
