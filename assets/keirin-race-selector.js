@@ -15,19 +15,6 @@
     return String(Math.floor(total / 60)).padStart(2, "0") + ":" +
       String(total % 60).padStart(2, "0");
   };
-  const updateBand = (tab, label) => {
-    let band = tab.querySelector(".race-state-band");
-    if (!label) {
-      band?.remove();
-      return;
-    }
-    if (!band) {
-      band = document.createElement("span");
-      band.className = "race-state-band";
-      tab.insertBefore(band, tab.firstChild);
-    }
-    band.textContent = label;
-  };
   const refresh = async () => {
     const response = await fetch(bar.dataset.sourcePage || "./SCR-02_keirin.html", {
       cache: "force-cache"
@@ -53,8 +40,7 @@
         raceType: race.dataset.raceType || "",
         past: race.classList.contains("closed"),
         soon: race.classList.contains("soon"),
-        rebate: !!race.querySelector(".rchip-rebate"),
-        countdown: race.querySelector(".rchip-warning")?.textContent.trim() || ""
+        rebate: !!race.querySelector(".rchip-rebate")
       };
     });
     entries.forEach((entry, index) => {
@@ -66,8 +52,8 @@
       tab.title = entry.raceType + " ／ 締切 " + entry.cutoff + " ／ 発走 " + entry.startTime;
       const startTime = tab.querySelector("small");
       if (startTime) startTime.textContent = entry.startTime;
-      // Keep the urgent red outline without a countdown label; rebate only has a gold band.
-      updateBand(tab, entry.soon ? "" : (entry.rebate ? "5%還元" : ""));
+      // Keep only colored race outlines; remove any legacy status banner.
+      tab.querySelector(".race-state-band")?.remove();
     });
   };
   refresh().catch((error) => {
