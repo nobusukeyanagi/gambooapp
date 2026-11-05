@@ -167,6 +167,8 @@
   flex-direction: column;
   align-items: stretch;
   gap: var(--space-card);
+  /* The menu's own top rule is authoritative: avoid two adjacent 1px rules. */
+  border-bottom: 0;
 }
 .race-detail-scroll .race-info-bar .ri-main {
   flex: 1 1 auto;
