@@ -181,9 +181,9 @@
     "number kind live"
     "clock clock clock"
     "detail detail detail";
-  grid-template-rows: 24px 24px 24px auto auto;
+  grid-template-rows: 22px 22px 22px auto auto;
   column-gap: var(--space-card);
-  row-gap: var(--space-2);
+  row-gap: var(--space-1);
   min-width: 0;
 }
 .race-detail-scroll .ri-meeting {
@@ -437,6 +437,7 @@
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="recent"] { min-width: 112px; }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="meeting"] { min-width: 108px; }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="position"] { min-width: 108px; }
+.race-detail-scroll .race-menu-scroll .info-tab[data-target="gindex"] { min-width: 72px; }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="mania"] { min-width: 90px; }
 
 /* The lineup has exactly two rows and a right-hand newspaper control. */
@@ -500,11 +501,14 @@
   line-height: 1;
 }
 .race-detail-scroll .lineup-bar .lineup-sep {
-  flex: 0 0 auto;
+  flex: 0 0 22px;
   display: inline-flex;
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
   align-items: center;
   justify-content: center;
-  padding: 0 var(--space-card);
+  padding: 0;
   margin: 0;
   color: var(--c-sub);
   font-size: var(--fs-18);
