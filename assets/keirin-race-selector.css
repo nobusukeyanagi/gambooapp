@@ -499,8 +499,15 @@
 }
 .race-detail-scroll .lineup-bar .lineup-sep {
   flex: 0 0 auto;
-  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-card);
   margin: 0;
+  color: var(--c-sub);
+  font-size: var(--fs-18);
+  font-weight: var(--fw-strong);
+  line-height: 22px;
 }
 .race-detail-scroll .lineup-bar .lineup-dir { flex: 0 0 auto; }
 .race-detail-scroll .aokei-paper-btn {
