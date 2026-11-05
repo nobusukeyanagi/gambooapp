@@ -48,12 +48,12 @@
       }
       function sync() {
         var current = Math.max(0, Math.min(maxLeft(), box.scrollLeft));
-        var alwaysVisible = outer.classList.contains("race-menu-scroll");
-        left.hidden = !alwaysVisible && current <= 1;
-        right.hidden = !alwaysVisible && current >= maxLeft() - 1;
-        // SCR-03 menu chevrons are permanent, but cannot scroll beyond the end.
-        left.disabled = alwaysVisible && current <= 1;
-        right.disabled = alwaysVisible && current >= maxLeft() - 1;
+        // The SCR-03 menu follows the same edge-arrow behavior as all
+        // other horizontal scrollers: hide arrows at the corresponding end.
+        left.hidden = current <= 1;
+        right.hidden = current >= maxLeft() - 1;
+        left.disabled = false;
+        right.disabled = false;
       }
       left.addEventListener("click", function () {
         box.scrollTo({ left: 0, behavior: "smooth" });
