@@ -8,7 +8,7 @@
 }
 .at.auto-merged .auto-lab-start > span {
   display: block;
-  font-size: var(--fs-14);
+  font-size: var(--fs-12);
   color: var(--c-text);
 }
 .at.auto-merged .auto-lab-start .rd-bar {
