@@ -367,13 +367,13 @@
   border-radius: var(--r-control);
 }
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live {
-  background: var(--c-primary-d);
+  background: var(--c-surface);
   border: var(--line-thin) solid var(--c-primary-d);
-  color: var(--c-surface);
+  color: var(--c-primary-d);
   box-shadow: var(--e1);
 }
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live .ic {
-  color: var(--c-surface);
+  color: var(--c-primary-d);
 }
 
 /* Horizontal menu is explicitly one-axis: dragging cannot move it vertically. */
