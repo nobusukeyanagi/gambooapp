@@ -412,3 +412,14 @@ body { font-weight: var(--fw-normal); }
   outline: var(--line-focus);
   outline-offset: var(--space-2);
 }
+
+/* Canonical racecard control corners: SCR-03 and SCR-04 use the same 8px
+   control token as the SCR-02 race buttons and cross-screen action buttons.
+   These are the actual filled/bordered buttons; underline navigation tabs,
+   vehicle-number badges, and circular close icons remain distinct. */
+.phone-inner .race-tabs .race-tab,
+.phone-inner .ri-act .ri-btn,
+.phone-inner .mania-table .item-btn,
+.phone-inner .at.auto-merged .lb-btn {
+  border-radius: var(--r-control);
+}
