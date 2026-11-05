@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/design-tokens.css?v=59" />
     <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=12" />
     <link rel="stylesheet" href="./assets/app-base.css?v=1" />
-    <link rel="stylesheet" href="./assets/mypage.css?v=23" />
+    <link rel="stylesheet" href="./assets/mypage.css?v=24" />
     <link rel="stylesheet" href="./assets/payout-bar.css?v=1" />
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=3" />
     <link rel="stylesheet" href="./assets/ui-consistency.css?v=31" />
@@ -60,8 +60,8 @@
                   <div class="user-avatar"><img class="user-avatar-photo" src="./assets/images/buta.png?v=2" alt="ユーザーアイコン" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><svg class="ic" aria-hidden="true" hidden><use href="#ic-person"></use></svg></div>
                   <div class="user-name">ユーザー さん</div>
                   <div class="user-card-actions" role="group" aria-label="会員設定">
-                    <a class="cp-btn user-card-action" href="#mypage-member">会員情報</a>
-                    <a class="cp-btn user-card-action" href="#mypage-profile">プロフィール</a>
+                    <a class="cp-btn user-card-action" href="https://gamboo.jp/member/">会員情報</a>
+                    <a class="cp-btn user-card-action" href="https://gamboo.jp/member/profile">プロフィール</a>
                   </div>
                 </div>
                 <div class="user-points pts3">
@@ -160,40 +160,31 @@
               <div class="section-header">
                 <div class="section-title">設定</div>
               </div>
-              <div class="menu-item settings-first">
-                <div class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-edit"></use></svg></div>
-                <div class="menu-text">競輪・オートレース表示順変更</div>
-                <div class="menu-arrow">›</div>
-              </div>
+              <button class="menu-item settings-first sport-order-toggle" type="button" aria-pressed="false" aria-label="競輪・オート表示順：競輪が先。タップして変更">
+                <span class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-edit"></use></svg></span>
+                <span class="menu-text">競輪・オート表示順</span>
+                <span class="sport-order-value" aria-live="polite">競輪</span>
+                <span class="menu-arrow" aria-hidden="true">›</span>
+              </button>
+              <a class="menu-item" href="https://gamboo.jp/member/minfo/edit">
+                <span class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-mail"></use></svg></span>
+                <span class="menu-text">メールアドレス変更</span>
+                <span class="menu-arrow" aria-hidden="true">›</span>
+              </a>
+              <a class="menu-item" href="https://gamboo.jp/member/mailmagazine/edit">
+                <span class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-mail"></use></svg></span>
+                <span class="menu-text">メールマガジン設定</span>
+                <span class="menu-arrow" aria-hidden="true">›</span>
+              </a>
+              <a class="menu-item" href="https://gamboo.jp/member/pinfo/edit">
+                <span class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-key"></use></svg></span>
+                <span class="menu-text">パスワード変更</span>
+                <span class="menu-arrow" aria-hidden="true">›</span>
+              </a>
               <div class="menu-item">
-                <div class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-person"></use></svg></div>
-                <div class="menu-text">友達を探す</div>
-                <div class="menu-arrow">›</div>
-              </div>
-              <div class="menu-item">
-                <div class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-key"></use></svg></div>
-                <div class="menu-text">パスワード変更</div>
-                <div class="menu-arrow">›</div>
-              </div>
-              <div class="menu-item">
-                <div class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-mail"></use></svg></div>
-                <div class="menu-text">メールアドレス変更</div>
-                <div class="menu-arrow">›</div>
-              </div>
-              <div class="menu-item">
-                <div class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-mail"></use></svg></div>
-                <div class="menu-text">メールマガジン変更</div>
-                <div class="menu-arrow">›</div>
-              </div>
-              <div class="menu-item">
-                <div class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-eye"></use></svg></div>
-                <div class="menu-text">ログイン通知設定</div>
-                <div class="menu-arrow">›</div>
-              </div>
-              <div class="menu-item">
-                <div class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-link"></use></svg></div>
-                <div class="menu-text">外部アカウント連携</div>
-                <div class="menu-arrow">›</div>
+                <span class="menu-icon"><svg class="ic" aria-hidden="true"><use href="#ic-eye"></use></svg></span>
+                <span class="menu-text">ログイン通知設定</span>
+                <span class="menu-arrow" aria-hidden="true">›</span>
               </div>
               <div class="content-end-spacer"></div>
             </div>
@@ -220,38 +211,11 @@
               </a>
             </div>
 
-            <section class="favorite-route" id="mypage-member" aria-label="会員情報">
-              <div class="favorite-route-header">
-                <a href="#mypage-main" class="favorite-route-back" aria-label="マイページに戻る">〈</a>
-                <span>会員情報</span>
-              </div>
-              <div class="favorite-route-content">
-                <div class="favorite-route-card">
-                  <h2>会員情報</h2>
-                  <p>会員情報を確認・変更する画面</p>
-                  <p class="favorite-route-note">遷移先のモックです。実際の登録・参照機能は未接続です。</p>
-                  <a class="cp-btn" href="#mypage-main">マイページに戻る</a>
-                </div>
-              </div>
-            </section>
-            <section class="favorite-route" id="mypage-profile" aria-label="プロフィール">
-              <div class="favorite-route-header">
-                <a href="#mypage-main" class="favorite-route-back" aria-label="マイページに戻る">〈</a>
-                <span>プロフィール</span>
-              </div>
-              <div class="favorite-route-content">
-                <div class="favorite-route-card">
-                  <h2>プロフィール</h2>
-                  <p>プロフィールを確認・変更する画面</p>
-                  <p class="favorite-route-note">遷移先のモックです。実際の登録・参照機能は未接続です。</p>
-                  <a class="cp-btn" href="#mypage-main">マイページに戻る</a>
-                </div>
-              </div>
-            </section>
           </div>
         </div>
       </div>
     </div>
+    <script src="./assets/sport-display-order.js?v=1"></script>
     <script src="./assets/scroll-controls.js?v=2"></script>
     <script src="./assets/payout-bar.js?v=1"></script>
       <script src="./assets/tap-feedback.js?v=3" defer></script>
