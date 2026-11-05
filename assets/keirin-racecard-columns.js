@@ -58,8 +58,14 @@
       kind:kind.toLowerCase()+num};
   };
   const raceCard = (record) => {
-    // Three fixed-height rows: decision/B on top, placing second, time last.
-    // Keep the empty top row so every result is vertically aligned.
+    // Render an explicit blank slot where a meeting day has no result.
+    // Retaining .res makes the same 26px separators appear around empty days.
+    if (!record) {
+      return '<span class="res res-empty" aria-label="データなし">'+
+        '<span class="res-note"></span><span class="res-rank"></span>'+
+        '<span class="res-time"></span></span>';
+    }
+    // Three fixed-height rows: decision/B, placing, and time.
     const rank=record[0],time=record[1],
       note=String(record[2]||"").replace(/\s+/g,"");
     return '<span class="res"><span class="res-note">'+escape(note)+'</span>'+
@@ -70,12 +76,17 @@
     if(!period || (!period.results?.length && !period.date))
       return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'">—</td>';
     const meta=parseMeeting(period,index,DATA);
+    const results=period.results||[];
+    // F-meetings have three displayed race days; GIII (including the
+    // four-day Hofu fixture) has four. Preserve all supplied results.
+    const days=index===0 || meta.kind.startsWith("g") ? 4 : 3;
+    const slots=Array.from({length:Math.max(days,results.length)},(_,i)=>raceCard(results[i]));
     return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'"><div class="meeting-entry">'+
       '<div class="meeting-meta">'+
       '<span class="grade-badge grade-'+escape(meta.kind)+'">'+escape(meta.grade)+'</span>'+
       '<span class="meeting-venue">'+escape(meta.venue)+'</span>'+
       '<span class="meeting-date">'+escape(meta.date)+'</span></div>'+
-      '<div class="res-wrap">'+(period.results||[]).map(raceCard).join("")+'</div></div></td>';
+      '<div class="res-wrap">'+slots.join("")+'</div></div></td>';
   };
   const renderRow = (DATA,rider,i) => {
     const p=DATA.marutoku[i],position=DATA.positionStats.rows[i];
