@@ -64,77 +64,9 @@
         ).join('<span class="lineup-sep">•</span>');
       lineup.title = "情報元：アオケイ";
     }
-    const tbody = inner.querySelector(".mania-table tbody");
-    if (!tbody) return;
-    const waku = [1, 2, 3, 4, 4, 5, 5, 6, 6];
-    const legClasses = {"追":"leg-chase","逃":"leg-escape","両":"leg-both"};
-    const card = ([rank,time,note]) => {
-      const n = note ? '<span class="res-note">' + escapeHTML(note).replace(/^B /, "B<br />") + '</span>' : "";
-      return '<div class="res"><div class="res-main"><span class="res-rank">' + escapeHTML(rank) +
-        '</span>' + (time ? '<span class="res-time">' + escapeHTML(time) + '</span>' : "") +
-        '</div>' + n + '</div>';
-    };
-    tbody.innerHTML = DATA.basics.map((rider,i) => {
-      const grade = rider.grade.split("/");
-      const group = waku[i];
-      const number = (i === 0 || waku[i - 1] !== group) ?
-        '<td class="c-waku"' + ([3,5,7].includes(i) ? ' rowspan="2"' : "") + '>' + group + '</td>' : "";
-      const cells = [
-        number,
-        '<td class="fx c-sha"><div class="frame-cell f' + rider.car + '">' + rider.car +
-          '</div><span class="sha-nm">' + escapeHTML(rider.name.slice(0, 3)) + '</span></td>',
-        '<td class="c-name"><div class="rider-name">' + escapeHTML(rider.name) +
-          '</div><div class="rider-meta">' + escapeHTML(rider.meta) + '</div></td>',
-        '<td><span class="g-val">' + escapeHTML(rider.g) + '</span></td>',
-        '<td class="bl cls">' + escapeHTML(grade[0]) + '<small>/' + escapeHTML(grade[1]) + '</small></td>',
-        '<td class="bl"><span class="leg-tag ' + (legClasses[rider.leg] || "leg-both") +
-          '">' + escapeHTML(rider.leg) + '</span></td>',
-        '<td class="bl score">' + escapeHTML(rider.score) + '</td>',
-        ...rider.stats.map((v,n) => '<td' +
-          (n === 0 || n === 1 || n === 5 ? ' class="bl"' :
-            n >= 6 ? ' class="' + (n === 6 ? "bl " : "") + 'rate"' : "") + '>' + escapeHTML(v) + '</td>'),
-        '<td class="bl res-cell"><div class="res-wrap">' + rider.current.map(card).join("") + '</div></td>',
-        '<td class="bl res-cell"><div class="res-wrap"><div class="res-date">' +
-          escapeHTML(rider.prevDate).replace(" ", "<br />") + '</div>' +
-          rider.previous.map(card).join("") + '</div></td>',
-        ...DATA.marutoku[i].points.map((value, col) =>
-          '<td class="' + (col === 0 ? "bl " : "") + 'marutoku-value' +
-          (DATA.marutoku[i].emphasis[col] ? ' marutoku-point-' + DATA.marutoku[i].emphasis[col] : "") +
-          '">' + escapeHTML(value) + '</td>'
-        ),
-        '<td class="marutoku-mark">' +
-          (DATA.marutoku[i].mark ? rating(DATA.marutoku[i].mark) : "") + '</td>',
-        '<td class="bl marutoku-comment">' + escapeHTML(DATA.marutoku[i].comment) + '</td>',
-        ...(() => {
-          const record = DATA.positionStats.rows[i];
-          const position = record.position;
-          const emphasis = position === "先頭" ? "position-highlight-lead" :
-            position === "番手" ? "position-highlight-follow" : "position-highlight-other";
-          const cells = ['<td class="position-stat position-current position-first ' +
-            emphasis + '">' + escapeHTML(position) + '</td>'];
-          const values = record.counts.concat(record.switches[0]);
-          values.forEach((v, index) => {
-            const group = Math.floor(index / 4);
-            const emphasized = (position === "先頭" && group === 0) ||
-              (position === "番手" && group === 1) ||
-              (position === "3番手" && group === 2) ||
-              (position === "単騎" && group === 3);
-            const className = ['position-stat', index % 4 === 0 ? 'position-first' : '',
-              v === 0 ? 'position-zero' : '', emphasized ? emphasis : '',
-              group === 5 ? 'position-switch-value' : ''].filter(Boolean).join(' ');
-            cells.push('<td class="' + className + '"' +
-              (group === 5 ? ' data-position-index="' + (index - 20) + '"' : '') +
-              '>' + escapeHTML(v) + '</td>');
-          });
-          return cells;
-        })(),
-        '<td class="mania-eval bl">' + rating(rider.ratings.overall) + '</td>',
-        ...rider.ratings.items.map((value,n) =>
-          '<td class="mania-eval' + (n === 0 ? " bl" : "") + '" data-item="' + n + '">' +
-          rating(value) + '</td>')
-      ];
-      return '<tr>' + cells.join("") + '</tr>';
-    }).join("");
+    const racecard = inner.querySelector("table.mania-table");
+    if (!racecard || !window.GambooKeirinRacecardColumns) return;
+    window.GambooKeirinRacecardColumns.render(racecard, DATA);
     const description = [...inner.querySelectorAll("dt")].find((el) => el.textContent.trim() === "マニア分析");
     if (description?.nextElementSibling?.tagName === "DD") {
       description.nextElementSibling.textContent =
@@ -278,10 +210,12 @@
     const threshold = wrap.scrollLeft + Math.min(70, wrap.clientWidth / 4) + 12;
     let name = "recent";
     if (atRightEdge || threshold >= columnOffset(maniaHeading)) name = "mania";
+    else if (threshold >= columnOffset(gIndexHeading)) name = "gindex";
     else if (threshold >= columnOffset(positionHeading)) name = "position";
+    else if (threshold >= columnOffset(meetingHeading)) name = "meeting";
+    else if (threshold >= columnOffset(recentHeading)) name = "recent";
     else if (threshold >= columnOffset(commentHeading)) name = "comment";
     else if (threshold >= columnOffset(pointHeading)) name = "marutoku";
-    else if (threshold >= columnOffset(meetingHeading)) name = "meeting";
     selectTab(name);
   }
   Object.entries(tabsByName).forEach(([name, tab]) => {
@@ -294,30 +228,6 @@
   }
   wrap.addEventListener("pointerdown", clearManualSelection, { passive: true });
   wrap.addEventListener("wheel", clearManualSelection, { passive: true });
-  // Original source has three interchangeable values for each of the four
-  // positions in the "イン粘り+追上" group. Preserve all three modes.
-  const switchButton = inner.querySelector(".position-switch");
-  const modeLabels = ["イン粘り<br>+追上", "イン粘り<br>回数", "追い上げ<br>回数"];
-  const modeTitle = DATA.positionStats.modeLabels;
-  let positionMode = 0;
-  if (switchButton) {
-    switchButton.addEventListener("click", () => {
-      positionMode = (positionMode + 1) % modeLabels.length;
-      switchButton.innerHTML = modeLabels[positionMode];
-      switchButton.title = modeTitle[positionMode] + "（クリックで切り替え）";
-      inner.querySelectorAll(".position-mode-label").forEach(el => {
-        el.innerHTML = modeLabels[positionMode];
-      });
-      const rowNodes = [...inner.querySelectorAll(".mania-table tbody tr")];
-      rowNodes.forEach((row, i) => {
-        const values = DATA.positionStats.rows[i].switches[positionMode];
-        row.querySelectorAll(".position-switch-value").forEach((cell, col) => {
-          cell.textContent = values[col];
-          cell.classList.toggle("position-zero", Number(values[col]) === 0);
-        });
-      });
-    });
-  }
   wrap.addEventListener("scroll", syncTab, { passive: true });
   window.addEventListener("resize", syncTab);
   syncTab();
@@ -328,7 +238,7 @@
     // The existing page links to this script without a separate data import.
     // Load the dataset before initializing the view and detail interactions.
     const loader = document.createElement("script");
-    loader.src = "./assets/keirin-hofu5-data.js?v=3";
+    loader.src = "./assets/keirin-hofu5-data.js?v=4";
     loader.onload = initializeHofu5;
     loader.onerror = () => {
       // Preserve the original page structure if the data asset cannot load.
