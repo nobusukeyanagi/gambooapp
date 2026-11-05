@@ -16,8 +16,10 @@
   padding: var(--space-small) var(--space-card);
   border-bottom: var(--line-normal);
 }
+/* Every column label, including 選手名, is horizontally centered. */
+.race-detail-scroll .mania-table thead tr:first-child th,
 .race-detail-scroll .mania-table thead tr:first-child th.c-name {
-  text-align: left;
+  text-align: center;
 }
 /* First grid line must appear to the left of the frame ("枠") column. */
 .race-detail-scroll .mania-table :is(th,td).c-waku {
@@ -71,6 +73,8 @@
   flex-direction: column;
   flex: 0 0 auto;
   width: 34px;
+  height: 56px;
+  min-height: 56px;
   gap: var(--space-1);
   align-items: flex-start;
   font-size: var(--fs-12);
@@ -89,6 +93,10 @@
 .race-detail-scroll .mania-table .meeting-cell .res-note {
   font-size: var(--fs-12);
 }
+.race-detail-scroll .mania-table .meeting-cell .res-note {
+  white-space: nowrap;
+  word-break: keep-all;
+}
 .race-detail-scroll .mania-table .meeting-avg {
   min-width: 102px;
   text-align: center;
@@ -99,6 +107,18 @@
   min-width: 68px;
   width: 68px;
   text-align: center;
+}
+/* A uniform rider-row height uses Matsuo's original two-line
+   rank/time plus one-line note layout as the reference. The result
+   cards are 56px tall plus the table's 6px top/bottom cell padding. */
+.race-detail-scroll .mania-table tbody tr {
+  height: 68px;
+}
+.race-detail-scroll .mania-table tbody tr td {
+  box-sizing: border-box;
+  height: 68px;
+  padding-top: var(--space-card);
+  padding-bottom: var(--space-card);
 }
 .race-detail-scroll .mania-table tbody tr td,
 .race-detail-scroll .mania-table tbody tr:nth-child(even) td {
