@@ -362,6 +362,21 @@
   overscroll-behavior-y: none;
   background: var(--c-surface);
 }
+/* Draw both horizontal rules on the full-width, non-scrolling bar. A border
+   attached to the scrolling tabs can disappear at the arrow overlays. */
+.race-detail-scroll .race-menu-scroll::before,
+.race-detail-scroll .race-menu-scroll::after {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  right: 0;
+  height: var(--line-thin);
+  background: var(--c-border);
+  pointer-events: none;
+}
+.race-detail-scroll .race-menu-scroll::before { top: 0; }
+.race-detail-scroll .race-menu-scroll::after { bottom: 0; }
 .race-detail-scroll .race-menu-scroll > .hscroll-inner {
   display: block;
   flex: 1 1 auto;
@@ -387,6 +402,7 @@
   min-height: 52px;
   overflow: hidden;
   align-items: stretch;
+  border-bottom: 0;
 }
 .race-detail-scroll .race-menu-scroll .info-tab,
 .race-detail-scroll .race-menu-scroll button.info-tab {
@@ -397,8 +413,10 @@
   min-width: 82px;
   height: 52px;
   min-height: 52px;
+  box-sizing: border-box;
   padding: var(--space-2) var(--space-card);
   margin: 0;
+  margin-bottom: 0;
   line-height: 1.25;
   white-space: nowrap;
   font-size: var(--fs-14);
