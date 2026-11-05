@@ -174,12 +174,12 @@
   display: grid;
   grid-template-columns: 68px minmax(0, 1fr) 80px;
   grid-template-areas:
-    "number meeting live"
+    "number meeting meeting"
     "number event event"
-    "number kind kind"
+    "number kind live"
     "clock clock clock"
     "detail detail detail";
-  grid-template-rows: 40px 24px 24px auto auto;
+  grid-template-rows: 24px 24px 40px auto auto;
   column-gap: var(--space-card);
   row-gap: var(--space-2);
   min-width: 0;
@@ -397,7 +397,8 @@
   text-align: center;
   touch-action: pan-x;
 }
-.race-detail-scroll .race-menu-scroll .info-tab[data-target="racecard"] { min-width: 72px; }
+.race-detail-scroll .race-menu-scroll .info-tab[data-target="recent"] { min-width: 112px; }
+.race-detail-scroll .race-menu-scroll .info-tab[data-target="meeting"] { min-width: 82px; }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="mania"] { min-width: 90px; }
 
 /* The lineup has exactly two rows and a right-hand newspaper control. */
@@ -445,6 +446,20 @@
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
   border-radius: var(--r-sm);
+}
+
+/* Match the racecard's numbered jersey chips exactly to the lineup chips.
+   Use the existing f1...f9 palette and canonical shared radius/font tokens. */
+.race-detail-scroll .mania-table .c-sha .frame-cell {
+  box-sizing: border-box;
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  min-height: 22px;
+  border-radius: var(--r-sm);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  line-height: 1;
 }
 .race-detail-scroll .lineup-bar .lineup-sep {
   flex: 0 0 auto;
