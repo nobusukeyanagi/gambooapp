@@ -58,11 +58,12 @@
       kind:kind.toLowerCase()+num};
   };
   const raceCard = (record) => {
-    // Three fixed slots align rank / time / note even if data is absent.
+    // Three fixed-height rows: decision/B on top, placing second, time last.
+    // Keep the empty top row so every result is vertically aligned.
     const rank=record[0],time=record[1],
       note=String(record[2]||"").replace(/\s+/g,"");
-    return '<span class="res"><span class="res-top"><span class="res-rank">'+escape(rank)+'</span>'+
-      (note?'<span class="res-note">'+escape(note)+'</span>':"")+'</span>'+
+    return '<span class="res"><span class="res-note">'+escape(note)+'</span>'+
+      '<span class="res-rank">'+escape(rank)+'</span>'+
       '<span class="res-time">'+escape(time)+'</span></span>';
   };
   const renderMeeting = (period,index,DATA) => {
