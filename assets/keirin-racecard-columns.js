@@ -33,21 +33,47 @@
     ];
     return '<thead><tr>'+subheads.join("")+'</tr></thead>';
   };
+  // Expand one-letter venue codes to their full keirin-track names.
+  const venueNames = {
+    "四":"四日市","玉":"玉野","青":"青森","宮":"大宮","垣":"大垣",
+    "前":"前橋","知":"高知","小":"小倉","別":"別府","岐":"岐阜",
+    "豊":"豊橋","奈":"奈良","熊":"熊本","塚":"平塚","川":"川崎",
+    "武":"武雄","弥":"弥彦","閣":"京王閣","園":"西武園","戸":"松戸",
+    "立":"立川","富":"富山","阪":"松阪","伊":"伊東温泉","函":"函館",
+    "名":"名古屋","宇":"宇都宮","防":"防府"
+  };
+  const romanGrade = {"1":"Ⅰ","2":"Ⅱ","3":"Ⅲ"};
+  const parseMeeting = (period, index, DATA) => {
+    if (index === 0) {
+      const [,month,day] = String(DATA.date || "").match(/^\d{4}-(\d{2})-(\d{2})$/) || [];
+      const grade = String(DATA.grade || "");
+      const number = {"Ⅰ":"1","Ⅱ":"2","Ⅲ":"3"}[grade.slice(1)] || "";
+      return {date:month && day ? month+"/"+day : "—",venue:DATA.venue || "—",
+        grade,kind:/^[GF]$/.test(grade[0]) ? grade[0].toLowerCase()+number : ""};
+    }
+    const match = String(period.date || "").match(/^(\d{1,2}\/\d{2})\s+(.+?)([GF])([123])$/);
+    if (!match) return {date:period.date || "—",venue:"—",grade:"—",kind:""};
+    const [,date,code,kind,num] = match;
+    return {date,venue:venueNames[code] || code,grade:kind+romanGrade[num],
+      kind:kind.toLowerCase()+num};
+  };
   const raceCard = (record) => {
-    // Keep B and the winning move on the same line (e.g. "B捲", "B逃").
+    // Three fixed slots align rank / time / note even if data is absent.
     const rank=record[0],time=record[1],
       note=String(record[2]||"").replace(/\s+/g,"");
-    return '<span class="res"><span class="res-main"><span class="res-rank">'+escape(rank)+'</span>'+
-      (time?'<span class="res-time">'+escape(time)+'</span>':"")+'</span>'+
-      (note?'<span class="res-note">'+escape(note)+'</span>':"")+'</span>';
+    return '<span class="res"><span class="res-rank">'+escape(rank)+'</span>'+
+      '<span class="res-time">'+escape(time)+'</span>'+
+      '<span class="res-note">'+escape(note)+'</span></span>';
   };
-  const renderMeeting = (period,index) => {
-    if(!period||(!period.results?.length&&!period.date))
+  const renderMeeting = (period,index,DATA) => {
+    if(!period || (!period.results?.length && !period.date))
       return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'">—</td>';
-    const label = String(period.date || "").replace(/([GF])([123])/g,
-      (_, kind, digit) => kind + ({"1":"Ⅰ","2":"Ⅱ","3":"Ⅲ"}[digit]));
+    const meta=parseMeeting(period,index,DATA);
     return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'"><div class="meeting-entry">'+
-      (label?'<div class="res-date">'+escape(label.replace(/\s+/, "　"))+'</div>':"")+
+      '<div class="meeting-meta">'+
+      '<span class="meeting-date">'+escape(meta.date)+'</span>'+
+      '<span class="grade-badge grade-'+escape(meta.kind)+'">'+escape(meta.grade)+'</span>'+
+      '<span class="meeting-venue">'+escape(meta.venue)+'</span></div>'+
       '<div class="res-wrap">'+(period.results||[]).map(raceCard).join("")+'</div></div></td>';
   };
   const renderRow = (DATA,rider,i) => {
@@ -86,7 +112,7 @@
       '<td class="bl marutoku-comment">'+escape(p.comment)+'</td>'+
       '<td class="bl score">'+escape(rider.score)+'</td>'+
       rider.stats.map((v,k)=>'<td'+(k===0||k===6?' class="bl"':'')+'>'+escape(v)+'</td>').join("")+
-      histories.map((v,k)=>renderMeeting(v,k)).join("")+
+      histories.map((v,k)=>renderMeeting(v,k,DATA)).join("")+
       '<td class="meeting-cell meeting-avg">' + (rider.avgBest?.length === 2 ?
         '<span class="meeting-avg-line">平均' + escape(rider.avgBest[0]) + '</span>' +
         '<span class="meeting-avg-line">最高' + escape(rider.avgBest[1]) + '</span>' : "—") + "</td>" +
