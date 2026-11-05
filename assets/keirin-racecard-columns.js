@@ -23,7 +23,7 @@
         sub(s,i===0?"bl recent-section-start":(i===1||i===7?"bl":""))),
       ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり"].map((s,i)=>sub(s,i===0?"bl meeting-current-label meeting-section-start":"")),
       sub("並び","bl position-col position-current position-section-start"),
-      ...placeGroups.flatMap((g)=>ranks.map((r,i)=>sub('<span class="position-group-name">'+escape(g)+'</span><span class="position-result-name">'+r+'</span>','position-col'+(i===0?' position-first':'')))),
+      ...placeGroups.flatMap(() => ranks.map((r,i)=>sub('<span class="position-result-name">'+r+'</span>','position-col'+(i===0?' position-first':'')))),
       sub("イン粘り<br>回数","bl position-col position-count"),
       sub("追い上げ<br>回数","position-col position-count"),
       sub("G指数","bl gindex-section-start"),
@@ -31,7 +31,31 @@
       ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレード","競輪場","車番","同県選手"].map((s,i)=>
         sub('<button type="button" class="item-btn" data-item="'+i+'">'+s+'</button>','c-item'+(i===0?" bl":"")))
     ];
-    return '<thead><tr>'+subheads.join("")+'</tr></thead>';
+    // Grouped first-row labels share the same physical columns as the
+    // second-row labels. Un-grouped columns span both header rows.
+    const groups = new Map([
+      [6,  {span:6, label:"マル得ポイント", klass:"bl marutoku-section-start"}],
+      [14, {span:4, label:"決まり手", klass:""}],
+      [33, {span:4, label:"ラインの先頭", klass:"position-first"}],
+      [37, {span:4, label:"2番手", klass:"position-first"}],
+      [41, {span:4, label:"3番手以降", klass:"position-first"}],
+      [45, {span:4, label:"単騎", klass:"position-first"}],
+      [49, {span:4, label:"競り", klass:"position-first"}]
+    ]);
+    const top = [], lower = [];
+    for (let i=0; i<subheads.length;) {
+      const group = groups.get(i);
+      if (group) {
+        top.push('<th colspan="'+group.span+'" class="box-group '+
+          group.klass+'">'+escape(group.label)+'</th>');
+        lower.push(...subheads.slice(i, i+group.span));
+        i += group.span;
+      } else {
+        top.push(subheads[i].replace('<th', '<th rowspan="2"'));
+        i++;
+      }
+    }
+    return '<thead><tr>'+top.join("")+'</tr><tr>'+lower.join("")+'</tr></thead>';
   };
   // Expand one-letter venue codes to their full keirin-track names.
   const venueNames = {
