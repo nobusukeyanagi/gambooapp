@@ -77,8 +77,7 @@
   flex-direction: column;
   flex: 0 0 auto;
   width: 34px;
-  height: 56px;
-  min-height: 56px;
+  min-height: 0;
   gap: var(--space-1);
   align-items: flex-start;
   font-size: var(--fs-12);
@@ -117,17 +116,16 @@
   width: 68px;
   text-align: center;
 }
-/* A uniform rider-row height uses Matsuo's original two-line
-   rank/time plus one-line note layout as the reference. The result
-   cards are 56px tall plus the table's 6px top/bottom cell padding. */
+/* Restore the pre-expansion 46px rider rows. The rank/time pairs
+   fit without the former forced 56px race-result card height. */
 .race-detail-scroll .mania-table tbody tr {
-  height: 68px;
+  height: 46px;
 }
 .race-detail-scroll .mania-table tbody tr td {
   box-sizing: border-box;
-  height: 68px;
-  padding-top: var(--space-card);
-  padding-bottom: var(--space-card);
+  height: 46px;
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
 }
 .race-detail-scroll .mania-table tbody tr td,
 .race-detail-scroll .mania-table tbody tr:nth-child(even) td {
