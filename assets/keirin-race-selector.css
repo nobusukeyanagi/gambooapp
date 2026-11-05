@@ -1,0 +1,174 @@
+@charset "UTF-8";
+/* SCR-03: one scrollable race-detail page below the shared fixed header.
+   Button semantics/color/radii use the same tokens as SCR-02. */
+.phone-inner > .race-detail-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+  background: var(--c-surface);
+}
+.phone-inner > .race-detail-scroll::-webkit-scrollbar { display: none; }
+.race-detail-scroll > .rt-area {
+  flex: none;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+/* The same edge-to-edge, full-height 44px chevrons as SCR-02. */
+.race-detail-scroll > .keirin-race-selector {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 77px;
+  flex: 0 0 auto;
+  background: var(--c-surface);
+  border-bottom: var(--line-normal);
+}
+.race-detail-scroll .keirin-race-selector > .hscroll-inner {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  padding: var(--space-card) 44px;
+}
+.race-detail-scroll .keirin-race-selector > .hscroll-inner::-webkit-scrollbar { display: none; }
+.race-detail-scroll .keirin-race-selector .race-tabs {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  height: 64px;
+  align-items: center;
+  gap: var(--space-card);
+  padding: 0;
+  overflow: visible;
+  border: 0;
+}
+.race-detail-scroll .keirin-race-selector .race-tab {
+  position: relative;
+  display: flex;
+  flex: 0 0 62px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 62px;
+  min-width: 62px;
+  max-width: 62px;
+  height: 64px;
+  min-height: 64px;
+  padding: 19px var(--space-2) var(--space-small);
+  gap: 0;
+  overflow: hidden;
+  border: var(--line-control);
+  border-radius: var(--r-control);
+  background: var(--c-surface);
+  color: var(--c-text);
+  box-shadow: var(--e1);
+  text-align: center;
+  scroll-snap-align: none;
+}
+.race-detail-scroll .keirin-race-selector .race-tab > b {
+  color: var(--c-text);
+  font-size: var(--fs-16);
+  line-height: 1.2;
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .keirin-race-selector .race-tab > small {
+  color: var(--c-text);
+  font-size: var(--fs-12);
+  line-height: 1.2;
+  white-space: nowrap;
+  font-weight: var(--fw-normal);
+  font-variant-numeric: tabular-nums;
+}
+.race-detail-scroll .keirin-race-selector .race-tab.past {
+  background: var(--c-bg);
+  border-color: var(--c-border);
+}
+.race-detail-scroll .keirin-race-selector .race-tab.past > :is(b,small) { color: var(--c-sub); }
+.race-detail-scroll .keirin-race-selector .race-tab.active:not(.soon):not(.rebate) {
+  background: var(--c-surface);
+  border: var(--line-emphasis-width) solid var(--c-border-control);
+}
+.race-detail-scroll .keirin-race-selector .race-tab.rebate {
+  background: var(--c-surface);
+  border: var(--line-emphasis-width) solid var(--c-primary-d);
+}
+.race-detail-scroll .keirin-race-selector .race-tab.soon {
+  background: var(--c-surface);
+  border: var(--line-emphasis-width) solid var(--c-error);
+}
+.race-detail-scroll .keirin-race-selector .race-tab .race-state-band {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-surface);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: calc(var(--r-control) - var(--line-emphasis-width))
+                 calc(var(--r-control) - var(--line-emphasis-width)) 0 0;
+}
+.race-detail-scroll .keirin-race-selector .race-tab.rebate .race-state-band {
+  background: var(--c-primary-d);
+}
+.race-detail-scroll .keirin-race-selector .race-tab.soon .race-state-band {
+  background: var(--c-error);
+}
+.race-detail-scroll .keirin-race-selector > :is(.hscroll-cue,.hscroll-cue-l) {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  z-index: 3;
+  width: var(--tap-min);
+  height: auto;
+  min-height: var(--tap-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--c-bg);
+  color: var(--c-sub);
+  box-shadow: none;
+  cursor: pointer;
+  pointer-events: auto;
+  font-family: var(--ff-ui);
+}
+.race-detail-scroll .keirin-race-selector > .hscroll-cue-l {
+  left: 0;
+  border-right: var(--line-normal);
+}
+.race-detail-scroll .keirin-race-selector > .hscroll-cue {
+  right: 0;
+  border-left: var(--line-normal);
+}
+.race-detail-scroll .keirin-race-selector > :is(.hscroll-cue,.hscroll-cue-l) .ic {
+  width: 18px;
+  height: 18px;
+}
+.race-detail-scroll .keirin-race-selector > :is(.hscroll-cue,.hscroll-cue-l)[hidden] {
+  display: none;
+}
+.race-detail-scroll .keirin-race-selector > :is(.hscroll-cue,.hscroll-cue-l):focus-visible {
+  outline: var(--line-focus);
+  outline-offset: var(--space-2);
+}
