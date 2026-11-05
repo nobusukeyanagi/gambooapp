@@ -8,6 +8,10 @@
   const race = Number(params.get("race"));
   if (!venue || !day || !Number.isInteger(race) || race < 1 || race > 12) return;
 
+  // SCR-03 currently displays the verified Hofu 5R sample only. Do not
+  // overwrite its purchase link or select a different race with 5R statistics.
+  if (document.querySelector(".ri-race-purchase")) return;
+
   const header = document.querySelector(".page-header-title");
   if (header && !header.hasAttribute("data-static-title")) header.textContent = venue + " " + day;
 
