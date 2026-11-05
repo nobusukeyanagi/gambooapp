@@ -139,6 +139,7 @@
   const recentHeading = wrap?.querySelector(".recent-section-start");
   const meetingHeading = wrap?.querySelector(".meeting-section-start");
   const positionHeading = wrap?.querySelector(".position-section-start");
+  const gindexHeading = wrap?.querySelector(".gindex-section-start");
   const maniaHeading = wrap?.querySelector(".mania-section-heading");
   const menuScroller = inner.querySelector(".info-tabs")?.closest(".hscroll-inner");
   const playerTab = inner.querySelector('.info-tab[data-target="player"]');
@@ -147,21 +148,22 @@
   const recentTab = inner.querySelector('.info-tab[data-target="recent"]');
   const meetingTab = inner.querySelector('.info-tab[data-target="meeting"]');
   const positionTab = inner.querySelector('.info-tab[data-target="position"]');
+  const gindexTab = inner.querySelector('.info-tab[data-target="gindex"]');
   const maniaTab = inner.querySelector('.info-tab[data-target="mania"]');
   if (!wrap || !table || !playerHeading || !pointHeading || !commentHeading ||
-      !recentHeading || !meetingHeading || !positionHeading || !maniaHeading ||
-      !playerTab || !pointTab || !commentTab || !recentTab || !meetingTab ||
-      !positionTab || !maniaTab) return;
+      !recentHeading || !meetingHeading || !positionHeading || !gindexHeading ||
+      !maniaHeading || !playerTab || !pointTab || !commentTab || !recentTab ||
+      !meetingTab || !positionTab || !gindexTab || !maniaTab) return;
 
   const tabsByName = {
     player: playerTab, marutoku: pointTab, comment: commentTab,
     recent: recentTab, meeting: meetingTab,
-    position: positionTab, mania: maniaTab
+    position: positionTab, gindex: gindexTab, mania: maniaTab
   };
   const headingsByName = {
     player: playerHeading, marutoku: pointHeading, comment: commentHeading,
     recent: recentHeading, meeting: meetingHeading,
-    position: positionHeading, mania: maniaHeading
+    position: positionHeading, gindex: gindexHeading, mania: maniaHeading
   };
   let current = "";
   let navigationTarget = null;
@@ -214,6 +216,7 @@
     const threshold = wrap.scrollLeft + stickyColumnWidth() + 2;
     let name = "player";
     if (atRightEdge || threshold >= columnOffset(maniaHeading)) name = "mania";
+    else if (threshold >= columnOffset(gindexHeading)) name = "gindex";
     else if (threshold >= columnOffset(positionHeading)) name = "position";
     else if (threshold >= columnOffset(meetingHeading)) name = "meeting";
     else if (threshold >= columnOffset(recentHeading)) name = "recent";
