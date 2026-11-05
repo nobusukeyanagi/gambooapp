@@ -8,12 +8,16 @@
 /* Section names now appear only in the menu; the single remaining
    header row contains the 65 column names and the seven scroll anchors. */
 .race-detail-scroll .mania-table thead tr:first-child th {
+  box-sizing: border-box;
+  height: 40px;
   background: var(--c-bg);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
   white-space: nowrap;
   text-align: center;
-  padding: var(--space-small) var(--space-card);
+  vertical-align: middle;
+  line-height: 1.25;
+  padding: var(--space-3) var(--space-card);
   border-bottom: var(--line-normal);
 }
 /* Every column label, including 選手名, is horizontally centered. */
@@ -87,7 +91,7 @@
   align-items: flex-start;
 }
 .race-detail-scroll .mania-table .meeting-cell .res-rank {
-  font-size: var(--fs-18);
+  font-size: var(--fs-16);
 }
 .race-detail-scroll .mania-table .meeting-cell .res-time,
 .race-detail-scroll .mania-table .meeting-cell .res-note {
@@ -102,6 +106,11 @@
   text-align: center;
   font-variant-numeric: tabular-nums;
   line-height: 1.4;
+}
+.race-detail-scroll .mania-table .meeting-avg-line {
+  display: block;
+  white-space: nowrap;
+  font-size: var(--fs-14);
 }
 .race-detail-scroll .mania-table .position-count {
   min-width: 68px;
