@@ -136,10 +136,10 @@
   cursor: pointer;
   overflow: hidden;
 }
-.favorite-sport--keirin .favorite-player-grid--super .favorite-player-card {
+.favorite-sport--keirin .favorite-player-card {
   border-left: var(--line-emphasis-width) solid var(--c-keirin);
 }
-.favorite-sport--auto .favorite-player-grid--super .favorite-player-card {
+.favorite-sport--auto .favorite-player-card {
   border-left: var(--line-emphasis-width) solid var(--c-auto);
 }
 .favorite-player-card:hover { border-color: var(--c-primary-d); }
