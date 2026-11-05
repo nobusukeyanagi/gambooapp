@@ -35,7 +35,7 @@
   function renderRace5(inner) {
     // Populate SCR-03's existing racecard rows and real analysis detail tables.
     // The structured race header, menu and lineup controls remain intact.
-    const raceNumber = inner.querySelector(".ri-race-number");
+    const raceNumber = inner.querySelector(".ri-meeting .ri-race-label");
     if (raceNumber) raceNumber.textContent = DATA.race + "R";
     const raceLink = inner.querySelector(".ri-race");
     if (raceLink) raceLink.setAttribute("aria-label", DATA.race + "Rの車券購入画面へ");
