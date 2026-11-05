@@ -134,6 +134,8 @@
   background: var(--c-border);
   pointer-events: none;
 }
+/* Use one 72px column width for meeting info and every race result.
+   This leaves room for the rank plus B捲/ク/差 on their common first line. */
 .race-detail-scroll .mania-table .meeting-cell .res {
   box-sizing: border-box;
   position: relative;
@@ -142,9 +144,9 @@
   grid-template-rows: 20px 20px;
   justify-items: center;
   align-items: center;
-  flex: 0 0 48px;
-  width: 48px;
-  min-width: 48px;
+  flex: 0 0 72px;
+  width: 72px;
+  min-width: 72px;
   height: 40px;
   min-height: 40px;
   margin: 0;
@@ -167,6 +169,7 @@
 .race-detail-scroll .mania-table .meeting-cell .res-top {
   display: flex;
   grid-column: 1;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
   width: 100%;
