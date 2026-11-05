@@ -59,7 +59,7 @@
 .race-detail-scroll .mania-table tbody tr td.position-stat,
 .race-detail-scroll .mania-table tbody tr:nth-child(even) td.position-stat {
   text-align: center;
-  font-size: var(--fs-14);
+  font-size: var(--fs-16);
   font-weight: var(--fw-normal);
   font-variant-numeric: tabular-nums;
   background: var(--c-surface);
