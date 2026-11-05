@@ -72,9 +72,9 @@
     const meta=parseMeeting(period,index,DATA);
     return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'"><div class="meeting-entry">'+
       '<div class="meeting-meta">'+
-      '<span class="meeting-date">'+escape(meta.date)+'</span>'+
       '<span class="grade-badge grade-'+escape(meta.kind)+'">'+escape(meta.grade)+'</span>'+
-      '<span class="meeting-venue">'+escape(meta.venue)+'</span></div>'+
+      '<span class="meeting-venue">'+escape(meta.venue)+'</span>'+
+      '<span class="meeting-date">'+escape(meta.date)+'</span></div>'+
       '<div class="res-wrap">'+(period.results||[]).map(raceCard).join("")+'</div></div></td>';
   };
   const renderRow = (DATA,rider,i) => {
