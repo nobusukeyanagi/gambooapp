@@ -5,7 +5,7 @@
   const inner = document.querySelector(".phone-inner");
   if (!inner) return;
   const DATA = window.GambooKeirinHofu5Data;
-  if (!DATA || DATA.basics.length !== 9 || DATA.details.length !== 8) return;
+  if (!DATA || DATA.basics.length !== 9 || DATA.details.length !== 8 || DATA.marutoku?.length !== 9) return;
   const ITEMS = DATA.details;
   const headingsFor = (item, groupIndex) => {
     if (item.type === "win") return ["出場選手中順位", "全国順位", groupIndex === 2 ? "優勝率" : "進出率"];
@@ -99,6 +99,14 @@
         '<td class="bl res-cell"><div class="res-wrap"><div class="res-date">' +
           escapeHTML(rider.prevDate).replace(" ", "<br />") + '</div>' +
           rider.previous.map(card).join("") + '</div></td>',
+        ...DATA.marutoku[i].points.map((value, col) =>
+          '<td class="' + (col === 0 ? "bl " : "") + 'marutoku-value' +
+          (DATA.marutoku[i].emphasis[col] ? ' marutoku-point-' + DATA.marutoku[i].emphasis[col] : "") +
+          '">' + escapeHTML(value) + '</td>'
+        ),
+        '<td class="marutoku-mark">' +
+          (DATA.marutoku[i].mark ? rating(DATA.marutoku[i].mark) : "") + '</td>',
+        '<td class="bl marutoku-comment">' + escapeHTML(DATA.marutoku[i].comment) + '</td>',
         '<td class="mania-eval bl">' + rating(rider.ratings.overall) + '</td>',
         ...rider.ratings.items.map((value,n) =>
           '<td class="mania-eval' + (n === 0 ? " bl" : "") + '" data-item="' + n + '">' +
@@ -170,42 +178,64 @@
   bind(inner);
 
   const wrap = inner.querySelector(".race-table-wrap");
-  const maniaHeading = wrap?.querySelector(".mania-section-start");
   const table = wrap?.querySelector("table.mania-table");
+  const pointHeading = wrap?.querySelector(".marutoku-section-start");
+  const commentHeading = wrap?.querySelector(".marutoku-comment-heading");
+  const maniaHeading = wrap?.querySelector(".mania-section-start");
   const menuScroller = inner.querySelector(".info-tabs")?.closest(".hscroll-inner");
   const raceTab = inner.querySelector('.info-tab[data-target="racecard"]');
+  const pointTab = inner.querySelector('.info-tab[data-target="marutoku"]');
+  const commentTab = inner.querySelector('.info-tab[data-target="comment"]');
   const maniaTab = inner.querySelector('.info-tab[data-target="mania"]');
-  if (!wrap || !table || !maniaHeading || !raceTab || !maniaTab) return;
+  if (!wrap || !table || !pointHeading || !commentHeading ||
+      !maniaHeading || !raceTab || !pointTab || !commentTab || !maniaTab) return;
 
+  const tabsByName = {
+    racecard: raceTab, marutoku: pointTab,
+    comment: commentTab, mania: maniaTab
+  };
+  const headingsByName = {
+    marutoku: pointHeading, comment: commentHeading, mania: maniaHeading
+  };
   let current = "";
   function selectTab(name) {
     if (name === current) return;
     current = name;
-    raceTab.classList.toggle("active", name === "racecard");
-    maniaTab.classList.toggle("active", name === "mania");
-    if (name === "mania" && menuScroller) {
-      menuScroller.scrollTo({ left: maniaTab.offsetLeft - menuScroller.offsetLeft - 12, behavior: "instant" });
-    }
-    if (name === "racecard" && menuScroller) {
-      menuScroller.scrollTo({ left: 0, behavior: "instant" });
-    }
+    Object.entries(tabsByName).forEach(([key, tab]) =>
+      tab.classList.toggle("active", key === name)
+    );
+    if (!menuScroller) return;
+    const active = tabsByName[name];
+    const scrollLeft = name === "racecard" ? 0 :
+      Math.max(0, active.offsetLeft - menuScroller.offsetLeft -
+        Math.min(40, menuScroller.clientWidth / 6));
+    menuScroller.scrollTo({ left: scrollLeft, behavior: "instant" });
   }
-
+  function scrollTableTo(name) {
+    if (name === "racecard") {
+      wrap.scrollTo({ left: 0, behavior: "instant" });
+    } else {
+      const heading = headingsByName[name];
+      const offset = heading.getBoundingClientRect().left -
+        table.getBoundingClientRect().left;
+      wrap.scrollTo({
+        left: Math.max(0, offset - Math.min(70, wrap.clientWidth / 4)),
+        behavior: "instant"
+      });
+    }
+    selectTab(name);
+  }
   function syncTab() {
     const atRightEdge = wrap.scrollWidth - wrap.clientWidth - wrap.scrollLeft <= 12;
-    const maniaVisible = wrap.scrollLeft > 0 &&
-      (atRightEdge || wrap.scrollLeft + wrap.clientWidth >= maniaHeading.offsetLeft + 12);
-    selectTab(maniaVisible ? "mania" : "racecard");
+    const threshold = wrap.scrollLeft + Math.min(70, wrap.clientWidth / 4) + 12;
+    let name = "racecard";
+    if (atRightEdge || threshold >= maniaHeading.offsetLeft) name = "mania";
+    else if (threshold >= commentHeading.offsetLeft) name = "comment";
+    else if (threshold >= pointHeading.offsetLeft) name = "marutoku";
+    selectTab(name);
   }
-
-  raceTab.addEventListener("click", () => {
-    wrap.scrollTo({ left: 0, behavior: "instant" });
-    selectTab("racecard");
-  });
-  maniaTab.addEventListener("click", () => {
-    const offset = maniaHeading.getBoundingClientRect().left - table.getBoundingClientRect().left;
-    wrap.scrollTo({ left: Math.max(0, offset - Math.min(90, wrap.clientWidth / 4)), behavior: "instant" });
-    selectTab("mania");
+  Object.entries(tabsByName).forEach(([name, tab]) => {
+    tab.addEventListener("click", () => scrollTableTo(name));
   });
   wrap.addEventListener("scroll", syncTab, { passive: true });
   window.addEventListener("resize", syncTab);
@@ -217,7 +247,7 @@
     // The existing page links to this script without a separate data import.
     // Load the dataset before initializing the view and detail interactions.
     const loader = document.createElement("script");
-    loader.src = "./assets/keirin-hofu5-data.js?v=1";
+    loader.src = "./assets/keirin-hofu5-data.js?v=2";
     loader.onload = initializeHofu5;
     loader.onerror = () => {
       // Preserve the original page structure if the data asset cannot load.
