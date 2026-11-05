@@ -46,8 +46,7 @@
     if (schedule) schedule.textContent = "締切 " + DATA.deadline + " ／ 発走 " + DATA.start;
     inner.querySelectorAll(".race-tabs .race-tab").forEach((tab, index) => {
       tab.classList.toggle("active", index === DATA.race - 1);
-      const time = tab.querySelector("small");
-      if (time) time.textContent = index === DATA.race - 1 ? DATA.start : "—";
+      // Race times are sourced from SCR-02; do not overwrite 1–12R with placeholders.
     });
     const lineup = inner.querySelector(".lineup-row");
     if (lineup) {
