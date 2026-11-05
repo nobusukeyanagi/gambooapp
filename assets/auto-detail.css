@@ -1161,7 +1161,6 @@
         justify-content: center;
         gap: 1px;
         border: var(--line-normal);
-        border-radius: var(--r-md);
         background: var(--c-surface);
         color: var(--c-text);
         cursor: pointer;
@@ -1883,7 +1882,6 @@
         height: 36px;
         margin: 0 auto;
         padding: 0 4px;
-        border-radius: var(--r-sm);
         border: var(--line-selected);
         background: linear-gradient(var(--c-bg), var(--c-primary));
         box-shadow: var(--e1);
@@ -1990,7 +1988,6 @@
         min-width: 76px;
         height: 30px;
         padding: 0 8px;
-        border-radius: var(--r-sm);
         border: var(--line-thin) solid var(--c-sub);
         background: var(--c-surface);
         box-shadow: var(--e1);
@@ -2021,7 +2018,6 @@
         align-items: center;
         justify-content: center;
         gap: 4px;
-        border-radius: var(--r-full);
         font-size: var(--fs-14);
         font-weight: var(--fw-strong);
         cursor: pointer;
