@@ -172,14 +172,14 @@
   flex: 1 1 auto;
   width: 100%;
   display: grid;
-  grid-template-columns: 76px minmax(0, 1fr);
+  grid-template-columns: 68px minmax(0, 1fr) 80px;
   grid-template-areas:
-    "number meeting"
-    "number event"
-    "number kind"
-    "clock clock"
-    "detail detail";
-  grid-template-rows: repeat(3, minmax(24px, 1fr)) auto auto;
+    "number meeting live"
+    "number event event"
+    "number kind kind"
+    "clock clock clock"
+    "detail detail detail";
+  grid-template-rows: 40px 24px 24px auto auto;
   column-gap: var(--space-card);
   row-gap: var(--space-2);
   min-width: 0;
@@ -229,14 +229,14 @@
 .race-detail-scroll .ri-race .ri-race-purchase {
   box-sizing: border-box;
   display: flex;
-  flex: 0 0 76px;
+  flex: 0 0 64px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-card);
-  width: 76px;
-  height: 76px;
-  min-height: 76px;
+  width: 64px;
+  height: 64px;
+  min-height: 64px;
   border: var(--line-emphasis-width) solid var(--c-error);
   border-radius: var(--r-control);
   background: var(--c-error);
@@ -314,10 +314,11 @@
   color: inherit;
 }
 .race-detail-scroll .race-info-bar .ri-act {
+  grid-area: live;
   display: flex;
-  flex: 0 0 auto;
-  width: 100%;
-  align-self: stretch;
+  flex: 0 0 80px;
+  width: 80px;
+  align-self: center;
   justify-content: flex-end;
   align-items: center;
   margin: 0;
@@ -332,6 +333,15 @@
   padding: 0;
   margin: 0;
   border-radius: var(--r-control);
+}
+.race-detail-scroll .race-info-bar .ri-act .ri-btn.live {
+  background: var(--c-primary-d);
+  border: var(--line-thin) solid var(--c-primary-d);
+  color: var(--c-surface);
+  box-shadow: var(--e1);
+}
+.race-detail-scroll .race-info-bar .ri-act .ri-btn.live .ic {
+  color: var(--c-surface);
 }
 
 /* Horizontal menu is explicitly one-axis: dragging cannot move it vertically. */
