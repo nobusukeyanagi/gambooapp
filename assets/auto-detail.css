@@ -1705,7 +1705,7 @@
         font-weight: var(--fw-strong);
         border: var(--line-thin) solid transparent;
       }
-      .wk.mini { width: 22px; height: 22px; font-size: var(--fs-14); }
+      .wk.mini { width: 22px; height: 22px; font-size: var(--fs-12); }
       .wk.w1 { background: var(--c-surface); color: var(--c-text); border-color: var(--c-sub); }
       .wk.w2 { background: var(--c-text); color: var(--c-surface); border-color: var(--c-text); }
       .wk.w3 { background: var(--w3); color: var(--c-surface); border-color: var(--w3); }
@@ -1718,7 +1718,7 @@
       .rn { font-family: var(--ff-ui); line-height: 1.25; min-width: 0; }
       .rn b {
         display: block;
-        font-size: var(--fs-14);
+        font-size: var(--fs-16);
         font-weight: var(--fw-strong);
         overflow: hidden;
         text-overflow: ellipsis;
@@ -1733,7 +1733,7 @@
       .rn .rk .s { color: var(--c-success); font-weight: var(--fw-strong); }
       .rn .rk .a { color: var(--c-primary-d); font-weight: var(--fw-strong); }
 
-      .at .hd { font-size: var(--fs-18); font-weight: var(--fw-strong); }
+      .at .hd { font-size: var(--fs-16); font-weight: var(--fw-strong); }
       .at .pt { padding-right: 2px; }
       .at .pm { padding-left: 2px; min-width: 20px; }
       .at .sm { color: var(--c-sub); font-size: var(--fs-12); }
@@ -1833,10 +1833,10 @@
       .at .rc.r3 { background: var(--c-bg) !important; }
 
       .at .sc { min-width: 64px; }
-      .at .sc b { font-size: var(--fs-18); font-weight: var(--fw-strong); margin-left: 4px; }
+      .at .sc b { font-size: var(--fs-16); font-weight: var(--fw-strong); margin-left: 4px; }
       .at .sc.lo b { color: var(--c-sub); font-weight: var(--fw-strong); }
       .at .vsn { min-width: 44px; }
-      .at .wl { font-size: var(--fs-14); font-weight: var(--fw-strong); letter-spacing: 0.04em; }
+      .at .wl { font-size: var(--fs-16); font-weight: var(--fw-strong); letter-spacing: 0.04em; }
       .at .wl.w { color: var(--c-error); }
       .at .wl.l { color: var(--c-keirin); }
       .at .wl.e { color: var(--c-sub); }
@@ -1981,7 +1981,7 @@
         white-space: nowrap;
       }
       .ldt td.dn { text-align: left; font-family: var(--ff-ui); font-weight: var(--fw-strong); }
-      .ldt .wk { width: 22px; height: 24px; font-size: var(--fs-14); }
+      .ldt .wk { width: 22px; height: 24px; font-size: var(--fs-16); }
       .ldt .hi { color: var(--c-error); font-weight: var(--fw-strong); }
       .lsheet-note { padding: 8px 12px 12px; font-size: var(--fs-12); color: var(--c-sub); }
       .lb-btn {
@@ -2114,9 +2114,9 @@
       .race-table td { font-size: var(--fs-14); }
       .rider-name { font-size: var(--fs-14); }
       .mania-table .c-name { min-width: 88px; width: 88px; }
-      .at td { font-size: var(--fs-14); }
-      .rn b { font-size: var(--fs-14); }
-      .at .hd { font-size: var(--fs-20); }
+      .at td { font-size: var(--fs-16); }
+      .rn b { font-size: var(--fs-16); }
+      .at .hd { font-size: var(--fs-16); }
       .at .fx2 { min-width: 108px; max-width: 108px; }
       .wx span { font-size: var(--fs-14); }
       .lsheet { bottom: 62px; }
@@ -2146,7 +2146,7 @@
       .at thead th.fx2 { z-index: 5; }
       .at .fx1 { width: 40px; min-width: 40px; }
       .at .fx2 { left: 40px; }
-      .wk { width: 24px; height: 24px; font-size: var(--fs-14); }
+      .wk { width: 24px; height: 24px; font-size: var(--fs-16); }
       .ldt .wk { width: 24px; height: 24px; }
       .lb-btn { background: var(--c-surface); border: var(--line-normal); box-shadow: var(--e1); color: var(--c-text); font-weight: var(--fw-strong); }
       .lb-btn:active,
@@ -2169,3 +2169,9 @@
 
       /* Let the long lab tab label wrap rather than narrowing characters. */
       .info-tabs .info-tab[data-tab="lab"] { white-space: normal; overflow-wrap: anywhere; }
+
+/* Box-table type scale: 16px for main data, 12px for secondary labels. */
+.at :is(.rider-name, .rate2 b),
+.ldt :is(.rider-name, .rate2 b, .mark, .mk) {
+  font-size: var(--fs-16);
+}
