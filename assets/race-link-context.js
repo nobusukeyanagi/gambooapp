@@ -9,7 +9,7 @@
   if (!venue || !day || !Number.isInteger(race) || race < 1 || race > 12) return;
 
   const header = document.querySelector(".page-header-title");
-  if (header) header.textContent = venue + " " + day;
+  if (header && !header.hasAttribute("data-static-title")) header.textContent = venue + " " + day;
 
   const heading = document.querySelector(".ri-race");
   if (heading) {
@@ -22,7 +22,8 @@
   let selected = null;
   [...bar.querySelectorAll(".race-tab")].forEach((tab) => {
     const n = Number(tab.querySelector("b")?.textContent.replace("R", ""));
-    tab.classList.remove("active", "soon");
+    tab.classList.remove("active");
+    if (!bar.closest(".keirin-race-selector")) tab.classList.remove("soon");
     if (n === race) selected = tab;
   });
 
@@ -41,10 +42,10 @@
     if (n === race) selected = tab;
   }
   if (selected) {
-    selected.classList.remove("past", "canceled");
+    if (!bar.closest(".keirin-race-selector")) selected.classList.remove("past", "canceled");
     selected.classList.add("active");
     const status = selected.querySelector("small");
-    if (status) status.textContent = "選択中";
+    if (status && !bar.closest(".keirin-race-selector")) status.textContent = "選択中";
     const scroller = bar.closest(".hscroll-inner");
     if (scroller) {
       requestAnimationFrame(() => {
