@@ -1847,7 +1847,7 @@
       .point-use span { min-height: 40px; font-size: var(--fs-14); }
 
       .mania-table td,
-      .race-table td { font-size: var(--fs-14); }
+      .race-table td { font-size: var(--fs-16); }
       .rider-name { font-size: var(--fs-14); }
       .mania-table .c-name { min-width: 88px; width: 88px; }
       .at td { font-size: var(--fs-14); }
@@ -1863,7 +1863,7 @@
       .mania-table td.rate { min-width: 30px; }
       .mania-table .res-cell { min-width: 0; }
       .mania-table .res-wrap { gap: 8px; }
-      .mania-table .res-rank { font-size: var(--fs-14); font-weight: var(--fw-strong); color: var(--c-text); }
+      .mania-table .res-rank { font-size: var(--fs-16); font-weight: var(--fw-strong); color: var(--c-text); }
       .mania-table .res-note { font-size: var(--fs-12); color: var(--c-primary-d); }
 
       .mania-table tbody tr.row-spacer td,
@@ -1941,7 +1941,7 @@
       }
       .mania-table .res { display: grid; grid-template-columns: 24px 14px; column-gap: 2px; align-items: start; }
       .mania-table .res-main { grid-column: 1; align-items: center; }
-      .mania-table .res-rank { font-size: var(--fs-18); font-weight: var(--fw-strong); line-height: 1.05; color: var(--c-text); }
+      .mania-table .res-rank { font-size: var(--fs-16); font-weight: var(--fw-strong); line-height: 1.05; color: var(--c-text); }
       .mania-table .res-time { font-size: var(--fs-12); }
       .mania-table .res-note { grid-column: 2; font-size: var(--fs-12); line-height: 1.1; text-align: left; }
       .mania-table .res-date { font-size: var(--fs-12); line-height: 1.25; white-space: nowrap; }
