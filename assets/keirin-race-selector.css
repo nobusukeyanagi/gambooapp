@@ -172,3 +172,243 @@
   outline: var(--line-focus);
   outline-offset: var(--space-2);
 }
+
+
+/* SCR-03 detail layout revision: shared token sizes, no other screens affected. */
+
+/* Urgent races use the SCR-02 red frame, not a remaining-minutes top band. */
+.race-detail-scroll .keirin-race-selector .race-tab.soon {
+  border: var(--line-emphasis-width) solid var(--c-error);
+  background: var(--c-surface);
+}
+.race-detail-scroll .keirin-race-selector .race-tab:not(.rebate) {
+  justify-content: center;
+  padding: var(--space-small) var(--space-2);
+}
+
+/* Two-row spanning race number, with date and cutoff aligned underneath. */
+.race-detail-scroll .race-info-bar.ri-has-act {
+  padding: var(--space-section);
+  align-items: center;
+  gap: var(--space-section);
+}
+.race-detail-scroll .race-info-bar .ri-main {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  grid-template-areas:
+    "meeting meeting"
+    "number event"
+    "number kind"
+    "clock clock"
+    "detail detail";
+  align-items: center;
+  column-gap: var(--space-small);
+  row-gap: 2px;
+  min-width: 0;
+}
+.race-detail-scroll .ri-meeting {
+  grid-area: meeting;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  gap: var(--space-small);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .ri-meeting .grade-badge {
+  padding: var(--space-1) var(--space-small);
+  border-radius: var(--r-sm);
+}
+.race-detail-scroll .race-info-bar .ri-race {
+  grid-area: number;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-strong);
+  white-space: nowrap;
+}
+.race-detail-scroll .race-info-bar .ri-event {
+  grid-area: event;
+  display: block;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  line-height: 1.25;
+  color: var(--c-text);
+}
+.race-detail-scroll .ri-kind {
+  grid-area: kind;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  line-height: 1.3;
+}
+.race-detail-scroll .race-info-bar .race-info-row {
+  grid-area: clock;
+  margin: var(--space-1) 0 0;
+}
+.race-detail-scroll .race-info-bar .race-info-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: var(--space-card);
+  white-space: nowrap;
+  font-family: var(--ff-ui);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  font-variant-numeric: tabular-nums;
+  color: var(--c-text);
+}
+.race-detail-scroll .ri-date-line {
+  grid-area: detail;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: var(--space-card);
+  font-size: var(--fs-12);
+  color: var(--c-sub);
+  font-family: var(--ff-ui);
+  font-variant-numeric: tabular-nums;
+}
+.race-detail-scroll .ri-date-line .ri-sub {
+  display: inline;
+  margin: 0;
+  font-size: inherit;
+  color: inherit;
+}
+.race-detail-scroll .race-info-bar .ri-act {
+  width: 80px;
+  flex: 0 0 80px;
+  align-self: center;
+  align-items: stretch;
+  margin: 0;
+  gap: var(--space-card);
+}
+.race-detail-scroll .race-info-bar .ri-act .ri-btn {
+  box-sizing: border-box;
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+  height: var(--h-control);
+  min-height: var(--h-control);
+  padding: 0;
+  margin: 0;
+  border-radius: var(--r-control);
+}
+/* Preserve header alignment at the shared 8px right inset. */
+.race-detail-scroll .race-info-bar .ri-act { margin-right: 0; }
+
+/* Horizontal menu is explicitly one-axis: dragging cannot move it vertically. */
+.race-detail-scroll .race-menu-scroll {
+  overflow: hidden;
+  overscroll-behavior-y: none;
+}
+.race-detail-scroll .race-menu-scroll > .hscroll-inner {
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x;
+  overscroll-behavior: contain;
+  scroll-snap-type: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  padding-right: 26px;
+  height: 52px;
+}
+.race-detail-scroll .race-menu-scroll .info-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  min-width: 100%;
+  height: 52px;
+  min-height: 52px;
+  overflow: hidden;
+  align-items: stretch;
+}
+.race-detail-scroll .race-menu-scroll .info-tab,
+.race-detail-scroll .race-menu-scroll button.info-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 82px;
+  height: 52px;
+  min-height: 52px;
+  padding: var(--space-2) var(--space-card);
+  margin: 0;
+  line-height: 1.25;
+  white-space: nowrap;
+  font-size: var(--fs-14);
+  text-align: center;
+  touch-action: pan-x;
+}
+.race-detail-scroll .race-menu-scroll .info-tab[data-target="racecard"] { min-width: 72px; }
+.race-detail-scroll .race-menu-scroll .info-tab[data-target="mania"] { min-width: 90px; }
+
+/* The lineup has exactly two rows and a right-hand newspaper control. */
+.race-detail-scroll .lineup-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-card);
+  padding: var(--space-card) var(--space-section);
+  background: var(--c-bg);
+  border-bottom: var(--line-normal);
+}
+.race-detail-scroll .lineup-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+}
+.race-detail-scroll .lineup-bar .lineup-title {
+  font-size: var(--fs-12);
+  line-height: 1.25;
+  color: var(--c-text);
+}
+.race-detail-scroll .lineup-bar .lineup-row {
+  margin: 0;
+  gap: 2px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+.race-detail-scroll .lineup-bar .lineup-car {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  font-size: var(--fs-12);
+}
+.race-detail-scroll .lineup-bar .lineup-sep { margin: 0; }
+.race-detail-scroll .aokei-paper-btn {
+  flex: 0 0 80px;
+  width: 80px;
+  min-height: var(--h-control);
+  padding: var(--space-small);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--line-control);
+  border-radius: var(--r-control);
+  background: var(--c-surface);
+  box-shadow: var(--e1);
+  color: var(--c-text);
+  font-family: var(--ff-ui);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* Headers retain their original background; every rider row remains white. */
+.race-detail-scroll .mania-table tbody tr td,
+.race-detail-scroll .mania-table tbody tr:nth-child(even) td,
+.race-detail-scroll .mania-table tbody tr:nth-child(even) td.fx {
+  background: var(--c-surface);
+}
