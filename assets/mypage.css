@@ -106,10 +106,35 @@
 .favorite-group { padding: var(--space-10) var(--space-content) var(--space-content); }
 .favorite-group + .favorite-group { border-top: var(--line-normal); }
 .favorite-group-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
   margin-bottom: var(--space-section);
   color: var(--c-text);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
+}
+/* Matches SCR-01's "特設ページ" link typography, color, spacing and chevron. */
+.favorite-group-change {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  min-height: 40px;
+  margin-left: auto;
+  color: var(--c-keirin);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  text-decoration: none;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.favorite-group-change .ic { width: 14px; height: 14px; }
+.favorite-group-change:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
 }
 .favorite-player-grid {
   display: grid;
@@ -132,8 +157,6 @@
   box-shadow: var(--e1);
   color: var(--c-text);
   text-align: center;
-  text-decoration: none;
-  cursor: pointer;
   overflow: hidden;
 }
 .favorite-sport--keirin .favorite-player-card {
@@ -141,11 +164,6 @@
 }
 .favorite-sport--auto .favorite-player-card {
   border-left: var(--line-emphasis-width) solid var(--c-auto);
-}
-.favorite-player-card:hover { border-color: var(--c-primary-d); }
-.favorite-player-card:focus-visible {
-  outline: var(--line-focus);
-  outline-offset: var(--space-2);
 }
 .favorite-player-name {
   display: block;
