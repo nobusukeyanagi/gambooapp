@@ -5,7 +5,7 @@
   const inner = document.querySelector(".phone-inner");
   if (!inner) return;
   const DATA = window.GambooKeirinHofu5Data;
-  if (!DATA || DATA.basics.length !== 9 || DATA.details.length !== 8 || DATA.marutoku?.length !== 9) return;
+  if (!DATA || DATA.basics.length !== 9 || DATA.details.length !== 8 || DATA.marutoku?.length !== 9 || DATA.positionStats?.rows?.length !== 9) return;
   const ITEMS = DATA.details;
   const headingsFor = (item, groupIndex) => {
     if (item.type === "win") return ["出場選手中順位", "全国順位", groupIndex === 2 ? "優勝率" : "進出率"];
@@ -106,6 +106,29 @@
         '<td class="marutoku-mark">' +
           (DATA.marutoku[i].mark ? rating(DATA.marutoku[i].mark) : "") + '</td>',
         '<td class="bl marutoku-comment">' + escapeHTML(DATA.marutoku[i].comment) + '</td>',
+        ...(() => {
+          const record = DATA.positionStats.rows[i];
+          const position = record.position;
+          const emphasis = position === "先頭" ? "position-highlight-lead" :
+            position === "番手" ? "position-highlight-follow" : "position-highlight-other";
+          const cells = ['<td class="position-stat position-current position-first ' +
+            emphasis + '">' + escapeHTML(position) + '</td>'];
+          const values = record.counts.concat(record.switches[0]);
+          values.forEach((v, index) => {
+            const group = Math.floor(index / 4);
+            const emphasized = (position === "先頭" && group === 0) ||
+              (position === "番手" && group === 1) ||
+              (position === "3番手" && group === 2) ||
+              (position === "単騎" && group === 3);
+            const className = ['position-stat', index % 4 === 0 ? 'position-first' : '',
+              v === 0 ? 'position-zero' : '', emphasized ? emphasis : '',
+              group === 5 ? 'position-switch-value' : ''].filter(Boolean).join(' ');
+            cells.push('<td class="' + className + '"' +
+              (group === 5 ? ' data-position-index="' + (index - 20) + '"' : '') +
+              '>' + escapeHTML(v) + '</td>');
+          });
+          return cells;
+        })(),
         '<td class="mania-eval bl">' + rating(rider.ratings.overall) + '</td>',
         ...rider.ratings.items.map((value,n) =>
           '<td class="mania-eval' + (n === 0 ? " bl" : "") + '" data-item="' + n + '">' +
@@ -180,21 +203,24 @@
   const table = wrap?.querySelector("table.mania-table");
   const pointHeading = wrap?.querySelector(".marutoku-section-start");
   const commentHeading = wrap?.querySelector(".marutoku-comment-heading");
+  const positionHeading = wrap?.querySelector(".position-section-start");
   const maniaHeading = wrap?.querySelector(".mania-section-start");
   const menuScroller = inner.querySelector(".info-tabs")?.closest(".hscroll-inner");
   const raceTab = inner.querySelector('.info-tab[data-target="racecard"]');
   const pointTab = inner.querySelector('.info-tab[data-target="marutoku"]');
   const commentTab = inner.querySelector('.info-tab[data-target="comment"]');
+  const positionTab = inner.querySelector('.info-tab[data-target="position"]');
   const maniaTab = inner.querySelector('.info-tab[data-target="mania"]');
-  if (!wrap || !table || !pointHeading || !commentHeading ||
-      !maniaHeading || !raceTab || !pointTab || !commentTab || !maniaTab) return;
+  if (!wrap || !table || !pointHeading || !commentHeading || !positionHeading ||
+      !maniaHeading || !raceTab || !pointTab || !commentTab || !positionTab || !maniaTab) return;
 
   const tabsByName = {
     racecard: raceTab, marutoku: pointTab,
-    comment: commentTab, mania: maniaTab
+    comment: commentTab, position: positionTab, mania: maniaTab
   };
   const headingsByName = {
-    marutoku: pointHeading, comment: commentHeading, mania: maniaHeading
+    marutoku: pointHeading, comment: commentHeading,
+    position: positionHeading, mania: maniaHeading
   };
   let current = "";
   function selectTab(name) {
@@ -229,6 +255,7 @@
     const threshold = wrap.scrollLeft + Math.min(70, wrap.clientWidth / 4) + 12;
     let name = "racecard";
     if (atRightEdge || threshold >= maniaHeading.offsetLeft) name = "mania";
+    else if (threshold >= positionHeading.offsetLeft) name = "position";
     else if (threshold >= commentHeading.offsetLeft) name = "comment";
     else if (threshold >= pointHeading.offsetLeft) name = "marutoku";
     selectTab(name);
@@ -236,6 +263,30 @@
   Object.entries(tabsByName).forEach(([name, tab]) => {
     tab.addEventListener("click", () => scrollTableTo(name));
   });
+  // Original source has three interchangeable values for each of the four
+  // positions in the "イン粘り+追上" group. Preserve all three modes.
+  const switchButton = inner.querySelector(".position-switch");
+  const modeLabels = ["イン粘り<br>+追上", "イン粘り<br>回数", "追い上げ<br>回数"];
+  const modeTitle = DATA.positionStats.modeLabels;
+  let positionMode = 0;
+  if (switchButton) {
+    switchButton.addEventListener("click", () => {
+      positionMode = (positionMode + 1) % modeLabels.length;
+      switchButton.innerHTML = modeLabels[positionMode];
+      switchButton.title = modeTitle[positionMode] + "（クリックで切り替え）";
+      inner.querySelectorAll(".position-mode-label").forEach(el => {
+        el.innerHTML = modeLabels[positionMode];
+      });
+      const rowNodes = [...inner.querySelectorAll(".mania-table tbody tr")];
+      rowNodes.forEach((row, i) => {
+        const values = DATA.positionStats.rows[i].switches[positionMode];
+        row.querySelectorAll(".position-switch-value").forEach((cell, col) => {
+          cell.textContent = values[col];
+          cell.classList.toggle("position-zero", Number(values[col]) === 0);
+        });
+      });
+    });
+  }
   wrap.addEventListener("scroll", syncTab, { passive: true });
   window.addEventListener("resize", syncTab);
   syncTab();
@@ -246,7 +297,7 @@
     // The existing page links to this script without a separate data import.
     // Load the dataset before initializing the view and detail interactions.
     const loader = document.createElement("script");
-    loader.src = "./assets/keirin-hofu5-data.js?v=2";
+    loader.src = "./assets/keirin-hofu5-data.js?v=3";
     loader.onload = initializeHofu5;
     loader.onerror = () => {
       // Preserve the original page structure if the data asset cannot load.
