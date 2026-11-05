@@ -10,36 +10,27 @@
     '">' + escape(x) + '</span>';
   const placeGroups = ["ラインの先頭","2番手","3番手以降","単騎","競り"];
   const ranks = ["1着","2着","3着","着外"];
-  const groupHead = (name, count, klass) =>
-    '<th class="bl ' + klass + '" colspan="' + count + '">' + name + '</th>';
-  const sub = (s, klass) => '<th' + (klass ? ' class="' + klass + '"' : '') + '>' + s + '</th>';
+  // Section names live in the horizontal menu; only column headings remain.
+  // Anchor each menu to the first column of its section.
+  const sub = (label, klass) => '<th' + (klass ? ' class="' + klass + '"' : '') + '>' + label + '</th>';
   const makeHead = () => {
-    const groups = [
-      groupHead("選手情報",6,"player-section-start"),
-      groupHead("マル得/ポイント",5,"marutoku-section-start"),
-      groupHead("選手コメント",1,"marutoku-comment-heading"),
-      groupHead("直近4ヵ月/基本成績",11,"recent-section-start"),
-      groupHead("直近7開催/着順・タイム",9,"meeting-section-start"),
-      groupHead("直近20走/並び別成績",23,"position-section-start"),
-      groupHead("マニア分析",10,"mania-section-heading")
-    ];
     const subheads = [
-      sub("枠","c-waku"),sub("車番","fx c-sha"),sub("選手名","c-name"),
+      sub("枠","c-waku player-section-start"),sub("車番","fx c-sha"),sub("選手名","c-name"),
       sub("級班","bl"),sub("脚質","bl"),sub("ギア比","bl"),
-      ...["1着P","2着P","3着P","総合P","印"].map((s,i)=>sub(s,(i===0?"bl ":"")+"marutoku-score-label")),
-      sub("選手コメント","bl marutoku-comment-label"),
-      ...["競走得点","失違","逃","捲","差","マ","B","勝","2連対","3連対","着外"].map((s,i)=>sub(s,i===0?"bl":"")),
-      ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり<br>平均/最高"].map((s,i)=>sub(s,i===0?"bl meeting-current-label":"")),
-      sub("並び","bl position-col position-current"),
+      ...["1着P","2着P","3着P","総合P","印"].map((s,i)=>sub(s,(i===0?"bl marutoku-section-start ":"")+"marutoku-score-label")),
+      sub("選手コメント","bl marutoku-comment-heading"),
+      ...["競走得点","失違","逃","捲","差","マ","B","勝","2連対","3連対","着外"].map((s,i)=>sub(s,i===0?"bl recent-section-start":"")),
+      ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり<br>平均/最高"].map((s,i)=>sub(s,i===0?"bl meeting-current-label meeting-section-start":"")),
+      sub("並び","bl position-col position-current position-section-start"),
       ...placeGroups.flatMap((g)=>ranks.map((r,i)=>sub('<span class="position-group-name">'+escape(g)+'</span><span class="position-result-name">'+r+'</span>','position-col'+(i===0?' position-first':'')))),
       sub("イン粘り<br>回数","bl position-col position-count"),
       sub("追い上げ<br>回数","position-col position-count"),
-      sub("G指数","bl gindex-section-start"),
+      sub("G指数","bl gindex-section-start mania-section-heading"),
       sub("総合<br>評価","bl c-item mania-section-start"),
       ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレード","競輪場","車番","同県選手"].map((s,i)=>
         sub('<button type="button" class="item-btn" data-item="'+i+'">'+s+'</button>','c-item'+(i===0?" bl":"")))
     ];
-    return '<thead><tr>'+groups.join("")+'</tr><tr>'+subheads.join("")+'</tr></thead>';
+    return '<thead><tr>'+subheads.join("")+'</tr></thead>';
   };
   const raceCard = (record) => {
     const rank=record[0],time=record[1],note=record[2];
@@ -50,9 +41,11 @@
   const renderMeeting = (period,index) => {
     if(!period||(!period.results?.length&&!period.date))
       return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'">—</td>';
-    return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'">'+
-      (period.date?'<div class="res-date">'+escape(period.date)+'</div>':"")+
-      '<div class="res-wrap">'+(period.results||[]).map(raceCard).join("")+'</div></td>';
+    const label = String(period.date || "").replace(/([GF])([123])/g,
+      (_, kind, digit) => kind + ({"1":"Ⅰ","2":"Ⅱ","3":"Ⅲ"}[digit]));
+    return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'"><div class="meeting-entry">'+
+      (label?'<div class="res-date">'+escape(label.replace(/\s+/, "　"))+'</div>':"")+
+      '<div class="res-wrap">'+(period.results||[]).map(raceCard).join("")+'</div></div></td>';
   };
   const renderRow = (DATA,rider,i) => {
     const p=DATA.marutoku[i],position=DATA.positionStats.rows[i];
