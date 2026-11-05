@@ -25,15 +25,15 @@
 .race-detail-scroll .mania-table thead tr:first-child th.c-name {
   text-align: center;
 }
-/* Three compact name-cell lines without expanding the 46px rider rows. */
+/* Slightly separate the three rider-name lines while retaining 46px rows. */
 .race-detail-scroll .mania-table tbody tr td.c-name {
-  padding-top: var(--space-1);
-  padding-bottom: var(--space-1);
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .race-detail-scroll .mania-table td.c-name .rider-name {
   font-size: var(--fs-16);
   line-height: 1;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 .race-detail-scroll .mania-table td.c-name .rider-meta {
   display: block;
@@ -41,7 +41,7 @@
   white-space: nowrap;
 }
 .race-detail-scroll .mania-table td.c-name .rider-home {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 /* Only the active menu section's column headings are dark gold.
