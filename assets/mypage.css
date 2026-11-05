@@ -203,51 +203,6 @@
   font-size: var(--fs-12);
 }
 
-/* Hash-based demonstration destinations: each action is independently routed.
-   Registration persistence is intentionally not implied in this static mock. */
-.favorite-route {
-  position:absolute;
-  inset:0;
-  display:none;
-  z-index:10;
-  overflow-y:auto;
-  background:var(--c-bg);
-}
-.favorite-route:target { display:block; }
-.favorite-route-header {
-  display:flex;
-  align-items:center;
-  gap:var(--space-section);
-  height:var(--h-header);
-  padding:0 var(--space-content);
-  background:var(--c-surface);
-  border-bottom:var(--line-normal);
-  font-size:var(--fs-18);
-  font-weight:var(--fw-strong);
-}
-.favorite-route-back {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:var(--h-control);
-  height:var(--h-control);
-  flex:0 0 var(--h-control);
-  color:var(--c-text);
-  text-decoration:none;
-  font-size:var(--fs-20);
-}
-.favorite-route-content { padding:var(--space-section); }
-.favorite-route-card {
-  padding:var(--space-content);
-  background:var(--c-surface);
-  border:var(--line-normal);
-  border-radius:var(--r-md);
-}
-.favorite-route-card h2 { font-size:var(--fs-18); font-weight:var(--fw-strong); }
-.favorite-route-card p { margin-top:var(--space-section); font-size:var(--fs-14); }
-.favorite-route-card .favorite-route-note { color:var(--c-sub); font-size:var(--fs-12); }
-.favorite-route-card .cp-btn { display:flex; margin-top:var(--space-section); }
-
 /* Featured riders: exact shared racing SVGs with their canonical aspect ratios. */
 .profile-race-icon { width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
 .profile-race-icon:has(use[href$="#nav-keirin"]) { width:calc(var(--fs-20) * 1.25); }
@@ -278,10 +233,15 @@
 .mypage-result-icon.keirin { color: var(--c-keirin); }
 .mypage-result-icon.auto { color: var(--c-auto); }
 
-/* Existing settings menu-row styling. */
+/* Settings rows: links share the same dimensions as the order toggle. */
 .divider { height:var(--space-card); background:var(--c-bg); }
 .menu-item { display:flex; align-items:center; gap:var(--space-section); min-height:56px; padding:var(--space-10) var(--space-content); background:var(--c-surface); border-bottom:var(--line-normal); }
-.settings-first { border-top: var(--line-normal); }
+.settings-first { border-top:var(--line-normal); }
+a.menu-item { color:var(--c-text); text-decoration:none; }
+button.menu-item { width:100%; border:0; border-bottom:var(--line-normal); color:var(--c-text); font:inherit; text-align:left; cursor:pointer; }
+button.menu-item.settings-first { border-top:var(--line-normal); }
+.menu-item:focus-visible { outline:var(--line-focus); outline-offset:-3px; }
+.sport-order-value { flex:0 0 auto; font-size:var(--fs-16); font-weight:var(--fw-normal); white-space:nowrap; }
 .menu-icon { flex:0 0 var(--fs-20); display:flex; align-items:center; justify-content:center; color:var(--c-sub); }
 .menu-icon .ic { width:var(--fs-20); height:var(--fs-20); }
 .menu-text { flex:1; min-width:0; font-size:var(--fs-16); }
