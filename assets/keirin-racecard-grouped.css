@@ -19,6 +19,10 @@
 .race-detail-scroll .mania-table thead tr:first-child th.c-name {
   text-align: left;
 }
+/* First grid line must appear to the left of the frame ("枠") column. */
+.race-detail-scroll .mania-table :is(th,td).c-waku {
+  border-left: var(--line-normal);
+}
 .race-detail-scroll .mania-table :is(
   .player-section-start,.marutoku-section-start,
   .marutoku-comment-heading,.recent-section-start,
