@@ -173,19 +173,15 @@
 .favorite-sport--auto .favorite-player-card {
   border-left: var(--line-emphasis-width) solid var(--c-auto);
 }
+/* 激推しメン and 推しメン share the same one-step-larger player name. */
 .favorite-player-name {
   display: block;
   max-width: 100%;
-  font-size: clamp(9px, 3vw, var(--fs-12));
+  font-size: clamp(11px, calc(3vw + 2px), var(--fs-14));
   line-height: 1.15;
   font-weight: var(--fw-strong);
   white-space: nowrap;
   letter-spacing: -0.04em;
-}
-/* 推しメン only: increase the displayed player name one type step (12px → 14px);
-   retain narrow-screen proportional sizing and keep 激推しメン unchanged. */
-.favorite-group--regular .favorite-player-name {
-  font-size: clamp(11px, calc(3vw + 2px), var(--fs-14));
 }
 .favorite-player-affiliation {
   display: block;
