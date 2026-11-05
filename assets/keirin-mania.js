@@ -35,13 +35,12 @@
   function renderRace5(inner) {
     // Populate SCR-03's existing racecard rows and real analysis detail tables.
     // The structured race header, menu and lineup controls remain intact.
-    const race = inner.querySelector(".ri-race");
-    if (race) {
-      const number = [...race.childNodes].find((node) => node.nodeType === Node.TEXT_NODE);
-      if (number) number.textContent = "5R";
-      const grade = race.querySelector("span");
-      if (grade) grade.textContent = DATA.stage;
-    }
+    const raceNumber = inner.querySelector(".ri-race-purchase");
+    if (raceNumber) raceNumber.textContent = DATA.race + "R";
+    const raceLink = inner.querySelector(".ri-race");
+    if (raceLink) raceLink.setAttribute("aria-label", DATA.race + "Rの車券購入画面へ");
+    const raceKind = inner.querySelector(".ri-kind");
+    if (raceKind) raceKind.textContent = "Ｓ級 選抜";
     // Update only the values, retaining the five-row SCR-03 summary layout.
     const deadline = inner.querySelector(".race-info-meta .race-deadline");
     const startTime = inner.querySelector(".race-info-meta .race-start");
