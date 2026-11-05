@@ -30,8 +30,9 @@
     var right = active.offsetLeft + active.offsetWidth;
     if (right > box.clientWidth - 26) box.scrollLeft = right - box.clientWidth + 34;
   });
-  /* SCR-02 race rows: arrows are full-height, keyboard accessible scroll controls. */
-  if (mode === "venue-list") {
+  /* SCR-02 venue rows and SCR-03 detailed race selector share full-height
+     44px edge arrows; each tap jumps directly to the first or last race. */
+  if (mode === "venue-list" || mode === "keirin-detail") {
     function initializeVenueRow(outer) {
       if (outer.dataset.arrowsReady === "true") return;
       var box = outer.querySelector(".hscroll-inner");
@@ -60,10 +61,24 @@
       if (typeof ResizeObserver !== "undefined") {
         new ResizeObserver(sync).observe(box);
       }
-      requestAnimationFrame(sync);
+      requestAnimationFrame(function () {
+        if (mode === "keirin-detail") {
+          var selected = box.querySelector(".race-tab.active");
+          if (selected) {
+            var relativeLeft = selected.getBoundingClientRect().left -
+              box.getBoundingClientRect().left;
+            box.scrollLeft = Math.max(0, Math.min(maxLeft(),
+              box.scrollLeft + relativeLeft - 44 - 6));
+          }
+        }
+        sync();
+      });
     }
     function initializeVenueRows() {
-      document.querySelectorAll(".venue-card .hscroll").forEach(initializeVenueRow);
+      var selector = mode === "keirin-detail"
+        ? ".keirin-race-selector"
+        : ".venue-card .hscroll";
+      document.querySelectorAll(selector).forEach(initializeVenueRow);
     }
     initializeVenueRows();
     document.addEventListener("gamboo:venues-changed", initializeVenueRows);
