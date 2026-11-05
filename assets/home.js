@@ -154,6 +154,7 @@
   var girlsHeart = "<span class=\"girls\" role=\"img\" aria-label=\"ガールズ\"><svg class=\"girls-heart-icon\" viewBox=\"0 0 24 24\" preserveAspectRatio=\"none\" aria-hidden=\"true\" focusable=\"false\"><use href=\"./assets/bottom-nav-icons.svg?v=16#girls-heart\"></use></svg></span>";
   var referenceDay = "2026-11-03";
   var referenceMinutes = 12 * 60 + 30;
+  var imminentWindowMinutes = 30;
   var tabs = Array.from(document.querySelectorAll(".scroll-area > .date-tabs [data-date]"));
   var keirinGrid = document.querySelector('[data-home-venues="keirin"]');
   var autoGrid = document.querySelector('[data-home-venues="autorace"]');
@@ -186,11 +187,11 @@
     grid.querySelectorAll(".vcard:not([data-demo]) .vcard-dl[data-deadline]").forEach(function (item) {
       var pieces = item.dataset.deadline.split(":");
       var remain = (+pieces[0] * 60 + +pieces[1]) - referenceMinutes;
-      var soon = remain > 0 && remain <= 20;
+      var soon = remain > 0 && remain <= imminentWindowMinutes;
       item.classList.toggle("soon", soon);
       item.closest(".vcard").classList.toggle("deadline-soon", soon);
       var text = item.querySelector(".deadline-time");
-      if (text) text.textContent = soon ? remain + "分前" : item.dataset.deadline;
+      if (text) text.textContent = item.dataset.deadline;
       if (soon) {
         item.setAttribute("aria-label", "締切" + remain + "分前（" + item.dataset.deadline + "）");
         item.setAttribute("title", "締切まで" + remain + "分");
