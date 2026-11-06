@@ -191,14 +191,17 @@
   white-space: nowrap;
   gap: var(--space-small);
   min-width: 0;
-  font-size: var(--fs-14);
+  font-size: var(--fs-16);
   font-weight: var(--fw-strong);
   line-height: 1.25;
+}
+.race-detail-scroll .ri-meeting .ri-day {
+  font-weight: var(--fw-normal);
 }
 .race-detail-scroll .ri-meeting .ri-race-label {
   flex: 0 0 auto;
   color: var(--c-charcoal);
-  font-size: var(--fs-14);
+  font-size: var(--fs-16);
   font-weight: var(--fw-strong);
 }
 .race-detail-scroll .ri-meeting .grade-badge {
@@ -248,7 +251,7 @@
   box-sizing: border-box;
   display: flex;
   flex: 0 0 64px;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: var(--space-card);
@@ -263,6 +266,14 @@
   font-family: var(--ff-ui);
   font-weight: var(--fw-strong);
   text-decoration: none;
+}
+.race-detail-scroll .ri-race .ri-ticket-icon {
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  color: var(--c-surface);
+  fill: currentColor;
 }
 .race-detail-scroll .ri-race .ri-race-number {
   color: var(--c-surface);
@@ -364,7 +375,7 @@
 }
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live {
   background: var(--c-surface);
-  border: var(--line-normal);
+  border: var(--line-control);
   color: var(--c-charcoal);
   box-shadow: var(--e1);
 }
@@ -476,7 +487,7 @@
   gap: var(--space-2);
 }
 .race-detail-scroll .lineup-bar .lineup-title {
-  font-size: var(--fs-12);
+  font-size: var(--fs-14);
   line-height: 1.25;
   color: var(--c-charcoal);
 }
@@ -533,6 +544,7 @@
   line-height: 22px;
 }
 .race-detail-scroll .lineup-bar .lineup-dir {
+  font-size: var(--fs-14);
   display: inline-flex;
   align-items: center;
   justify-content: center;
