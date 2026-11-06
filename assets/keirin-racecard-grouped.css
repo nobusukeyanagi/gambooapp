@@ -373,8 +373,8 @@
 ),
 .race-detail-scroll .mania-table thead tr:nth-child(2) th.marutoku-section-start,
 .race-detail-scroll .mania-table tbody tr > td:is(
-  :nth-child(1), :nth-child(7), :nth-child(12), :nth-child(13),
-  :nth-child(24), :nth-child(33), :nth-child(62), :nth-child(64)
+  :nth-child(1), :nth-child(7), :nth-child(8), :nth-child(19),
+  :nth-child(28), :nth-child(57), :nth-child(62), :nth-child(64)
 ) {
   border-left: 2px solid var(--c-border);
 }
@@ -384,10 +384,10 @@
   .meeting-section-start, .position-section-start, .gindex-section-start,
   .mania-section-heading)
 ),
-.race-detail-scroll .mania-table thead tr:nth-child(2) th:nth-child(5),
+.race-detail-scroll .mania-table thead tr:nth-child(2) th:has(+ th.marutoku-section-start),
 .race-detail-scroll .mania-table tbody tr > td:is(
-  :nth-child(6), :nth-child(11), :nth-child(12), :nth-child(23),
-  :nth-child(32), :nth-child(61), :nth-child(63)
+  :nth-child(6), :nth-child(7), :nth-child(18), :nth-child(27),
+  :nth-child(56), :nth-child(61), :nth-child(63)
 ) {
   border-right: 0;
 }
@@ -452,51 +452,9 @@
   max-width: 60px;
 }
 
-/* Exact widths for the Marutoku detail columns 7–11 (second header row). */
-.race-detail-scroll .mania-table thead tr:nth-child(2) > th:nth-child(1),
-.race-detail-scroll .mania-table tbody tr > td:nth-child(7) {
-  box-sizing: border-box;
-  width: 60px;
-  min-width: 60px;
-  max-width: 60px;
-}
-.race-detail-scroll .mania-table thead tr:nth-child(2) > th:nth-child(2),
-.race-detail-scroll .mania-table tbody tr > td:nth-child(8) {
-  box-sizing: border-box;
-  width: 60px;
-  min-width: 60px;
-  max-width: 60px;
-}
-.race-detail-scroll .mania-table thead tr:nth-child(2) > th:nth-child(3),
-.race-detail-scroll .mania-table tbody tr > td:nth-child(9) {
-  box-sizing: border-box;
-  width: 60px;
-  min-width: 60px;
-  max-width: 60px;
-}
-.race-detail-scroll .mania-table thead tr:nth-child(2) > th:nth-child(4),
-.race-detail-scroll .mania-table tbody tr > td:nth-child(10) {
-  box-sizing: border-box;
-  width: 60px;
-  min-width: 60px;
-  max-width: 60px;
-}
-.race-detail-scroll .mania-table thead tr:nth-child(2) > th:nth-child(5),
-.race-detail-scroll .mania-table tbody tr > td:nth-child(11) {
-  box-sizing: border-box;
-  width: 40px;
-  min-width: 40px;
-  max-width: 40px;
-}
-/* Column 12 sits at the eighth cell in the first header row because
-   the five Marutoku columns share a merged first-row header. */
-.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(8),
-.race-detail-scroll .mania-table tbody tr > td:nth-child(12) {
-  box-sizing: border-box;
-  width: 100px;
-  min-width: 100px;
-  max-width: 100px;
-}
+/* The comment cell now immediately follows player information.
+   Marutoku score cells are moved to logical columns 57–61 and sized below
+   with the other 72 logical columns. */
 /* Two-line race score: 16px current value above 12px grey previous-term value. */
 .race-detail-scroll .mania-table tbody td.score .score-current {
   display: block;
@@ -512,38 +470,38 @@
   line-height: 1.2;
 }
 
-/* Racecard column sizes from the 2026-11-06 specification. These are exact
-   outer widths (content, padding, and borders) except the unchanged 60px-
-   minimum four-month percentage columns. Logical 54–61 are now 8 columns
-   for the four placing outcomes of イン粘り回数 and 追い上げ回数. */
-.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(13), :nth-child(62)),
-.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(9), :nth-child(34)) {
-  box-sizing: border-box;
-  width: 80px !important;
-  min-width: 80px !important;
-  max-width: 80px !important;
-}
-.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(14), :nth-child(15), :nth-child(16), :nth-child(17), :nth-child(18), :nth-child(19), :nth-child(63), :nth-child(34), :nth-child(35), :nth-child(36), :nth-child(37), :nth-child(38), :nth-child(39), :nth-child(40), :nth-child(41), :nth-child(42), :nth-child(43), :nth-child(44), :nth-child(45), :nth-child(46), :nth-child(47), :nth-child(48), :nth-child(49), :nth-child(50), :nth-child(51), :nth-child(52), :nth-child(53), :nth-child(54), :nth-child(55), :nth-child(56), :nth-child(57), :nth-child(58), :nth-child(59), :nth-child(60), :nth-child(61), :nth-child(64), :nth-child(65), :nth-child(66), :nth-child(67), :nth-child(68), :nth-child(69), :nth-child(70), :nth-child(71), :nth-child(72)),
-.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(10), :nth-child(12), :nth-child(35), :nth-child(36), :nth-child(37), :nth-child(38), :nth-child(39), :nth-child(40), :nth-child(41), :nth-child(42), :nth-child(43), :nth-child(44)),
-.race-detail-scroll .mania-table thead tr:nth-child(2) > th:is(:nth-child(6), :nth-child(7), :nth-child(8), :nth-child(9), :nth-child(10), :nth-child(11), :nth-child(12), :nth-child(13), :nth-child(14), :nth-child(15), :nth-child(16), :nth-child(17), :nth-child(18), :nth-child(19), :nth-child(20), :nth-child(21), :nth-child(22), :nth-child(23), :nth-child(24), :nth-child(25), :nth-child(26), :nth-child(27), :nth-child(28), :nth-child(29), :nth-child(30), :nth-child(31), :nth-child(32), :nth-child(33), :nth-child(34), :nth-child(35), :nth-child(36), :nth-child(37)) {
-  box-sizing: border-box;
-  width: 40px !important;
-  min-width: 40px !important;
-  max-width: 40px !important;
-}
-.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(32)),
-.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(25)) {
+/* Logical widths after moving Marutoku immediately before G-index.
+   The first six columns retain their declared widths above. Columns 15–18
+   retain 60px minimums. Meeting columns 19–26 use 60px subcells. */
+.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(7), :nth-child(27)),
+.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(7), :nth-child(24)) {
   box-sizing: border-box;
   width: 100px !important;
   min-width: 100px !important;
   max-width: 100px !important;
 }
-.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(33)),
-.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(26)) {
+.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(8), :nth-child(62)),
+.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(8), :nth-child(34)) {
+  box-sizing: border-box;
+  width: 80px !important;
+  min-width: 80px !important;
+  max-width: 80px !important;
+}
+.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(28), :nth-child(57), :nth-child(58), :nth-child(59), :nth-child(60), :nth-child(64), :nth-child(65), :nth-child(66), :nth-child(67), :nth-child(68), :nth-child(69), :nth-child(70), :nth-child(71), :nth-child(72)),
+.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(25), :nth-child(36), :nth-child(37), :nth-child(38), :nth-child(39), :nth-child(40), :nth-child(41), :nth-child(42), :nth-child(43), :nth-child(44)),
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th:is(:nth-child(33), :nth-child(34), :nth-child(35), :nth-child(36)) {
   box-sizing: border-box;
   width: 60px !important;
   min-width: 60px !important;
   max-width: 60px !important;
+}
+.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(63), :nth-child(9), :nth-child(10), :nth-child(11), :nth-child(12), :nth-child(13), :nth-child(14), :nth-child(29), :nth-child(30), :nth-child(31), :nth-child(32), :nth-child(33), :nth-child(34), :nth-child(35), :nth-child(36), :nth-child(37), :nth-child(38), :nth-child(39), :nth-child(40), :nth-child(41), :nth-child(42), :nth-child(43), :nth-child(44), :nth-child(45), :nth-child(46), :nth-child(47), :nth-child(48), :nth-child(49), :nth-child(50), :nth-child(51), :nth-child(52), :nth-child(53), :nth-child(54), :nth-child(55), :nth-child(56), :nth-child(61)),
+.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(35), :nth-child(9), :nth-child(11)),
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th:is(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6), :nth-child(7), :nth-child(8), :nth-child(9), :nth-child(10), :nth-child(11), :nth-child(12), :nth-child(13), :nth-child(14), :nth-child(15), :nth-child(16), :nth-child(17), :nth-child(18), :nth-child(19), :nth-child(20), :nth-child(21), :nth-child(22), :nth-child(23), :nth-child(24), :nth-child(25), :nth-child(26), :nth-child(27), :nth-child(28), :nth-child(29), :nth-child(30), :nth-child(31), :nth-child(32), :nth-child(37)) {
+  box-sizing: border-box;
+  width: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
 }
 
 /* The eight visible meeting slots each use 60px for their venue/date info
@@ -560,18 +518,22 @@
 .race-detail-scroll .mania-table tbody td.meeting-avg {
   min-width: 100px;
 }
-/* Narrow 40px item columns require their clickable header labels to fit. */
-.race-detail-scroll .mania-table thead th.c-item {
-  padding-left: 0;
-  padding-right: 0;
+/* The nine mania-analysis columns are all 60px; header buttons fill
+   the available area except for the standard 3px/6px cell inset. */
+.race-detail-scroll .mania-table thead tr:first-child > th.c-item {
+  padding: var(--space-3) var(--space-card);
 }
 .race-detail-scroll .mania-table thead th.c-item .item-btn {
+  position: absolute;
+  inset: var(--space-3) var(--space-card);
   box-sizing: border-box;
-  width: 100%;
+  width: auto;
+  height: auto;
   min-width: 0;
-  max-width: 100%;
-  padding-left: 0;
-  padding-right: 0;
+  min-height: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }
 .race-detail-scroll .mania-table thead th.c-item .item-btn > span {
   display: block;
