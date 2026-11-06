@@ -227,6 +227,9 @@
   white-space: nowrap;
   font-size: var(--fs-16);
 }
+.race-detail-scroll .mania-table .meeting-avg-line + .meeting-avg-line {
+  margin-top: var(--space-5);
+}
 /* Use 56px rows to accommodate the expanded first-to-second name-line gap. */
 .race-detail-scroll .mania-table tbody tr {
   height: 56px;
@@ -286,6 +289,9 @@
   font-size: var(--fs-16);
   line-height: 1.2;
 }
+.race-detail-scroll .mania-table tbody td.cls .grade-current {
+  margin-bottom: var(--space-5);
+}
 .race-detail-scroll .mania-table tbody td.cls .grade-prev {
   display: block;
   font-size: var(--fs-12);
@@ -314,6 +320,25 @@
 .race-detail-scroll .mania-table tbody td :is(.mk, .mark) {
   font-weight: var(--fw-strong);
 }
+/* All grade and rating marks use a consistent black stroke. */
+.race-detail-scroll .mania-table tbody :is(.mk, .mark) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-charcoal);
+  line-height: 1;
+  vertical-align: middle;
+}
+.race-detail-scroll .mania-table tbody .mk-symbol {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
 /* Four-month results: two-line column labels and count / percentage cells. */
 .race-detail-scroll .mania-table thead th.recent4-heading,
@@ -337,7 +362,7 @@
 }
 .race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate {
   display: block;
-  margin-top: var(--space-2);
+  margin-top: var(--space-5);
   color: var(--c-silver);
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
@@ -365,10 +390,12 @@
   box-shadow: none;
   border-right: var(--line-normal);
 }
-/* Every 12px grey label in the box table uses normal (400) weight.
-   Keep the selected white-on-gold headings unchanged. */
-.race-detail-scroll .mania-table thead tr:first-child th:not(.section-selected),
-.race-detail-scroll .mania-table thead tr:nth-child(2) th:not(.section-selected),
+/* Every box-table heading is strong, selected or not.
+   Supporting rider metadata alone stays regular. */
+.race-detail-scroll .mania-table thead th,
+.race-detail-scroll .mania-table thead th .item-btn {
+  font-weight: var(--fw-strong);
+}
 .race-detail-scroll .mania-table tbody td.c-name .rider-meta {
   font-weight: var(--fw-normal);
 }
@@ -429,6 +456,9 @@
   font-size: var(--fs-16);
   color: var(--c-charcoal);
   line-height: 1.2;
+}
+.race-detail-scroll .mania-table tbody td.score .score-current {
+  margin-bottom: var(--space-5);
 }
 .race-detail-scroll .mania-table tbody td.score .score-previous {
   display: block;
