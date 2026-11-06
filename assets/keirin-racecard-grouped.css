@@ -82,7 +82,7 @@
 }
 .race-detail-scroll .mania-table :is(
   .player-section-start,.marutoku-section-start,
-  .marutoku-comment-heading,.recent-section-start,
+  .recent-section-start,
   .meeting-section-start,.position-section-start,
   .mania-section-heading
 ) {
@@ -110,9 +110,9 @@
   grid-template-rows: 16px 12px 12px;
   justify-items: start;
   align-items: center;
-  flex: 0 0 60px;
-  width: 60px;
-  min-width: 60px;
+  flex: 0 0 50px;
+  width: 50px;
+  min-width: 50px;
   font-size: var(--fs-12);
   line-height: 1;
   color: var(--c-text);
@@ -158,7 +158,7 @@
   background: var(--c-border);
   pointer-events: none;
 }
-/* Match 60px meeting labels and race-result tiles: four fullwidth characters
+/* Match 50px meeting labels and race-result tiles: four fullwidth characters
    at the shared 12px font size, with room for 2px of rendering tolerance. */
 .race-detail-scroll .mania-table .meeting-cell .res {
   box-sizing: border-box;
@@ -168,9 +168,9 @@
   grid-template-rows: 12px 16px 12px;
   justify-items: center;
   align-items: center;
-  flex: 0 0 60px;
-  width: 60px;
-  min-width: 60px;
+  flex: 0 0 50px;
+  width: 50px;
+  min-width: 50px;
   height: 40px;
   min-height: 40px;
   margin: 0;
@@ -367,26 +367,26 @@
 }
 /* Column-group starts, including the two-tier Marutoku heading. */
 .race-detail-scroll .mania-table thead tr:first-child th:is(
-  .player-section-start, .marutoku-section-start, .marutoku-comment-heading,
+  .player-section-start, .marutoku-section-start,
   .recent-section-start, .meeting-section-start, .position-section-start,
   .gindex-section-start, .mania-section-heading
 ),
 .race-detail-scroll .mania-table thead tr:nth-child(2) th.marutoku-section-start,
 .race-detail-scroll .mania-table tbody tr > td:is(
-  :nth-child(1), :nth-child(7), :nth-child(8), :nth-child(19),
+  :nth-child(1), :nth-child(8), :nth-child(19),
   :nth-child(28), :nth-child(57), :nth-child(62), :nth-child(64)
 ) {
   border-left: 2px solid var(--c-border);
 }
 /* Suppress the preceding right border to keep the total at exactly 2px. */
 .race-detail-scroll .mania-table thead tr:first-child th:has(
-  + th:is(.marutoku-section-start, .marutoku-comment-heading, .recent-section-start,
+  + th:is(.marutoku-section-start, .recent-section-start,
   .meeting-section-start, .position-section-start, .gindex-section-start,
   .mania-section-heading)
 ),
 .race-detail-scroll .mania-table thead tr:nth-child(2) th:has(+ th.marutoku-section-start),
 .race-detail-scroll .mania-table tbody tr > td:is(
-  :nth-child(6), :nth-child(7), :nth-child(18), :nth-child(27),
+  :nth-child(7), :nth-child(18), :nth-child(27),
   :nth-child(56), :nth-child(61), :nth-child(63)
 ) {
   border-right: 0;
@@ -472,7 +472,7 @@
 
 /* Logical widths after moving Marutoku immediately before G-index.
    The first six columns retain their declared widths above. Columns 15–18
-   retain 60px minimums. Meeting columns 19–26 use 60px subcells. */
+   retain 60px minimums. Meeting columns 19–26 use 50px subcells. */
 .race-detail-scroll .mania-table tbody tr > td:is(:nth-child(7), :nth-child(27)),
 .race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(7), :nth-child(24)) {
   box-sizing: border-box;
@@ -504,16 +504,16 @@
   max-width: 40px !important;
 }
 
-/* The eight visible meeting slots each use 60px for their venue/date info
-   and for EVERY day result, including empty day slots. A meeting table
-   column grows only with its number of day slots. */
+/* Each meeting uses 50px for the venue/date panel and every result slot.
+   Four slots are always rendered (even for one-race meetings); longer
+   meetings automatically add more 50px slots. */
 .race-detail-scroll .mania-table .meeting-cell .meeting-meta,
 .race-detail-scroll .mania-table .meeting-cell .res {
   box-sizing: border-box;
-  flex: 0 0 60px;
-  width: 60px;
-  min-width: 60px;
-  max-width: 60px;
+  flex: 0 0 50px;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
 }
 .race-detail-scroll .mania-table tbody td.meeting-avg {
   min-width: 100px;
@@ -539,4 +539,15 @@
   display: block;
   white-space: normal;
   line-height: 1.2;
+}
+
+/* Preserve all four short vertical separators even when a race-day result
+   is missing. Every empty placeholder retains the same visible grid cell. */
+.race-detail-scroll .mania-table .meeting-cell .res-wrap > .res.res-empty {
+  display: grid;
+  position: relative;
+  visibility: visible;
+}
+.race-detail-scroll .mania-table .meeting-cell .res-wrap > .res.res-empty::before {
+  visibility: visible;
 }
