@@ -63,6 +63,7 @@
 
   /* ④ 状態色 */
   --c-success: #477868;
+  --c-info: #426E9A; /* informational blue; accessible on white */
   --c-warning: #D89556;
   --c-error: #A5374C;
 
