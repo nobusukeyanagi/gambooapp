@@ -370,14 +370,14 @@ body { font-weight: var(--fw-normal); }
 .shared-app-header .header-actions .icon-btn {
   width: auto;
   padding: 0 var(--space-section);
-  border: var(--line-normal);
-  background: transparent;
-  color: var(--c-gold);
+  border: var(--line-control);
+  background: var(--c-surface);
+  color: var(--c-charcoal);
 }
 .shared-app-header .header-actions .cta-btn {
   padding: 0 var(--space-10);
   border: 0;
-  background: var(--c-keirin);
+  background: var(--c-teal);
   color: var(--c-surface);
 }
 .shared-app-header .header-actions .ic {
@@ -393,9 +393,9 @@ body { font-weight: var(--fw-normal); }
   height: var(--fs-18);
   flex-basis: var(--fs-18);
 }
-/* Restore the neutral grey bell mark; deposit icon remains white. */
+/* Notification uses the standard neutral button style; deposit is teal. */
 .shared-app-header .header-actions .header-notification {
-  color: var(--c-silver);
+  color: var(--c-charcoal);
 }
 .shared-app-header .header-actions .badge {
   display: block;
