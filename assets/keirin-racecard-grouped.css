@@ -228,11 +228,6 @@
   white-space: nowrap;
   font-size: var(--fs-16);
 }
-.race-detail-scroll .mania-table .position-count {
-  min-width: 68px;
-  width: 68px;
-  text-align: center;
-}
 /* Use 56px rows to accommodate the expanded first-to-second name-line gap. */
 .race-detail-scroll .mania-table tbody tr {
   height: 56px;
