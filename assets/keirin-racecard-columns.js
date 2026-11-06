@@ -29,12 +29,14 @@
       ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり"].map((s,i)=>sub(s,i===0?"bl meeting-current-label meeting-section-start":"")),
       sub("並び","bl position-col position-current position-section-start"),
       ...placeGroups.flatMap(() => ranks.map((r,i)=>sub('<span class="position-result-name">'+r+'</span>','position-col'+(i===0?' position-first':'')))),
-      sub("イン粘り<br>回数","bl position-col position-count"),
-      sub("追い上げ<br>回数","position-col position-count"),
+      ...["1着","2着","3着","着外"].map((label,i)=>
+        sub(label,"position-col position-switch"+(i===0?" position-first":""))),
+      ...["1着","2着","3着","着外"].map((label,i)=>
+        sub(label,"position-col position-switch"+(i===0?" position-first":""))),
       sub("G指数","bl gindex-section-start"),
       sub("印","gindex-mark"),
-      sub("総合<br>評価","bl c-item mania-section-start mania-section-heading"),
-      ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレード","競輪場","車番","同県選手"].map((s,i)=>
+      sub("総合","bl c-item mania-section-start mania-section-heading"),
+      ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレ<br>ード","競輪場","車番","同県<br>選手"].map((s,i)=>
         sub('<button type="button" class="item-btn" data-item="'+i+'">'+s+'</button>','c-item'+(i===0?" bl":"")))
     ];
     // Grouped first-row labels share the same physical columns as the
@@ -46,7 +48,9 @@
       [37, {span:4, label:"2番手", klass:"position-first"}],
       [41, {span:4, label:"3番手以降", klass:"position-first"}],
       [45, {span:4, label:"単騎", klass:"position-first"}],
-      [49, {span:4, label:"競り", klass:"position-first"}]
+      [49, {span:4, label:"競り", klass:"position-first"}],
+      [53, {span:4, label:"イン粘り回数", klass:"position-first"}],
+      [57, {span:4, label:"追い上げ回数", klass:"position-first"}]
     ]);
     const top = [], lower = [];
     for (let i=0; i<subheads.length;) {
@@ -137,7 +141,10 @@
       const classes=["position-stat",k%4===0?"position-first":"",v===0?"position-zero":"",highlighted?emphasis:""].filter(Boolean);
       return '<td class="'+classes.join(" ")+'">'+escape(v)+'</td>';
     });
-    const totals=[1,2].map(mode=>position.switches[mode].reduce((sum,n)=>sum+Number(n||0),0));
+    // Each switching action has its own 1st / 2nd / 3rd / outside counts.
+    // switches[0] stores another mode; modes 1 and 2 are in-adhesion and follow-up.
+    const switchCounts=[1,2].flatMap(mode=>
+      Array.from({length:4},(_,index)=>Number(position.switches?.[mode]?.[index]??0)));
     return '<tr>'+
       '<td class="c-waku">'+waku[i]+'</td>'+
       '<td class="fx c-sha"><div class="frame-cell f'+rider.car+'">'+rider.car+
@@ -174,8 +181,9 @@
         '<span class="meeting-avg-line">最高' + escape(rider.avgBest[1]) + '</span>' : "—") + "</td>" +
       '<td class="position-stat position-current position-first '+emphasis+'">'+escape(position.position)+'</td>'+
       buildCounts.join("")+
-      '<td class="position-stat position-count bl">'+totals[0]+'</td>'+
-      '<td class="position-stat position-count">'+totals[1]+'</td>'+
+      switchCounts.map((count,k)=>'<td class="position-stat position-switch'+
+        (k%4===0?' position-first':'')+(count===0?' position-zero':'')+
+        '">'+escape(count)+'</td>').join("")+
       '<td class="bl c-g"><span class="g-val">'+escape(rider.g)+'</span></td>'+
       '<td class="gindex-mark">'+marker(gMark)+'</td>'+
       '<td class="mania-eval bl">'+marker(rider.ratings.overall)+'</td>'+
