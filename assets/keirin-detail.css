@@ -359,11 +359,11 @@
       }
       .leg-chase {
         background: var(--c-bg);
-        color: var(--w4);
+        color: var(--c-blue);
       }
       .leg-both {
         background: var(--c-bg);
-        color: var(--w6);
+        color: var(--c-green);
       }
       .action-bar-btn {
         flex: 1;
@@ -834,8 +834,8 @@
         font-size: var(--fs-14);
         margin: 0 auto;
       }
-      .f1 { background: var(--c-surface); color: var(--c-text); border: var(--line-thin) solid var(--c-sub); }
-      .f2 { background: var(--c-text); color: var(--c-surface); border: var(--line-thin) solid var(--c-text); }
+      .f1 { background: var(--w1); color: var(--c-text); border: var(--line-control); }
+      .f2 { background: var(--w2); color: var(--c-surface); border: var(--line-thin) solid var(--w2); }
       .f3 { background: var(--w3); color: var(--c-surface); border: var(--line-thin) solid var(--w3); }
       .f4 { background: var(--w4); color: var(--c-surface); border: var(--line-thin) solid var(--w4); }
       .f5 { background: var(--w5); color: var(--c-text); border: var(--line-thin) solid var(--w5); }

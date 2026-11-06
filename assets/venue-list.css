@@ -387,15 +387,15 @@ button, input, select, textarea {
 }
 
 .carno.w1 {
-  background: var(--c-surface);
+  background: var(--w1);
   color: var(--c-text);
-  border-color: var(--c-sub);
+  border-color: var(--c-border-control);
 }
 
 .carno.w2 {
-  background: var(--c-text);
+  background: var(--w2);
   color: var(--c-surface);
-  border-color: var(--c-text);
+  border-color: var(--w2);
 }
 
 .carno.w3 {

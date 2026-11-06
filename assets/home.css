@@ -469,8 +469,8 @@ button,
         border: var(--line-thin) solid transparent;
         font-family: var(--ff-ui);
       }
-      .carno.w1 { background: var(--c-surface); color: var(--c-text); border-color: var(--c-sub); }
-      .carno.w2 { background: var(--c-text); color: var(--c-surface); border-color: var(--c-text); }
+      .carno.w1 { background: var(--w1); color: var(--c-text); border-color: var(--c-border-control); }
+      .carno.w2 { background: var(--w2); color: var(--c-surface); border-color: var(--w2); }
       .carno.w3 { background: var(--w3); color: var(--c-surface); border-color: var(--w3); }
       .carno.w4 { background: var(--w4); color: var(--c-surface); border-color: var(--w4); }
       .carno.w7 { background: var(--w7); color: var(--c-surface); border-color: var(--w7); }
