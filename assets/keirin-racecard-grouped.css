@@ -65,9 +65,11 @@
   margin-bottom: var(--space-3);
 }
 
-/* Only the active menu section's column headings are dark gold.
-   All other header cells retain their ordinary background and text. */
-.race-detail-scroll .mania-table thead th.section-selected {
+/* Selected menu section: restore the dark-gold/white header highlight.
+   Match the specificity of both normal first-row and second-row header
+   backgrounds so their :first-child/:nth-child rules cannot override it. */
+.race-detail-scroll .mania-table thead tr:first-child th.section-selected,
+.race-detail-scroll .mania-table thead tr:nth-child(2) th.section-selected {
   background: var(--c-primary-d);
   color: var(--c-surface);
 }
