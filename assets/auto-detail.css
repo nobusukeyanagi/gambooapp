@@ -806,7 +806,7 @@
         color: var(--c-warning);
       }
       .leg-chase {
-        background: var(--c-keirin-bg);
+        background: var(--c-bg);
         color: var(--w4);
       }
       .leg-both {
@@ -1191,16 +1191,6 @@
       .race-tab.past b { font-weight: var(--fw-strong); }
       .race-tab.past small { color: var(--c-keirin); font-weight: var(--fw-strong); }
 
-      .race-tab.canceled {
-        background: repeating-linear-gradient(
-          -45deg,
-          var(--c-auto-bg) 0 5px,
-          var(--c-error-bg) 5px 10px
-        );
-        border-color: var(--c-error);
-        color: var(--c-error);
-        cursor: default;
-      }
       .race-tab.canceled b { color: var(--c-error); }
       .race-tab.canceled small { color: var(--c-error); font-weight: var(--fw-strong); }
 
@@ -1828,9 +1818,9 @@
       .at-wrap.detail .rc-dt { display: block; }
       .at-wrap.detail .rc-st { display: inline; }
       .at-wrap.detail .at.past .rch { min-width: 128px; }
-      .at .rc.r1 { background: var(--c-error-bg) !important; }
-      .at .rc.r2 { background: var(--c-keirin-bg) !important; }
-      .at .rc.r3 { background: var(--c-bg) !important; }
+      /* Use the shared neutral background for placing history; do not tint
+         by rank with competition/error background colors. */
+      .at .rc:is(.r1, .r2, .r3) { background: var(--c-bg) !important; }
 
       .at .sc { min-width: 64px; }
       .at .sc b { font-size: var(--fs-16); font-weight: var(--fw-strong); margin-left: 4px; }
