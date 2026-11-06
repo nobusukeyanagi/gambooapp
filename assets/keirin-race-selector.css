@@ -92,16 +92,16 @@
 }
 .race-detail-scroll .keirin-race-selector .race-tab.past {
   background: var(--c-bg);
-  border-color: var(--c-silver);
+  border-color: var(--c-silver-l);
 }
-.race-detail-scroll .keirin-race-selector .race-tab.past > :is(b,small) { color: var(--c-silver-d); }
+.race-detail-scroll .keirin-race-selector .race-tab.past > :is(b,small) { color: var(--c-silver); }
 .race-detail-scroll .keirin-race-selector .race-tab.active:not(.soon):not(.rebate) {
   background: var(--c-surface);
   border: var(--line-emphasis-width) solid var(--c-border-control);
 }
 .race-detail-scroll .keirin-race-selector .race-tab.rebate {
   background: var(--c-surface);
-  border: var(--line-emphasis-width) solid var(--c-gold-d);
+  border: var(--line-emphasis-width) solid var(--c-gold);
 }
 .race-detail-scroll :is(.keirin-race-selector,.race-menu-scroll) > :is(.hscroll-cue,.hscroll-cue-l) {
   position: absolute;
@@ -120,7 +120,7 @@
   border: 0;
   border-radius: 0;
   background: var(--c-bg);
-  color: var(--c-silver-d);
+  color: var(--c-silver);
   box-shadow: none;
   cursor: pointer;
   pointer-events: auto;
@@ -331,7 +331,7 @@
   white-space: nowrap;
   gap: var(--space-card);
   font-size: var(--fs-12);
-  color: var(--c-silver-d);
+  color: var(--c-silver);
   font-family: var(--ff-ui);
   font-variant-numeric: tabular-nums;
 }
@@ -392,7 +392,7 @@
   left: 0;
   right: 0;
   height: var(--line-thin);
-  background: var(--c-silver);
+  background: var(--c-silver-l);
   pointer-events: none;
 }
 .race-detail-scroll .race-menu-scroll::before { top: 0; }
@@ -527,7 +527,7 @@
   justify-content: center;
   padding: 0;
   margin: 0;
-  color: var(--c-silver-d);
+  color: var(--c-silver);
   font-size: var(--fs-18);
   font-weight: var(--fw-strong);
   line-height: 22px;
@@ -542,7 +542,7 @@
   height: 22px;
   padding: 0;
   margin: 0;
-  color: var(--c-silver-d);
+  color: var(--c-silver);
 }
 .race-detail-scroll .aokei-paper-btn {
   flex: 0 0 80px;
