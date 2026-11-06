@@ -10,21 +10,13 @@
 /* Keep the column header at the same width as the comment cells. */
 .race-detail-scroll .mania-table th.player-comment-heading {
   box-sizing: border-box;
-  width: 108px;
-  min-width: 108px;
-  max-width: 108px;
   white-space: normal;
 }
 .race-detail-scroll .mania-table th.marutoku-score-label {
-  min-width: 58px;
   white-space: nowrap;
   background: var(--c-bg);
 }
-.race-detail-scroll .mania-table th.marutoku-score-label:first-of-type {
-  border-left: var(--line-normal);
-}
 .race-detail-scroll .mania-table tbody td.marutoku-value {
-  min-width: 58px;
   text-align: center;
   white-space: nowrap;
   font-size: var(--fs-16);
@@ -35,7 +27,6 @@
   font-weight: var(--fw-strong);
 }
 .race-detail-scroll .mania-table tbody td.marutoku-mark {
-  min-width: 48px;
   text-align: center;
   font-weight: var(--fw-strong);
 }
@@ -43,9 +34,6 @@
   font-weight: var(--fw-strong);
 }
 .race-detail-scroll .mania-table tbody td.player-comment {
-  width: 108px;
-  min-width: 108px;
-  max-width: 108px;
   text-align: left;
   white-space: normal;
   overflow-wrap: break-word;
