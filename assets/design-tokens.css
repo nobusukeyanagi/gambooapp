@@ -58,7 +58,7 @@
   --w8: #D884A8;
   --w9: #944BBC;
 
-  /* ③ 基本カラー：彩度を抑えた色と金銀銅をHSL色相順に管理。
+  /* ③ 基本カラー：彩度を抑えた色と金銅をHSL色相順に管理。
      色相の間隔が大きい領域に黄緑・青緑・紫・赤紫を追加。 */
   --c-bronze: #7E5B42;
   --c-orange: #D89556;
@@ -66,13 +66,12 @@
   --c-yellowgreen: #577E44;
   --c-green: #477868;
   --c-teal: #467C81;
-  --c-silver: #626C76;
   --c-blue: #426E9A;
   --c-purple: #764F92;
   --c-magenta: #944781;
   --c-red: #A5374C;
 
-  /* 基本11色に対応する薄色はすべて「基本色40% + 白60%」から算出。
+  /* 基本10色に対応する薄色はすべて「基本色40% + 白60%」から算出。
      薄色を固定HEXで持たず、基本色の変更に自動で追従する。 */
   --c-bronze-light: color-mix(in srgb, var(--c-bronze) 40%, white 60%);
   --c-orange-light: color-mix(in srgb, var(--c-orange) 40%, white 60%);
@@ -80,19 +79,21 @@
   --c-yellowgreen-light: color-mix(in srgb, var(--c-yellowgreen) 40%, white 60%);
   --c-green-light: color-mix(in srgb, var(--c-green) 40%, white 60%);
   --c-teal-light: color-mix(in srgb, var(--c-teal) 40%, white 60%);
-  --c-silver-light: color-mix(in srgb, var(--c-silver) 40%, white 60%);
   --c-blue-light: color-mix(in srgb, var(--c-blue) 40%, white 60%);
   --c-purple-light: color-mix(in srgb, var(--c-purple) 40%, white 60%);
   --c-magenta-light: color-mix(in srgb, var(--c-magenta) 40%, white 60%);
   --c-red-light: color-mix(in srgb, var(--c-red) 40%, white 60%);
 
-  /* ④ 根幹カラー：基本文字色・背景・罫線・操作枠線を一元管理。
-     本文はチャコール、補助文字は基本カラーの銀、罫線色は独立管理。 */
+  /* ④ 根幹カラー：基本文字色・補助文字・背景・罫線・操作枠線。
+     HSL明度の低い順（暗い→明るい）に定義する。
+     銀の薄色は銀40%＋白60%から算出し、既存参照を維持する。 */
   --c-charcoal: #30363C;
+  --c-silver: #626C76;
+  --c-border-control: #9CA4A8;
+  --c-silver-light: color-mix(in srgb, var(--c-silver) 40%, white 60%);
+  --c-border: #C9CFD5;
   --c-bg: #F8F7F4;
   --c-surface: #FFFFFF;
-  --c-border: #C9CFD5;
-  --c-border-control: #9CA4A8;
 
   /* Unified line system: 1px standard/control, 3px selected/race/focus. */
   --line-thin: 1px;
