@@ -59,18 +59,17 @@
   --w9: #944BBC;
 
   /* ③ 基本カラー：一般色と金銀銅を統合し、HSL色相の昇順で定義。
-     色値を変えずに色名を直接参照する。 */
-  --c-brown: #92684C;
-  --c-bronze-d: #805A40;
-  --c-bronze: #CAA080;
+     ブラウンは濃い銅に統合し、各色を直接参照する。 */
+  --c-bronze-d: #7E5B42;
+  --c-bronze: #CAA082;
   --c-orange: #D89556;
   --c-taupe: #7B7568;
   --c-gold: #E4CA7C;
   --c-gold-d: #86733A;
   --c-green: #477868;
-  --c-silver: #C9D0D4;
-  --c-silver-d: #626E75;
-  --c-charcoal: #44494D;
+  --c-silver: #C9CFD5;
+  --c-silver-d: #626C76;
+  --c-charcoal: #44494E;
   --c-blue: #426E9A;
   --c-red: #A5374C;
 
