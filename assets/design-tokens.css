@@ -52,7 +52,7 @@
   --w8: #E68FB6;
   --w9: #A747CD;
 
-  /* ③ 状態色・グレード共通色
+  /* ③ 状態カラー（グレードを含む）
      GI/特GI → error、GII → info、GIII → success を直接参照。
      GP・FI・FIIはこのグループで個別管理。SGは --c-text。
      GP/SGの文字は --w5。旧グレード色の別名変数は作らない。 */
@@ -64,7 +64,7 @@
   --c-f1: #92684C; /* muted chestnut; white numeral contrast >=4.5:1 */
   --c-f2: #7B7568; /* muted taupe; white numeral contrast >=4.5:1 */
 
-  /* ⑤ 共通色（ブランド・文字・背景・罫線。リンク色は --c-keirin を共有） */
+  /* ④ 共通色（ブランド・文字・背景・罫線。リンク色は --c-keirin を共有） */
   --c-bg: #F8F7F4; /* HSL hue 45deg; low-chroma warm white */
   --c-surface: #FFFFFF;
   --c-border: #D0D4D6;
