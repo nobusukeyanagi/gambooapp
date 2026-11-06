@@ -37,7 +37,7 @@
       sub("印","gindex-mark"),
       sub("総合","bl c-item mania-section-start mania-section-heading"),
       ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレ<br>ード","競輪場","車番","同県<br>選手"].map((s,i)=>
-        sub('<button type="button" class="item-btn" data-item="'+i+'">'+s+'</button>','c-item'+(i===0?" bl":"")))
+        sub('<button type="button" class="item-btn" data-item="'+i+'"><span>'+s+'</span></button>','c-item'+(i===0?" bl":"")))
     ];
     // Grouped first-row labels share the same physical columns as the
     // second-row labels. Un-grouped columns span both header rows.
