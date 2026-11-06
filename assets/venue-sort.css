@@ -24,7 +24,7 @@
   border: var(--line-control);
   border-radius: var(--r-control);
   background: var(--c-surface);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   box-shadow: var(--e1);
 }
 .venue-sort-options [data-sort="venue"] {
@@ -44,7 +44,7 @@
 
 .venue-sort-options .chip.active {
   background: var(--c-gold);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   border-color: var(--c-gold-d);
 }
 .venue-sort-options .chip:focus-visible {

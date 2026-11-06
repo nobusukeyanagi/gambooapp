@@ -60,7 +60,7 @@
 
   /* ③ 基本カラー（色名で直接参照。金銀銅・背景・文字・罫線もここで管理）
      GⅠ/特GⅠ=赤、GⅡ=青、GⅢ=緑、GP=チャコール、FⅠ=ブラウン、
-     FⅡ/普通=トープ、SG=本文色。GP/SG文字は車番黄色 --w5。 */
+     FⅡ/普通=トープ、SG/GP=チャコール。GP/SG文字は車番黄色 --w5。 */
   --c-green: #477868;
   --c-blue: #426E9A;
   --c-orange: #D89556;
@@ -77,18 +77,15 @@
   --c-bronze: #CAA080;
   --c-bronze-d: #805A40;
 
-  /* 背景・文字・罫線 */
+  /* 背景・操作枠線（通常罫線は銀、補助文字は濃い銀、本文はチャコール） */
   --c-bg: #F8F7F4;
   --c-surface: #FFFFFF;
-  --c-border: #D0D4D6;
   --c-border-control: #9CA4A8;
-  --c-sub: #656D71;
-  --c-text: #2B3135;
 
   /* Unified line system: 1px standard/control, 3px selected/race/focus. */
   --line-thin: 1px;
   --line-emphasis-width: 3px;
-  --line-normal: var(--line-thin) solid var(--c-border);
+  --line-normal: var(--line-thin) solid var(--c-silver);
   --line-control: var(--line-thin) solid var(--c-border-control);
   --line-selected: var(--line-emphasis-width) solid var(--c-gold-d);
   --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
@@ -104,9 +101,9 @@
   --r-lg: 20px;
   --r-full: 9999px;
 
-  --e1: 0 1px 2px color-mix(in srgb, var(--c-text) 10%, transparent);
-  --e2: 0 2px 6px color-mix(in srgb, var(--c-text) 14%, transparent);
-  --e3: 0 8px 24px color-mix(in srgb, var(--c-text) 22%, transparent);
+  --e1: 0 1px 2px color-mix(in srgb, var(--c-charcoal) 10%, transparent);
+  --e2: 0 2px 6px color-mix(in srgb, var(--c-charcoal) 14%, transparent);
+  --e3: 0 8px 24px color-mix(in srgb, var(--c-charcoal) 22%, transparent);
 
   --tap-min: 44px;
   --tap-dense: 36px;

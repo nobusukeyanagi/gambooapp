@@ -42,7 +42,7 @@
   border: 0;
   border-bottom: var(--line-emphasis-width) solid transparent;
   background: transparent;
-  color: var(--c-text);
+  color: var(--c-charcoal);
   font-family: inherit;
   cursor: pointer;
 }
@@ -79,7 +79,7 @@
   font-family: var(--ff-ui);
   font-size: var(--fs-20);
   font-weight: var(--fw-strong);
-  color: var(--c-sub);
+  color: var(--c-silver-d);
   border: var(--line-normal);
   border-radius: var(--r-control);
   background: var(--c-bg);
@@ -92,7 +92,7 @@
 .campaign-page-info {
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   font-variant-numeric: tabular-nums;
 }
 
@@ -138,7 +138,7 @@
 .cp-title {
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   line-height: 1.35;
   overflow-wrap: anywhere;
 }
@@ -158,13 +158,13 @@
 }
 /* Closed campaigns retain the deadline layout; their date is no longer an alert. */
 .cp-card[data-status="closed"] .cp-period {
-  color: var(--c-sub);
+  color: var(--c-silver-d);
 }
 /* Campaign and point shortcut buttons share their complete visual design in ui-consistency.css. */
 .campaign-empty {
   margin: var(--space-section);
   padding: var(--space-24) var(--space-content);
-  color: var(--c-sub);
+  color: var(--c-silver-d);
   font-size: var(--fs-14);
   text-align: center;
 }

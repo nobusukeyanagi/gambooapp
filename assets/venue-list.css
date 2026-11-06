@@ -37,7 +37,7 @@ button, input, select, textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--c-sub);
+  color: var(--c-silver-d);
   cursor: pointer;
   
   letter-spacing: normal;
@@ -118,7 +118,7 @@ button, input, select, textarea {
   align-items: center;
   min-width: max-content;
   white-space: nowrap;
-  color: var(--c-text);
+  color: var(--c-charcoal);
   font-size: var(--fs-14);
   font-weight: var(--fw-normal);
   line-height: 1.25;
@@ -197,7 +197,7 @@ button, input, select, textarea {
   border: var(--line-control);
   box-shadow: var(--e1);
   background: var(--c-surface);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -259,7 +259,7 @@ button, input, select, textarea {
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
-  color: var(--c-text);
+  color: var(--c-charcoal);
   flex: 0 1 auto;
   font-size: var(--fs-20);
   font-weight: var(--fw-strong);
@@ -270,7 +270,7 @@ button, input, select, textarea {
   color: var(--w5);
 }
 .grade-sg {
-  background: var(--c-text);
+  background: var(--c-charcoal);
   color: var(--w5);
 }
 
@@ -346,7 +346,7 @@ button, input, select, textarea {
 
 .comment-row {
   gap: var(--space-section);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   margin: 0;
   padding: var(--space-7) var(--space-10);
   background: transparent;
@@ -366,7 +366,7 @@ button, input, select, textarea {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   font-weight: var(--fw-strong);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   font-size: var(--fs-14);
 }
 
@@ -388,7 +388,7 @@ button, input, select, textarea {
 
 .carno.w1 {
   background: var(--w1);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   border-color: var(--c-border-control);
 }
 
@@ -412,7 +412,7 @@ button, input, select, textarea {
 
 .carno.w5 {
   background: var(--w5);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   border-color: var(--w5);
 }
 
@@ -430,7 +430,7 @@ button, input, select, textarea {
 
 .carno.w8 {
   background: var(--w8);
-  color: var(--c-text);
+  color: color-mix(in srgb, var(--c-charcoal) 70%, black);
   border-color: var(--w8);
 }
 
@@ -477,7 +477,7 @@ button, input, select, textarea {
   pointer-events: auto;
   cursor: pointer;
   appearance: none;
-  color: var(--c-sub);
+  color: var(--c-silver-d);
   background: var(--c-bg);
   border: 0;
   border-radius: 0;
@@ -532,9 +532,9 @@ button, input, select, textarea {
 }
 
 .rchip.canceled {
-  background: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
-  border-color: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
-  color: var(--c-sub);
+  background: color-mix(in srgb, var(--c-silver) 30%, var(--c-surface));
+  border-color: color-mix(in srgb, var(--c-silver) 30%, var(--c-surface));
+  color: var(--c-silver-d);
   cursor: default;
 }
 
@@ -635,7 +635,7 @@ button, input, select, textarea {
 }
 
 .venue-card .rchip:not(.closed):not(.live):not(.canceled) > small {
-  color: var(--c-text);
+  color: var(--c-charcoal);
 }
 
 .venue-card .rchip.next.soon {
@@ -675,11 +675,11 @@ button, input, select, textarea {
 }
 
 .venue-card .rchip:not(.canceled) > b {
-  color: var(--c-text);
+  color: var(--c-charcoal);
 }
 
 .venue-card .rchip:is(.closed, .live) > small {
-  color: var(--c-text);
+  color: var(--c-charcoal);
 }
 
 .comment-row .carno {
@@ -695,7 +695,7 @@ button, input, select, textarea {
 .comment-row .cr-name {
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   min-width: 0;
 }
 
@@ -716,7 +716,7 @@ button, input, select, textarea {
   padding-left: var(--space-small);
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   line-height: 22px;
   white-space: nowrap;
   flex: 0 0 auto;

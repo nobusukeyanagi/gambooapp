@@ -115,7 +115,7 @@
   min-width: 50px;
   font-size: var(--fs-12);
   line-height: 1;
-  color: var(--c-text);
+  color: var(--c-charcoal);
 }
 .race-detail-scroll .mania-table .meeting-cell .meeting-meta .meeting-date,
 .race-detail-scroll .mania-table .meeting-cell .meeting-meta .meeting-venue {
@@ -155,7 +155,7 @@
   transform: translateY(-50%);
   width: var(--line-thin);
   height: 26px;
-  background: var(--c-border);
+  background: var(--c-silver);
   pointer-events: none;
 }
 /* Match 50px meeting labels and race-result tiles: four fullwidth characters
@@ -187,7 +187,7 @@
   transform: translateY(-50%);
   width: var(--line-thin);
   height: 26px;
-  background: var(--c-border);
+  background: var(--c-silver);
   pointer-events: none;
 }
 .race-detail-scroll .mania-table .meeting-cell .res-note {
@@ -292,7 +292,7 @@
   font-size: var(--fs-12);
   line-height: 1.2;
   font-weight: var(--fw-normal);
-  color: var(--c-sub);
+  color: var(--c-silver-d);
 }
 .race-detail-scroll .mania-table tbody td .leg-tag {
   font-size: var(--fs-16);
@@ -331,7 +331,7 @@
 }
 .race-detail-scroll .mania-table tbody td.recent4-cell .recent4-count {
   display: block;
-  color: var(--c-text);
+  color: var(--c-charcoal);
   font-size: var(--fs-16);
   font-weight: var(--fw-normal);
   line-height: 1.2;
@@ -339,7 +339,7 @@
 .race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate {
   display: block;
   margin-top: var(--space-2);
-  color: var(--c-sub);
+  color: var(--c-silver-d);
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
   line-height: 1.2;
@@ -428,14 +428,14 @@
 .race-detail-scroll .mania-table tbody td.score .score-current {
   display: block;
   font-size: var(--fs-16);
-  color: var(--c-text);
+  color: var(--c-charcoal);
   line-height: 1.2;
 }
 .race-detail-scroll .mania-table tbody td.score .score-previous {
   display: block;
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
-  color: var(--c-sub);
+  color: var(--c-silver-d);
   line-height: 1.2;
 }
 

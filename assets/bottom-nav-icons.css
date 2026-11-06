@@ -11,7 +11,7 @@
 .page-header .page-header-title .header-race-icon {
   width: var(--nav-icon-size);
   height: var(--nav-icon-size);
-  color: var(--c-sub);
+  color: var(--c-silver-d);
   fill: currentColor;
 }
 .bottom-tab .tab-item.active .tab-icon .ic {
@@ -28,7 +28,7 @@
   background: var(--c-surface);
 }
 .page-header .page-header-title:has(.header-race-icon) {
-  color: var(--c-text);
+  color: var(--c-charcoal);
 }
 .page-header .page-header-title .header-race-icon:has(use[href$="#nav-keirin"]) {
   color: var(--c-keirin);
