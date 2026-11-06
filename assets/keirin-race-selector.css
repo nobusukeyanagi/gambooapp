@@ -103,10 +103,6 @@
   background: var(--c-surface);
   border: var(--line-emphasis-width) solid var(--c-primary-d);
 }
-.race-detail-scroll .keirin-race-selector .race-tab.soon {
-  background: var(--c-surface);
-  border: var(--line-emphasis-width) solid var(--c-error);
-}
 .race-detail-scroll :is(.keirin-race-selector,.race-menu-scroll) > :is(.hscroll-cue,.hscroll-cue-l) {
   position: absolute;
   top: 0;
