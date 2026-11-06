@@ -100,7 +100,7 @@
         background: var(--c-bg);
         border-radius: var(--r-tag);
         font-size: var(--fs-12);
-        color: var(--c-orange);
+        color: var(--c-gold);
         flex-shrink: 0;
       }
       .sheet-body {
