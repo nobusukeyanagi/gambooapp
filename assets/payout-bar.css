@@ -17,7 +17,7 @@
       }
       .payout-label {
         
-        color: var(--c-silver-d);
+        color: var(--c-silver);
         
         white-space: nowrap;
         overflow: hidden;
@@ -39,7 +39,7 @@
       .balance-sep {
         
         width: 1px;
-        background: var(--c-silver);
+        background: var(--c-silver-l);
         
         flex: 0 0 1px;
       }
@@ -81,13 +81,13 @@
         min-height: 36px;
         align-items: center;
       }
-      .pay-toggle .pay-val .ic { width: 18px; height: 18px; color: var(--c-silver-d); }
+      .pay-toggle .pay-val .ic { width: 18px; height: 18px; color: var(--c-silver); }
       .pay-toggle .eye-off,
       .pay-toggle .pay-hidden { display: none; }
       .pay-toggle.masked .eye-on,
       .pay-toggle.masked .pay-shown { display: none; }
       .pay-toggle.masked .eye-off { display: block; }
-      .pay-toggle.masked .pay-hidden { display: inline; color: var(--c-silver-d); letter-spacing: 0.1em; }
+      .pay-toggle.masked .pay-hidden { display: inline; color: var(--c-silver); letter-spacing: 0.1em; }
 
 .pt-h .balance-sep { height: auto; align-self: stretch;  }
 
@@ -130,7 +130,7 @@
       .pay-toggle.masked .pay-val .pay-hidden {
         display: inline;
         visibility: visible;
-        color: var(--c-silver-d);
+        color: var(--c-silver);
         letter-spacing: 0;
       }
 
