@@ -84,6 +84,11 @@
   --c-text: #2B3135;
   --c-primary: #E4CA7C; /* HSL hue 45deg; subdued gold */
   --c-primary-d: #86733A; /* HSL hue 45deg; legible against white */
+  /* Medal colors: light fill / dark text or emphasis, matched in tone to gold. */
+  --c-silver: #C9D0D4;
+  --c-silver-d: #626E75;
+  --c-bronze: #CAA080;
+  --c-bronze-d: #805A40;
 
   /* Distinct semantic colors are derived from canonical base colors only. */
   --c-keirin-bg: color-mix(in srgb, var(--c-keirin) 20%, var(--c-surface));
