@@ -1,4 +1,4 @@
-/* SCR-201 merged racecard: preserve all eight mania-analysis detail views and sync the menu with the table's horizontal scroll. */
+/* SCR-210 merged racecard: preserve all eight mania-analysis detail views and sync the menu with the table's horizontal scroll. */
 (() => {
   "use strict";
   function initializeHofu5() {
@@ -33,7 +33,7 @@
   };
 
   function renderRace5(inner) {
-    // Populate SCR-201's existing racecard rows and real analysis detail tables.
+    // Populate SCR-210's existing racecard rows and real analysis detail tables.
     // The structured race header, menu and lineup controls remain intact.
     const raceNumber = inner.querySelector(".ri-meeting .ri-race-label");
     if (raceNumber) raceNumber.textContent = DATA.race + "R";
@@ -41,7 +41,7 @@
     if (raceLink) raceLink.setAttribute("aria-label", DATA.race + "Rの車券購入画面へ");
     const raceKind = inner.querySelector(".ri-kind");
     if (raceKind) raceKind.textContent = "Ｓ級 選抜";
-    // Update only the values, retaining the five-row SCR-201 summary layout.
+    // Update only the values, retaining the five-row SCR-210 summary layout.
     const deadline = inner.querySelector(".race-info-meta .race-deadline");
     const startTime = inner.querySelector(".race-info-meta .race-start");
     if (deadline) {
