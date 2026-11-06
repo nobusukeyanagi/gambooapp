@@ -11,11 +11,11 @@
 .page-header .page-header-title .header-race-icon {
   width: var(--nav-icon-size);
   height: var(--nav-icon-size);
-  color: var(--c-silver-d);
+  color: var(--c-silver);
   fill: currentColor;
 }
 .bottom-tab .tab-item.active .tab-icon .ic {
-  color: var(--c-gold-d);
+  color: var(--c-gold);
 }
 
 /* Preserve the same non-square racing silhouettes in both locations. */
