@@ -8,15 +8,15 @@
 .scroll-area { flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; background:var(--c-bg); scrollbar-width:none; }
 .scroll-area::-webkit-scrollbar { display:none; }
 .bottom-tab { display:flex; flex-shrink:0; background:var(--c-surface); border-top:var(--line-normal); }
-.bottom-tab .tab-item { flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--c-silver-d); }
-.bottom-tab .tab-item.active { color:var(--c-gold-d); }
+.bottom-tab .tab-item { flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--c-silver); }
+.bottom-tab .tab-item.active { color:var(--c-gold); }
 .bottom-tab .tab-icon { display:flex; align-items:center; justify-content:center; }
 .ic { display:block; width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
 
 /* Inset avatar on a white identity card with a restrained gold accent line. */
 .user-card { margin:var(--space-section); padding:0; background:var(--c-surface); border:var(--line-normal); border-radius:var(--r-md); box-shadow:var(--e1); overflow:hidden; }
-.user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-14)) minmax(0, 1fr); align-items:center; column-gap:var(--space-section); row-gap:var(--space-10); padding:var(--space-section) var(--space-content); background:var(--c-surface); border-top:var(--line-emphasis-width) solid var(--c-gold); border-bottom:var(--line-normal); }
-.user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-14)); height:calc(var(--h-control) + var(--space-14)); flex:0 0 calc(var(--h-control) + var(--space-14)); overflow:hidden; border-radius:var(--r-md); background:var(--c-gold); box-shadow:var(--e1); color:var(--c-gold-d); }
+.user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-14)) minmax(0, 1fr); align-items:center; column-gap:var(--space-section); row-gap:var(--space-10); padding:var(--space-section) var(--space-content); background:var(--c-surface); border-top:var(--line-emphasis-width) solid var(--c-gold-l); border-bottom:var(--line-normal); }
+.user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-14)); height:calc(var(--h-control) + var(--space-14)); flex:0 0 calc(var(--h-control) + var(--space-14)); overflow:hidden; border-radius:var(--r-md); background:var(--c-gold-l); box-shadow:var(--e1); color:var(--c-gold); }
 .user-avatar-photo { display:block; width:100%; height:100%; object-fit:cover; }
 .user-avatar [hidden] { display:none; }
 .user-name { grid-column:2; min-width:0; font-size:var(--fs-18); font-weight:var(--fw-strong); line-height:1.2; overflow-wrap:anywhere; color:var(--c-charcoal); }
@@ -82,7 +82,7 @@
 /* SCR-100-style headings: shared .section-header supplies 20px/600 and 44px.
    The 4px x 22px left bar uses the same gold/radius values as home. */
 .section-header .section-title { display:inline-flex; align-items:center; gap:var(--space-5); color:var(--c-charcoal); }
-.section-header .section-title::before { content:""; display:inline-block; flex:0 0 4px; width:4px; height:22px; border-radius:var(--r-xxs); background:var(--c-gold); }
+.section-header .section-title::before { content:""; display:inline-block; flex:0 0 4px; width:4px; height:22px; border-radius:var(--r-xxs); background:var(--c-gold-l); }
 
 
 /* Both sports are always visible; each icon uses its shared competition color. */
@@ -189,13 +189,13 @@
   font-size: clamp(8px, 2.6vw, 10px);
   line-height: 1.15;
   font-weight: var(--fw-normal);
-  color: var(--c-silver-d);
+  color: var(--c-silver);
   white-space: nowrap;
   letter-spacing: -0.06em;
 }
 .favorite-more-count {
   margin-top: var(--space-section);
-  color: var(--c-silver-d);
+  color: var(--c-silver);
   font-size: var(--fs-12);
 }
 
@@ -238,8 +238,8 @@ button.menu-item { width:100%; border:0; border-bottom:var(--line-normal); color
 button.menu-item.settings-first { border-top:var(--line-normal); }
 .menu-item:focus-visible { outline:var(--line-focus); outline-offset:-3px; }
 .sport-order-value { flex:0 0 auto; font-size:var(--fs-16); font-weight:var(--fw-normal); white-space:nowrap; }
-.menu-icon { flex:0 0 var(--fs-20); display:flex; align-items:center; justify-content:center; color:var(--c-silver-d); }
+.menu-icon { flex:0 0 var(--fs-20); display:flex; align-items:center; justify-content:center; color:var(--c-silver); }
 .menu-icon .ic { width:var(--fs-20); height:var(--fs-20); }
 .menu-text { flex:1; min-width:0; font-size:var(--fs-16); }
-.menu-arrow { flex:0 0 auto; color:var(--c-silver-d); font-size:var(--fs-20); }
+.menu-arrow { flex:0 0 auto; color:var(--c-silver); font-size:var(--fs-20); }
 .content-end-spacer { height:var(--space-section); }
