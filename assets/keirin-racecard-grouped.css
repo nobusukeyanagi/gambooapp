@@ -404,3 +404,51 @@
 .race-detail-scroll .mania-table tbody td.c-name .rider-meta {
   font-weight: var(--fw-normal);
 }
+
+/* Fixed outer widths of the first six logical columns: 枠 / 車番 /
+   選手名 / 級班 / 脚質 / ギア比. These are border-box widths,
+   including the 1px regular separators and 2px section boundary. */
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(1),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(1) {
+  box-sizing: border-box;
+  width: 16px;
+  min-width: 16px;
+  max-width: 16px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(2),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(2) {
+  box-sizing: border-box;
+  width: 48px;
+  min-width: 48px;
+  max-width: 48px;
+}
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(3),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(3) {
+  box-sizing: border-box;
+  width: 96px;
+  min-width: 96px;
+  max-width: 96px;
+}
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(4),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(4) {
+  box-sizing: border-box;
+  width: 48px;
+  min-width: 48px;
+  max-width: 48px;
+}
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(5),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(5) {
+  box-sizing: border-box;
+  width: 36px;
+  min-width: 36px;
+  max-width: 36px;
+}
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(6),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(6) {
+  box-sizing: border-box;
+  width: 48px;
+  min-width: 48px;
+  max-width: 48px;
+}
