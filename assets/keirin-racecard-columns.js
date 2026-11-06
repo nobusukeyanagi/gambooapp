@@ -78,13 +78,13 @@
       const [,month,day] = String(DATA.date || "").match(/^\d{4}-(\d{2})-(\d{2})$/) || [];
       const grade = String(DATA.grade || "");
       const number = {"Ⅰ":"1","Ⅱ":"2","Ⅲ":"3"}[grade.slice(1)] || "";
-      return {date:month && day ? month+"/"+day : "—",venue:DATA.venue || "—",
+      return {date:month && day ? Number(month)+"/"+Number(day) : "—",venue:DATA.venue || "—",
         grade,kind:/^[GF]$/.test(grade[0]) ? grade[0].toLowerCase()+number : ""};
     }
-    const match = String(period.date || "").match(/^(\d{1,2}\/\d{2})\s+(.+?)([GF])([123])$/);
+    const match = String(period.date || "").match(/^(\d{1,2})\/(\d{1,2})\s+(.+?)([GF])([123])$/);
     if (!match) return {date:period.date || "—",venue:"—",grade:"—",kind:""};
-    const [,date,code,kind,num] = match;
-    return {date,venue:venueNames[code] || code,grade:kind+romanGrade[num],
+    const [,month,day,code,kind,num] = match;
+    return {date:Number(month)+"/"+Number(day),venue:venueNames[code] || code,grade:kind+romanGrade[num],
       kind:kind.toLowerCase()+num};
   };
   const raceCard = (record) => {
@@ -162,7 +162,7 @@
         return '<td class="'+(k===0?"bl ":"")+'recent4-cell">'+
           '<span class="recent4-count">'+escape(count ?? "—")+'</span>'+
           '<span class="recent4-rate">'+
-          escape(rate === undefined || rate === null || rate === "" ? "—" : rate+"%")+
+          escape(rate === undefined || rate === null || rate === "" ? "—" : Math.trunc(Number(rate))+"%")+
           '</span></td>';
       }).join("")+
       histories.map((v,k)=>renderMeeting(v,k,DATA)).join("")+
