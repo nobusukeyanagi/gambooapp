@@ -308,23 +308,12 @@
         border-radius: 3px;
         color: var(--c-charcoal);
       }
-      .grade-gp, .grade-g1 {
-        background: var(--c-red);
-        color: var(--c-surface);
-      }
-      .grade-g2 {
-        background: var(--c-blue);
-      }
-      .grade-g3 {
-        background: var(--c-green);
-      }
-      .grade-f1 {
-        background: var(--c-bronze);
-      }
-      .grade-f2 {
-        background: var(--c-silver);
-        color: var(--c-surface);
-      }
+      /* オート: SG=赤紫、GⅠ/特GⅠ=青、GⅡ=緑、普通=銅。 */
+      .grade-gp, .grade-sg { background: var(--c-magenta); color: var(--c-surface); }
+      .grade-g1 { background: var(--c-blue); color: var(--c-surface); }
+      .grade-g2, .grade-g3 { background: var(--c-green); color: black; }
+      .grade-f1 { background: var(--c-gold); color: black; }
+      .grade-f2, .grade-normal { background: var(--c-bronze); color: var(--c-surface); }
 
       .rebate-badge {
         font-size: var(--fs-12);
@@ -1520,11 +1509,11 @@
         border-radius: var(--r-sm);
         flex-shrink: 0;
       }
-      .grade-gp, .grade-g1 { background: var(--c-red); color: var(--c-surface); }
-      .grade-g2 { background: var(--c-blue); color: var(--c-surface); }
-      .grade-g3 { background: var(--c-green); color: var(--c-surface); }
-      .grade-f1 { background: var(--c-bronze); color: var(--c-surface); }
-      .grade-f2 { background: var(--c-silver); color: var(--c-surface); }
+      .grade-gp, .grade-sg { background: var(--c-magenta); color: var(--c-surface); }
+      .grade-g1 { background: var(--c-blue); color: var(--c-surface); }
+      .grade-g2, .grade-g3 { background: var(--c-green); color: black; }
+      .grade-f1 { background: var(--c-gold); color: black; }
+      .grade-f2, .grade-normal { background: var(--c-bronze); color: var(--c-surface); }
 
       .ri-event {
         display: flex;
