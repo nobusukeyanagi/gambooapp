@@ -931,7 +931,7 @@
       .grade-g1 { background: var(--c-red); color: var(--c-surface); }
       .grade-g2 { background: var(--c-blue); color: var(--c-surface); }
       .grade-g3 { background: var(--c-green); color: var(--c-surface); }
-      .grade-f1 { background: var(--c-brown); color: var(--c-surface); }
+      .grade-f1 { background: var(--c-bronze-d); color: var(--c-surface); }
       .grade-f2 { background: var(--c-taupe); color: var(--c-surface); }
 
       .ri-event {
