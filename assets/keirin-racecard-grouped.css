@@ -350,46 +350,20 @@
   line-height: 1.2;
 }
 
-/* SCR-03 box-table border system:
-   1px between ordinary columns, 2px ONLY at the eight menu boundaries.
-   Always draw a boundary on one side, never stack neighboring borders. */
+/* One-pixel vertical grid throughout the SCR-03 box table.
+   Right borders are always drawn, including both header rows and merged
+   headings. Do not remove a right border at menu/column-group boundaries:
+   that formerly caused missing header segments. The sole left border is
+   the table's outer edge. !important overrides legacy .bl/.position-first
+   borders in shared CSS without changing those other views. */
 .race-detail-scroll .mania-table thead th,
 .race-detail-scroll .mania-table tbody td {
-  border-left: 0;
-  border-right: var(--line-normal);
+  border-left: 0 !important;
+  border-right: var(--line-normal) !important;
 }
-/* Remove the legacy internal group dividers and their extra 1px edges. */
-.race-detail-scroll .mania-table thead th.position-col.position-first,
-.race-detail-scroll .mania-table tbody td.position-first,
-.race-detail-scroll .mania-table thead th.box-group.position-first,
-.race-detail-scroll .mania-table thead tr:nth-child(2) th.marutoku-score-label:first-of-type {
-  border-left: 0;
-}
-/* Column-group starts, including the two-tier Marutoku heading. */
-.race-detail-scroll .mania-table thead tr:first-child th:is(
-  .player-section-start, .marutoku-section-start,
-  .recent-section-start, .meeting-section-start, .position-section-start,
-  .gindex-section-start, .mania-section-heading
-),
-.race-detail-scroll .mania-table thead tr:nth-child(2) th.marutoku-section-start,
-.race-detail-scroll .mania-table tbody tr > td:is(
-  :nth-child(1), :nth-child(8), :nth-child(19),
-  :nth-child(28), :nth-child(57), :nth-child(62), :nth-child(64)
-) {
-  border-left: 2px solid var(--c-border);
-}
-/* Suppress the preceding right border to keep the total at exactly 2px. */
-.race-detail-scroll .mania-table thead tr:first-child th:has(
-  + th:is(.marutoku-section-start, .recent-section-start,
-  .meeting-section-start, .position-section-start, .gindex-section-start,
-  .mania-section-heading)
-),
-.race-detail-scroll .mania-table thead tr:nth-child(2) th:has(+ th.marutoku-section-start),
-.race-detail-scroll .mania-table tbody tr > td:is(
-  :nth-child(7), :nth-child(18), :nth-child(27),
-  :nth-child(56), :nth-child(61), :nth-child(63)
-) {
-  border-right: 0;
+.race-detail-scroll .mania-table thead tr:first-child > th:first-child,
+.race-detail-scroll .mania-table tbody tr > td:first-child {
+  border-left: var(--line-normal) !important;
 }
 /* Fixed vehicle number: use its regular 1px border instead of the 2px
    inset shadow that made the separator oversized on horizontal scroll. */
