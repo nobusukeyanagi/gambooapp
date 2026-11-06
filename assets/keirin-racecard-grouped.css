@@ -285,6 +285,32 @@
   text-align: left;
 }
 
+/* Racecard-only typography: current grade and riding style are 16px;
+   the previous grade appears below at 12px in muted grey. */
+.race-detail-scroll .mania-table tbody td.cls .grade-current {
+  display: block;
+  font-size: var(--fs-16);
+  line-height: 1.2;
+}
+.race-detail-scroll .mania-table tbody td.cls .grade-prev {
+  display: block;
+  font-size: var(--fs-12);
+  line-height: 1.2;
+  font-weight: var(--fw-normal);
+  color: var(--c-sub);
+}
+.race-detail-scroll .mania-table tbody td .leg-tag {
+  font-size: var(--fs-16);
+}
+/* The extra G-index mark has its own compact column. */
+.race-detail-scroll .mania-table :is(th,td).gindex-mark {
+  min-width: 48px;
+  text-align: center;
+}
+.race-detail-scroll .mania-table tbody td.gindex-mark .mk {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+}
 /* Box-table main symbols and figures follow the shared 16px tier. */
 .race-detail-scroll .mania-table :is(.mark, .mk, .rate2 b, .rn b) {
   font-size: var(--fs-16);
