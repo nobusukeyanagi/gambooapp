@@ -312,13 +312,13 @@
         background: var(--c-gp);
       }
       .grade-g1 {
-        background: var(--c-g1);
+        background: var(--c-error);
       }
       .grade-g2 {
-        background: var(--c-g2);
+        background: var(--c-info);
       }
       .grade-g3 {
-        background: var(--c-g3);
+        background: var(--c-success);
       }
       .grade-f1 {
         background: var(--c-f1);
@@ -1522,9 +1522,9 @@
         flex-shrink: 0;
       }
       .grade-gp { background: var(--c-gp); color: var(--w5); }
-      .grade-g1 { background: var(--c-g1); color: var(--c-surface); }
-      .grade-g2 { background: var(--c-g2); color: var(--c-surface); }
-      .grade-g3 { background: var(--c-g3); color: var(--c-surface); }
+      .grade-g1 { background: var(--c-error); color: var(--c-surface); }
+      .grade-g2 { background: var(--c-info); color: var(--c-surface); }
+      .grade-g3 { background: var(--c-success); color: var(--c-surface); }
       .grade-f1 { background: var(--c-f1); color: var(--c-surface); }
       .grade-f2 { background: var(--c-f2); color: var(--c-surface); }
 
