@@ -124,6 +124,10 @@
   text-align: left;
   white-space: nowrap;
 }
+/* Match the 3px between the rider's second (home) and third (age) lines. */
+.race-detail-scroll .mania-table .meeting-cell .meeting-meta .meeting-date {
+  margin-top: var(--space-3);
+}
 .race-detail-scroll .mania-table .meeting-cell .meeting-meta .grade-badge {
   display: inline-flex;
   align-items: center;
@@ -212,6 +216,7 @@
   grid-column: 1;
   width: 100%;
   font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
   line-height: 1;
   text-align: center;
   white-space: nowrap;
