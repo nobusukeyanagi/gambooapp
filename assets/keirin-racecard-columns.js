@@ -143,6 +143,7 @@
       '<td class="bl"><span class="leg-tag '+(legCss[rider.leg]||"leg-both")+'">'+escape(rider.leg)+'</span></td>'+
       '<td class="bl">'+escape(rider.gear||"—")+'</td>'+
       p.points.map((v,k)=>'<td class="'+(k===0?"bl ":"")+'marutoku-value'+
+        (k===3?" marutoku-total":"")+
         (p.emphasis[k]?" marutoku-point-"+p.emphasis[k]:"")+'">'+escape(v)+'</td>').join("")+
       '<td class="marutoku-mark">'+marker(p.mark)+'</td>'+
       '<td class="bl marutoku-comment">'+escape(p.comment)+'</td>'+
