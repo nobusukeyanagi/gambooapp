@@ -70,7 +70,7 @@
         width: 36px;
         height: 4px;
         border-radius: var(--r-xxs);
-        background: var(--c-silver-l);
+        background: var(--c-silver-light);
         margin: var(--space-card) auto var(--space-2);
         flex-shrink: 0;
       }
@@ -179,4 +179,4 @@
         color: var(--c-charcoal);
       }
       .item-btn:active,
-      .item-btn.active { background: var(--c-gold-l); border-color: var(--c-gold); color: var(--c-charcoal); }
+      .item-btn.active { background: var(--c-gold-light); border-color: var(--c-gold); color: var(--c-charcoal); }
