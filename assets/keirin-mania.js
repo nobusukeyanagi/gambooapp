@@ -282,7 +282,7 @@
     // The existing page links to this script without a separate data import.
     // Load the dataset before initializing the view and detail interactions.
     const loader = document.createElement("script");
-    loader.src = "./assets/keirin-hofu5-data.js?v=6";
+    loader.src = "./assets/keirin-hofu5-data.js?v=7";
     loader.onload = initializeHofu5;
     loader.onerror = () => {
       // Preserve the original page structure if the data asset cannot load.
