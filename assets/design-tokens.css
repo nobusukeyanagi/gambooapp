@@ -86,11 +86,9 @@
   --c-magenta-light: color-mix(in srgb, var(--c-magenta) 40%, white 60%);
   --c-red-light: color-mix(in srgb, var(--c-red) 40%, white 60%);
 
-  /* ④ 基本文字色：一般基本色から独立。本文・影などで直接参照。 */
+  /* ④ 根幹カラー：基本文字色・背景・罫線・操作枠線を一元管理。
+     本文はチャコール、補助文字は基本カラーの銀、罫線色は独立管理。 */
   --c-charcoal: #30363C;
-
-  /* ⑤ 背景・罫線・操作枠線：旧薄銀は「通常罫線色」として独立管理。
-     補助文字は銀、本文はチャコール。 */
   --c-bg: #F8F7F4;
   --c-surface: #FFFFFF;
   --c-border: #C9CFD5;
