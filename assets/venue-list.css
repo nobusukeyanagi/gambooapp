@@ -275,17 +275,17 @@ button, input, select, textarea {
 }
 
 .grade-g1 {
-  background: var(--c-g1);
+  background: var(--c-error);
   color: var(--c-surface);
 }
 
 .grade-g2 {
-  background: var(--c-g2);
+  background: var(--c-info);
   color: var(--c-surface);
 }
 
 .grade-g3 {
-  background: var(--c-g3);
+  background: var(--c-success);
   color: var(--c-surface);
 }
 
