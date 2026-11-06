@@ -315,6 +315,11 @@
 .race-detail-scroll .mania-table :is(.mark, .mk, .rate2 b, .rn b) {
   font-size: var(--fs-16);
 }
+/* All marks in the box table (Marutoku, G-index and mania ratings) are bold. */
+.race-detail-scroll .mania-table tbody td:is(.marutoku-mark, .gindex-mark, .mania-eval),
+.race-detail-scroll .mania-table tbody td :is(.mk, .mark) {
+  font-weight: var(--fw-strong);
+}
 
 /* Four-month results: two-line column labels and count / percentage cells. */
 .race-detail-scroll .mania-table thead th.recent4-heading,
