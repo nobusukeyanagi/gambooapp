@@ -58,30 +58,40 @@
   --w8: #D884A8;
   --w9: #944BBC;
 
-  /* ③ 基本カラー：一般色と金銀銅を統合し、HSL色相の昇順で定義。
-     ブラウンは基本色の銅に統合。薄銅は明色として管理し、各色を直接参照する。 */
+  /* ③ 基本カラー：金銀銅も一般色も同じ原則で管理（HSL色相順）。 */
   --c-bronze: #7E5B42;
-  --c-bronze-l: #CAA082;
   --c-orange: #D89556;
   --c-taupe: #7B7568;
-  --c-gold-l: #E4CA7C;
   --c-gold: #86733A;
   --c-green: #477868;
-  --c-silver-l: #C9CFD5;
   --c-silver: #626C76;
   --c-charcoal: #44494E;
   --c-blue: #426E9A;
   --c-red: #A5374C;
 
-  /* 背景・操作枠線（通常罫線は薄銀、補助文字は銀、本文はチャコール） */
+  /* 基本9色に対応する薄色はすべて「基本色40% + 白60%」から算出。
+     薄色を固定HEXで持たず、基本色の変更に自動で追従する。 */
+  --c-bronze-light: color-mix(in srgb, var(--c-bronze) 40%, white 60%);
+  --c-orange-light: color-mix(in srgb, var(--c-orange) 40%, white 60%);
+  --c-taupe-light: color-mix(in srgb, var(--c-taupe) 40%, white 60%);
+  --c-gold-light: color-mix(in srgb, var(--c-gold) 40%, white 60%);
+  --c-green-light: color-mix(in srgb, var(--c-green) 40%, white 60%);
+  --c-silver-light: color-mix(in srgb, var(--c-silver) 40%, white 60%);
+  --c-charcoal-light: color-mix(in srgb, var(--c-charcoal) 40%, white 60%);
+  --c-blue-light: color-mix(in srgb, var(--c-blue) 40%, white 60%);
+  --c-red-light: color-mix(in srgb, var(--c-red) 40%, white 60%);
+
+  /* 背景・罫線・操作枠線：旧薄銀は「通常罫線色」として独立管理。
+     補助文字は銀、本文はチャコール。 */
   --c-bg: #F8F7F4;
   --c-surface: #FFFFFF;
+  --c-border: #C9CFD5;
   --c-border-control: #9CA4A8;
 
   /* Unified line system: 1px standard/control, 3px selected/race/focus. */
   --line-thin: 1px;
   --line-emphasis-width: 3px;
-  --line-normal: var(--line-thin) solid var(--c-silver-l);
+  --line-normal: var(--line-thin) solid var(--c-border);
   --line-control: var(--line-thin) solid var(--c-border-control);
   --line-selected: var(--line-emphasis-width) solid var(--c-gold);
   --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
