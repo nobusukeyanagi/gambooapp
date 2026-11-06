@@ -46,7 +46,7 @@
 .race-detail-scroll .mania-table thead th.c-name {
   text-align: center;
 }
-/* Slightly separate the three rider-name lines within 52px rows. */
+/* Separate the name and home lines a little more within 56px rows. */
 .race-detail-scroll .mania-table tbody tr td.c-name {
   padding-top: var(--space-2);
   padding-bottom: var(--space-2);
@@ -54,7 +54,7 @@
 .race-detail-scroll .mania-table td.c-name .rider-name {
   font-size: var(--fs-16);
   line-height: 1;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-5);
 }
 .race-detail-scroll .mania-table td.c-name .rider-meta {
   display: block;
@@ -233,13 +233,13 @@
   width: 68px;
   text-align: center;
 }
-/* Use 52px rows to accommodate the three separated name lines. */
+/* Use 56px rows to accommodate the expanded first-to-second name-line gap. */
 .race-detail-scroll .mania-table tbody tr {
-  height: 52px;
+  height: 56px;
 }
 .race-detail-scroll .mania-table tbody tr td {
   box-sizing: border-box;
-  height: 52px;
+  height: 56px;
   padding-top: var(--space-2);
   padding-bottom: var(--space-2);
 }
