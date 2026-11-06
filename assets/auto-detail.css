@@ -330,7 +330,7 @@
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         background: var(--c-bg);
-        color: var(--c-orange);
+        color: var(--c-gold);
         border: var(--line-normal);
         padding: 1px 5px;
         border-radius: 3px;
@@ -802,7 +802,7 @@
       }
       .leg-escape {
         background: var(--c-bg);
-        color: var(--c-orange);
+        color: var(--c-bronze);
       }
       .leg-chase {
         background: var(--c-bg);
@@ -1225,7 +1225,7 @@
       .race-countdown {
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        color: var(--c-orange);
+        color: var(--c-red);
         display: inline-flex;
         align-items: center;
         gap: 3px;
