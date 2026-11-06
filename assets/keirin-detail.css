@@ -1928,7 +1928,6 @@
         color: var(--c-text);
       }
       .race-table-wrap.scrolled .sha-nm { display: block; }
-      .race-table-wrap.scrolled .c-sha { box-shadow: inset -2px 0 0 var(--c-border); }
       .mania-table .c-mania { width: 44px; min-width: 44px; padding-left: 2px; padding-right: 2px; }
       .mania-table .th-mania { padding: 1px 4px; line-height: 1.2; border-radius: 4px; }
       .mania-table .res-wrap {
