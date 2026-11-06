@@ -38,6 +38,8 @@
       return {
         cutoff, startTime,
         raceType: race.dataset.raceType || "",
+        status: ["確定", "締切"].includes(race.querySelector(":scope > small")?.textContent.trim()) ?
+          race.querySelector(":scope > small").textContent.trim() : "",
         past: race.classList.contains("closed"),
         soon: race.classList.contains("soon"),
         rebate: !!race.querySelector(".rchip-rebate")
@@ -50,8 +52,11 @@
       tab.classList.toggle("soon", entry.soon);
       tab.classList.toggle("rebate", entry.rebate);
       tab.title = entry.raceType + " ／ 締切 " + entry.cutoff + " ／ 発走 " + entry.startTime;
-      const startTime = tab.querySelector("small");
-      if (startTime) startTime.textContent = entry.startTime;
+      const timeOrStatus = tab.querySelector("small");
+      if (timeOrStatus) {
+        timeOrStatus.textContent = entry.status || entry.startTime;
+        timeOrStatus.classList.toggle("race-status", Boolean(entry.status));
+      }
       // Keep only colored race outlines; remove any legacy status banner.
       tab.querySelector(".race-state-band")?.remove();
     });
