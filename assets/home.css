@@ -91,7 +91,7 @@ button,
         flex: 0 0 4px;
         height: 22px;
         border-radius: var(--r-xxs);
-        background: var(--c-gold-light);
+        background: var(--c-gold);
       }
       .news-badge.point {
         background: var(--c-charcoal);
@@ -733,15 +733,25 @@ button,
         font-size: var(--fs-14);
         letter-spacing: normal;
       }
-      .pk3 .pk-race-time {
-        flex: 0 0 auto;
-        white-space: nowrap;
-        font-weight: var(--fw-strong);
-        color: var(--c-charcoal);
-        font-family: var(--ff-ui);
-        font-size: var(--fs-14);
-        letter-spacing: normal;
-      }
+       .pk3 .pk-race-time {
+         display: flex;
+         flex: 0 0 auto;
+         flex-direction: column;
+         align-items: flex-end;
+         text-align: right;
+         white-space: nowrap;
+         font-weight: var(--fw-strong);
+         color: var(--c-charcoal);
+         font-family: var(--ff-ui);
+         font-size: var(--fs-14);
+         line-height: 1.25;
+         letter-spacing: normal;
+       }
+       .pk3 .pk-race-time .pk-race-place,
+       .pk3 .pk-race-time .pk-race-clock {
+         display: block;
+         text-align: right;
+       }
       
 
       .venue-grid.g3 .vcard-dl[data-deadline] {
@@ -824,12 +834,14 @@ button,
         height: 106px;
         min-height: 106px;
       }
-      /* Evenly distribute the four content rows instead of pushing only
-         the R / deadline row to the bottom. Keep the 106px tile height. */
-      .venue-grid.g3 .vcard:not(.mori-photo-tile) {
-        justify-content: space-between;
-        gap: 0;
-      }
+      /* Align all four venue rows identically on today, yesterday and tomorrow,
+          regardless of whether a row contains a race/time or sale status. */
+       .venue-grid.g3 .vcard:not(.mori-photo-tile) {
+         display: grid;
+         grid-template-rows: 20px 26px minmax(18px, 1fr) 24px;
+         align-content: stretch;
+         row-gap: var(--space-2);
+       }
       .venue-grid.g3 .vcard:not(.mori-photo-tile) .vcard-name,
       .venue-grid.g3 .vcard:not(.mori-photo-tile) .vcard-bottom {
         margin-top: 0;
