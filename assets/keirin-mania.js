@@ -156,14 +156,14 @@
       !meetingTab || !positionTab || !gindexTab || !maniaTab) return;
 
   const tabsByName = {
-    player: playerTab, marutoku: pointTab, comment: commentTab,
-    recent: recentTab, meeting: meetingTab,
-    position: positionTab, gindex: gindexTab, mania: maniaTab
+    player: playerTab, comment: commentTab, recent: recentTab,
+    meeting: meetingTab, position: positionTab, marutoku: pointTab,
+    gindex: gindexTab, mania: maniaTab
   };
   const headingsByName = {
-    player: playerHeading, marutoku: pointHeading, comment: commentHeading,
-    recent: recentHeading, meeting: meetingHeading,
-    position: positionHeading, gindex: gindexHeading, mania: maniaHeading
+    player: playerHeading, comment: commentHeading, recent: recentHeading,
+    meeting: meetingHeading, position: positionHeading, marutoku: pointHeading,
+    gindex: gindexHeading, mania: maniaHeading
   };
   // Map both header rows to their logical column indices. Rowspans and
   // colspans must not change the eight menu sections' original boundaries.
@@ -255,11 +255,11 @@
     let name = "player";
     if (atRightEdge || threshold >= columnOffset(maniaHeading)) name = "mania";
     else if (threshold >= columnOffset(gindexHeading)) name = "gindex";
+    else if (threshold >= columnOffset(pointHeading)) name = "marutoku";
     else if (threshold >= columnOffset(positionHeading)) name = "position";
     else if (threshold >= columnOffset(meetingHeading)) name = "meeting";
     else if (threshold >= columnOffset(recentHeading)) name = "recent";
     else if (threshold >= columnOffset(commentHeading)) name = "comment";
-    else if (threshold >= columnOffset(pointHeading)) name = "marutoku";
     selectTab(name);
   }
   Object.entries(tabsByName).forEach(([name, tab]) => {
