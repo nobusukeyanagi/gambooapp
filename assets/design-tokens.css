@@ -62,6 +62,7 @@
      色相の間隔が大きい領域に黄緑・青緑・紫・赤紫を追加。 */
   --c-bronze: #7E5B42;
   --c-orange: #D89556;
+  --c-yellow: #C8A851; /* #FFCD44と同じ色相約44°・彩度約52% */
   --c-gold: #86733A;
   --c-yellowgreen: #577E44;
   --c-green: #477868;
@@ -71,10 +72,11 @@
   --c-magenta: #944781;
   --c-red: #A5374C;
 
-  /* 基本10色に対応する薄色はすべて「基本色40% + 白60%」から算出。
+  /* 基本11色に対応する薄色はすべて「基本色40% + 白60%」から算出。
      薄色を固定HEXで持たず、基本色の変更に自動で追従する。 */
   --c-bronze-light: color-mix(in srgb, var(--c-bronze) 40%, white 60%);
   --c-orange-light: color-mix(in srgb, var(--c-orange) 40%, white 60%);
+  --c-yellow-light: color-mix(in srgb, var(--c-yellow) 40%, white 60%);
   --c-gold-light: color-mix(in srgb, var(--c-gold) 40%, white 60%);
   --c-yellowgreen-light: color-mix(in srgb, var(--c-yellowgreen) 40%, white 60%);
   --c-green-light: color-mix(in srgb, var(--c-green) 40%, white 60%);
