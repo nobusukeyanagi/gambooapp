@@ -28,34 +28,34 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 44px;
-        height: 28px;
+        
+        
         margin: 0 auto;
-        border: var(--line-selected);
-        background: linear-gradient(var(--c-bg), var(--c-primary));
-        box-shadow: 0 1px 2px color-mix(in srgb, var(--c-text) 20%, transparent);
-        font-size: var(--fs-12);
+        
+        
+        
+        
         line-height: 1.15;
-        color: var(--c-text);
+        
         cursor: pointer;
         font-family: inherit;
       }
       .item-btn:active,
       .item-btn.active {
-        background: linear-gradient(var(--c-primary), var(--c-primary));
-        border-color: var(--c-primary);
-        color: var(--c-surface);
+        
+        
+        
         font-weight: var(--fw-strong);
       }
       .hint {
         font-size: var(--fs-12);
         color: var(--c-sub);
-        padding: 6px 10px 10px;
+        padding: var(--space-card) var(--space-10) var(--space-10);
       }
 
       .sheet-overlay {
         position: absolute;
-        inset: 0 0 52px 0;
+        
         background: color-mix(in srgb, var(--c-text) 40%, transparent);
         z-index: 10;
       }
@@ -63,10 +63,10 @@
         position: absolute;
         left: 0;
         right: 0;
-        bottom: 52px;
+        
         height: 72%;
         background: var(--c-surface);
-        border-radius: 20px 20px 0 0;
+        border-radius: var(--r-lg) var(--r-lg) 0 0;
         z-index: 11;
         display: flex;
         flex-direction: column;
@@ -75,16 +75,16 @@
       .sheet-handle {
         width: 36px;
         height: 4px;
-        border-radius: 2px;
+        border-radius: var(--r-xxs);
         background: var(--c-border);
-        margin: 6px auto 2px;
+        margin: var(--space-card) auto var(--space-2);
         flex-shrink: 0;
       }
       .sheet-head {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 2px 12px 6px;
+        padding: var(--space-2) var(--space-content) var(--space-card);
         flex-shrink: 0;
       }
       .sheet-title {
@@ -101,10 +101,10 @@
         cursor: pointer;
       }
       .sheet-cond {
-        margin: 0 12px 6px;
-        padding: 4px 8px;
+        margin: 0 var(--space-content) var(--space-card);
+        padding: var(--space-small) var(--space-section);
         background: var(--c-bg);
-        border-radius: 4px;
+        border-radius: var(--r-tag);
         font-size: var(--fs-12);
         color: var(--c-warning);
         flex-shrink: 0;
@@ -115,22 +115,22 @@
         scrollbar-width: thin;
       }
       .detail-table {
-        width: 100%;
-        border-collapse: collapse;
+        
+        
         font-size: var(--fs-12);
       }
       .detail-table th {
         background: var(--c-bg);
         color: var(--c-sub);
         font-weight: var(--fw-strong);
-        padding: 4px 3px;
+        padding: var(--space-small) var(--space-3);
         border-bottom: var(--line-normal);
         position: sticky;
         top: 0;
         white-space: nowrap;
       }
       .detail-table td {
-        padding: 4px 3px;
+        padding: var(--space-small) var(--space-3);
         border-bottom: var(--line-normal);
         text-align: center;
         white-space: nowrap;
@@ -151,7 +151,7 @@
       .sheet-note {
         font-size: var(--fs-12);
         color: var(--c-sub);
-        padding: 6px 12px 10px;
+        padding: var(--space-card) var(--space-content) var(--space-10);
       }
 
 /* Nine-rider detailed-stat table, sticky rider labels, and visual rate indicators. */
@@ -159,7 +159,7 @@
       .sheet-overlay { inset: 0 0 62px 0; }
 
       .mania-table td.c-g { white-space: nowrap; }
-      .mania-table td.c-g .g-val { margin-right: 2px; }
+      .mania-table td.c-g .g-val { margin-right: var(--space-2); }
       .detail-table { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; }
       .detail-table th { line-height: 1.25; border-right: var(--line-normal); }
       .detail-table thead tr + tr th { top: 22px; }
@@ -170,10 +170,10 @@
       .detail-table th.dt-fx { z-index: 4; background: var(--c-bg); }
       .detail-table .dt-car { left: 0; width: 26px; min-width: 26px; }
       .detail-table .dt-name { left: 26px; min-width: 64px; border-right: var(--line-normal); }
-      .detail-table td.rt { min-width: 64px; padding: 3px 4px 4px; text-align: right; vertical-align: top; }
+      .detail-table td.rt { min-width: 64px; padding: var(--space-3) var(--space-small) var(--space-small); text-align: right; vertical-align: top; }
       .detail-table .rt-v { display: block; font-weight: var(--fw-strong); color: var(--c-text); line-height: 1.2; }
       .detail-table .rt-n { display: block; font-size: var(--fs-12); color: var(--c-sub); line-height: 1.2; }
-      .detail-table .rt-bar { display: block; height: 6px; margin-top: 2px; background: var(--w6); border-radius: 1px; }
+      .detail-table .rt-bar { display: block; height: 6px; margin-top: var(--space-2); background: var(--w6); border-radius: 1px; }
       .detail-table .rt-out .rt-bar { background: var(--c-keirin); }
       .detail-table tbody tr:nth-child(even) td { background: var(--c-bg); }
 
