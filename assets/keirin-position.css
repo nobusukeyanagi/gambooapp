@@ -9,8 +9,6 @@
   font-weight: var(--fw-strong);
 }
 .race-detail-scroll .mania-table th.position-col {
-  min-width: 48px;
-  width: 48px;
   padding: var(--space-3) var(--space-2);
   text-align: center;
   white-space: nowrap;
@@ -18,15 +16,7 @@
   font-size: var(--fs-12);
   background: var(--c-bg);
 }
-.race-detail-scroll .mania-table th.position-col.position-first,
-.race-detail-scroll .mania-table td.position-first {
-  border-left: var(--line-normal);
-}
-.race-detail-scroll .mania-table th.position-col.position-current,
-.race-detail-scroll .mania-table td.position-current {
-  min-width: 66px;
-  width: 66px;
-}
+
 .race-detail-scroll .mania-table th.position-col .position-group-name,
 .race-detail-scroll .mania-table th.position-col .position-result-name {
   display: block;
