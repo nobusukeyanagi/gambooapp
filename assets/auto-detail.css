@@ -16,7 +16,7 @@
 
 
       .screen-label {
-        color: var(--c-silver-l);
+        color: var(--c-silver-light);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         text-transform: uppercase;
@@ -162,7 +162,7 @@
       }
       .hero-tag {
         font-size: var(--fs-12);
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         color: var(--c-charcoal);
         padding: 1px 6px;
         border-radius: 3px;
@@ -189,10 +189,10 @@
         width: 5px;
         height: 5px;
         border-radius: 50%;
-        background: var(--c-silver-l);
+        background: var(--c-silver-light);
       }
       .dot.active {
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         width: 12px;
         border-radius: 3px;
       }
@@ -215,7 +215,7 @@
         content: "";
         width: 3px;
         height: 14px;
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         border-radius: 2px;
         display: inline-block;
       }
@@ -272,7 +272,7 @@
         cursor: pointer;
       }
       .chip.active {
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         color: var(--c-charcoal);
         border-color: var(--c-gold);
       }
@@ -414,7 +414,7 @@
         gap: 3px;
       }
       .action-btn.primary {
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         color: var(--c-charcoal);
       }
       .action-btn.outline {
@@ -473,7 +473,7 @@
         margin-top: 1px;
       }
       .news-badge.point {
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
       }
       .news-badge.keirin {
         background: var(--c-keirin);
@@ -697,7 +697,7 @@
         overflow-x: auto;
         flex: 1;
         scrollbar-width: thin;
-        scrollbar-color: var(--c-silver-l) transparent;
+        scrollbar-color: var(--c-silver-light) transparent;
       }
       .race-table {
         min-width: 400px;
@@ -837,7 +837,7 @@
         gap: 3px;
       }
       .action-bar-btn.primary {
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         color: var(--c-charcoal);
       }
       .action-bar-btn.secondary {
@@ -846,7 +846,7 @@
       }
 
       .user-card {
-        background: linear-gradient(135deg, var(--c-gold-l), var(--c-gold-l));
+        background: linear-gradient(135deg, var(--c-gold-light), var(--c-gold-light));
         margin: 8px;
         border-radius: var(--r-md);
         padding: 12px;
@@ -1019,7 +1019,7 @@
         top: 0;
         height: 100%;
         width: 46%;
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         border-radius: var(--r-full);
       }
 
@@ -1176,7 +1176,7 @@
         font-variant-numeric: tabular-nums;
       }
       .race-tab.active {
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         border-color: var(--c-gold);
         color: var(--c-charcoal);
         box-shadow: var(--e1);
@@ -1471,7 +1471,7 @@
       .app-header .logo .ic { width: 18px; height: 18px; }
 
       .venue-name { color: var(--c-charcoal) !important; }
-      .action-btn.primary { background: var(--c-gold-l) !important; color: var(--c-charcoal) !important; }
+      .action-btn.primary { background: var(--c-gold-light) !important; color: var(--c-charcoal) !important; }
       .date-tab.active,
       .top-tab.active { color: var(--c-gold) !important; border-bottom-color: var(--c-gold) !important; }
 
@@ -1567,7 +1567,7 @@
 
       .info-tab.active { color: var(--c-gold) !important; border-bottom-color: var(--c-gold) !important; }
       .race-tab.active {
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         border-color: var(--c-gold);
         color: var(--c-charcoal);
       }
@@ -1758,7 +1758,7 @@
         width: 42px;
         height: 24px;
         border-radius: var(--r-full);
-        background: var(--c-silver-l);
+        background: var(--c-silver-light);
         cursor: pointer;
         transition: background 0.15s;
       }
@@ -1773,7 +1773,7 @@
         box-shadow: var(--e1);
         transition: left 0.15s;
       }
-      .sw[aria-checked="true"] { background: var(--c-gold-l); }
+      .sw[aria-checked="true"] { background: var(--c-gold-light); }
       .sw[aria-checked="true"] i { left: 20px; }
 
       .at.past .rch { min-width: 92px; }
@@ -1873,7 +1873,7 @@
         margin: 0 auto;
         padding: 0 4px;
         border: var(--line-selected);
-        background: linear-gradient(var(--c-bg), var(--c-gold-l));
+        background: linear-gradient(var(--c-bg), var(--c-gold-light));
         box-shadow: var(--e1);
         font-family: var(--ff-ui);
         font-size: var(--fs-12);
@@ -1883,8 +1883,8 @@
         cursor: pointer;
       }
       .lb-btn.active {
-        background: linear-gradient(var(--c-gold-l), var(--c-gold-l));
-        border-color: var(--c-gold-l);
+        background: linear-gradient(var(--c-gold-light), var(--c-gold-light));
+        border-color: var(--c-gold-light);
       }
       .at-wrap.wet .lb-cap[data-w="湿走路"] { color: var(--c-keirin); }
       .lb-hint {
@@ -1919,7 +1919,7 @@
         width: 36px;
         height: 4px;
         border-radius: 2px;
-        background: var(--c-silver-l);
+        background: var(--c-silver-light);
         margin: 8px auto 4px;
       }
       .lsheet-head {
@@ -1985,7 +1985,7 @@
         font-weight: var(--fw-strong);
         white-space: nowrap;
       }
-      .lb-btn.active { background: var(--c-gold-l); border-color: var(--c-gold); color: var(--c-charcoal); }
+      .lb-btn.active { background: var(--c-gold-light); border-color: var(--c-gold); color: var(--c-charcoal); }
       .at .lb-div { border-left: var(--line-normal); }
       .at.lab .rn small.rk { margin-top: 2px; }
       .race-info-bar.ri-has-act {
@@ -2015,7 +2015,7 @@
       }
       .ri-btn::before { content: ""; position: absolute; inset: -2px 0; }
       .ri-btn .ic { width: 18px; height: 18px; }
-      .ri-btn.vote { background: var(--c-gold-l); color: var(--c-charcoal); }
+      .ri-btn.vote { background: var(--c-gold-light); color: var(--c-charcoal); }
       .ri-btn.live { background: var(--c-red); color: var(--c-surface); }
       .ri-btn.live .ic { outline-color: color-mix(in srgb, var(--c-surface) 75%, transparent); }
       .race-tab.active { min-width: 86px; }
@@ -2140,7 +2140,7 @@
       .ldt .wk { width: 24px; height: 24px; }
       .lb-btn { background: var(--c-surface); border: var(--line-normal); box-shadow: var(--e1); color: var(--c-charcoal); font-weight: var(--fw-strong); }
       .lb-btn:active,
-      .lb-btn.active { background: var(--c-gold-l); border-color: var(--c-gold); color: var(--c-charcoal); }
+      .lb-btn.active { background: var(--c-gold-light); border-color: var(--c-gold); color: var(--c-charcoal); }
       .at td.fx2 { position: static; }
       .at th.fx2 { left: auto; z-index: 3; }
       .at .fx1 .sha-nm {
@@ -2155,7 +2155,7 @@
         color: var(--c-charcoal);
       }
       .at-wrap.scrolled .at .fx1 .sha-nm { display: block; }
-      .at-wrap.scrolled .at .fx1 { box-shadow: inset -2px 0 0 var(--c-silver-l); }
+      .at-wrap.scrolled .at .fx1 { box-shadow: inset -2px 0 0 var(--c-border); }
 
       /* Let the long lab tab label wrap rather than narrowing characters. */
       .info-tabs .info-tab[data-tab="lab"] { white-space: normal; overflow-wrap: anywhere; }
