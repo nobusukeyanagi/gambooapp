@@ -405,50 +405,109 @@
   font-weight: var(--fw-normal);
 }
 
-/* Fixed outer widths of the first six logical columns: 枠 / 車番 /
-   選手名 / 級班 / 脚質 / ギア比. These are border-box widths,
-   including the 1px regular separators and 2px section boundary. */
+/* Exact border-box widths for the first six columns (枠～ギア比).
+   These include padding and grid borders; the car number remains sticky. */
 .race-detail-scroll .mania-table thead tr:first-child > th:nth-child(1),
 .race-detail-scroll .mania-table tbody tr > td:nth-child(1) {
   box-sizing: border-box;
-  width: 16px;
-  min-width: 16px;
-  max-width: 16px;
+  width: 20px;
+  min-width: 20px;
+  max-width: 20px;
   padding-left: 0;
   padding-right: 0;
 }
 .race-detail-scroll .mania-table thead tr:first-child > th:nth-child(2),
 .race-detail-scroll .mania-table tbody tr > td:nth-child(2) {
   box-sizing: border-box;
-  width: 48px;
-  min-width: 48px;
-  max-width: 48px;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
 }
 .race-detail-scroll .mania-table thead tr:first-child > th:nth-child(3),
 .race-detail-scroll .mania-table tbody tr > td:nth-child(3) {
   box-sizing: border-box;
-  width: 96px;
-  min-width: 96px;
-  max-width: 96px;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
 }
 .race-detail-scroll .mania-table thead tr:first-child > th:nth-child(4),
 .race-detail-scroll .mania-table tbody tr > td:nth-child(4) {
   box-sizing: border-box;
-  width: 48px;
-  min-width: 48px;
-  max-width: 48px;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
 }
 .race-detail-scroll .mania-table thead tr:first-child > th:nth-child(5),
 .race-detail-scroll .mania-table tbody tr > td:nth-child(5) {
   box-sizing: border-box;
-  width: 36px;
-  min-width: 36px;
-  max-width: 36px;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
 }
 .race-detail-scroll .mania-table thead tr:first-child > th:nth-child(6),
 .race-detail-scroll .mania-table tbody tr > td:nth-child(6) {
   box-sizing: border-box;
-  width: 48px;
-  min-width: 48px;
-  max-width: 48px;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}
+
+/* Exact widths for the Marutoku detail columns 7–11 (second header row). */
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th:nth-child(1),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(7) {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th:nth-child(2),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(8) {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th:nth-child(3),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(9) {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th:nth-child(4),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(10) {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th:nth-child(5),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(11) {
+  box-sizing: border-box;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+}
+/* Column 12 sits at the eighth cell in the first header row because
+   the five Marutoku columns share a merged first-row header. */
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(8),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(12) {
+  box-sizing: border-box;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+}
+/* Two-line race score: 16px current value above 12px grey previous-term value. */
+.race-detail-scroll .mania-table tbody td.score .score-current {
+  display: block;
+  font-size: var(--fs-16);
+  color: var(--c-text);
+  line-height: 1.2;
+}
+.race-detail-scroll .mania-table tbody td.score .score-previous {
+  display: block;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+  color: var(--c-sub);
+  line-height: 1.2;
 }
