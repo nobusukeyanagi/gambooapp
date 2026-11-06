@@ -135,7 +135,6 @@
   // Navigation order follows the first row of the racecard table.
   const playerHeading = wrap?.querySelector(".player-section-start");
   const pointHeading = wrap?.querySelector(".marutoku-section-start");
-  const commentHeading = wrap?.querySelector(".marutoku-comment-heading");
   const recentHeading = wrap?.querySelector(".recent-section-start");
   const meetingHeading = wrap?.querySelector(".meeting-section-start");
   const positionHeading = wrap?.querySelector(".position-section-start");
@@ -144,29 +143,28 @@
   const menuScroller = inner.querySelector(".info-tabs")?.closest(".hscroll-inner");
   const playerTab = inner.querySelector('.info-tab[data-target="player"]');
   const pointTab = inner.querySelector('.info-tab[data-target="marutoku"]');
-  const commentTab = inner.querySelector('.info-tab[data-target="comment"]');
   const recentTab = inner.querySelector('.info-tab[data-target="recent"]');
   const meetingTab = inner.querySelector('.info-tab[data-target="meeting"]');
   const positionTab = inner.querySelector('.info-tab[data-target="position"]');
   const gindexTab = inner.querySelector('.info-tab[data-target="gindex"]');
   const maniaTab = inner.querySelector('.info-tab[data-target="mania"]');
-  if (!wrap || !table || !playerHeading || !pointHeading || !commentHeading ||
+  if (!wrap || !table || !playerHeading || !pointHeading ||
       !recentHeading || !meetingHeading || !positionHeading || !gindexHeading ||
-      !maniaHeading || !playerTab || !pointTab || !commentTab || !recentTab ||
+      !maniaHeading || !playerTab || !pointTab || !recentTab ||
       !meetingTab || !positionTab || !gindexTab || !maniaTab) return;
 
   const tabsByName = {
-    player: playerTab, comment: commentTab, recent: recentTab,
+    player: playerTab, recent: recentTab,
     meeting: meetingTab, position: positionTab, marutoku: pointTab,
     gindex: gindexTab, mania: maniaTab
   };
   const headingsByName = {
-    player: playerHeading, comment: commentHeading, recent: recentHeading,
+    player: playerHeading, recent: recentHeading,
     meeting: meetingHeading, position: positionHeading, marutoku: pointHeading,
     gindex: gindexHeading, mania: maniaHeading
   };
   // Map both header rows to their logical column indices. Rowspans and
-  // colspans must not change the eight menu sections' original boundaries.
+  // colspans must not change the seven menu sections' logical boundaries.
   const grid = [];
   const headerCells = [];
   Array.from(table.tHead?.rows || []).forEach((row, rowIndex) => {
@@ -259,7 +257,6 @@
     else if (threshold >= columnOffset(positionHeading)) name = "position";
     else if (threshold >= columnOffset(meetingHeading)) name = "meeting";
     else if (threshold >= columnOffset(recentHeading)) name = "recent";
-    else if (threshold >= columnOffset(commentHeading)) name = "comment";
     selectTab(name);
   }
   Object.entries(tabsByName).forEach(([name, tab]) => {
