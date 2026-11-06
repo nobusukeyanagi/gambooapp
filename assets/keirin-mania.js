@@ -39,7 +39,7 @@
     if (raceNumber) raceNumber.textContent = DATA.race + "R";
     const raceLink = inner.querySelector(".ri-race");
     if (raceLink) raceLink.setAttribute("aria-label", DATA.race + "Rの車券購入画面へ");
-    const raceKind = inner.querySelector(".ri-kind");
+    const raceKind = inner.querySelector(".ri-kind > span:first-child");
     if (raceKind) raceKind.textContent = "Ｓ級 選抜";
     // Update only the values, retaining the five-row SCR-210 summary layout.
     const deadline = inner.querySelector(".race-info-meta .race-deadline");
@@ -51,6 +51,20 @@
     if (startTime) {
       startTime.textContent = DATA.start;
       startTime.setAttribute("datetime", DATA.start);
+    }
+    // This page uses a historical 2026-11-03 12:30 mock snapshot, not the
+    // visitor's live clock. Derive the notice from that same reference time.
+    const countdown = inner.querySelector(".ri-kind .race-countdown");
+    const snapshot = inner.querySelector(".race-info-bar")?.dataset.snapshot;
+    if (countdown && snapshot && DATA.date && DATA.deadline) {
+      const remainingMs = Date.parse(DATA.date + "T" + DATA.deadline + ":00+09:00") -
+        Date.parse(snapshot);
+      if (Number.isFinite(remainingMs)) {
+        const minutes = Math.ceil(remainingMs / 60000);
+        countdown.textContent = minutes > 0 ? "締切" + minutes + "分前" : "締切";
+        countdown.setAttribute("aria-label", minutes > 0 ?
+          "BET締切まで" + minutes + "分" : "BET締切済");
+      }
     }
     inner.querySelectorAll(".race-tabs .race-tab").forEach((tab, index) => {
       tab.classList.toggle("active", index === DATA.race - 1);
