@@ -9,7 +9,7 @@ button,
       }
 
       .screen-label {
-        color: var(--c-silver-l);
+        color: var(--c-silver-light);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         text-transform: uppercase;
@@ -91,7 +91,7 @@ button,
         flex: 0 0 4px;
         height: 22px;
         border-radius: var(--r-xxs);
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
       }
       .news-badge.point {
         background: var(--c-charcoal);
@@ -532,8 +532,8 @@ button,
         color: var(--c-silver);
       }
       .bn-dots { display: flex; justify-content: center; gap: var(--space-5); }
-      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-silver-l); transition: width .2s; }
-      .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-gold-l); }
+      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-silver-light); transition: width .2s; }
+      .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-gold-light); }
       .pk3 .kun-ic {
         width: 64px;
         height: 64px;
