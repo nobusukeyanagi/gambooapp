@@ -10,12 +10,12 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 const ROOT = process.cwd();
 const paths = [
-  'SCR-02_keirin.html',
-  'SCR-02_autorace.html',
-  'SCR-03_racecardkeirin.html',
-  'SCR-04_racecardautorace.html',
-  'SCR-07_mypage.html',
-  'SCR-11_campaign.html',
+  'SCR-200_keirin.html',
+  'SCR-300_autorace.html',
+  'SCR-201_racecardkeirin.html',
+  'SCR-301_racecardautorace.html',
+  'SCR-500_mypage.html',
+  'SCR-400_campaign.html',
   'index.html'
 ];
 const BASE = process.env.BASELINE_URL || '';
@@ -276,7 +276,7 @@ async function checkMyPage(page, width) {
   if (headingStyle.font!=='20px' || headingStyle.weight!=='600' ||
       headingStyle.accent!=='rgb(228, 202, 124)' ||
       headingStyle.barW!=='4px' || headingStyle.barH!=='22px')
-    fail(width+'px mypage section headings must match SCR-01: '+JSON.stringify(headingStyle));
+    fail(width+'px mypage section headings must match SCR-100: '+JSON.stringify(headingStyle));
   const icons=await page.locator('.scroll-area .profile-race-icon use').evaluateAll(nodes=>
     nodes.map(n=>n.getAttribute('href')?.split('#')[1]));
   if (icons.filter(x=>x==='nav-keirin').length!==1 ||
@@ -324,8 +324,8 @@ async function checkMyPage(page, width) {
   if (!avatarImage.complete || avatarImage.naturalWidth!==130 || avatarImage.naturalHeight!==130 || !avatarImage.visible)
     fail(width+'px uploaded buta.png must load as the original 130x130 image: '+JSON.stringify(avatarImage));
   if (await page.locator('.phone-inner > .status-bar').count())
-    fail(width+'px SCR-07 must not show simulated 9:33/5G status bar');
-  // DELCA and refund use the exact SCR-01 markup and directly shared styles.
+    fail(width+'px SCR-500 must not show simulated 9:33/5G status bar');
+  // DELCA and refund use the exact SCR-100 markup and directly shared styles.
   const balanceBar=page.locator('.phone-inner > .payout-bar.pt-h');
   const bar=await balanceBar.evaluate(el=>{
     const s=getComputedStyle(el),a=el.querySelectorAll('.pt-item');
@@ -339,7 +339,7 @@ async function checkMyPage(page, width) {
   const home=await page.context().newPage();
   let homeBar;
   try {
-    await home.goto(new URL('./SCR-01_bet.html',page.url()).href,{waitUntil:'load'});
+    await home.goto(new URL('./SCR-100_bet.html',page.url()).href,{waitUntil:'load'});
     homeBar=await home.locator('.phone-inner > .payout-bar.pt-h').evaluate(el=>{
       const s=getComputedStyle(el);
       return {height:el.getBoundingClientRect().height,bg:s.backgroundColor,
@@ -354,7 +354,7 @@ async function checkMyPage(page, width) {
      bar.names.join('|')!==homeBar.names.join('|') ||
      bar.fonts.join('|')!==homeBar.fonts.join('|') ||
      !bar.preceding || !bar.following)
-    fail(width+'px SCR-07 payout bar must match SCR-01 actual layout: '+
+    fail(width+'px SCR-500 payout bar must match SCR-100 actual layout: '+
       JSON.stringify({mypage:bar,home:homeBar}));
   const toggle=balanceBar.locator('.pay-toggle');
   if(await toggle.count()!==1||await toggle.getAttribute('aria-pressed')!=='true')
@@ -648,7 +648,7 @@ async function checkMyPage(page, width) {
       item.border!=='rgb(156, 164, 168)'||
       item.radius!=='8px'||item.bg!=='rgb(255, 255, 255)'||
       item.shadow==='none'))
-    fail(width+'px remaining SCR-07 action buttons must match campaign style: '+JSON.stringify(cmp));
+    fail(width+'px remaining SCR-500 action buttons must match campaign style: '+JSON.stringify(cmp));
 
 }
 
@@ -658,13 +658,13 @@ async function checkCompactSectionHeader(page,width,file) {
   if(await header.count()!==1)
     return fail(file+' '+width+'px must use canonical shared header');
   const names={
-    'SCR-01_bet.html':['車券購入','nav-ticket'],
-    'SCR-02_keirin.html':['競輪予想','nav-keirin'],
-    'SCR-02_autorace.html':['オートレース予想','nav-auto'],
-    'SCR-03_racecardkeirin.html':['大垣 最終日',null],
-    'SCR-04_racecardautorace.html':['川口 2日目',null],
-    'SCR-07_mypage.html':['マイページ','nav-mypage'],
-    'SCR-11_campaign.html':['キャンペーン','nav-campaign']
+    'SCR-100_bet.html':['車券購入','nav-ticket'],
+    'SCR-200_keirin.html':['競輪予想','nav-keirin'],
+    'SCR-300_autorace.html':['オートレース予想','nav-auto'],
+    'SCR-201_racecardkeirin.html':['大垣 最終日',null],
+    'SCR-301_racecardautorace.html':['川口 2日目',null],
+    'SCR-500_mypage.html':['マイページ','nav-mypage'],
+    'SCR-400_campaign.html':['キャンペーン','nav-campaign']
   };
   const expected=names[file];
   if(!expected)return;
@@ -723,8 +723,8 @@ async function checkNavPredictionLinks(page, width, file) {
   }
   for (let i = 0; i < count; i++) {
     const nav = navs.nth(i);
-    const keirin = nav.locator('a.tab-item[href="./SCR-02_keirin.html"]');
-    const auto = nav.locator('a.tab-item[href="./SCR-02_autorace.html"]');
+    const keirin = nav.locator('a.tab-item[href="./SCR-200_keirin.html"]');
+    const auto = nav.locator('a.tab-item[href="./SCR-300_autorace.html"]');
     if (await keirin.count() !== 1 || await auto.count() !== 1) {
       fail(file + " " + width + "px missing prediction tab link");
       continue;
@@ -733,13 +733,13 @@ async function checkNavPredictionLinks(page, width, file) {
     if ((await auto.innerText()).trim() !== "オート予想") fail(file + " autorace tab label mismatch");
   }
   if (width !== 296) return;
-  const keirinLink = navs.first().locator('a.tab-item[href="./SCR-02_keirin.html"]');
+  const keirinLink = navs.first().locator('a.tab-item[href="./SCR-200_keirin.html"]');
   await keirinLink.click();
-  if (new URL(page.url()).pathname.split("/").pop() !== "SCR-02_keirin.html")
+  if (new URL(page.url()).pathname.split("/").pop() !== "SCR-200_keirin.html")
     fail(file + " keirin tab did not navigate");
-  const autoLink = page.locator(".bottom-tab").first().locator('a.tab-item[href="./SCR-02_autorace.html"]');
+  const autoLink = page.locator(".bottom-tab").first().locator('a.tab-item[href="./SCR-300_autorace.html"]');
   await autoLink.click();
-  if (new URL(page.url()).pathname.split("/").pop() !== "SCR-02_autorace.html")
+  if (new URL(page.url()).pathname.split("/").pop() !== "SCR-300_autorace.html")
     fail(file + " autorace tab did not navigate");
   console.log("BOTTOM NAV OK " + file + " " + width + "px");
 }
@@ -1454,8 +1454,8 @@ async function checkSharedReferences(){
    fail('Canonical typography weights must be 400 and 600');
  if(/--fw-\d{2}-(normal|strong)/.test(tokens))
    fail('Legacy size-specific weight token found');
- const all=['SCR-01_bet.html',...paths];
- const pagesWithPrunedIcons=new Set(['SCR-01_bet.html','SCR-02_keirin.html','SCR-02_autorace.html']);
+ const all=['SCR-100_bet.html',...paths];
+ const pagesWithPrunedIcons=new Set(['SCR-100_bet.html','SCR-200_keirin.html','SCR-300_autorace.html']);
  for(const page of all){
   const html=await readFile(path.join(ROOT,page),'utf8');
   if(page!=='index.html' && (html.includes('bottom-nav-icons.svg?v=15') ||
@@ -1508,17 +1508,17 @@ try {
       checked++;
     }
     await checkCompactSectionHeader(a.page,w,file);
-    if (file === 'SCR-02_keirin.html' || file === 'SCR-02_autorace.html') {
+    if (file === 'SCR-200_keirin.html' || file === 'SCR-300_autorace.html') {
       const h = await a.page.locator('.phone-inner > .page-header .page-header-title')
         .evaluate(el => ({size:getComputedStyle(el).fontSize,weight:getComputedStyle(el).fontWeight}));
       if (h.size !== '18px' || h.weight !== '600')
         fail(file + ' ' + w + 'px shared header title must be 18px/600: '+JSON.stringify(h));
     }
-    if (file === 'SCR-11_campaign.html') await checkCampaignPage(a.page,w);
-    if (file === 'SCR-07_mypage.html') await checkMyPage(a.page,w);
-    if (file === 'SCR-02_keirin.html' || file === 'SCR-02_autorace.html') await checkPredictionSort(a.page,w,file === 'SCR-02_autorace.html');
-    if (file === 'SCR-03_racecardkeirin.html') await checkKeirinMania(a.page,w);
-    if (file === "SCR-04_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
+    if (file === 'SCR-400_campaign.html') await checkCampaignPage(a.page,w);
+    if (file === 'SCR-500_mypage.html') await checkMyPage(a.page,w);
+    if (file === 'SCR-200_keirin.html' || file === 'SCR-300_autorace.html') await checkPredictionSort(a.page,w,file === 'SCR-300_autorace.html');
+    if (file === 'SCR-201_racecardkeirin.html') await checkKeirinMania(a.page,w);
+    if (file === "SCR-301_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
     if (file !== "index.html") await checkNavPredictionLinks(a.page,w,file);
    }finally {await a.context.close();if(b)await b.context.close();}
   }

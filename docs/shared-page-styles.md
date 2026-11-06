@@ -20,9 +20,9 @@
 ## ページ専用CSS
 
 - ホーム：`home.css`
-- 競輪予想（`SCR-02_keirin.html`）・オートレース予想（`SCR-02_autorace.html`）：`venue-list.css` と `venue-sort.css`。共通の並び替え制御に `venue-sort.js` を使用。未使用だったオート専用 `venue-list-auto-overrides.css` は廃止
-- 出走表・競輪（`SCR-03_racecardkeirin.html`）：`keirin-detail.css` と `keirin-detail-9car.css`、マニア分析統合用 `keirin-mania.css`／`keirin-mania.js`
-- 出走表・オートレース（`SCR-04_racecardautorace.html`）：`auto-detail.css` と統合列用 `autorace-lab-merged.css`、操作用 `auto-detail.js`
+- 競輪予想（`SCR-200_keirin.html`）・オートレース予想（`SCR-300_autorace.html`）：`venue-list.css` と `venue-sort.css`。共通の並び替え制御に `venue-sort.js` を使用。未使用だったオート専用 `venue-list-auto-overrides.css` は廃止
+- 出走表・競輪（`SCR-201_racecardkeirin.html`）：`keirin-detail.css` と `keirin-detail-9car.css`、マニア分析統合用 `keirin-mania.css`／`keirin-mania.js`
+- 出走表・オートレース（`SCR-301_racecardautorace.html`）：`auto-detail.css` と統合列用 `autorace-lab-merged.css`、操作用 `auto-detail.js`
 - マイページ：`mypage.css`
 - キャンペーン：`campaign.css`
 - QR入口：`qr-index.css`

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* SCR-11 Campaign. Shared design tokens are referenced directly without aliases.
+/* SCR-400 Campaign. Shared design tokens are referenced directly without aliases.
    The app shell and compact header are supplied by app-base and ui-consistency. */
 
 .ic {

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* SCR-07-specific styles only. Canonical tokens, app shell, racing icons,
+/* SCR-500-specific styles only. Canonical tokens, app shell, racing icons,
    header hierarchy and navigation styles are directly referenced in HTML.
    Removed unused legacy rules for race tables, banners, news and other pages. */
 
@@ -79,7 +79,7 @@
   outline-offset: var(--space-2);
 }
 
-/* SCR-01-style headings: shared .section-header supplies 20px/600 and 44px.
+/* SCR-100-style headings: shared .section-header supplies 20px/600 and 44px.
    The 4px x 22px left bar uses the same gold/radius values as home. */
 .section-header .section-title { display:inline-flex; align-items:center; gap:var(--space-5); color:var(--c-charcoal); }
 .section-header .section-title::before { content:""; display:inline-block; flex:0 0 4px; width:4px; height:22px; border-radius:var(--r-xxs); background:var(--c-gold); }
@@ -123,7 +123,7 @@
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
 }
-/* Matches SCR-01's "特設ページ" link typography, color, spacing and chevron. */
+/* Matches SCR-100's "特設ページ" link typography, color, spacing and chevron. */
 .favorite-group-change {
   display: inline-flex;
   align-items: center;

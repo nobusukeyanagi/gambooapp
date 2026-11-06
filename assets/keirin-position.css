@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* SCR-03: genuine 2026-11-03 Hofu 5R lineup-position statistics.
+/* SCR-201: genuine 2026-11-03 Hofu 5R lineup-position statistics.
    Inserted immediately before the existing mania-analysis section. */
 .race-detail-scroll .mania-table th.position-section-start {
   background: var(--c-bg);

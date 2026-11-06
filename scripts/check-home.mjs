@@ -19,7 +19,7 @@ const ROOT = process.cwd();
 const URL_CURRENT = process.env.CURRENT_URL || 'http://127.0.0.1:4173';
 const URL_BASELINE = process.env.BASELINE_URL || '';
 const OUTPUT = process.env.SCREENSHOT_DIR || '/tmp/gamboo-home-check';
-const PAGE = 'SCR-01_bet.html';
+const PAGE = 'SCR-100_bet.html';
 const cssNames = [
   'assets/design-tokens.css',
   'assets/home.css',
@@ -302,7 +302,7 @@ async function checkCurrentPage(page, width) {
   }
   if (!initial.keirin.find(x=>x.name==='小田原')?.ended)
     fail(width+'px Odawara must be complete at noon');
-  // SCR-01 warning palette matches SCR-02: caution red background, white text.
+  // SCR-100 warning palette matches SCR-200／SCR-300: caution red background, white text.
   // The 20-minute cutoff is handled by the existing home.js scheduler.
   const urgentPaint=await page.evaluate(()=>{
     const read=selector=>[...document.querySelectorAll(selector)].map(el=>{
@@ -327,12 +327,12 @@ async function checkCurrentPage(page, width) {
   if (urgentPaint.venues.length!==2 || urgentPaint.featured.length!==1 ||
       [...urgentPaint.venues,...urgentPaint.featured].some(p=>
         p.bg!==expectedAlertColor || p.fg!==expectedAlertText || p.width<=0))
-    fail(width+'px SCR-01 venue/featured deadline badges must be solid caution red with white text: '+
+    fail(width+'px SCR-100 venue/featured deadline badges must be solid caution red with white text: '+
       JSON.stringify(urgentPaint));
   if (urgentPaint.regular.some(p=>p.bg===expectedAlertColor || p.fg===expectedAlertText) ||
       urgentPaint.numbers.some(color=>color===expectedAlertText) ||
       urgentPaint.venues.some(p=>p.bgParent===expectedAlertColor))
-    fail(width+'px SCR-01 urgency must not color regular deadlines, R numbers or whole rows: '+
+    fail(width+'px SCR-100 urgency must not color regular deadlines, R numbers or whole rows: '+
       JSON.stringify(urgentPaint));
 
   const loaded = await page.evaluate(() => Array.from(document.styleSheets).some((s) => s.href && s.href.includes('assets/home.css')));
@@ -423,14 +423,14 @@ async function checkInteractions(page, width) {
      oldButtons.some(el=>el.width<80||el.height!==40||el.font!=='14px') ||
      oldButtons[0].padding!=='8px' ||oldButtons[1].padding!=='10px' ||
      oldButtons[0].icon!==20 ||oldButtons[1].icon!==18)
-    fail(width+'px restored original SCR-01 notification/deposit geometry mismatch: '+JSON.stringify(oldButtons));
+    fail(width+'px restored original SCR-100 notification/deposit geometry mismatch: '+JSON.stringify(oldButtons));
   const header=page.locator('.app-header.shared-app-header');
   if(await header.count()!==1 ||
      (await header.locator('.header-title-text').innerText()).trim()!=='車券購入' ||
      !(await header.locator('.header-page-icon use').getAttribute('href')).endsWith('#nav-ticket') ||
      await header.locator('.header-notification').count()!==1 ||
      await header.locator('.header-deposit').count()!==1)
-    fail(width+'px SCR-01 must show the ticket icon/title and both header actions');
+    fail(width+'px SCR-100 must show the ticket icon/title and both header actions');
 
   const toggle = page.locator('.pay-toggle').first();
   if (await toggle.count() !== 1) {
@@ -443,8 +443,8 @@ async function checkInteractions(page, width) {
   await toggle.press('Enter');
   eq(await toggle.getAttribute('aria-pressed'), before, width + 'px payout keyboard Enter');
   const nav = page.locator(".bottom-tab");
-  const keirin = nav.locator('a.tab-item[href="./SCR-02_keirin.html"]');
-  const auto = nav.locator('a.tab-item[href="./SCR-02_autorace.html"]');
+  const keirin = nav.locator('a.tab-item[href="./SCR-200_keirin.html"]');
+  const auto = nav.locator('a.tab-item[href="./SCR-300_autorace.html"]');
   if (await keirin.count() !== 1 || (await keirin.innerText()).trim() !== "競輪予想") {
     fail(width + "px home keirin prediction link missing");
   }

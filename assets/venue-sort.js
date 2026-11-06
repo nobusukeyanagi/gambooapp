@@ -1,4 +1,4 @@
-/* Shared inline venue sorting for SCR-02 prediction pages. */
+/* Shared inline venue sorting for SCR-200／SCR-300 prediction pages. */
 (() => {
   "use strict";
 
@@ -8,7 +8,7 @@
   if (!scrollArea || options.length < 2 || options.length > 3 || !cards.length) return;
 
 
-  /* SCR-02 preset: simulate the published 2026-11-03 12:30 JST snapshot.
+  /* SCR-200／SCR-300 preset: simulate the published 2026-11-03 12:30 JST snapshot.
      Calculate race states and venue sort keys from the existing cutoff times,
      rather than freezing stale 12:00 status, 5%-rebate bands, and "next" flags. */
   const snapshotDay = "2026-11-03";
@@ -138,7 +138,7 @@
         originalPosition.get(a) - originalPosition.get(b)
     );
     // Reattaching an already ordered card resets its child race bar's scrollLeft.
-    // In particular this used to undo the initial "next race" scroll on SCR-02.
+    // In particular this used to undo the initial "next race" scroll on SCR-200／SCR-300.
     const currentOrder = [...scrollArea.querySelectorAll(":scope > .venue-card")];
     if (ordered.every((card, index) => card === currentOrder[index])) return;
     const savedScroll = new Map(cards.map((card) => {

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* SCR-04: data-analysis columns extend the existing auto racecard, not a second panel. */
+/* SCR-301: data-analysis columns extend the existing auto racecard, not a second panel. */
 .at.auto-merged .auto-lab-start {
   min-width: 700px;
   border-left: var(--line-normal);

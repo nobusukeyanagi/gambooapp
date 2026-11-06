@@ -1,4 +1,4 @@
-/* SCR-11: archive pagination and two-state campaign filter. */
+/* SCR-400: archive pagination and two-state campaign filter. */
 (() => {
   "use strict";
   const pageSize = 20;

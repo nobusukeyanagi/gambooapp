@@ -1,6 +1,6 @@
 @charset "UTF-8";
-/* SCR-03: one scrollable race-detail page below the shared fixed header.
-   Button semantics/color/radii use the same tokens as SCR-02. */
+/* SCR-201: one scrollable race-detail page below the shared fixed header.
+   Button semantics/color/radii use the same tokens as SCR-200. */
 .phone-inner > .race-detail-scroll {
   flex: 1 1 auto;
   min-height: 0;
@@ -17,7 +17,7 @@
   min-height: 0;
   overflow: visible;
 }
-/* The same edge-to-edge, full-height 44px chevrons as SCR-02. */
+/* The same edge-to-edge, full-height 44px chevrons as SCR-200. */
 .race-detail-scroll > .keirin-race-selector {
   position: relative;
   display: flex;
@@ -147,15 +147,15 @@
 }
 
 
-/* SCR-03 detail layout revision: shared token sizes, no other screens affected. */
+/* SCR-201 detail layout revision: shared token sizes, no other screens affected. */
 
-/* Urgent races use the SCR-02 red frame, not a remaining-minutes top band. */
+/* Urgent races use the SCR-200 red frame, not a remaining-minutes top band. */
 .race-detail-scroll .keirin-race-selector .race-tab.soon {
   border: var(--line-emphasis-width) solid var(--c-red);
   background: var(--c-surface);
 }
 
-/* SCR-03 summary: three compact information lines on the left; the original
+/* SCR-201 summary: three compact information lines on the left; the original
    64px purchase tile and 80px LIVE tile stack at the right. */
 .race-detail-scroll .race-info-bar.ri-has-act {
   padding: var(--space-section);

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* SCR-03 Hofu 5R: style Marutoku points and the separate player-comment
+/* SCR-201 Hofu 5R: style Marutoku points and the separate player-comment
    column, now grouped under 選手情報 in the horizontal menu. */
 .race-detail-scroll .mania-table th.marutoku-section-start,
 .race-detail-scroll .mania-table th.player-comment-heading {

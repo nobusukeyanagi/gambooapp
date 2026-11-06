@@ -58,8 +58,8 @@
 
     document.querySelectorAll(".bottom-tab").forEach(function (nav) {
       orderSiblings(
-        nav.querySelector('a[href$="SCR-02_keirin.html"]'),
-        nav.querySelector('a[href$="SCR-02_autorace.html"]'),
+        nav.querySelector('a[href$="SCR-200_keirin.html"]'),
+        nav.querySelector('a[href$="SCR-300_autorace.html"]'),
         order
       );
     });

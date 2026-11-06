@@ -1,4 +1,4 @@
-/* SCR-02 three-day fixed preset. The 11/3 race data is kept in the
+/* SCR-200／SCR-300 three-day fixed preset. The 11/3 race data is kept in the
    original HTML; adjacent days have verified meeting/day/grade/race counts
    and Girls race numbers/types. Unverified individual cutoff/rider details
    for adjacent dates are not invented. */

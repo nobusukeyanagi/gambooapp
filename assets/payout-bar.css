@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* One direct source for SCR-01 and SCR-07 payout balance bar.
+/* One direct source for SCR-100 and SCR-500 payout balance bar.
    All original home styles moved here without changing their declarations. */
 .payout-value small {
         font-size: var(--fs-12);

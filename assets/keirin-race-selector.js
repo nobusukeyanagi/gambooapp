@@ -1,4 +1,4 @@
-/* SCR-03 race selector follows the published SCR-02 Hofu schedule.
+/* SCR-201 race selector follows the published SCR-200 Hofu schedule.
  * The HTML contains a verified 12-race fallback, so the screen also works if
  * the optional same-origin schedule refresh is unavailable. */
 (() => {
@@ -16,13 +16,13 @@
       String(total % 60).padStart(2, "0");
   };
   const refresh = async () => {
-    const response = await fetch(bar.dataset.sourcePage || "./SCR-02_keirin.html", {
+    const response = await fetch(bar.dataset.sourcePage || "./SCR-200_keirin.html", {
       cache: "force-cache"
     });
-    if (!response.ok) throw new Error("Cannot load SCR-02 race schedule");
+    if (!response.ok) throw new Error("Cannot load SCR-200 race schedule");
     const doc = new DOMParser().parseFromString(await response.text(), "text/html");
     const venue = doc.querySelector('.venue-card[data-venue="防府"]');
-    if (!venue) throw new Error("Hofu race data was not found in SCR-02");
+    if (!venue) throw new Error("Hofu race data was not found in SCR-200");
     const sourceRaces = [...venue.querySelectorAll(".rcol > .rchip")];
     if (sourceRaces.length !== tabs.length) {
       throw new Error("Hofu schedule has an unexpected number of races");
@@ -58,6 +58,6 @@
   };
   refresh().catch((error) => {
     // Keep the initially rendered 12 verified start times and visual statuses.
-    console.warn("SCR-03 is using the embedded SCR-02 schedule snapshot.", error);
+    console.warn("SCR-201 is using the embedded SCR-200 schedule snapshot.", error);
   });
 })();

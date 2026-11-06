@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* Shared SCR-02 prediction styles. Each selector is defined once; obsolete dimensions and
+/* Shared SCR-200／SCR-300 prediction styles. Each selector is defined once; obsolete dimensions and
  * earlier overridden states have been removed. Canonical values come from design-tokens.css. */
 
 button, input, select, textarea {
@@ -81,7 +81,7 @@ button, input, select, textarea {
 
 /* Venue headings */
 
-/* All SCR-02 venue metadata belongs to one line, including its rebate mark.
+/* All SCR-200／SCR-300 venue metadata belongs to one line, including its rebate mark.
    When the full line is wider than the card, venue-calendar.js applies a
    horizontal fit factor without changing shared typography or clipping text. */
 .venue-header {

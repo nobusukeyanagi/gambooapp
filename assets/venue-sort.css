@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* SCR-02 shared inline sorting. Canonical control palette, radius, lines and fonts. */
+/* SCR-200／SCR-300 shared inline sorting. Canonical control palette, radius, lines and fonts. */
 .venue-sort-options {
   display: flex;
   align-items: stretch;

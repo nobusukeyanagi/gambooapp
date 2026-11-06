@@ -759,7 +759,7 @@ button,
       }
 
       /* Urgency is confined to the deadline badge. Keep R numbers, rider
-         labels and card surfaces unchanged; match the SCR-02 alert palette. */
+         labels and card surfaces unchanged; match the SCR-200／SCR-300 alert palette. */
       .venue-grid.g3 .vcard.deadline-soon .vcard-bottom {
         background: transparent;
         padding: 0;
