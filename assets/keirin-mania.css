@@ -1,8 +1,7 @@
 @charset "UTF-8";
 /* Merged SCR-03 racecard: the original mania-analysis evaluation columns and drill-down sheet. */
-.mania-section-start { text-align: center; min-width: 420px; }
-.mania-table .mania-eval { text-align: center; min-width: 48px; }
-.mania-table th.c-item { min-width: 48px; }
+.mania-section-start { text-align: center; }
+.mania-table .mania-eval { text-align: center; }
 .info-tabs button.info-tab {
   appearance: none;
   font-family: inherit;
@@ -46,11 +45,6 @@
         
         
         font-weight: var(--fw-strong);
-      }
-      .hint {
-        font-size: var(--fs-12);
-        color: var(--c-sub);
-        padding: var(--space-card) var(--space-10) var(--space-10);
       }
 
       .sheet-overlay {
@@ -143,10 +137,6 @@
         width: 16px;
         height: 18px;
         font-size: var(--fs-12);
-      }
-      .rate-hi {
-        color: var(--c-error);
-        font-weight: var(--fw-strong);
       }
       .sheet-note {
         font-size: var(--fs-12);
