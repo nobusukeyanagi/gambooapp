@@ -140,7 +140,8 @@
       '<td class="c-name"><div class="rider-name">'+escape(rider.name)+
         '</div><div class="rider-meta rider-home">'+escape(home)+
         '</div><div class="rider-meta rider-age">'+escape(cohort)+'期 '+escape(age)+'歳</div></td>'+
-      '<td class="bl cls">'+escape(grade[0])+'<small>/'+escape(grade[1])+'</small></td>'+
+      '<td class="bl cls"><span class="grade-current">'+escape(grade[0])+
+        '</span><span class="grade-prev">前'+escape(grade[1] || "—")+'</span></td>'+
       '<td class="bl"><span class="leg-tag '+(legCss[rider.leg]||"leg-both")+'">'+escape(rider.leg)+'</span></td>'+
       '<td class="bl">'+escape(rider.gear||"—")+'</td>'+
       p.points.map((v,k)=>'<td class="'+(k===0?"bl ":"")+'marutoku-value'+
