@@ -17,7 +17,7 @@
     const subheads = [
       sub("枠","c-waku player-section-start"),sub("車番","fx c-sha"),sub("選手名","c-name"),
       sub("級班","bl"),sub("脚質","bl"),sub("ギア比","bl"),
-      sub("選手コメント","bl marutoku-comment-heading"),
+      sub("コメント","player-comment-heading"),
       ...["競走得点","失違","逃","捲","差","マ","B"].map((s,i)=>
         sub(s,i===0?"bl recent-section-start":(i===1?"bl":""))),
       ...[["1着","勝率"],["2着","2連対率"],["3着","3連対率"],["着外","着外率"]]
@@ -110,14 +110,13 @@
       '<span class="res-time">'+escape(time)+'</span></span>';
   };
   const renderMeeting = (period,index,DATA) => {
-    if(!period || (!period.results?.length && !period.date))
-      return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'">—</td>';
-    const meta=parseMeeting(period,index,DATA);
-    const results=period.results||[];
-    // F-meetings have three displayed race days; GIII (including the
-    // four-day Hofu fixture) has four. Preserve all supplied results.
-    const days=index===0 || meta.kind.startsWith("g") ? 4 : 3;
-    const slots=Array.from({length:Math.max(days,results.length)},(_,i)=>raceCard(results[i]));
+    // Keep the same five-area layout even if a meeting has no result data.
+    const meeting=period||{date:"",results:[]};
+    const meta=parseMeeting(meeting,index,DATA);
+    const results=meeting.results||[];
+    // Every meeting has four standard race-day cells, including blank ones.
+    // Preserve extra cells for longer fixtures (e.g. six-day meetings).
+    const slots=Array.from({length:Math.max(4,results.length)},(_,i)=>raceCard(results[i]));
     return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'"><div class="meeting-entry">'+
       '<div class="meeting-meta">'+
       '<span class="grade-badge grade-'+escape(meta.kind)+'">'+escape(meta.grade)+'</span>'+
@@ -159,7 +158,7 @@
         '</span><span class="grade-prev">前'+escape(grade[1] || "—")+'</span></td>'+
       '<td class="bl"><span class="leg-tag '+(legCss[rider.leg]||"leg-both")+'">'+escape(rider.leg)+'</span></td>'+
       '<td class="bl">'+escape(rider.gear||"—")+'</td>'+
-      '<td class="bl marutoku-comment">'+escape(p.comment)+'</td>'+
+      '<td class="player-comment">'+escape(p.comment)+'</td>'+
       '<td class="bl score"><span class="score-current">'+escape(rider.score)+'</span>'+
         '<span class="score-previous">'+
         (rider.previousScore ? '前'+escape(rider.previousScore) : '前—')+
