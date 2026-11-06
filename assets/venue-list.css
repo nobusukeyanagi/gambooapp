@@ -530,10 +530,10 @@ button, input, select, textarea {
 }
 
 .rchip.canceled {
-  background: color-mix(in srgb, var(--c-silver-light) 30%, var(--c-surface));
-  border-color: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
+  background: var(--c-bg);
+  border: var(--line-control);
   color: var(--c-silver);
-  cursor: default;
+  cursor: pointer;
 }
 
 /* Canonical 90px race cards */
