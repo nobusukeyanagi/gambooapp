@@ -27,6 +27,7 @@
       sub("イン粘り<br>回数","bl position-col position-count"),
       sub("追い上げ<br>回数","position-col position-count"),
       sub("G指数","bl gindex-section-start"),
+      sub("印","gindex-mark"),
       sub("総合<br>評価","bl c-item mania-section-start mania-section-heading"),
       ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレード","競輪場","車番","同県選手"].map((s,i)=>
         sub('<button type="button" class="item-btn" data-item="'+i+'">'+s+'</button>','c-item'+(i===0?" bl":"")))
@@ -112,7 +113,7 @@
       '<span class="meeting-date">'+escape(meta.date)+'</span></div>'+
       '<div class="res-wrap">'+slots.join("")+'</div></div></td>';
   };
-  const renderRow = (DATA,rider,i) => {
+  const renderRow = (DATA,rider,i,gMark) => {
     const p=DATA.marutoku[i],position=DATA.positionStats.rows[i];
     const grade=rider.grade.split("/");
     // Display name / prefecture(home) / training class and age on three lines.
@@ -158,12 +159,31 @@
       '<td class="position-stat position-count bl">'+totals[0]+'</td>'+
       '<td class="position-stat position-count">'+totals[1]+'</td>'+
       '<td class="bl c-g"><span class="g-val">'+escape(rider.g)+'</span></td>'+
+      '<td class="gindex-mark">'+marker(gMark)+'</td>'+
       '<td class="mania-eval bl">'+marker(rider.ratings.overall)+'</td>'+
       rider.ratings.items.map((v,k)=>'<td class="mania-eval'+(k===0?' bl':'')+
         '" data-item="'+k+'">'+marker(v)+'</td>').join("")+
       '</tr>';
   };
-  const toHTML=DATA=>makeHead()+'<tbody>'+DATA.basics.map((r,i)=>renderRow(DATA,r,i)).join("")+'</tbody>';
+  // Rank G-index values numerically, descending. The four highest riders
+  // receive ◎, ○, △ and × respectively; all others have an empty mark.
+  // In the event of equal values, retain the original rider order.
+  const getGMarks = (riders) => {
+    const marks = Array(riders.length).fill("");
+    riders.map((rider, index) => ({
+      index, text: String(rider.g ?? "").trim(), value: Number(rider.g)
+    }))
+      .filter(({text, value}) => text !== "" && Number.isFinite(value))
+      .sort((a, b) => b.value - a.value || a.index - b.index)
+      .slice(0, 4)
+      .forEach(({index}, rank) => { marks[index] = ["◎","○","△","×"][rank]; });
+    return marks;
+  };
+  const toHTML = (DATA) => {
+    const gMarks = getGMarks(DATA.basics);
+    return makeHead()+'<tbody>'+
+      DATA.basics.map((r,i)=>renderRow(DATA,r,i,gMarks[i])).join("")+'</tbody>';
+  };
   const render=(table,DATA)=>{if(table&&DATA)table.innerHTML=toHTML(DATA);};
   window.GambooKeirinRacecardColumns={toHTML,render};
 })();
