@@ -358,7 +358,7 @@
         color: var(--c-warning);
       }
       .leg-chase {
-        background: var(--c-keirin-bg);
+        background: var(--c-bg);
         color: var(--w4);
       }
       .leg-both {
