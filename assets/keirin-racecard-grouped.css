@@ -344,3 +344,58 @@
   font-weight: var(--fw-normal);
   line-height: 1.2;
 }
+
+/* SCR-03 box-table border system:
+   1px between ordinary columns, 2px ONLY at the eight menu boundaries.
+   Always draw a boundary on one side, never stack neighboring borders. */
+.race-detail-scroll .mania-table thead th,
+.race-detail-scroll .mania-table tbody td {
+  border-left: 0;
+  border-right: var(--line-normal);
+}
+/* Remove the legacy internal group dividers and their extra 1px edges. */
+.race-detail-scroll .mania-table thead th.position-col.position-first,
+.race-detail-scroll .mania-table tbody td.position-first,
+.race-detail-scroll .mania-table thead th.box-group.position-first,
+.race-detail-scroll .mania-table thead tr:nth-child(2) th.marutoku-score-label:first-of-type {
+  border-left: 0;
+}
+/* Column-group starts, including the two-tier Marutoku heading. */
+.race-detail-scroll .mania-table thead tr:first-child th:is(
+  .player-section-start, .marutoku-section-start, .marutoku-comment-heading,
+  .recent-section-start, .meeting-section-start, .position-section-start,
+  .gindex-section-start, .mania-section-heading
+),
+.race-detail-scroll .mania-table thead tr:nth-child(2) th.marutoku-section-start,
+.race-detail-scroll .mania-table tbody tr > td:is(
+  :nth-child(1), :nth-child(7), :nth-child(12), :nth-child(13),
+  :nth-child(24), :nth-child(33), :nth-child(56), :nth-child(58)
+) {
+  border-left: 2px solid var(--c-border);
+}
+/* Suppress the preceding right border to keep the total at exactly 2px. */
+.race-detail-scroll .mania-table thead tr:first-child th:has(
+  + th:is(.marutoku-section-start, .marutoku-comment-heading, .recent-section-start,
+  .meeting-section-start, .position-section-start, .gindex-section-start,
+  .mania-section-heading)
+),
+.race-detail-scroll .mania-table thead tr:nth-child(2) th:nth-child(5),
+.race-detail-scroll .mania-table tbody tr > td:is(
+  :nth-child(6), :nth-child(11), :nth-child(12), :nth-child(23),
+  :nth-child(32), :nth-child(55), :nth-child(57)
+) {
+  border-right: 0;
+}
+/* Fixed vehicle number: use its regular 1px border instead of the 2px
+   inset shadow that made the separator oversized on horizontal scroll. */
+.race-detail-scroll .race-table-wrap.scrolled .mania-table :is(th,td).c-sha {
+  box-shadow: none;
+  border-right: var(--line-normal);
+}
+/* Every 12px grey label in the box table uses normal (400) weight.
+   Keep the selected white-on-gold headings unchanged. */
+.race-detail-scroll .mania-table thead tr:first-child th:not(.section-selected),
+.race-detail-scroll .mania-table thead tr:nth-child(2) th:not(.section-selected),
+.race-detail-scroll .mania-table tbody td.c-name .rider-meta {
+  font-weight: var(--fw-normal);
+}
