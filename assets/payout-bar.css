@@ -39,7 +39,7 @@
       .balance-sep {
         
         width: 1px;
-        background: var(--c-silver-l);
+        background: var(--c-border);
         
         flex: 0 0 1px;
       }
