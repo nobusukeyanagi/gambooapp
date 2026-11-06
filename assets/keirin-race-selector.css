@@ -455,7 +455,6 @@
 }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="player"] { min-width: 82px; }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="marutoku"] { min-width: 90px; }
-.race-detail-scroll .race-menu-scroll .info-tab[data-target="comment"] { min-width: 100px; }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="recent"] { min-width: 112px; }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="meeting"] { min-width: 108px; }
 .race-detail-scroll .race-menu-scroll .info-tab[data-target="position"] { min-width: 108px; }
