@@ -311,8 +311,8 @@
       /* オート: SG=赤紫、GⅠ/特GⅠ=青、GⅡ=緑、普通=銅。 */
       .grade-gp, .grade-sg { background: var(--c-magenta); color: var(--c-surface); }
       .grade-g1 { background: var(--c-blue); color: var(--c-surface); }
-      .grade-g2, .grade-g3 { background: var(--c-green); color: black; }
-      .grade-f1 { background: var(--c-gold); color: black; }
+      .grade-g2, .grade-g3 { background: var(--c-green); color: var(--c-surface); }
+      .grade-f1 { background: var(--c-gold); color: var(--c-surface); }
       .grade-f2, .grade-normal { background: var(--c-bronze); color: var(--c-surface); }
 
       .rebate-badge {
@@ -1511,8 +1511,8 @@
       }
       .grade-gp, .grade-sg { background: var(--c-magenta); color: var(--c-surface); }
       .grade-g1 { background: var(--c-blue); color: var(--c-surface); }
-      .grade-g2, .grade-g3 { background: var(--c-green); color: black; }
-      .grade-f1 { background: var(--c-gold); color: black; }
+      .grade-g2, .grade-g3 { background: var(--c-green); color: var(--c-surface); }
+      .grade-f1 { background: var(--c-gold); color: var(--c-surface); }
       .grade-f2, .grade-normal { background: var(--c-bronze); color: var(--c-surface); }
 
       .ri-event {
