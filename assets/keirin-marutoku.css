@@ -1,14 +1,14 @@
 @charset "UTF-8";
-/* SCR-03 Hofu 5R: the Marutoku point totals and rider comments follow
-   previous-meeting results, before the existing mania-analysis section. */
+/* SCR-03 Hofu 5R: style Marutoku points and the separate player-comment
+   column, now grouped under 選手情報 in the horizontal menu. */
 .race-detail-scroll .mania-table th.marutoku-section-start,
-.race-detail-scroll .mania-table th.marutoku-comment-heading {
+.race-detail-scroll .mania-table th.player-comment-heading {
   text-align: center;
   min-width: 0;
   background: var(--c-bg);
 }
 /* Keep the column header at the same width as the comment cells. */
-.race-detail-scroll .mania-table th.marutoku-comment-heading {
+.race-detail-scroll .mania-table th.player-comment-heading {
   box-sizing: border-box;
   width: 108px;
   min-width: 108px;
@@ -42,7 +42,7 @@
 .race-detail-scroll .mania-table tbody td.marutoku-mark .mk {
   font-weight: var(--fw-strong);
 }
-.race-detail-scroll .mania-table tbody td.marutoku-comment {
+.race-detail-scroll .mania-table tbody td.player-comment {
   width: 108px;
   min-width: 108px;
   max-width: 108px;
