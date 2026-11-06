@@ -265,18 +265,13 @@ button, input, select, textarea {
   font-weight: var(--fw-strong);
 }
 
-.grade-gp {
-  background: var(--c-charcoal);
-  color: var(--w5);
+.grade-gp, .grade-g1 {
+  background: var(--c-red);
+  color: var(--c-surface);
 }
 .grade-sg {
   background: var(--c-charcoal);
   color: var(--w5);
-}
-
-.grade-g1 {
-  background: var(--c-red);
-  color: var(--c-surface);
 }
 
 .grade-g2 {
@@ -295,7 +290,7 @@ button, input, select, textarea {
 }
 
 .grade-f2, .grade-normal {
-  background: var(--c-taupe);
+  background: var(--c-silver);
   color: var(--c-surface);
 }
 
