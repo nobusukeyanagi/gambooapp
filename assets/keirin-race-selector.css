@@ -95,6 +95,11 @@
   border-color: var(--c-border);
 }
 .race-detail-scroll .keirin-race-selector .race-tab.past > :is(b,small) { color: var(--c-silver); }
+/* Status labels remain dark even when the race number uses the past-race grey. */
+.race-detail-scroll .keirin-race-selector .race-tab.past > small.race-status {
+  color: var(--c-charcoal);
+  font-weight: var(--fw-strong);
+}
 .race-detail-scroll .keirin-race-selector .race-tab.active:not(.soon):not(.rebate) {
   background: var(--c-surface);
   border: var(--line-emphasis-width) solid var(--c-border-control);
@@ -155,8 +160,8 @@
   background: var(--c-surface);
 }
 
-/* SCR-210 summary: three compact information lines on the left; the original
-   64px purchase tile and 80px LIVE tile stack at the right. */
+/* SCR-210 summary: five evenly-spaced information rows on the left;
+   the purchase and LIVE controls remain vertically balanced at the right. */
 .race-detail-scroll .race-info-bar.ri-has-act {
   padding: var(--space-section);
   display: flex;
@@ -177,9 +182,10 @@
     "kind actions"
     "clock actions"
     "detail actions";
-  grid-template-rows: 22px 22px 22px auto auto;
+  grid-template-rows: repeat(5, minmax(22px, auto));
   column-gap: var(--space-card);
-  row-gap: var(--space-1);
+  row-gap: var(--space-small);
+  align-items: center;
   min-width: 0;
 }
 .race-detail-scroll .ri-meeting {
@@ -220,11 +226,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: var(--space-card);
   width: 80px;
   min-width: 80px;
-  align-self: start;
+  align-self: center;
 }
 .race-detail-scroll .race-info-bar .ri-race {
   grid-area: auto;
@@ -313,14 +319,26 @@
 }
 .race-detail-scroll .ri-kind {
   grid-area: kind;
+  display: flex;
+  align-items: center;
   align-self: center;
+  gap: var(--space-section);
+  min-width: 0;
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
   line-height: 1.3;
 }
+.race-detail-scroll .ri-kind .race-countdown {
+  flex: 0 0 auto;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  color: var(--c-red);
+  white-space: nowrap;
+}
 .race-detail-scroll .race-info-bar .race-info-row {
   grid-area: clock;
-  margin: var(--space-1) 0 0;
+  align-self: center;
+  margin: 0;
 }
 .race-detail-scroll .race-info-bar .race-info-meta {
   display: flex;
@@ -338,6 +356,7 @@
 .race-detail-scroll .ri-date-line {
   grid-area: detail;
   display: flex;
+  align-self: center;
   align-items: center;
   white-space: nowrap;
   gap: var(--space-card);
@@ -558,6 +577,8 @@
 }
 .race-detail-scroll .aokei-paper-btn {
   flex: 0 0 80px;
+  text-decoration: none;
+  cursor: pointer;
   width: 80px;
   min-height: var(--h-control);
   padding: var(--space-small);
@@ -574,6 +595,11 @@
   font-weight: var(--fw-strong);
   line-height: 1.25;
   text-align: center;
+}
+
+.race-detail-scroll .aokei-paper-btn:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: var(--space-2);
 }
 
 /* Headers retain their original background; every rider row remains white. */
