@@ -65,7 +65,7 @@
   background: color-mix(in srgb, var(--c-green) 15%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.position-stat.position-highlight-other {
-  background: color-mix(in srgb, var(--c-gold-l) 25%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-gold-light) 25%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.position-stat.position-current {
   font-weight: var(--fw-strong);
