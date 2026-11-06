@@ -17,7 +17,6 @@
     const subheads = [
       sub("枠","c-waku player-section-start"),sub("車番","fx c-sha"),sub("選手名","c-name"),
       sub("級班","bl"),sub("脚質","bl"),sub("ギア比","bl"),
-      ...["1着P","2着P","3着P","総合P","印"].map((s,i)=>sub(s,(i===0?"bl marutoku-section-start ":"")+"marutoku-score-label")),
       sub("選手コメント","bl marutoku-comment-heading"),
       ...["競走得点","失違","逃","捲","差","マ","B"].map((s,i)=>
         sub(s,i===0?"bl recent-section-start":(i===1?"bl":""))),
@@ -33,24 +32,28 @@
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
       ...["1着","2着","3着","着外"].map((label,i)=>
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
+      ...["1着P","2着P","3着P","総合P","印"].map((label,i)=>
+        sub(label,(i===0?"bl marutoku-section-start ":"")+
+          "marutoku-score-label"+(i===4?" marutoku-mark-label":""))),
       sub("G指数","bl gindex-section-start"),
       sub("印","gindex-mark"),
-      sub("総合","bl c-item mania-section-start mania-section-heading"),
-      ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレ<br>ード","競輪場","車番","同県<br>選手"].map((s,i)=>
-        sub('<button type="button" class="item-btn" data-item="'+i+'"><span>'+s+'</span></button>','c-item'+(i===0?" bl":"")))
+      ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレ<br>ード","競輪場","車番","同県<br>選手"].map((label,i)=>
+        sub('<button type="button" class="item-btn" data-item="'+i+'"><span>'+label+'</span></button>',
+          'c-item'+(i===0?" bl mania-section-start mania-section-heading":""))),
+      sub("総合","c-item mania-total")
     ];
     // Grouped first-row labels share the same physical columns as the
     // second-row labels. Un-grouped columns span both header rows.
     const groups = new Map([
-      [6,  {span:5, label:"マル得ポイント", klass:"bl marutoku-section-start"}],
-      [14, {span:4, label:"決まり手", klass:""}],
-      [33, {span:4, label:"ラインの先頭", klass:"position-first"}],
-      [37, {span:4, label:"2番手", klass:"position-first"}],
-      [41, {span:4, label:"3番手以降", klass:"position-first"}],
-      [45, {span:4, label:"単騎", klass:"position-first"}],
-      [49, {span:4, label:"競り", klass:"position-first"}],
-      [53, {span:4, label:"イン粘り回数", klass:"position-first"}],
-      [57, {span:4, label:"追い上げ回数", klass:"position-first"}]
+      [9,  {span:4, label:"決まり手", klass:""}],
+      [28, {span:4, label:"ラインの先頭", klass:"position-first"}],
+      [32, {span:4, label:"2番手", klass:"position-first"}],
+      [36, {span:4, label:"3番手以降", klass:"position-first"}],
+      [40, {span:4, label:"単騎", klass:"position-first"}],
+      [44, {span:4, label:"競り", klass:"position-first"}],
+      [48, {span:4, label:"イン粘り回数", klass:"position-first"}],
+      [52, {span:4, label:"追い上げ回数", klass:"position-first"}],
+      [56, {span:5, label:"マル得ポイント", klass:"bl marutoku-section-start"}]
     ]);
     const top = [], lower = [];
     for (let i=0; i<subheads.length;) {
@@ -156,10 +159,6 @@
         '</span><span class="grade-prev">前'+escape(grade[1] || "—")+'</span></td>'+
       '<td class="bl"><span class="leg-tag '+(legCss[rider.leg]||"leg-both")+'">'+escape(rider.leg)+'</span></td>'+
       '<td class="bl">'+escape(rider.gear||"—")+'</td>'+
-      p.points.map((v,k)=>'<td class="'+(k===0?"bl ":"")+'marutoku-value'+
-        (k===3?" marutoku-total":"")+
-        (p.emphasis[k]?" marutoku-point-"+p.emphasis[k]:"")+'">'+escape(v)+'</td>').join("")+
-      '<td class="marutoku-mark">'+marker(p.mark)+'</td>'+
       '<td class="bl marutoku-comment">'+escape(p.comment)+'</td>'+
       '<td class="bl score"><span class="score-current">'+escape(rider.score)+'</span>'+
         '<span class="score-previous">'+
@@ -184,11 +183,15 @@
       switchCounts.map((count,k)=>'<td class="position-stat position-switch'+
         (k%4===0?' position-first':'')+(count===0?' position-zero':'')+
         '">'+escape(count)+'</td>').join("")+
+      p.points.map((v,k)=>'<td class="'+(k===0?"bl ":"")+'marutoku-value'+
+        (k===3?" marutoku-total":"")+
+        (p.emphasis[k]?" marutoku-point-"+p.emphasis[k]:"")+'">'+escape(v)+'</td>').join("")+
+      '<td class="marutoku-mark">'+marker(p.mark)+'</td>'+
       '<td class="bl c-g"><span class="g-val">'+escape(rider.g)+'</span></td>'+
       '<td class="gindex-mark">'+marker(gMark)+'</td>'+
-      '<td class="mania-eval bl">'+marker(rider.ratings.overall)+'</td>'+
       rider.ratings.items.map((v,k)=>'<td class="mania-eval'+(k===0?' bl':'')+
         '" data-item="'+k+'">'+marker(v)+'</td>').join("")+
+      '<td class="mania-eval mania-total">'+marker(rider.ratings.overall)+'</td>'+
       '</tr>';
   };
   // Rank G-index values numerically, descending. The four highest riders
