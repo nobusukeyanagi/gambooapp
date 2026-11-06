@@ -532,8 +532,8 @@ button, input, select, textarea {
 }
 
 .rchip.canceled {
-  background: color-mix(in srgb, var(--c-silver-l) 30%, var(--c-surface));
-  border-color: color-mix(in srgb, var(--c-silver-l) 30%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-silver-light) 30%, var(--c-surface));
+  border-color: color-mix(in srgb, var(--c-border) 30%, var(--c-surface));
   color: var(--c-silver);
   cursor: default;
 }
