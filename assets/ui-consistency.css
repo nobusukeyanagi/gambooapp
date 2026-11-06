@@ -413,7 +413,7 @@ body { font-weight: var(--fw-normal); }
   outline-offset: var(--space-2);
 }
 
-/* Canonical racecard control corners: SCR-201 and SCR-301 use the same 8px
+/* Canonical racecard control corners: SCR-210 and SCR-310 use the same 8px
    control token as the SCR-200／SCR-300 race buttons and cross-screen action buttons.
    These are the actual filled/bordered buttons; underline navigation tabs,
    vehicle-number badges, and circular close icons remain distinct. */
