@@ -177,13 +177,12 @@ button,
 
       .vcard-dl .ic { width: 12px; height: 12px; }
 
-      .g-gp { background: var(--c-charcoal); color: var(--w5); }
+      .g-gp, .g-g1 { background: var(--c-red); color: var(--c-surface); }
       .g-sg { background: var(--c-charcoal); color: var(--w5); }
-      .g-g1 { background: var(--c-red); color: var(--c-surface); }
       .g-g2 { background: var(--c-blue); color: var(--c-surface); }
       .g-g3 { background: var(--c-green); color: var(--c-surface); }
       .g-f1 { background: var(--c-bronze); color: var(--c-surface); }
-      .g-f2 { background: var(--c-taupe); color: var(--c-surface); }
+      .g-f2 { background: var(--c-silver); color: var(--c-surface); }
 
       .pickup-card {
         margin: 0 var(--space-section) var(--space-card);
