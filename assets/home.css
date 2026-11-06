@@ -9,7 +9,7 @@ button,
       }
 
       .screen-label {
-        color: var(--c-silver);
+        color: var(--c-silver-l);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         text-transform: uppercase;
@@ -29,7 +29,7 @@ button,
       }
       .logo {
 
-        color: var(--c-gold-d);
+        color: var(--c-gold);
         letter-spacing: normal;
       }
       .logo span {
@@ -73,7 +73,7 @@ button,
         display: none;
       }
       .tab-item.active {
-        color: var(--c-gold-d);
+        color: var(--c-gold);
       }
 
       .section-title {
@@ -91,7 +91,7 @@ button,
         flex: 0 0 4px;
         height: 22px;
         border-radius: var(--r-xxs);
-        background: var(--c-gold);
+        background: var(--c-gold-l);
       }
       .news-badge.point {
         background: var(--c-charcoal);
@@ -222,8 +222,8 @@ button,
       }
       .app-header .logo .ic { width: 18px; height: 18px; }
       .date-tab.active {
-        color: var(--c-gold-d);
-        border-bottom-color: var(--c-gold-d);
+        color: var(--c-gold);
+        border-bottom-color: var(--c-gold);
       }
 
       .ic {
@@ -258,7 +258,7 @@ button,
         height: 36px;
         color: var(--c-auto);
       }
-      .vgroup-name b { font-weight: var(--fw-strong); color: var(--c-silver-d); font-size: var(--fs-12); }
+      .vgroup-name b { font-weight: var(--fw-strong); color: var(--c-silver); font-size: var(--fs-12); }
       .mori-venue-grid { row-gap: var(--space-card); }
       .g3 .vcard {
         /* Equal 4px vertical insets: more space between four rows while
@@ -305,7 +305,7 @@ button,
         gap: var(--space-small);
         margin-left: auto;
         white-space: nowrap;
-        color: var(--c-gold-d);
+        color: var(--c-gold);
         font-size: var(--fs-14);
         font-weight: var(--fw-strong);
         line-height: 1;
@@ -315,7 +315,7 @@ button,
         width: 20px;
         height: 20px;
         flex: 0 0 20px;
-        color: var(--c-gold-d);
+        color: var(--c-gold);
         fill: currentColor;
       }
       .news-badge {
@@ -350,7 +350,7 @@ button,
         right: var(--space-content);
         top: 50%;
         margin-top: calc(-1 * var(--space-9));
-        color: var(--c-silver-d);
+        color: var(--c-silver);
       }
       .news-item > .news-arrow .ic { width: 18px; height: 18px; }
 
@@ -392,7 +392,7 @@ button,
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: var(--c-silver-d);
+        color: var(--c-silver);
         cursor: pointer;
         
         letter-spacing: normal;
@@ -529,11 +529,11 @@ button,
         border-radius: var(--r-md);
         box-shadow: var(--e1);
         background: var(--c-bg);
-        color: var(--c-silver-d);
+        color: var(--c-silver);
       }
       .bn-dots { display: flex; justify-content: center; gap: var(--space-5); }
-      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-silver); transition: width .2s; }
-      .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-gold); }
+      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-silver-l); transition: width .2s; }
+      .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-gold-l); }
       .pk3 .kun-ic {
         width: 64px;
         height: 64px;
