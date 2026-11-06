@@ -37,7 +37,7 @@ button, input, select, textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--c-silver-d);
+  color: var(--c-silver);
   cursor: pointer;
   
   letter-spacing: normal;
@@ -48,7 +48,7 @@ button, input, select, textarea {
 }
 
 .tab-item.active {
-  color: var(--c-gold-d);
+  color: var(--c-gold);
 }
 
 .tab-item .tab-icon {
@@ -300,8 +300,8 @@ button, input, select, textarea {
 }
 
 .date-tab.active {
-  color: var(--c-gold-d);
-  border-bottom-color: var(--c-gold-d);
+  color: var(--c-gold);
+  border-bottom-color: var(--c-gold);
 }
 
 .list-head {
@@ -318,7 +318,7 @@ button, input, select, textarea {
   justify-content: center;
   gap: var(--space-small);
   min-height: 20px;
-  color: var(--c-gold-d);
+  color: var(--c-gold);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
   letter-spacing: normal;
@@ -340,7 +340,7 @@ button, input, select, textarea {
   width: 20px;
   height: 20px;
   flex: 0 0 20px;
-  color: var(--c-gold-d);
+  color: var(--c-gold);
   fill: currentColor;
 }
 
@@ -477,7 +477,7 @@ button, input, select, textarea {
   pointer-events: auto;
   cursor: pointer;
   appearance: none;
-  color: var(--c-silver-d);
+  color: var(--c-silver);
   background: var(--c-bg);
   border: 0;
   border-radius: 0;
@@ -532,9 +532,9 @@ button, input, select, textarea {
 }
 
 .rchip.canceled {
-  background: color-mix(in srgb, var(--c-silver) 30%, var(--c-surface));
-  border-color: color-mix(in srgb, var(--c-silver) 30%, var(--c-surface));
-  color: var(--c-silver-d);
+  background: color-mix(in srgb, var(--c-silver-l) 30%, var(--c-surface));
+  border-color: color-mix(in srgb, var(--c-silver-l) 30%, var(--c-surface));
+  color: var(--c-silver);
   cursor: default;
 }
 
@@ -558,7 +558,7 @@ button, input, select, textarea {
 .venue-card .rchip:has(> .rchip-rebate) {
   position: relative;
   overflow: hidden;
-  border: var(--line-emphasis-width) solid var(--c-gold-d);
+  border: var(--line-emphasis-width) solid var(--c-gold);
 }
 .venue-card .rchip > .rchip-rebate {
   position: absolute;
@@ -570,7 +570,7 @@ button, input, select, textarea {
   padding: 0;
   border-radius: calc(var(--r-control) - var(--line-emphasis-width))
                  calc(var(--r-control) - var(--line-emphasis-width)) 0 0;
-  background: var(--c-gold-d);
+  background: var(--c-gold);
   color: var(--c-surface);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
@@ -624,7 +624,7 @@ button, input, select, textarea {
   width: 16px;
   height: 16px;
   fill: currentColor;
-  color: var(--c-gold-d);
+  color: var(--c-gold);
 }
 
 .venue-card .rchip-featured-icon {
