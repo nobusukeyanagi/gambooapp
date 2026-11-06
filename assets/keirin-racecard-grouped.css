@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* SCR-201: one consolidated seven-section racecard. Shared design tokens
+/* SCR-210: one consolidated seven-section racecard. Shared design tokens
    and the existing fixed car-number column stay authoritative. */
 .race-detail-scroll .mania-table {
   border-spacing: 0;
@@ -345,7 +345,7 @@
   line-height: 1.2;
 }
 
-/* One-pixel vertical grid throughout the SCR-201 box table.
+/* One-pixel vertical grid throughout the SCR-210 box table.
    Right borders are always drawn, including both header rows and merged
    headings. Do not remove a right border at menu/column-group boundaries:
    that formerly caused missing header segments. The sole left border is
