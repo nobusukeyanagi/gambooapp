@@ -19,8 +19,13 @@
       sub("級班","bl"),sub("脚質","bl"),sub("ギア比","bl"),
       ...["1着P","2着P","3着P","総合P","印"].map((s,i)=>sub(s,(i===0?"bl marutoku-section-start ":"")+"marutoku-score-label")),
       sub("選手コメント","bl marutoku-comment-heading"),
-      ...["競走得点","失違","逃","捲","差","マ","B","勝","2連対","3連対","着外"].map((s,i)=>
-        sub(s,i===0?"bl recent-section-start":(i===1||i===7?"bl":""))),
+      ...["競走得点","失違","逃","捲","差","マ","B"].map((s,i)=>
+        sub(s,i===0?"bl recent-section-start":(i===1?"bl":""))),
+      ...[["1着","勝率"],["2着","2連対率"],["3着","3連対率"],["着外","着外率"]]
+        .map(([placing, rate],i)=>sub(
+          '<span class="recent4-heading-main">'+placing+'</span>'+
+          '<span class="recent4-heading-rate">'+rate+'</span>',
+          (i===0?"bl ":"")+"recent4-heading")),
       ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり"].map((s,i)=>sub(s,i===0?"bl meeting-current-label meeting-section-start":"")),
       sub("並び","bl position-col position-current position-section-start"),
       ...placeGroups.flatMap(() => ranks.map((r,i)=>sub('<span class="position-result-name">'+r+'</span>','position-col'+(i===0?' position-first':'')))),
@@ -150,7 +155,16 @@
       '<td class="marutoku-mark">'+marker(p.mark)+'</td>'+
       '<td class="bl marutoku-comment">'+escape(p.comment)+'</td>'+
       '<td class="bl score">'+escape(rider.score)+'</td>'+
-      rider.stats.map((v,k)=>'<td'+(k===0||k===6?' class="bl"':'')+'>'+escape(v)+'</td>').join("")+
+      rider.stats.map((v,k)=>'<td'+(k===0?' class="bl"':'')+'>'+escape(v)+'</td>').join("")+
+      Array.from({length:4},(_,k)=>{
+        const count=rider.recent4Months?.counts?.[k];
+        const rate=rider.recent4Months?.rates?.[k];
+        return '<td class="'+(k===0?"bl ":"")+'recent4-cell">'+
+          '<span class="recent4-count">'+escape(count ?? "—")+'</span>'+
+          '<span class="recent4-rate">'+
+          escape(rate === undefined || rate === null || rate === "" ? "—" : rate+"%")+
+          '</span></td>';
+      }).join("")+
       histories.map((v,k)=>renderMeeting(v,k,DATA)).join("")+
       '<td class="meeting-cell meeting-avg">' + (rider.avgBest?.length === 2 ?
         '<span class="meeting-avg-line">平均' + escape(rider.avgBest[0]) + '</span>' +
