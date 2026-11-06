@@ -48,7 +48,7 @@ button, input, select, textarea {
 }
 
 .tab-item.active {
-  color: var(--c-primary-d);
+  color: var(--c-gold-d);
 }
 
 .tab-item .tab-icon {
@@ -266,7 +266,7 @@ button, input, select, textarea {
 }
 
 .grade-gp {
-  background: var(--c-gp);
+  background: var(--c-charcoal);
   color: var(--w5);
 }
 .grade-sg {
@@ -275,33 +275,33 @@ button, input, select, textarea {
 }
 
 .grade-g1 {
-  background: var(--c-error);
+  background: var(--c-red);
   color: var(--c-surface);
 }
 
 .grade-g2 {
-  background: var(--c-info);
+  background: var(--c-blue);
   color: var(--c-surface);
 }
 
 .grade-g3 {
-  background: var(--c-success);
+  background: var(--c-green);
   color: var(--c-surface);
 }
 
 .grade-f1 {
-  background: var(--c-f1);
+  background: var(--c-brown);
   color: var(--c-surface);
 }
 
 .grade-f2, .grade-normal {
-  background: var(--c-f2);
+  background: var(--c-taupe);
   color: var(--c-surface);
 }
 
 .date-tab.active {
-  color: var(--c-primary-d);
-  border-bottom-color: var(--c-primary-d);
+  color: var(--c-gold-d);
+  border-bottom-color: var(--c-gold-d);
 }
 
 .list-head {
@@ -318,7 +318,7 @@ button, input, select, textarea {
   justify-content: center;
   gap: var(--space-small);
   min-height: 20px;
-  color: var(--c-primary-d);
+  color: var(--c-gold-d);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
   letter-spacing: normal;
@@ -340,7 +340,7 @@ button, input, select, textarea {
   width: 20px;
   height: 20px;
   flex: 0 0 20px;
-  color: var(--c-primary-d);
+  color: var(--c-gold-d);
   fill: currentColor;
 }
 
@@ -558,7 +558,7 @@ button, input, select, textarea {
 .venue-card .rchip:has(> .rchip-rebate) {
   position: relative;
   overflow: hidden;
-  border: var(--line-emphasis-width) solid var(--c-primary-d);
+  border: var(--line-emphasis-width) solid var(--c-gold-d);
 }
 .venue-card .rchip > .rchip-rebate {
   position: absolute;
@@ -570,7 +570,7 @@ button, input, select, textarea {
   padding: 0;
   border-radius: calc(var(--r-control) - var(--line-emphasis-width))
                  calc(var(--r-control) - var(--line-emphasis-width)) 0 0;
-  background: var(--c-primary-d);
+  background: var(--c-gold-d);
   color: var(--c-surface);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
@@ -624,7 +624,7 @@ button, input, select, textarea {
   width: 16px;
   height: 16px;
   fill: currentColor;
-  color: var(--c-primary-d);
+  color: var(--c-gold-d);
 }
 
 .venue-card .rchip-featured-icon {
@@ -642,7 +642,7 @@ button, input, select, textarea {
   position: relative;
   overflow: hidden;
   background: var(--c-surface);
-  border: var(--line-emphasis-width) solid var(--c-error);
+  border: var(--line-emphasis-width) solid var(--c-red);
 }
 
 /* First row is the warning strip. Keep the four-row race button geometry.
@@ -657,7 +657,7 @@ button, input, select, textarea {
   padding: 0;
   border-radius: calc(var(--r-control) - var(--line-emphasis-width))
                  calc(var(--r-control) - var(--line-emphasis-width)) 0 0;
-  background: var(--c-error);
+  background: var(--c-red);
   color: var(--c-surface);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
@@ -671,7 +671,7 @@ button, input, select, textarea {
 .venue-card .rchip.next.soon > small:not(.rchip-time) {
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
-  color: var(--c-error);
+  color: var(--c-red);
 }
 
 .venue-card .rchip:not(.canceled) > b {
@@ -703,7 +703,7 @@ button, input, select, textarea {
   margin-left: var(--space-1);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
-  color: var(--c-error);
+  color: var(--c-red);
   white-space: nowrap;
   flex: 0 0 auto;
 }

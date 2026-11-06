@@ -29,7 +29,7 @@ button,
       }
       .logo {
 
-        color: var(--c-primary-d);
+        color: var(--c-gold-d);
         letter-spacing: normal;
       }
       .logo span {
@@ -57,7 +57,7 @@ button,
         right: 2px;
         width: 8px;
         height: 8px;
-        background: var(--c-error);
+        background: var(--c-red);
         border-radius: 50%;
         border: var(--line-thin) solid var(--c-surface);
       }
@@ -73,7 +73,7 @@ button,
         display: none;
       }
       .tab-item.active {
-        color: var(--c-primary-d);
+        color: var(--c-gold-d);
       }
 
       .section-title {
@@ -91,7 +91,7 @@ button,
         flex: 0 0 4px;
         height: 22px;
         border-radius: var(--r-xxs);
-        background: var(--c-primary);
+        background: var(--c-gold);
       }
       .news-badge.point {
         background: var(--c-text);
@@ -177,13 +177,13 @@ button,
 
       .vcard-dl .ic { width: 12px; height: 12px; }
 
-      .g-gp { background: var(--c-gp); color: var(--w5); }
+      .g-gp { background: var(--c-charcoal); color: var(--w5); }
       .g-sg { background: var(--c-text); color: var(--w5); }
-      .g-g1 { background: var(--c-error); color: var(--c-surface); }
-      .g-g2 { background: var(--c-info); color: var(--c-surface); }
-      .g-g3 { background: var(--c-success); color: var(--c-surface); }
-      .g-f1 { background: var(--c-f1); color: var(--c-surface); }
-      .g-f2 { background: var(--c-f2); color: var(--c-surface); }
+      .g-g1 { background: var(--c-red); color: var(--c-surface); }
+      .g-g2 { background: var(--c-blue); color: var(--c-surface); }
+      .g-g3 { background: var(--c-green); color: var(--c-surface); }
+      .g-f1 { background: var(--c-brown); color: var(--c-surface); }
+      .g-f2 { background: var(--c-taupe); color: var(--c-surface); }
 
       .pickup-card {
         margin: 0 var(--space-section) var(--space-card);
@@ -222,8 +222,8 @@ button,
       }
       .app-header .logo .ic { width: 18px; height: 18px; }
       .date-tab.active {
-        color: var(--c-primary-d);
-        border-bottom-color: var(--c-primary-d);
+        color: var(--c-gold-d);
+        border-bottom-color: var(--c-gold-d);
       }
 
       .ic {
@@ -305,7 +305,7 @@ button,
         gap: var(--space-small);
         margin-left: auto;
         white-space: nowrap;
-        color: var(--c-primary-d);
+        color: var(--c-gold-d);
         font-size: var(--fs-14);
         font-weight: var(--fw-strong);
         line-height: 1;
@@ -315,7 +315,7 @@ button,
         width: 20px;
         height: 20px;
         flex: 0 0 20px;
-        color: var(--c-primary-d);
+        color: var(--c-gold-d);
         fill: currentColor;
       }
       .news-badge {
@@ -533,7 +533,7 @@ button,
       }
       .bn-dots { display: flex; justify-content: center; gap: var(--space-5); }
       .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-border); transition: width .2s; }
-      .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-primary); }
+      .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-gold); }
       .pk3 .kun-ic {
         width: 64px;
         height: 64px;
@@ -543,7 +543,7 @@ button,
         line-height: 1.3;
         text-align: center;
       }
-      .pk3 .pk-note { margin-left: auto; font-size: var(--fs-14); font-weight: var(--fw-strong); color: var(--c-error); white-space: nowrap; }
+      .pk3 .pk-note { margin-left: auto; font-size: var(--fs-14); font-weight: var(--fw-strong); color: var(--c-red); white-space: nowrap; }
 
 
       
@@ -632,7 +632,7 @@ button,
         width: 100%;
         padding: var(--space-2) var(--space-7);
         border-radius: var(--r-full);
-        background: var(--c-error);
+        background: var(--c-red);
         color: var(--c-surface);
         font-size: var(--fs-16);
         font-weight: var(--fw-strong);
@@ -657,7 +657,7 @@ button,
       .pk3 .pk-player .pk-text { flex: 0 0 auto; }
       .news-new {
 
-        color: var(--c-error);
+        color: var(--c-red);
         white-space: nowrap;
       }
 
@@ -727,7 +727,7 @@ button,
         margin-left: var(--space-1);
         font-weight: var(--fw-strong);
         white-space: nowrap;
-        color: var(--c-error);
+        color: var(--c-red);
         font-size: var(--fs-14);
         letter-spacing: normal;
       }
@@ -770,7 +770,7 @@ button,
       .venue-grid.g3 .vcard.deadline-soon .vcard-dl.soon,
       .pk3 .pk-deadline.soon {
         color: var(--c-surface);
-        background: var(--c-error);
+        background: var(--c-red);
         border-radius: var(--r-tag);
         padding: var(--space-2) var(--space-small);
       }

@@ -52,40 +52,41 @@
   --w8: #E68FB6;
   --w9: #A747CD;
 
-  /* ③ 状態カラー（グレードを含む）
-     GI/特GI → error、GII → info、GIII → success を直接参照。
-     GP・FI・FIIはこのグループで個別管理。SGは --c-text。
-     GP/SGの文字は --w5。旧グレード色の別名変数は作らない。 */
-  --c-success: #477868;
-  --c-info: #426E9A; /* informational blue; accessible on white */
-  --c-warning: #D89556;
-  --c-error: #A5374C;
-  --c-gp: #44494D;
-  --c-f1: #92684C; /* muted chestnut; white numeral contrast >=4.5:1 */
-  --c-f2: #7B7568; /* muted taupe; white numeral contrast >=4.5:1 */
+  /* ③ 基本カラー（色名で直接参照。金銀銅・背景・文字・罫線もここで管理）
+     GⅠ/特GⅠ=赤、GⅡ=青、GⅢ=緑、GP=チャコール、FⅠ=ブラウン、
+     FⅡ/普通=トープ、SG=本文色。GP/SG文字は車番黄色 --w5。 */
+  --c-green: #477868;
+  --c-blue: #426E9A;
+  --c-orange: #D89556;
+  --c-red: #A5374C;
+  --c-charcoal: #44494D;
+  --c-brown: #92684C;
+  --c-taupe: #7B7568;
 
-  /* ④ 共通色（ブランド・文字・背景・罫線。リンク色は --c-keirin を共有） */
-  --c-bg: #F8F7F4; /* HSL hue 45deg; low-chroma warm white */
+  /* 金・銀・銅：通常色と濃色 */
+  --c-gold: #E4CA7C;
+  --c-gold-d: #86733A;
+  --c-silver: #C9D0D4;
+  --c-silver-d: #626E75;
+  --c-bronze: #CAA080;
+  --c-bronze-d: #805A40;
+
+  /* 背景・文字・罫線 */
+  --c-bg: #F8F7F4;
   --c-surface: #FFFFFF;
   --c-border: #D0D4D6;
-  --c-border-control: #9CA4A8; /* input and interactive boundaries */
+  --c-border-control: #9CA4A8;
+  --c-sub: #656D71;
+  --c-text: #2B3135;
+
   /* Unified line system: 1px standard/control, 3px selected/race/focus. */
   --line-thin: 1px;
   --line-emphasis-width: 3px;
   --line-normal: var(--line-thin) solid var(--c-border);
   --line-control: var(--line-thin) solid var(--c-border-control);
-  --line-selected: var(--line-emphasis-width) solid var(--c-primary-d);
+  --line-selected: var(--line-emphasis-width) solid var(--c-gold-d);
   --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
   --line-focus: var(--line-emphasis-width) solid var(--c-keirin);
-  --c-sub: #656D71;
-  --c-text: #2B3135;
-  --c-primary: #E4CA7C; /* HSL hue 45deg; subdued gold */
-  --c-primary-d: #86733A; /* HSL hue 45deg; legible against white */
-  /* Medal colors: light fill / dark text or emphasis, matched in tone to gold. */
-  --c-silver: #C9D0D4;
-  --c-silver-d: #626E75;
-  --c-bronze: #CAA080;
-  --c-bronze-d: #805A40;
 
   /* Shared radii, shadows, and tap dimensions */
   --r-xxs: 2px; /* small accent lines */

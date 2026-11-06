@@ -43,9 +43,9 @@
 .venue-sort-options .sort-direction:empty { display: none; }
 
 .venue-sort-options .chip.active {
-  background: var(--c-primary);
+  background: var(--c-gold);
   color: var(--c-text);
-  border-color: var(--c-primary-d);
+  border-color: var(--c-gold-d);
 }
 .venue-sort-options .chip:focus-visible {
   outline: var(--line-focus);

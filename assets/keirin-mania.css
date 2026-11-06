@@ -9,7 +9,7 @@
   border: 0;
   border-bottom: var(--line-emphasis-width) solid transparent;
 }
-.info-tabs button.info-tab.active { border-bottom-color: var(--c-primary-d); }
+.info-tabs button.info-tab.active { border-bottom-color: var(--c-gold-d); }
 .sheet-overlay[hidden], .sheet[hidden] { display: none; }
 
 /* Original mania ratings, item buttons, and the full detailed sheet presentation. */
@@ -19,7 +19,7 @@
         font-weight: var(--fw-strong);
       }
       .mk-dbl { color: var(--w3); }
-      .mk-o { color: var(--c-success); }
+      .mk-o { color: var(--c-green); }
       .mk-tri { color: var(--c-keirin); }
       .mk-x { color: var(--c-text); }
 
@@ -100,7 +100,7 @@
         background: var(--c-bg);
         border-radius: var(--r-tag);
         font-size: var(--fs-12);
-        color: var(--c-warning);
+        color: var(--c-orange);
         flex-shrink: 0;
       }
       .sheet-body {
@@ -179,4 +179,4 @@
         color: var(--c-text);
       }
       .item-btn:active,
-      .item-btn.active { background: var(--c-primary); border-color: var(--c-primary-d); color: var(--c-text); }
+      .item-btn.active { background: var(--c-gold); border-color: var(--c-gold-d); color: var(--c-text); }

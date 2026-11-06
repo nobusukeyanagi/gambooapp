@@ -49,7 +49,7 @@ body { font-weight: var(--fw-normal); }
   height: var(--fs-14);
   flex: 0 0 auto;
   fill: currentColor;
-  color: var(--c-error);
+  color: var(--c-red);
 }
 .venue-grid.g3 .girls {
   height: auto;
@@ -83,7 +83,7 @@ body { font-weight: var(--fw-normal); }
   text-decoration: none;
 }
 .bottom-tab a.tab-item.active {
-  color: var(--c-primary-d);
+  color: var(--c-gold-d);
 }
 .bottom-tab a.tab-item:focus-visible {
   outline: var(--line-focus);
@@ -217,7 +217,7 @@ body { font-weight: var(--fw-normal); }
   display: block;
   width: var(--nav-icon-size);
   height: var(--nav-icon-size);
-  color: var(--c-primary-d);
+  color: var(--c-gold-d);
   fill: currentColor;
   flex: 0 0 auto;
 }
@@ -295,7 +295,7 @@ body { font-weight: var(--fw-normal); }
   width: 28px;
   height: 28px;
   flex: 0 0 28px;
-  color: var(--c-primary-d);
+  color: var(--c-gold-d);
   fill: currentColor;
 }
 .shared-app-header .header-race-icon:has(use[href$="#nav-keirin"]) {
@@ -372,7 +372,7 @@ body { font-weight: var(--fw-normal); }
   padding: 0 var(--space-section);
   border: var(--line-normal);
   background: transparent;
-  color: var(--c-primary-d);
+  color: var(--c-gold-d);
 }
 .shared-app-header .header-actions .cta-btn {
   padding: 0 var(--space-10);
@@ -406,7 +406,7 @@ body { font-weight: var(--fw-normal); }
   height: 13px;
   border: var(--line-thin) solid var(--c-surface);
   border-radius: var(--r-full);
-  background: var(--c-error);
+  background: var(--c-red);
 }
 .shared-app-header .header-actions :is(.icon-btn, .cta-btn):focus-visible {
   outline: var(--line-focus);

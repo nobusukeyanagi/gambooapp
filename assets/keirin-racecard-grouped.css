@@ -70,7 +70,7 @@
    backgrounds so their :first-child/:nth-child rules cannot override it. */
 .race-detail-scroll .mania-table thead tr:first-child th.section-selected,
 .race-detail-scroll .mania-table thead tr:nth-child(2) th.section-selected {
-  background: var(--c-primary-d);
+  background: var(--c-gold-d);
   color: var(--c-surface);
 }
 /* Buttons inside the selected mania section intentionally retain their
@@ -243,22 +243,22 @@
   background: var(--c-surface);
 }
 .race-detail-scroll .mania-table tbody tr td.marutoku-point-orange {
-  background: color-mix(in srgb, var(--c-warning) 20%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-orange) 20%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.marutoku-point-yellow {
-  background: color-mix(in srgb, var(--c-primary) 25%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-gold) 25%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.marutoku-point-green {
-  background: color-mix(in srgb, var(--c-success) 14%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-green) 14%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.position-highlight-lead {
-  background: color-mix(in srgb, var(--c-warning) 20%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-orange) 20%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.position-highlight-follow {
-  background: color-mix(in srgb, var(--c-success) 15%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-green) 15%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.position-highlight-other {
-  background: color-mix(in srgb, var(--c-primary) 25%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-gold) 25%, var(--c-surface));
 }
 
 /* In the racecard legend, explanations start at the same left edge as

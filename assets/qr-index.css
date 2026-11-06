@@ -14,7 +14,7 @@
     .login-panel input:focus{outline: var(--line-focus);border-color:var(--c-keirin);}
     .login-panel button{margin-top:18px;width:100%;padding:12px 20px;border:0;border-radius:8px;background:var(--c-keirin);color:var(--c-surface);font-weight: var(--fw-strong);}
     .login-panel button:hover,.btn-primary:hover{background:var(--c-keirin);}
-    .error{min-height:1.6em;margin:9px 0 -7px;color:var(--c-error);font-size:var(--fs-14);}
+    .error{min-height:1.6em;margin:9px 0 -7px;color:var(--c-red);font-size:var(--fs-14);}
     .page-wrap{width:min(1170px,calc(100% - 48px));margin:0 auto;}
     main{padding:24px 0 52px;}
     .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;}

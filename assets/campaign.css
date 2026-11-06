@@ -47,8 +47,8 @@
   cursor: pointer;
 }
 .campaign-tabs .date-tab.active {
-  color: var(--c-primary-d);
-  border-bottom-color: var(--c-primary-d);
+  color: var(--c-gold-d);
+  border-bottom-color: var(--c-gold-d);
 }
 .campaign-tabs .date-tab:focus-visible,
 .campaign-page-arrow:focus-visible,
@@ -152,7 +152,7 @@
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
   line-height: 1.25;
-  color: var(--c-error);
+  color: var(--c-red);
   text-align: center;
   font-variant-numeric: tabular-nums;
 }

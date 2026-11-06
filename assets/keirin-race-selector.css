@@ -101,7 +101,7 @@
 }
 .race-detail-scroll .keirin-race-selector .race-tab.rebate {
   background: var(--c-surface);
-  border: var(--line-emphasis-width) solid var(--c-primary-d);
+  border: var(--line-emphasis-width) solid var(--c-gold-d);
 }
 .race-detail-scroll :is(.keirin-race-selector,.race-menu-scroll) > :is(.hscroll-cue,.hscroll-cue-l) {
   position: absolute;
@@ -151,7 +151,7 @@
 
 /* Urgent races use the SCR-02 red frame, not a remaining-minutes top band. */
 .race-detail-scroll .keirin-race-selector .race-tab.soon {
-  border: var(--line-emphasis-width) solid var(--c-error);
+  border: var(--line-emphasis-width) solid var(--c-red);
   background: var(--c-surface);
 }
 
@@ -255,9 +255,9 @@
   width: 80px;
   height: 64px;
   min-height: 64px;
-  border: var(--line-emphasis-width) solid var(--c-error);
+  border: var(--line-emphasis-width) solid var(--c-red);
   border-radius: var(--r-control);
-  background: var(--c-error);
+  background: var(--c-red);
   color: var(--c-surface);
   box-shadow: var(--e1);
   font-family: var(--ff-ui);

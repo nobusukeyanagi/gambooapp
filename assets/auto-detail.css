@@ -55,7 +55,7 @@
       .logo {
         font-size: var(--fs-16);
         font-weight: var(--fw-strong);
-        color: var(--c-primary-d);
+        color: var(--c-gold-d);
         letter-spacing: normal;
       }
       .logo span {
@@ -86,7 +86,7 @@
         right: 2px;
         width: 8px;
         height: 8px;
-        background: var(--c-error);
+        background: var(--c-red);
         border-radius: 50%;
         border: var(--line-thin) solid var(--c-surface);
       }
@@ -130,7 +130,7 @@
         cursor: pointer;
       }
       .tab-item.active {
-        color: var(--c-primary-d);
+        color: var(--c-gold-d);
       }
       .tab-item .tab-icon {
         font-size: var(--fs-18);
@@ -162,7 +162,7 @@
       }
       .hero-tag {
         font-size: var(--fs-12);
-        background: var(--c-primary);
+        background: var(--c-gold);
         color: var(--c-text);
         padding: 1px 6px;
         border-radius: 3px;
@@ -192,7 +192,7 @@
         background: var(--c-border);
       }
       .dot.active {
-        background: var(--c-primary);
+        background: var(--c-gold);
         width: 12px;
         border-radius: 3px;
       }
@@ -215,7 +215,7 @@
         content: "";
         width: 3px;
         height: 14px;
-        background: var(--c-primary);
+        background: var(--c-gold);
         border-radius: 2px;
         display: inline-block;
       }
@@ -244,8 +244,8 @@
         cursor: pointer;
       }
       .date-tab.active {
-        color: var(--c-primary-d);
-        border-bottom-color: var(--c-primary-d);
+        color: var(--c-gold-d);
+        border-bottom-color: var(--c-gold-d);
       }
 
       .filter-chips {
@@ -272,9 +272,9 @@
         cursor: pointer;
       }
       .chip.active {
-        background: var(--c-primary);
+        background: var(--c-gold);
         color: var(--c-text);
-        border-color: var(--c-primary-d);
+        border-color: var(--c-gold-d);
       }
 
       .venue-card {
@@ -309,29 +309,29 @@
         color: var(--c-text);
       }
       .grade-gp {
-        background: var(--c-gp);
+        background: var(--c-charcoal);
       }
       .grade-g1 {
-        background: var(--c-error);
+        background: var(--c-red);
       }
       .grade-g2 {
-        background: var(--c-info);
+        background: var(--c-blue);
       }
       .grade-g3 {
-        background: var(--c-success);
+        background: var(--c-green);
       }
       .grade-f1 {
-        background: var(--c-f1);
+        background: var(--c-brown);
       }
       .grade-f2 {
-        background: var(--c-f2);
+        background: var(--c-taupe);
       }
 
       .rebate-badge {
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         background: var(--c-bg);
-        color: var(--c-warning);
+        color: var(--c-orange);
         border: var(--line-normal);
         padding: 1px 5px;
         border-radius: 3px;
@@ -357,11 +357,11 @@
       }
       .race-status {
         font-size: var(--fs-12);
-        color: var(--c-success);
+        color: var(--c-green);
         font-weight: var(--fw-strong);
       }
       .race-status.closing {
-        color: var(--c-error);
+        color: var(--c-red);
       }
       .race-status.closed {
         color: var(--c-sub);
@@ -414,7 +414,7 @@
         gap: 3px;
       }
       .action-btn.primary {
-        background: var(--c-primary);
+        background: var(--c-gold);
         color: var(--c-text);
       }
       .action-btn.outline {
@@ -446,7 +446,7 @@
       .pickup-reason-main {
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        color: var(--c-error);
+        color: var(--c-red);
       }
       .pickup-reason-sub {
         font-size: var(--fs-12);
@@ -473,7 +473,7 @@
         margin-top: 1px;
       }
       .news-badge.point {
-        background: var(--c-primary);
+        background: var(--c-gold);
       }
       .news-badge.keirin {
         background: var(--c-keirin);
@@ -518,7 +518,7 @@
         width: 40px;
         height: 40px;
         border-radius: var(--r-md);
-        background: linear-gradient(135deg, var(--c-keirin), var(--c-error));
+        background: linear-gradient(135deg, var(--c-keirin), var(--c-red));
         flex-shrink: 0;
         display: flex;
         align-items: center;
@@ -549,7 +549,7 @@
         gap: 6px;
       }
       .new-badge {
-        background: var(--c-error);
+        background: var(--c-red);
         color: var(--c-surface);
         font-size: var(--fs-12);
         padding: 0px 3px;
@@ -601,7 +601,7 @@
       }
       .race-countdown {
         font-size: var(--fs-12);
-        color: var(--c-success);
+        color: var(--c-green);
         font-weight: var(--fw-strong);
       }
 
@@ -632,8 +632,8 @@
         flex-shrink: 0;
       }
       .race-tab.active {
-        color: var(--c-primary-d);
-        border-bottom-color: var(--c-primary-d);
+        color: var(--c-gold-d);
+        border-bottom-color: var(--c-gold-d);
       }
       .race-tab.past {
         color: var(--c-sub);
@@ -660,8 +660,8 @@
         margin-bottom: -2px;
       }
       .info-tab.active {
-        color: var(--c-primary-d);
-        border-bottom-color: var(--c-primary-d);
+        color: var(--c-gold-d);
+        border-bottom-color: var(--c-gold-d);
       }
 
       .lineup-bar {
@@ -783,7 +783,7 @@
         color: var(--c-text);
       }
       .score-hi {
-        color: var(--c-error);
+        color: var(--c-red);
         font-weight: var(--fw-strong);
       }
       .rider-name {
@@ -803,7 +803,7 @@
       }
       .leg-escape {
         background: var(--c-bg);
-        color: var(--c-warning);
+        color: var(--c-orange);
       }
       .leg-chase {
         background: var(--c-bg);
@@ -837,7 +837,7 @@
         gap: 3px;
       }
       .action-bar-btn.primary {
-        background: var(--c-primary);
+        background: var(--c-gold);
         color: var(--c-text);
       }
       .action-bar-btn.secondary {
@@ -846,7 +846,7 @@
       }
 
       .user-card {
-        background: linear-gradient(135deg, var(--c-primary), var(--c-primary));
+        background: linear-gradient(135deg, var(--c-gold), var(--c-gold));
         margin: 8px;
         border-radius: var(--r-md);
         padding: 12px;
@@ -1019,7 +1019,7 @@
         top: 0;
         height: 100%;
         width: 46%;
-        background: var(--c-primary);
+        background: var(--c-gold);
         border-radius: var(--r-full);
       }
 
@@ -1034,7 +1034,7 @@
       }
 
       .maxcase {
-        outline: var(--line-thin) solid var(--c-error);
+        outline: var(--line-thin) solid var(--c-red);
         outline-offset: 1px;
       }
 
@@ -1176,12 +1176,12 @@
         font-variant-numeric: tabular-nums;
       }
       .race-tab.active {
-        background: var(--c-primary);
-        border-color: var(--c-primary-d);
+        background: var(--c-gold);
+        border-color: var(--c-gold-d);
         color: var(--c-text);
         box-shadow: var(--e1);
       }
-      .race-tab.active small { color: var(--c-primary-d); }
+      .race-tab.active small { color: var(--c-gold-d); }
 
       .race-tab.past {
         background: var(--c-surface);
@@ -1191,8 +1191,8 @@
       .race-tab.past b { font-weight: var(--fw-strong); }
       .race-tab.past small { color: var(--c-keirin); font-weight: var(--fw-strong); }
 
-      .race-tab.canceled b { color: var(--c-error); }
-      .race-tab.canceled small { color: var(--c-error); font-weight: var(--fw-strong); }
+      .race-tab.canceled b { color: var(--c-red); }
+      .race-tab.canceled small { color: var(--c-red); font-weight: var(--fw-strong); }
 
       .race-info-bar {
         background: var(--c-surface);
@@ -1226,7 +1226,7 @@
       .race-countdown {
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        color: var(--c-warning);
+        color: var(--c-orange);
         display: inline-flex;
         align-items: center;
         gap: 3px;
@@ -1260,8 +1260,8 @@
         margin-bottom: -2px;
       }
       .info-tab.active {
-        color: var(--c-primary-d);
-        border-bottom-color: var(--c-primary-d);
+        color: var(--c-gold-d);
+        border-bottom-color: var(--c-gold-d);
       }
 
       .mania-table .c-waku {
@@ -1341,7 +1341,7 @@
         font-weight: var(--fw-strong);
       }
       .num-blue { color: var(--c-keirin); }
-      .num-hi { color: var(--c-error); }
+      .num-hi { color: var(--c-red); }
 
       .frame-cell {
         width: 24px;
@@ -1375,7 +1375,7 @@
       }
 
       .mark { font-size: var(--fs-14); line-height: 1; color: var(--c-text); min-width: 16px; display: inline-block; }
-      .mark.tri { color: var(--c-primary-d); }
+      .mark.tri { color: var(--c-gold-d); }
       .mark.x { color: var(--c-sub); }
 
       .info-tabs .info-tab { flex: 1 1 0; min-width: 0; min-height: 46px; font-size: var(--fs-14); }
@@ -1437,7 +1437,7 @@
         font-variant-numeric: tabular-nums;
       }
       .race-table .res-mini .rk { font-weight: var(--fw-strong); }
-      .race-table .res-mini .rk.win { color: var(--c-error); }
+      .race-table .res-mini .rk.win { color: var(--c-red); }
       .race-table .res-mini .rk.in { color: var(--c-keirin); }
       .race-table .res-mini .rk.out { color: var(--c-sub); }
 
@@ -1453,8 +1453,8 @@
       }
 
       .mk, .mark { font-size: var(--fs-14); line-height: 1; display: inline-block; min-width: 16px; }
-      .mk-dbl, .mark.dbl { color: var(--c-error); }
-      .mk-o, .mark.o { color: var(--c-primary-d); }
+      .mk-dbl, .mark.dbl { color: var(--c-red); }
+      .mk-o, .mark.o { color: var(--c-gold-d); }
       .mk-tri, .mark.tri { color: var(--c-keirin); }
       .mk-x, .mark.x { color: var(--c-sub); }
       .mark { color: var(--c-text); }
@@ -1471,9 +1471,9 @@
       .app-header .logo .ic { width: 18px; height: 18px; }
 
       .venue-name { color: var(--c-text) !important; }
-      .action-btn.primary { background: var(--c-primary) !important; color: var(--c-text) !important; }
+      .action-btn.primary { background: var(--c-gold) !important; color: var(--c-text) !important; }
       .date-tab.active,
-      .top-tab.active { color: var(--c-primary-d) !important; border-bottom-color: var(--c-primary-d) !important; }
+      .top-tab.active { color: var(--c-gold-d) !important; border-bottom-color: var(--c-gold-d) !important; }
 
       .ic {
         outline: none;
@@ -1521,12 +1521,12 @@
         border-radius: var(--r-sm);
         flex-shrink: 0;
       }
-      .grade-gp { background: var(--c-gp); color: var(--w5); }
-      .grade-g1 { background: var(--c-error); color: var(--c-surface); }
-      .grade-g2 { background: var(--c-info); color: var(--c-surface); }
-      .grade-g3 { background: var(--c-success); color: var(--c-surface); }
-      .grade-f1 { background: var(--c-f1); color: var(--c-surface); }
-      .grade-f2 { background: var(--c-f2); color: var(--c-surface); }
+      .grade-gp { background: var(--c-charcoal); color: var(--w5); }
+      .grade-g1 { background: var(--c-red); color: var(--c-surface); }
+      .grade-g2 { background: var(--c-blue); color: var(--c-surface); }
+      .grade-g3 { background: var(--c-green); color: var(--c-surface); }
+      .grade-f1 { background: var(--c-brown); color: var(--c-surface); }
+      .grade-f2 { background: var(--c-taupe); color: var(--c-surface); }
 
       .ri-event {
         display: flex;
@@ -1553,25 +1553,25 @@
       .dl-pill {
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        color: var(--c-success);
+        color: var(--c-green);
         border: var(--line-thin) solid currentColor;
         border-radius: var(--r-full);
         padding: 1px 9px;
         white-space: nowrap;
         font-family: var(--ff-ui);
       }
-      .dl-pill.soon { color: var(--c-error); }
+      .dl-pill.soon { color: var(--c-red); }
 
       .race-tab.past small { color: var(--c-sub); }
       .hscroll .race-tabs { overflow: visible; width: max-content; min-width: 100%; }
 
-      .info-tab.active { color: var(--c-primary-d) !important; border-bottom-color: var(--c-primary-d) !important; }
+      .info-tab.active { color: var(--c-gold-d) !important; border-bottom-color: var(--c-gold-d) !important; }
       .race-tab.active {
-        background: var(--c-primary);
-        border-color: var(--c-primary-d);
+        background: var(--c-gold);
+        border-color: var(--c-gold-d);
         color: var(--c-text);
       }
-      .race-tab.active small { color: var(--c-primary-d); }
+      .race-tab.active small { color: var(--c-gold-d); }
       .race-tab.past small { color: var(--c-sub); }
 
       .mania-table td,
@@ -1720,8 +1720,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .rn .rk .s { color: var(--c-success); font-weight: var(--fw-strong); }
-      .rn .rk .a { color: var(--c-primary-d); font-weight: var(--fw-strong); }
+      .rn .rk .s { color: var(--c-green); font-weight: var(--fw-strong); }
+      .rn .rk .a { color: var(--c-gold-d); font-weight: var(--fw-strong); }
 
       .at .hd { font-size: var(--fs-16); font-weight: var(--fw-strong); }
       .at .pt { padding-right: 2px; }
@@ -1734,8 +1734,8 @@
         color: var(--c-sub);
       }
       .at .mark { font-size: var(--fs-16); }
-      .at .mark.dbl { color: var(--c-error); }
-      .at .mark.o { color: var(--c-primary-d); }
+      .at .mark.dbl { color: var(--c-red); }
+      .at .mark.o { color: var(--c-gold-d); }
       .at .mark.tri { color: var(--c-keirin); }
       .at .mark.x { color: var(--c-sub); }
 
@@ -1773,7 +1773,7 @@
         box-shadow: var(--e1);
         transition: left 0.15s;
       }
-      .sw[aria-checked="true"] { background: var(--c-primary); }
+      .sw[aria-checked="true"] { background: var(--c-gold); }
       .sw[aria-checked="true"] i { left: 20px; }
 
       .at.past .rch { min-width: 92px; }
@@ -1827,7 +1827,7 @@
       .at .sc.lo b { color: var(--c-sub); font-weight: var(--fw-strong); }
       .at .vsn { min-width: 44px; }
       .at .wl { font-size: var(--fs-16); font-weight: var(--fw-strong); letter-spacing: 0.04em; }
-      .at .wl.w { color: var(--c-error); }
+      .at .wl.w { color: var(--c-red); }
       .at .wl.l { color: var(--c-keirin); }
       .at .wl.e { color: var(--c-sub); }
       .at .pw { text-align: left; min-width: 64px; }
@@ -1873,7 +1873,7 @@
         margin: 0 auto;
         padding: 0 4px;
         border: var(--line-selected);
-        background: linear-gradient(var(--c-bg), var(--c-primary));
+        background: linear-gradient(var(--c-bg), var(--c-gold));
         box-shadow: var(--e1);
         font-family: var(--ff-ui);
         font-size: var(--fs-12);
@@ -1883,8 +1883,8 @@
         cursor: pointer;
       }
       .lb-btn.active {
-        background: linear-gradient(var(--c-primary), var(--c-primary));
-        border-color: var(--c-primary);
+        background: linear-gradient(var(--c-gold), var(--c-gold));
+        border-color: var(--c-gold);
       }
       .at-wrap.wet .lb-cap[data-w="湿走路"] { color: var(--c-keirin); }
       .lb-hint {
@@ -1948,7 +1948,7 @@
         border-radius: var(--r-sm);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        color: var(--c-primary-d);
+        color: var(--c-gold-d);
       }
       .lsheet-body { flex: 1; overflow: auto; }
       .ldt { width: 100%; border-collapse: collapse; font-size: var(--fs-12); font-family: var(--ff-ui); }
@@ -1972,7 +1972,7 @@
       }
       .ldt td.dn { text-align: left; font-family: var(--ff-ui); font-weight: var(--fw-strong); }
       .ldt .wk { width: 22px; height: 24px; font-size: var(--fs-16); }
-      .ldt .hi { color: var(--c-error); font-weight: var(--fw-strong); }
+      .ldt .hi { color: var(--c-red); font-weight: var(--fw-strong); }
       .lsheet-note { padding: 8px 12px 12px; font-size: var(--fs-12); color: var(--c-sub); }
       .lb-btn {
         min-width: 76px;
@@ -1985,7 +1985,7 @@
         font-weight: var(--fw-strong);
         white-space: nowrap;
       }
-      .lb-btn.active { background: var(--c-primary); border-color: var(--c-primary-d); color: var(--c-text); }
+      .lb-btn.active { background: var(--c-gold); border-color: var(--c-gold-d); color: var(--c-text); }
       .at .lb-div { border-left: var(--line-normal); }
       .at.lab .rn small.rk { margin-top: 2px; }
       .race-info-bar.ri-has-act {
@@ -2015,8 +2015,8 @@
       }
       .ri-btn::before { content: ""; position: absolute; inset: -2px 0; }
       .ri-btn .ic { width: 18px; height: 18px; }
-      .ri-btn.vote { background: var(--c-primary); color: var(--c-text); }
-      .ri-btn.live { background: var(--c-error); color: var(--c-surface); }
+      .ri-btn.vote { background: var(--c-gold); color: var(--c-text); }
+      .ri-btn.live { background: var(--c-red); color: var(--c-surface); }
       .ri-btn.live .ic { outline-color: color-mix(in srgb, var(--c-surface) 75%, transparent); }
       .race-tab.active { min-width: 86px; }
       .at td:not(.fx2),
@@ -2121,8 +2121,8 @@
       .race-tab.past small { color: var(--c-sub); font-weight: var(--fw-strong); }
       .race-tab.active { min-width: 90px; }
       .race-tab.active b { color: var(--c-text); }
-      .race-tab.active small { color: var(--c-primary-d); font-weight: var(--fw-strong); }
-      .race-tab.active.soon small { color: var(--c-error); }
+      .race-tab.active small { color: var(--c-gold-d); font-weight: var(--fw-strong); }
+      .race-tab.active.soon small { color: var(--c-red); }
       .race-tab.canceled { background: var(--c-bg); border-color: var(--c-bg); color: var(--c-sub); cursor: default; }
       .race-tab.canceled b,
       .race-tab.canceled small { color: var(--c-sub); font-weight: var(--fw-strong); }
@@ -2140,7 +2140,7 @@
       .ldt .wk { width: 24px; height: 24px; }
       .lb-btn { background: var(--c-surface); border: var(--line-normal); box-shadow: var(--e1); color: var(--c-text); font-weight: var(--fw-strong); }
       .lb-btn:active,
-      .lb-btn.active { background: var(--c-primary); border-color: var(--c-primary-d); color: var(--c-text); }
+      .lb-btn.active { background: var(--c-gold); border-color: var(--c-gold-d); color: var(--c-text); }
       .at td.fx2 { position: static; }
       .at th.fx2 { left: auto; z-index: 3; }
       .at .fx1 .sha-nm {
