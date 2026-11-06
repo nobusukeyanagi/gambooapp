@@ -927,11 +927,11 @@
         border-radius: var(--r-sm);
         flex-shrink: 0;
       }
-      .grade-gp, .grade-g1 { background: var(--c-red); color: var(--c-surface); }
+      .grade-gp, .grade-g1 { background: var(--c-magenta); color: var(--c-surface); }
       .grade-g2 { background: var(--c-blue); color: var(--c-surface); }
-      .grade-g3 { background: var(--c-green); color: var(--c-surface); }
-      .grade-f1 { background: var(--c-bronze); color: var(--c-surface); }
-      .grade-f2 { background: var(--c-silver); color: var(--c-surface); }
+      .grade-g3 { background: var(--c-green); color: black; }
+      .grade-f1 { background: var(--c-gold); color: black; }
+      .grade-f2 { background: var(--c-bronze); color: var(--c-surface); }
 
       .ri-event {
         display: flex;
