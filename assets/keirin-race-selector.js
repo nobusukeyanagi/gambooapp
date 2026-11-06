@@ -1,4 +1,4 @@
-/* SCR-201 race selector follows the published SCR-200 Hofu schedule.
+/* SCR-210 race selector follows the published SCR-200 Hofu schedule.
  * The HTML contains a verified 12-race fallback, so the screen also works if
  * the optional same-origin schedule refresh is unavailable. */
 (() => {
@@ -58,6 +58,6 @@
   };
   refresh().catch((error) => {
     // Keep the initially rendered 12 verified start times and visual statuses.
-    console.warn("SCR-201 is using the embedded SCR-200 schedule snapshot.", error);
+    console.warn("SCR-210 is using the embedded SCR-200 schedule snapshot.", error);
   });
 })();
