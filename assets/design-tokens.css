@@ -48,7 +48,7 @@
      1番は青みを含む白、2番は青みを含む黒。
      3・4・6・7・9番は白文字、1・5・8番は濃い文字。
      2番も白文字。いずれも文字コントラスト4.5:1以上。 */
-  --w1: #E9EEF2;
+  --w1: #F8FAFC;
   --w2: #424A54;
   --w3: #C13C50;
   --w4: #3178AD;
@@ -64,16 +64,16 @@
   --c-bronze-l: #CAA082;
   --c-orange: #D89556;
   --c-taupe: #7B7568;
-  --c-gold: #E4CA7C;
-  --c-gold-d: #86733A;
+  --c-gold-l: #E4CA7C;
+  --c-gold: #86733A;
   --c-green: #477868;
-  --c-silver: #C9CFD5;
-  --c-silver-d: #626C76;
+  --c-silver-l: #C9CFD5;
+  --c-silver: #626C76;
   --c-charcoal: #44494E;
   --c-blue: #426E9A;
   --c-red: #A5374C;
 
-  /* 背景・操作枠線（通常罫線は銀、補助文字は濃い銀、本文はチャコール） */
+  /* 背景・操作枠線（通常罫線は薄銀、補助文字は銀、本文はチャコール） */
   --c-bg: #F8F7F4;
   --c-surface: #FFFFFF;
   --c-border-control: #9CA4A8;
@@ -81,9 +81,9 @@
   /* Unified line system: 1px standard/control, 3px selected/race/focus. */
   --line-thin: 1px;
   --line-emphasis-width: 3px;
-  --line-normal: var(--line-thin) solid var(--c-silver);
+  --line-normal: var(--line-thin) solid var(--c-silver-l);
   --line-control: var(--line-thin) solid var(--c-border-control);
-  --line-selected: var(--line-emphasis-width) solid var(--c-gold-d);
+  --line-selected: var(--line-emphasis-width) solid var(--c-gold);
   --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
   --line-focus: var(--line-emphasis-width) solid var(--c-keirin);
 
