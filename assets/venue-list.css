@@ -290,7 +290,7 @@ button, input, select, textarea {
 }
 
 .grade-f1 {
-  background: var(--c-bronze-d);
+  background: var(--c-bronze);
   color: var(--c-surface);
 }
 
