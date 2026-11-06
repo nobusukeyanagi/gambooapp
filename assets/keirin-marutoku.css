@@ -45,7 +45,7 @@
    and green. Keep the highlights subtle and token-based, with white rows
    remaining the default throughout the racecard. */
 .race-detail-scroll .mania-table tbody tr td.marutoku-point-orange {
-  background: color-mix(in srgb, var(--c-orange) 20%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-bronze) 20%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.marutoku-point-yellow {
   background: color-mix(in srgb, var(--c-gold-light) 25%, var(--c-surface));
