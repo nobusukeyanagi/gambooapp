@@ -115,8 +115,11 @@
     const meta=parseMeeting(meeting,index,DATA);
     const results=meeting.results||[];
     // Every meeting has four standard race-day cells, including blank ones.
-    // Preserve extra cells for longer fixtures (e.g. six-day meetings).
-    const slots=Array.from({length:Math.max(4,results.length)},(_,i)=>raceCard(results[i]));
+    // Longer fixtures can specify meetingDays / scheduledDays / days even
+    // before results arrive (e.g. a scheduled six-day meeting).
+    const declaredDays=Number(meeting.meetingDays ?? meeting.scheduledDays ?? meeting.days);
+    const scheduledDays=Number.isInteger(declaredDays)&&declaredDays>0?declaredDays:0;
+    const slots=Array.from({length:Math.max(4,scheduledDays,results.length)},(_,i)=>raceCard(results[i]));
     return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'"><div class="meeting-entry">'+
       '<div class="meeting-meta">'+
       '<span class="grade-badge grade-'+escape(meta.kind)+'">'+escape(meta.grade)+'</span>'+
