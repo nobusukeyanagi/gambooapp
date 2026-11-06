@@ -1,4 +1,4 @@
-/* Shared column renderer for SCR-201 防府5R: section order and cells stay aligned. */
+/* Shared column renderer for SCR-210 防府5R: section order and cells stay aligned. */
 (() => {
   "use strict";
   const escape = (x) => String(x ?? "").replace(/&/g, "&amp;")
