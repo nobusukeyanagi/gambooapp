@@ -4,7 +4,7 @@
 .mania-table .mania-eval { text-align: center; }
 .info-tabs button.info-tab {
   appearance: none;
-  font-family: inherit;
+  font-family: var(--ff-ui);
   background: transparent;
   border: 0;
   border-bottom: var(--line-emphasis-width) solid transparent;
@@ -37,7 +37,7 @@
         line-height: 1.15;
         
         cursor: pointer;
-        font-family: inherit;
+        font-family: var(--ff-ui);
       }
       .item-btn:active,
       .item-btn.active {
