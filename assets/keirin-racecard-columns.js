@@ -5,9 +5,23 @@
     .replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const waku = [1,2,3,4,4,5,5,6,6];
   const legCss = {"追":"leg-chase","逃":"leg-escape","両":"leg-both"};
-  const marker = (x) => !x ? "" :
-    '<span class="mk ' + ({"◎":"mk-dbl","○":"mk-o","△":"mk-tri","×":"mk-x"}[x]||"") +
-    '">' + escape(x) + '</span>';
+  // All rank marks share one neutral stroke width and color rather than
+  // relying on unequal glyph outlines and per-symbol font colors.
+  const markShapes = {
+    "◎": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>',
+    "○": '<circle cx="12" cy="12" r="9"/>',
+    "△": '<path d="M12 3 L21 21 H3 Z"/>',
+    "×": '<path d="M5 5 L19 19 M19 5 L5 19"/>'
+  };
+  const marker = (x) => {
+    if (!x) return "";
+    const shape = markShapes[x];
+    return shape
+      ? '<span class="mk" role="img" aria-label="' + escape(x) +
+        '"><svg class="mk-symbol" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+        shape + '</svg></span>'
+      : '<span class="mk">' + escape(x) + '</span>';
+  };
   const placeGroups = ["ラインの先頭","2番手","3番手以降","単騎","競り"];
   const ranks = ["1着","2着","3着","着外"];
   // Section names live in the horizontal menu; only column headings remain.
