@@ -30,7 +30,7 @@
     var right = active.offsetLeft + active.offsetWidth;
     if (right > box.clientWidth - 26) box.scrollLeft = right - box.clientWidth + 34;
   });
-  /* SCR-200／SCR-300 venue rows and SCR-201 detailed race selector share full-height
+  /* SCR-200／SCR-300 venue rows and SCR-210 detailed race selector share full-height
      44px edge arrows; each tap jumps directly to the first or last race. */
   if (mode === "venue-list" || mode === "keirin-detail") {
     function initializeVenueRow(outer) {
@@ -48,7 +48,7 @@
       }
       function sync() {
         var current = Math.max(0, Math.min(maxLeft(), box.scrollLeft));
-        // The SCR-201 menu follows the same edge-arrow behavior as all
+        // The SCR-210 menu follows the same edge-arrow behavior as all
         // other horizontal scrollers: hide arrows at the corresponding end.
         left.hidden = current <= 1;
         right.hidden = current >= maxLeft() - 1;
