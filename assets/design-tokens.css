@@ -61,7 +61,6 @@
   /* ③ 基本カラー：金銀銅も一般色も同じ原則で管理（HSL色相順）。 */
   --c-bronze: #7E5B42;
   --c-orange: #D89556;
-  --c-taupe: #7B7568;
   --c-gold: #86733A;
   --c-green: #477868;
   --c-silver: #626C76;
@@ -69,11 +68,10 @@
   --c-blue: #426E9A;
   --c-red: #A5374C;
 
-  /* 基本9色に対応する薄色はすべて「基本色40% + 白60%」から算出。
+  /* 基本8色に対応する薄色はすべて「基本色40% + 白60%」から算出。
      薄色を固定HEXで持たず、基本色の変更に自動で追従する。 */
   --c-bronze-light: color-mix(in srgb, var(--c-bronze) 40%, white 60%);
   --c-orange-light: color-mix(in srgb, var(--c-orange) 40%, white 60%);
-  --c-taupe-light: color-mix(in srgb, var(--c-taupe) 40%, white 60%);
   --c-gold-light: color-mix(in srgb, var(--c-gold) 40%, white 60%);
   --c-green-light: color-mix(in srgb, var(--c-green) 40%, white 60%);
   --c-silver-light: color-mix(in srgb, var(--c-silver) 40%, white 60%);
