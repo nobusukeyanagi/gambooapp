@@ -155,7 +155,7 @@
   transform: translateY(-50%);
   width: var(--line-thin);
   height: 26px;
-  background: var(--c-silver-l);
+  background: var(--c-border);
   pointer-events: none;
 }
 /* Match 50px meeting labels and race-result tiles: four fullwidth characters
@@ -187,7 +187,7 @@
   transform: translateY(-50%);
   width: var(--line-thin);
   height: 26px;
-  background: var(--c-silver-l);
+  background: var(--c-border);
   pointer-events: none;
 }
 .race-detail-scroll .mania-table .meeting-cell .res-note {
@@ -246,7 +246,7 @@
   background: color-mix(in srgb, var(--c-orange) 20%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.marutoku-point-yellow {
-  background: color-mix(in srgb, var(--c-gold-l) 25%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-gold-light) 25%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.marutoku-point-green {
   background: color-mix(in srgb, var(--c-green) 14%, var(--c-surface));
@@ -258,7 +258,7 @@
   background: color-mix(in srgb, var(--c-green) 15%, var(--c-surface));
 }
 .race-detail-scroll .mania-table tbody tr td.position-highlight-other {
-  background: color-mix(in srgb, var(--c-gold-l) 25%, var(--c-surface));
+  background: color-mix(in srgb, var(--c-gold-light) 25%, var(--c-surface));
 }
 
 /* In the racecard legend, explanations start at the same left edge as
