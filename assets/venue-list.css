@@ -276,11 +276,11 @@ button, input, select, textarea {
 }
 .grade-g3 {
   background: var(--c-green);
-  color: black;
+  color: var(--c-surface);
 }
 .grade-f1 {
   background: var(--c-gold);
-  color: black;
+  color: var(--c-surface);
 }
 .grade-f2, .grade-normal {
   background: var(--c-bronze);
@@ -294,7 +294,7 @@ button, input, select, textarea {
 }
 .sport-auto .grade-g2 {
   background: var(--c-green);
-  color: black;
+  color: var(--c-surface);
 }
 
 .date-tab.active {
