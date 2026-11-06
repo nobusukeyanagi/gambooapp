@@ -108,6 +108,7 @@
   box-sizing: border-box;
   display: grid;
   grid-template-rows: 16px 12px 12px;
+  row-gap: var(--space-5);
   justify-items: start;
   align-items: center;
   flex: 0 0 50px;
@@ -124,10 +125,7 @@
   text-align: left;
   white-space: nowrap;
 }
-/* Match the 3px between the rider's second (home) and third (age) lines. */
-.race-detail-scroll .mania-table .meeting-cell .meeting-meta .meeting-date {
-  margin-top: var(--space-3);
-}
+/* Equal 5px gaps between grade, venue and date; no per-row margin offset. */
 .race-detail-scroll .mania-table .meeting-cell .meeting-meta .grade-badge {
   display: inline-flex;
   align-items: center;
@@ -395,10 +393,10 @@
   box-shadow: none;
   border-right: var(--line-normal);
 }
-/* Every box-table heading is strong, selected or not.
-   Supporting rider metadata alone stays regular. */
+/* All box-table header labels, including inner 1着–着外 spans and
+   button labels, use the exact same strong weight regardless of column. */
 .race-detail-scroll .mania-table thead th,
-.race-detail-scroll .mania-table thead th .item-btn {
+.race-detail-scroll .mania-table thead th * {
   font-weight: var(--fw-strong);
 }
 .race-detail-scroll .mania-table tbody td.c-name .rider-meta {
