@@ -6,7 +6,7 @@
       input,
       select,
       textarea {
-        font-family: inherit;
+        font-family: var(--ff-ui);
       }
 
 
