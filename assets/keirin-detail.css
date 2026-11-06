@@ -16,7 +16,7 @@
 
 
       .screen-label {
-        color: var(--c-silver-l);
+        color: var(--c-silver-light);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         text-transform: uppercase;
@@ -164,7 +164,7 @@
         cursor: pointer;
       }
       .chip.active {
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         color: var(--c-charcoal);
         border-color: var(--c-gold);
       }
@@ -314,7 +314,7 @@
         overflow-x: auto;
         flex: 1;
         scrollbar-width: thin;
-        scrollbar-color: var(--c-silver-l) transparent;
+        scrollbar-color: var(--c-silver-light) transparent;
       }
       .race-table {
         min-width: 400px;
@@ -378,7 +378,7 @@
         gap: var(--space-3);
       }
       .action-bar-btn.primary {
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         color: var(--c-charcoal);
       }
       .action-bar-btn.secondary {
@@ -686,7 +686,7 @@
         font-variant-numeric: tabular-nums;
       }
       .race-tab.active {
-        background: var(--c-gold-l);
+        background: var(--c-gold-light);
         border-color: var(--c-gold);
         color: var(--c-charcoal);
         box-shadow: var(--e1);
@@ -886,7 +886,7 @@
       .page-header-title .ic { width: 18px; height: 18px; }
       .app-header .logo { display: flex; align-items: center; gap: var(--space-5); }
       .app-header .logo .ic { width: 18px; height: 18px; }
-      .action-btn.primary { background: var(--c-gold-l) !important; color: var(--c-charcoal) !important; }
+      .action-btn.primary { background: var(--c-gold-light) !important; color: var(--c-charcoal) !important; }
       .date-tab.active,
       .top-tab.active { color: var(--c-gold) !important; border-bottom-color: var(--c-gold) !important; }
 
@@ -1003,7 +1003,7 @@
       }
       .ri-btn::before { content: ""; position: absolute; inset: -2px 0; }
       .ri-btn .ic { width: 18px; height: 18px; }
-      .ri-btn.vote { background: var(--c-gold-l); color: var(--c-charcoal); }
+      .ri-btn.vote { background: var(--c-gold-light); color: var(--c-charcoal); }
       .ri-btn.live { background: var(--c-red); color: var(--c-surface); }
       .ri-btn.live .ic { outline-color: color-mix(in srgb, var(--c-surface) 75%, transparent); }
       .mania-table td:not(.c-name),
