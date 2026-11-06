@@ -28,12 +28,19 @@
   text-align: center;
   white-space: nowrap;
   font-size: var(--fs-16);
-  font-weight: var(--fw-strong);
+  font-weight: var(--fw-normal);
   font-variant-numeric: tabular-nums;
+}
+.race-detail-scroll .mania-table tbody td.marutoku-value.marutoku-total {
+  font-weight: var(--fw-strong);
 }
 .race-detail-scroll .mania-table tbody td.marutoku-mark {
   min-width: 48px;
   text-align: center;
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table tbody td.marutoku-mark .mk {
+  font-weight: var(--fw-strong);
 }
 .race-detail-scroll .mania-table tbody td.marutoku-comment {
   width: 108px;
