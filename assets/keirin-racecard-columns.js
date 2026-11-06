@@ -154,7 +154,10 @@
         (p.emphasis[k]?" marutoku-point-"+p.emphasis[k]:"")+'">'+escape(v)+'</td>').join("")+
       '<td class="marutoku-mark">'+marker(p.mark)+'</td>'+
       '<td class="bl marutoku-comment">'+escape(p.comment)+'</td>'+
-      '<td class="bl score">'+escape(rider.score)+'</td>'+
+      '<td class="bl score"><span class="score-current">'+escape(rider.score)+'</span>'+
+        '<span class="score-previous">'+
+        (rider.previousScore ? '前'+escape(rider.previousScore) : '前—')+
+        '</span></td>'+
       rider.stats.map((v,k)=>'<td'+(k===0?' class="bl"':'')+'>'+escape(v)+'</td>').join("")+
       Array.from({length:4},(_,k)=>{
         const count=rider.recent4Months?.counts?.[k];
