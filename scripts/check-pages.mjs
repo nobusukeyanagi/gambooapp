@@ -118,7 +118,7 @@ async function checkCampaignPage(page, width) {
       radius: getComputedStyle(el).borderRadius
     })));
   if (detailAppearance.length !== 16 || detailAppearance.some(a =>
-      a.border !== 'rgb(156, 164, 168)' || a.borderWidth !== '1px' ||
+      a.border !== 'rgb(156, 162, 168)' || a.borderWidth !== '1px' ||
       a.background !== 'rgb(255, 255, 255)' || a.shadow === 'none' || a.radius !== '8px'))
     fail(width+'px campaign detail buttons must use white background with a shared control border: '+
       JSON.stringify(detailAppearance));
@@ -464,7 +464,7 @@ async function checkCompactSectionHeader(page,width,file) {
      !bell.icon?.endsWith('#header-bell') || !deposit.icon?.endsWith('#header-card') ||
      data.controls.some(x=>x.h!==40||x.w<80||x.font!=='14px'||x.weight!=='600') ||
      bell.iconWidth!==20 || deposit.iconWidth!==18 ||
-     bell.borderWidth!=='1px'||bell.borderColor!=='rgb(156, 164, 168)'||
+     bell.borderWidth!=='1px'||bell.borderColor!=='rgb(156, 162, 168)'||
      bell.paddingLeft!=='8px'||deposit.paddingLeft!=='10px' ||
      deposit.borderWidth!=='0px'||deposit.bg!=='rgb(49, 119, 114)' ||
      Math.abs(data.titleTextX-53)>1 ||
@@ -723,7 +723,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   for (const st of raceStyles) {
     if (st.shadow === 'none') fail(width + 'px race button missing shadow: ' + st.classes);
     if (st.classes.includes('canceled') || st.classes.includes('soon')) continue;
-    const expectedBorder=st.hasRebate?'rgb(114, 109, 49)':'rgb(156, 164, 168)';
+    const expectedBorder=st.hasRebate?'rgb(114, 109, 49)':'rgb(156, 162, 168)';
     const expectedWidth=st.hasRebate?'3px':'1px';
     if(st.border!==expectedBorder || st.borderWidth!==expectedWidth)
       fail(width + 'px rebate buttons need gold 3px borders; other actions use grey 1px: '+
@@ -731,7 +731,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   }
   const sortBorders = await page.locator('.venue-sort-options .chip:not(.active)')
     .evaluateAll(nodes => nodes.map(n => getComputedStyle(n).borderTopColor));
-  if (sortBorders.some(c => c !== 'rgb(156, 164, 168)'))
+  if (sortBorders.some(c => c !== 'rgb(156, 162, 168)'))
     fail(width + 'px inactive sort buttons must use the control border');
   // Regression of 3px urgent border, 44px arrow target and 14px sort label.
   const warningLabels = await page.locator('.venue-card .rchip.next.soon .rchip-warning')
