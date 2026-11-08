@@ -612,9 +612,9 @@ button,
         justify-content: flex-start;
       }
       .pk3 .pk-explain {
-        flex: 0 0 auto;
         white-space: normal;
         overflow-wrap: anywhere;
+        padding-right: var(--space-24);
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
@@ -683,7 +683,7 @@ button,
       }
       .pk3 {
         position: relative;
-        padding: var(--space-small) var(--space-content) var(--space-small) var(--space-10);
+        padding: var(--space-10) var(--space-content) var(--space-10) var(--space-10);
         align-items: center;
         gap: var(--space-section);
       }
@@ -706,51 +706,15 @@ button,
         background: transparent;
         object-fit: contain;
       }
-      /* The rider pager uses the same edge-cue look as SCR-200 and SCR-210.
-         The narrow columns preserve room for rider names and the deadline. */
-      .pk3 .pk-player-panel {
-        display: grid;
-        grid-template-columns: var(--tap-min) minmax(0, 1fr) var(--tap-min);
-        flex: 1 1 auto;
-        min-height: 0;
-      }
-      .pk3 .pk-nav {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        align-self: stretch;
-        min-height: 0;
-        padding: 0;
-        margin: 0;
-        appearance: none;
-        border: 0;
-        border-radius: 0;
-        background: var(--c-bg);
-        color: var(--c-silver);
-        box-shadow: none;
-        font-family: var(--ff-ui);
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent;
-      }
-      .pk3 .pk-prev { border-right: var(--line-normal); }
-      .pk3 .pk-next { border-left: var(--line-normal); }
-      .pk3 .pk-nav .ic {
-        display: block;
-        width: 18px;
-        height: 18px;
-        max-width: 100%;
-      }
-      .pk3 .pk-prev .ic { transform: rotate(180deg); }
-      .pk3 .pk-nav:focus-visible { outline: var(--line-focus); outline-offset: var(--space-2); }
       .pk3 .pk-compact-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
         min-width: 0;
+        flex: 1 1 auto;
         min-height: 0;
         position: relative;
-        padding: 0 var(--space-2);
         gap: var(--space-small);
       }
       .pk3 .pk-player {
@@ -780,7 +744,7 @@ button,
       }
        .pk3 .pk-race-time {
          position: absolute;
-         right: var(--space-2);
+         right: 0;
          bottom: 0;
          display: flex;
          flex: 0 0 auto;
@@ -861,8 +825,27 @@ button,
         height: auto;
         min-height: 86px;
       }
-      .pk3.pk-many-riders .pk-player-panel { flex: 0 0 auto; }
-      .pk3.pk-many-riders .pk-compact-row { min-height: 0; padding-block: var(--space-small); }
+      .pk3 .pk-next {
+        position: absolute;
+        z-index: 1;
+        top: var(--space-3);
+        right: var(--space-3);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 32px;
+        padding: 0;
+        border: var(--line-control);
+        border-radius: var(--r-sm);
+        background: var(--c-surface);
+        color: var(--c-silver);
+        box-shadow: var(--e1);
+        cursor: pointer;
+      }
+      .pk3 .pk-next .ic { width: 20px; height: 20px; }
+      .pk3 .pk-next:focus-visible { outline: var(--line-focus); outline-offset: 1px; }
+      .pk3.pk-many-riders .pk-compact-row { flex: 0 0 auto; min-height: 0; }
       .pk3.pk-many-riders .pk-two-rider-stack { padding-bottom: 0; }
       .pk3.pk-many-riders .pk-race-time { bottom: 0; }
       .pk3 .pk-two-rider-stack {
@@ -997,20 +980,14 @@ button,
         .news-head { flex-wrap: wrap; column-gap: var(--space-small); row-gap: var(--space-small); }
                 .news-item > .news-arrow { top: auto; bottom: var(--space-content); margin-top: 0; }
       }
-      /* Below standard handset width, keep rider names and race time clear. */
-      @media (max-width: 389px) {
-        .pk3 .pk-player-panel { grid-template-columns: 18px minmax(0, 1fr) 18px; }
-      }
       @media (max-width: 330px) {
-        .pk3 { gap: var(--space-2); padding-left: var(--space-7); padding-right: var(--space-2); }
-                .pk3 .kun { flex-basis: 50px; min-width: 50px; }
-                .pk3 img.kun-ic { width: 50px; height: 50px; }
+        .pk3 { gap: var(--space-5); padding-left: var(--space-7); padding-right: var(--space-7); }
+                .pk3 .kun { flex-basis: 54px; min-width: 54px; }
+                .pk3 img.kun-ic { width: 54px; height: 54px; }
                 .pk3 .pk-compact-row {
                   justify-content: space-between;
                   overflow: visible;
-                  padding-inline: 0;
                 }
-                .pk3 .pk-player-panel { grid-template-columns: 16px minmax(0, 1fr) 16px; }
                 .pk3 .pk-player,
                 .pk3 .pk-race-time { flex-shrink: 0; }
         
@@ -1022,5 +999,5 @@ button,
                   height: 80px;
                   min-height: 80px;
                 }
-
+                .pk3 .pk-next { top: var(--space-2); right: var(--space-2); }
       }
