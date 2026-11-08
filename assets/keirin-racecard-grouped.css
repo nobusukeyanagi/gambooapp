@@ -336,6 +336,9 @@
 .race-detail-scroll .mania-table tbody td .rank-number.rank-tint-3 {
   background: var(--c-bronze-light);
 }
+.race-detail-scroll .mania-table tbody td .rank-number.rank-tint-4 {
+  background: var(--c-green-light);
+}
 .race-detail-scroll .mania-table tbody td.c-g .g-val {
   margin-right: 0;
 }
@@ -746,7 +749,7 @@
 .race-detail-scroll .mania-table tbody td.meeting-avg {
   min-width: 100px;
 }
-/* Shared fixed mark-left/value-right layout for three integrated columns.
+/* Shared fixed mark-left/value-right layout for all integrated columns.
    Empty mark slots remain occupied so every rider's value stays aligned.
    A rank-number chip and the mark chip each keep their own background. */
 .race-detail-scroll .mania-table .stat-combined-layout {
@@ -780,7 +783,7 @@
 .race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell) .stat-combined-score {
   font-weight: var(--fw-strong);
 }
-.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell, .distance-combined-cell) {
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell, .distance-combined-cell, .analyzer-combined-cell) {
   text-align: center;
   background: var(--c-surface);
   color: var(--c-text-primary);
@@ -804,8 +807,8 @@
   padding-left: var(--space-2);
   padding-right: var(--space-2);
 }
-.race-detail-scroll .mania-table thead tr:nth-child(2) > th.distance-combined-heading,
-.race-detail-scroll .mania-table tbody td.distance-combined-cell {
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th:is(.distance-combined-heading, .analyzer-combined-heading),
+.race-detail-scroll .mania-table tbody td:is(.distance-combined-cell, .analyzer-combined-cell) {
   box-sizing: border-box;
   width: 90px !important;
   min-width: 90px !important;
@@ -814,7 +817,29 @@
   padding-right: var(--space-2);
 }
 /* The four standalone 周長別 rates match four-month results (60px). */
-.race-detail-scroll .mania-table tbody td.distance-rate .recent4-rate {
+.race-detail-scroll .mania-table tbody td:is(.distance-rate, .analyzer-rate-cell) .recent4-rate {
+  color: var(--c-text-primary);
+}
+/* Composite column headings should be centered across their whole cells,
+   not shifted into the numerical slot reserved for row data. */
+.race-detail-scroll .mania-table thead th:is(
+  .marutoku-combined-heading, .gindex-combined-heading,
+  .distance-combined-heading, .analyzer-combined-heading
+) {
+  text-align: center !important;
+  vertical-align: middle;
+}
+.race-detail-scroll .mania-table tbody td.analyzer-rate-cell,
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th.analyzer-rate-heading {
+  box-sizing: border-box;
+  width: 60px !important;
+  min-width: 60px !important;
+  max-width: 60px !important;
+  text-align: center;
+  white-space: nowrap;
+}
+.race-detail-scroll .mania-table tbody td.analyzer-rate-cell {
+  background: var(--c-surface);
   color: var(--c-text-primary);
 }
 .race-detail-scroll .mania-table tbody td.distance-rate {
