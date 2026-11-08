@@ -1,6 +1,6 @@
 /* Shared keirin / autorace display priority for all Gamboo app screens.
    Persist locally so navigation between standalone HTML screens keeps the order.
-   The setting changes position only; links, content and active states stay intact. */
+   The setting reorders sport content only; bottom navigation stays in a fixed order. */
 (function () {
   "use strict";
 
@@ -56,13 +56,8 @@
   function applyOrder(value) {
     order = value;
 
-    document.querySelectorAll(".bottom-tab").forEach(function (nav) {
-      orderSiblings(
-        nav.querySelector('a[href$="SCR-200_keirin.html"]'),
-        nav.querySelector('a[href$="SCR-300_autorace.html"]'),
-        order
-      );
-    });
+    // Bottom navigation is fixed on every page, regardless of display preference.
+    // Only the sport-specific content below may change order.
 
     applyHomeVenues(order);
 
