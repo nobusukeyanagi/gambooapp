@@ -340,31 +340,21 @@
         return {riderCount: entry.riders.length, entry: entry};
       })
     );
-    // The left/right arrows fill the entire player row, not the explanation.
-    const panel = document.createElement("div");
-    panel.className = "pk-player-panel";
-    const makeArrow = function (direction, text) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "pk-nav pk-" + direction;
-      button.title = text + config.title + "の対象選手";
-      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.setAttribute("class", "ic");
-      svg.setAttribute("aria-hidden", "true");
-      const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-      use.setAttribute("href", "#ic-chevron");
-      svg.appendChild(use);
-      button.appendChild(svg);
-      return button;
-    };
-    const prev = makeArrow("prev", "前の");
-    const next = makeArrow("next", "次の");
+    const next = document.createElement("button");
+    next.type = "button";
+    next.className = "pk-next";
+    next.title = "次の" + config.title + "の対象選手";
+    const arrow = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    arrow.setAttribute("class", "ic");
+    arrow.setAttribute("aria-hidden", "true");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", "#ic-chevron");
+    arrow.appendChild(use);
+    next.appendChild(arrow);
     row.id = "pk-" + type + "-riders";
     row.setAttribute("aria-live", "polite");
-    prev.setAttribute("aria-controls", row.id);
     next.setAttribute("aria-controls", row.id);
-    row.before(panel);
-    panel.append(prev, row, next);
+    card.appendChild(next);
 
     let index = 0;
     function show(newIndex) {
@@ -380,19 +370,15 @@
       card.classList.toggle("pk-many-riders", slide.riderCount >= 3);
       card.dataset.featuredIndex = String(index);
       card.dataset.riderCount = String(slide.riderCount);
-      prev.setAttribute("aria-label",
-        "前の" + config.title + "の対象選手を表示（現在 " + (index + 1) + " / " + slides.length + "）");
       next.setAttribute("aria-label",
         "次の" + config.title + "の対象選手を表示（現在 " + (index + 1) + " / " + slides.length + "）");
     }
-    function move(delta, event) {
+    next.addEventListener("click", function (event) {
       event.preventDefault();
       event.stopPropagation();
-      show((index + delta + slides.length) % slides.length);
-    }
-    prev.addEventListener("click", function (event) { move(-1, event); });
-    next.addEventListener("click", function (event) { move(1, event); });
-    if (slides.length <= 1) { prev.hidden = true; next.hidden = true; }
+      show((index + 1) % slides.length);
+    });
+    if (slides.length <= 1) next.hidden = true;
     show(0);
   });
 })();
