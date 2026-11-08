@@ -652,6 +652,7 @@ async function checkKeirinRaceInformation(page, width) {
       third:bar.querySelector('.ri-kind')?.textContent.trim(),
       fourth:[...fourth.children].map(x=>x.textContent.trim()),
       countdownText:countdown?.textContent.trim(),
+      deadlineFullwidthSpace:fourth.children[1]?.textContent.startsWith('　'),
       countdownFullwidthSpace:countdown?.textContent.startsWith('　'),
       countdownLast:countdown===fourth.lastElementChild,
       countdownColor:getComputedStyle(countdown).color,
@@ -669,7 +670,7 @@ async function checkKeirinRaceInformation(page, width) {
      result.third!=='Ｓ級 選抜'||
      result.fourth.join('|')!=='発走 12:57|BET締切 12:52|22分前'||
      !result.countdownLast || result.countdownText!=='22分前'||
-     !result.countdownFullwidthSpace ||
+     !result.deadlineFullwidthSpace || !result.countdownFullwidthSpace ||
      result.countdownColor!=='rgb(184, 71, 99)'||
      !result.fourthFits ||
      result.date!=='2026/11/03' ||
