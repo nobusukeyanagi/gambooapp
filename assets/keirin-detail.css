@@ -355,15 +355,15 @@
       }
       .leg-escape {
         background: var(--c-bg);
-        color: var(--c-bronze);
+        color: var(--c-red);
       }
       .leg-chase {
         background: var(--c-bg);
-        color: var(--c-blue);
+        color: var(--c-teal);
       }
       .leg-both {
         background: var(--c-bg);
-        color: var(--c-green);
+        color: var(--c-yellowgreen);
       }
       .action-bar-btn {
         flex: 1;

@@ -687,6 +687,21 @@ async function checkKeirinMania(page, width) {
   const overlay = page.locator(".phone-inner > .sheet-overlay");
   const allRiders = table.locator("tbody tr");
   if (await allRiders.count() !== 9) fail(width + "px nine riders not retained");
+  const legs=await allRiders.evaluateAll(rows=>rows.map(row=>{
+    const tag=row.querySelector('.leg-tag');
+    return {type:tag?.textContent.trim(),className:tag?.className,
+      color:tag?getComputedStyle(tag).color:null,
+      rider:row.querySelector('.rider-name')?.textContent.trim()};
+  }));
+  const expectedLegs=['追','逃','追','逃','追','逃','追','追','両'];
+  const expectedClass={追:'leg-chase',逃:'leg-escape',両:'leg-both'};
+  const expectedColor={追:'rgb(49, 119, 114)',逃:'rgb(184, 71, 99)',両:'rgb(79, 118, 50)'};
+  if(legs.length!==9||legs.some((leg,i)=>
+      leg.type!==expectedLegs[i]||
+      !leg.className?.split(' ').includes(expectedClass[leg.type])||
+      leg.color!==expectedColor[leg.type])||
+      legs[8].rider!=='山口貴弘')
+    fail(width+'px SCR-210 leg types/colors including #9 both are incorrect: '+JSON.stringify(legs));
   if (await table.locator(".mania-section-start").count() !== 1) fail(width + "px appended mania section missing");
   if (await table.locator(".item-btn").count() !== 8) fail(width + "px mania item buttons missing");
   if (await table.locator(".mania-eval").count() !== 81) fail(width + "px all evaluation cells not present");
