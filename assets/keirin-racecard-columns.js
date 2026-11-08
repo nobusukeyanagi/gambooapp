@@ -98,10 +98,10 @@
       sub("G指数","bl gindex-section-start"),
       sub("印","gindex-mark"),
       ...["順位","印","1着","2着","3着","着外"].map((label,i)=>
-        sub(label,"distance-col"+(i===0?" distance-rank-heading":"")+
+        sub(label,(i===0?"bl ":"")+"distance-col"+
+          (i===0?" distance-rank-heading":"")+
           (i===1?" distance-mark-heading":"")+
-          (i>=2?" distance-rate-heading":"")+
-          (i===0?" bl distance-section-start":"")))
+          (i>=2?" distance-rate-heading":"")))
     ];
     // Grouped headings share columns across the two header rows.
     // 1着P～印 are standalone 48px rowspan=2 headings, with no
