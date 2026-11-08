@@ -214,7 +214,7 @@
 .mypage-result-actions .mypage-result-action {
   display: inline-flex;
   min-width: 0;
-  min-height: var(--h-control);
+  min-height: var(--tap-min);
   align-items: center;
   justify-content: center;
   gap: var(--space-card);
