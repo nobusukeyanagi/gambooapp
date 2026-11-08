@@ -323,6 +323,7 @@
 }
 .race-detail-scroll .mania-table tbody td .leg-tag {
   font-size: var(--fs-16);
+  font-weight: var(--fw-normal);
 }
 /* The extra G-index mark has its own compact column. */
 .race-detail-scroll .mania-table :is(th,td).gindex-mark {
@@ -389,6 +390,27 @@
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
   line-height: 1.2;
+}
+
+/* Top three rates are ranked independently for win / 2-place / 3-place.
+   Color only the percentage label, not the entire 60px table cell. */
+.race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate:is(.recent4-rank-1,.recent4-rank-2,.recent4-rank-3) {
+  display: table;
+  box-sizing: border-box;
+  width: max-content;
+  margin-inline: auto;
+  padding-inline: var(--space-2);
+  border-radius: var(--r-xs);
+  color: var(--c-text-primary);
+}
+.race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate.recent4-rank-1 {
+  background: var(--c-gold-light);
+}
+.race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate.recent4-rank-2 {
+  background: var(--c-blue-light);
+}
+.race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate.recent4-rank-3 {
+  background: var(--c-bronze-light);
 }
 
 /* One-pixel vertical grid throughout the SCR-210 box table.
