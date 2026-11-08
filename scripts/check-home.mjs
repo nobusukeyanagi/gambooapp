@@ -322,6 +322,10 @@ async function checkCurrentPage(page, width) {
     return {
       separation:Math.abs(box.top-desc.bottom),
       border:getComputedStyle(panel).borderTopWidth,
+      buttonBorder:getComputedStyle(barLeft).borderTopWidth,
+      buttonBackground:getComputedStyle(barLeft).backgroundColor,
+      buttonForeground:getComputedStyle(barLeft).color,
+      buttonRadius:getComputedStyle(barLeft).borderTopLeftRadius,
       leftHeight:Math.abs(box.bottom-a.bottom),
       rightHeight:Math.abs(box.bottom-b.bottom),
       leftTop:Math.abs(a.top-box.top),
@@ -331,10 +335,13 @@ async function checkCurrentPage(page, width) {
       height:box.height
     };
   }));
-  if(bands.length!==4 || bands.some(x=>!x||x.separation>1||x.border!=='1px'||
-    x.leftHeight>1||x.rightHeight>1||Math.abs(x.leftTop-1)>1||
-    Math.abs(x.rightTop-1)>1||!x.leftOfRider||!x.rightOfRider||x.height<28))
-    fail(width+'px featured description divider or full-height left/right bands incorrect: '+
+  if(bands.length!==4 || bands.some(x=>!x||x.separation>1||x.border!=='0px'||
+    x.buttonBorder!=='1px'||x.buttonRadius!=='8px'||
+    x.buttonBackground!=='rgb(255, 255, 255)'||
+    x.buttonForeground==='rgb(255, 255, 255)'||
+    x.leftHeight>1||x.rightHeight>1||x.leftTop>1||
+    x.rightTop>1||!x.leftOfRider||!x.rightOfRider||x.height<28))
+    fail(width+'px featured no-divider or standard outlined left/right bands incorrect: '+
       JSON.stringify(bands));
   for(let i=0;i<4;i++){
     const card=featured.nth(i);
