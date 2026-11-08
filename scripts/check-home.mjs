@@ -347,6 +347,19 @@ async function checkCurrentPage(page, width) {
   if(autoToCarouselGap!==8)
     fail(width+'px auto-race venue grid to carousel spacing must use 8px token: '+autoToCarouselGap);
 
+  const streakSpacing=await page.locator('.pk3 .pk-player:has(.pk-note)').evaluateAll(players=>
+    players.map(player=>{
+      const name=player.querySelector('.pk-text').getBoundingClientRect();
+      const streak=player.querySelector('.pk-note').getBoundingClientRect();
+      return {gap:streak.left-name.right,
+        nameSize:getComputedStyle(player.querySelector('.pk-text')).fontSize,
+        streakSize:getComputedStyle(player.querySelector('.pk-note')).fontSize};
+    }));
+  if(streakSpacing.length!==2 || streakSpacing.some(item=>
+      Math.abs(item.gap-9)>0.6 || item.nameSize!=='16px'||item.streakSize!=='14px'))
+    fail(width+'px SCR-100 rider and winning-streak spacing must match SCR-200: '+
+      JSON.stringify(streakSpacing));
+
   // SCR-100 featured riders: center the name area beneath the description,
   // while venue/race/deadline remains fixed to the lower-right edge.
   const featuredAlignment=await page.locator('.pickup-card.pk3').evaluateAll(cards =>

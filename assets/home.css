@@ -770,7 +770,8 @@ button,
         font-weight: var(--fw-strong);
       }
       .pk3 .pk-player .pk-note {
-        margin-left: var(--space-1);
+        /* Match SCR-200: 2px flex gap + 7px margin = 9px name/streak spacing. */
+        margin-left: var(--space-7);
         font-weight: var(--fw-strong);
         white-space: nowrap;
         color: var(--c-red);
