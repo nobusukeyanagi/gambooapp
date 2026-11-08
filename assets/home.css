@@ -324,7 +324,7 @@ button,
         color: var(--c-surface);
         white-space: nowrap;
         flex-shrink: 0;
-        width: 76px;
+        width: 88px;
         height: 24px;
         display: inline-flex;
         align-items: center;
