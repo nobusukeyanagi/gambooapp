@@ -41,15 +41,3 @@
   font-weight: var(--fw-normal);
   line-height: 1.35;
 }
-/* The original source distinguishes emphasized figures by orange, yellow
-   and green. Keep the highlights subtle and token-based, with white rows
-   remaining the default throughout the racecard. */
-.race-detail-scroll .mania-table tbody tr td.marutoku-point-orange {
-  background: color-mix(in srgb, var(--c-bronze) 20%, var(--c-surface));
-}
-.race-detail-scroll .mania-table tbody tr td.marutoku-point-yellow {
-  background: color-mix(in srgb, var(--c-gold-light) 25%, var(--c-surface));
-}
-.race-detail-scroll .mania-table tbody tr td.marutoku-point-green {
-  background: color-mix(in srgb, var(--c-green) 14%, var(--c-surface));
-}
