@@ -26,11 +26,8 @@
   };
   const finalTypes={"2026-11-02":{"熊本":{"7":"A級チャレンジ決勝"}},"2026-11-04":{"豊橋":{"10":"A級決勝","11":"ガールズ決勝","12":"S級決勝"},"静岡":{"6":"ガールズ決勝","7":"A級決勝"},"奈良":{"7":"A級チャレンジ決勝"},"武雄":{"6":"ガールズ決勝","7":"A級チャレンジ決勝"}}};
   const giftIcon='<span class="rchip-bottom-icons"><span class="rchip-bottom-icon rchip-campaign" role="img" aria-label="キャンペーン"><svg class="rchip-campaign-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="./assets/bottom-nav-icons.svg?v=16#nav-campaign"></use></svg></span></span>';
-  const rebateBand='<span class="rchip-rebate">5%還元</span>';
-  const campaignLogo='<span class="rebate-logo" aria-label="5%還元"><svg class="rebate-campaign-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="./assets/bottom-nav-icons.svg?v=16#nav-campaign"></use></svg><span class="rebate-label">5%還元</span></span>';
-  const keirinLogo=campaignLogo.replace('aria-label="5%還元"',
-    'aria-label="決勝5%還元"').replace('<span class="rebate-label">5%還元</span>',
-    '<span class="rebate-label"><span>決勝</span><span>5%還元</span></span>');
+  const rebateBand='<span class="rchip-rebate">キャンペーン</span>';
+  const campaignLogo='<span class="rebate-logo" aria-label="キャンペーン"><svg class="rebate-campaign-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="./assets/bottom-nav-icons.svg?v=16#nav-campaign"></use></svg><span class="rebate-label">キャンペーン</span></span>';
   const girlsRaceIcon='<span class="rchip-bottom-icon rchip-girls" role="img" aria-label="ガールズ">' +
     '<svg class="girls-heart-icon" viewBox="0 0 24 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">' +
     '<use href="./assets/bottom-nav-icons.svg?v=16#girls-heart"></use></svg></span>';
@@ -73,7 +70,7 @@
     const eligible=rebateRaces[date]?.[venue];
     const isEligible=race => eligible==='all' || Array.isArray(eligible) && eligible.includes(race);
     const hasCampaign=!!eligible;
-    const headerCampaign=hasCampaign ? (kind==='autorace' ? campaignLogo : keirinLogo) : '';
+    const headerCampaign=hasCampaign ? campaignLogo : '';
     const heading = '<div class="venue-header"><div class="venue-header-line">' +
       '<span class="grade-badge ' + gradeClass + '">' + grade + '</span>' +
       '<span class="venue-title"><span class="venue-name">' + venue + '</span>' +
@@ -98,7 +95,7 @@
         ' role="group" aria-label="' +
         venue + ' ' + race + 'R ' + date + ' ' + dayState +
         (girlsRace ? ' ' + girlsRaceType : '') +
-        (rebate ? ' 5%還元' : '') + '（レース詳細は未収録）">' +
+        (rebate ? ' キャンペーン' : '') + '（レース詳細は未収録）">' +
         (rebate ? rebateBand : '') + '<b>' + race + 'R</b><small>' +
         dayState + '</small>' + bottomIcons + '</div></div>';
     }
