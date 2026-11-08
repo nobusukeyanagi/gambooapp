@@ -133,8 +133,8 @@ const expectedComputedStyles = [
   ['.date-tabs .date-tab.active', 'color', 'rgb(114, 109, 49)'],
   ['.venue-grid.g3 .vcard-r', 'fontWeight', '600'],
   ['.venue-grid.g3 .vcard-dl', 'fontWeight', '600'],
-  ['.venue-grid.g3 .vcard', 'borderTopColor', 'rgb(208, 212, 214)'],
-  ['.app-header .header-actions .icon-btn', 'borderTopColor', 'rgb(208, 212, 214)'],
+  ['.venue-grid.g3 .vcard', 'borderTopColor', 'rgb(201, 207, 213)'],
+  ['.app-header .header-actions .icon-btn', 'borderTopColor', 'rgb(156, 164, 168)'],
   ['.bottom-tab', 'height', '60px'],
   ['.bottom-tab .tab-item', 'rowGap', '0px'],
   ['.bottom-tab .tab-icon .ic', 'height', '32px'],
@@ -244,7 +244,7 @@ async function checkCurrentPage(page, width) {
       return {border:st.borderTopColor,width:st.borderTopWidth,leftWidth:st.borderLeftWidth};
     }));
   if(cardBorders.length!==10 || cardBorders.some(x=>
-      x.border!=='rgb(208, 212, 214)' || x.width!=='1px' || x.leftWidth!=='3px'))
+      x.border!=='rgb(201, 207, 213)' || x.width!=='1px' || x.leftWidth!=='3px'))
     fail(width+'px venue card line-normal / sport accent border wrong: '+JSON.stringify(cardBorders));
 
   // Measure the actual text width of 特GⅠ in a 36×20px badge at this viewport.
