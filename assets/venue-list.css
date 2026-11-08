@@ -529,10 +529,11 @@ button, input, select, textarea {
   outline-offset: var(--space-2);
 }
 
+/* Canceled races: shared neutral fill, matching frame and white R/status text. */
 .rchip.canceled {
-  background: var(--c-bg);
-  border: var(--line-control);
-  color: var(--c-text-secondary);
+  background: var(--c-text-secondary);
+  border: var(--line-thin) solid var(--c-text-secondary);
+  color: var(--c-surface);
   cursor: pointer;
 }
 

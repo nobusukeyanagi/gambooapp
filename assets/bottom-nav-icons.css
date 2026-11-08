@@ -11,8 +11,14 @@
 .page-header .page-header-title .header-race-icon {
   width: var(--nav-icon-size);
   height: var(--nav-icon-size);
-  color: var(--c-text-secondary);
   fill: currentColor;
+}
+/* Inactive footer icons use the next lighter neutral without changing header icons. */
+.bottom-tab .tab-item .tab-icon .ic {
+  color: var(--c-border-control);
+}
+.page-header .page-header-title .header-race-icon {
+  color: var(--c-text-secondary);
 }
 .bottom-tab .tab-item.active .tab-icon .ic {
   color: var(--c-gold);

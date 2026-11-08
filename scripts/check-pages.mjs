@@ -274,6 +274,16 @@ async function checkFixedBottomNav(page, context) {
     [...nav.querySelectorAll(':scope > a.tab-item')].map(a=>a.getAttribute('href'))));
   if(!navs.length || navs.some(links=>links.join('|')!==fixedBottomNavHrefs.join('|')))
     fail(context+' bottom navigation must stay in the fixed order: '+JSON.stringify(navs));
+  const navColors=await page.locator('.bottom-tab a.tab-item').evaluateAll(items=>
+    items.map(a=>({active:a.classList.contains('active'),
+      label:getComputedStyle(a).color,
+      icon:getComputedStyle(a.querySelector('.tab-icon .ic')).color})));
+  if(navColors.length!==5 || navColors.some(x=>{
+    const expected=x.active?'rgb(114, 109, 49)':'rgb(151, 161, 170)';
+    return x.label!==expected||x.icon!==expected;
+  }))
+    fail(context+' inactive footer labels and icons must use lighter neutral: '+
+      JSON.stringify(navColors));
 }
 
 async function checkMyPage(page, width) {
@@ -718,6 +728,16 @@ async function checkPredictionSort(page, width, isAutorace) {
     .evaluateAll(nodes => [...new Set(nodes.map(n => getComputedStyle(n).fontWeight))]);
   if (raceWeights.some(weight => weight !== '600'))
     fail(width + 'px race button fonts must be 600: ' + raceWeights.join(','));
+  const canceledStyles=await page.locator('.venue-card .rchip.canceled').evaluateAll(items=>
+    items.map(chip=>({bg:getComputedStyle(chip).backgroundColor,
+      border:getComputedStyle(chip).borderTopColor,
+      number:getComputedStyle(chip.querySelector('b')).color,
+      status:getComputedStyle(chip.querySelector('small')).color})));
+  if(canceledStyles.some(x=>x.bg!=='rgb(96, 107, 118)' ||
+      x.border!=='rgb(96, 107, 118)' ||
+      x.number!=='rgb(255, 255, 255)' ||
+      x.status!=='rgb(255, 255, 255)'))
+    fail(width+'px canceled race button colors must be consistent: '+JSON.stringify(canceledStyles));
   // Action buttons use the visible control boundary; cards use the lighter
   // passive border. Urgent/canceled states retain their semantic exceptions.
   // Every race button retains the canonical subtle shadow.
@@ -792,13 +812,20 @@ async function checkPredictionSort(page, width, isAutorace) {
         race:chip.querySelector('b')?.textContent, status:chip.querySelector('small')?.textContent,
         tag:chip.tagName, noLink:!chip.hasAttribute('href'),
         color:getComputedStyle(chip).color,
+        raceColor:getComputedStyle(chip.querySelector('b')).color,
+        statusColor:getComputedStyle(chip.querySelector('small')).color,
         bg:getComputedStyle(chip).backgroundColor,
         border:getComputedStyle(chip).borderTopColor
       })));
     if(canceled.length!==1 || canceled[0].race!=='6R' ||
        canceled[0].status!=='中止' || canceled[0].tag!=='A' ||
-       canceled[0].noLink || canceled[0].bg==='rgb(255, 255, 255)')
-      fail(width+'px Nov 3 Aomori 6R must be a non-clickable canceled demo: '+
+       canceled[0].noLink ||
+       canceled[0].bg!=='rgb(96, 107, 118)'||
+       canceled[0].border!=='rgb(96, 107, 118)'||
+       canceled[0].color!=='rgb(255, 255, 255)'||
+       canceled[0].raceColor!=='rgb(255, 255, 255)'||
+       canceled[0].statusColor!=='rgb(255, 255, 255)')
+      fail(width+'px Nov 3 Aomori 6R must use grey fill and white race/status text: '+
         JSON.stringify(canceled));
   }
   const arrowWidths = await page.locator('.venue-card .hscroll > .hscroll-cue, .venue-card .hscroll > .hscroll-cue-l')

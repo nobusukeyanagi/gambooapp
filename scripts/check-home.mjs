@@ -687,6 +687,15 @@ async function checkInteractions(page, width) {
   eq(await toggle.getAttribute('aria-pressed'), before === 'true' ? 'false' : 'true', width + 'px payout click');
   await toggle.press('Enter');
   eq(await toggle.getAttribute('aria-pressed'), before, width + 'px payout keyboard Enter');
+  const navColorAudit=await page.locator('.bottom-tab a.tab-item').evaluateAll(items=>
+    items.map(a=>({active:a.classList.contains('active'),
+      label:getComputedStyle(a).color,
+      icon:getComputedStyle(a.querySelector('.tab-icon .ic')).color})));
+  if(navColorAudit.length!==5 || navColorAudit.some(x=>{
+    const expected=x.active?'rgb(114, 109, 49)':'rgb(151, 161, 170)';
+    return x.label!==expected || x.icon!==expected;
+  }))
+    fail(width+'px home footer gray must be one step brighter: '+JSON.stringify(navColorAudit));
   const nav = page.locator(".bottom-tab");
   const keirin = nav.locator('a.tab-item[href="./SCR-200_keirin.html"]');
   const auto = nav.locator('a.tab-item[href="./SCR-300_autorace.html"]');
