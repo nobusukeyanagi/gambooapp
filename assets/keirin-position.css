@@ -58,7 +58,7 @@
 .race-detail-scroll .mania-table tbody td.position-stat.position-zero {
   color: var(--c-text-primary);
 }
-/* One text-sized badge, rather than a whole-cell fill, for ordered data. */
+/* Small badges remain for per-position results; the current lineup uses full-cell fills. */
 .race-detail-scroll .tone-tag {
   display: inline-flex;
   box-sizing: border-box;
@@ -72,7 +72,7 @@
 }
 .race-detail-scroll .tone-tag.tone-1 {
   color: var(--c-text-primary);
-  background: var(--c-red-light);
+  background: var(--c-magenta-light);
 }
 .race-detail-scroll .tone-tag.tone-2 {
   color: var(--c-text-primary);
@@ -86,7 +86,21 @@
   color: var(--c-text-primary);
   background: var(--c-bronze-light);
 }
+/* The current lineup cell is filled edge to edge, rather than using a text badge.
+   Keep all four categories regular-weight with black text. */
 .race-detail-scroll .mania-table tbody tr td.position-stat.position-current {
-  font-weight: var(--fw-strong);
+  font-weight: var(--fw-normal);
   white-space: nowrap;
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-current.position-tone-1 {
+  background: var(--c-magenta-light);
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-current.position-tone-2 {
+  background: var(--c-teal-light);
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-current.position-tone-3 {
+  background: var(--c-yellowgreen-light);
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-current.position-tone-4 {
+  background: var(--c-bronze-light);
 }
