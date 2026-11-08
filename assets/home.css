@@ -706,13 +706,12 @@ button,
         background: transparent;
         object-fit: contain;
       }
-      /* The line separates the explanation from the full-height player pager. */
+      /* Standard outline navigation bands fill the player area, without an explanation divider. */
       .pk3 .pk-player-panel {
         display: grid;
         grid-template-columns: 18px minmax(0, 1fr) 18px;
         flex: 1 1 auto;
         min-height: 0;
-        border-top: var(--line-normal);
       }
       .pk3 .pk-nav {
         display: flex;
@@ -722,17 +721,16 @@ button,
         min-height: 0;
         padding: 0;
         margin: 0;
-        border: 0;
-        border-radius: 0;
-        background: var(--c-silver-light);
+        border: var(--line-control);
+        border-radius: var(--r-control);
+        background: var(--c-surface);
+        box-shadow: var(--e1);
         color: var(--c-charcoal);
         font-family: var(--ff-ui);
-        font-size: var(--fs-18);
+        font-size: var(--fs-14);
         font-weight: var(--fw-strong);
         cursor: pointer;
       }
-      .pk3 .pk-prev { border-right: var(--line-normal); }
-      .pk3 .pk-next { border-left: var(--line-normal); }
       .pk3 .pk-nav:focus-visible { outline: var(--line-focus); outline-offset: -3px; }
       .pk3 .pk-compact-row {
         display: flex;
@@ -999,7 +997,7 @@ button,
                   padding-inline: 0;
                 }
                 .pk3 .pk-player-panel { grid-template-columns: 16px minmax(0, 1fr) 16px; }
-                .pk3 .pk-nav { font-size: var(--fs-16); }
+                .pk3 .pk-nav { font-size: var(--fs-12); }
                 .pk3 .pk-player,
                 .pk3 .pk-race-time { flex-shrink: 0; }
         
