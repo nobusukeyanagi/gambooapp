@@ -594,7 +594,7 @@ async function checkInteractions(page, width) {
     const autoUrl='https://gamboo.jp/bet/xt_autorace.aspx?mac=Console_Index&it=1&rno=';
     if(links.some(card=>card.tag!=='A'||card.href!==
         (card.sport==='keirin'?keirinUrl:autoUrl)) ||
-       links.filter(card=>card.sport==='keirin').length!==(day==='Nov 3'?11:8) ||
+       links.filter(card=>card.sport==='keirin').length!==11 ||
        links.filter(card=>card.sport==='autorace').length!==2)
       fail(width+'px '+day+' venue links incorrect: '+JSON.stringify(links));
   }
