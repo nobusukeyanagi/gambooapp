@@ -257,7 +257,7 @@
 /* Raise the circled-number glyph size so its central digit visually matches
    the plain placing numerals, without changing the badge size. */
 .race-detail-scroll .mania-table .meeting-cell .res-rank.res-rank-circled {
-  font-size: 21px;
+  font-size: 19px;
 }
 /* Unreported meeting days are empty placeholders, not a placed finisher. */
 .race-detail-scroll .mania-table .meeting-cell .res.res-empty .res-rank {
