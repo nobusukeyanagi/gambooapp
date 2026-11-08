@@ -1097,6 +1097,9 @@
       .race-detail-scroll .lineup-bar .lineup-car {
         box-sizing: border-box;
         flex: 0 0 24px;
+        width: 24px;
+        height: 24px;
+        font-size: var(--fs-14);
         border: var(--line-thin) solid var(--c-border-control);
         color: var(--c-text-primary);
       }
