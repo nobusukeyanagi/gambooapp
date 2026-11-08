@@ -253,8 +253,9 @@ button,
         align-items: center;
         gap: var(--space-5);
       }
-      /* Competition headers show both their accent bar and race pictogram. */
-      .vgroup-name.race-heading .race-heading-icon {
+      /* Reuse the venue heading pictogram sizes across sport-related headings.
+         Decorative left bars remain removed on SCR-100. */
+      :is(.vgroup-name.race-heading, .section-title.race-heading) .race-heading-icon {
         display: block;
         flex: 0 0 auto;
         width: 42px;
