@@ -683,6 +683,29 @@ async function checkInteractions(page, width) {
     width+'px fixed demo cards remain after date switching');
   const mask = await toggle.evaluate((el) => el.classList.contains('masked'));
   eq(mask, before === 'true', width + 'px payout mask restored');
+  const expectedNav=[
+    './SCR-100_bet.html','./SCR-200_keirin.html',
+    './SCR-300_autorace.html','./SCR-400_campaign.html',
+    './SCR-500_mypage.html'
+  ];
+  const readNav=()=>page.locator('.bottom-tab > a.tab-item').evaluateAll(items=>
+    items.map(el=>el.getAttribute('href')));
+  eq((await readNav()).join('|'),expectedNav.join('|'),
+    width+'px initial bottom navigation must be fixed');
+  await page.evaluate(()=>window.dispatchEvent(new StorageEvent('storage',{
+    key:'gamboo.sport-display-order',newValue:'auto'
+  })));
+  eq(await page.locator('[data-home-venues]').first().getAttribute('data-home-venues'),
+    'autorace',width+'px auto-first preference moves content');
+  eq((await readNav()).join('|'),expectedNav.join('|'),
+    width+'px auto-first preference must not move bottom navigation');
+  await page.evaluate(()=>window.dispatchEvent(new StorageEvent('storage',{
+    key:'gamboo.sport-display-order',newValue:'keirin'
+  })));
+  eq(await page.locator('[data-home-venues]').first().getAttribute('data-home-venues'),
+    'keirin',width+'px keirin-first preference restores content');
+  eq((await readNav()).join('|'),expectedNav.join('|'),
+    width+'px keirin-first preference must not move bottom navigation');
 }
 
 async function auditBrowser() {
