@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="./assets/design-tokens.css?v=82" />
     <link rel="stylesheet" href="./assets/bottom-nav-icons.css?v=19" />
     <link rel="stylesheet" href="./assets/app-base.css?v=3" />
-    <link rel="stylesheet" href="./assets/keirin-detail.css?v=26" />
+    <link rel="stylesheet" href="./assets/keirin-detail.css?v=27" />
       <link rel="stylesheet" href="./assets/keirin-detail-9car.css?v=3" />
     <link rel="stylesheet" href="./assets/keirin-mania.css?v=11" />
       <link rel="stylesheet" href="./assets/tap-feedback.css?v=5" />
     <link rel="stylesheet" href="./assets/ui-consistency.css?v=40" />
     <link rel="stylesheet" href="./assets/keirin-race-selector.css?v=32" />
     <link rel="stylesheet" href="./assets/keirin-marutoku.css?v=10" />
-    <link rel="stylesheet" href="./assets/keirin-position.css?v=11" />
-    <link rel="stylesheet" href="./assets/keirin-racecard-grouped.css?v=41" />
+    <link rel="stylesheet" href="./assets/keirin-position.css?v=12" />
+    <link rel="stylesheet" href="./assets/keirin-racecard-grouped.css?v=42" />
     <link rel="stylesheet" href="./assets/race-selector-shared.css?v=1" />
   </head>
   <body>
@@ -107,18 +107,18 @@
                 <div class="lineup-title">並び予想　提供：アオケイ</div>
                 <div class="lineup-row">
                 <span class="lineup-dir">←</span>
-                <div class="lineup-car"><span class="tone-tag tone-1">2</span></div>
-                <div class="lineup-car"><span class="tone-tag tone-1">5</span></div>
-                <div class="lineup-car"><span class="tone-tag tone-1">1</span></div>
+                <div class="lineup-car f2 tone-1">2</div>
+                <div class="lineup-car f5 tone-1">5</div>
+                <div class="lineup-car f1 tone-1">1</div>
                 <span class="lineup-sep" aria-label="ラインの区切り">・</span>
-                <div class="lineup-car"><span class="tone-tag tone-2">6</span></div>
-                <div class="lineup-car"><span class="tone-tag tone-2">3</span></div>
+                <div class="lineup-car f6 tone-2">6</div>
+                <div class="lineup-car f3 tone-2">3</div>
                 <span class="lineup-sep" aria-label="ラインの区切り">・</span>
-                <div class="lineup-car"><span class="tone-tag tone-3">4</span></div>
-                <div class="lineup-car"><span class="tone-tag tone-3">7</span></div>
-                <div class="lineup-car"><span class="tone-tag tone-3">8</span></div>
+                <div class="lineup-car f4 tone-3">4</div>
+                <div class="lineup-car f7 tone-3">7</div>
+                <div class="lineup-car f8 tone-3">8</div>
                 <span class="lineup-sep" aria-label="ラインの区切り">・</span>
-                <div class="lineup-car"><span class="tone-tag tone-4">9</span></div>
+                <div class="lineup-car f9 tone-4">9</div>
                 </div>
               </div>
               <a class="aokei-paper-btn" href="https://gamboo.jp/keirin/yoso/aokei?rdt=2026-11-03&amp;pid=63&amp;rno=5" aria-label="アオケイ電子新聞を開く">アオケイ<br />電子新聞</a>
@@ -131,16 +131,25 @@
             </div>
               <div class="rt-legend">
                 <div class="rt-legend-title">出走表の見方</div>
+                <p class="rt-legend-intro">初めて見るなら、まず「並び予想」「競走得点」「脚質」の3つをチェック。選手同士の連携と実力の目安がつかめます。</p>
                 <dl>
-                  <dt>選手名</dt><dd>2行目は府県（ホーム）、3行目は○期 ○歳</dd>
-                  <dt>級班</dt><dd>今期／前期</dd>
-                  <dt>直近4ヵ月／基本成績</dt><dd>競走得点、失違、逃・捲・差・マ（決まり手）、B、勝・2連対・3連対・着外の各率を表示</dd>
-                  <dt>直近7開催／着順・タイム</dt><dd>今開催・直近1～7の着順、みなし上がりタイム、B獲得・決まり手。末尾に連対時みなし上がりタイムの平均／最高を表示。未確認の開催は「—」表示</dd>
-                  <dt>マル得ポイント</dt><dd>1着P・2着P・3着P・総合P・印を表示</dd>
-                  <dt>コメント</dt><dd>選手のコメントを表示</dd>
-                  <dt>直近20走／並び別成績</dt><dd>直近20走（2026/10/20開催分まで集計）の並び別成績。ラインの先頭・2番手・3番手以降・単騎・競りの着順別回数と、イン粘り・追い上げの回数を別列で表示</dd>
-                  <dt>マニア分析</dt><dd>評価項目をタップすると、防府5Rの条件別詳細成績を表示</dd>
+                  <dt>① 並び予想（ライン）</dt>
+                  <dd>「・」で区切られた選手のまとまりがラインです。左から先頭、後ろに続く選手の順。薄色が同じ車番は同じラインの予想です。</dd>
+                  <dt>② 競走得点</dt>
+                  <dd>最近のレース成績をもとにした実力の目安。基本的には高いほど好成績です。このレースの上位3名は金・青・銅の薄色で表示しています。</dd>
+                  <dt>③ 脚質（逃・追・両）</dt>
+                  <dd>「逃」は前で仕掛けるタイプ、「追」は前の選手について最後に抜くタイプ、「両」は両方をこなせるタイプ。並び予想と一緒に見るとレース展開を想像しやすくなります。</dd>
+                  <dt>マル得ポイントとは？</dt>
+                  <dd>Gamboo独自の計算による着順の期待度です。「1着P」「2着P」「3着P」はそれぞれの着順に入る期待度を示し、数値が高いほどその着順への期待が大きくなります。「総合P」は3つを総合した値です。</dd>
+                  <dt>G指数とは？</dt>
+                  <dd>Gamboo独自の選手能力指数です。直近7場所の成績を重視し、欠場や級班変更なども補正して算出。競走得点と見比べると、近況の勢いを評価する手掛かりになります。</dd>
+                  <dt>決まり手・B・直近7開催</dt>
+                  <dd>「逃・捲・差・マ」はどんな方法で上位に入ったかを示します。「B」は最終周回のバックで先頭を通過した回数。直近7開催の着順やタイムで、最近の調子や得意な走り方を確認できます。</dd>
+                  <dt>直近20走・マニア分析</dt>
+                  <dd>直近20走では、ラインの先頭・番手・単騎など、位置ごとの着順実績を比較できます。マニア分析では、距離やレース条件を絞って過去の成績を確認できます。</dd>
                 </dl>
+                <p class="rt-legend-tip">迷ったら「競走得点とG指数で有力選手を探す → 並びと脚質で展開を考える → マル得ポイントで着順候補を比較する」の順がおすすめです。数値は予想の参考であり、結果を保証するものではありません。</p>
+                <p class="rt-legend-source"><a href="https://gamboo.jp/topics/?tid=keirin-yoso-about">Gamboo公式・予想情報の見方</a></p>
               </div>
             </div>
             </div><!-- /race-detail-scroll -->
@@ -191,7 +200,7 @@
     <script src="./assets/sport-display-order.js?v=2"></script>
     <script src="./assets/scroll-controls.js?v=7" data-scroll-mode="keirin-detail"></script>
     <script src="./assets/keirin-racecard-columns.js?v=23" defer></script>
-    <script src="./assets/keirin-mania.js?v=29" defer></script>
+    <script src="./assets/keirin-mania.js?v=30" defer></script>
     <script src="./assets/keirin-race-selector.js?v=4" defer></script>
       <script src="./assets/race-link-context.js?v=4" defer></script>
       <script src="./assets/tap-feedback.js?v=3" defer></script>

@@ -695,25 +695,25 @@ async function checkKeirinMania(page, width) {
   }));
   const expectedLegs=['追','逃','追','逃','追','逃','追','追','両'];
   const expectedClass={追:'leg-chase',逃:'leg-escape',両:'leg-both'};
-  const expectedColor={追:'rgb(49, 119, 114)',逃:'rgb(184, 71, 99)',両:'rgb(79, 118, 50)'};
+  const expectedColor={追:'rgb(48, 54, 59)',逃:'rgb(48, 54, 59)',両:'rgb(48, 54, 59)'};
   if(legs.length!==9||legs.some((leg,i)=>
       leg.type!==expectedLegs[i]||
       !leg.className?.split(' ').includes(expectedClass[leg.type])||
       leg.color!==expectedColor[leg.type])||
       legs[8].rider!=='山口貴弘')
     fail(width+'px SCR-210 leg types/colors including #9 both are incorrect: '+JSON.stringify(legs));
-  // Both four-way lineup colors and top-three score colors are text-sized labels.
+  // All classification letters are dark; color appears only in the light badge fill.
   const colored=await page.evaluate(()=>{
     const palette={
-      1:["#B84763","--c-red-light"],
-      2:["#317772","--c-teal-light"],
-      3:["#4F7632","--c-yellowgreen-light"],
-      4:["#9C5E40","--c-bronze-light"]
+      1:["#30363B","--c-red-light"],
+      2:["#30363B","--c-teal-light"],
+      3:["#30363B","--c-yellowgreen-light"],
+      4:["#30363B","--c-bronze-light"]
     };
     const rankPalette={
-      1:["#726D31","--c-gold-light"],
-      2:["#486BB1","--c-blue-light"],
-      3:["#9C5E40","--c-bronze-light"]
+      1:["#30363B","--c-gold-light"],
+      2:["#30363B","--c-blue-light"],
+      3:["#30363B","--c-bronze-light"]
     };
     const resolvedColor=hex=>{
       const probe=document.createElement('span');probe.style.color=hex;
@@ -730,13 +730,25 @@ async function checkKeirinMania(page, width) {
       getComputedStyle(el).color===resolvedColor(config[index][0]) &&
       getComputedStyle(el).backgroundColor===resolvedBg(config[index][1]);
     const parts=[...document.querySelectorAll('.lineup-row .lineup-car')].map(box=>{
-      const tag=box.querySelector('.tone-tag'),color=Number(tag?.className.match(/tone-([0-9]+)/)?.[1]);
-      return {car:Number(tag?.textContent),tone:color,
-        valid:isTone(tag,color,palette),
-        textOnly:tag?.getBoundingClientRect().width<box.getBoundingClientRect().width-1 &&
-          getComputedStyle(box).backgroundColor!==getComputedStyle(tag).backgroundColor};
+      const tone=Number(box.className.match(/tone-([0-9]+)/)?.[1]);
+      const number=Number(box.textContent.trim());
+      const bounds=box.getBoundingClientRect();
+      return {car:number,tone,valid:isTone(box,tone,palette),
+        iconRestored:bounds.width===24 && bounds.height===24 &&
+          box.classList.contains('f'+number) &&
+          getComputedStyle(box).borderStyle==='solid' &&
+          getComputedStyle(box).borderWidth==='1px'};
     });
     const rows=[...document.querySelectorAll('.mania-table tbody tr')];
+    const legFillTokens={逃:'--c-red-light',追:'--c-teal-light',両:'--c-yellowgreen-light'};
+    const legFill=rows.map(row=>{
+      const badge=row.querySelector('.leg-tag');
+      return {type:badge?.textContent.trim(),correct:!!badge &&
+        getComputedStyle(badge).color===resolvedColor('#30363B') &&
+        getComputedStyle(badge).backgroundColor===resolvedBg(legFillTokens[badge.textContent.trim()]) &&
+        badge.getBoundingClientRect().width<badge.parentElement.getBoundingClientRect().width-1 &&
+        getComputedStyle(badge.parentElement).backgroundColor==='rgb(255, 255, 255)'};
+    });
     const placements=rows.map(row=>{
       const cell=row.querySelector('td.position-current'),tag=cell?.querySelector('.tone-tag');
       const index=({"先頭":1,"番手":2,"3番手":3,"単騎":4})[tag?.textContent];
@@ -759,12 +771,13 @@ async function checkKeirinMania(page, width) {
           getComputedStyle(previous).backgroundColor==="rgba(0, 0, 0, 0)" &&
           getComputedStyle(badge.parentElement).backgroundColor==="rgb(255, 255, 255)"};
     });
-    return {parts,placements,scores};
+    return {parts,placements,scores,legFill};
   });
   const lineupNumbers=[2,5,1,6,3,4,7,8,9],lineupGroups=[1,1,1,2,2,3,3,3,4];
   if(colored.parts.length!==9||colored.parts.some((item,i)=>
       item.car!==lineupNumbers[i]||item.tone!==lineupGroups[i]||
-      !item.valid||!item.textOnly)||
+      !item.valid||!item.iconRestored)||
+     colored.legFill.length!==9||colored.legFill.some(x=>!x.correct)||
      colored.placements.length!==9||
      colored.placements.some(x=>!x.index||!x.valid)||
      colored.scores.length!==9||
@@ -772,6 +785,21 @@ async function checkKeirinMania(page, width) {
        !s.valid || !s.previousNeutral))
     fail(width+'px SCR-210 lineup/score text badges or four-way position colors incorrect: '+
       JSON.stringify(colored));
+  const legend=await page.locator('.rt-legend').evaluate(el=>({
+    text:el.innerText,
+    sections:[...el.querySelectorAll('dl dt')].map(x=>x.textContent.trim()),
+    link:el.querySelector('.rt-legend-source a')?.href,
+    introSize:getComputedStyle(el.querySelector('.rt-legend-intro')).fontSize,
+    hasIntro:!!el.querySelector('.rt-legend-intro')
+  }));
+  const mustExplain=['並び予想','競走得点','脚質','マル得ポイント','G指数',
+    '直近7場所','直近20走','マニア分析'];
+  if(!legend.hasIntro||legend.introSize!=='14px'||legend.sections.length!==7||
+     mustExplain.some(term=>!legend.text.includes(term))||
+     !legend.link?.includes('gamboo.jp/topics/?tid=keirin-yoso-about')||
+     legend.text.includes('選手のコメントを表示'))
+    fail(width+'px SCR-210 first-time guide missing useful explanations: '+
+      JSON.stringify(legend));
   if (await table.locator(".mania-section-start").count() !== 1) fail(width + "px appended mania section missing");
   if (await table.locator(".item-btn").count() !== 8) fail(width + "px mania item buttons missing");
   if (await table.locator(".mania-eval").count() !== 81) fail(width + "px all evaluation cells not present");

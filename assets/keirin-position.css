@@ -71,19 +71,19 @@
   white-space: nowrap;
 }
 .race-detail-scroll .tone-tag.tone-1 {
-  color: var(--c-red);
+  color: var(--c-text-primary);
   background: var(--c-red-light);
 }
 .race-detail-scroll .tone-tag.tone-2 {
-  color: var(--c-teal);
+  color: var(--c-text-primary);
   background: var(--c-teal-light);
 }
 .race-detail-scroll .tone-tag.tone-3 {
-  color: var(--c-yellowgreen);
+  color: var(--c-text-primary);
   background: var(--c-yellowgreen-light);
 }
 .race-detail-scroll .tone-tag.tone-4 {
-  color: var(--c-bronze);
+  color: var(--c-text-primary);
   background: var(--c-bronze-light);
 }
 .race-detail-scroll .mania-table tbody tr td.position-stat.position-current {

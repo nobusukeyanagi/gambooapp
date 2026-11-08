@@ -74,8 +74,8 @@
     if (lineup) {
       lineup.innerHTML = '<span class="lineup-dir">←</span>' +
         DATA.lineup.map((part, index) =>
-          part.map((car) => '<div class="lineup-car"><span class="tone-tag tone-' +
-            (index+1) + '">' + car + '</span></div>').join("")
+          part.map((car) => '<div class="lineup-car f' + car + ' tone-' +
+            (index+1) + '">' + car + '</div>').join("")
         ).join('<span class="lineup-sep" aria-label="ラインの区切り">・</span>');
       lineup.title = "情報元：アオケイ";
     }
