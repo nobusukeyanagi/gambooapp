@@ -340,21 +340,25 @@
         return {riderCount: entry.riders.length, entry: entry};
       })
     );
-    const next = document.createElement("button");
-    next.type = "button";
-    next.className = "pk-next";
-    next.title = "次の" + config.title + "の対象選手";
-    const arrow = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    arrow.setAttribute("class", "ic");
-    arrow.setAttribute("aria-hidden", "true");
-    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", "#ic-chevron");
-    arrow.appendChild(use);
-    next.appendChild(arrow);
+    // The left/right arrows fill the entire player row, not the explanation.
+    const panel = document.createElement("div");
+    panel.className = "pk-player-panel";
+    const makeArrow = function (direction, glyph, text) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "pk-nav pk-" + direction;
+      button.textContent = glyph;
+      button.title = text + config.title + "の対象選手";
+      return button;
+    };
+    const prev = makeArrow("prev", "＜", "前の");
+    const next = makeArrow("next", "＞", "次の");
     row.id = "pk-" + type + "-riders";
     row.setAttribute("aria-live", "polite");
+    prev.setAttribute("aria-controls", row.id);
     next.setAttribute("aria-controls", row.id);
-    card.appendChild(next);
+    row.before(panel);
+    panel.append(prev, row, next);
 
     let index = 0;
     function show(newIndex) {
@@ -370,15 +374,19 @@
       card.classList.toggle("pk-many-riders", slide.riderCount >= 3);
       card.dataset.featuredIndex = String(index);
       card.dataset.riderCount = String(slide.riderCount);
+      prev.setAttribute("aria-label",
+        "前の" + config.title + "の対象選手を表示（現在 " + (index + 1) + " / " + slides.length + "）");
       next.setAttribute("aria-label",
         "次の" + config.title + "の対象選手を表示（現在 " + (index + 1) + " / " + slides.length + "）");
     }
-    next.addEventListener("click", function (event) {
+    function move(delta, event) {
       event.preventDefault();
       event.stopPropagation();
-      show((index + 1) % slides.length);
-    });
-    if (slides.length <= 1) next.hidden = true;
+      show((index + delta + slides.length) % slides.length);
+    }
+    prev.addEventListener("click", function (event) { move(-1, event); });
+    next.addEventListener("click", function (event) { move(1, event); });
+    if (slides.length <= 1) { prev.hidden = true; next.hidden = true; }
     show(0);
   });
 })();
