@@ -158,7 +158,8 @@
   var tabs = Array.from(document.querySelectorAll(".scroll-area > .date-tabs [data-date]"));
   var keirinGrid = document.querySelector('[data-home-venues="keirin"]');
   var autoGrid = document.querySelector('[data-home-venues="autorace"]');
-  if (tabs.length !== 3 || !keirinGrid || !autoGrid) return;
+  var moriGrid = document.querySelector(".mori-venue-grid");
+  if (tabs.length !== 3 || !keirinGrid || !autoGrid || !moriGrid) return;
   function makeTile(data, sport, date) {
     var grade = gradeStyles[data.grade];
     if (!grade) return null;
@@ -209,6 +210,13 @@
     if (!data) return;
     keirinGrid.querySelectorAll('.vcard[data-demo]').forEach(function (tile) {
       tile.hidden = date !== referenceDay;
+    });
+    // Date tabs filter Mori's two card rows without modifying race information:
+    // yesterday: "本日出走" row, today: both, tomorrow: "次回予定" row.
+    moriGrid.querySelectorAll(".vcard[data-mori-row]").forEach(function (tile) {
+      tile.hidden = date < referenceDay
+        ? tile.dataset.moriRow === "next"
+        : date > referenceDay && tile.dataset.moriRow === "today";
     });
     [keirinGrid, autoGrid].forEach(function (grid, index) {
       var sport = index === 0 ? "keirin" : "autorace";
