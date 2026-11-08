@@ -291,17 +291,19 @@ async function checkMyPage(page, width) {
         '競輪とオートレースの推しメン登録')
     fail(width+'px mypage results must precede per-sport favorite headings: '+
       JSON.stringify(sectionOrder));
-  // Every section bar is the canonical gold, including My Results and Settings.
-  const sectionBars=await page.locator('.scroll-area .section-header > .section-title')
-    .evaluateAll(items=>items.map(el=>({
-      background:getComputedStyle(el,'::before').backgroundColor,
-      width:getComputedStyle(el,'::before').width,
-      height:getComputedStyle(el,'::before').height
+  // SCR-500 headings use natural spacing instead of decorative gold bars.
+  const sectionSpacing=await page.locator('.scroll-area .section-header > .section-title')
+    .evaluateAll(items=>items.map(label=>({
+      pseudo:getComputedStyle(label,'::before').content,
+      marginTop:getComputedStyle(label.parentElement).marginTop,
+      fontSize:getComputedStyle(label).fontSize,
+      fontWeight:getComputedStyle(label).fontWeight
     })));
-  if(sectionBars.length!==4 || sectionBars.some(item=>
-      item.background!=='rgb(114, 109, 49)'||item.width!=='4px'||item.height!=='22px'))
-    fail(width+'px all mypage section accents must use the standard gold: '+
-      JSON.stringify(sectionBars));
+  if(sectionSpacing.length!==4 || sectionSpacing.some(x=>
+      !['none','normal'].includes(x.pseudo) || x.marginTop!=='8px' ||
+      x.fontSize!=='20px' || x.fontWeight!=='600'))
+    fail(width+'px SCR-500 headings should be bar-free with 8px leading separation: '+
+      JSON.stringify(sectionSpacing));
 
   const userCardAccent=await page.locator('.user-card-top').evaluate(el=>{
     const st=getComputedStyle(el);
