@@ -212,6 +212,25 @@ async function checkCurrentPage(page, width) {
       }));
     return {keirin:read('keirin'),auto:read('autorace')};
   });
+  // All venue buttons are native outbound links to the supplied betting consoles.
+  const keirinBet='https://gamboo.jp/bet/xt_keirin.aspx?rmac=console_device-checker&it=1';
+  const autoraceBet='https://gamboo.jp/bet/xt_autorace.aspx?mac=Console_Index&it=1&rno=';
+  const venueLinks=await page.locator('[data-home-venues] > .vcard, .mori-venue-grid > .vcard.auto').evaluateAll(cards=>
+    cards.map(card=>({
+      element:card.tagName,
+      kind:card.closest('[data-home-venues]')?.dataset.homeVenues ||
+        (card.closest('.mori-venue-grid')?'autorace':'unknown'),
+      href:card.getAttribute('href'),
+      venue:card.querySelector('.vcard-name')?.textContent.trim(),
+      underline:getComputedStyle(card).textDecorationLine
+    })));
+  if(venueLinks.length!==16 || venueLinks.some(card=>
+    card.element!=='A'||
+    card.href!==(card.kind==='keirin'?keirinBet:autoraceBet)||
+    card.underline!=='none') ||
+    await page.locator('.mori-photo-tile a, a.mori-photo-tile').count()!==0)
+    fail(width+'px all keirin/autorace venue buttons must link to their consoles: '+
+      JSON.stringify(venueLinks));
   const keirinNames=['京王閣','小倉','玉野','防府','青森','豊橋','久留米','小田原','静岡','奈良','武雄'];
   const autoNames=['浜松','川口'];
   if (initial.keirin.map(x=>x.name).join('|')!==keirinNames.join('|') ||
@@ -564,6 +583,21 @@ async function checkInteractions(page, width) {
   }
   const dateTabs=page.locator('.scroll-area > .date-tabs [data-date]');
   const readNames=async (kind) => page.locator('[data-home-venues="'+kind+'"] > .vcard:not([data-demo]) .vcard-name').allTextContents();
+  async function checkLinksForDay(day) {
+    const links=await page.locator('[data-home-venues] > .vcard').evaluateAll(cards=>
+      cards.map(card=>({
+        sport:card.closest('[data-home-venues]')?.dataset.homeVenues,
+        tag:card.tagName,
+        href:card.getAttribute('href')
+      })));
+    const keirinUrl='https://gamboo.jp/bet/xt_keirin.aspx?rmac=console_device-checker&it=1';
+    const autoUrl='https://gamboo.jp/bet/xt_autorace.aspx?mac=Console_Index&it=1&rno=';
+    if(links.some(card=>card.tag!=='A'||card.href!==
+        (card.sport==='keirin'?keirinUrl:autoUrl)) ||
+       links.filter(card=>card.sport==='keirin').length!==(day==='Nov 3'?11:8) ||
+       links.filter(card=>card.sport==='autorace').length!==2)
+      fail(width+'px '+day+' venue links incorrect: '+JSON.stringify(links));
+  }
   const demos=page.locator('[data-home-venues="keirin"] > .vcard[data-demo]');
   async function checkDummyVisibility(visible,day) {
     const state=await demos.evaluateAll(nodes=>nodes.map(el=>({
@@ -577,8 +611,10 @@ async function checkInteractions(page, width) {
       fail(width+'px '+day+' should have '+(visible?11:8)+' keirin cards; got '+count);
   }
   await checkDummyVisibility(true,'Nov 3 initially');
+  await checkLinksForDay('Nov 3');
   await dateTabs.nth(0).click();
   await checkDummyVisibility(false,'Nov 2');
+  await checkLinksForDay('Nov 2');
   eq((await readNames('keirin')).join('|'),
     '防府|豊橋|久留米|小田原|静岡|奈良|武雄|熊本',width+'px Nov 2 grade and track-number order');
   eq((await readNames('autorace')).join('|'),'浜松|川口',width+'px Nov 2 real autorace');
@@ -586,6 +622,7 @@ async function checkInteractions(page, width) {
     fail(width+'px yesterday must not have next-race cutoffs');
   await dateTabs.nth(2).click();
   await checkDummyVisibility(false,'Nov 4');
+  await checkLinksForDay('Nov 4');
   eq((await readNames('keirin')).join('|'),
     '青森|大宮|豊橋|取手|静岡|奈良|武雄|別府',width+'px Nov 4 grade and track-number order');
   eq((await readNames('autorace')).join('|'),'川口|山陽',width+'px Nov 4 real autorace');
@@ -604,6 +641,7 @@ async function checkInteractions(page, width) {
     fail(width+'px presale must align right like ended: '+JSON.stringify(presales));
   await dateTabs.nth(1).click();
   await checkDummyVisibility(true,'Nov 3 restored');
+  await checkLinksForDay('Nov 3');
   eq((await readNames('keirin')).join('|'),
     '防府|青森|豊橋|久留米|小田原|静岡|奈良|武雄',width+'px Nov 3 grade and track-number order');
   eq(await dateTabs.nth(1).getAttribute('aria-selected'),'true',width+'px today selected');
