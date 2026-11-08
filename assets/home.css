@@ -807,8 +807,8 @@ button,
       /* All featured-rider cards share the existing single-rider card height.
          A two-rider card uses a compact, reusable 2-row player stack. */
       .pickup-card.pk3 {
-        height: 86px;
-        min-height: 86px;
+        height: 104px;
+        min-height: 104px;
       }
       .pk3 .pk-two-rider-stack {
         display: flex;
@@ -953,10 +953,6 @@ button,
                 .pk3 .pk-player,
                 .pk3 .pk-race-time { flex-shrink: 0; }
         
-        .pickup-card.pk3 {
-                  height: 100px;
-                  min-height: 100px;
-                }
                 .pk3.pk-two-riders {
                   padding-top: var(--space-7);
                   padding-bottom: var(--space-7);
