@@ -264,17 +264,29 @@ async function checkCampaignPage(page, width) {
 async function checkMyPage(page, width) {
   // SCR-500 is a static prototype: athlete tiles display names; separate
   // "変更する" links open the editors. Do not require obsolete card links.
-  const headings = await page.locator('.scroll-area > .section-header > .section-title')
+  const headings = await page.locator('.scroll-area .section-header > .section-title')
     .allTextContents();
-  if (headings.map(v=>v.trim()).join('|') !== 'マイ成績|推しメン登録|設定')
-    fail(width+'px mypage section order or new favorites heading changed: '+headings);
-  const sectionOrder=await page.locator('#mypage-results, #favorites-section').evaluateAll(items=>
-    items.map(el=>el.id));
-  if(sectionOrder.join('|')!=='mypage-results|favorites-section' ||
+  if (headings.map(v=>v.trim()).join('|') !==
+      'マイ成績|競輪推しメン|オートレース推しメン|設定')
+    fail(width+'px mypage section headings or order changed: '+headings);
+  const sectionOrder=await page.locator('#mypage-results, #favorites-section, #favorites-section-auto')
+    .evaluateAll(items=>items.map(el=>el.id));
+  if(sectionOrder.join('|')!=='mypage-results|favorites-section|favorites-section-auto' ||
       (await page.locator('.favorites-stack').getAttribute('aria-label'))!==
         '競輪とオートレースの推しメン登録')
-    fail(width+'px mypage results must precede favorite registration: '+
+    fail(width+'px mypage results must precede per-sport favorite headings: '+
       JSON.stringify(sectionOrder));
+  // Every section bar is the canonical gold, including My Results and Settings.
+  const sectionBars=await page.locator('.scroll-area .section-header > .section-title')
+    .evaluateAll(items=>items.map(el=>({
+      background:getComputedStyle(el,'::before').backgroundColor,
+      width:getComputedStyle(el,'::before').width,
+      height:getComputedStyle(el,'::before').height
+    })));
+  if(sectionBars.length!==4 || sectionBars.some(item=>
+      item.background!=='rgb(114, 109, 49)'||item.width!=='4px'||item.height!=='22px'))
+    fail(width+'px all mypage section accents must use the standard gold: '+
+      JSON.stringify(sectionBars));
 
   const avatar = page.locator('.user-avatar-photo');
   const loaded = await avatar.evaluate(el=>el.complete && el.naturalWidth===130 &&
@@ -306,7 +318,12 @@ async function checkMyPage(page, width) {
   const sports=await page.locator('.favorites-stack > .favorite-sport').evaluateAll(items=>
     items.map(sport=>({
       sport:sport.dataset.sport,
-      header:sport.querySelector('.favorite-sport-heading')?.textContent.trim(),
+      header:sport.querySelector('.section-header .section-title')?.textContent.trim(),
+      logo:(()=>{
+        const el=sport.querySelector('.section-header .favorite-sport-icon');
+        const st=getComputedStyle(el);
+        return {width:st.width,height:st.height,href:el.querySelector('use')?.getAttribute('href')};
+      })(),
       superCount:sport.querySelectorAll('.favorite-group--super .favorite-player-card').length,
       regularCount:sport.querySelectorAll('.favorite-group--regular .favorite-player-card').length,
       editors:[...sport.querySelectorAll('.favorite-group-change')].map(a=>a.getAttribute('href')),
@@ -318,7 +335,11 @@ async function checkMyPage(page, width) {
       }))
     })));
   if (sports.length!==2 || sports[0].sport!=='keirin'||sports[1].sport!=='auto'||
-      sports[0].header!=='競輪'||sports[1].header!=='オートレース'||
+      sports[0].header!=='競輪推しメン'||sports[1].header!=='オートレース推しメン'||
+      sports[0].logo.width!=='42px'||sports[0].logo.height!=='34px'||
+      sports[1].logo.width!=='37px'||sports[1].logo.height!=='34px'||
+      !sports[0].logo.href.endsWith('#nav-keirin')||
+      !sports[1].logo.href.endsWith('#nav-auto')||
       sports[0].superCount!==1||sports[0].regularCount!==10||
       sports[1].superCount!==1||sports[1].regularCount!==5||
       sports.some(s=>s.editors.length!==2 || s.editors.some(u=>!u?.startsWith('https://gamboo.jp/')) ||
@@ -348,12 +369,16 @@ async function checkMyPage(page, width) {
     fail(width+'px default sport order must prioritize keirin');
   await toggle.click();
   if(await toggle.getAttribute('aria-pressed')!=='true' ||
-     (await page.locator('.favorites-stack > .favorite-sport').first().getAttribute('data-sport'))!=='auto')
-    fail(width+'px sport-order toggle did not switch to autorace');
+     (await page.locator('.favorites-stack > .favorite-sport').first().getAttribute('data-sport'))!=='auto' ||
+     (await page.locator('.favorites-stack > .favorite-sport').first()
+       .locator('.section-header .section-title').innerText()).trim()!=='オートレース推しメン')
+    fail(width+'px sport-order toggle did not move auto heading together with its players');
   await toggle.click();
   if(await toggle.getAttribute('aria-pressed')!=='false' ||
-     (await page.locator('.favorites-stack > .favorite-sport').first().getAttribute('data-sport'))!=='keirin')
-    fail(width+'px sport-order toggle did not restore keirin');
+     (await page.locator('.favorites-stack > .favorite-sport').first().getAttribute('data-sport'))!=='keirin' ||
+     (await page.locator('.favorites-stack > .favorite-sport').first()
+       .locator('.section-header .section-title').innerText()).trim()!=='競輪推しメン')
+    fail(width+'px sport-order toggle did not restore keirin heading with its players');
 
   if (await page.locator('.phone-inner > .status-bar').count())
     fail(width+'px simulated status bar remains');
