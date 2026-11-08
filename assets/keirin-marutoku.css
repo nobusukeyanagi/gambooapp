@@ -23,14 +23,38 @@
   font-weight: var(--fw-normal);
   font-variant-numeric: tabular-nums;
 }
-.race-detail-scroll .mania-table tbody td.marutoku-value.marutoku-total {
-  font-weight: var(--fw-strong);
+/* A single 110px column combines two independent visual elements.
+   The grid exists in both the heading and all nine data rows, including
+   riders without a mark, so horizontal positions never shift. */
+.race-detail-scroll .mania-table .marutoku-combined-layout {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  column-gap: var(--space-2);
+  align-items: center;
+  width: 100%;
+  min-height: 24px;
+  margin: 0;
+  padding: 0;
 }
-.race-detail-scroll .mania-table tbody td.marutoku-mark {
+.race-detail-scroll .mania-table .marutoku-combined-layout > .marutoku-combined-mark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-self: center;
+  width: 32px;
+  min-width: 32px;
+  min-height: 24px;
+}
+.race-detail-scroll .mania-table .marutoku-combined-layout > .marutoku-combined-score {
+  display: block;
+  justify-self: center;
   text-align: center;
-  font-weight: var(--fw-strong);
+  white-space: nowrap;
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
 }
-.race-detail-scroll .mania-table tbody td.marutoku-mark .mk {
+.race-detail-scroll .mania-table tbody td.marutoku-combined-cell .marutoku-combined-score,
+.race-detail-scroll .mania-table tbody td.marutoku-combined-cell .marutoku-combined-mark .mk {
   font-weight: var(--fw-strong);
 }
 .race-detail-scroll .mania-table tbody td.player-comment {
