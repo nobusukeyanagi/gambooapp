@@ -734,6 +734,8 @@ async function checkKeirinMania(page, width) {
       const number=Number(box.textContent.trim());
       const bounds=box.getBoundingClientRect();
       return {car:number,tone,valid:isTone(box,tone,palette),
+        dimensions:[bounds.width,bounds.height],
+        border:[getComputedStyle(box).borderStyle,getComputedStyle(box).borderWidth],
         iconRestored:bounds.width===24 && bounds.height===24 &&
           box.classList.contains('f'+number) &&
           getComputedStyle(box).borderStyle==='solid' &&
