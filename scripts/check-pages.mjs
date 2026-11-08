@@ -262,394 +262,97 @@ async function checkCampaignPage(page, width) {
 }
 
 async function checkMyPage(page, width) {
-  const headings=await page.locator('.scroll-area > .section-header > .section-title').allTextContents();
-  if (headings.length!==3 ||
-      headings.map(x=>x.trim()).join('|')!==
-        '激推しメン・推しメン|マイ成績|設定')
-    fail(width+'px mypage section headings changed: '+headings);
-  const headingStyle=await page.locator('.scroll-area > .section-header > .section-title').first()
-    .evaluate(el=>{
-      const text=getComputedStyle(el),bar=getComputedStyle(el,'::before');
-      return {font:text.fontSize,weight:text.fontWeight,
-        accent:bar.backgroundColor,barW:bar.width,barH:bar.height};
-    });
-  if (headingStyle.font!=='20px' || headingStyle.weight!=='600' ||
-      headingStyle.accent!=='rgb(114, 109, 49)' ||
-      headingStyle.barW!=='4px' || headingStyle.barH!=='22px')
-    fail(width+'px mypage section headings must match SCR-100: '+JSON.stringify(headingStyle));
-  const icons=await page.locator('.scroll-area .profile-race-icon use').evaluateAll(nodes=>
-    nodes.map(n=>n.getAttribute('href')?.split('#')[1]));
-  if (icons.filter(x=>x==='nav-keirin').length!==1 ||
-      icons.filter(x=>x==='nav-auto').length!==1)
-    fail(width+'px mypage racing icons must use canonical SVG: '+JSON.stringify(icons));
-  const avatar=page.locator('.user-avatar > img.user-avatar-photo');
-  if (await avatar.count()!==1 || await avatar.getAttribute('src')!=='./assets/images/buta.png?v=2')
-    fail(width+'px mypage avatar image reference must be buta.png');
-  const avatarRadius=await page.locator('.user-avatar').evaluate(el=>getComputedStyle(el).borderRadius);
-  if(avatarRadius!=='12px')fail(width+'px avatar must use canonical --r-md (12px): '+avatarRadius);
-  const hero=await page.locator('.user-card-top').evaluate(el=>{
-    const card=el.getBoundingClientRect(),image=el.querySelector('.user-avatar').getBoundingClientRect(),
-      name=el.querySelector('.user-name').getBoundingClientRect(),
-      links=[...el.querySelectorAll('.user-card-actions a')].map(a=>{
-        const r=a.getBoundingClientRect(),style=getComputedStyle(a);
-        return {title:a.textContent.trim(),href:a.getAttribute('href'),
-          x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height,
-          font:style.fontSize,weight:style.fontWeight,bg:style.backgroundColor,
-          radius:style.borderRadius};
-      }),style=getComputedStyle(el);
-    return {height:card.height,left:card.left,right:card.right,
-      background:style.backgroundColor,gold:style.borderTopColor,
-      goldWidth:style.borderTopWidth,
-      imageWidth:image.width,imageHeight:image.height,imageInset:image.x-card.x,
-      imageBottom:image.bottom,nameBottom:name.bottom,
-      nameX:name.x,nameRight:name.right,links};
-  });
-  const [memberAction,profileAction]=hero.links;
-  if(hero.height<110||hero.height>145||hero.background!=='rgb(255, 255, 255)'||
-     hero.gold!=='rgb(114, 109, 49)'||hero.goldWidth!=='3px'||
-     hero.imageWidth!==54||hero.imageHeight!==54||hero.imageInset<8||
-     hero.links.length!==2||
-     memberAction.title!=='会員情報'||memberAction.href!=='#mypage-member'||
-     profileAction.title!=='プロフィール'||profileAction.href!=='#mypage-profile'||
-     memberAction.x>=profileAction.x||memberAction.right>profileAction.x||
-     Math.abs(memberAction.y-profileAction.y)>1||
-     Math.abs(memberAction.height-profileAction.height)>1||
-     memberAction.y<Math.max(hero.nameBottom,hero.imageBottom)||
-     hero.links.some(btn=>btn.height<44||btn.font!=='14px'||btn.weight!=='600'||
-       btn.bg!=='rgb(255, 255, 255)'||btn.radius!=='8px'||btn.right>hero.right+1)||
-     await page.locator('#mypage-member .favorite-route-card h2').textContent()!=='会員情報'||
-     await page.locator('#mypage-profile .favorite-route-card h2').textContent()!=='プロフィール')
-    fail(width+'px dual member/profile buttons must align below the name: '+JSON.stringify(hero));
-  const avatarImage=await avatar.evaluate(el=>({complete:el.complete,naturalWidth:el.naturalWidth,naturalHeight:el.naturalHeight,visible:el.getBoundingClientRect().width>0}));
-  if (!avatarImage.complete || avatarImage.naturalWidth!==130 || avatarImage.naturalHeight!==130 || !avatarImage.visible)
-    fail(width+'px uploaded buta.png must load as the original 130x130 image: '+JSON.stringify(avatarImage));
-  if (await page.locator('.phone-inner > .status-bar').count())
-    fail(width+'px SCR-500 must not show simulated 9:33/5G status bar');
-  // DELCA and refund use the exact SCR-100 markup and directly shared styles.
-  const balanceBar=page.locator('.phone-inner > .payout-bar.pt-h');
-  const bar=await balanceBar.evaluate(el=>{
-    const s=getComputedStyle(el),a=el.querySelectorAll('.pt-item');
-    return {height:el.getBoundingClientRect().height,bg:s.backgroundColor,
-      border:s.borderBottomColor,items:a.length,
-      names:[...el.querySelectorAll('.payout-label')].map(x=>x.textContent.trim()),
-      fonts:[...el.querySelectorAll('.payout-value.pay-shown,.delca-entry .payout-value')].map(x=>getComputedStyle(x).fontSize),
-      preceding:el.previousElementSibling?.classList.contains('page-header'),
-      following:el.nextElementSibling?.classList.contains('scroll-area')};
-  });
-  const home=await page.context().newPage();
-  let homeBar;
-  try {
-    await home.goto(new URL('./SCR-100_bet.html',page.url()).href,{waitUntil:'load'});
-    homeBar=await home.locator('.phone-inner > .payout-bar.pt-h').evaluate(el=>{
-      const s=getComputedStyle(el);
-      return {height:el.getBoundingClientRect().height,bg:s.backgroundColor,
-        border:s.borderBottomColor,items:el.querySelectorAll('.pt-item').length,
-        names:[...el.querySelectorAll('.payout-label')].map(x=>x.textContent.trim()),
-        fonts:[...el.querySelectorAll('.payout-value.pay-shown,.delca-entry .payout-value')].map(x=>getComputedStyle(x).fontSize)};
-    });
-  } finally {await home.close();}
-  if(Math.abs(bar.height-homeBar.height)>0.5 ||
-     bar.bg!==homeBar.bg || bar.border!==homeBar.border ||
-     bar.items!==homeBar.items ||
-     bar.names.join('|')!==homeBar.names.join('|') ||
-     bar.fonts.join('|')!==homeBar.fonts.join('|') ||
-     !bar.preceding || !bar.following)
-    fail(width+'px SCR-500 payout bar must match SCR-100 actual layout: '+
-      JSON.stringify({mypage:bar,home:homeBar}));
-  const toggle=balanceBar.locator('.pay-toggle');
-  if(await toggle.count()!==1||await toggle.getAttribute('aria-pressed')!=='true')
-    fail(width+'px refund initial masked state missing');
-  await toggle.click();
-  if(await toggle.getAttribute('aria-pressed')!=='false')
-    fail(width+'px refund click must reveal amount');
-  await toggle.press('Enter');
-  if(await toggle.getAttribute('aria-pressed')!=='true')
-    fail(width+'px refund keyboard toggle must restore mask');
-  if((await page.locator('.user-name').innerText()).trim()!=='ユーザー さん')
-    fail(width+'px profile username must be ユーザー さん');
-  const values=await page.evaluate(()=>{
-    const read=selector=>{
-      const s=getComputedStyle(document.querySelector(selector));
-      return [s.fontSize,s.fontWeight,s.color].join('/');
-    };
-    return ['.payout-label','.payout-value','.unit'].map(c=>
-      [read('.user-points '+c),read('.payout-bar '+c)]);
-  });
-  if(values.some(pair=>pair[0]!==pair[1]))
-    fail(width+'px Gamboo points must match balance bar text: '+JSON.stringify(values));
-  const expiryStyles=await page.locator('.user-card .pt3-row').evaluateAll(rows=>
-    rows.map(row=>['.point-label','.point-value','.unit'].map(selector=>{
-      const s=getComputedStyle(row.querySelector(selector));
-      return [s.fontSize,s.fontWeight,s.color,s.fontFamily].join('|');
+  // SCR-500 is a static prototype: athlete tiles display names; separate
+  // "変更する" links open the editors. Do not require obsolete card links.
+  const headings = await page.locator('.scroll-area > .section-header > .section-title')
+    .allTextContents();
+  if (headings.map(v=>v.trim()).join('|') !== '激推しメン・推しメン|マイ成績|設定')
+    fail(width+'px mypage section order changed: '+headings);
+
+  const avatar = page.locator('.user-avatar-photo');
+  const loaded = await avatar.evaluate(el=>el.complete && el.naturalWidth===130 &&
+    el.naturalHeight===130);
+  if (!loaded) fail(width+'px user avatar not loaded');
+
+  const profile = await page.locator('.user-card-actions a').evaluateAll(items =>
+    items.map(el=>({name:el.textContent.trim(),href:el.getAttribute('href'),
+      height:el.getBoundingClientRect().height})));
+  if (profile.length!==2 || profile[0].name!=='会員情報' ||
+      profile[0].href!=='https://gamboo.jp/member/' ||
+      profile[1].name!=='プロフィール' ||
+      profile[1].href!=='https://gamboo.jp/member/profile' ||
+      profile.some(x=>x.height<44))
+    fail(width+'px member/profile controls changed: '+JSON.stringify(profile));
+
+  const points = await page.locator('.point-actions > a.point-action').evaluateAll(items =>
+    items.map(el=>({href:el.getAttribute('href'),
+      x:el.getBoundingClientRect().x,y:el.getBoundingClientRect().y,
+      width:el.getBoundingClientRect().width,
+      height:el.getBoundingClientRect().height})));
+  if (points.length!==7 || points.some(p=>!p.href?.startsWith('https://') || p.height<44) ||
+      !(points[0].width > points[1].width*2) ||
+      !(points[1].y===points[2].y && points[2].y===points[3].y) ||
+      !(points[4].y===points[5].y && points[5].y===points[6].y))
+    fail(width+'px point shortcuts must have one full-width and two three-column rows: '+
+      JSON.stringify(points));
+
+  const sports=await page.locator('.favorites-stack > .favorite-sport').evaluateAll(items=>
+    items.map(sport=>({
+      sport:sport.dataset.sport,
+      header:sport.querySelector('.favorite-sport-heading')?.textContent.trim(),
+      superCount:sport.querySelectorAll('.favorite-group--super .favorite-player-card').length,
+      regularCount:sport.querySelectorAll('.favorite-group--regular .favorite-player-card').length,
+      editors:[...sport.querySelectorAll('.favorite-group-change')].map(a=>a.getAttribute('href')),
+      names:[...sport.querySelectorAll('.favorite-player-card')].map(card=>({
+        name:card.querySelector('.favorite-player-name')?.textContent.trim(),
+        affiliation:card.querySelector('.favorite-player-affiliation')?.textContent.trim(),
+        tag:card.tagName,
+        height:card.getBoundingClientRect().height
+      }))
     })));
-  if(expiryStyles.length!==2||expiryStyles[0].some((s,i)=>s!==expiryStyles[1][i]))
-    fail(width+'px expiring balance typography must exactly match Gamboo points: '+
-      JSON.stringify(expiryStyles));
-  if(await page.locator('.user-card .favorite-intro, .favorite-group-heading small').count()||
-     (await page.locator('.scroll-area').innerText()).includes('競技を選んで、') ||
-     (await page.locator('.scroll-area').innerText()).includes('1名登録・') ||
-     (await page.locator('.scroll-area').innerText()).includes('登録中'))
-    fail(width+'px favourites description text should be removed');
-  const menuText=await page.locator('.scroll-area').innerText();
-  if(['デルカ・投票口座','コンテンツ','ウイン履歴','成績・履歴','サポート',
-      'マイ成績（競輪）','マイ成績（オートレース）','投稿ブログ管理','デルカチャージ',
-      'KEIRIN.JP 口座登録'].some(label=>menuText.includes(label)))
-    fail(width+'px removed sections/entries still displayed');
-  const settings=await page.locator('.scroll-area > .menu-item .menu-text').allTextContents();
-  const expectedSettings=[
-    '競輪・オートレース表示順変更','友達を探す','パスワード変更','メールアドレス変更',
-    'メールマガジン変更','ログイン通知設定','外部アカウント連携'
-  ];
-  if(settings.length!==7||settings.some((label,i)=>label.trim()!==expectedSettings[i]))
-    fail(width+'px settings must contain exactly seven ordered entries: '+JSON.stringify(settings));
-  const firstSetting=await page.locator('.scroll-area > .settings-first').evaluate(el=>{
-    const style=getComputedStyle(el);return {label:el.querySelector('.menu-text')?.textContent.trim(),
-      topWidth:style.borderTopWidth,topColor:style.borderTopColor,
-      bottomWidth:style.borderBottomWidth};
-  });
-  if(firstSetting.label!=='競輪・オートレース表示順変更'||
-     firstSetting.topWidth!=='1px'||
-     firstSetting.topColor!=='rgb(201, 207, 213)'||
-     firstSetting.bottomWidth!=='1px')
-    fail(width+'px first setting needs top rule and new label: '+JSON.stringify(firstSetting));
-  const results=await page.locator('.mypage-result-actions > a').evaluateAll(links=>links.map(el=>{
-    const r=el.getBoundingClientRect(),cs=getComputedStyle(el),icon=el.querySelector('.mypage-result-icon');
-    return {name:el.textContent.trim(),href:el.getAttribute('href'),
-      width:r.width,height:r.height,x:r.x,y:r.y,icon:icon.querySelector('use')?.getAttribute('href'),
-      iconColor:getComputedStyle(icon).color,font:cs.fontSize,weight:cs.fontWeight,
-      bg:cs.backgroundColor,border:cs.borderTopWidth,radius:cs.borderRadius,shadow:cs.boxShadow};
-  }));
-  if(results.length!==2 || results[0].name!=='競輪'||results[1].name!=='オートレース'||
-     results[0].href!=='https://gamboo.jp/member/achievement/keirin'||
-     results[1].href!=='https://gamboo.jp/member/achievement/autorace'||
-     !results[0].icon?.endsWith('#nav-keirin')||!results[1].icon?.endsWith('#nav-auto')||
-     results[0].iconColor!=='rgb(71, 122, 148)'||
-     results[1].iconColor!=='rgb(172, 96, 90)'||
-     results.some(btn=>btn.width<70||btn.height<40||btn.font!=='14px'||
-       btn.weight!=='600'||btn.bg!=='rgb(255, 255, 255)'||
-       btn.border!=='1px'||btn.radius!=='8px'||btn.shadow==='none')||
-     Math.abs(results[0].y-results[1].y)>1 ||results[0].x>=results[1].x)
-    fail(width+'px My Results needs two canonical Keirin/Auto buttons: '+JSON.stringify(results));
-  for(const id of ['mypage-member','mypage-profile']) {
-    const link=page.locator('.user-card-actions a[href="#'+id+'"]');
-    if(await link.count()!==1) {
-      fail(width+'px user/result shortcut missing '+id);
-      continue;
-    }
-    await link.click();
-    const route=page.locator('.favorite-route:target');
-    if(await route.count()!==1 || await route.getAttribute('id')!==id)
-      fail(width+'px shortcut must open its independent mock '+id);
-    else {
-      await route.locator('.favorite-route-card a').click();
-      if(await page.locator('.favorite-route:target').count())
-        fail(width+'px shortcut return should close '+id);
-    }
-  }
+  if (sports.length!==2 || sports[0].sport!=='keirin'||sports[1].sport!=='auto'||
+      sports[0].header!=='競輪'||sports[1].header!=='オートレース'||
+      sports[0].superCount!==1||sports[0].regularCount!==10||
+      sports[1].superCount!==1||sports[1].regularCount!==5||
+      sports.some(s=>s.editors.length!==2 || s.editors.some(u=>!u?.startsWith('https://gamboo.jp/')) ||
+        s.names.some(n=>n.tag!=='DIV'||!n.name||!n.affiliation||n.height<44)))
+    fail(width+'px favorite-athlete groups or editor links changed: '+JSON.stringify(sports));
+  const grids=await page.locator('.favorite-player-grid').evaluateAll(items=>items.map(el=>
+    getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length));
+  if(grids.some(n=>n!==3))fail(width+'px athlete tiles must use three columns: '+grids);
 
-  const pointPositions=await page.locator('.user-card').evaluate(el=>{
-    const rows=[...el.querySelectorAll('.pt3-row')],
-      rects=rows.map(x=>x.getBoundingClientRect()),
-      first=el.querySelector('.point-action').getBoundingClientRect(),
-      actions=el.querySelector('.point-actions'),
-      expiry=rows[1];
-    return {heights:rects.map(r=>r.height),gap:first.y-rects.at(-1).bottom,
-      topPadding:getComputedStyle(actions).paddingTop,
-      labels:rows.map(row=>row.querySelector('.point-label').textContent.trim()),
-      amounts:rows.map(row=>row.querySelector('.point-value').textContent.trim()),
-      expiryColor:getComputedStyle(expiry.querySelector('.point-value')).color};
-  });
-  if(pointPositions.heights.length!==2||pointPositions.heights[0]!==40||
-     pointPositions.heights[1]!==40||pointPositions.gap>9||pointPositions.gap<4||
-     pointPositions.topPadding!=='6px'||
-     pointPositions.labels.join('|')!=='Gambooポイント|今月失効予定のポイント'||
-     pointPositions.amounts.map(x=>x.replace(/\\s/g,'')).join('|')!=='9,999,999pt|123,456pt'||
-     pointPositions.expiryColor!=='rgb(48, 54, 60)')
-    fail(width+'px points and expiry must have identical 40px row style: '+JSON.stringify(pointPositions));
-  if(await page.locator('.user-card .pt3-row').count()!==2)
-    fail(width+'px both Gamboo points and expiring points must be shown');
-  if(await page.locator('.user-card .point-value.maxcase,.user-card .point-item,.user-card .point-use').count())
-    fail(width+'px legacy point boxes or the single old button still remain');
-  const pointStyle=await page.locator('.user-card .point-value').first().evaluate(el=>{
-    const x=getComputedStyle(el);return {outline:x.outlineStyle,border:x.borderStyle};
-  });
-  if(pointStyle.outline!=='none'||pointStyle.border!=='none')
-    fail(width+'px Gamboo point value must have no individual border: '+JSON.stringify(pointStyle));
-  const pointActions=await page.locator('.point-actions > a.point-action').evaluateAll(nodes=>
-    nodes.map(el=>{
-      const a=el.getBoundingClientRect(),cs=getComputedStyle(el);
-      return {name:el.textContent.trim(),href:el.getAttribute('href'),
-        x:a.x,y:a.y,w:a.width,h:a.height,display:cs.display,
-        font:cs.fontSize, border:cs.borderTopWidth,
-        lines:el.querySelectorAll(':scope > span').length,
-        lineTexts:[...el.querySelectorAll(':scope > span')].map(x=>x.textContent.trim()),
-        fits:[...el.querySelectorAll(':scope > span')].every(x=>{
-          const r=x.getBoundingClientRect();return r.left>=a.left-1&&r.right<=a.right+1;
-        })};
-    }));
-  const expectedActions=[
-    ['Gambooポイント履歴','https://gamboo.jp/point/history'],
-    ['現金に交換','https://gamboo.jp/point/exchange/'],
-    ['デルカに交換','https://gamboo.jp/point/exchange/deruca/'],
-    ['景品に交換','https://gamboo.jp/point/topics/?tid=goods-exchange'],
-    ['ウインに交換','https://gamboo.jp/point/exchange/winpoint/'],
-    ['Pexポイントに交換','https://gamboo.jp/point/exchange/pex/']
-  ];
-  if(pointActions.length!==6 ||
-     pointActions.some((a,i)=>a.name!==expectedActions[i][0]||
-       a.href!==expectedActions[i][1]||a.h<68||a.w<60||
-       a.font!=='14px'||a.border!=='1px'||a.lines!==2||!a.fits ||
-       a.lineTexts.join('/')!==[
-         'Gamboo/ポイント履歴','現金/に交換','デルカ/に交換',
-         '景品/に交換','ウイン/に交換','Pexポイント/に交換'
-       ][i]) ||
-     Math.abs(pointActions[0]?.y-pointActions[1]?.y)>1 ||
-     Math.abs(pointActions[1]?.y-pointActions[2]?.y)>1 ||
-     Math.abs(pointActions[3]?.y-pointActions[4]?.y)>1 ||
-     Math.abs(pointActions[4]?.y-pointActions[5]?.y)>1 ||
-     !(pointActions[3]?.y>pointActions[0]?.y+20) ||
-     !(pointActions[2]?.x>pointActions[1]?.x && pointActions[1]?.x>pointActions[0]?.x))
-    fail(width+'px points shortcuts must form exactly two rows of three linked buttons: '+JSON.stringify(pointActions));
+  const results=await page.locator('.mypage-result-actions a').evaluateAll(items=>
+    items.map(el=>({text:el.textContent.trim(),href:el.getAttribute('href'),
+      height:el.getBoundingClientRect().height})));
+  if(results.length!==2 || results[0].text!=='競輪'||
+      results[0].href!=='https://gamboo.jp/member/achievement/keirin'||
+      results[1].text!=='オートレース'||
+      results[1].href!=='https://gamboo.jp/member/achievement/autorace'||
+      results.some(x=>x.height<44))
+    fail(width+'px mypage race result links changed: '+JSON.stringify(results));
 
-  // The two competition sections are always visible, top to bottom; no tabs.
-  const sports=await page.locator('.favorites-stack > .favorite-sport').evaluateAll(nodes=>
-    nodes.map(el=>{
-      const icon=el.querySelector('.favorite-sport-icon');
-      const cards=[...el.querySelectorAll('.favorite-player-card')].map(a=>{
-        const r=a.getBoundingClientRect(),style=getComputedStyle(a),
-          nameEl=a.querySelector('.favorite-player-name'),
-          affEl=a.querySelector('.favorite-player-affiliation'),
-          title=nameEl?.textContent.trim(),aff=affEl?.textContent.trim();
-        return {name:title,affiliation:aff,href:a.getAttribute('href'),
-          storedName:a.dataset.playerName,storedAffiliation:a.dataset.playerAffiliation,
-          width:r.width,height:r.height,display:style.display,
-          border:style.borderTopWidth,radius:style.borderRadius,
-          color:style.color,background:style.backgroundColor,
-          nameFits:nameEl?.scrollWidth<=nameEl?.clientWidth+1,
-          affiliationFits:affEl?.scrollWidth<=affEl?.clientWidth+1};
-      });
-      const r=el.getBoundingClientRect();
-      return {
-        sport:el.dataset.sport,y:r.y,height:r.height,display:getComputedStyle(el).display,
-        heading:el.querySelector('.favorite-sport-heading').textContent.trim(),
-        icon:icon.querySelector('use')?.getAttribute('href'),
-        iconColor:getComputedStyle(icon).color,
-        labels:[...el.querySelectorAll('.favorite-group-heading')].map(x=>x.textContent.trim()),
-        super:el.querySelectorAll('.favorite-group--super .favorite-player-card').length,
-        regular:el.querySelectorAll('.favorite-group--regular .favorite-player-card').length,
-        oldActions:el.querySelectorAll('.os-tab,.oshi-act,.os-btn,.os-chip,.os-seg').length,
-        cards
-      };
-    }));
-  if(sports.length!==2||sports[0]?.sport!=='keirin'||sports[1]?.sport!=='auto'||
-     sports[0].heading!=='競輪'||sports[1].heading!=='オートレース'||
-     !(sports[1].y>sports[0].y+sports[0].height-1)||
-     sports[0].iconColor!=='rgb(71, 122, 148)'||
-     sports[1].iconColor!=='rgb(172, 96, 90)'||
-     !sports[0].icon?.endsWith('#nav-keirin')||
-     !sports[1].icon?.endsWith('#nav-auto')||
-     sports.some(x=>x.display==='none'||x.labels.join('|')!=='激推しメン|推しメン'||
-       x.super!==1||x.oldActions!==0)||
-     sports[0].regular!==10||sports[1].regular!==5)
-    fail(width+'px both sports must show Keirin then Auto with sport-color icons, no tabs/actions: '+JSON.stringify(sports));
-  if(await page.locator('.favorites-stack .favorite-player-card').count()!==17||
-     await page.locator('.favorites-stack .os-tab,.favorites-stack .os-panel,.favorites-stack .os-actions').count())
-    fail(width+'px favourites must be linked player cards, not sport tabs/buttons');
-  for(const section of sports) {
-    for(const card of section.cards) {
-      const kind=card.href?.includes('-super-')?'super':'list';
-      if(!card.name||!card.affiliation||!card.name.includes('　')||card.name.includes(' ')||
-         card.storedName!==card.name||
-         card.storedAffiliation!==card.affiliation||
-         card.href!=='#favorite-'+kind+'-'+section.sport||
-         card.width<=0||card.height!==44||!card.nameFits||!card.affiliationFits||
-         card.border!=='1px'||
-         card.radius!=='8px'||card.background!=='rgb(255, 255, 255)')
-        fail(width+'px selected athlete cards need affiliation and correct editor route: '+
-          JSON.stringify({sport:section.sport,card}));
-    }
-  }
-  // Verify all 17 riders and their affiliations against the supplied image.
-  const rosters={
-    keirin:{
-      super:[['南　修二','大阪府・88期']],
-      list:[
-        ['吉田　惠理','北海道・130期'],['小原　乃亜','岩手県・130期'],
-        ['川上　いちご','千葉県・130期'],['栗山　百花','神奈川県・130期'],
-        ['古山　稀絵','静岡県・130期'],['鈴木　媛子','愛知県・130期'],
-        ['仲井　リコ','岐阜県・130期'],['アニー　紗世子','和歌山県・130期'],
-        ['露谷　菜々花','高知県・130期'],['齊藤　萌','福岡県・130期']
-      ]
-    },
-    auto:{
-      super:[['山田　達也','川口・28期']],
-      list:[['篠崎　実','川口・09期'],['宍戸　幸雄','伊勢崎・14期'],
-            ['鈴木　章夫','浜松・02期'],['花元　初美','飯塚・08期'],
-            ['別府　末彦','山陽・09期']]
-    }
-  };
-  for(const section of sports) {
-    const expected=[...rosters[section.sport].super,...rosters[section.sport].list];
-    const actual=section.cards.map(card=>[card.name,card.affiliation]);
-    if(JSON.stringify(actual)!==JSON.stringify(expected))
-      fail(width+'px player names/affiliations must match reference image: '+JSON.stringify({sport:section.sport,actual,expected}));
-  }
-  const threeCol=await page.locator('.favorite-sport--keirin .favorite-group--regular .favorite-player-card').evaluateAll(nodes=>
-    nodes.slice(0,6).map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height}}));
-  if(threeCol.length!==6||
-     !(threeCol[0].x<threeCol[1].x&&threeCol[1].x<threeCol[2].x)||
-     Math.abs(threeCol[0].y-threeCol[2].y)>1||
-     Math.abs(threeCol[3].y-threeCol[5].y)>1||
-     !(threeCol[3].y>threeCol[0].y+20))
-    fail(width+'px favorites must use a 3-column layout: '+JSON.stringify(threeCol));
-  const superAccent=await page.locator('.favorite-sport').evaluateAll(nodes=>nodes.map(el=>{
-    const a=el.querySelector('.favorite-group--super .favorite-player-card');
-    const style=getComputedStyle(a);
-    return {color:style.borderLeftColor,width:style.borderLeftWidth};
-  }));
-  if(superAccent.length!==2||superAccent[0].color!=='rgb(71, 122, 148)'||
-     superAccent[1].color!=='rgb(172, 96, 90)'||
-     superAccent.some(x=>x.width!=='3px'))
-    fail(width+'px featured athlete left band must use each competition color: '+JSON.stringify(superAccent));
-  if((await page.locator('.favorites-stack').innerText()).includes('ほか12名'))
-    fail(width+'px legacy count placeholder must be removed');
+  const settings=await page.locator('.scroll-area > .menu-item')
+    .evaluateAll(items=>items.map(el=>el.querySelector('.menu-text')?.textContent.trim()));
+  if(settings.join('|')!=='競輪・オート表示順|メールアドレス変更|メールマガジン設定|パスワード変更|ログイン通知設定')
+    fail(width+'px settings entries changed: '+JSON.stringify(settings));
 
-  // Every selected player opens their own correct Keirin/Auto × Super/Regular editor.
-  for(const [sport,kind] of [
-    ['keirin','super'],['keirin','list'],['auto','super'],['auto','list']]) {
-    const selector='.favorite-sport[data-sport="'+sport+'"] .favorite-group--'+
-      (kind==='super'?'super':'regular')+' .favorite-player-card';
-    const card=page.locator(selector).first();
-    const details=await card.evaluate(el=>({name:el.dataset.playerName,
-      affiliation:el.dataset.playerAffiliation}));
-    await card.click();
-    const target=page.locator('.favorite-route:target');
-    const expectedId='favorite-'+kind+'-'+sport;
-    if(await target.count()!==1||await target.getAttribute('id')!==expectedId)
-      fail(width+'px player card must open '+expectedId);
-    else {
-      const selected=await target.locator('.favorite-route-selected').innerText();
-      if(selected!==details.name+'　'+details.affiliation)
-        fail(width+'px editor must show selected player and affiliation: '+selected);
-      await target.locator('a[href="#favorites-section"]').first().click();
-      if(await page.locator('.favorite-route:target').count())
-        fail(width+'px edit route must close on return');
-    }
-  }
-  const cmp=await page.locator('.point-action, .user-card-action').evaluateAll(nodes=>
-    nodes.map(el=>{const st=getComputedStyle(el);
-      return {name:el.textContent.trim(),color:st.color,font:st.fontSize,
-        weight:st.fontWeight,border:st.borderTopColor,radius:st.borderRadius,
-        shadow:st.boxShadow,bg:st.backgroundColor};
-    }));
-  if(cmp.length!==8||cmp.some(item=>
-      item.color!=='rgb(48, 54, 60)'||
-      item.font!=='14px'||item.weight!=='600'||
-      item.border!=='rgb(156, 164, 168)'||
-      item.radius!=='8px'||item.bg!=='rgb(255, 255, 255)'||
-      item.shadow==='none'))
-    fail(width+'px remaining SCR-500 action buttons must match campaign style: '+JSON.stringify(cmp));
+  const toggle=page.locator('.sport-order-toggle');
+  if(await toggle.getAttribute('aria-pressed')!=='false')
+    fail(width+'px default sport order must prioritize keirin');
+  await toggle.click();
+  if(await toggle.getAttribute('aria-pressed')!=='true' ||
+     (await page.locator('.favorites-stack > .favorite-sport').first().getAttribute('data-sport'))!=='auto')
+    fail(width+'px sport-order toggle did not switch to autorace');
+  await toggle.click();
+  if(await toggle.getAttribute('aria-pressed')!=='false' ||
+     (await page.locator('.favorites-stack > .favorite-sport').first().getAttribute('data-sport'))!=='keirin')
+    fail(width+'px sport-order toggle did not restore keirin');
 
+  if (await page.locator('.phone-inner > .status-bar').count())
+    fail(width+'px simulated status bar remains');
+  if (await page.locator('.phone-inner > .payout-bar.pt-h').count()!==1)
+    fail(width+'px mypage payout controls missing');
+  console.log('MYPAGE OK '+width+'px (7 points, 2 sports, 3-column favorites, 2 results, settings)');
 }
 
 async function checkCompactSectionHeader(page,width,file) {
