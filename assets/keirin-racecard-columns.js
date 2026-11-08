@@ -91,10 +91,13 @@
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
       ...["1着","2着","3着","着外"].map((label,i)=>
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
-      ...["1着P","2着P","3着P","総合P","印"].map((label,i)=>
+      ...["1着P","2着P","3着P"].map((label,i)=>
         sub(label,(i===0?"bl marutoku-section-start ":"")+
-          "marutoku-score-label"+(i===3?" marutoku-total-heading":"")+
-          (i===4?" marutoku-mark-label":""))),
+          "marutoku-score-label")),
+      sub('<span class="marutoku-combined-layout">'+
+        '<span class="marutoku-combined-mark">印</span>'+
+        '<span class="marutoku-combined-score">総合P</span></span>',
+        "marutoku-score-label marutoku-combined-heading"),
       sub("G指数","bl gindex-section-start"),
       sub("印","gindex-mark"),
       ...["順位","印","1着","2着","3着","着外"].map((label,i)=>
@@ -104,8 +107,8 @@
           (i>=2?" distance-rate-heading":"")))
     ];
     // Grouped headings share columns across the two header rows.
-    // 1着P～印 are standalone 48px rowspan=2 headings, with no
-    // redundant "マル得ポイント" group label above them.
+    // The three point labels and the combined "印 / 総合P" heading
+    // remain 48px rowspan=2 cells, with no redundant group heading.
     const groups = new Map([
       [9,  {span:4, label:"決まり手", klass:""}],
       [28, {span:4, label:"ラインの先頭", klass:"position-first"}],
@@ -282,6 +285,10 @@
     // switches[0] stores another mode; modes 1 and 2 are in-adhesion and follow-up.
     const switchCounts=[1,2].flatMap(mode=>
       Array.from({length:4},(_,index)=>Number(position.switches?.[mode]?.[index]??0)));
+    const totalRank=pointRanks[3]||0;
+    const totalText=totalRank
+      ? '<span class="rank-number rank-tint-'+totalRank+'">'+escape(p.points[3])+'</span>'
+      : escape(p.points[3]);
     return '<tr>'+
       '<td class="c-waku">'+waku[i]+'</td>'+
       '<td class="fx c-sha"><div class="frame-cell f'+rider.car+'">'+rider.car+
@@ -319,15 +326,18 @@
       switchCounts.map((count,k)=>'<td class="position-stat position-switch'+
         (k%4===0?' position-first':'')+(count===0?' position-zero':'')+
         '">'+escape(count)+'</td>').join("")+
-      p.points.map((v,k)=>{
+      p.points.slice(0,3).map((v,k)=>{
         const rank=pointRanks[k]||0;
         const label=rank
           ? '<span class="rank-number rank-tint-'+rank+'">'+escape(v)+'</span>'
           : escape(v);
-        return '<td class="'+(k===0?"bl ":"")+'marutoku-value'+
-          (k===3?" marutoku-total":"")+'">'+label+'</td>';
+        return '<td class="'+(k===0?"bl ":"")+'marutoku-value">'+label+'</td>';
       }).join("")+
-      '<td class="marutoku-mark">'+marker(p.mark)+'</td>'+
+      '<td class="marutoku-value marutoku-combined-cell">'+
+        '<div class="marutoku-combined-layout">'+
+          '<span class="marutoku-combined-mark">'+marker(p.mark)+'</span>'+
+          '<span class="marutoku-combined-score">'+totalText+'</span>'+
+        '</div></td>'+
       '<td class="bl c-g"><span class="g-val'+(gRank?' rank-number rank-tint-'+gRank:'')+'">'+escape(rider.g)+'</span></td>'+
       '<td class="gindex-mark">'+marker(gMark)+'</td>'+
       distanceCells(rider.car)+
