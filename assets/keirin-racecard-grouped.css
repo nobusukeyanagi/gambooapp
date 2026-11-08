@@ -145,7 +145,7 @@
   align-items: center;
   justify-content: flex-start;
   column-gap: 0;
-  padding-left: var(--space-small);
+  padding-left: 0;
 }
 /* A short divider separates meeting metadata from the first rank. */
 .race-detail-scroll .mania-table .meeting-cell .res-wrap::before {
