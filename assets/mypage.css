@@ -15,7 +15,7 @@
 
 /* Inset avatar on a white identity card with a restrained gold accent line. */
 .user-card { margin:var(--space-section); padding:0; background:var(--c-surface); border:var(--line-normal); border-radius:var(--r-md); box-shadow:var(--e1); overflow:hidden; }
-.user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-14)) minmax(0, 1fr); align-items:center; column-gap:var(--space-section); row-gap:var(--space-10); padding:var(--space-section) var(--space-content); background:var(--c-surface); border-top:var(--line-emphasis-width) solid var(--c-gold-light); border-bottom:var(--line-normal); }
+.user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-14)) minmax(0, 1fr); align-items:center; column-gap:var(--space-section); row-gap:var(--space-10); padding:var(--space-section) var(--space-content); background:var(--c-surface); border-top:var(--line-emphasis-width) solid var(--c-gold); border-bottom:var(--line-normal); }
 .user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-14)); height:calc(var(--h-control) + var(--space-14)); flex:0 0 calc(var(--h-control) + var(--space-14)); overflow:hidden; border-radius:var(--r-md); background:var(--c-gold-light); box-shadow:var(--e1); color:var(--c-gold); }
 .user-avatar-photo { display:block; width:100%; height:100%; object-fit:cover; }
 .user-avatar [hidden] { display:none; }
