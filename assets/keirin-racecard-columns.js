@@ -45,7 +45,7 @@
           '<span class="recent4-heading-rate">'+rate+'</span>',
           (i===0?"bl ":"")+"recent4-heading")),
       ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり"].map((s,i)=>sub(s,i===0?"bl meeting-current-label meeting-section-start":"")),
-      sub("並び","bl position-col position-current position-section-start position-heading-tone-neutral"),
+      sub("並び","bl position-col position-current position-section-start"),
       ...placeGroups.flatMap(() => ranks.map((r,i)=>sub('<span class="position-result-name">'+r+'</span>','position-col'+(i===0?' position-first':'')))),
       ...["1着","2着","3着","着外"].map((label,i)=>
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
@@ -66,13 +66,13 @@
     // second-row labels. Un-grouped columns span both header rows.
     const groups = new Map([
       [9,  {span:4, label:"決まり手", klass:""}],
-      [28, {span:4, label:"ラインの先頭", klass:"position-first position-heading-tone-1"}],
-      [32, {span:4, label:"2番手", klass:"position-first position-heading-tone-2"}],
-      [36, {span:4, label:"3番手以降", klass:"position-first position-heading-tone-3"}],
-      [40, {span:4, label:"単騎", klass:"position-first position-heading-tone-4"}],
-      [44, {span:4, label:"競り", klass:"position-first position-heading-tone-neutral"}],
-      [48, {span:4, label:"イン粘り回数", klass:"position-first position-heading-tone-neutral"}],
-      [52, {span:4, label:"追い上げ回数", klass:"position-first position-heading-tone-neutral"}],
+      [28, {span:4, label:"ラインの先頭", klass:"position-first"}],
+      [32, {span:4, label:"2番手", klass:"position-first"}],
+      [36, {span:4, label:"3番手以降", klass:"position-first"}],
+      [40, {span:4, label:"単騎", klass:"position-first"}],
+      [44, {span:4, label:"競り", klass:"position-first"}],
+      [48, {span:4, label:"イン粘り回数", klass:"position-first"}],
+      [52, {span:4, label:"追い上げ回数", klass:"position-first"}],
       [56, {span:5, label:"マル得ポイント", klass:"bl marutoku-section-start"}]
     ]);
     const top = [], lower = [];
@@ -226,17 +226,15 @@
     const histories=Array.from({length:8},(_,x)=>
       prev[x]||(x===0?{date:"",results:rider.current}:x===1?{date:rider.prevDate,results:rider.previous}:null));
     const toneIndex={"先頭":1,"番手":2,"3番手":3,"単騎":4}[position.position]||0;
-    const toneTag=(value)=>toneIndex
-      ? '<span class="tone-tag tone-'+toneIndex+'">'+escape(value)+'</span>'
-      : escape(value);
     const buildCounts=position.counts.map((v,k)=>{
       const group=Math.floor(k/4);
       const highlighted=(group===0&&position.position==="先頭")||
         (group===1&&position.position==="番手")||
         (group===2&&position.position==="3番手")||
         (group===3&&position.position==="単騎");
-      const classes=["position-stat",k%4===0?"position-first":"",v===0?"position-zero":""].filter(Boolean);
-      return '<td class="'+classes.join(" ")+'">'+(highlighted?toneTag(v):escape(v))+'</td>';
+      const classes=["position-stat",k%4===0?"position-first":"",v===0?"position-zero":"",
+        highlighted&&toneIndex?"position-tone-"+toneIndex:""].filter(Boolean);
+      return '<td class="'+classes.join(" ")+'">'+escape(v)+'</td>';
     });
     // Each switching action has its own 1st / 2nd / 3rd / outside counts.
     // switches[0] stores another mode; modes 1 and 2 are in-adhesion and follow-up.
