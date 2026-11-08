@@ -531,14 +531,15 @@
 .race-detail-scroll .mania-table tbody tr > td:first-child {
   border-left: var(--line-normal) !important;
 }
-/* The whole 50px vehicle-number header is a tap target for lineup sort.
-   Highlight the pressed state without changing the car-number cells. */
-.race-detail-scroll .mania-table thead tr:first-child th.c-sha {
+/* Sortable header cells keep their normal background in every mode.
+   A second text line appears only when the corresponding sort is active. */
+.race-detail-scroll .mania-table thead tr:first-child th:is(.c-sha, .recent-section-start) {
   padding: 0;
 }
-.race-detail-scroll .mania-table th.c-sha .car-line-sort {
+.race-detail-scroll .mania-table thead th .racecard-sort-button {
   display: flex;
   box-sizing: border-box;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   appearance: none;
@@ -554,13 +555,18 @@
   font: inherit;
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
+  line-height: 1.25;
+  white-space: nowrap;
   cursor: pointer;
   touch-action: manipulation;
 }
-.race-detail-scroll .mania-table th.c-sha .car-line-sort[aria-pressed="true"] {
-  background: var(--c-gold-light);
+.race-detail-scroll .mania-table thead th .racecard-sort-button .sort-mode-label {
+  display: none;
 }
-.race-detail-scroll .mania-table th.c-sha .car-line-sort:focus-visible {
+.race-detail-scroll .mania-table thead th .racecard-sort-button[aria-pressed="true"] .sort-mode-label {
+  display: block;
+}
+.race-detail-scroll .mania-table thead th .racecard-sort-button:focus-visible {
   outline: var(--line-focus);
   outline-offset: calc(-1 * var(--line-emphasis-width));
 }
