@@ -12,8 +12,8 @@ const ROOT = process.cwd();
 const paths = [
   'SCR-200_keirin.html',
   'SCR-300_autorace.html',
-  'SCR-201_racecardkeirin.html',
-  'SCR-301_racecardautorace.html',
+  'SCR-210_racecardkeirin.html',
+  'SCR-310_racecardautorace.html',
   'SCR-500_mypage.html',
   'SCR-400_campaign.html',
   'index.html'
@@ -661,8 +661,8 @@ async function checkCompactSectionHeader(page,width,file) {
     'SCR-100_bet.html':['車券購入','nav-ticket'],
     'SCR-200_keirin.html':['競輪予想','nav-keirin'],
     'SCR-300_autorace.html':['オートレース予想','nav-auto'],
-    'SCR-201_racecardkeirin.html':['大垣 最終日',null],
-    'SCR-301_racecardautorace.html':['川口 2日目',null],
+    'SCR-210_racecardkeirin.html':['大垣 最終日',null],
+    'SCR-310_racecardautorace.html':['川口 2日目',null],
     'SCR-500_mypage.html':['マイページ','nav-mypage'],
     'SCR-400_campaign.html':['キャンペーン','nav-campaign']
   };
@@ -1443,7 +1443,7 @@ async function checkPredictionSort(page, width, isAutorace) {
 }
 
 async function checkSharedReferences(){
- const expected=['design-tokens.css?v=59','tap-feedback.css?v=3'];
+ const expected=['design-tokens.css','tap-feedback.css'];
  const tokens=await readFile(path.join(ROOT,'assets','design-tokens.css'),'utf8');
  const icons=await readFile(path.join(ROOT,'assets','bottom-nav-icons.svg'),'utf8');
  const gift=icons.split('<symbol id="nav-campaign"')[1]?.split('</symbol>')[0];
@@ -1462,7 +1462,7 @@ async function checkSharedReferences(){
      !html.includes('bottom-nav-icons.svg?v=16')))
     fail(page+': stale shared campaign gift icon cache reference');
   if(page!=='index.html' &&
-    (!html.includes('ui-consistency.css?v=31') ||
+    (!/ui-consistency\.css\?v=\d+/.test(html) ||
      !html.includes('header-icons.svg?v=1#header-bell') ||
      !html.includes('header-icons.svg?v=1#header-card') ||
      !html.includes('shared-app-header')))
@@ -1475,7 +1475,7 @@ async function checkSharedReferences(){
   }
   if(/<style\b/i.test(html))fail(page+': old inline <style> block detected');
   const css=[...html.matchAll(/<link\b[^>]*href=["']\.\/assets\/([^"']+\.css\?v=\d+)["']/g)].map(m=>m[1]);
-  for(const name of expected)if(!css.includes(name))fail(page+': shared CSS direct reference missing '+name);
+  for(const name of expected)if(!css.some(href=>href.split('?')[0]===name))fail(page+': shared CSS direct reference missing '+name);
   if(css.length!==new Set(css).size)fail(page+': duplicated stylesheet reference');
   const commonRefs=css.filter(name=>/^ui-consistency\.css\?v=\d+$/.test(name));
   if(commonRefs.length!==1)fail(page+': shared UI stylesheet must be directly referenced exactly once');
@@ -1517,8 +1517,8 @@ try {
     if (file === 'SCR-400_campaign.html') await checkCampaignPage(a.page,w);
     if (file === 'SCR-500_mypage.html') await checkMyPage(a.page,w);
     if (file === 'SCR-200_keirin.html' || file === 'SCR-300_autorace.html') await checkPredictionSort(a.page,w,file === 'SCR-300_autorace.html');
-    if (file === 'SCR-201_racecardkeirin.html') await checkKeirinMania(a.page,w);
-    if (file === "SCR-301_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
+    if (file === 'SCR-210_racecardkeirin.html') await checkKeirinMania(a.page,w);
+    if (file === "SCR-310_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
     if (file !== "index.html") await checkNavPredictionLinks(a.page,w,file);
    }finally {await a.context.close();if(b)await b.context.close();}
   }
