@@ -86,7 +86,7 @@
   background: var(--c-gold);
   color: var(--c-surface);
 }
-/* The un-tabbed 周長別 group retains its ordinary column-heading appearance. */
+/* The restored mania evaluation section starts with its first item button. */
 
 /* First grid line must appear to the left of the frame ("枠") column. */
 .race-detail-scroll .mania-table :is(th,td).c-waku {
@@ -96,7 +96,7 @@
   .player-section-start,.marutoku-section-start,
   .recent-section-start,
   .meeting-section-start,.position-section-start,
-  .distance-section-start
+  .mania-section-start
 ) {
   border-left: var(--line-normal);
 }
@@ -700,7 +700,7 @@
   line-height: 1.2;
 }
 
-/* Logical widths of the integrated 66-column table.
+/* Logical widths of the restored 70-column table.
    The first six columns retain their declared widths above. Columns 15–18
    retain 60px minimums. Meeting columns 19–26 use 50px subcells. */
 .race-detail-scroll .mania-table tbody tr > td:is(:nth-child(7), :nth-child(27)),
@@ -846,14 +846,6 @@
   text-align: center;
   background: var(--c-surface);
   color: var(--c-text-primary);
-}
-.race-detail-scroll .racecard-sample-note {
-  margin: 0;
-  padding: var(--space-2) var(--space-content);
-  background: var(--c-bg);
-  color: var(--c-text-secondary);
-  font-size: var(--fs-12);
-  line-height: 1.4;
 }
 /* Preserve all four short vertical separators even when a race-day result
    is missing. Every empty placeholder retains the same visible grid cell. */
