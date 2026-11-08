@@ -1,4 +1,4 @@
-/* SCR-210: original eight-item mania analysis with tabbed detail sheets and synchronized racecard navigation. */
+/* SCR-210: original eight-item mania analysis with full source-group detail sheets. */
 (() => {
   "use strict";
   function initializeHofu5() {
@@ -59,119 +59,112 @@
 
   renderRace5(inner);
 
-  /* Restored original mania-analysis bottom sheet. The first level shows
-     evaluation symbols; each category tab displays source race statistics
-     in the same compact count / percentage / ranking design. */
-  const analyzer = window.GambooKeirinAnalyzerSample || {};
-  const renderers = window.GambooKeirinRacecardColumns;
+  /* Detail-sheet UI: one category is opened from the matching button
+     in the racecard. The source's complete groups are visible side by side;
+     no extra category menu, condition strap, national ranking, or prediction
+     marks appear in the detail sheet. */
+  const detailSource = window.GambooKeirinAnalyzerFull || {};
   const categories = [
-    {key:"distance",title:"周長別成績",condition:"周長400m・過去1年",race:"四日市12R"},
-    {key:"line",title:"見なし直線別成績",condition:"見なし直線60m以上",race:"四日市6R"},
-    {key:"race",title:"レース種別成績",condition:"選抜",race:"四日市6R"},
-    {key:"day",title:"日程別成績",condition:"最終日",race:"四日市6R"},
-    {key:"grade",title:"グレード別成績",condition:"G3",race:"四日市12R"},
-    {key:"advance",title:"グレード別勝ち上がり率",condition:"G3・準決勝／決勝／優勝",race:"四日市12R"},
-    {key:"car",title:"車番別成績",condition:"各選手の当該車番",race:"四日市12R"},
-    {key:"pref",title:"同県選手同乗時成績",condition:"同県選手同乗レース",race:"四日市12R"}
+    ["distance","周長別成績","四日市12R"],
+    ["line","見なし直線別成績","四日市6R"],
+    ["race","レース種別成績","四日市6R"],
+    ["day","日程別成績","四日市6R"],
+    ["grade","グレード別成績","四日市12R"],
+    ["advance","グレード別勝ち上がり率","四日市12R"],
+    ["car","車番別成績","四日市12R"],
+    ["pref","同県選手同乗時成績","四日市12R"]
   ];
   const escapeHTML = x => String(x ?? "").replace(/&/g,"&amp;")
     .replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-  const mark = value => renderers.marker(value);
-  const statCombo = (symbol,value) => renderers.statCombo(symbol,value);
   const rankCell = rank => {
-    const n=Number(rank)||0;
-    const markValue=["","◎","○","△","×"][n]||"";
-    const numberText=n>=1&&n<=4
-      ? '<span class="rank-number rank-tint-'+n+'">'+n+'位</span>'
-      : escapeHTML(n?n+"位":"—");
-    return '<td class="rt sheet-rank-cell">'+
-      statCombo(mark(markValue),numberText)+'</td>';
+    const n=Number(rank);
+    const label=Number.isInteger(n)&&n>0?n+"位":"—";
+    const value=n>=1&&n<=4
+      ? '<span class="rank-number rank-tint-'+n+'">'+escapeHTML(label)+'</span>'
+      : escapeHTML(label);
+    return '<td class="dt-rank">'+value+'</td>';
   };
-  const rateCell=(count,rate,rank=0) =>
-    '<td class="rt"><span class="recent4-count">'+escapeHTML(count)+'</span>'+
-    '<span class="recent4-rate'+(rank>=1&&rank<=3?' recent4-rank-'+rank:'')+'">'+
-      escapeHTML(rate)+'%</span></td>';
-  const detailedRows=(spec) => Array.from({length:9},(_,i)=>{
-    const car=i+1;
-    if(spec.key==="distance") {
-      const d=renderers.distance400Sample[car];
-      return d ? {car,name:d.name,rank:d.rank,
-        counts:[d.cum[0],d.cum[1]-d.cum[0],d.cum[2]-d.cum[1],d.total-d.cum[2]],
-        rates:d.rates} : null;
-    }
-    const row=analyzer[spec.key]?.[i];
-    if(!row)return null;
-    if(spec.key==="advance")return {car,name:row[0],stages:row.slice(1)};
-    if(spec.key==="pref")return {car,name:row[0],counts:row[1],rates:row[2]};
-    return {car,name:row[0],rank:row[1],counts:row[2],rates:row[3]};
-  });
-  const rankingForRates=records=>{
-    return [0,1,2].map(k=>{
-      const values=records.map((r,i)=>({car:i+1,value:Number(r?.rates?.[k])}))
-        .filter(x=>Number.isFinite(x.value))
-        .sort((a,b)=>b.value-a.value||a.car-b.car);
-      const result={};
-      values.forEach((x,i)=>{
-        result[x.car]=i&&values[i-1].value===x.value
-          ?result[values[i-1].car] : i+1;
-      });
-      return result;
+  const rateCell = (stat, rateRank) => {
+    if (!stat) return '<td class="dt-rate">—</td>';
+    const [rate, count, total]=stat;
+    const rankClass=rateRank>=1&&rateRank<=3?" recent4-rank-"+rateRank:"";
+    return '<td class="dt-rate">'+
+      '<span class="recent4-count">'+escapeHTML(count)+"/"+escapeHTML(total)+'</span>'+
+      '<span class="recent4-rate'+rankClass+'">'+escapeHTML(rate)+'%</span></td>';
+  };
+  const differenceCell=txt=>
+    '<td class="dt-rate"><span class="dt-difference">'+escapeHTML(txt||"—")+'</span></td>';
+  const ranksByRate = (rows, groupIndex, metricIndex, isPref) => {
+    const indexes=rows.map((entry,i)=>{
+      const numeric=Number(isPref?entry?.[2]?.[groupIndex]?.[metricIndex]?.[0]:
+        entry?.[2]?.[groupIndex]?.[1]?.[metricIndex]?.[0]);
+      return {car:i+1,rate:numeric};
+    }).filter(x=>Number.isFinite(x.rate)).sort((a,b)=>b.rate-a.rate||a.car-b.car);
+    const result={};
+    indexes.forEach((entry,i)=>{
+      result[entry.car]=i&&indexes[i-1].rate===entry.rate
+        ?result[indexes[i-1].car]:i+1;
     });
+    return result;
   };
   const sheet=inner.querySelector(".sheet");
   const overlay=inner.querySelector(".sheet-overlay");
-  const sheetTabs=sheet?.querySelector(".sheet-categories");
-  let selectedItem=0;
-  if(sheet && overlay && sheetTabs && renderers) {
-    sheetTabs.innerHTML=categories.map((spec,i)=>
-      '<button type="button" role="tab" class="sheet-category" data-item="'+i+
-      '" aria-selected="false">'+escapeHTML(spec.title)+'</button>').join("");
-    const renderSheet=(idx)=>{
-      const spec=categories[idx];
-      if(!spec)return;
-      selectedItem=idx;
-      const records=detailedRows(spec);
-      const isAdvance=spec.key==="advance";
-      const isPref=spec.key==="pref";
-      const labels=isAdvance
-        ? ["準決勝順位","準決勝進出率","決勝順位","決勝進出率","優勝順位","優勝率"]
-        : isPref ? ["1着","2着","3着","着外"]
-        : ["順位","1着","2着","3着","着外"];
-      sheet.querySelector(".sheet-title").textContent=spec.title;
-      sheet.querySelector(".sheet-cond").textContent=
-        "対象条件："+spec.condition+" ／ "+spec.race;
+  const sheetBody=sheet?.querySelector(".sheet-body");
+  if (sheet && overlay && sheetBody) {
+    const renderSheet=idx=>{
+      const meta=categories[idx], src=meta&&detailSource[meta[0]];
+      if (!src || !src.rows || src.rows.length!==9) return;
+      const [key,title,sourceRace]=meta;
+      sheet.querySelector(".sheet-title").textContent=title;
       sheet.querySelector(".sheet-note").textContent=
-        "参考データ：2026年11月8日 "+spec.race+"（車番順）。"+
-        "この出走表の防府5Rとは異なるレースです。";
-      sheet.querySelector(".detail-table thead").innerHTML=
-        '<tr><th class="dt-fx dt-car" rowspan="2">車</th>'+
-        '<th class="dt-fx dt-name" rowspan="2">選手名</th>'+
-        '<th class="dt-grp" colspan="'+labels.length+'">'+escapeHTML(spec.title)+'</th></tr>'+
-        '<tr>'+labels.map(x=>'<th>'+escapeHTML(x)+'</th>').join("")+'</tr>';
-      const rateRanks=isAdvance?[]:rankingForRates(records);
-      sheet.querySelector(".detail-table tbody").innerHTML=records.map((record,i)=>{
-        if(!record)return "";
-        const cells=isAdvance
-          ? record.stages.map(stage=>
-              rankCell(stage[0])+rateCell(stage[1],stage[3],Number(stage[0]))).join("")
-          : (isPref?"":rankCell(record.rank))+
-            record.counts.map((count,k)=>
-              rateCell(count,record.rates[k],k===3?0:rateRanks[k][i+1])
-            ).join("");
-        return '<tr><td class="dt-fx dt-car"><div class="frame-cell f'+record.car+
-          '">'+record.car+'</div></td><td class="dt-fx dt-name dn">'+
-          escapeHTML(record.name)+'</td>'+cells+'</tr>';
+        "参考データ：2026年11月8日・"+sourceRace+
+        "。現在の出走表（防府5R）とは別レースです。";
+      const fieldLabels=src.type==="advance"?["順位","進出率"]:
+        src.type==="pref"?["勝率","2連対率","3連対率","着外率"]:
+        ["順位","勝率","2連対率","3連対率","着外率"];
+      const groupHeaders=src.type==="advance"
+        ? src.headers.map((text,i)=>'<th class="dt-grp" colspan="2">'+escapeHTML(text)+'</th>')
+        : src.headers.map((text,i)=>'<th class="dt-grp" colspan="'+(src.type==="pref"?4:5)+'">'+
+            escapeHTML(text)+'</th>');
+      const fields=src.headers.map((_,groupIndex)=>{
+        const labels=src.type==="advance"
+          ? ["順位",groupIndex===2?"優勝率":"進出率"]
+          : fieldLabels;
+        return labels.map(label=>'<th>'+escapeHTML(label)+'</th>').join("");
       }).join("");
-      sheetTabs.querySelectorAll(".sheet-category").forEach((btn,i)=>{
-        const active=i===idx;
-        btn.setAttribute("aria-selected",String(active));
-        btn.classList.toggle("active",active);
-      });
+      sheet.querySelector(".detail-table thead").innerHTML=
+        '<tr><th class="dt-vehicle" rowspan="2">車番<span class="dt-vehicle-heading-sub">選手</span></th>'+
+        groupHeaders.join("")+'</tr><tr>'+fields+'</tr>';
+      const ranking=src.headers.map((_,k)=>src.type==="advance"?null:
+        [0,1,2].map(metric=>ranksByRate(src.rows,k,metric,src.type==="pref")));
+      const html=src.rows.map((record,index)=>{
+        const [name,short,groups]=record;
+        const cells=groups.map((group,k)=>{
+          if(src.type==="advance"){
+            return rankCell(group[0])+rateCell(group[1],0);
+          }
+          if(src.type==="pref") {
+            return k===2
+              ? group.map(differenceCell).join("")
+              : group.map((rate,j)=>rateCell(rate,j===3?0:ranking[k][j][index+1])).join("");
+          }
+          return rankCell(group[0])+
+            group[1].map((rate,j)=>rateCell(rate,j===3?0:ranking[k][j][index+1])).join("");
+        }).join("");
+        return '<tr><td class="dt-vehicle" title="'+escapeHTML(name)+'">'+
+          '<span class="dt-vehicle-content">'+
+            '<span class="frame-cell f'+(index+1)+'">'+(index+1)+'</span>'+
+            '<span class="dt-vehicle-short">'+escapeHTML(short)+'</span>'+
+          '</span></td>'+cells+'</tr>';
+      }).join("");
+      sheet.querySelector(".detail-table tbody").innerHTML=html;
+      sheetBody.scrollTop=0;
+      sheetBody.scrollLeft=0;
       inner.querySelectorAll(".mania-table .item-btn").forEach(btn=>
         btn.classList.toggle("active",Number(btn.dataset.item)===idx));
-      sheet.querySelector(".sheet-body").scrollTop=0;
     };
-    const openSheet=(idx)=>{
+    const openSheet=idx=>{
+      if(!categories[idx])return;
       sheet.hidden=false;
       overlay.hidden=false;
       renderSheet(idx);
@@ -184,10 +177,6 @@
     };
     inner.querySelectorAll(".mania-table .item-btn").forEach(btn=>
       btn.addEventListener("click",()=>openSheet(Number(btn.dataset.item))));
-    sheetTabs.addEventListener("click",event=>{
-      const btn=event.target.closest(".sheet-category");
-      if(btn)renderSheet(Number(btn.dataset.item));
-    });
     sheet.querySelector(".sheet-close").addEventListener("click",closeSheet);
     overlay.addEventListener("click",closeSheet);
     window.addEventListener("keydown",event=>{
