@@ -93,10 +93,6 @@ button,
         border-radius: var(--r-xxs);
         background: var(--c-gold);
       }
-      .news-badge.point {
-        background: var(--c-charcoal);
-      }
-
       .unit {
 
         margin-left: var(--space-1);
@@ -307,7 +303,7 @@ button,
       }
       .news-head {
         display: flex;
-        grid-column: 1 / -1;
+        grid-column: 1;
         grid-row: 1;
         align-items: center;
         gap: var(--space-section);
@@ -336,17 +332,17 @@ button,
       .news-head :is(.news-date, .news-new) { display: inline-flex; align-items: center; line-height: 1; }
       .news-badge.keirin { background: var(--c-keirin); }
       .news-badge.auto { background: var(--c-auto); }
-      .news-badge.other { background: var(--c-silver); }
-      .news-badge.community { background: var(--c-purple); }
+      /* Non-race categories use the same grey badge as その他. */
+      .news-badge:is(.other, .point, .community) { background: var(--c-silver); }
       .news-badge.both {
         background: linear-gradient(90deg, var(--c-keirin) 0 50%, var(--c-auto) 50% 100%);
       }
 
-      /* Arrow is centered only within the title row, not the badge/date row. */
+      /* Center the arrow across both the badge/date and full-title rows. */
       .news-item > .news-arrow {
         display: flex;
         grid-column: 2;
-        grid-row: 2;
+        grid-row: 1 / -1;
         align-items: center;
         justify-content: center;
         align-self: center;
@@ -448,7 +444,7 @@ button,
         grid-row: 2;
         min-width: 0;
         font-size: var(--fs-16);
-        font-weight: var(--fw-strong);
+        font-weight: var(--fw-normal);
         line-height: 1.45;
         overflow-wrap: anywhere;
       }
@@ -938,7 +934,7 @@ button,
 /* Eight pixels between the final featured card and the next section. */
 .pickup-card.pk3:has(+ .section-header) { margin-bottom: var(--space-section); }
 
-      /* Keep campaign metadata and chevrons distinct at narrow phone widths. */
+      /* Keep notice labels and dates legible at narrow phone widths. */
       /* Responsive adjustments: one breakpoint block per supported width. */
       @media (max-width: 359px) {
         /* Keep 18px R/time typography and save width via spacing instead. */
