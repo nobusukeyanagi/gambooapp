@@ -451,8 +451,24 @@ async function checkCurrentPage(page, width) {
       criticalAlert.color!=='rgb(255, 255, 255)')
     fail(width+'px Sept 24 critical notice icon must be red with white ! after date: '+
       JSON.stringify(criticalAlert));
+  const moriSectionOrder=await page.evaluate(()=>{
+    const carousel=document.querySelector('.bn-carousel');
+    const heading=document.querySelector('.mori-heading');
+    const grid=document.querySelector('.mori-venue-grid');
+    const featured=document.querySelector('.featured-races-header');
+    return {
+      bannerThenMori:carousel?.nextElementSibling===heading,
+      headingThenGrid:heading?.nextElementSibling===grid,
+      moriThenFeatured:grid?.nextElementSibling===featured
+    };
+  });
+  if(Object.values(moriSectionOrder).some(value=>value!==true))
+    fail(width+'px Mori section must appear between slide banners and featured riders: '+
+      JSON.stringify(moriSectionOrder));
   const mori=await page.locator('.mori-venue-grid > .vcard').evaluateAll(cards=>
     cards.map(card=>({
+      row:card.dataset.moriRow,
+      hidden:card.hidden,
       race:card.dataset.moriRace||'',
       venue:card.querySelector('.vcard-name')?.textContent?.trim(),
       grade:card.querySelector('.gbadge')?.textContent?.trim(),
@@ -463,7 +479,9 @@ async function checkCurrentPage(page, width) {
       day:card.querySelector('.vcard-day')?.textContent?.trim(),
       photo:card.classList.contains('mori-photo-tile')
     })));
-  if(mori.length!==5 || !mori[0].photo || !mori[3].photo ||
+  if(mori.length!==5 ||
+     mori.some((card,i)=>card.row!==(i<3?'today':'next') || card.hidden) ||
+     !mori[0].photo || !mori[3].photo ||
      mori[1].race!=='2' || mori[1].venue!=='浜松' || mori[1].grade!=='SG' ||
      mori[1].number!=='2R' || mori[1].state!=='確定' ||
      mori[2].race!=='10' || mori[2].venue!=='浜松' || mori[2].grade!=='SG' ||
@@ -650,6 +668,22 @@ async function checkInteractions(page, width) {
        links.filter(card=>card.sport==='autorace').length!==2)
       fail(width+'px '+day+' venue links incorrect: '+JSON.stringify(links));
   }
+  async function checkMoriRows(day, expected) {
+    const cards=await page.locator('.mori-venue-grid > .vcard').evaluateAll(items=>
+      items.map(item=>({
+        row:item.dataset.moriRow,
+        hidden:item.hidden,
+        visible:getComputedStyle(item).display!=='none',
+        label:item.querySelector('.mori-today-strip')?.textContent.trim()||''
+      })));
+    const shown=cards.filter(card=>card.visible);
+    if(cards.length!==5 ||
+       cards.some(card=>card.hidden===card.visible) ||
+       shown.map(card=>card.row).join('|')!==expected.join('|') ||
+       (day==='Nov 2' && shown[0]?.label!=='本日出走') ||
+       (day==='Nov 4' && shown[0]?.label!=='次回予定'))
+      fail(width+'px '+day+' Mori row selection mismatch: '+JSON.stringify(cards));
+  }
   const demos=page.locator('[data-home-venues="keirin"] > .vcard[data-demo]');
   async function checkDummyVisibility(visible,day) {
     const state=await demos.evaluateAll(nodes=>nodes.map(el=>({
@@ -663,9 +697,11 @@ async function checkInteractions(page, width) {
       fail(width+'px '+day+' should have '+(visible?11:8)+' keirin cards; got '+count);
   }
   await checkDummyVisibility(true,'Nov 3 initially');
+  await checkMoriRows('Nov 3',['today','today','today','next','next']);
   await checkLinksForDay('Nov 3');
   await dateTabs.nth(0).click();
   await checkDummyVisibility(false,'Nov 2');
+  await checkMoriRows('Nov 2',['today','today','today']);
   await checkLinksForDay('Nov 2');
   eq((await readNames('keirin')).join('|'),
     '防府|豊橋|久留米|小田原|静岡|奈良|武雄|熊本',width+'px Nov 2 grade and track-number order');
@@ -674,6 +710,7 @@ async function checkInteractions(page, width) {
     fail(width+'px yesterday must not have next-race cutoffs');
   await dateTabs.nth(2).click();
   await checkDummyVisibility(false,'Nov 4');
+  await checkMoriRows('Nov 4',['next','next']);
   await checkLinksForDay('Nov 4');
   eq((await readNames('keirin')).join('|'),
     '青森|大宮|豊橋|取手|静岡|奈良|武雄|別府',width+'px Nov 4 grade and track-number order');
@@ -693,6 +730,7 @@ async function checkInteractions(page, width) {
     fail(width+'px presale must align right like ended: '+JSON.stringify(presales));
   await dateTabs.nth(1).click();
   await checkDummyVisibility(true,'Nov 3 restored');
+  await checkMoriRows('Nov 3',['today','today','today','next','next']);
   await checkLinksForDay('Nov 3');
   eq((await readNames('keirin')).join('|'),
     '防府|青森|豊橋|久留米|小田原|静岡|奈良|武雄',width+'px Nov 3 grade and track-number order');
