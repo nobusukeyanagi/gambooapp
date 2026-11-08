@@ -105,6 +105,14 @@
   gap: var(--space-5);
   min-width: 0;
 }
+/* Keirin favorite headings must not break between the sport and group label. */
+.favorite-sport--keirin .favorite-group-title {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.favorite-sport--keirin .favorite-group-title > span {
+  white-space: nowrap;
+}
 .favorite-sport-icon { color: var(--c-keirin); }
 .favorite-sport--auto .favorite-sport-icon { color: var(--c-auto); }
 .favorite-group { padding: var(--space-10) var(--space-content) var(--space-content); }

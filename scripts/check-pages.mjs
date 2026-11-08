@@ -372,8 +372,15 @@ async function checkMyPage(page, width) {
       headings:[...sport.querySelectorAll('.favorite-group-title')].map(label=>{
         const svg=label.querySelector('svg');
         const style=getComputedStyle(svg);
+        const titleText=label.querySelector(':scope > span');
+        const titleBox=label.getBoundingClientRect();
+        const textBox=titleText?.getBoundingClientRect();
+        const linkBox=label.closest('.favorite-group-heading')?.querySelector('.favorite-group-change')?.getBoundingClientRect();
         return {title:label.textContent.trim(),width:style.width,height:style.height,
-          href:svg.querySelector('use')?.getAttribute('href'),color:style.color};
+          href:svg.querySelector('use')?.getAttribute('href'),color:style.color,
+          noWrap:getComputedStyle(titleText).whiteSpace==='nowrap' &&
+            textBox.height<=parseFloat(getComputedStyle(titleText).fontSize)*1.6 &&
+            (linkBox?.left??0)>=titleBox.right-1};
       }),
       superCount:sport.querySelectorAll('.favorite-group--super .favorite-player-card').length,
       regularCount:sport.querySelectorAll('.favorite-group--regular .favorite-player-card').length,
@@ -388,7 +395,7 @@ async function checkMyPage(page, width) {
   if (sports.length!==2 || sports[0].sport!=='keirin'||sports[1].sport!=='auto'||
       sports[0].headings.map(h=>h.title).join('|')!=='競輪 激推しメン|競輪 推しメン'||
       sports[1].headings.map(h=>h.title).join('|')!=='オートレース 激推しメン|オートレース 推しメン'||
-      sports[0].headings.some(h=>h.width!=='30px'||h.height!=='24px'||
+      sports[0].headings.some(h=>h.width!=='30px'||h.height!=='24px'||!h.noWrap||
         !h.href.endsWith('#nav-keirin')||h.color!=='rgb(71, 122, 148)')||
       sports[1].headings.some(h=>h.width!=='26px'||h.height!=='24px'||
         !h.href.endsWith('#nav-auto')||h.color!=='rgb(172, 96, 90)')||
