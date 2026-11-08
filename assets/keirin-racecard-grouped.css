@@ -197,8 +197,8 @@
 .race-detail-scroll .mania-table .meeting-cell .res-placement {
   display: grid;
   box-sizing: border-box;
-  grid-template-columns: 28px minmax(0, 1fr);
-  padding-left: var(--space-card);
+  grid-template-columns: 32px minmax(0, 1fr);
+  padding-left: var(--space-2);
   align-items: center;
   justify-items: center;
   width: 100%;
@@ -230,11 +230,11 @@
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  min-width: 26px;
-  border: var(--line-normal);
-  border-radius: 0;
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border: 0;
+  border-radius: var(--r-xs);
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
   line-height: 1;
@@ -251,7 +251,7 @@
   background: var(--c-bronze-light);
 }
 .race-detail-scroll .mania-table .meeting-cell .res-rank.race-rank-other {
-  background: var(--c-bg);
+  background: var(--c-border);
 }
 /* Unreported meeting days are empty placeholders, not a placed finisher. */
 .race-detail-scroll .mania-table .meeting-cell .res.res-empty .res-rank {
