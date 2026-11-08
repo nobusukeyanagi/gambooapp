@@ -329,6 +329,7 @@ async function checkCurrentPage(page, width) {
       buttonShadow:getComputedStyle(barLeft).boxShadow,
       prevBorder:getComputedStyle(barLeft).borderRightWidth,
       nextBorder:getComputedStyle(barRight).borderLeftWidth,
+      bandWidth:a.width,
       iconWidth:barLeft.querySelector('.ic')?.getBoundingClientRect().width,
       iconMarkup:barLeft.querySelector('.ic use')?.getAttribute('href'),
       leftHeight:Math.abs(box.bottom-a.bottom),
@@ -345,6 +346,7 @@ async function checkCurrentPage(page, width) {
     x.buttonBackground!=='rgb(248, 247, 244)'||
     x.buttonForeground!=='rgb(98, 108, 118)'||
     x.prevBorder!=='1px'||x.nextBorder!=='1px'||
+    Math.abs(x.bandWidth-(width<=330?16:width<=389?18:44))>1||
     Math.abs(x.iconWidth-(width<=330?16:18))>1||x.iconMarkup!=='#ic-chevron'||
     x.leftHeight>1||x.rightHeight>1||x.leftTop>1||
     x.rightTop>1||!x.leftOfRider||!x.rightOfRider||x.height<28))
