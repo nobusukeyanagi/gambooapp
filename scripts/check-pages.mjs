@@ -730,16 +730,20 @@ async function checkKeirinMania(page, width) {
       getComputedStyle(el).color===resolvedColor(config[index][0]) &&
       getComputedStyle(el).backgroundColor===resolvedBg(config[index][1]);
     const parts=[...document.querySelectorAll('.lineup-row .lineup-car')].map(box=>{
-      const tone=Number(box.className.match(/tone-([0-9]+)/)?.[1]);
       const number=Number(box.textContent.trim());
       const bounds=box.getBoundingClientRect();
-      return {car:number,tone,valid:isTone(box,tone,palette),
+      const matching=document.querySelector('.mania-table tbody tr:nth-child('+number+') .c-sha .frame-cell');
+      const current=getComputedStyle(box),reference=matching&&getComputedStyle(matching);
+      return {car:number,
+        hasCarClass:box.classList.contains('f'+number) && ![...box.classList].some(x=>/^tone-/.test(x)),
         dimensions:[bounds.width,bounds.height],
-        border:[getComputedStyle(box).borderStyle,getComputedStyle(box).borderWidth],
-        iconRestored:bounds.width===24 && bounds.height===24 &&
-          box.classList.contains('f'+number) &&
-          getComputedStyle(box).borderStyle==='solid' &&
-          getComputedStyle(box).borderWidth==='1px'};
+        correctCarColors:!!reference &&
+          current.backgroundColor===reference.backgroundColor &&
+          current.color===reference.color &&
+          current.borderColor===reference.borderColor &&
+          current.borderStyle===reference.borderStyle,
+        sameSize:!!matching && bounds.width===matching.getBoundingClientRect().width &&
+          bounds.height===matching.getBoundingClientRect().height};
     });
     const rows=[...document.querySelectorAll('.mania-table tbody tr')];
     const legFillTokens={逃:'--c-red-light',追:'--c-teal-light',両:'--c-yellowgreen-light'};
@@ -766,6 +770,7 @@ async function checkKeirinMania(page, width) {
       const previous=row.querySelector('td.score .score-previous');
       const rank=Number(badge?.className.match(/score-rank-([0-9]+)/)?.[1])||0;
       return {car:i+1,value:Number(badge?.textContent),rank,
+        badgeWidth:badge.getBoundingClientRect().width,
         valid:rank?getComputedStyle(badge).color===resolvedColor(rankPalette[rank][0]) &&
           getComputedStyle(badge).backgroundColor===resolvedBg(rankPalette[rank][1]) &&
           badge.getBoundingClientRect().width<badge.parentElement.getBoundingClientRect().width-1:true,
@@ -775,10 +780,13 @@ async function checkKeirinMania(page, width) {
     });
     return {parts,placements,scores,legFill};
   });
-  const lineupNumbers=[2,5,1,6,3,4,7,8,9],lineupGroups=[1,1,1,2,2,3,3,3,4];
+  const lineupNumbers=[2,5,1,6,3,4,7,8,9];
+  const highlights=colored.scores.filter(x=>x.rank>0);
   if(colored.parts.length!==9||colored.parts.some((item,i)=>
-      item.car!==lineupNumbers[i]||item.tone!==lineupGroups[i]||
-      !item.valid||!item.iconRestored)||
+      item.car!==lineupNumbers[i]||!item.hasCarClass||
+      !item.correctCarColors||!item.sameSize)||
+     highlights.length!==3||
+     highlights.some(x=>Math.abs(x.badgeWidth-highlights[0].badgeWidth)>0.5)||
      colored.legFill.length!==9||colored.legFill.some(x=>!x.correct)||
      colored.placements.length!==9||
      colored.placements.some(x=>!x.index||!x.valid)||

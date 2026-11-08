@@ -483,6 +483,15 @@
   color: var(--c-text-primary);
   line-height: 1.2;
 }
+/* Uniform badge width uses the six-digit 104.27 value as its baseline.
+   Do not widen the table cell, only the three highlighted text badges. */
+.race-detail-scroll .mania-table tbody td.score .score-current:is(.score-rank-1,.score-rank-2,.score-rank-3) {
+  box-sizing: border-box;
+  width: calc(6ch + var(--space-2) * 2);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}
 .race-detail-scroll .mania-table tbody td.score .score-current.score-rank-1 {
   color: var(--c-text-primary);
   background: var(--c-gold-light);
