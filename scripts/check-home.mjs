@@ -299,15 +299,43 @@ async function checkCurrentPage(page, width) {
     height:card.getBoundingClientRect().height,
     count:card.querySelectorAll('.pk-player').length,
     next:card.querySelectorAll('button.pk-next').length,
+    prev:card.querySelectorAll('button.pk-prev').length,
     controls:card.querySelector('button.pk-next')?.getAttribute('aria-controls')
   })));
   const originalHeight=width<=330?80:86;
   if(compactHeights.length!==4 || compactHeights.some(x=>
       Math.abs(x.height-originalHeight)>1 || x.count<1 || x.count>2 ||
-      x.next!==1 || !x.controls))
+      x.next!==1 || x.prev!==1 || !x.controls))
     fail(width+'px featured categories must have compact 1/2-player cards and next arrows: '+
       JSON.stringify(compactHeights));
 
+  const bands=await featured.evaluateAll(cards=>cards.map(card=>{
+    const desc=card.querySelector('.pk-explain').getBoundingClientRect();
+    const panel=card.querySelector('.pk-player-panel');
+    const barLeft=panel?.querySelector('.pk-prev');
+    const barRight=panel?.querySelector('.pk-next');
+    const row=panel?.querySelector('.pk-compact-row');
+    if(!panel||!barLeft||!barRight||!row)return null;
+    const box=panel.getBoundingClientRect();
+    const a=barLeft.getBoundingClientRect(),b=barRight.getBoundingClientRect();
+    const middle=row.getBoundingClientRect();
+    return {
+      separation:Math.abs(box.top-desc.bottom),
+      border:getComputedStyle(panel).borderTopWidth,
+      leftHeight:Math.abs(box.bottom-a.bottom),
+      rightHeight:Math.abs(box.bottom-b.bottom),
+      leftTop:Math.abs(a.top-box.top),
+      rightTop:Math.abs(b.top-box.top),
+      leftOfRider:a.right<=middle.left+1,
+      rightOfRider:middle.right<=b.left+1,
+      height:box.height
+    };
+  }));
+  if(bands.length!==4 || bands.some(x=>!x||x.separation>1||x.border!=='1px'||
+    x.leftHeight>1||x.rightHeight>1||Math.abs(x.leftTop-1)>1||
+    Math.abs(x.rightTop-1)>1||!x.leftOfRider||!x.rightOfRider||x.height<28))
+    fail(width+'px featured description divider or full-height left/right bands incorrect: '+
+      JSON.stringify(bands));
   for(let i=0;i<4;i++){
     const card=featured.nth(i);
     const state=async()=>card.evaluate(el=>({
@@ -326,18 +354,23 @@ async function checkCurrentPage(page, width) {
     const second=await state();
     await card.locator('button.pk-next').click();
     const returned=await state();
+    await card.locator('button.pk-prev').click();
+    const wrapped=await state();
+    await card.locator('button.pk-next').click();
+    const restored=await state();
     if(second.index!=='1'||second.players.join('|')===initial.players.join('|')||
        second.title!==initial.title||second.icon!==initial.icon||
        Math.abs(second.height-originalHeight)>1||second.timeBottom>2||
        returned.index!=='0'||returned.players.join('|')!==initial.players.join('|')||
-       returned.race!==initial.race||returned.height!==initial.height)
-      fail(width+'px featured category '+i+' did not advance independently and wrap: '+
-        JSON.stringify({initial,second,returned}));
+       returned.race!==initial.race||returned.height!==initial.height||
+       wrapped.index!=='1'||wrapped.players.join('|')!==second.players.join('|')||
+       restored.index!=='0'||restored.players.join('|')!==initial.players.join('|'))
+      fail(width+'px featured category '+i+' did not advance/backtrack independently: '+
+        JSON.stringify({initial,second,returned,wrapped,restored}));
   }
   const growth=await featured.first().evaluate(card=>{
     const clone=card.cloneNode(true);
     clone.classList.add('pk-many-riders','pk-two-riders');
-    clone.querySelector('button.pk-next')?.remove();
     const row=clone.querySelector('.pk-compact-row');
     const race=row.querySelector('.pk-race-time');
     const rider=row.querySelector('.pk-player');
