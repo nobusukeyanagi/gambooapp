@@ -120,7 +120,7 @@ const expectedComputedStyles = [
   ['.app-header .page-header-title', 'fontWeight', '600'],
   ['.icon-sprite', 'display', 'none'],
   ['.news-title', 'fontSize', '16px'],
-  ['.news-title', 'fontWeight', '600'],
+  ['.news-title', 'fontWeight', '400'],
   ['.news-date', 'fontSize', '14px'],
   ['.news-new', 'fontSize', '14px'],
   ['.venue-grid.g3 .kubun', 'fontSize', '14px'],
@@ -337,21 +337,25 @@ async function checkCurrentPage(page, width) {
     const title=el.querySelector('.news-title');
     const arrow=el.querySelector('.news-arrow');
     const head=el.querySelector('.news-head');
-    const rect=title.getBoundingClientRect();
+    const cardRect=el.getBoundingClientRect();
     const arrowRect=arrow.getBoundingClientRect();
     const titleStyle=getComputedStyle(title);
+    const badgeStyle=getComputedStyle(el.querySelector('.news-badge'));
     return {
       date:el.querySelector('.news-date')?.textContent.trim(),
       title:title.textContent.trim(),
       href:el.getAttribute('href'),
       kind:el.dataset.newsKind,
       category:el.querySelector('.news-badge')?.textContent.trim(),
+      badgeBackground:badgeStyle.backgroundColor,
+      titleWeight:titleStyle.fontWeight,
       isCampaign:Boolean(el.querySelector('.news-campaign')),
       titleFullyVisible:titleStyle.overflow!=='hidden' &&
         titleStyle.webkitLineClamp==='none' &&
         title.scrollHeight<=title.clientHeight+1,
-      arrowCenteredToTitle:Math.abs((rect.top+rect.bottom-arrowRect.top-arrowRect.bottom)/2)<=1.5 &&
-        arrowRect.top>=head.getBoundingClientRect().bottom-0.5
+      arrowCenteredToCard:Math.abs((cardRect.top+cardRect.bottom-arrowRect.top-arrowRect.bottom)/2)<=1.5 &&
+        arrowRect.right<=cardRect.right &&
+        arrowRect.left>=head.getBoundingClientRect().right-1
     };
   }));
   const expectedNews=[
@@ -370,9 +374,11 @@ async function checkCurrentPage(page, width) {
     return n.date!==date||n.category!==category||n.title!==title||
       n.kind!=='notice'||n.isCampaign||
       n.href!==('https://gamboo.jp/news/?tid=info&tsid='+tid)||
-      !n.titleFullyVisible||!n.arrowCenteredToTitle;
+      !n.titleFullyVisible||!n.arrowCenteredToCard||n.titleWeight!=='400'||
+      (['ポイント','コミュニティ','その他'].includes(n.category) &&
+        n.badgeBackground!=='rgb(98, 108, 118)');
   }))
-    fail(width+'px SCR-100 must display nine full-title Gamboo notices without campaigns: '+
+    fail(width+'px SCR-100 must display nine regular-weight notices with centered arrows and grey non-race badges: '+
       JSON.stringify(homeNews));
   const mori=await page.locator('.mori-venue-grid > .vcard').evaluateAll(cards=>
     cards.map(card=>({
