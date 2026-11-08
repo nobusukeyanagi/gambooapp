@@ -43,17 +43,25 @@
       .sort((a,b) => Number(b[1].rates[k])-Number(a[1].rates[k]))
       .reduce((r,[car],i)=>{r[car]=i+1;return r;}, {})
   );
+  // Shared mark-left / value-right layout for Marutoku, G-index and 400m rank.
+  // The mark slot remains present when no mark is assigned.
+  const statCombo = (mark, value) =>
+    '<span class="stat-combined-layout">'+
+      '<span class="stat-combined-mark">'+mark+'</span>'+
+      '<span class="stat-combined-score">'+value+'</span>'+
+    '</span>';
   const distanceCells = car => {
     const d=distance400Sample[car];
-    if (!d) return Array(6).fill('<td class="distance-sample-empty">—</td>').join("");
+    if (!d) return '<td class="distance-combined-cell">'+statCombo("","—")+'</td>'+
+      Array(4).fill('<td class="distance-sample-empty">—</td>').join("");
     const counts=[d.cum[0], d.cum[1]-d.cum[0], d.cum[2]-d.cum[1], d.total-d.cum[2]];
     const mark=["","◎","○","△","×"][d.rank] || "";
     const rankHtml=d.rank<=3
       ? '<span class="rank-number rank-tint-'+d.rank+'">'+d.rank+'位</span>'
       : d.rank+'位';
     const title='参考：四日市12R・'+d.name+'（車番'+car+'）';
-    return '<td class="distance-rank" title="'+escape(title)+'">'+rankHtml+'</td>'+
-      '<td class="distance-mark" title="'+escape(title)+'">'+marker(mark)+'</td>'+
+    return '<td class="distance-combined-cell" title="'+escape(title)+'">'+
+      statCombo(marker(mark),rankHtml)+'</td>'+
       counts.map((count,i)=>{
         const rateRank=i===3?0:sampleRateRanks[i][car];
         return '<td class="distance-rate recent4-cell" title="'+escape(title)+'">'+
@@ -91,24 +99,18 @@
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
       ...["1着","2着","3着","着外"].map((label,i)=>
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
-      ...["1着P","2着P","3着P"].map((label,i)=>
-        sub(label,(i===0?"bl marutoku-section-start ":"")+
-          "marutoku-score-label")),
-      sub('<span class="marutoku-combined-layout">'+
-        '<span class="marutoku-combined-mark">印</span>'+
-        '<span class="marutoku-combined-score">総合P</span></span>',
-        "marutoku-score-label marutoku-combined-heading"),
-      sub("G指数","bl gindex-section-start"),
-      sub("印","gindex-mark"),
-      ...["順位","印","1着","2着","3着","着外"].map((label,i)=>
-        sub(label,(i===0?"bl ":"")+"distance-col"+
-          (i===0?" distance-rank-heading":"")+
-          (i===1?" distance-mark-heading":"")+
-          (i>=2?" distance-rate-heading":"")))
+      sub(statCombo("","総合P"),
+        "bl marutoku-section-start marutoku-score-label marutoku-combined-heading"),
+      ...["1着P","2着P","3着P"].map(label=>
+        sub(label,"marutoku-score-label")),
+      sub(statCombo("","G指数"),"bl gindex-section-start gindex-combined-heading"),
+      sub(statCombo("","順位"),"bl distance-combined-heading"),
+      ...["1着","2着","3着","着外"].map(label=>
+        sub(label,"distance-col distance-rate-heading"))
     ];
     // Grouped headings share columns across the two header rows.
-    // The three point labels and the combined "印 / 総合P" heading
-    // remain 48px rowspan=2 cells, with no redundant group heading.
+    // Mark-and-value headings use the same fixed left/center grid as data.
+    // Marutoku begins with 総合P, followed by 1着P/2着P/3着P.
     const groups = new Map([
       [9,  {span:4, label:"決まり手", klass:""}],
       [28, {span:4, label:"ラインの先頭", klass:"position-first"}],
@@ -118,7 +120,7 @@
       [44, {span:4, label:"競り", klass:"position-first"}],
       [48, {span:4, label:"イン粘り回数", klass:"position-first"}],
       [52, {span:4, label:"追い上げ回数", klass:"position-first"}],
-      [62, {span:6, label:"周長別", klass:"bl distance-section-start"}]
+      [61, {span:5, label:"周長別", klass:"bl distance-section-start"}]
     ]);
     const top = [], lower = [];
     for (let i=0; i<subheads.length;) {
@@ -326,20 +328,19 @@
       switchCounts.map((count,k)=>'<td class="position-stat position-switch'+
         (k%4===0?' position-first':'')+(count===0?' position-zero':'')+
         '">'+escape(count)+'</td>').join("")+
+      '<td class="bl marutoku-value marutoku-combined-cell">'+
+        statCombo(marker(p.mark),totalText)+'</td>'+
       p.points.slice(0,3).map((v,k)=>{
         const rank=pointRanks[k]||0;
         const label=rank
           ? '<span class="rank-number rank-tint-'+rank+'">'+escape(v)+'</span>'
           : escape(v);
-        return '<td class="'+(k===0?"bl ":"")+'marutoku-value">'+label+'</td>';
+        return '<td class="marutoku-value">'+label+'</td>';
       }).join("")+
-      '<td class="marutoku-value marutoku-combined-cell">'+
-        '<div class="marutoku-combined-layout">'+
-          '<span class="marutoku-combined-mark">'+marker(p.mark)+'</span>'+
-          '<span class="marutoku-combined-score">'+totalText+'</span>'+
-        '</div></td>'+
-      '<td class="bl c-g"><span class="g-val'+(gRank?' rank-number rank-tint-'+gRank:'')+'">'+escape(rider.g)+'</span></td>'+
-      '<td class="gindex-mark">'+marker(gMark)+'</td>'+
+      '<td class="bl gindex-combined-cell">'+
+        statCombo(marker(gMark),
+          '<span class="g-val'+(gRank?' rank-number rank-tint-'+gRank:'')+'">'+
+            escape(rider.g)+'</span>')+'</td>'+
       distanceCells(rider.car)+
       '</tr>';
   };
