@@ -37,9 +37,18 @@ body { font-weight: var(--fw-normal); }
 .news-date {
   font-size: var(--fs-14);
   font-weight: var(--fw-normal);
-  color: var(--c-text-primary);
   line-height: 1.25;
   letter-spacing: normal;
+}
+/* Home venue day and session labels use the next lighter neutral tone. */
+.venue-grid.g3 .vcard-day,
+.venue-grid.g3 .kubun {
+  color: var(--c-text-secondary);
+}
+/* Descriptions and news dates retain their primary text tone. */
+.pk3 .pk-explain,
+.news-date {
+  color: var(--c-text-primary);
 }
 /* One shared filled SVG for every Girls mark (home, venue labels and R rows).
    The 1.15 aspect ratio replaces font-dependent horizontal scaling. */
