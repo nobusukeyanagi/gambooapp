@@ -325,9 +325,27 @@ async function checkCurrentPage(page, width) {
 
   const featuredSeeAll=page.locator('.featured-races-header .see-all');
   if (await featuredSeeAll.count()!==1 ||
-      await featuredSeeAll.getAttribute('href')!=='./SCR-210_racecardkeirin.html' ||
+      await featuredSeeAll.getAttribute('href')!=='https://gamboo.jp/bet/xt_keirin.aspx?rmac=console_device-checker&it=1' ||
       (await featuredSeeAll.innerText()).trim()!=='すべて見る')
-    fail(width+'px featured keirin riders see-all must link to SCR-210 racecard');
+    fail(width+'px featured keirin riders see-all must link to BET keirin');
+
+  const homeNewsIcon=await page.locator('.section-header .news-heading-icon').evaluate(svg=>({
+    parentHeading:svg.parentElement?.textContent?.trim(),
+    width:getComputedStyle(svg).width,
+    height:getComputedStyle(svg).height,
+    color:getComputedStyle(svg).color,
+    isFirst:svg.parentElement?.firstElementChild===svg,
+    hasShape:svg.querySelectorAll('rect,path').length===2
+  }));
+  if(homeNewsIcon.parentHeading!=='お知らせ' || homeNewsIcon.width!=='34px' ||
+     homeNewsIcon.height!=='34px' || homeNewsIcon.color!=='rgb(114, 109, 49)' ||
+     !homeNewsIcon.isFirst || !homeNewsIcon.hasShape)
+    fail(width+'px notice heading SVG must appear left of title in brand gold: '+
+      JSON.stringify(homeNewsIcon));
+  const autoToCarouselGap=await page.locator('.bn-carousel').evaluate(el=>
+    parseFloat(getComputedStyle(el).marginTop));
+  if(autoToCarouselGap!==8)
+    fail(width+'px auto-race venue grid to carousel spacing must use 8px token: '+autoToCarouselGap);
 
   // SCR-100 featured riders: center the name area beneath the description,
   // while venue/race/deadline remains fixed to the lower-right edge.

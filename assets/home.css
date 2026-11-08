@@ -82,6 +82,19 @@ button,
         align-items: center;
         gap: var(--space-5);
       }
+      /* Original newspaper SVG for the SCR-100 notice heading. */
+      .news-heading-icon {
+        display: block;
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        color: var(--c-gold);
+      }
       /* Without decorative bars, use a consistent 8px separation between
          content blocks and headings. Keep the first race heading flush with
          the date tabs rather than adding empty space at the top. */
@@ -531,6 +544,8 @@ button,
       .vcard:is(.ended, .presale) .vcard-bottom { justify-content: flex-end; }
       .venue-grid.g3 > .vcard[data-demo][hidden] { display: none; }
 
+      /* Match the 8px section-to-section spacing used by the venue headings. */
+      .scroll-area > .venue-grid.g3 + .bn-carousel { margin-top: var(--space-section); }
       .bn-carousel { position: relative; padding-bottom: var(--space-section); }
       .bn-track {
         display: flex;
