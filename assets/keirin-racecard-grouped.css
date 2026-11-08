@@ -65,6 +65,42 @@
   margin-bottom: var(--space-3);
 }
 
+/* Position-group headings use the same four category fills as the
+   corresponding rider-position cells. Miscellaneous position headings use
+   one neutral grey fill, not a new classification color. */
+.race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-1 {
+  background: var(--c-magenta-light);
+  color: var(--c-text-primary);
+}
+.race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-2 {
+  background: var(--c-teal-light);
+  color: var(--c-text-primary);
+}
+.race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-3 {
+  background: var(--c-yellowgreen-light);
+  color: var(--c-text-primary);
+}
+.race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-4 {
+  background: var(--c-bronze-light);
+  color: var(--c-text-primary);
+}
+.race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-neutral {
+  background: color-mix(in srgb, var(--c-border) 40%, var(--c-surface) 60%);
+  color: var(--c-text-primary);
+}
+/* Every historical placing is a full-size tap target, while visually
+   preserving the existing two-row placement/time layout. */
+.race-detail-scroll .mania-table .meeting-cell a.res.res-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.race-detail-scroll .mania-table .meeting-cell a.res.res-link:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: calc(-1 * var(--line-emphasis-width));
+}
+
 /* Selected menu section: restore the dark-gold/white header highlight.
    Match the specificity of both normal first-row and second-row header
    backgrounds so their :first-child/:nth-child rules cannot override it. */
@@ -283,7 +319,7 @@
 .race-detail-scroll .mania-table .meeting-avg-line {
   display: block;
   white-space: nowrap;
-  font-size: var(--fs-16);
+  font-size: var(--fs-14);
 }
 .race-detail-scroll .mania-table .meeting-avg-line + .meeting-avg-line {
   margin-top: var(--space-5);
@@ -733,6 +769,15 @@
 }
 .race-detail-scroll .mania-table tbody td.meeting-avg {
   min-width: 100px;
+}
+/* 総合P: only this column is 10px wider (60px → 70px). The
+   matching second-row heading is logical child 36. */
+.race-detail-scroll .mania-table tbody tr > td.marutoku-value.marutoku-total,
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th.marutoku-total-heading {
+  box-sizing: border-box;
+  width: 70px !important;
+  min-width: 70px !important;
+  max-width: 70px !important;
 }
 /* The nine mania-analysis columns are all 60px; header buttons fill
    the available area except for the standard 3px/6px cell inset. */
