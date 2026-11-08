@@ -141,7 +141,7 @@
       '<span class="meeting-date">'+escape(meta.date)+'</span></div>'+
       '<div class="res-wrap">'+slots.join("")+'</div></div></td>';
   };
-  const renderRow = (DATA,rider,i,gMark,scoreRank) => {
+  const renderRow = (DATA,rider,i,gMark,scoreRank,rateRanks) => {
     const p=DATA.marutoku[i],position=DATA.positionStats.rows[i];
     const grade=rider.grade.split("/");
     // Display name / prefecture(home) / training class and age on three lines.
@@ -186,9 +186,10 @@
       Array.from({length:4},(_,k)=>{
         const count=rider.recent4Months?.counts?.[k];
         const rate=rider.recent4Months?.rates?.[k];
+        const rank=k<3?(rateRanks?.[k]||0):0;
         return '<td class="'+(k===0?"bl ":"")+'recent4-cell">'+
           '<span class="recent4-count">'+escape(count ?? "—")+'</span>'+
-          '<span class="recent4-rate">'+
+          '<span class="recent4-rate'+(rank?' recent4-rank-'+rank:'')+'">'+
           escape(rate === undefined || rate === null || rate === "" ? "—" : Math.trunc(Number(rate))+"%")+
           '</span></td>';
       }).join("")+
@@ -235,11 +236,29 @@
       .slice(0,3).forEach(({index},rank)=>{ranks[index]=rank+1;});
     return ranks;
   };
+  // Rank each displayed percentage column independently; use car number to
+  // break ties consistently. Outside rate (fourth column) is not ranked.
+  const getRecentRateRanks = (riders) => {
+    const result=Array.from({length:riders.length},()=>[0,0,0]);
+    for(let k=0;k<3;k++){
+      riders.map((rider,index)=>{
+        const rate=rider.recent4Months?.rates?.[k];
+        return {index,car:Number(rider.car),value:Math.trunc(Number(rate)),
+          valid:rate!==undefined&&rate!==null&&rate!==""};
+      })
+        .filter(({value,valid})=>valid&&Number.isFinite(value))
+        .sort((a,b)=>b.value-a.value||a.car-b.car||a.index-b.index)
+        .slice(0,3)
+        .forEach(({index},rank)=>{result[index][k]=rank+1;});
+    }
+    return result;
+  };
   const toHTML = (DATA) => {
     const gMarks = getGMarks(DATA.basics);
     const scoreRanks=getScoreRanks(DATA.basics);
+    const rateRanks=getRecentRateRanks(DATA.basics);
     return makeHead()+'<tbody>'+
-      DATA.basics.map((r,i)=>renderRow(DATA,r,i,gMarks[i],scoreRanks[i])).join("")+'</tbody>';
+      DATA.basics.map((r,i)=>renderRow(DATA,r,i,gMarks[i],scoreRanks[i],rateRanks[i])).join("")+'</tbody>';
   };
   const render=(table,DATA)=>{if(table&&DATA)table.innerHTML=toHTML(DATA);};
   window.GambooKeirinRacecardColumns={toHTML,render};
