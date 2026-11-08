@@ -62,8 +62,9 @@
           'c-item'+(i===0?" bl mania-section-start mania-section-heading":""))),
       sub("総合","c-item mania-total")
     ];
-    // Grouped first-row labels share the same physical columns as the
-    // second-row labels. Un-grouped columns span both header rows.
+    // Grouped headings share columns across the two header rows.
+    // 1着P～印 are standalone 48px rowspan=2 headings, with no
+    // redundant "マル得ポイント" group label above them.
     const groups = new Map([
       [9,  {span:4, label:"決まり手", klass:""}],
       [28, {span:4, label:"ラインの先頭", klass:"position-first"}],
@@ -72,8 +73,7 @@
       [40, {span:4, label:"単騎", klass:"position-first"}],
       [44, {span:4, label:"競り", klass:"position-first"}],
       [48, {span:4, label:"イン粘り回数", klass:"position-first"}],
-      [52, {span:4, label:"追い上げ回数", klass:"position-first"}],
-      [56, {span:5, label:"マル得ポイント", klass:"bl marutoku-section-start"}]
+      [52, {span:4, label:"追い上げ回数", klass:"position-first"}]
     ]);
     const top = [], lower = [];
     for (let i=0; i<subheads.length;) {
