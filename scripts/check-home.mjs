@@ -292,52 +292,23 @@ async function checkCurrentPage(page, width) {
     fail(width+'px featured rider center or fixed bottom-right venue/time mismatch: '+
       JSON.stringify(featuredAlignment));
 
-  // Each featured category has its own next arrow. One/two riders retain the
-  // pre-expansion height; a three-rider example must naturally grow.
+  // Static SCR-100 featured riders: no left/right arrows or pager state.
   const featured=page.locator('.pickup-card.pk3');
   const compactHeights=await featured.evaluateAll(cards=>cards.map(card=>({
     height:card.getBoundingClientRect().height,
     count:card.querySelectorAll('.pk-player').length,
-    next:card.querySelectorAll('button.pk-next').length,
-    controls:card.querySelector('button.pk-next')?.getAttribute('aria-controls')
+    arrows:card.querySelectorAll('button.pk-next,button.pk-prev,.pk-nav,.pk-player-panel').length,
+    pagerState:card.hasAttribute('data-featured-index')
   })));
   const originalHeight=width<=330?80:86;
   if(compactHeights.length!==4 || compactHeights.some(x=>
       Math.abs(x.height-originalHeight)>1 || x.count<1 || x.count>2 ||
-      x.next!==1 || !x.controls))
-    fail(width+'px featured categories must have compact 1/2-player cards and next arrows: '+
+      x.arrows!==0 || x.pagerState))
+    fail(width+'px featured rider cards must be compact and have no pager: '+
       JSON.stringify(compactHeights));
-
-  for(let i=0;i<4;i++){
-    const card=featured.nth(i);
-    const state=async()=>card.evaluate(el=>({
-      title:el.querySelector('.pk-explain')?.textContent.trim(),
-      icon:el.querySelector('.kun-ic')?.getAttribute('src'),
-      players:[...el.querySelectorAll('.pk-player .pk-text')].map(x=>x.textContent.trim()),
-      race:el.querySelector('.pk-race-time')?.textContent.trim(),
-      count:el.dataset.riderCount,
-      index:el.dataset.featuredIndex,
-      height:el.getBoundingClientRect().height,
-      timeBottom:Math.abs(el.querySelector('.pk-race-time').getBoundingClientRect().bottom-
-        el.querySelector('.pickup-body').getBoundingClientRect().bottom)
-    }));
-    const initial=await state();
-    await card.locator('button.pk-next').click();
-    const second=await state();
-    await card.locator('button.pk-next').click();
-    const returned=await state();
-    if(second.index!=='1'||second.players.join('|')===initial.players.join('|')||
-       second.title!==initial.title||second.icon!==initial.icon||
-       Math.abs(second.height-originalHeight)>1||second.timeBottom>2||
-       returned.index!=='0'||returned.players.join('|')!==initial.players.join('|')||
-       returned.race!==initial.race||returned.height!==initial.height)
-      fail(width+'px featured category '+i+' did not advance independently and wrap: '+
-        JSON.stringify({initial,second,returned}));
-  }
   const growth=await featured.first().evaluate(card=>{
     const clone=card.cloneNode(true);
-    clone.classList.add('pk-many-riders','pk-two-riders');
-    clone.querySelector('button.pk-next')?.remove();
+    clone.classList.add('pk-two-riders');
     const row=clone.querySelector('.pk-compact-row');
     const race=row.querySelector('.pk-race-time');
     const rider=row.querySelector('.pk-player');
