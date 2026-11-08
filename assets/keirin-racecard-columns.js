@@ -22,6 +22,46 @@
         shape + '</svg></span>'
       : '<span class="mk">' + escape(x) + '</span>';
   };
+  // Sample, not the riders in 防府5R: 2026-11-08 四日市12R,
+  // 400m velodromes, past one year (from the user-supplied Gamboo HTML).
+  // Keyed by CAR NUMBER solely to preview the six-column table layout.
+  // rates = [win, top-2, top-3, out], cumulative counts as given in source.
+  const distance400Sample = {
+    1: {name:"浅井康太", rank:7, total:61, cum:[19,21,33], rates:["31.1","34.4","54.1","45.9"]},
+    2: {name:"森田優弥", rank:1, total:57, cum:[26,33,39], rates:["45.6","57.9","68.4","31.6"]},
+    3: {name:"寺崎浩平", rank:4, total:43, cum:[12,20,24], rates:["27.9","46.5","55.8","44.2"]},
+    4: {name:"松谷秀幸", rank:8, total:61, cum:[6,20,28], rates:["9.8","32.8","45.9","54.1"]},
+    5: {name:"古性優作", rank:2, total:48, cum:[13,25,34], rates:["27.1","52.1","70.8","29.2"]},
+    6: {name:"桑名僚也", rank:5, total:52, cum:[13,23,31], rates:["25.0","44.2","59.6","40.4"]},
+    7: {name:"新田祐大", rank:6, total:63, cum:[13,23,32], rates:["20.6","36.5","50.8","49.2"]},
+    8: {name:"脇本勇希", rank:9, total:45, cum:[7,11,18], rates:["15.6","24.4","40.0","60.0"]},
+    9: {name:"中野慎詞", rank:3, total:37, cum:[8,19,21], rates:["21.6","51.4","56.8","43.2"]}
+  };
+  const sampleRateRanks = Array.from({length:4},(_,k) =>
+    k===3 ? null :
+    Object.entries(distance400Sample)
+      .sort((a,b) => Number(b[1].rates[k])-Number(a[1].rates[k]))
+      .reduce((r,[car],i)=>{r[car]=i+1;return r;}, {})
+  );
+  const distanceCells = car => {
+    const d=distance400Sample[car];
+    if (!d) return Array(6).fill('<td class="distance-sample-empty">—</td>').join("");
+    const counts=[d.cum[0], d.cum[1]-d.cum[0], d.cum[2]-d.cum[1], d.total-d.cum[2]];
+    const mark=["","◎","○","△","×"][d.rank] || "";
+    const rankHtml=d.rank<=3
+      ? '<span class="rank-number rank-tint-'+d.rank+'">'+d.rank+'位</span>'
+      : d.rank+'位';
+    const title='参考：四日市12R・'+d.name+'（車番'+car+'）';
+    return '<td class="distance-rank" title="'+escape(title)+'">'+rankHtml+'</td>'+
+      '<td class="distance-mark" title="'+escape(title)+'">'+marker(mark)+'</td>'+
+      counts.map((count,i)=>{
+        const rateRank=i===3?0:sampleRateRanks[i][car];
+        return '<td class="distance-rate recent4-cell" title="'+escape(title)+'">'+
+          '<span class="recent4-count">'+escape(count)+'</span>'+
+          '<span class="recent4-rate'+(rateRank&&rateRank<=3?' recent4-rank-'+rateRank:'')+'">'+
+          escape(d.rates[i])+'%</span></td>';
+      }).join("");
+  };
   const placeGroups = ["ラインの先頭","2番手","3番手以降","単騎","競り"];
   const ranks = ["1着","2着","3着","着外"];
   // Section names live in the horizontal menu; only column headings remain.
@@ -57,10 +97,11 @@
           (i===4?" marutoku-mark-label":""))),
       sub("G指数","bl gindex-section-start"),
       sub("印","gindex-mark"),
-      ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレ<br>ード","競輪場","車番","同県<br>選手"].map((label,i)=>
-        sub('<button type="button" class="item-btn" data-item="'+i+'"><span>'+label+'</span></button>',
-          'c-item'+(i===0?" bl mania-section-start mania-section-heading":""))),
-      sub("総合","c-item mania-total")
+      ...["順位","印","1着","2着","3着","着外"].map((label,i)=>
+        sub(label,"distance-col"+(i===0?" distance-rank-heading":"")+
+          (i===1?" distance-mark-heading":"")+
+          (i>=2?" distance-rate-heading":"")+
+          (i===0?" bl distance-section-start":"")))
     ];
     // Grouped headings share columns across the two header rows.
     // 1着P～印 are standalone 48px rowspan=2 headings, with no
@@ -73,7 +114,8 @@
       [40, {span:4, label:"単騎", klass:"position-first"}],
       [44, {span:4, label:"競り", klass:"position-first"}],
       [48, {span:4, label:"イン粘り回数", klass:"position-first"}],
-      [52, {span:4, label:"追い上げ回数", klass:"position-first"}]
+      [52, {span:4, label:"追い上げ回数", klass:"position-first"}],
+      [63, {span:6, label:"周長別", klass:"bl distance-section-start"}]
     ]);
     const top = [], lower = [];
     for (let i=0; i<subheads.length;) {
@@ -288,9 +330,7 @@
       '<td class="marutoku-mark">'+marker(p.mark)+'</td>'+
       '<td class="bl c-g"><span class="g-val'+(gRank?' rank-number rank-tint-'+gRank:'')+'">'+escape(rider.g)+'</span></td>'+
       '<td class="gindex-mark">'+marker(gMark)+'</td>'+
-      rider.ratings.items.map((v,k)=>'<td class="mania-eval'+(k===0?' bl':'')+
-        '" data-item="'+k+'">'+marker(v)+'</td>').join("")+
-      '<td class="mania-eval mania-total">'+marker(rider.ratings.overall)+'</td>'+
+      distanceCells(rider.car)+
       '</tr>';
   };
   // Rank G-index values numerically, descending. The four highest riders
