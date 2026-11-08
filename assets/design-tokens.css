@@ -73,15 +73,15 @@
 
   /* 基本9色に対応する薄色はすべて「基本色40% + 白60%」から算出。
      薄色を固定HEXで持たず、基本色の変更に自動で追従する。 */
-  --c-bronze-light: color-mix(in srgb, var(--c-bronze) 10%, white 90%);
-  --c-gold-light: color-mix(in srgb, var(--c-gold) 10%, white 90%);
-  --c-yellowgreen-light: color-mix(in srgb, var(--c-yellowgreen) 10%, white 90%);
-  --c-green-light: color-mix(in srgb, var(--c-green) 10%, white 90%);
-  --c-teal-light: color-mix(in srgb, var(--c-teal) 10%, white 90%);
-  --c-blue-light: color-mix(in srgb, var(--c-blue) 10%, white 90%);
-  --c-purple-light: color-mix(in srgb, var(--c-purple) 10%, white 90%);
-  --c-magenta-light: color-mix(in srgb, var(--c-magenta) 10%, white 90%);
-  --c-red-light: color-mix(in srgb, var(--c-red) 10%, white 90%);
+  --c-bronze-light: color-mix(in srgb, var(--c-bronze) 20%, white 80%);
+  --c-gold-light: color-mix(in srgb, var(--c-gold) 20%, white 80%);
+  --c-yellowgreen-light: color-mix(in srgb, var(--c-yellowgreen) 20%, white 80%);
+  --c-green-light: color-mix(in srgb, var(--c-green) 20%, white 80%);
+  --c-teal-light: color-mix(in srgb, var(--c-teal) 20%, white 80%);
+  --c-blue-light: color-mix(in srgb, var(--c-blue) 20%, white 80%);
+  --c-purple-light: color-mix(in srgb, var(--c-purple) 20%, white 80%);
+  --c-magenta-light: color-mix(in srgb, var(--c-magenta) 20%, white 80%);
+  --c-red-light: color-mix(in srgb, var(--c-red) 20%, white 80%);
 
   /* ④ 根幹カラー：基本文字・補助文字・操作枠線・罫線・背景。
      共通4色はH210°/S10%、明度21%/42%/63%/84%で統一。
