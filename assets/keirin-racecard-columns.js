@@ -5,6 +5,27 @@
     .replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const waku = [1,2,3,4,4,5,5,6,6];
   const legCss = {"追":"leg-chase","逃":"leg-escape","両":"leg-both"};
+  // Reuse the exact four featured-rider icons from the SCR-200 race buttons.
+  // One rider may have several labels, which render as a vertical stack.
+  const featuredIconFiles = Object.freeze({
+    "ダントツ君":"ic_pickup01.png",
+    "超ダントツ君":"ic_pickup01.png",
+    "逃げイチ君":"ic_pickup02.png",
+    "連勝君":"ic_pickup03.png",
+    "ロケット君":"ic_pickup04.png"
+  });
+  const renderFeatured = rider => {
+    const tags = Array.isArray(rider.featured) ? rider.featured :
+      rider.featured ? [rider.featured] : [];
+    const icons = tags.map(label => {
+      const image = featuredIconFiles[label];
+      return image ? '<img src="./assets/images/'+image+'" alt="'+escape(label)+
+        '" title="'+escape(label)+'" width="24" height="24">' : "";
+    }).join("");
+    return '<td class="player-featured">'+
+      (icons ? '<div class="player-featured-icons">'+icons+'</div>' : "")+
+      '</td>';
+  };
   // All mark symbols use the same outline and four shared text-backdrop tints.
   const markShapes = {
     "◎": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>',
@@ -62,6 +83,7 @@
       sub("選手名","c-name"),
       sub("級班","bl"),sub("脚質","bl"),sub("ギア比","bl"),
       sub("コメント","player-comment-heading"),
+      sub("注目","player-featured-heading"),
       ...["競走得点","失違","逃","捲","差","マ","B"].map((s,i)=>
         sub(i===0
           ? '<button type="button" class="score-order-sort racecard-sort-button" aria-pressed="false" aria-label="競走得点順に並べ替え"><span>競走得点</span><span class="sort-mode-label" aria-hidden="true">得点順</span></button>'
@@ -95,14 +117,14 @@
     // Mark-and-value headings use the same fixed left/center grid as data.
     // Marutoku begins with 総合P, followed by 1着P/2着P/3着P.
     const groups = new Map([
-      [9,  {span:4, label:"決まり手", klass:""}],
-      [28, {span:4, label:"ラインの先頭", klass:"position-first"}],
-      [32, {span:4, label:"2番手", klass:"position-first"}],
-      [36, {span:4, label:"3番手以降", klass:"position-first"}],
-      [40, {span:4, label:"単騎", klass:"position-first"}],
-      [44, {span:4, label:"競り", klass:"position-first"}],
-      [48, {span:4, label:"イン粘り回数", klass:"position-first"}],
-      [52, {span:4, label:"追い上げ回数", klass:"position-first"}],
+      [10,  {span:4, label:"決まり手", klass:""}],
+      [29, {span:4, label:"ラインの先頭", klass:"position-first"}],
+      [33, {span:4, label:"2番手", klass:"position-first"}],
+      [37, {span:4, label:"3番手以降", klass:"position-first"}],
+      [41, {span:4, label:"単騎", klass:"position-first"}],
+      [45, {span:4, label:"競り", klass:"position-first"}],
+      [49, {span:4, label:"イン粘り回数", klass:"position-first"}],
+      [53, {span:4, label:"追い上げ回数", klass:"position-first"}],
     ]);
     const top = [], lower = [];
     for (let i=0; i<subheads.length;) {
@@ -285,6 +307,7 @@
       '<td class="bl"><span class="leg-tag '+(legCss[rider.leg]||"leg-both")+'">'+escape(rider.leg)+'</span></td>'+
       '<td class="bl">'+escape(rider.gear||"—")+'</td>'+
       '<td class="player-comment">'+escape(p.comment)+'</td>'+
+      renderFeatured(rider)+
       '<td class="bl score"><span class="score-current'+(scoreRank?' score-rank-'+scoreRank:'')+'">'+escape(rider.score)+'</span>'+
         '<span class="score-previous">'+
         (rider.previousScore ? '前'+escape(rider.previousScore) : '前—')+
