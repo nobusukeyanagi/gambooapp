@@ -68,7 +68,7 @@
   const meetingHeading = wrap?.querySelector(".meeting-section-start");
   const positionHeading = wrap?.querySelector(".position-section-start");
   const gindexHeading = wrap?.querySelector(".gindex-section-start");
-  const distanceHeading = wrap?.querySelector(".distance-section-start");
+  const maniaHeading = wrap?.querySelector(".mania-section-start");
   const menuScroller = inner.querySelector(".info-tabs")?.closest(".hscroll-inner");
   const playerTab = inner.querySelector('.info-tab[data-target="player"]');
   const pointTab = inner.querySelector('.info-tab[data-target="marutoku"]');
@@ -76,24 +76,24 @@
   const meetingTab = inner.querySelector('.info-tab[data-target="meeting"]');
   const positionTab = inner.querySelector('.info-tab[data-target="position"]');
   const gindexTab = inner.querySelector('.info-tab[data-target="gindex"]');
+  const maniaTab = inner.querySelector('.info-tab[data-target="mania"]');
   if (!wrap || !table || !playerHeading || !pointHeading ||
       !recentHeading || !meetingHeading || !positionHeading || !gindexHeading ||
-      !distanceHeading || !playerTab || !pointTab || !recentTab ||
-      !meetingTab || !positionTab || !gindexTab) return;
+      !maniaHeading || !playerTab || !pointTab || !recentTab ||
+      !meetingTab || !positionTab || !gindexTab || !maniaTab) return;
 
   const tabsByName = {
     player: playerTab, recent: recentTab,
     meeting: meetingTab, position: positionTab, marutoku: pointTab,
-    gindex: gindexTab
+    gindex: gindexTab, mania: maniaTab
   };
   const headingsByName = {
     player: playerHeading, recent: recentHeading,
     meeting: meetingHeading, position: positionHeading, marutoku: pointHeading,
-    gindex: gindexHeading
+    gindex: gindexHeading, mania: maniaHeading
   };
-  // Map both header rows to their logical column indices. Rowspans and
-  // The six visible navigation sections align with the physical table columns.
-  // The final 周長別 group has no tab and remains visible at the right edge.
+  // Map both header rows to their logical column indices, including rowspans.
+  // The final マニア分析 tab scrolls to 周長別 and covers every analyzer group.
   const grid = [];
   const headerCells = [];
   Array.from(table.tHead?.rows || []).forEach((row, rowIndex) => {
@@ -115,15 +115,13 @@
     key, start: headerCells.find((item) => item.cell === headingsByName[key])?.from ?? -1
   }));
   if (headerBounds.some((entry) => entry.start < 0)) return;
-  const distanceStart = headerCells.find((entry) =>
-    entry.cell === distanceHeading)?.from ?? -1;
-  if (distanceStart < 0) return;
+  const columnCount = Math.max(0, ...headerCells.map(entry=>entry.until));
   function highlightHeader(name) {
     const index = headerBounds.findIndex((entry) => entry.key === name);
     if (index < 0) return;
     const from = headerBounds[index].start;
     const until = index + 1 < headerBounds.length
-      ? headerBounds[index + 1].start : distanceStart;
+      ? headerBounds[index + 1].start : columnCount;
     // Group cells illuminate whenever their span overlaps the active section.
     // Frame and vehicle-number headers always retain their normal color.
     headerCells.forEach(({cell, from: start, until: end}) =>
@@ -173,7 +171,7 @@
   }
   function syncTab() {
     // Keep the tapped section selected while the table scrolls smoothly.
-    // Keep the last G-index tab active while the un-tabbed 周長別 area is viewed.
+    // Manual selection stays active until scrolling is resumed by the user.
     if (selectedByUser !== null) return;
     if (navigationTarget !== null) {
       if (Math.abs(wrap.scrollLeft - navigationTarget) > 2) return;
@@ -182,7 +180,8 @@
     const atRightEdge = wrap.scrollWidth - wrap.clientWidth - wrap.scrollLeft <= 12;
     const threshold = wrap.scrollLeft + stickyColumnWidth() + 2;
     let name = "player";
-    if (atRightEdge || threshold >= columnOffset(gindexHeading)) name = "gindex";
+    if (atRightEdge || threshold >= columnOffset(maniaHeading)) name = "mania";
+    else if (threshold >= columnOffset(gindexHeading)) name = "gindex";
     else if (threshold >= columnOffset(pointHeading)) name = "marutoku";
     else if (threshold >= columnOffset(positionHeading)) name = "position";
     else if (threshold >= columnOffset(meetingHeading)) name = "meeting";
