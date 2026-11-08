@@ -196,7 +196,9 @@
    right. Up to three marks stack inside the 36px placement row. */
 .race-detail-scroll .mania-table .meeting-cell .res-placement {
   display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
+  box-sizing: border-box;
+  grid-template-columns: 28px minmax(0, 1fr);
+  padding-left: var(--space-card);
   align-items: center;
   justify-items: center;
   width: 100%;
@@ -219,7 +221,7 @@
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
   line-height: 1;
-  color: var(--c-text-primary);
+  color: var(--c-red);
   text-align: center;
   white-space: nowrap;
 }
@@ -228,9 +230,9 @@
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
   border: var(--line-normal);
   border-radius: 0;
   font-size: var(--fs-16);
@@ -289,14 +291,30 @@
 .race-detail-scroll .mania-table tbody tr:nth-child(even) td {
   background: var(--c-surface);
 }
-.race-detail-scroll .mania-table tbody tr td.marutoku-point-orange {
-  background: color-mix(in srgb, var(--c-bronze) 20%, var(--c-surface));
+/* Text-only ranking highlights shared by Marutoku figures and G-index.
+   Keep every table cell's own surface white. */
+.race-detail-scroll .mania-table tbody td .rank-number {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r-xs);
+  color: var(--c-text-primary);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
 }
-.race-detail-scroll .mania-table tbody tr td.marutoku-point-yellow {
-  background: color-mix(in srgb, var(--c-gold-light) 25%, var(--c-surface));
+.race-detail-scroll .mania-table tbody td .rank-number.rank-tint-1 {
+  background: var(--c-gold-light);
 }
-.race-detail-scroll .mania-table tbody tr td.marutoku-point-green {
-  background: color-mix(in srgb, var(--c-green) 14%, var(--c-surface));
+.race-detail-scroll .mania-table tbody td .rank-number.rank-tint-2 {
+  background: var(--c-blue-light);
+}
+.race-detail-scroll .mania-table tbody td .rank-number.rank-tint-3 {
+  background: var(--c-bronze-light);
+}
+.race-detail-scroll .mania-table tbody td.c-g .g-val {
+  margin-right: 0;
 }
 /* In the racecard legend, explanations start at the same left edge as
    their terms, rather than occupying the right column of a grid. */
@@ -403,6 +421,38 @@
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+/* Every ◎○△× mark shares one text-sized background system,
+   both in the racecard and in the mania-detail sheet. */
+.phone-inner .mk {
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  border-radius: var(--r-xs);
+  padding: var(--space-1);
+  color: var(--c-text-primary);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+}
+.phone-inner .mk.mk-dbl {
+  color: var(--c-text-primary);
+  background: var(--c-gold-light);
+}
+.phone-inner .mk.mk-o {
+  color: var(--c-text-primary);
+  background: var(--c-blue-light);
+}
+.phone-inner .mk.mk-tri {
+  color: var(--c-text-primary);
+  background: var(--c-bronze-light);
+}
+.phone-inner .mk.mk-x {
+  color: var(--c-text-primary);
+  background: var(--c-green-light);
 }
 
 /* Four-month results: two-line column labels and count / percentage cells. */
