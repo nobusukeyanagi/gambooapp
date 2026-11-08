@@ -612,9 +612,9 @@ button,
         justify-content: flex-start;
       }
       .pk3 .pk-explain {
+        flex: 0 0 auto;
         white-space: normal;
         overflow-wrap: anywhere;
-        padding-right: var(--space-24);
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
@@ -683,7 +683,7 @@ button,
       }
       .pk3 {
         position: relative;
-        padding: var(--space-10) var(--space-content) var(--space-10) var(--space-10);
+        padding: var(--space-small) var(--space-content) var(--space-small) var(--space-10);
         align-items: center;
         gap: var(--space-section);
       }
@@ -706,15 +706,43 @@ button,
         background: transparent;
         object-fit: contain;
       }
+      /* The line separates the explanation from the full-height player pager. */
+      .pk3 .pk-player-panel {
+        display: grid;
+        grid-template-columns: 18px minmax(0, 1fr) 18px;
+        flex: 1 1 auto;
+        min-height: 0;
+        border-top: var(--line-normal);
+      }
+      .pk3 .pk-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: stretch;
+        min-height: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        background: var(--c-silver-light);
+        color: var(--c-charcoal);
+        font-family: var(--ff-ui);
+        font-size: var(--fs-18);
+        font-weight: var(--fw-strong);
+        cursor: pointer;
+      }
+      .pk3 .pk-prev { border-right: var(--line-normal); }
+      .pk3 .pk-next { border-left: var(--line-normal); }
+      .pk3 .pk-nav:focus-visible { outline: var(--line-focus); outline-offset: -3px; }
       .pk3 .pk-compact-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
         min-width: 0;
-        flex: 1 1 auto;
         min-height: 0;
         position: relative;
+        padding: 0 var(--space-2);
         gap: var(--space-small);
       }
       .pk3 .pk-player {
@@ -744,7 +772,7 @@ button,
       }
        .pk3 .pk-race-time {
          position: absolute;
-         right: 0;
+         right: var(--space-2);
          bottom: 0;
          display: flex;
          flex: 0 0 auto;
@@ -825,29 +853,10 @@ button,
         height: auto;
         min-height: 86px;
       }
-      .pk3 .pk-next {
-        position: absolute;
-        z-index: 1;
-        top: var(--space-3);
-        right: var(--space-3);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 24px;
-        height: 32px;
-        padding: 0;
-        border: var(--line-control);
-        border-radius: var(--r-sm);
-        background: var(--c-surface);
-        color: var(--c-silver);
-        box-shadow: var(--e1);
-        cursor: pointer;
-      }
-      .pk3 .pk-next .ic { width: 20px; height: 20px; }
-      .pk3 .pk-next:focus-visible { outline: var(--line-focus); outline-offset: 1px; }
-      .pk3.pk-many-riders .pk-compact-row { flex: 0 0 auto; min-height: 0; }
+      .pk3.pk-many-riders .pk-player-panel { flex: 0 0 auto; }
+      .pk3.pk-many-riders .pk-compact-row { min-height: 0; padding-block: var(--space-small); }
       .pk3.pk-many-riders .pk-two-rider-stack { padding-bottom: 0; }
-      .pk3.pk-many-riders .pk-race-time { bottom: 0; }
+      .pk3.pk-many-riders .pk-race-time { bottom: var(--space-small); }
       .pk3 .pk-two-rider-stack {
         display: flex;
         flex-direction: column;
@@ -988,6 +997,8 @@ button,
                   justify-content: space-between;
                   overflow: visible;
                 }
+                .pk3 .pk-player-panel { grid-template-columns: 16px minmax(0, 1fr) 16px; }
+                .pk3 .pk-nav { font-size: var(--fs-16); }
                 .pk3 .pk-player,
                 .pk3 .pk-race-time { flex-shrink: 0; }
         
@@ -999,5 +1010,5 @@ button,
                   height: 80px;
                   min-height: 80px;
                 }
-                .pk3 .pk-next { top: var(--space-2); right: var(--space-2); }
+
       }
