@@ -269,6 +269,29 @@ async function checkCurrentPage(page, width) {
      !specialBadge.fits)
     fail(width+'px special GⅠ text outside badge: '+JSON.stringify(specialBadge));
 
+  // SCR-100 featured riders: center the name area beneath the description,
+  // while venue/race/deadline remains fixed to the lower-right edge.
+  const featuredAlignment=await page.locator('.pickup-card.pk3').evaluateAll(cards =>
+    cards.map(card=>{
+      const body=card.querySelector('.pickup-body').getBoundingClientRect();
+      const description=card.querySelector('.pk-explain').getBoundingClientRect();
+      const player=(card.querySelector('.pk-two-rider-stack') ||
+        card.querySelector('.pk-player')).getBoundingClientRect();
+      const time=card.querySelector('.pk-race-time').getBoundingClientRect();
+      return {
+        riderCenterDelta:Math.abs((player.top+player.bottom-description.bottom-body.bottom)/2),
+        timeBottomDelta:Math.abs(time.bottom-body.bottom),
+        horizontalGap:time.left-player.right,
+        riderInBounds:player.top>=description.bottom-2 && player.bottom<=body.bottom+2,
+        timeInBounds:time.bottom<=body.bottom+2
+      };
+    }));
+  if(featuredAlignment.length!==4 || featuredAlignment.some(a=>
+    a.riderCenterDelta>2 || a.timeBottomDelta>2 || a.horizontalGap < -1 ||
+    !a.riderInBounds || !a.timeInBounds))
+    fail(width+'px featured rider center or fixed bottom-right venue/time mismatch: '+
+      JSON.stringify(featuredAlignment));
+
   const mori=await page.locator('.mori-venue-grid > .vcard').evaluateAll(cards=>
     cards.map(card=>({
       race:card.dataset.moriRace||'',
