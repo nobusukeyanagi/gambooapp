@@ -326,6 +326,11 @@ async function checkCurrentPage(page, width) {
       buttonBackground:getComputedStyle(barLeft).backgroundColor,
       buttonForeground:getComputedStyle(barLeft).color,
       buttonRadius:getComputedStyle(barLeft).borderTopLeftRadius,
+      buttonShadow:getComputedStyle(barLeft).boxShadow,
+      prevBorder:getComputedStyle(barLeft).borderRightWidth,
+      nextBorder:getComputedStyle(barRight).borderLeftWidth,
+      iconWidth:barLeft.querySelector('.ic')?.getBoundingClientRect().width,
+      iconMarkup:barLeft.querySelector('.ic use')?.getAttribute('href'),
       leftHeight:Math.abs(box.bottom-a.bottom),
       rightHeight:Math.abs(box.bottom-b.bottom),
       leftTop:Math.abs(a.top-box.top),
@@ -336,12 +341,14 @@ async function checkCurrentPage(page, width) {
     };
   }));
   if(bands.length!==4 || bands.some(x=>!x||x.separation>1||x.border!=='0px'||
-    x.buttonBorder!=='1px'||x.buttonRadius!=='8px'||
-    x.buttonBackground!=='rgb(255, 255, 255)'||
-    x.buttonForeground==='rgb(255, 255, 255)'||
+    x.buttonBorder!=='0px'||x.buttonRadius!=='0px'||x.buttonShadow!=='none'||
+    x.buttonBackground!=='rgb(248, 247, 244)'||
+    x.buttonForeground!=='rgb(98, 108, 118)'||
+    x.prevBorder!=='1px'||x.nextBorder!=='1px'||
+    Math.abs(x.iconWidth-(width<=330?16:18))>1||x.iconMarkup!=='#ic-chevron'||
     x.leftHeight>1||x.rightHeight>1||x.leftTop>1||
     x.rightTop>1||!x.leftOfRider||!x.rightOfRider||x.height<28))
-    fail(width+'px featured no-divider or standard outlined left/right bands incorrect: '+
+    fail(width+'px featured navigation must match SCR-200/210 edge-cue design: '+
       JSON.stringify(bands));
   for(let i=0;i<4;i++){
     const card=featured.nth(i);
