@@ -733,10 +733,10 @@ async function checkPredictionSort(page, width, isAutorace) {
       border:getComputedStyle(chip).borderTopColor,
       number:getComputedStyle(chip.querySelector('b')).color,
       status:getComputedStyle(chip.querySelector('small')).color})));
-  if(canceledStyles.some(x=>x.bg!=='rgb(96, 107, 118)' ||
-      x.border!=='rgb(96, 107, 118)' ||
-      x.number!=='rgb(255, 255, 255)' ||
-      x.status!=='rgb(255, 255, 255)'))
+  if(canceledStyles.some(x=>x.bg!=='rgb(210, 214, 218)' ||
+      x.border!=='rgb(210, 214, 218)' ||
+      x.number!=='rgb(48, 54, 59)' ||
+      x.status!=='rgb(48, 54, 59)'))
     fail(width+'px canceled race button colors must be consistent: '+JSON.stringify(canceledStyles));
   // Action buttons use the visible control boundary; cards use the lighter
   // passive border. Urgent/canceled states retain their semantic exceptions.
@@ -820,12 +820,12 @@ async function checkPredictionSort(page, width, isAutorace) {
     if(canceled.length!==1 || canceled[0].race!=='6R' ||
        canceled[0].status!=='中止' || canceled[0].tag!=='A' ||
        canceled[0].noLink ||
-       canceled[0].bg!=='rgb(96, 107, 118)'||
-       canceled[0].border!=='rgb(96, 107, 118)'||
-       canceled[0].color!=='rgb(255, 255, 255)'||
-       canceled[0].raceColor!=='rgb(255, 255, 255)'||
-       canceled[0].statusColor!=='rgb(255, 255, 255)')
-      fail(width+'px Nov 3 Aomori 6R must use grey fill and white race/status text: '+
+       canceled[0].bg!=='rgb(210, 214, 218)'||
+       canceled[0].border!=='rgb(210, 214, 218)'||
+       canceled[0].color!=='rgb(48, 54, 59)'||
+       canceled[0].raceColor!=='rgb(48, 54, 59)'||
+       canceled[0].statusColor!=='rgb(48, 54, 59)')
+      fail(width+'px Nov 3 Aomori 6R must use light grey fill and primary race/status text: '+
         JSON.stringify(canceled));
   }
   const arrowWidths = await page.locator('.venue-card .hscroll > .hscroll-cue, .venue-card .hscroll > .hscroll-cue-l')

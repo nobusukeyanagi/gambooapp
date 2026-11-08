@@ -529,12 +529,15 @@ button, input, select, textarea {
   outline-offset: var(--space-2);
 }
 
-/* Canceled races: shared neutral fill, matching frame and white R/status text. */
+/* Canceled races stay visually recessive: light neutral fill and primary text. */
 .rchip.canceled {
-  background: var(--c-text-secondary);
-  border: var(--line-thin) solid var(--c-text-secondary);
-  color: var(--c-surface);
+  background: var(--c-border);
+  border: var(--line-thin) solid var(--c-border);
+  color: var(--c-text-primary);
   cursor: pointer;
+}
+.venue-card .rchip.canceled > :is(b, small) {
+  color: var(--c-text-primary);
 }
 
 /* Canonical 90px race cards */
