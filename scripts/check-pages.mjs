@@ -261,6 +261,21 @@ async function checkCampaignPage(page, width) {
   console.log('CAMPAIGN PAGE OK ' + width + 'px (16 source entries, deadline state, 20-per-page)');
 }
 
+// Bottom navigation is fixed even when sport content is reordered.
+const fixedBottomNavHrefs=[
+  './SCR-100_bet.html',
+  './SCR-200_keirin.html',
+  './SCR-300_autorace.html',
+  './SCR-400_campaign.html',
+  './SCR-500_mypage.html'
+];
+async function checkFixedBottomNav(page, context) {
+  const navs=await page.locator('.bottom-tab').evaluateAll(items=>items.map(nav=>
+    [...nav.querySelectorAll(':scope > a.tab-item')].map(a=>a.getAttribute('href'))));
+  if(!navs.length || navs.some(links=>links.join('|')!==fixedBottomNavHrefs.join('|')))
+    fail(context+' bottom navigation must stay in the fixed order: '+JSON.stringify(navs));
+}
+
 async function checkMyPage(page, width) {
   // SCR-500 is a static prototype: athlete tiles display names; separate
   // "変更する" links open the editors. Do not require obsolete card links.
@@ -287,6 +302,20 @@ async function checkMyPage(page, width) {
       item.background!=='rgb(114, 109, 49)'||item.width!=='4px'||item.height!=='22px'))
     fail(width+'px all mypage section accents must use the standard gold: '+
       JSON.stringify(sectionBars));
+
+  const userCardAccent=await page.locator('.user-card-top').evaluate(el=>{
+    const st=getComputedStyle(el);
+    return {color:st.borderTopColor,width:st.borderTopWidth};
+  });
+  if(userCardAccent.color!=='rgb(114, 109, 49)'||userCardAccent.width!=='3px')
+    fail(width+'px user card top band must match solid gold accents: '+JSON.stringify(userCardAccent));
+  const sportOrderIcon=await page.locator('.sport-order-toggle .menu-icon .ic use')
+    .getAttribute('href');
+  if(sportOrderIcon!=='#ic-swap-order' ||
+      await page.locator('#ic-swap-order path[fill="none"][stroke="currentColor"]').count()!==1 ||
+      await page.locator('#ic-edit').count()!==0)
+    fail(width+'px sport display-order setting must use two-way swap arrows: '+sportOrderIcon);
+  await checkFixedBottomNav(page,width+'px initial SCR-500');
 
   const avatar = page.locator('.user-avatar-photo');
   const loaded = await avatar.evaluate(el=>el.complete && el.naturalWidth===130 &&
@@ -373,12 +402,14 @@ async function checkMyPage(page, width) {
      (await page.locator('.favorites-stack > .favorite-sport').first()
        .locator('.section-header .section-title').innerText()).trim()!=='オートレース推しメン')
     fail(width+'px sport-order toggle did not move auto heading together with its players');
+  await checkFixedBottomNav(page,width+'px SCR-500 after auto-first toggle');
   await toggle.click();
   if(await toggle.getAttribute('aria-pressed')!=='false' ||
      (await page.locator('.favorites-stack > .favorite-sport').first().getAttribute('data-sport'))!=='keirin' ||
      (await page.locator('.favorites-stack > .favorite-sport').first()
        .locator('.section-header .section-title').innerText()).trim()!=='競輪推しメン')
     fail(width+'px sport-order toggle did not restore keirin heading with its players');
+  await checkFixedBottomNav(page,width+'px SCR-500 after keirin-first toggle');
 
   if (await page.locator('.phone-inner > .status-bar').count())
     fail(width+'px simulated status bar remains');
@@ -456,6 +487,7 @@ async function checkNavPredictionLinks(page, width, file) {
     fail(file + " " + width + "px missing bottom navigation");
     return;
   }
+  await checkFixedBottomNav(page,file+' '+width+'px');
   for (let i = 0; i < count; i++) {
     const nav = navs.nth(i);
     const keirin = nav.locator('a.tab-item[href="./SCR-200_keirin.html"]');
