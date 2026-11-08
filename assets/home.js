@@ -164,7 +164,10 @@
     if (!grade) return null;
     var today = date === referenceDay, upcoming = today && Boolean(data.deadline);
     var ended = date < referenceDay || (today && !upcoming);
-    var tile = document.createElement("div");
+    var tile = document.createElement("a");
+    tile.href = sport === "autorace"
+      ? "https://gamboo.jp/bet/xt_autorace.aspx?mac=Console_Index&it=1&rno="
+      : "https://gamboo.jp/bet/xt_keirin.aspx?rmac=console_device-checker&it=1";
     tile.className = "vcard" + (sport === "autorace" ? " auto" : "") +
       (ended ? " ended" : "") + (date > referenceDay ? " presale" : "");
     tile.dataset.venue = data.venue;
