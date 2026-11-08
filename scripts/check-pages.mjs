@@ -282,13 +282,13 @@ async function checkMyPage(page, width) {
   const headings = await page.locator('.scroll-area .section-header > .section-title')
     .allTextContents();
   if (headings.map(v=>v.trim()).join('|') !==
-      'マイ成績|競輪推しメン|オートレース推しメン|設定')
+      'マイ成績|推しメン登録|設定')
     fail(width+'px mypage section headings or order changed: '+headings);
-  const sectionOrder=await page.locator('#mypage-results, #favorites-section, #favorites-section-auto')
+  const sectionOrder=await page.locator('#mypage-results, #favorites-section')
     .evaluateAll(items=>items.map(el=>el.id));
-  if(sectionOrder.join('|')!=='mypage-results|favorites-section|favorites-section-auto' ||
+  if(sectionOrder.join('|')!=='mypage-results|favorites-section' ||
       (await page.locator('.favorites-stack').getAttribute('aria-label'))!==
-        '競輪とオートレースの推しメン登録')
+        '推しメン登録：競輪とオートレース')
     fail(width+'px mypage results must precede per-sport favorite headings: '+
       JSON.stringify(sectionOrder));
   // SCR-500 headings use natural spacing instead of decorative gold bars.
@@ -299,7 +299,7 @@ async function checkMyPage(page, width) {
       fontSize:getComputedStyle(label).fontSize,
       fontWeight:getComputedStyle(label).fontWeight
     })));
-  if(sectionSpacing.length!==4 || sectionSpacing.some(x=>
+  if(sectionSpacing.length!==3 || sectionSpacing.some(x=>
       !['none','normal'].includes(x.pseudo) || x.marginTop!=='8px' ||
       x.fontSize!=='20px' || x.fontWeight!=='600'))
     fail(width+'px SCR-500 headings should be bar-free with 8px leading separation: '+
@@ -346,15 +346,25 @@ async function checkMyPage(page, width) {
     fail(width+'px point shortcuts must have one full-width and two three-column rows: '+
       JSON.stringify(points));
 
+  const favoriteCard=await page.locator('.favorites-stack').evaluate(card=>{
+    const style=getComputedStyle(card);
+    return {bg:style.backgroundColor,border:style.borderTopWidth,radius:style.borderTopLeftRadius,
+      sportBorders:[...card.querySelectorAll('.favorite-sport')].map(sport=>
+        getComputedStyle(sport).borderTopWidth)};
+  });
+  if(favoriteCard.bg!=='rgb(255, 255, 255)'||favoriteCard.border!=='1px'||
+     favoriteCard.radius!=='12px'||favoriteCard.sportBorders.join('|')!=='0px|1px')
+    fail(width+'px favorites must be a single card with four sport groups: '+JSON.stringify(favoriteCard));
+
   const sports=await page.locator('.favorites-stack > .favorite-sport').evaluateAll(items=>
     items.map(sport=>({
       sport:sport.dataset.sport,
-      header:sport.querySelector('.section-header .section-title')?.textContent.trim(),
-      logo:(()=>{
-        const el=sport.querySelector('.section-header .favorite-sport-icon');
-        const st=getComputedStyle(el);
-        return {width:st.width,height:st.height,href:el.querySelector('use')?.getAttribute('href')};
-      })(),
+      headings:[...sport.querySelectorAll('.favorite-group-title')].map(label=>{
+        const svg=label.querySelector('svg');
+        const style=getComputedStyle(svg);
+        return {title:label.textContent.trim(),width:style.width,height:style.height,
+          href:svg.querySelector('use')?.getAttribute('href'),color:style.color};
+      }),
       superCount:sport.querySelectorAll('.favorite-group--super .favorite-player-card').length,
       regularCount:sport.querySelectorAll('.favorite-group--regular .favorite-player-card').length,
       editors:[...sport.querySelectorAll('.favorite-group-change')].map(a=>a.getAttribute('href')),
@@ -366,11 +376,12 @@ async function checkMyPage(page, width) {
       }))
     })));
   if (sports.length!==2 || sports[0].sport!=='keirin'||sports[1].sport!=='auto'||
-      sports[0].header!=='競輪推しメン'||sports[1].header!=='オートレース推しメン'||
-      sports[0].logo.width!=='42px'||sports[0].logo.height!=='34px'||
-      sports[1].logo.width!=='37px'||sports[1].logo.height!=='34px'||
-      !sports[0].logo.href.endsWith('#nav-keirin')||
-      !sports[1].logo.href.endsWith('#nav-auto')||
+      sports[0].headings.map(h=>h.title).join('|')!=='競輪 激推しメン|競輪 推しメン'||
+      sports[1].headings.map(h=>h.title).join('|')!=='オートレース 激推しメン|オートレース 推しメン'||
+      sports[0].headings.some(h=>h.width!=='30px'||h.height!=='24px'||
+        !h.href.endsWith('#nav-keirin')||h.color!=='rgb(71, 122, 148)')||
+      sports[1].headings.some(h=>h.width!=='26px'||h.height!=='24px'||
+        !h.href.endsWith('#nav-auto')||h.color!=='rgb(172, 96, 90)')||
       sports[0].superCount!==1||sports[0].regularCount!==10||
       sports[1].superCount!==1||sports[1].regularCount!==5||
       sports.some(s=>s.editors.length!==2 || s.editors.some(u=>!u?.startsWith('https://gamboo.jp/')) ||
@@ -402,14 +413,14 @@ async function checkMyPage(page, width) {
   if(await toggle.getAttribute('aria-pressed')!=='true' ||
      (await page.locator('.favorites-stack > .favorite-sport').first().getAttribute('data-sport'))!=='auto' ||
      (await page.locator('.favorites-stack > .favorite-sport').first()
-       .locator('.section-header .section-title').innerText()).trim()!=='オートレース推しメン')
+       .locator('.favorite-group-title').first().innerText()).trim()!=='オートレース 激推しメン')
     fail(width+'px sport-order toggle did not move auto heading together with its players');
   await checkFixedBottomNav(page,width+'px SCR-500 after auto-first toggle');
   await toggle.click();
   if(await toggle.getAttribute('aria-pressed')!=='false' ||
      (await page.locator('.favorites-stack > .favorite-sport').first().getAttribute('data-sport'))!=='keirin' ||
      (await page.locator('.favorites-stack > .favorite-sport').first()
-       .locator('.section-header .section-title').innerText()).trim()!=='競輪推しメン')
+       .locator('.favorite-group-title').first().innerText()).trim()!=='競輪 激推しメン')
     fail(width+'px sport-order toggle did not restore keirin heading with its players');
   await checkFixedBottomNav(page,width+'px SCR-500 after keirin-first toggle');
 

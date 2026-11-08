@@ -82,24 +82,28 @@
 /* Shared headings remain 20px/600 with no decorative accent bar.
    Separate sections by whitespace; competition SVGs stay aligned with text. */
 .section-header .section-title { display:inline-flex; align-items:center; gap:var(--space-5); color:var(--c-text-primary); }
-.scroll-area > .section-header,
-.favorite-sport > .section-header { margin-top:var(--space-section); }
+.scroll-area > .section-header { margin-top:var(--space-section); }
 
 
-/* Keep each sport's section heading and favorite cards together when sorting. */
+/* One registration section and one card contain both reorderable sports. */
 .favorites-stack {
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin: 0;
-}
-.favorite-sport { min-width: 0; }
-.favorite-sport-body {
-  overflow: hidden;
   margin: var(--space-card) var(--space-10) var(--space-section);
   border: var(--line-normal);
   border-radius: var(--r-md);
   background: var(--c-surface);
+  overflow: hidden;
+}
+.favorite-sport { min-width: 0; }
+.favorite-sport + .favorite-sport { border-top: var(--line-normal); }
+.favorite-sport-body { overflow: hidden; }
+.favorite-group-title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-width: 0;
 }
 .favorite-sport-icon { color: var(--c-keirin); }
 .favorite-sport--auto .favorite-sport-icon { color: var(--c-auto); }
@@ -195,17 +199,19 @@
 .profile-race-icon { width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
 .profile-race-icon:has(use[href$="#nav-keirin"]) { width:calc(var(--fs-20) * 1.25); }
 .profile-race-icon:has(use[href$="#nav-auto"]) { width:calc(var(--fs-20) * 1.0833333); }
-/* Favorite section headings: same 42×34 / 37×34 SVG sizes as SCR-100. */
-.favorite-sport .section-header .favorite-sport-icon {
-  width: 42px;
-  height: 34px;
-  flex: 0 0 42px;
+/* Correct sport logo ratios at the four group headings. */
+.favorite-group-title .favorite-sport-icon {
+  width: 30px;
+  height: 24px;
+  flex: 0 0 30px;
 }
-.favorite-sport--auto .section-header .favorite-sport-icon {
-  width: 37px;
-  flex-basis: 37px;
+.favorite-group-title .favorite-sport-icon:has(use[href$="#nav-keirin"]) {
+  width: 30px;
 }
-
+.favorite-sport--auto .favorite-group-title .favorite-sport-icon {
+  width: 26px;
+  flex-basis: 26px;
+}
 /* My Results: keep the campaign's .cp-btn design as the direct source. */
 .mypage-result-actions {
   display: grid;
