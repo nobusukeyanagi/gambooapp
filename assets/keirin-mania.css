@@ -1,7 +1,7 @@
 @charset "UTF-8";
-/* Merged SCR-210 racecard: the original mania-analysis evaluation columns and drill-down sheet. */
-.mania-section-start { text-align: center; }
-.mania-table .mania-eval { text-align: center; }
+/* SCR-210: the integrated racecard retains the horizontal section menu
+   and shared prediction-mark presentation. The former mania bottom sheet,
+   interactive item buttons and detail-table styles are retired. */
 .info-tabs button.info-tab {
   appearance: none;
   font-family: var(--ff-ui);
@@ -9,170 +9,17 @@
   border: 0;
   border-bottom: var(--line-emphasis-width) solid transparent;
 }
-.info-tabs button.info-tab.active { border-bottom-color: var(--c-gold); }
-.sheet-overlay[hidden], .sheet[hidden] { display: none; }
-
-/* Original mania ratings, item buttons, and the full detailed sheet presentation. */
-      .mk {
-        font-size: var(--fs-16);
-        line-height: 1;
-        font-weight: var(--fw-strong);
-      }
-
-      .item-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        
-        margin: 0 auto;
-        
-        
-        
-        
-        line-height: 1.15;
-        
-        cursor: pointer;
-        font-family: var(--ff-ui);
-      }
-      .item-btn:active,
-      .item-btn.active {
-        
-        
-        
-        font-weight: var(--fw-strong);
-      }
-
-      .sheet-overlay {
-        position: absolute;
-        
-        background: color-mix(in srgb, var(--c-text-primary) 40%, transparent);
-        z-index: 10;
-      }
-      .sheet {
-        position: absolute;
-        left: 0;
-        right: 0;
-        
-        height: 72%;
-        background: var(--c-surface);
-        border-radius: var(--r-lg) var(--r-lg) 0 0;
-        z-index: 11;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 -4px 16px color-mix(in srgb, var(--c-text-primary) 15%, transparent);
-      }
-      .sheet-handle {
-        width: 36px;
-        height: 4px;
-        border-radius: var(--r-xxs);
-        background: var(--c-border);
-        margin: var(--space-card) auto var(--space-2);
-        flex-shrink: 0;
-      }
-      .sheet-head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: var(--space-2) var(--space-content) var(--space-card);
-        flex-shrink: 0;
-      }
-      .sheet-title {
-        font-size: var(--fs-14);
-        font-weight: var(--fw-strong);
-      }
-      .sheet-close {
-        width: 24px;
-        height: 24px;
-        border-radius: var(--r-full);
-        border: none;
-        background: var(--c-bg);
-        font-size: var(--fs-12);
-        cursor: pointer;
-      }
-      .sheet-cond {
-        margin: 0 var(--space-content) var(--space-card);
-        padding: var(--space-small) var(--space-section);
-        background: var(--c-bg);
-        border-radius: var(--r-tag);
-        font-size: var(--fs-12);
-        color: var(--c-gold);
-        flex-shrink: 0;
-      }
-      .sheet-body {
-        flex: 1;
-        overflow: auto;
-        scrollbar-width: thin;
-      }
-      .detail-table {
-        
-        
-        font-size: var(--fs-12);
-      }
-      .detail-table th {
-        background: var(--c-bg);
-        color: var(--c-text-secondary);
-        font-weight: var(--fw-strong);
-        padding: var(--space-small) var(--space-3);
-        border-bottom: var(--line-normal);
-        position: sticky;
-        top: 0;
-        white-space: nowrap;
-      }
-      .detail-table td {
-        padding: var(--space-small) var(--space-3);
-        border-bottom: var(--line-normal);
-        text-align: center;
-        white-space: nowrap;
-      }
-      .detail-table td.dn {
-        text-align: left;
-        font-weight: var(--fw-strong);
-      }
-      .detail-table .frame-cell {
-        width: 16px;
-        height: 18px;
-        font-size: var(--fs-12);
-      }
-      .sheet-note {
-        font-size: var(--fs-12);
-        color: var(--c-text-secondary);
-        padding: var(--space-card) var(--space-content) var(--space-10);
-      }
-
-/* Nine-rider detailed-stat table, sticky rider labels, and visual rate indicators. */
-      .sheet { bottom: 62px; }
-      .sheet-overlay { inset: 0 0 62px 0; }
-
-      .mania-table td.c-g { white-space: nowrap; }
-      .mania-table td.c-g .g-val { margin-right: var(--space-2); }
-      .detail-table { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; }
-      .detail-table th { line-height: 1.25; border-right: var(--line-normal); }
-      .detail-table thead tr + tr th { top: 22px; }
-      .detail-table th.dt-grp { background: var(--c-bg); color: var(--c-text-primary); border-left: var(--line-normal); }
-      .detail-table td { border-right: var(--line-normal); }
-      .detail-table td.dt-gs { border-left: var(--line-normal); }
-      .detail-table .dt-fx { position: sticky; z-index: 2; background: var(--c-surface); }
-      .detail-table th.dt-fx { z-index: 4; background: var(--c-bg); }
-      .detail-table .dt-car { left: 0; width: 26px; min-width: 26px; }
-      .detail-table .dt-name { left: 26px; min-width: 64px; border-right: var(--line-normal); }
-      .detail-table td.rt { min-width: 64px; padding: var(--space-3) var(--space-small) var(--space-small); text-align: right; vertical-align: top; }
-      .detail-table .rt-v { display: block; font-weight: var(--fw-strong); color: var(--c-text-primary); line-height: 1.2; }
-      .detail-table .rt-n { display: block; font-size: var(--fs-12); color: var(--c-text-secondary); line-height: 1.2; }
-      .detail-table .rt-bar { display: block; height: 6px; margin-top: var(--space-2); background: var(--w6); border-radius: 1px; }
-      .detail-table .rt-out .rt-bar { background: var(--c-keirin); }
-      .detail-table tbody tr:nth-child(even) td { background: var(--c-bg); }
-
-/* Original item-button final visual rules. */
-      .item-btn {
-        width: 46px;
-        height: 30px;
-        border: var(--line-normal);
-        background: var(--c-surface);
-        box-shadow: var(--e1);
-        font-size: var(--fs-12);
-        font-weight: var(--fw-strong);
-        color: var(--c-text-primary);
-      }
-      .item-btn:active,
-      .item-btn.active { background: var(--c-gold-light); border-color: var(--c-gold); color: var(--c-text-primary); }
+.info-tabs button.info-tab.active {
+  border-bottom-color: var(--c-gold);
+}
+.mk {
+  font-size: var(--fs-16);
+  line-height: 1;
+  font-weight: var(--fw-strong);
+}
+.mania-table td.c-g {
+  white-space: nowrap;
+}
+.mania-table td.c-g .g-val {
+  margin-right: var(--space-2);
+}
