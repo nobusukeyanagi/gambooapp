@@ -199,6 +199,16 @@ async function checkCurrentPage(page, width) {
   if (!autoHeading.adjacent || autoHeading.text!=='オートレース' ||
       !autoHeading.icon.endsWith('#nav-auto'))
     fail(width+'px autorace section heading and bottom-nav icon were lost: '+JSON.stringify(autoHeading));
+  // The two venue-section pictograms are slightly reduced without affecting headers.
+  const raceHeadingIcons=await page.evaluate(() => [
+    document.querySelector('.vgroup-name.race-heading:not(.auto) .race-heading-icon'),
+    document.querySelector('.vgroup-name.race-heading.auto .race-heading-icon')
+  ].map(el=>el?{width:getComputedStyle(el).width,height:getComputedStyle(el).height}:null));
+  if(raceHeadingIcons.length!==2 || !raceHeadingIcons[0] || !raceHeadingIcons[1] ||
+      raceHeadingIcons[0].width!=='42px' || raceHeadingIcons[0].height!=='34px' ||
+      raceHeadingIcons[1].width!=='37px' || raceHeadingIcons[1].height!=='34px')
+    fail(width+'px venue heading icons must have reduced dimensions: '+
+      JSON.stringify(raceHeadingIcons));
   const initial = await page.evaluate(() => {
     const read = sport => [...document.querySelectorAll('[data-home-venues="'+sport+'"] > .vcard')]
       .map(card => ({
@@ -401,6 +411,28 @@ async function checkCurrentPage(page, width) {
   }))
     fail(width+'px SCR-100 must display nine regular-weight notices with centered arrows and grey non-race badges: '+
       JSON.stringify(homeNews));
+  const criticalAlert=await page.locator('.news-item').last().evaluate(el=>{
+    const date=el.querySelector('.news-date');
+    const icon=el.querySelector('.news-alert-icon');
+    const style=icon?getComputedStyle(icon):null;
+    return {
+      date:date?.textContent.trim(),
+      immediatelyAfterDate:date?.nextElementSibling===icon,
+      count:document.querySelectorAll('.news-alert-icon').length,
+      text:icon?.textContent.trim(),
+      label:icon?.getAttribute('aria-label'),
+      width:style?.width,height:style?.height,
+      background:style?.backgroundColor,color:style?.color
+    };
+  });
+  if(criticalAlert.date!=='2026.09.24' ||
+      !criticalAlert.immediatelyAfterDate || criticalAlert.count!==1 ||
+      criticalAlert.text!=='！' || criticalAlert.label!=='重要' ||
+      criticalAlert.width!=='20px' || criticalAlert.height!=='20px' ||
+      criticalAlert.background!=='rgb(184, 71, 99)' ||
+      criticalAlert.color!=='rgb(255, 255, 255)')
+    fail(width+'px Sept 24 critical notice icon must be red with white ! after date: '+
+      JSON.stringify(criticalAlert));
   const mori=await page.locator('.mori-venue-grid > .vcard').evaluateAll(cards=>
     cards.map(card=>({
       race:card.dataset.moriRace||'',
