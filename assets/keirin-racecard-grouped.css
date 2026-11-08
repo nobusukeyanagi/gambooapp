@@ -65,6 +65,27 @@
   margin-bottom: var(--space-3);
 }
 
+/* Every historical placing is a full-size tap target, while visually
+   preserving the existing two-row placement/time layout. */
+.race-detail-scroll .mania-table .meeting-cell a.res.res-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.race-detail-scroll .mania-table .meeting-cell a.res.res-link:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: calc(-1 * var(--line-emphasis-width));
+}
+
+/* Selected menu section: restore the dark-gold/white header highlight.
+   Match the specificity of both normal first-row and second-row header
+   backgrounds so their :first-child/:nth-child rules cannot override it. */
+.race-detail-scroll .mania-table thead tr:first-child th.section-selected,
+.race-detail-scroll .mania-table thead tr:nth-child(2) th.section-selected {
+  background: var(--c-gold);
+  color: var(--c-surface);
+}
 /* Position-group headings use the same four category fills as the
    corresponding rider-position cells. Miscellaneous position headings use
    one neutral grey fill, not a new classification color. */
@@ -87,27 +108,6 @@
 .race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-neutral {
   background: color-mix(in srgb, var(--c-border) 40%, var(--c-surface) 60%);
   color: var(--c-text-primary);
-}
-/* Every historical placing is a full-size tap target, while visually
-   preserving the existing two-row placement/time layout. */
-.race-detail-scroll .mania-table .meeting-cell a.res.res-link {
-  color: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.race-detail-scroll .mania-table .meeting-cell a.res.res-link:focus-visible {
-  outline: var(--line-focus);
-  outline-offset: calc(-1 * var(--line-emphasis-width));
-}
-
-/* Selected menu section: restore the dark-gold/white header highlight.
-   Match the specificity of both normal first-row and second-row header
-   backgrounds so their :first-child/:nth-child rules cannot override it. */
-.race-detail-scroll .mania-table thead tr:first-child th.section-selected,
-.race-detail-scroll .mania-table thead tr:nth-child(2) th.section-selected {
-  background: var(--c-gold);
-  color: var(--c-surface);
 }
 /* Buttons inside the selected mania section intentionally retain their
    own original white surface, dark text, and independent active state. */
