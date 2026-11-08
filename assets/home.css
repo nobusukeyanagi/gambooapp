@@ -705,8 +705,8 @@ button,
         justify-content: space-between;
         width: 100%;
         min-width: 0;
+        flex: 1 1 auto;
         gap: var(--space-small);
-        
       }
       .pk3 .pk-player {
         display: inline-flex;
@@ -738,6 +738,7 @@ button,
          flex: 0 0 auto;
          flex-direction: column;
          align-items: flex-end;
+         align-self: flex-end;
          text-align: right;
          white-space: nowrap;
          font-weight: var(--fw-strong);
@@ -820,13 +821,12 @@ button,
       .pk3 .pk-two-rider-stack .pk-player {
         line-height: 1;
       }
-      .pk3.pk-two-riders .pk-compact-row {
-        margin-top: var(--space-2);
-        align-items: center;
-      }
-      /* Place each single-rider number/name/time at the Ogura 11R baseline. */
+      /* Center rider name(s) in the space below the description; keep venue/time
+         anchored at the lower-right edge, regardless of one or two riders. */
+      .pk3.pk-two-riders .pk-compact-row,
       .pk3:not(.pk-two-riders) .pk-compact-row {
-        margin-top: var(--space-14);
+        margin-top: 0;
+        align-items: center;
       }
       
       /* Equal-height home venue tiles; the previously shorter Hiratsuka card is the model. */
@@ -947,16 +947,15 @@ button,
                 .pk3 .kun { flex-basis: 54px; min-width: 54px; }
                 .pk3 img.kun-ic { width: 54px; height: 54px; }
                 .pk3 .pk-compact-row {
-                  justify-content: flex-start;
-                  overflow-x: auto;
-                  scrollbar-width: thin;
+                  justify-content: space-between;
+                  overflow: visible;
                 }
                 .pk3 .pk-player,
                 .pk3 .pk-race-time { flex-shrink: 0; }
         
         .pickup-card.pk3 {
-                  height: 80px;
-                  min-height: 80px;
+                  height: 100px;
+                  min-height: 100px;
                 }
                 .pk3.pk-two-riders {
                   padding-top: var(--space-7);
