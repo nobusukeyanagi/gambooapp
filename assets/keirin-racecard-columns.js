@@ -108,20 +108,32 @@
     return {date:Number(month)+"/"+Number(day),venue:venueNames[code] || code,grade:kind+romanGrade[num],
       kind:kind.toLowerCase()+num};
   };
+  // Keep the original result glyph (including circled placings and 棄),
+  // but map its numeric placing to a consistently filled square.
+  const circledRanks = Object.fromEntries([
+    ...Array.from("①②③④⑤⑥⑦⑧⑨", (glyph, i) => [glyph, i + 1]),
+    ...Array.from("❶❷❸❹❺❻❼❽❾", (glyph, i) => [glyph, i + 1])
+  ]);
+  const placingClass = (result) => {
+    const number = /^[1-9]$/.test(String(result)) ? Number(result) : circledRanks[result];
+    return number >= 1 && number <= 3 ? "race-rank-" + number : "race-rank-other";
+  };
   const raceCard = (record) => {
-    // Render an explicit blank slot where a meeting day has no result.
-    // Retaining .res makes the same 26px separators appear around empty days.
+    // Always keep a result tile, even for unreported meeting days.
     if (!record) {
       return '<span class="res res-empty" aria-label="データなし">'+
-        '<span class="res-note"></span><span class="res-rank"></span>'+
-        '<span class="res-time"></span></span>';
+        '<span class="res-placement"><span class="res-rank"></span>'+
+        '<span class="res-notes"></span></span><span class="res-time"></span></span>';
     }
-    // Three fixed-height rows: decision/B, placing, and time.
-    const rank=record[0],time=record[1],
-      note=String(record[2]||"").replace(/\s+/g,"");
-    return '<span class="res"><span class="res-note">'+escape(note)+'</span>'+
-      '<span class="res-rank">'+escape(rank)+'</span>'+
-      '<span class="res-time">'+escape(time)+'</span></span>';
+    const rank = String(record[0] ?? "");
+    const time = String(record[1] ?? "");
+    const note = String(record[2] || "").replace(/\s+/g, "");
+    // Each mark (B, 捲, 差, ...) occupies one line to the right of the box.
+    const notes = Array.from(note, char => '<span class="res-note">' + escape(char) + '</span>').join("");
+    return '<span class="res"><span class="res-placement">'+
+      '<span class="res-rank ' + placingClass(rank) + '">' + escape(rank) + '</span>'+
+      '<span class="res-notes">' + notes + '</span></span>'+
+      '<span class="res-time">' + escape(time) + '</span></span>';
   };
   const renderMeeting = (period,index,DATA) => {
     // Keep the same five-area layout even if a meeting has no result data.
@@ -247,8 +259,8 @@
   const getScoreRanks=(riders)=>topThreeRanks(
     riders.map(rider=>Number(rider.score))
   );
-  // Rank each of the three percentage columns independently. A tie is
-  // determined by the displayed (truncated) integer percentage.
+  // Rank each of the three percentage columns by the source's full
+  // precision (e.g., 20.8 outranks 20.6 even if both display as 20%).
   // Outside rate (fourth column) is intentionally not ranked.
   const getRecentRateRanks = (riders) => {
     const result=Array.from({length:riders.length},()=>[0,0,0]);
@@ -256,7 +268,7 @@
       const values=riders.map(rider=>{
         const value=rider.recent4Months?.rates?.[k];
         return value===undefined||value===null||value===""
-          ? NaN : Math.trunc(Number(value));
+          ? NaN : Number(value);
       });
       topThreeRanks(values).forEach((rank,index)=>{result[index][k]=rank;});
     }
