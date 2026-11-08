@@ -343,16 +343,22 @@
     // The left/right arrows fill the entire player row, not the explanation.
     const panel = document.createElement("div");
     panel.className = "pk-player-panel";
-    const makeArrow = function (direction, glyph, text) {
+    const makeArrow = function (direction, text) {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "pk-nav pk-" + direction;
-      button.textContent = glyph;
       button.title = text + config.title + "の対象選手";
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("class", "ic");
+      svg.setAttribute("aria-hidden", "true");
+      const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+      use.setAttribute("href", "#ic-chevron");
+      svg.appendChild(use);
+      button.appendChild(svg);
       return button;
     };
-    const prev = makeArrow("prev", "＜", "前の");
-    const next = makeArrow("next", "＞", "次の");
+    const prev = makeArrow("prev", "前の");
+    const next = makeArrow("next", "次の");
     row.id = "pk-" + type + "-riders";
     row.setAttribute("aria-live", "polite");
     prev.setAttribute("aria-controls", row.id);
