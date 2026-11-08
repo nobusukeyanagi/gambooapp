@@ -402,12 +402,22 @@ async function checkMyPage(page, width) {
   if(grids.some(n=>n!==3))fail(width+'px athlete tiles must use three columns: '+grids);
 
   const results=await page.locator('.mypage-result-actions a').evaluateAll(items=>
-    items.map(el=>({text:el.textContent.trim(),href:el.getAttribute('href'),
-      height:el.getBoundingClientRect().height})));
+    items.map(el=>{
+      const svg=el.querySelector('.mypage-result-icon');
+      const style=getComputedStyle(svg);
+      return {text:el.textContent.trim(),href:el.getAttribute('href'),
+        height:el.getBoundingClientRect().height,
+        iconWidth:style.width,iconHeight:style.height,
+        iconColor:style.color,iconHref:svg.querySelector('use')?.getAttribute('href')};
+    }));
   if(results.length!==2 || results[0].text!=='競輪'||
       results[0].href!=='https://gamboo.jp/member/achievement/keirin'||
       results[1].text!=='オートレース'||
       results[1].href!=='https://gamboo.jp/member/achievement/autorace'||
+      results[0].iconWidth!=='30px'||results[0].iconHeight!=='24px'||
+      results[1].iconWidth!=='26px'||results[1].iconHeight!=='24px'||
+      !results[0].iconHref.endsWith('#nav-keirin')||
+      !results[1].iconHref.endsWith('#nav-auto')||
       results.some(x=>x.height<44))
     fail(width+'px mypage race result links changed: '+JSON.stringify(results));
 
@@ -1070,6 +1080,8 @@ async function checkPredictionSort(page, width, isAutorace) {
       return {venue:header.closest('.venue-card').dataset.venue,
         title:!!title,badge:!!badge,name:!!name,
         day:day?.textContent?.trim(),
+        dayColor:day?getComputedStyle(day).color:null,
+        sessionColor:meta?getComputedStyle(meta).color:null,
         label:logo?.textContent?.trim(),hasLogo:!!logo,
         symbol:logo?.querySelector('use')?.getAttribute('href'),
         logoColor:logo?getComputedStyle(logo).color:null,
@@ -1087,6 +1099,8 @@ async function checkPredictionSort(page, width, isAutorace) {
     }));
   if(headers.length!==(isAutorace?2:8)||headers.some(h=>
       !h.title||!h.badge||!h.name||!h.day||!h.dayRight||
+      h.dayColor!=='rgb(94, 105, 115)' ||
+      h.sessionColor!=='rgb(48, 54, 59)' ||
       !h.allOneLine||!h.nowrap||!h.fits||!h.rightAligned||
       !h.logoSingle||!h.scaleOk))
     fail(width+'px heading must fit grade, venue, day, session, Girls and right rebate in one line: '+

@@ -199,16 +199,15 @@
 .profile-race-icon { width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
 .profile-race-icon:has(use[href$="#nav-keirin"]) { width:calc(var(--fs-20) * 1.25); }
 .profile-race-icon:has(use[href$="#nav-auto"]) { width:calc(var(--fs-20) * 1.0833333); }
-/* Correct sport logo ratios at the four group headings. */
-.favorite-group-title .favorite-sport-icon {
+/* My Results and all four Favorite headings share the same logo dimensions. */
+.favorite-group-title .favorite-sport-icon,
+.mypage-result-icon {
   width: 30px;
   height: 24px;
   flex: 0 0 30px;
 }
-.favorite-group-title .favorite-sport-icon:has(use[href$="#nav-keirin"]) {
-  width: 30px;
-}
-.favorite-sport--auto .favorite-group-title .favorite-sport-icon {
+.favorite-sport--auto .favorite-group-title .favorite-sport-icon,
+.mypage-result-icon.auto {
   width: 26px;
   flex-basis: 26px;
 }
@@ -228,12 +227,7 @@
   gap: var(--space-card);
   text-align: center;
 }
-.mypage-result-icon {
-  width: var(--fs-20);
-  height: var(--fs-20);
-  flex: 0 0 var(--fs-20);
-  fill: currentColor;
-}
+.mypage-result-icon { fill: currentColor; }
 .mypage-result-icon.keirin { color: var(--c-keirin); }
 .mypage-result-icon.auto { color: var(--c-auto); }
 
