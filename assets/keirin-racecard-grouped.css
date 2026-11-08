@@ -108,7 +108,7 @@
   box-sizing: border-box;
   display: grid;
   grid-template-rows: 16px 12px 12px;
-  row-gap: var(--space-5);
+  row-gap: var(--space-3);
   justify-items: start;
   align-items: center;
   flex: 0 0 50px;
@@ -125,7 +125,7 @@
   text-align: left;
   white-space: nowrap;
 }
-/* Equal 5px gaps between grade, venue and date; no per-row margin offset. */
+/* Equal 3px gaps between grade, venue and date; no per-row margin offset. */
 .race-detail-scroll .mania-table .meeting-cell .meeting-meta .grade-badge {
   display: inline-flex;
   align-items: center;
