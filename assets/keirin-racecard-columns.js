@@ -114,9 +114,10 @@
     return {date:Number(month)+"/"+Number(day),venue:venueNames[code] || code,grade:kind+romanGrade[num],
       kind:kind.toLowerCase()+num};
   };
-  // GambooBET publishes an event/day-specific racecard listing. Individual
-  // historical records in this fixture lack race numbers, so do not guess
-  // a 1R–12R destination. An explicit rno will enable exact-race linking.
+  // Historical results link to Gamboo's KEIRIN prediction information,
+  // never the betting (GambooBET) site. The preset lacks race numbers:
+  // preserve the known date/venue without inventing a specific race.
+  // An explicitly provided rno will be passed through if available.
   const trackCodes = {
     "函館":"11","青森":"12","弥彦":"21","前橋":"22","宇都宮":"24",
     "大宮":"25","西武園":"26","京王閣":"27","立川":"28",
@@ -128,7 +129,7 @@
     "小倉":"81","久留米":"83","武雄":"84","佐世保":"85",
     "別府":"86","熊本":"87"
   };
-  const ymd = date => date.toISOString().slice(0,10).replace(/-/g,"");
+  const isoDate = date => date.toISOString().slice(0,10);
   const meetingLink = (meeting, index, slotIndex, meta, DATA, record) => {
     const code = trackCodes[meta.venue];
     if (!code) return null;
@@ -148,21 +149,18 @@
       if (start.getUTCFullYear()!==year || start.getUTCMonth()+1!==month ||
           start.getUTCDate()!==day) return null;
     }
-    const eventId = code + ymd(start);
-    const dayIndex = String(slotIndex+1).padStart(2,"0");
-    const dayId = eventId + dayIndex + "00";
     const day = new Date(start.getTime()+slotIndex*86400000);
     const label = day.getUTCFullYear()+"年"+(day.getUTCMonth()+1)+"月"+
-      day.getUTCDate()+"日 "+meta.venue+"の出走表";
-    const base = "https://keirin.kdreams.jp/gamboo/keirin-kaisai/";
+      day.getUTCDate()+"日 "+meta.venue+"の競輪予想情報";
+    // rdt/pid follow the query convention already used by the existing
+    // Gamboo prediction/newspaper links. Do not infer a race number.
+    const base = "https://gamboo.jp/keirin/yoso/?rdt="+isoDate(day)+"&pid="+code;
     const raceNumber = Number(record?.rno ?? record?.raceNo ?? record?.[3]);
     if (Number.isInteger(raceNumber) && raceNumber >= 1 && raceNumber <= 12) {
-      return {url:base+"race-card/result/"+eventId+"/"+dayId+"/"+
-        String(raceNumber).padStart(2,"0")+"/",
+      return {url:base+"&rno="+raceNumber,
         label:label+" "+raceNumber+"Rを開く"};
     }
-    return {url:base+"race-list/"+eventId+"/"+dayId+"/",
-      label:label+"一覧を開く（レース番号未収録）"};
+    return {url:base, label:label+"を開く（レース番号未収録）"};
   };
 
   // Keep the original result glyph (including circled placings and 棄),
