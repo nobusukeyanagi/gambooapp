@@ -620,6 +620,45 @@ async function checkSharedRaceSelector(page, width, isAuto) {
   }
 }
 
+async function checkKeirinRaceInformation(page, width) {
+  const result=await page.locator('.race-detail-scroll .race-info-bar.ri-has-act').evaluate(bar=>{
+    const grid=bar.querySelector('.ri-main');
+    const fourth=bar.querySelector('.race-info-meta');
+    const countdown=fourth.querySelector('.race-countdown');
+    const date=bar.querySelector('.ri-date-line');
+    const purchase=bar.querySelector('.ri-race-purchase');
+    const rect=el=>el.getBoundingClientRect();
+    const gridStyle=getComputedStyle(grid);
+    return {
+      height:rect(bar).height,
+      gap:gridStyle.rowGap,
+      rows:gridStyle.gridTemplateRows.split(' ').length,
+      padding:getComputedStyle(bar).paddingTop,
+      purchaseHeight:rect(purchase).height,
+      third:bar.querySelector('.ri-kind')?.textContent.trim(),
+      fourth:[...fourth.children].map(x=>x.textContent.trim()),
+      countdownText:countdown?.textContent.trim(),
+      countdownLast:countdown===fourth.lastElementChild,
+      countdownColor:getComputedStyle(countdown).color,
+      fourthFits:fourth.scrollWidth<=fourth.clientWidth+1,
+      date:date.querySelector('.ri-date')?.textContent,
+      distance:date.querySelector('.ri-sub')?.textContent,
+      dateGap:getComputedStyle(date).gap
+    };
+  });
+  if(result.height>132 || result.height<100 ||
+     result.gap!=='2px'||result.rows!==5||
+     result.padding!=='6px'||result.purchaseHeight!==56||
+     result.third!=='Ｓ級 選抜'||
+     result.fourth.join('|')!=='発走 12:57|BET締切 12:52|22分前'||
+     !result.countdownLast || result.countdownText!=='22分前'||
+     result.countdownColor!=='rgb(184, 71, 99)'||
+     !result.fourthFits ||
+     result.date!=='2026/11/03' ||
+     result.distance!=='2015m(6周)' || result.dateGap!=='12px')
+    fail(width+'px SCR-210 condensed 5-line race information mismatch: '+JSON.stringify(result));
+}
+
 async function checkKeirinMania(page, width) {
   const wrap = page.locator(".race-table-wrap");
   const table = wrap.locator("table.mania-table");
@@ -1439,6 +1478,7 @@ try {
     if (file === 'SCR-200_keirin.html' || file === 'SCR-300_autorace.html') await checkPredictionSort(a.page,w,file === 'SCR-300_autorace.html');
     if (file === 'SCR-210_racecardkeirin.html'||file === 'SCR-310_racecardautorace.html')
       await checkSharedRaceSelector(a.page,w,file === 'SCR-310_racecardautorace.html');
+    if (file === 'SCR-210_racecardkeirin.html') await checkKeirinRaceInformation(a.page,w);
     if (file === 'SCR-210_racecardkeirin.html') await checkKeirinMania(a.page,w);
     if (file === "SCR-310_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
     if (file !== "index.html") await checkNavPredictionLinks(a.page,w,file);

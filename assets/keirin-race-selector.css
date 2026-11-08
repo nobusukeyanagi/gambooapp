@@ -66,7 +66,7 @@
 /* SCR-210 summary: five evenly-spaced information rows on the left;
    the purchase and LIVE controls remain vertically balanced at the right. */
 .race-detail-scroll .race-info-bar.ri-has-act {
-  padding: var(--space-section);
+  padding: var(--space-card);
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -85,9 +85,9 @@
     "kind actions"
     "clock actions"
     "detail actions";
-  grid-template-rows: repeat(5, minmax(22px, auto));
+  grid-template-rows: repeat(5, minmax(20px, auto));
   column-gap: var(--space-card);
-  row-gap: var(--space-small);
+  row-gap: var(--space-2);
   align-items: center;
   min-width: 0;
 }
@@ -130,7 +130,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-card);
+  gap: var(--space-2);
   width: 80px;
   min-width: 80px;
   align-self: center;
@@ -138,9 +138,9 @@
 .race-detail-scroll .race-info-bar .ri-race {
   grid-area: auto;
   align-self: center;
-  flex: 0 0 64px;
+  flex: 0 0 56px;
   width: 80px;
-  height: 64px;
+  height: 56px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -159,14 +159,14 @@
 .race-detail-scroll .ri-race .ri-race-purchase {
   box-sizing: border-box;
   display: flex;
-  flex: 0 0 64px;
+  flex: 0 0 56px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: var(--space-card);
   width: 80px;
-  height: 64px;
-  min-height: 64px;
+  height: 56px;
+  min-height: 56px;
   border: var(--line-emphasis-width) solid var(--c-red);
   border-radius: var(--r-control);
   background: var(--c-red);
@@ -231,13 +231,6 @@
   font-weight: var(--fw-strong);
   line-height: 1.3;
 }
-.race-detail-scroll .ri-kind .race-countdown {
-  flex: 0 0 auto;
-  font-size: var(--fs-12);
-  font-weight: var(--fw-strong);
-  color: var(--c-red);
-  white-space: nowrap;
-}
 .race-detail-scroll .race-info-bar .race-info-row {
   grid-area: clock;
   align-self: center;
@@ -248,7 +241,7 @@
   align-items: center;
   justify-content: flex-start;
   flex-wrap: nowrap;
-  gap: var(--space-card);
+  gap: var(--space-2);
   white-space: nowrap;
   font-family: var(--ff-ui);
   font-size: var(--fs-12);
@@ -256,13 +249,22 @@
   font-variant-numeric: tabular-nums;
   color: var(--c-text-primary);
 }
+.race-detail-scroll .race-info-meta > span {
+  flex: 0 0 auto;
+}
+.race-detail-scroll .race-info-meta > .race-countdown {
+  color: var(--c-red);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  white-space: nowrap;
+}
 .race-detail-scroll .ri-date-line {
   grid-area: detail;
   display: flex;
   align-self: center;
   align-items: center;
   white-space: nowrap;
-  gap: var(--space-card);
+  gap: var(--fs-12);
   font-size: var(--fs-12);
   color: var(--c-text-secondary);
   font-family: var(--ff-ui);
