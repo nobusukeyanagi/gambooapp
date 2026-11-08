@@ -583,24 +583,31 @@ async function checkSharedRaceSelector(page, width, isAuto) {
      detail.pastBg!=='rgb(248, 247, 244)' ||
      detail.pastSmall!=='rgb(48, 54, 59)' ||
      detail.arrows.length!==2||detail.arrows.some(a=>a.tag!=='BUTTON'||a.width!=='44px')||
-     !detail.hasOverflow ||
+     (width<768 && !detail.hasOverflow) ||
      detail.races.some((r,i)=>r.number!==i+1||r.id!==i+1) ||
      (isAuto && (detail.canceledBg!=='rgb(210, 214, 218)' ||
       detail.canceledNumber!=='rgb(48, 54, 59)')))
     fail(width+'px SCR-210/310 race selection designs must match: '+JSON.stringify(detail));
   const scroll=selector.locator('.hscroll-inner');
-  await scroll.evaluate(el=>{el.scrollLeft=0;el.dispatchEvent(new Event('scroll'));});
-  await page.waitForFunction(()=>!document.querySelector('.race-selector > .hscroll-cue-l:not([hidden])'));
-  await selector.locator(':scope > .hscroll-cue').click();
-  await page.waitForFunction(()=>{
-    const el=document.querySelector('.race-selector > .hscroll-inner');
-    return el.scrollLeft>=el.scrollWidth-el.clientWidth-2;
-  },null,{timeout:6000});
-  await selector.locator(':scope > .hscroll-cue-l').click();
-  await page.waitForFunction(()=>{
-    const el=document.querySelector('.race-selector > .hscroll-inner');
-    return el.scrollLeft<=2;
-  },null,{timeout:6000});
+  if(detail.hasOverflow) {
+    await scroll.evaluate(el=>{el.scrollLeft=0;el.dispatchEvent(new Event('scroll'));});
+    await page.waitForFunction(()=>!document.querySelector('.race-selector > .hscroll-cue-l:not([hidden])'));
+    await selector.locator(':scope > .hscroll-cue').click();
+    await page.waitForFunction(()=>{
+      const el=document.querySelector('.race-selector > .hscroll-inner');
+      return el.scrollLeft>=el.scrollWidth-el.clientWidth-2;
+    },null,{timeout:6000});
+    await selector.locator(':scope > .hscroll-cue-l').click();
+    await page.waitForFunction(()=>{
+      const el=document.querySelector('.race-selector > .hscroll-inner');
+      return el.scrollLeft<=2;
+    },null,{timeout:6000});
+  } else {
+    const hidden=await selector.locator(':scope > .hscroll-cue-l, :scope > .hscroll-cue')
+      .evaluateAll(arrows=>arrows.map(a=>a.hidden));
+    if(hidden.length!==2 || hidden.some(v=>!v))
+      fail(width+'px no-overflow selector must hide both arrows: '+JSON.stringify(hidden));
+  }
 }
 
 async function checkKeirinMania(page, width) {
