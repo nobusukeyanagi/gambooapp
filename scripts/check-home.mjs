@@ -366,6 +366,7 @@ async function checkCurrentPage(page, width) {
       href:el.getAttribute('href'),
       kind:el.dataset.newsKind,
       category:el.querySelector('.news-badge')?.textContent.trim(),
+      badgeWidth:el.querySelector('.news-badge')?.getBoundingClientRect().width,
       badgeBackground:badgeStyle.backgroundColor,
       titleWeight:titleStyle.fontWeight,
       isCampaign:Boolean(el.querySelector('.news-campaign')),
@@ -394,6 +395,7 @@ async function checkCurrentPage(page, width) {
       n.kind!=='notice'||n.isCampaign||
       n.href!==('https://gamboo.jp/news/?tid=info&tsid='+tid)||
       !n.titleFullyVisible||!n.arrowCenteredToCard||n.titleWeight!=='400'||
+      Math.abs(n.badgeWidth-88)>1||
       (['ポイント','コミュニティ','その他'].includes(n.category) &&
         n.badgeBackground!=='rgb(98, 108, 118)');
   }))
