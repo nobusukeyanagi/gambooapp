@@ -217,15 +217,23 @@ async function checkCurrentPage(page, width) {
   if (!autoHeading.adjacent || autoHeading.text!=='オートレース' ||
       !autoHeading.icon.endsWith('#nav-auto'))
     fail(width+'px autorace section heading and bottom-nav icon were lost: '+JSON.stringify(autoHeading));
-  // The two venue-section pictograms are slightly reduced without affecting headers.
+  // Each sport-related heading uses the same canonical icon as its venue section.
   const raceHeadingIcons=await page.evaluate(() => [
     document.querySelector('.vgroup-name.race-heading:not(.auto) .race-heading-icon'),
-    document.querySelector('.vgroup-name.race-heading.auto .race-heading-icon')
-  ].map(el=>el?{width:getComputedStyle(el).width,height:getComputedStyle(el).height}:null));
-  if(raceHeadingIcons.length!==2 || !raceHeadingIcons[0] || !raceHeadingIcons[1] ||
-      raceHeadingIcons[0].width!=='42px' || raceHeadingIcons[0].height!=='34px' ||
-      raceHeadingIcons[1].width!=='37px' || raceHeadingIcons[1].height!=='34px')
-    fail(width+'px venue heading icons must have reduced dimensions: '+
+    document.querySelector('[data-home-venues="autorace"]').previousElementSibling?.querySelector('.vgroup-name.race-heading.auto .race-heading-icon'),
+    document.querySelector('.mori-heading .vgroup-name.race-heading.auto .race-heading-icon'),
+    document.querySelector('.featured-races-header .section-title.race-heading .race-heading-icon')
+  ].map(el=>el?{
+    width:getComputedStyle(el).width,
+    height:getComputedStyle(el).height,
+    href:el.querySelector('use')?.getAttribute('href')
+  }:null));
+  if(raceHeadingIcons.length!==4 ||
+      raceHeadingIcons.some((el,i)=>!el ||
+        el.width!==(i===1||i===2?'37px':'42px') ||
+        el.height!=='34px' ||
+        !el.href?.endsWith(i===1||i===2?'#nav-auto':'#nav-keirin')))
+    fail(width+'px Mori and featured SVG heading logos must match venue logo sizes: '+
       JSON.stringify(raceHeadingIcons));
   const initial = await page.evaluate(() => {
     const read = sport => [...document.querySelectorAll('[data-home-venues="'+sport+'"] > .vcard')]
