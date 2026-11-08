@@ -253,6 +253,11 @@
 .race-detail-scroll .mania-table .meeting-cell .res-rank.race-rank-other {
   background: var(--c-bg);
 }
+/* Unreported meeting days are empty placeholders, not a placed finisher. */
+.race-detail-scroll .mania-table .meeting-cell .res.res-empty .res-rank {
+  border: 0;
+  background: transparent;
+}
 .race-detail-scroll .mania-table .meeting-cell .res-time {
   display: block;
   grid-column: 1;
