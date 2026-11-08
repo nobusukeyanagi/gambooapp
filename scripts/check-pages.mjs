@@ -266,8 +266,15 @@ async function checkMyPage(page, width) {
   // "変更する" links open the editors. Do not require obsolete card links.
   const headings = await page.locator('.scroll-area > .section-header > .section-title')
     .allTextContents();
-  if (headings.map(v=>v.trim()).join('|') !== '激推しメン・推しメン|マイ成績|設定')
-    fail(width+'px mypage section order changed: '+headings);
+  if (headings.map(v=>v.trim()).join('|') !== 'マイ成績|推しメン登録|設定')
+    fail(width+'px mypage section order or new favorites heading changed: '+headings);
+  const sectionOrder=await page.locator('#mypage-results, #favorites-section').evaluateAll(items=>
+    items.map(el=>el.id));
+  if(sectionOrder.join('|')!=='mypage-results|favorites-section' ||
+      (await page.locator('.favorites-stack').getAttribute('aria-label'))!==
+        '競輪とオートレースの推しメン登録')
+    fail(width+'px mypage results must precede favorite registration: '+
+      JSON.stringify(sectionOrder));
 
   const avatar = page.locator('.user-avatar-photo');
   const loaded = await avatar.evaluate(el=>el.complete && el.naturalWidth===130 &&
