@@ -79,10 +79,11 @@
   outline-offset: var(--space-2);
 }
 
-/* SCR-100-style headings: shared .section-header supplies 20px/600 and 44px.
-   All SCR-500 left accent bars use the same gold as SCR-100. */
+/* Shared headings remain 20px/600 with no decorative accent bar.
+   Separate sections by whitespace; competition SVGs stay aligned with text. */
 .section-header .section-title { display:inline-flex; align-items:center; gap:var(--space-5); color:var(--c-charcoal); }
-.section-header .section-title::before { content:""; display:inline-block; flex:0 0 4px; width:4px; height:22px; border-radius:var(--r-xxs); background:var(--c-gold); }
+.scroll-area > .section-header,
+.favorite-sport > .section-header { margin-top:var(--space-section); }
 
 
 /* Keep each sport's section heading and favorite cards together when sorting. */
