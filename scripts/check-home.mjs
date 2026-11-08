@@ -315,6 +315,12 @@ async function checkCurrentPage(page, width) {
      !specialBadge.fits)
     fail(width+'px special GⅠ text outside badge: '+JSON.stringify(specialBadge));
 
+  const featuredSeeAll=page.locator('.featured-races-header .see-all');
+  if (await featuredSeeAll.count()!==1 ||
+      await featuredSeeAll.getAttribute('href')!=='./SCR-210_racecardkeirin.html' ||
+      (await featuredSeeAll.innerText()).trim()!=='すべて見る')
+    fail(width+'px featured keirin riders see-all must link to SCR-210 racecard');
+
   // SCR-100 featured riders: center the name area beneath the description,
   // while venue/race/deadline remains fixed to the lower-right edge.
   const featuredAlignment=await page.locator('.pickup-card.pk3').evaluateAll(cards =>
