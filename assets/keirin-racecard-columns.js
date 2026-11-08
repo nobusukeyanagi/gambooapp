@@ -53,7 +53,8 @@
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
       ...["1着P","2着P","3着P","総合P","印"].map((label,i)=>
         sub(label,(i===0?"bl marutoku-section-start ":"")+
-          "marutoku-score-label"+(i===4?" marutoku-mark-label":""))),
+          "marutoku-score-label"+(i===3?" marutoku-total-heading":"")+
+          (i===4?" marutoku-mark-label":""))),
       sub("G指数","bl gindex-section-start"),
       sub("印","gindex-mark"),
       ...["周長","見なし<br>直線","レース<br>種別","レース<br>日程","グレ<br>ード","競輪場","車番","同県<br>選手"].map((label,i)=>
