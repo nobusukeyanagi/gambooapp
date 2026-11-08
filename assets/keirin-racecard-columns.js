@@ -228,29 +228,37 @@
       .forEach(({index}, rank) => { marks[index] = ["◎","○","△","×"][rank]; });
     return marks;
   };
-  // Current race scores in descending order, ties resolved by car number.
-  const getScoreRanks=(riders)=>{
-    const ranks=Array(riders.length).fill(0);
-    riders.map((rider,index)=>({index,value:Number(rider.score)}))
+  // Competition ranks (1, 1, 3, ...): equal values share one rank and
+  // one tint. All riders tied for a top-three rank receive that tint.
+  const topThreeRanks = (values) => {
+    const ranks=Array(values.length).fill(0);
+    let previousValue;
+    let rank=0;
+    values.map((value,index)=>({index,value}))
       .filter(({value})=>Number.isFinite(value))
       .sort((a,b)=>b.value-a.value||a.index-b.index)
-      .slice(0,3).forEach(({index},rank)=>{ranks[index]=rank+1;});
+      .forEach(({index,value},order)=>{
+        if(order===0||value!==previousValue)rank=order+1;
+        if(rank<=3)ranks[index]=rank;
+        previousValue=value;
+      });
     return ranks;
   };
-  // Rank each displayed percentage column independently; use car number to
-  // break ties consistently. Outside rate (fourth column) is not ranked.
+  const getScoreRanks=(riders)=>topThreeRanks(
+    riders.map(rider=>Number(rider.score))
+  );
+  // Rank each of the three percentage columns independently. A tie is
+  // determined by the displayed (truncated) integer percentage.
+  // Outside rate (fourth column) is intentionally not ranked.
   const getRecentRateRanks = (riders) => {
     const result=Array.from({length:riders.length},()=>[0,0,0]);
     for(let k=0;k<3;k++){
-      riders.map((rider,index)=>{
-        const rate=rider.recent4Months?.rates?.[k];
-        return {index,car:Number(rider.car),value:Math.trunc(Number(rate)),
-          valid:rate!==undefined&&rate!==null&&rate!==""};
-      })
-        .filter(({value,valid})=>valid&&Number.isFinite(value))
-        .sort((a,b)=>b.value-a.value||a.car-b.car||a.index-b.index)
-        .slice(0,3)
-        .forEach(({index},rank)=>{result[index][k]=rank+1;});
+      const values=riders.map(rider=>{
+        const value=rider.recent4Months?.rates?.[k];
+        return value===undefined||value===null||value===""
+          ? NaN : Math.trunc(Number(value));
+      });
+      topThreeRanks(values).forEach((rank,index)=>{result[index][k]=rank;});
     }
     return result;
   };
