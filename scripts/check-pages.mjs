@@ -702,6 +702,76 @@ async function checkKeirinMania(page, width) {
       leg.color!==expectedColor[leg.type])||
       legs[8].rider!=='山口貴弘')
     fail(width+'px SCR-210 leg types/colors including #9 both are incorrect: '+JSON.stringify(legs));
+  // Both four-way lineup colors and top-three score colors are text-sized labels.
+  const colored=await page.evaluate(()=>{
+    const palette={
+      1:["#B84763","--c-red-light"],
+      2:["#317772","--c-teal-light"],
+      3:["#4F7632","--c-yellowgreen-light"],
+      4:["#9C5E40","--c-bronze-light"]
+    };
+    const rankPalette={
+      1:["#726D31","--c-gold-light"],
+      2:["#486BB1","--c-blue-light"],
+      3:["#9C5E40","--c-bronze-light"]
+    };
+    const resolvedColor=hex=>{
+      const probe=document.createElement('span');probe.style.color=hex;
+      document.body.appendChild(probe);
+      const value=getComputedStyle(probe).color;probe.remove();return value;
+    };
+    const resolvedBg=token=>{
+      const probe=document.createElement('span');probe.style.backgroundColor="var("+token+")";
+      document.body.appendChild(probe);
+      const value=getComputedStyle(probe).backgroundColor;probe.remove();return value;
+    };
+    const isTone=(el,index,config)=>!!el &&
+      el.classList.contains("tone-"+index) &&
+      getComputedStyle(el).color===resolvedColor(config[index][0]) &&
+      getComputedStyle(el).backgroundColor===resolvedBg(config[index][1]);
+    const parts=[...document.querySelectorAll('.lineup-row .lineup-car')].map(box=>{
+      const tag=box.querySelector('.tone-tag'),color=Number(tag?.className.match(/tone-([0-9]+)/)?.[1]);
+      return {car:Number(tag?.textContent),tone:color,
+        valid:isTone(tag,color,palette),
+        textOnly:tag?.getBoundingClientRect().width<box.getBoundingClientRect().width-1 &&
+          getComputedStyle(box).backgroundColor!==getComputedStyle(tag).backgroundColor};
+    });
+    const rows=[...document.querySelectorAll('.mania-table tbody tr')];
+    const placements=rows.map(row=>{
+      const cell=row.querySelector('td.position-current'),tag=cell?.querySelector('.tone-tag');
+      const index=({"先頭":1,"番手":2,"3番手":3,"単騎":4})[tag?.textContent];
+      const countTags=[...row.querySelectorAll('td.position-stat:not(.position-current) .tone-tag')];
+      return {position:tag?.textContent,index,
+        valid:isTone(tag,index,palette) && countTags.length===4 &&
+          countTags.every(tag=>isTone(tag,index,palette)) &&
+          getComputedStyle(cell).backgroundColor==="rgb(255, 255, 255)" &&
+          countTags.every(tag=>getComputedStyle(tag.parentElement).backgroundColor==="rgb(255, 255, 255)")};
+    });
+    const scores=rows.map((row,i)=>{
+      const badge=row.querySelector('td.score .score-current');
+      const previous=row.querySelector('td.score .score-previous');
+      const rank=Number(badge?.className.match(/score-rank-([0-9]+)/)?.[1])||0;
+      return {car:i+1,value:Number(badge?.textContent),rank,
+        valid:rank?getComputedStyle(badge).color===resolvedColor(rankPalette[rank][0]) &&
+          getComputedStyle(badge).backgroundColor===resolvedBg(rankPalette[rank][1]) &&
+          badge.getBoundingClientRect().width<badge.parentElement.getBoundingClientRect().width-1:true,
+        previousNeutral:getComputedStyle(previous).color==="rgb(96, 107, 118)" &&
+          getComputedStyle(previous).backgroundColor==="rgba(0, 0, 0, 0)" &&
+          getComputedStyle(badge.parentElement).backgroundColor==="rgb(255, 255, 255)"};
+    });
+    return {parts,placements,scores};
+  });
+  const lineupNumbers=[2,5,1,6,3,4,7,8,9],lineupGroups=[1,1,1,2,2,3,3,3,4];
+  if(colored.parts.length!==9||colored.parts.some((item,i)=>
+      item.car!==lineupNumbers[i]||item.tone!==lineupGroups[i]||
+      !item.valid||!item.textOnly)||
+     colored.placements.length!==9||
+     colored.placements.some(x=>!x.index||!x.valid)||
+     colored.scores.length!==9||
+     colored.scores.some(s=>s.rank!==({5:1,2:2,1:3}[s.car]||0) ||
+       !s.valid || !s.previousNeutral))
+    fail(width+'px SCR-210 lineup/score text badges or four-way position colors incorrect: '+
+      JSON.stringify(colored));
   if (await table.locator(".mania-section-start").count() !== 1) fail(width + "px appended mania section missing");
   if (await table.locator(".item-btn").count() !== 8) fail(width + "px mania item buttons missing");
   if (await table.locator(".mania-eval").count() !== 81) fail(width + "px all evaluation cells not present");

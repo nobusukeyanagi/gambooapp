@@ -141,7 +141,7 @@
       '<span class="meeting-date">'+escape(meta.date)+'</span></div>'+
       '<div class="res-wrap">'+slots.join("")+'</div></div></td>';
   };
-  const renderRow = (DATA,rider,i,gMark) => {
+  const renderRow = (DATA,rider,i,gMark,scoreRank) => {
     const p=DATA.marutoku[i],position=DATA.positionStats.rows[i];
     const grade=rider.grade.split("/");
     // Display name / prefecture(home) / training class and age on three lines.
@@ -149,16 +149,18 @@
     const prev=rider.history||[];
     const histories=Array.from({length:8},(_,x)=>
       prev[x]||(x===0?{date:"",results:rider.current}:x===1?{date:rider.prevDate,results:rider.previous}:null));
-    const emphasis=position.position==="先頭"?"position-highlight-lead":
-      position.position==="番手"?"position-highlight-follow":"position-highlight-other";
+    const toneIndex={"先頭":1,"番手":2,"3番手":3,"単騎":4}[position.position]||0;
+    const toneTag=(value)=>toneIndex
+      ? '<span class="tone-tag tone-'+toneIndex+'">'+escape(value)+'</span>'
+      : escape(value);
     const buildCounts=position.counts.map((v,k)=>{
       const group=Math.floor(k/4);
       const highlighted=(group===0&&position.position==="先頭")||
         (group===1&&position.position==="番手")||
         (group===2&&position.position==="3番手")||
         (group===3&&position.position==="単騎");
-      const classes=["position-stat",k%4===0?"position-first":"",v===0?"position-zero":"",highlighted?emphasis:""].filter(Boolean);
-      return '<td class="'+classes.join(" ")+'">'+escape(v)+'</td>';
+      const classes=["position-stat",k%4===0?"position-first":"",v===0?"position-zero":""].filter(Boolean);
+      return '<td class="'+classes.join(" ")+'">'+(highlighted?toneTag(v):escape(v))+'</td>';
     });
     // Each switching action has its own 1st / 2nd / 3rd / outside counts.
     // switches[0] stores another mode; modes 1 and 2 are in-adhesion and follow-up.
@@ -176,7 +178,7 @@
       '<td class="bl"><span class="leg-tag '+(legCss[rider.leg]||"leg-both")+'">'+escape(rider.leg)+'</span></td>'+
       '<td class="bl">'+escape(rider.gear||"—")+'</td>'+
       '<td class="player-comment">'+escape(p.comment)+'</td>'+
-      '<td class="bl score"><span class="score-current">'+escape(rider.score)+'</span>'+
+      '<td class="bl score"><span class="score-current'+(scoreRank?' score-rank-'+scoreRank:'')+'">'+escape(rider.score)+'</span>'+
         '<span class="score-previous">'+
         (rider.previousScore ? '前'+escape(rider.previousScore) : '前—')+
         '</span></td>'+
@@ -194,7 +196,7 @@
       '<td class="meeting-cell meeting-avg">' + (rider.avgBest?.length === 2 ?
         '<span class="meeting-avg-line">平均' + escape(rider.avgBest[0]) + '</span>' +
         '<span class="meeting-avg-line">最高' + escape(rider.avgBest[1]) + '</span>' : "—") + "</td>" +
-      '<td class="position-stat position-current position-first '+emphasis+'">'+escape(position.position)+'</td>'+
+      '<td class="position-stat position-current position-first">'+toneTag(position.position)+'</td>'+
       buildCounts.join("")+
       switchCounts.map((count,k)=>'<td class="position-stat position-switch'+
         (k%4===0?' position-first':'')+(count===0?' position-zero':'')+
@@ -224,10 +226,20 @@
       .forEach(({index}, rank) => { marks[index] = ["◎","○","△","×"][rank]; });
     return marks;
   };
+  // Current race scores in descending order, ties resolved by car number.
+  const getScoreRanks=(riders)=>{
+    const ranks=Array(riders.length).fill(0);
+    riders.map((rider,index)=>({index,value:Number(rider.score)}))
+      .filter(({value})=>Number.isFinite(value))
+      .sort((a,b)=>b.value-a.value||a.index-b.index)
+      .slice(0,3).forEach(({index},rank)=>{ranks[index]=rank+1;});
+    return ranks;
+  };
   const toHTML = (DATA) => {
     const gMarks = getGMarks(DATA.basics);
+    const scoreRanks=getScoreRanks(DATA.basics);
     return makeHead()+'<tbody>'+
-      DATA.basics.map((r,i)=>renderRow(DATA,r,i,gMarks[i])).join("")+'</tbody>';
+      DATA.basics.map((r,i)=>renderRow(DATA,r,i,gMarks[i],scoreRanks[i])).join("")+'</tbody>';
   };
   const render=(table,DATA)=>{if(table&&DATA)table.innerHTML=toHTML(DATA);};
   window.GambooKeirinRacecardColumns={toHTML,render};

@@ -256,16 +256,6 @@
 .race-detail-scroll .mania-table tbody tr td.marutoku-point-green {
   background: color-mix(in srgb, var(--c-green) 14%, var(--c-surface));
 }
-.race-detail-scroll .mania-table tbody tr td.position-highlight-lead {
-  background: color-mix(in srgb, var(--c-bronze) 20%, var(--c-surface));
-}
-.race-detail-scroll .mania-table tbody tr td.position-highlight-follow {
-  background: color-mix(in srgb, var(--c-green) 15%, var(--c-surface));
-}
-.race-detail-scroll .mania-table tbody tr td.position-highlight-other {
-  background: color-mix(in srgb, var(--c-gold-light) 25%, var(--c-surface));
-}
-
 /* In the racecard legend, explanations start at the same left edge as
    their terms, rather than occupying the right column of a grid. */
 .race-detail-scroll .rt-legend dl {
@@ -453,15 +443,28 @@
 /* The comment cell now immediately follows player information.
    Marutoku score cells are moved to logical columns 57–61 and sized below
    with the other 72 logical columns. */
-/* Two-line race score: 16px current value above 12px grey previous-term value. */
+/* Text-sized badges for top-three current scores; previous scores stay neutral. */
 .race-detail-scroll .mania-table tbody td.score .score-current {
-  display: block;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r-xs);
+  margin-bottom: var(--space-3);
   font-size: var(--fs-16);
   color: var(--c-text-primary);
   line-height: 1.2;
 }
-.race-detail-scroll .mania-table tbody td.score .score-current {
-  margin-bottom: var(--space-5);
+.race-detail-scroll .mania-table tbody td.score .score-current.score-rank-1 {
+  color: var(--c-gold);
+  background: var(--c-gold-light);
+}
+.race-detail-scroll .mania-table tbody td.score .score-current.score-rank-2 {
+  color: var(--c-blue);
+  background: var(--c-blue-light);
+}
+.race-detail-scroll .mania-table tbody td.score .score-current.score-rank-3 {
+  color: var(--c-bronze);
+  background: var(--c-bronze-light);
 }
 .race-detail-scroll .mania-table tbody td.score .score-previous {
   display: block;
