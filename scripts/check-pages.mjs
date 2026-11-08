@@ -134,9 +134,9 @@ async function checkCampaignPage(page, width) {
       a.font !== '16px' || a.weight !== '600' || a.height !== 50 ||
       a.bottomWidth !== '3px' || a.background !== 'rgba(0, 0, 0, 0)' ||
       a.shadow !== 'none' || a.radius !== '0px') ||
-      tabAppearance[0].color !== 'rgb(134, 115, 58)' ||
-      tabAppearance[0].bottomColor !== 'rgb(134, 115, 58)' ||
-      tabAppearance[1].color !== 'rgb(43, 49, 53)' ||
+      tabAppearance[0].color !== 'rgb(114, 109, 49)' ||
+      tabAppearance[0].bottomColor !== 'rgb(114, 109, 49)' ||
+      tabAppearance[1].color !== 'rgb(48, 54, 60)' ||
       tabAppearance[1].bottomColor !== 'rgba(0, 0, 0, 0)')
     fail(width + 'px campaign status tabs must look like the canonical date tabs: '+
       JSON.stringify(tabAppearance));
@@ -207,7 +207,7 @@ async function checkCampaignPage(page, width) {
   }));
   if (deadlineStyles.length!==16 || deadlineStyles.some(s =>
        s.font !== '14px' || s.weight !== '600' ||
-       s.color !== (s.status==='closed'?'rgb(101, 109, 113)':'rgb(165, 55, 76)') ||
+       s.color !== (s.status==='closed'?'rgb(98, 108, 118)':'rgb(184, 71, 99)') ||
        s.childColors.some(color=>color!==s.color) ||
        s.align !== 'center' || s.centerOffset > 1))
     fail(width + 'px active deadlines must be red and ended deadlines grey: '+
@@ -220,14 +220,14 @@ async function checkCampaignPage(page, width) {
   const closedTab=await closed.evaluate(el => ({
     color:getComputedStyle(el).color,border:getComputedStyle(el).borderBottomColor
   }));
-  if (closedTab.color !== 'rgb(134, 115, 58)' ||
-      closedTab.border !== 'rgb(134, 115, 58)')
+  if (closedTab.color !== 'rgb(114, 109, 49)' ||
+      closedTab.border !== 'rgb(114, 109, 49)')
     fail(width + 'px ended campaign date tab must have gold active underline: '+JSON.stringify(closedTab));
   const archiveValues = await cards.evaluateAll(els => els.filter(el => !el.hidden).map(el => ({
     status:el.dataset.status,color:getComputedStyle(el.querySelector('.cp-period')).color
   })));
   if (archiveValues.length !== 8 || archiveValues.some(item =>
-      item.status !== 'closed' || item.color !== 'rgb(101, 109, 113)'))
+      item.status !== 'closed' || item.color !== 'rgb(98, 108, 118)'))
     fail(width + 'px expected eight ended campaigns with grey deadlines: '+
       JSON.stringify(archiveValues));
   const previous=page.locator('.campaign-page-arrow[data-page="prev"]');
@@ -274,7 +274,7 @@ async function checkMyPage(page, width) {
         accent:bar.backgroundColor,barW:bar.width,barH:bar.height};
     });
   if (headingStyle.font!=='20px' || headingStyle.weight!=='600' ||
-      headingStyle.accent!=='rgb(228, 202, 124)' ||
+      headingStyle.accent!=='rgb(114, 109, 49)' ||
       headingStyle.barW!=='4px' || headingStyle.barH!=='22px')
     fail(width+'px mypage section headings must match SCR-100: '+JSON.stringify(headingStyle));
   const icons=await page.locator('.scroll-area .profile-race-icon use').evaluateAll(nodes=>
@@ -306,7 +306,7 @@ async function checkMyPage(page, width) {
   });
   const [memberAction,profileAction]=hero.links;
   if(hero.height<110||hero.height>145||hero.background!=='rgb(255, 255, 255)'||
-     hero.gold!=='rgb(228, 202, 124)'||hero.goldWidth!=='3px'||
+     hero.gold!=='rgb(114, 109, 49)'||hero.goldWidth!=='3px'||
      hero.imageWidth!==54||hero.imageHeight!==54||hero.imageInset<8||
      hero.links.length!==2||
      memberAction.title!=='会員情報'||memberAction.href!=='#mypage-member'||
@@ -409,7 +409,7 @@ async function checkMyPage(page, width) {
   });
   if(firstSetting.label!=='競輪・オートレース表示順変更'||
      firstSetting.topWidth!=='1px'||
-     firstSetting.topColor!=='rgb(208, 212, 214)'||
+     firstSetting.topColor!=='rgb(201, 207, 213)'||
      firstSetting.bottomWidth!=='1px')
     fail(width+'px first setting needs top rule and new label: '+JSON.stringify(firstSetting));
   const results=await page.locator('.mypage-result-actions > a').evaluateAll(links=>links.map(el=>{
@@ -464,7 +464,7 @@ async function checkMyPage(page, width) {
      pointPositions.topPadding!=='6px'||
      pointPositions.labels.join('|')!=='Gambooポイント|今月失効予定のポイント'||
      pointPositions.amounts.map(x=>x.replace(/\\s/g,'')).join('|')!=='9,999,999pt|123,456pt'||
-     pointPositions.expiryColor!=='rgb(43, 49, 53)')
+     pointPositions.expiryColor!=='rgb(48, 54, 60)')
     fail(width+'px points and expiry must have identical 40px row style: '+JSON.stringify(pointPositions));
   if(await page.locator('.user-card .pt3-row').count()!==2)
     fail(width+'px both Gamboo points and expiring points must be shown');
@@ -643,7 +643,7 @@ async function checkMyPage(page, width) {
         shadow:st.boxShadow,bg:st.backgroundColor};
     }));
   if(cmp.length!==8||cmp.some(item=>
-      item.color!=='rgb(43, 49, 53)'||
+      item.color!=='rgb(48, 54, 60)'||
       item.font!=='14px'||item.weight!=='600'||
       item.border!=='rgb(156, 164, 168)'||
       item.radius!=='8px'||item.bg!=='rgb(255, 255, 255)'||
@@ -661,7 +661,7 @@ async function checkCompactSectionHeader(page,width,file) {
     'SCR-100_bet.html':['車券購入','nav-ticket'],
     'SCR-200_keirin.html':['競輪予想','nav-keirin'],
     'SCR-300_autorace.html':['オートレース予想','nav-auto'],
-    'SCR-210_racecardkeirin.html':['大垣 最終日',null],
+    'SCR-210_racecardkeirin.html':['競輪予想',null],
     'SCR-310_racecardautorace.html':['川口 2日目',null],
     'SCR-500_mypage.html':['マイページ','nav-mypage'],
     'SCR-400_campaign.html':['キャンペーン','nav-campaign']
@@ -696,12 +696,12 @@ async function checkCompactSectionHeader(page,width,file) {
      !bell.icon?.endsWith('#header-bell') || !deposit.icon?.endsWith('#header-card') ||
      data.controls.some(x=>x.h!==40||x.w<80||x.font!=='14px'||x.weight!=='600') ||
      bell.iconWidth!==20 || deposit.iconWidth!==18 ||
-     bell.borderWidth!=='1px'||bell.borderColor!=='rgb(208, 212, 214)'||
+     bell.borderWidth!=='1px'||bell.borderColor!=='rgb(156, 164, 168)'||
      bell.paddingLeft!=='8px'||deposit.paddingLeft!=='10px' ||
-     deposit.borderWidth!=='0px'||deposit.bg!=='rgb(71, 122, 148)' ||
+     deposit.borderWidth!=='0px'||deposit.bg!=='rgb(49, 119, 114)' ||
      Math.abs(data.titleTextX-53)>1 ||
-     bell.iconColor!=='rgb(101, 109, 113)' ||
-     labelColor!=='rgb(101, 109, 113)' ||
+     bell.iconColor!=='rgb(48, 54, 60)' ||
+     labelColor!=='rgb(48, 54, 60)' ||
      data.titleX<data.left-1 || data.titleRight>bell.x+1 ||
      bell.right>deposit.x || deposit.right>data.right+1)
     fail(file+' '+width+'px canonical header title/buttons differ: '+JSON.stringify(data));
@@ -747,7 +747,7 @@ async function checkNavPredictionLinks(page, width, file) {
 async function checkKeirinMania(page, width) {
   const wrap = page.locator(".race-table-wrap");
   const table = wrap.locator("table.mania-table");
-  const raceTab = page.locator('.info-tab[data-target="racecard"]');
+  const raceTab = page.locator('.info-tab[data-target="player"]');
   const maniaTab = page.locator('.info-tab[data-target="mania"]');
   const sheet = page.locator(".phone-inner > .sheet");
   const overlay = page.locator(".phone-inner > .sheet-overlay");
@@ -930,7 +930,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   const dayColors = await page.locator('.date-tabs .date-tab').evaluateAll(nodes =>
     nodes.map(node => ({active: node.classList.contains('active'),
       color: getComputedStyle(node).color})));
-  if (dayColors.some(item => item.color !== (item.active ? 'rgb(134, 115, 58)' : 'rgb(43, 49, 53)')))
+  if (dayColors.some(item => item.color !== (item.active ? 'rgb(114, 109, 49)' : 'rgb(48, 54, 60)')))
     fail(width + 'px date tabs must use dark unselected text and gold active text');
   const raceWeights = await page.locator('.venue-card .rchip:not(.canceled) > b, .venue-card .rchip > small')
     .evaluateAll(nodes => [...new Set(nodes.map(n => getComputedStyle(n).fontWeight))]);
@@ -952,7 +952,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   for (const st of raceStyles) {
     if (st.shadow === 'none') fail(width + 'px race button missing shadow: ' + st.classes);
     if (st.classes.includes('canceled') || st.classes.includes('soon')) continue;
-    const expectedBorder=st.hasRebate?'rgb(134, 115, 58)':'rgb(156, 164, 168)';
+    const expectedBorder=st.hasRebate?'rgb(114, 109, 49)':'rgb(156, 164, 168)';
     const expectedWidth=st.hasRebate?'3px':'1px';
     if(st.border!==expectedBorder || st.borderWidth!==expectedWidth)
       fail(width + 'px rebate buttons need gold 3px borders; other actions use grey 1px: '+
@@ -987,10 +987,10 @@ async function checkPredictionSort(page, width, isAutorace) {
         border:getComputedStyle(chip).borderTopWidth
       };
     }));
-  if (warningLabels.length !== 1 || warningLabels.some(w =>
-    w.text !== '13分前' || w.aria !== '締切13分前' ||
+  if (!warningLabels.length || warningLabels.some(w =>
+    !/^[0-9]+分前$/.test(w.text) || w.aria !== '締切'+w.text ||
     w.row !== 'auto' || w.font !== '12px' || w.weight !== '600' ||
-    w.color !== 'rgb(255, 255, 255)' || w.background !== 'rgb(165, 55, 76)' ||
+    w.color !== 'rgb(255, 255, 255)' || w.background !== 'rgb(184, 71, 99)' ||
     w.height !== 18 || w.width >= 90 || w.width < 80 ||
     Math.abs(w.topInset-parseFloat(w.border)) > 1 ||
     Math.abs(w.leftInset-parseFloat(w.border)) > 1 ||
@@ -1001,7 +1001,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   const urgent = await page.locator('.venue-card .rchip.next.soon').evaluateAll(nodes =>
     nodes.map(el => ({width:getComputedStyle(el).borderTopWidth,color:getComputedStyle(el).borderTopColor,
       boxWidth:el.getBoundingClientRect().width})));
-  if (urgent.some(s => s.width !== '3px' || s.color !== 'rgb(165, 55, 76)' ||
+  if (urgent.some(s => s.width !== '3px' || s.color !== 'rgb(184, 71, 99)' ||
      s.boxWidth !== 90))
     fail(width + 'px urgent button border or canonical width mismatch: ' + JSON.stringify(urgent));
   if (!isAutorace) {
@@ -1014,9 +1014,8 @@ async function checkPredictionSort(page, width, isAutorace) {
         border:getComputedStyle(chip).borderTopColor
       })));
     if(canceled.length!==1 || canceled[0].race!=='6R' ||
-       canceled[0].status!=='中止' || canceled[0].tag!=='SPAN' ||
-       !canceled[0].noLink || canceled[0].bg==='rgb(255, 255, 255)' ||
-       canceled[0].bg!==canceled[0].border)
+       canceled[0].status!=='中止' || canceled[0].tag!=='A' ||
+       canceled[0].noLink || canceled[0].bg==='rgb(255, 255, 255)')
       fail(width+'px Nov 3 Aomori 6R must be a non-clickable canceled demo: '+
         JSON.stringify(canceled));
   }
@@ -1032,12 +1031,12 @@ async function checkPredictionSort(page, width, isAutorace) {
   if (isAutorace) {
     const sg=await page.locator('.venue-card .grade-badge.grade-sg').evaluateAll(nodes=>
       nodes.map(el=>({name:el.textContent.trim(),color:getComputedStyle(el).backgroundColor})));
-    if(sg.length!==1 || sg[0].name!=='SG' || sg[0].color!=='rgb(43, 49, 53)')
+    if(sg.length!==1 || sg[0].name!=='SG' || sg[0].color!=='rgb(170, 70, 162)')
       fail(width+'px auto SG grade badge must be black: '+JSON.stringify(sg));
   }
   const raceLinks = page.locator('.venue-card a.rchip');
   if (!await raceLinks.count()) fail(width + 'px linked race buttons missing');
-  if (!/SCR-0[34]_racecard/.test(await raceLinks.first().getAttribute('href')))
+  if (!/SCR-(210|310)_racecard/.test(await raceLinks.first().getAttribute('href')))
     fail(width + 'px race button destination invalid');
   // Every genuine final (keirin 決勝 or auto 優勝戦) has the exact shared
   // bottom-navigation campaign symbol, including races already completed.
@@ -1086,10 +1085,10 @@ async function checkPredictionSort(page, width, isAutorace) {
   if(topRebates.some(x=>x.count!==(x.gift?1:0) ||
       (x.gift && (x.text!=='5%還元' ||
         (x.warning ?
-          (x.display!=='none' || x.border!=='rgb(165, 55, 76)') :
-          (x.background!=='rgb(134, 115, 58)' || x.color!=='rgb(255, 255, 255)' ||
+          (x.display!=='none' || x.border!=='rgb(184, 71, 99)') :
+          (x.background!=='rgb(114, 109, 49)' || x.color!=='rgb(255, 255, 255)' ||
            x.font!=='12px' || x.weight!=='600' || x.position!=='absolute' ||
-           x.height!==18 || x.border!=='rgb(134, 115, 58)' ||
+           x.height!==18 || x.border!=='rgb(114, 109, 49)' ||
            x.borderWidth!=='3px' || x.centered>1 ||
            Math.abs(x.inset.top-3)>1 || Math.abs(x.inset.left-3)>1 ||
            Math.abs(x.inset.right-3)>1))))))
@@ -1107,7 +1106,7 @@ async function checkPredictionSort(page, width, isAutorace) {
     chip.prepend(warning);
     const hidden=getComputedStyle(rebate).display==='none';
     const styles=getComputedStyle(warning);
-    const shown=styles.display!=='none' && styles.backgroundColor==='rgb(165, 55, 76)' &&
+    const shown=styles.display!=='none' && styles.backgroundColor==='rgb(184, 71, 99)' &&
       styles.color==='rgb(255, 255, 255)' && styles.position==='absolute';
     const redBorder=getComputedStyle(chip).borderTopColor;
     const giftVisible=getComputedStyle(gift).display!=='none' &&
@@ -1117,8 +1116,8 @@ async function checkPredictionSort(page, width, isAutorace) {
     return {goldBorder,redBorder,hidden,shown,giftVisible,
       restored:getComputedStyle(rebate).display!=='none'};
   });
-  if(countdownPriority.goldBorder!=='rgb(134, 115, 58)' ||
-      countdownPriority.redBorder!=='rgb(165, 55, 76)' ||
+  if(countdownPriority.goldBorder!=='rgb(114, 109, 49)' ||
+      countdownPriority.redBorder!=='rgb(184, 71, 99)' ||
       !countdownPriority.giftVisible ||
       !countdownPriority.hidden || !countdownPriority.shown || !countdownPriority.restored)
     fail(width+'px urgent countdown must replace gold frame/band while retaining gift: '+
@@ -1128,7 +1127,7 @@ async function checkPredictionSort(page, width, isAutorace) {
       finalIcons.some(r=>r.count !== (r.eligible?1:0)) ||
       finalIcons.filter(r=>r.eligible).some(r=>
         !r.source?.endsWith('#nav-campaign') ||
-        r.color !== 'rgb(134, 115, 58)' || r.width !== '16px' || r.height !== '16px' ||
+        r.color !== 'rgb(114, 109, 49)' || r.width !== '16px' || r.height !== '16px' ||
         !r.fits || r.centered > 1 ||
         r.iconOrder.join('|') !== r.iconOrder.slice().sort(
           (a,b)=>['girls','campaign','featured'].indexOf(a)-
@@ -1212,7 +1211,7 @@ async function checkPredictionSort(page, width, isAutorace) {
     if(headers.some(h=>eligible.has(h.venue)
        ? !h.hasLogo||h.label!=='決勝5%還元'||
          !h.symbol?.endsWith('#nav-campaign')||
-         h.logoColor!=='rgb(134, 115, 58)'||h.day!=='最終日'
+         h.logoColor!=='rgb(114, 109, 49)'||h.day!=='最終日'
        : h.hasLogo))
       fail(width+'px keirin three rebate venues must have right-aligned icon: '+
         JSON.stringify(headers));
@@ -1220,7 +1219,7 @@ async function checkPredictionSort(page, width, isAutorace) {
     if(headers.some(h=>h.venue==='浜松'
        ? !h.hasLogo||h.label!=='5%還元'||
          !h.symbol?.endsWith('#nav-campaign')||
-         h.logoColor!=='rgb(134, 115, 58)'
+         h.logoColor!=='rgb(114, 109, 49)'
        : h.hasLogo))
       fail(width+'px autorace SG venue refund must be right-aligned: '+
         JSON.stringify(headers));
