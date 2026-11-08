@@ -332,6 +332,48 @@ async function checkCurrentPage(page, width) {
       !growth.ridersInBounds || !growth.timeAtBottom)
     fail(width+'px featured card must grow only for 3+ riders: '+JSON.stringify(growth));
 
+  // Gamboo front page: news and campaigns are merged by published date.
+  // On the same date notices precede campaigns, preserving each source order.
+  const homeNews=await page.locator('.news-item').evaluateAll(items=>items.map(el=>{
+    const marker=el.querySelector('.news-campaign');
+    const badge=el.querySelector('.news-badge');
+    return {
+      date:el.querySelector('.news-date')?.textContent.trim(),
+      title:el.querySelector('.news-title')?.textContent.trim(),
+      href:el.getAttribute('href'),
+      kind:el.dataset.newsKind,
+      category:badge?.textContent.trim(),
+      badge:badge?.className,
+      isCampaign:Boolean(marker),
+      campaignLabel:marker?.textContent.trim(),
+      campaignSvg:marker?.querySelector('use')?.getAttribute('href'),
+      campaignAtRight:marker ?
+        Math.abs(marker.getBoundingClientRect().right-
+          el.querySelector('.news-head').getBoundingClientRect().right)<1 : true
+    };
+  }));
+  const expectedNews=[
+    ['2026.11.06','notice','【ブース出展のお知らせ】豪華景品が当たるチャンス！11/7(土)～8(日)四日市GIIIにてGambooブース出展決定！','03633'],
+    ['2026.11.06','campaign','【山陽GII】山口県の名産品が当たる！','20261111_sanyo_nrd'],
+    ['2026.11.06','campaign','【エントリー不要】山陽GIIがおトク！もれなく5%還元！','20261111_sanyo_eua'],
+    ['2026.11.06','campaign','立川GIIIスペシャルキャンペーン','20261112_tachikawasp_soq'],
+    ['2026.11.02','notice','【重要】GambooBETの一時発売停止を伴うメンテナンス実施について(11月分)','03631'],
+    ['2026.11.02','notice','【重要】d払いのメンテナンスについて','03630'],
+    ['2026.11.01','notice','【重要】ログインパスワードは定期的に変更してください！','03612'],
+    ['2026.10.30','notice','「景品に交換」「景品を当てる」に四日市GIIIオリジナルクオカードが登場！','03627'],
+    ['2026.10.30','campaign','【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/11～13FI・11/23～25MN】','yokkaichi20261111'],
+    ['2026.10.30','campaign','【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/5～8GIII】','yokkaichi20261105']
+  ];
+  if(homeNews.length!==10 || homeNews.some((n,i)=>{
+    const [date,kind,title,tid]=expectedNews[i]||[];
+    return n.date!==date||n.kind!==kind||n.title!==title||
+      !n.href?.startsWith('https://gamboo.jp/')||
+      !n.href.includes(tid)||n.isCampaign!==(kind==='campaign')||
+      (kind==='campaign' && (n.campaignLabel!=='キャンペーン'||
+        !n.campaignSvg?.endsWith('#nav-campaign')||!n.campaignAtRight));
+  }))
+    fail(width+'px Gamboo merged notices/campaigns not latest 10 with notice-first date ties: '+
+      JSON.stringify(homeNews));
   const mori=await page.locator('.mori-venue-grid > .vcard').evaluateAll(cards=>
     cards.map(card=>({
       race:card.dataset.moriRace||'',
