@@ -706,7 +706,8 @@ button,
         background: transparent;
         object-fit: contain;
       }
-      /* Standard outline navigation bands fill the player area, without an explanation divider. */
+      /* The rider pager uses the same edge-cue look as SCR-200 and SCR-210.
+         The narrow columns preserve room for rider names and the deadline. */
       .pk3 .pk-player-panel {
         display: grid;
         grid-template-columns: 18px minmax(0, 1fr) 18px;
@@ -721,17 +722,26 @@ button,
         min-height: 0;
         padding: 0;
         margin: 0;
-        border: var(--line-control);
-        border-radius: var(--r-control);
-        background: var(--c-surface);
-        box-shadow: var(--e1);
-        color: var(--c-charcoal);
+        appearance: none;
+        border: 0;
+        border-radius: 0;
+        background: var(--c-bg);
+        color: var(--c-silver);
+        box-shadow: none;
         font-family: var(--ff-ui);
-        font-size: var(--fs-14);
-        font-weight: var(--fw-strong);
         cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
       }
-      .pk3 .pk-nav:focus-visible { outline: var(--line-focus); outline-offset: -3px; }
+      .pk3 .pk-prev { border-right: var(--line-normal); }
+      .pk3 .pk-next { border-left: var(--line-normal); }
+      .pk3 .pk-nav .ic {
+        display: block;
+        width: 18px;
+        height: 18px;
+        max-width: 100%;
+      }
+      .pk3 .pk-prev .ic { transform: rotate(180deg); }
+      .pk3 .pk-nav:focus-visible { outline: var(--line-focus); outline-offset: var(--space-2); }
       .pk3 .pk-compact-row {
         display: flex;
         align-items: center;
@@ -997,7 +1007,6 @@ button,
                   padding-inline: 0;
                 }
                 .pk3 .pk-player-panel { grid-template-columns: 16px minmax(0, 1fr) 16px; }
-                .pk3 .pk-nav { font-size: var(--fs-12); }
                 .pk3 .pk-player,
                 .pk3 .pk-race-time { flex-shrink: 0; }
         
