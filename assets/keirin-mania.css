@@ -18,10 +18,6 @@
         line-height: 1;
         font-weight: var(--fw-strong);
       }
-      .mk-dbl { color: var(--w3); }
-      .mk-o { color: var(--c-green); }
-      .mk-tri { color: var(--c-keirin); }
-      .mk-x { color: var(--c-text-primary); }
 
       .item-btn {
         display: flex;
