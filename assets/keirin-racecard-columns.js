@@ -50,15 +50,75 @@
       '<span class="stat-combined-mark">'+mark+'</span>'+
       '<span class="stat-combined-score">'+value+'</span>'+
     '</span>';
+  /* Uploaded samples for 四日市6R/12R are distinct from 防府5R data. */
+  const analyzerSample = window.GambooKeirinAnalyzerSample || {};
+  const analyzerSpecs = [
+    {key:"line",label:"見なし直線別",span:5,detail:"60m以上",race:"四日市6R"},
+    {key:"race",label:"レース種別",span:5,detail:"選抜",race:"四日市6R"},
+    {key:"day",label:"日程別",span:5,detail:"最終日",race:"四日市6R"},
+    {key:"grade",label:"グレード別",span:5,detail:"G3",race:"四日市12R"},
+    {key:"advance",label:"グレード別勝ち上がり率",span:6,detail:"準決勝・決勝・優勝",race:"四日市12R"},
+    {key:"car",label:"車番別",span:5,detail:"当該車番",race:"四日市12R"},
+    {key:"pref",label:"同県選手同乗時",span:4,detail:"同県選手同乗レース",race:"四日市12R"}
+  ];
+  const analyzerByKey = Object.fromEntries(analyzerSpecs.map(x=>[x.key,x]));
+  const paleRank = (number, text) => number>=1 && number<=4
+    ? '<span class="rank-number rank-tint-'+number+'">'+escape(text)+'</span>'
+    : escape(text);
+  const markByRank = n => ["","◎","○","△","×"][n]||"";
+  const rankCell = (rank, className, title) =>
+    '<td class="'+className+'" title="'+escape(title)+'">'+
+      statCombo(marker(markByRank(rank)),paleRank(rank,rank+"位"))+'</td>';
+  /* Attached percentage columns mean win/top2/top3/out.
+     Cumulative counts are converted to exclusive placing counts. */
+  const analyzerRankings = {};
+  for (const key of ["line","race","day","grade","car","pref"]) {
+    const rows = analyzerSample[key] || [];
+    analyzerRankings[key] = Array.from({length:3},(_,k) =>
+      Object.entries(rows).map(([index,row])=>({
+        car:Number(index)+1,value:Number(row[key==="pref"?2:3][k])
+      })).filter(x=>Number.isFinite(x.value))
+        .sort((a,b)=>b.value-a.value||a.car-b.car)
+        .reduce((r,x,i,all)=>{
+          const rank=i===0?1:(all[i-1].value===x.value?r[all[i-1].car]:i+1);
+          r[x.car]=rank;return r;
+        }, {})
+    );
+  }
+  const analyzerRateCells = (key,car,counts,rates,title) =>
+    counts.map((count,k)=>{
+      const rank=k<3?analyzerRankings[key]?.[k]?.[car]:0;
+      return '<td class="analyzer-rate-cell recent4-cell" title="'+escape(title)+'">'+
+        '<span class="recent4-count">'+escape(count)+'</span>'+
+        '<span class="recent4-rate'+(rank>=1&&rank<=3?' recent4-rank-'+rank:'')+'">'+
+        escape(rates[k])+'%</span></td>';
+    }).join("");
+  const analyzerCells = (key,car) => {
+    const d=analyzerSample[key]?.[car-1];
+    const spec=analyzerByKey[key];
+    if (!d) return Array(spec.span).fill('<td class="analyzer-empty">—</td>').join("");
+    const title='参考：'+spec.race+' '+spec.label+'（'+spec.detail+'）・'+d[0]+'・車番'+car;
+    if (key==="pref") return analyzerRateCells(key,car,d[1],d[2],title);
+    if (key==="advance") {
+      return d.slice(1).map((stage,k)=>{
+        const label=["準決勝進出率","決勝進出率","優勝率"][k];
+        const t=title+"・"+label;
+        return rankCell(stage[0],"analyzer-combined-cell",t)+
+          '<td class="analyzer-rate-cell recent4-cell" title="'+escape(t)+'">'+
+            '<span class="recent4-count">'+escape(stage[1])+'</span>'+
+            '<span class="recent4-rate">'+escape(stage[3])+'%</span></td>';
+      }).join("");
+    }
+    return rankCell(d[1],"analyzer-combined-cell",title)+
+      analyzerRateCells(key,car,d[2],d[3],title);
+  };
   const distanceCells = car => {
     const d=distance400Sample[car];
     if (!d) return '<td class="distance-combined-cell">'+statCombo("","—")+'</td>'+
       Array(4).fill('<td class="distance-sample-empty">—</td>').join("");
     const counts=[d.cum[0], d.cum[1]-d.cum[0], d.cum[2]-d.cum[1], d.total-d.cum[2]];
     const mark=["","◎","○","△","×"][d.rank] || "";
-    const rankHtml=d.rank<=3
-      ? '<span class="rank-number rank-tint-'+d.rank+'">'+d.rank+'位</span>'
-      : d.rank+'位';
+    const rankHtml=paleRank(d.rank,d.rank+'位');
     const title='参考：四日市12R・'+d.name+'（車番'+car+'）';
     return '<td class="distance-combined-cell" title="'+escape(title)+'">'+
       statCombo(marker(mark),rankHtml)+'</td>'+
@@ -99,14 +159,27 @@
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
       ...["1着","2着","3着","着外"].map((label,i)=>
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
-      sub(statCombo("","総合P"),
+      sub("総合P",
         "bl marutoku-section-start marutoku-score-label marutoku-combined-heading"),
       ...["1着P","2着P","3着P"].map(label=>
         sub(label,"marutoku-score-label")),
-      sub(statCombo("","G指数"),"bl gindex-section-start gindex-combined-heading"),
-      sub(statCombo("","順位"),"bl distance-combined-heading"),
+      sub("G指数","bl gindex-section-start gindex-combined-heading"),
+      sub("順位","bl distance-combined-heading"),
       ...["1着","2着","3着","着外"].map(label=>
-        sub(label,"distance-col distance-rate-heading"))
+        sub(label,"distance-col distance-rate-heading")),
+      ...analyzerSpecs.flatMap(spec=>
+        spec.key==="pref"
+          ? ["1着","2着","3着","着外"].map((label,i)=>
+              sub(label,(i===0?"bl ":"")+"analyzer-rate-heading"))
+          : spec.key==="advance"
+            ? ["準決勝","決勝","優勝"].flatMap(label=>[
+                sub("順位","bl analyzer-combined-heading"),
+                sub(label==="優勝"?"優勝率":label+"進出率","analyzer-rate-heading")
+              ])
+            : [sub("順位","bl analyzer-combined-heading"),
+               ...["1着","2着","3着","着外"].map(label=>
+                 sub(label,"analyzer-rate-heading"))]
+      )
     ];
     // Grouped headings share columns across the two header rows.
     // Mark-and-value headings use the same fixed left/center grid as data.
@@ -120,8 +193,15 @@
       [44, {span:4, label:"競り", klass:"position-first"}],
       [48, {span:4, label:"イン粘り回数", klass:"position-first"}],
       [52, {span:4, label:"追い上げ回数", klass:"position-first"}],
-      [61, {span:5, label:"周長別", klass:"bl distance-section-start"}]
+      [61, {span:5, label:"周長別", klass:"bl mania-section-start distance-section-start"}]
     ]);
+    let analyzerOffset=66;
+    analyzerSpecs.forEach(spec=>{
+      groups.set(analyzerOffset,{
+        span:spec.span,label:spec.label,klass:"bl analyzer-section-start"
+      });
+      analyzerOffset+=spec.span;
+    });
     const top = [], lower = [];
     for (let i=0; i<subheads.length;) {
       const group = groups.get(i);
@@ -342,6 +422,7 @@
           '<span class="g-val'+(gRank?' rank-number rank-tint-'+gRank:'')+'">'+
             escape(rider.g)+'</span>')+'</td>'+
       distanceCells(rider.car)+
+      analyzerSpecs.map(spec=>analyzerCells(spec.key,rider.car)).join("")+
       '</tr>';
   };
   // Rank G-index values numerically, descending. The four highest riders
