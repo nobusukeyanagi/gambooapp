@@ -295,6 +295,15 @@ button,
         padding: var(--space-9) var(--space-content) var(--space-9) var(--space-content);
         position: relative;
       }
+      /* Notices and campaigns link to their original source as one tap target. */
+      a.news-item {
+        color: inherit;
+        text-decoration: none;
+      }
+      a.news-item:focus-visible {
+        outline: var(--line-focus);
+        outline-offset: -2px;
+      }
       .news-head {
         display: flex;
         align-items: center;
@@ -343,6 +352,7 @@ button,
       .news-head :is(.news-date, .news-new) { display: inline-flex; align-items: center; line-height: 1; }
       .news-badge.keirin { background: var(--c-keirin); }
       .news-badge.auto { background: var(--c-auto); }
+      .news-badge.other { background: var(--c-silver); }
       .news-badge.both {
         background: linear-gradient(90deg, var(--c-keirin) 0 50%, var(--c-auto) 50% 100%);
       }
