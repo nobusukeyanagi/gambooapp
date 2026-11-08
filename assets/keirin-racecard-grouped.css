@@ -209,7 +209,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 36px;
   min-width: 0;
 }
@@ -250,8 +250,14 @@
 .race-detail-scroll .mania-table .meeting-cell .res-rank.race-rank-3 {
   background: var(--c-bronze-light);
 }
+/* One lightness step above the neutral border grey; no badge stroke. */
 .race-detail-scroll .mania-table .meeting-cell .res-rank.race-rank-other {
-  background: var(--c-border);
+  background: color-mix(in srgb, var(--c-border) 70%, var(--c-surface) 30%);
+}
+/* Raise the circled-number glyph size so its central digit visually matches
+   the plain placing numerals, without changing the badge size. */
+.race-detail-scroll .mania-table .meeting-cell .res-rank.res-rank-circled {
+  font-size: 21px;
 }
 /* Unreported meeting days are empty placeholders, not a placed finisher. */
 .race-detail-scroll .mania-table .meeting-cell .res.res-empty .res-rank {
