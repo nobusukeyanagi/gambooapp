@@ -122,7 +122,6 @@ const expectedComputedStyles = [
   ['.news-title', 'fontSize', '16px'],
   ['.news-title', 'fontWeight', '600'],
   ['.news-date', 'fontSize', '14px'],
-  ['.news-campaign', 'fontSize', '14px'],
   ['.news-new', 'fontSize', '14px'],
   ['.venue-grid.g3 .kubun', 'fontSize', '14px'],
   ['.venue-grid.g3 .kubun', 'fontWeight', '400'],
@@ -332,61 +331,48 @@ async function checkCurrentPage(page, width) {
       !growth.ridersInBounds || !growth.timeAtBottom)
     fail(width+'px featured card must grow only for 3+ riders: '+JSON.stringify(growth));
 
-  // Gamboo front page: news and campaigns are merged by published date.
-  // On the same date notices precede campaigns, preserving each source order.
+  // SCR-100 announcement list: exactly nine notices from the supplied
+  // Gamboo source page. No campaign entries, headings or campaign markers.
   const homeNews=await page.locator('.news-item').evaluateAll(items=>items.map(el=>{
-    const marker=el.querySelector('.news-campaign');
-    const badge=el.querySelector('.news-badge');
+    const title=el.querySelector('.news-title');
+    const arrow=el.querySelector('.news-arrow');
+    const head=el.querySelector('.news-head');
+    const rect=title.getBoundingClientRect();
+    const arrowRect=arrow.getBoundingClientRect();
+    const titleStyle=getComputedStyle(title);
     return {
       date:el.querySelector('.news-date')?.textContent.trim(),
-      title:el.querySelector('.news-title')?.textContent.trim(),
+      title:title.textContent.trim(),
       href:el.getAttribute('href'),
       kind:el.dataset.newsKind,
-      category:badge?.textContent.trim(),
-      badge:badge?.className,
-      isCampaign:Boolean(marker),
-      campaignLabel:marker?.textContent.trim(),
-      campaignSvg:marker?.querySelector('use')?.getAttribute('href'),
-      campaignAtRight:marker ?
-        Math.abs(marker.getBoundingClientRect().right-
-          el.querySelector('.news-head').getBoundingClientRect().right)<1 : true,
-      titleFullyVisible:(()=>{
-        const elTitle=el.querySelector('.news-title');
-        const style=getComputedStyle(elTitle);
-        return style.overflow!=='hidden' && style.webkitLineClamp==='none' &&
-          elTitle.scrollHeight<=elTitle.clientHeight+1;
-      })(),
-      arrowCenteredToTitle:(()=>{
-        const title=el.querySelector('.news-title').getBoundingClientRect();
-        const arrow=el.querySelector('.news-arrow').getBoundingClientRect();
-        const head=el.querySelector('.news-head').getBoundingClientRect();
-        return Math.abs((title.top+title.bottom-arrow.top-arrow.bottom)/2)<=1.5 &&
-          arrow.top>=head.bottom-0.5;
-      })()
+      category:el.querySelector('.news-badge')?.textContent.trim(),
+      isCampaign:Boolean(el.querySelector('.news-campaign')),
+      titleFullyVisible:titleStyle.overflow!=='hidden' &&
+        titleStyle.webkitLineClamp==='none' &&
+        title.scrollHeight<=title.clientHeight+1,
+      arrowCenteredToTitle:Math.abs((rect.top+rect.bottom-arrowRect.top-arrowRect.bottom)/2)<=1.5 &&
+        arrowRect.top>=head.getBoundingClientRect().bottom-0.5
     };
   }));
   const expectedNews=[
-    ['2026.11.06','notice','【ブース出展のお知らせ】豪華景品が当たるチャンス！11/7(土)～8(日)四日市GIIIにてGambooブース出展決定！','03633'],
-    ['2026.11.06','campaign','【山陽GII】山口県の名産品が当たる！','20261111_sanyo_nrd'],
-    ['2026.11.06','campaign','【エントリー不要】山陽GIIがおトク！もれなく5%還元！','20261111_sanyo_eua'],
-    ['2026.11.06','campaign','立川GIIIスペシャルキャンペーン','20261112_tachikawasp_soq'],
-    ['2026.11.02','notice','【重要】GambooBETの一時発売停止を伴うメンテナンス実施について(11月分)','03631'],
-    ['2026.11.02','notice','【重要】d払いのメンテナンスについて','03630'],
-    ['2026.11.01','notice','【重要】ログインパスワードは定期的に変更してください！','03612'],
-    ['2026.10.30','notice','「景品に交換」「景品を当てる」に四日市GIIIオリジナルクオカードが登場！','03627'],
-    ['2026.10.30','campaign','【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/11～13FI・11/23～25MN】','yokkaichi20261111'],
-    ['2026.10.30','campaign','【エントリー不要】エブリデイ四日市ナイターキャンペーン【2026/11/5～8GIII】','yokkaichi20261105']
+    ['2026.11.06','競輪','【ブース出展のお知らせ】豪華景品が当たるチャンス！11/7(土)～8(日)四日市GIIIにてGambooブース出展決定！','03633'],
+    ['2026.11.02','競輪＆オート','【重要】GambooBETの一時発売停止を伴うメンテナンス実施について(11月分)','03631'],
+    ['2026.11.02','競輪＆オート','【重要】d払いのメンテナンスについて','03630'],
+    ['2026.11.01','その他','【重要】ログインパスワードは定期的に変更してください！','03612'],
+    ['2026.10.30','ポイント','「景品に交換」「景品を当てる」に四日市GIIIオリジナルクオカードが登場！','03627'],
+    ['2026.10.15','コミュニティ','Gambooブログの2026年9月月間賞発表！！','03616'],
+    ['2026.10.01','その他','【重要】ログインパスワードは定期的に変更してください！','03603'],
+    ['2026.09.28','ポイント','※10/19追記【Gポイント交換停止中】「Gポイント」サイトメンテナンスとポイント交換サービス一時停止のお知らせ','03610'],
+    ['2026.09.24','競輪','【復旧】「KEIRIN.JP」ライブ映像の視聴不具合について(Androidスマートフォン)','03617']
   ];
-  if(homeNews.length!==10 || homeNews.some((n,i)=>{
-    const [date,kind,title,tid]=expectedNews[i]||[];
-    return n.date!==date||n.kind!==kind||n.title!==title||
-      !n.href?.startsWith('https://gamboo.jp/')||
-      !n.href.includes(tid)||n.isCampaign!==(kind==='campaign')||
-      !n.titleFullyVisible||!n.arrowCenteredToTitle||
-      (kind==='campaign' && (n.campaignLabel!=='キャンペーン'||
-        !n.campaignSvg?.endsWith('#nav-campaign')||!n.campaignAtRight));
+  if(homeNews.length!==9 || homeNews.some((n,i)=>{
+    const [date,category,title,tid]=expectedNews[i]||[];
+    return n.date!==date||n.category!==category||n.title!==title||
+      n.kind!=='notice'||n.isCampaign||
+      n.href!==('https://gamboo.jp/news/?tid=info&tsid='+tid)||
+      !n.titleFullyVisible||!n.arrowCenteredToTitle;
   }))
-    fail(width+'px Gamboo merged notices/campaigns not latest 10 with notice-first date ties: '+
+    fail(width+'px SCR-100 must display nine full-title Gamboo notices without campaigns: '+
       JSON.stringify(homeNews));
   const mori=await page.locator('.mori-venue-grid > .vcard').evaluateAll(cards=>
     cards.map(card=>({
