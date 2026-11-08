@@ -30,12 +30,15 @@
   const makeHead = () => {
     const subheads = [
       sub("枠","c-waku player-section-start"),
-      sub('<button type="button" class="car-line-sort" aria-pressed="false" aria-label="ライン順に並べ替え">車番</button>',"fx c-sha"),
+      sub('<button type="button" class="car-line-sort racecard-sort-button" aria-pressed="false" aria-label="ライン順に並べ替え"><span>車番</span><span class="sort-mode-label" aria-hidden="true">並び順</span></button>',"fx c-sha"),
       sub("選手名","c-name"),
       sub("級班","bl"),sub("脚質","bl"),sub("ギア比","bl"),
       sub("コメント","player-comment-heading"),
       ...["競走得点","失違","逃","捲","差","マ","B"].map((s,i)=>
-        sub(s,i===0?"bl recent-section-start":(i===1?"bl":""))),
+        sub(i===0
+          ? '<button type="button" class="score-order-sort racecard-sort-button" aria-pressed="false" aria-label="競走得点順に並べ替え"><span>競走得点</span><span class="sort-mode-label" aria-hidden="true">得点順</span></button>'
+          : s,
+          i===0?"bl recent-section-start":(i===1?"bl":""))),
       ...[["1着","勝率"],["2着","2連対率"],["3着","3連対率"],["着外","着外率"]]
         .map(([placing, rate],i)=>sub(
           '<span class="recent4-heading-main">'+placing+'</span>'+
@@ -301,16 +304,17 @@
     return makeHead()+'<tbody>'+
       DATA.basics.map((r,i)=>renderRow(DATA,r,i,gMarks[i],scoreRanks[i],rateRanks[i],pointRanks[i],gRanks[i])).join("")+'</tbody>';
   };
-  // The vehicle-number header toggles between numeric car order and
-  // the full predicted lineup. Reordering existing <tr> nodes retains all
-  // values, links and scroll positions without regenerating the racecard.
-  const bindLineupSort = (table, DATA) => {
-    const button = table.querySelector("thead .car-line-sort");
+  // One sort mode at a time: car number, predicted lineup or current score.
+  // Moving the existing <tr> nodes preserves the original rider data, visual
+  // badges and horizontal scroll position. Tapping the active mode resets it.
+  const bindRowSort = (table, DATA) => {
+    const carButton = table.querySelector("thead .car-line-sort");
+    const scoreButton = table.querySelector("thead .score-order-sort");
     const tbody = table.tBodies[0];
     const lines = Array.isArray(DATA.lineup) ? DATA.lineup : [];
-    if (!button || !tbody || !lines.length) return;
+    if (!carButton || !scoreButton || !tbody || !lines.length) return;
     const rows = Array.from(tbody.rows);
-    const carOf = (row) => Number(row.querySelector("td.c-sha .frame-cell")?.textContent?.trim());
+    const carOf = row => Number(row.querySelector("td.c-sha .frame-cell")?.textContent?.trim());
     const byCar = new Map(rows.map(row => [carOf(row), row]));
     const lineupCars = lines.flat().map(Number);
     if (byCar.size !== rows.length || lineupCars.length !== rows.length ||
@@ -318,26 +322,44 @@
         new Set(lineupCars).size !== rows.length) return;
 
     const carOrder = [...byCar.keys()].sort((a,b) => a-b);
-    let isLineupOrder = false;
-    button.addEventListener("click", () => {
-      isLineupOrder = !isLineupOrder;
-      const orderedCars = isLineupOrder ? lineupCars : carOrder;
-      orderedCars.forEach(car => tbody.appendChild(byCar.get(car)));
+    const scoreByCar = new Map(DATA.basics.map(rider => [Number(rider.car), Number(rider.score)]));
+    const scoreOrder = [...carOrder].sort((a,b) => {
+      const scoreA = scoreByCar.get(a);
+      const scoreB = scoreByCar.get(b);
+      const valueA = Number.isFinite(scoreA) ? scoreA : -Infinity;
+      const valueB = Number.isFinite(scoreB) ? scoreB : -Infinity;
+      return valueB - valueA || a - b;
+    });
+    let mode = "car";
+
+    const updateMode = selected => {
+      mode = mode === selected ? "car" : selected;
+      const order = mode === "lineup" ? lineupCars :
+        mode === "score" ? scoreOrder : carOrder;
+      order.forEach(car => tbody.appendChild(byCar.get(car)));
+
       rows.forEach(row => row.classList.remove("line-group-start"));
-      if (isLineupOrder) {
+      if (mode === "lineup") {
         lines.slice(1).forEach(line => {
-          const firstCar = Number(line[0]);
-          byCar.get(firstCar)?.classList.add("line-group-start");
+          byCar.get(Number(line[0]))?.classList.add("line-group-start");
         });
       }
-      button.setAttribute("aria-pressed", String(isLineupOrder));
-      button.setAttribute("aria-label", isLineupOrder ? "車番順に戻す" : "ライン順に並べ替え");
-    });
+      const lineupActive = mode === "lineup";
+      const scoreActive = mode === "score";
+      carButton.setAttribute("aria-pressed", String(lineupActive));
+      carButton.setAttribute("aria-label",
+        lineupActive ? "車番順に戻す" : "ライン順に並べ替え");
+      scoreButton.setAttribute("aria-pressed", String(scoreActive));
+      scoreButton.setAttribute("aria-label",
+        scoreActive ? "車番順に戻す" : "競走得点順に並べ替え");
+    };
+    carButton.addEventListener("click", () => updateMode("lineup"));
+    scoreButton.addEventListener("click", () => updateMode("score"));
   };
   const render=(table,DATA)=>{
     if (!table || !DATA) return;
     table.innerHTML=toHTML(DATA);
-    bindLineupSort(table,DATA);
+    bindRowSort(table,DATA);
   };
   window.GambooKeirinRacecardColumns={toHTML,render};
 })();
