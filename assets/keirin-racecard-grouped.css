@@ -86,29 +86,6 @@
   background: var(--c-gold);
   color: var(--c-surface);
 }
-/* Position-group headings use the same four category fills as the
-   corresponding rider-position cells. Miscellaneous position headings use
-   one neutral grey fill, not a new classification color. */
-.race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-1 {
-  background: var(--c-magenta-light);
-  color: var(--c-text-primary);
-}
-.race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-2 {
-  background: var(--c-teal-light);
-  color: var(--c-text-primary);
-}
-.race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-3 {
-  background: var(--c-yellowgreen-light);
-  color: var(--c-text-primary);
-}
-.race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-4 {
-  background: var(--c-bronze-light);
-  color: var(--c-text-primary);
-}
-.race-detail-scroll .mania-table thead tr:first-child th.position-heading-tone-neutral {
-  background: color-mix(in srgb, var(--c-border) 40%, var(--c-surface) 60%);
-  color: var(--c-text-primary);
-}
 /* Buttons inside the selected mania section intentionally retain their
    own original white surface, dark text, and independent active state. */
 
