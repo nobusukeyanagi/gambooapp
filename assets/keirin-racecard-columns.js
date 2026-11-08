@@ -197,7 +197,8 @@
       '<td class="meeting-cell meeting-avg">' + (rider.avgBest?.length === 2 ?
         '<span class="meeting-avg-line">平均' + escape(rider.avgBest[0]) + '</span>' +
         '<span class="meeting-avg-line">最高' + escape(rider.avgBest[1]) + '</span>' : "—") + "</td>" +
-      '<td class="position-stat position-current position-first">'+toneTag(position.position)+'</td>'+
+      '<td class="position-stat position-current position-first'+
+        (toneIndex?' position-tone-'+toneIndex:'')+'">'+escape(position.position)+'</td>'+
       buildCounts.join("")+
       switchCounts.map((count,k)=>'<td class="position-stat position-switch'+
         (k%4===0?' position-first':'')+(count===0?' position-zero':'')+
