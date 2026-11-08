@@ -45,7 +45,7 @@
           '<span class="recent4-heading-rate">'+rate+'</span>',
           (i===0?"bl ":"")+"recent4-heading")),
       ...["今開催",...Array.from({length:7},(_,i)=>"直近"+(i+1)),"連対時<br>見なし上がり"].map((s,i)=>sub(s,i===0?"bl meeting-current-label meeting-section-start":"")),
-      sub("並び","bl position-col position-current position-section-start"),
+      sub("並び","bl position-col position-current position-section-start position-heading-tone-neutral"),
       ...placeGroups.flatMap(() => ranks.map((r,i)=>sub('<span class="position-result-name">'+r+'</span>','position-col'+(i===0?' position-first':'')))),
       ...["1着","2着","3着","着外"].map((label,i)=>
         sub(label,"position-col position-switch"+(i===0?" position-first":""))),
@@ -65,13 +65,13 @@
     // second-row labels. Un-grouped columns span both header rows.
     const groups = new Map([
       [9,  {span:4, label:"決まり手", klass:""}],
-      [28, {span:4, label:"ラインの先頭", klass:"position-first"}],
-      [32, {span:4, label:"2番手", klass:"position-first"}],
-      [36, {span:4, label:"3番手以降", klass:"position-first"}],
-      [40, {span:4, label:"単騎", klass:"position-first"}],
-      [44, {span:4, label:"競り", klass:"position-first"}],
-      [48, {span:4, label:"イン粘り回数", klass:"position-first"}],
-      [52, {span:4, label:"追い上げ回数", klass:"position-first"}],
+      [28, {span:4, label:"ラインの先頭", klass:"position-first position-heading-tone-1"}],
+      [32, {span:4, label:"2番手", klass:"position-first position-heading-tone-2"}],
+      [36, {span:4, label:"3番手以降", klass:"position-first position-heading-tone-3"}],
+      [40, {span:4, label:"単騎", klass:"position-first position-heading-tone-4"}],
+      [44, {span:4, label:"競り", klass:"position-first position-heading-tone-neutral"}],
+      [48, {span:4, label:"イン粘り回数", klass:"position-first position-heading-tone-neutral"}],
+      [52, {span:4, label:"追い上げ回数", klass:"position-first position-heading-tone-neutral"}],
       [56, {span:5, label:"マル得ポイント", klass:"bl marutoku-section-start"}]
     ]);
     const top = [], lower = [];
@@ -113,6 +113,57 @@
     return {date:Number(month)+"/"+Number(day),venue:venueNames[code] || code,grade:kind+romanGrade[num],
       kind:kind.toLowerCase()+num};
   };
+  // GambooBET publishes an event/day-specific racecard listing. Individual
+  // historical records in this fixture lack race numbers, so do not guess
+  // a 1R–12R destination. An explicit rno will enable exact-race linking.
+  const trackCodes = {
+    "函館":"11","青森":"12","弥彦":"21","前橋":"22","宇都宮":"24",
+    "大宮":"25","西武園":"26","京王閣":"27","立川":"28",
+    "松戸":"31","川崎":"34","平塚":"35","伊東温泉":"37",
+    "静岡":"38","名古屋":"42","岐阜":"43","大垣":"44","豊橋":"45",
+    "富山":"46","松阪":"47","四日市":"48","福井":"51",
+    "奈良":"53","和歌山":"55","岸和田":"56","玉野":"61",
+    "防府":"63","高松":"71","高知":"74","松山":"75",
+    "小倉":"81","久留米":"83","武雄":"84","佐世保":"85",
+    "別府":"86","熊本":"87"
+  };
+  const ymd = date => date.toISOString().slice(0,10).replace(/-/g,"");
+  const meetingLink = (meeting, index, slotIndex, meta, DATA, record) => {
+    const code = trackCodes[meta.venue];
+    if (!code) return null;
+    const raceDate = new Date(DATA.date + "T00:00:00Z");
+    if (Number.isNaN(raceDate.getTime())) return null;
+    let start;
+    if (index === 0) {
+      // The current meeting shows completed days before DATA.date.
+      start = new Date(raceDate.getTime() - meeting.results.length*86400000);
+    } else {
+      const match = String(meeting.date||"").match(/^(\d{1,2})\/(\d{1,2})/);
+      if (!match) return null;
+      const month = Number(match[1]), day = Number(match[2]);
+      const referenceYear = raceDate.getUTCFullYear();
+      const year = month > raceDate.getUTCMonth()+1 ? referenceYear-1 : referenceYear;
+      start = new Date(Date.UTC(year,month-1,day));
+      if (start.getUTCFullYear()!==year || start.getUTCMonth()+1!==month ||
+          start.getUTCDate()!==day) return null;
+    }
+    const eventId = code + ymd(start);
+    const dayIndex = String(slotIndex+1).padStart(2,"0");
+    const dayId = eventId + dayIndex + "00";
+    const day = new Date(start.getTime()+slotIndex*86400000);
+    const label = day.getUTCFullYear()+"年"+(day.getUTCMonth()+1)+"月"+
+      day.getUTCDate()+"日 "+meta.venue+"の出走表";
+    const base = "https://keirin.kdreams.jp/gamboo/keirin-kaisai/";
+    const raceNumber = Number(record?.rno ?? record?.raceNo ?? record?.[3]);
+    if (Number.isInteger(raceNumber) && raceNumber >= 1 && raceNumber <= 12) {
+      return {url:base+"race-card/result/"+eventId+"/"+dayId+"/"+
+        String(raceNumber).padStart(2,"0")+"/",
+        label:label+" "+raceNumber+"Rを開く"};
+    }
+    return {url:base+"race-list/"+eventId+"/"+dayId+"/",
+      label:label+"一覧を開く（レース番号未収録）"};
+  };
+
   // Keep the original result glyph (including circled placings and 棄),
   // but map its numeric placing to a consistently filled square.
   const circledRanks = Object.fromEntries([
@@ -124,7 +175,7 @@
     const tone = number >= 1 && number <= 3 ? "race-rank-" + number : "race-rank-other";
     return tone + (Object.prototype.hasOwnProperty.call(circledRanks, result) ? " res-rank-circled" : "");
   };
-  const raceCard = (record) => {
+  const raceCard = (record, destination) => {
     // Always keep a result tile, even for unreported meeting days.
     if (!record) {
       return '<span class="res res-empty" aria-label="データなし">'+
@@ -136,10 +187,16 @@
     const note = String(record[2] || "").replace(/\s+/g, "");
     // Each mark (B, 捲, 差, ...) occupies one line to the right of the box.
     const notes = Array.from(note, char => '<span class="res-note">' + escape(char) + '</span>').join("");
-    return '<span class="res"><span class="res-placement">'+
+    const startTag = destination
+      ? '<a class="res res-link" href="' + escape(destination.url) +
+        '" aria-label="' + escape(destination.label) + '" title="' +
+        escape(destination.label) + '">'
+      : '<span class="res">';
+    return startTag + '<span class="res-placement">'+
       '<span class="res-rank ' + placingClass(rank) + '">' + escape(rank) + '</span>'+
       '<span class="res-notes">' + notes + '</span></span>'+
-      '<span class="res-time">' + escape(time) + '</span></span>';
+      '<span class="res-time">' + escape(time) + '</span>'+
+      (destination ? '</a>' : '</span>');
   };
   const renderMeeting = (period,index,DATA) => {
     // Keep the same five-area layout even if a meeting has no result data.
@@ -151,7 +208,9 @@
     // before results arrive (e.g. a scheduled six-day meeting).
     const declaredDays=Number(meeting.meetingDays ?? meeting.scheduledDays ?? meeting.days);
     const scheduledDays=Number.isInteger(declaredDays)&&declaredDays>0?declaredDays:0;
-    const slots=Array.from({length:Math.max(4,scheduledDays,results.length)},(_,i)=>raceCard(results[i]));
+    const slots=Array.from({length:Math.max(4,scheduledDays,results.length)},(_,i)=>
+      raceCard(results[i],
+        results[i] ? meetingLink(meeting,index,i,meta,DATA,results[i]) : null));
     return '<td class="res-cell meeting-cell'+(index===0?" bl":"")+'"><div class="meeting-entry">'+
       '<div class="meeting-meta">'+
       '<span class="grade-badge grade-'+escape(meta.kind)+'">'+escape(meta.grade)+'</span>'+
