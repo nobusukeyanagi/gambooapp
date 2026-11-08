@@ -116,7 +116,8 @@
   ]);
   const placingClass = (result) => {
     const number = /^[1-9]$/.test(String(result)) ? Number(result) : circledRanks[result];
-    return number >= 1 && number <= 3 ? "race-rank-" + number : "race-rank-other";
+    const tone = number >= 1 && number <= 3 ? "race-rank-" + number : "race-rank-other";
+    return tone + (Object.prototype.hasOwnProperty.call(circledRanks, result) ? " res-rank-circled" : "");
   };
   const raceCard = (record) => {
     // Always keep a result tile, even for unreported meeting days.
