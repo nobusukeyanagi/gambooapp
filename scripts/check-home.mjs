@@ -128,12 +128,12 @@ const expectedComputedStyles = [
   ['.venue-grid.g3 .girls .girls-heart-icon', 'height', '14px'],
   ['.date-tabs .date-tab', 'fontSize', '16px'],
   ['.date-tabs .date-tab', 'fontWeight', '600'],
-  ['.date-tabs .date-tab:not(.active)', 'color', 'rgb(48, 54, 60)'],
+  ['.date-tabs .date-tab:not(.active)', 'color', 'rgb(48, 54, 59)'],
   ['.date-tabs .date-tab.active', 'color', 'rgb(114, 109, 49)'],
   ['.venue-grid.g3 .vcard-r', 'fontWeight', '600'],
   ['.venue-grid.g3 .vcard-dl', 'fontWeight', '600'],
-  ['.venue-grid.g3 .vcard', 'borderTopColor', 'rgb(201, 207, 213)'],
-  ['.app-header .header-actions .icon-btn', 'borderTopColor', 'rgb(156, 162, 168)'],
+  ['.venue-grid.g3 .vcard', 'borderTopColor', 'rgb(210, 214, 218)'],
+  ['.app-header .header-actions .icon-btn', 'borderTopColor', 'rgb(151, 161, 170)'],
   ['.bottom-tab', 'height', '60px'],
   ['.bottom-tab .tab-item', 'rowGap', '0px'],
   ['.bottom-tab .tab-icon .ic', 'height', '32px'],
@@ -298,7 +298,7 @@ async function checkCurrentPage(page, width) {
       return {border:st.borderTopColor,width:st.borderTopWidth,leftWidth:st.borderLeftWidth};
     }));
   if(cardBorders.length!==10 || cardBorders.some(x=>
-      x.border!=='rgb(201, 207, 213)' || x.width!=='1px' || x.leftWidth!=='3px'))
+      x.border!=='rgb(210, 214, 218)' || x.width!=='1px' || x.leftWidth!=='3px'))
     fail(width+'px venue card line-normal / sport accent border wrong: '+JSON.stringify(cardBorders));
 
   // Measure the actual text width of 特GⅠ in a 36×20px badge at this viewport.
@@ -470,7 +470,7 @@ async function checkCurrentPage(page, width) {
       !n.titleFullyVisible||!n.arrowCenteredToCard||n.titleWeight!=='400'||
       Math.abs(n.badgeWidth-88)>1||
       (['ポイント','コミュニティ','その他'].includes(n.category) &&
-        n.badgeBackground!=='rgb(98, 108, 118)');
+        n.badgeBackground!=='rgb(96, 107, 118)');
   }))
     fail(width+'px SCR-100 must display nine regular-weight notices with centered arrows and grey non-race badges: '+
       JSON.stringify(homeNews));

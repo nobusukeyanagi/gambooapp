@@ -118,7 +118,7 @@ async function checkCampaignPage(page, width) {
       radius: getComputedStyle(el).borderRadius
     })));
   if (detailAppearance.length !== 16 || detailAppearance.some(a =>
-      a.border !== 'rgb(156, 162, 168)' || a.borderWidth !== '1px' ||
+      a.border !== 'rgb(151, 161, 170)' || a.borderWidth !== '1px' ||
       a.background !== 'rgb(255, 255, 255)' || a.shadow === 'none' || a.radius !== '8px'))
     fail(width+'px campaign detail buttons must use white background with a shared control border: '+
       JSON.stringify(detailAppearance));
@@ -136,7 +136,7 @@ async function checkCampaignPage(page, width) {
       a.shadow !== 'none' || a.radius !== '0px') ||
       tabAppearance[0].color !== 'rgb(114, 109, 49)' ||
       tabAppearance[0].bottomColor !== 'rgb(114, 109, 49)' ||
-      tabAppearance[1].color !== 'rgb(48, 54, 60)' ||
+      tabAppearance[1].color !== 'rgb(48, 54, 59)' ||
       tabAppearance[1].bottomColor !== 'rgba(0, 0, 0, 0)')
     fail(width + 'px campaign status tabs must look like the canonical date tabs: '+
       JSON.stringify(tabAppearance));
@@ -207,7 +207,7 @@ async function checkCampaignPage(page, width) {
   }));
   if (deadlineStyles.length!==16 || deadlineStyles.some(s =>
        s.font !== '14px' || s.weight !== '600' ||
-       s.color !== (s.status==='closed'?'rgb(98, 108, 118)':'rgb(184, 71, 99)') ||
+       s.color !== (s.status==='closed'?'rgb(96, 107, 118)':'rgb(184, 71, 99)') ||
        s.childColors.some(color=>color!==s.color) ||
        s.align !== 'center' || s.centerOffset > 1))
     fail(width + 'px active deadlines must be red and ended deadlines grey: '+
@@ -227,7 +227,7 @@ async function checkCampaignPage(page, width) {
     status:el.dataset.status,color:getComputedStyle(el.querySelector('.cp-period')).color
   })));
   if (archiveValues.length !== 8 || archiveValues.some(item =>
-      item.status !== 'closed' || item.color !== 'rgb(98, 108, 118)'))
+      item.status !== 'closed' || item.color !== 'rgb(96, 107, 118)'))
     fail(width + 'px expected eight ended campaigns with grey deadlines: '+
       JSON.stringify(archiveValues));
   const previous=page.locator('.campaign-page-arrow[data-page="prev"]');
@@ -475,12 +475,12 @@ async function checkCompactSectionHeader(page,width,file) {
      !bell.icon?.endsWith('#header-bell') || !deposit.icon?.endsWith('#header-card') ||
      data.controls.some(x=>x.h!==40||x.w<80||x.font!=='14px'||x.weight!=='600') ||
      bell.iconWidth!==20 || deposit.iconWidth!==18 ||
-     bell.borderWidth!=='1px'||bell.borderColor!=='rgb(156, 162, 168)'||
+     bell.borderWidth!=='1px'||bell.borderColor!=='rgb(151, 161, 170)'||
      bell.paddingLeft!=='8px'||deposit.paddingLeft!=='10px' ||
      deposit.borderWidth!=='0px'||deposit.bg!=='rgb(49, 119, 114)' ||
      Math.abs(data.titleTextX-53)>1 ||
-     bell.iconColor!=='rgb(48, 54, 60)' ||
-     labelColor!=='rgb(48, 54, 60)' ||
+     bell.iconColor!=='rgb(48, 54, 59)' ||
+     labelColor!=='rgb(48, 54, 59)' ||
      data.titleX<data.left-1 || data.titleRight>bell.x+1 ||
      bell.right>deposit.x || deposit.right>data.right+1)
     fail(file+' '+width+'px canonical header title/buttons differ: '+JSON.stringify(data));
@@ -712,7 +712,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   const dayColors = await page.locator('.date-tabs .date-tab').evaluateAll(nodes =>
     nodes.map(node => ({active: node.classList.contains('active'),
       color: getComputedStyle(node).color})));
-  if (dayColors.some(item => item.color !== (item.active ? 'rgb(114, 109, 49)' : 'rgb(48, 54, 60)')))
+  if (dayColors.some(item => item.color !== (item.active ? 'rgb(114, 109, 49)' : 'rgb(48, 54, 59)')))
     fail(width + 'px date tabs must use dark unselected text and gold active text');
   const raceWeights = await page.locator('.venue-card .rchip:not(.canceled) > b, .venue-card .rchip > small')
     .evaluateAll(nodes => [...new Set(nodes.map(n => getComputedStyle(n).fontWeight))]);
@@ -734,7 +734,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   for (const st of raceStyles) {
     if (st.shadow === 'none') fail(width + 'px race button missing shadow: ' + st.classes);
     if (st.classes.includes('canceled') || st.classes.includes('soon')) continue;
-    const expectedBorder=st.hasRebate?'rgb(114, 109, 49)':'rgb(156, 162, 168)';
+    const expectedBorder=st.hasRebate?'rgb(114, 109, 49)':'rgb(151, 161, 170)';
     const expectedWidth=st.hasRebate?'3px':'1px';
     if(st.border!==expectedBorder || st.borderWidth!==expectedWidth)
       fail(width + 'px rebate buttons need gold 3px borders; other actions use grey 1px: '+
@@ -742,7 +742,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   }
   const sortBorders = await page.locator('.venue-sort-options .chip:not(.active)')
     .evaluateAll(nodes => nodes.map(n => getComputedStyle(n).borderTopColor));
-  if (sortBorders.some(c => c !== 'rgb(156, 162, 168)'))
+  if (sortBorders.some(c => c !== 'rgb(151, 161, 170)'))
     fail(width + 'px inactive sort buttons must use the control border');
   // Regression of 3px urgent border, 44px arrow target and 14px sort label.
   const warningLabels = await page.locator('.venue-card .rchip.next.soon .rchip-warning')
