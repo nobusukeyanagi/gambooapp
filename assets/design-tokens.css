@@ -71,17 +71,18 @@
   --c-magenta: #AA46A2;
   --c-red: #B84763;
 
-  /* 基本9色に対応する薄色はすべて「基本色40% + 白60%」から算出。
-     薄色を固定HEXで持たず、基本色の変更に自動で追従する。 */
-  --c-bronze-light: color-mix(in srgb, var(--c-bronze) 20%, white 80%);
-  --c-gold-light: color-mix(in srgb, var(--c-gold) 20%, white 80%);
-  --c-yellowgreen-light: color-mix(in srgb, var(--c-yellowgreen) 20%, white 80%);
-  --c-green-light: color-mix(in srgb, var(--c-green) 20%, white 80%);
-  --c-teal-light: color-mix(in srgb, var(--c-teal) 20%, white 80%);
-  --c-blue-light: color-mix(in srgb, var(--c-blue) 20%, white 80%);
-  --c-purple-light: color-mix(in srgb, var(--c-purple) 20%, white 80%);
-  --c-magenta-light: color-mix(in srgb, var(--c-magenta) 20%, white 80%);
-  --c-red-light: color-mix(in srgb, var(--c-red) 20%, white 80%);
+  /* 基本9色の薄色：黒字(#30363B)の可読性を保ったまま彩度を強め、
+     グレーと薄金を判別しやすくする。各色は承認済みの固定HEX。
+     白80%混色だけでの自動生成は行わず、基本色そのものは変更しない。 */
+  --c-bronze-light: #F2D0C0;
+  --c-gold-light: #F4E9BD;
+  --c-yellowgreen-light: #DBF2CA;
+  --c-green-light: #CAF2D4;
+  --c-teal-light: #CAF2EE;
+  --c-blue-light: #CCD9F5;
+  --c-purple-light: #DDCCF5;
+  --c-magenta-light: #F3CDF0;
+  --c-red-light: #F4CDD6;
 
   /* ④ 根幹カラー：基本文字・補助文字・操作枠線・罫線・背景。
      共通4色はH210°/S10%、明度21%/42%/63%/84%で統一。
