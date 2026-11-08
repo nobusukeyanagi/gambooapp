@@ -634,6 +634,9 @@ async function checkKeirinRaceInformation(page, width) {
     const countdown=fourth.querySelector('.race-countdown');
     const date=bar.querySelector('.ri-date-line');
     const purchase=bar.querySelector('.ri-race-purchase');
+    const live=bar.querySelector('.ri-btn.live');
+    const day=bar.querySelector('.ri-day');
+    const actions=bar.querySelector('.ri-actions');
     const rect=el=>el.getBoundingClientRect();
     const gridStyle=getComputedStyle(grid);
     return {
@@ -642,9 +645,14 @@ async function checkKeirinRaceInformation(page, width) {
       rows:gridStyle.gridTemplateRows.split(' ').length,
       padding:getComputedStyle(bar).paddingTop,
       purchaseHeight:rect(purchase).height,
+      actionGap:getComputedStyle(actions).gap,
+      buttonGap:rect(live).top-rect(purchase).bottom,
+      dayFont:getComputedStyle(day).fontSize,
+      dayWeight:getComputedStyle(day).fontWeight,
       third:bar.querySelector('.ri-kind')?.textContent.trim(),
       fourth:[...fourth.children].map(x=>x.textContent.trim()),
       countdownText:countdown?.textContent.trim(),
+      countdownFullwidthSpace:countdown?.textContent.startsWith('　'),
       countdownLast:countdown===fourth.lastElementChild,
       countdownColor:getComputedStyle(countdown).color,
       fourthFits:fourth.scrollWidth<=fourth.clientWidth+1,
@@ -655,10 +663,13 @@ async function checkKeirinRaceInformation(page, width) {
   });
   if(result.height>132 || result.height<100 ||
      result.gap!=='2px'||result.rows!==5||
-     result.padding!=='6px'||result.purchaseHeight!==56||
+     result.padding!=='6px'||result.purchaseHeight!==52||
+     result.actionGap!=='8px'||Math.abs(result.buttonGap-8)>0.5||
+     result.dayFont!=='12px'||result.dayWeight!=='400'||
      result.third!=='Ｓ級 選抜'||
      result.fourth.join('|')!=='発走 12:57|BET締切 12:52|22分前'||
      !result.countdownLast || result.countdownText!=='22分前'||
+     !result.countdownFullwidthSpace ||
      result.countdownColor!=='rgb(184, 71, 99)'||
      !result.fourthFits ||
      result.date!=='2026/11/03' ||
