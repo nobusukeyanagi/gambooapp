@@ -129,7 +129,7 @@ const expectedComputedStyles = [
   ['.venue-grid.g3 .girls .girls-heart-icon', 'height', '14px'],
   ['.date-tabs .date-tab', 'fontSize', '16px'],
   ['.date-tabs .date-tab', 'fontWeight', '600'],
-  ['.date-tabs .date-tab:not(.active)', 'color', 'rgb(43, 49, 53)'],
+  ['.date-tabs .date-tab:not(.active)', 'color', 'rgb(48, 54, 60)'],
   ['.date-tabs .date-tab.active', 'color', 'rgb(134, 115, 58)'],
   ['.venue-grid.g3 .vcard-r', 'fontWeight', '600'],
   ['.venue-grid.g3 .vcard-dl', 'fontWeight', '600'],
@@ -231,8 +231,8 @@ async function checkCurrentPage(page, width) {
     };
   });
   const expectedColors={
-    gp:'rgb(68, 73, 77)',sg:'rgb(43, 49, 53)',gi:'rgb(157, 63, 71)',
-    gii:'rgb(70, 110, 152)',giii:'rgb(79, 120, 76)'
+    gp:'rgb(170, 70, 162)',sg:'rgb(170, 70, 162)',gi:'rgb(170, 70, 162)',
+    gii:'rgb(72, 107, 177)',giii:'rgb(50, 123, 68)'
   };
   for(const [grade,color] of Object.entries(expectedColors))
     if(gradeColors[grade]!==color)
@@ -290,14 +290,14 @@ async function checkCurrentPage(page, width) {
      mori[4].day!=='初日' || mori[4].state!=='11/7')
     fail(width+'px Mori 11/3 demo / 11/7 next entry changed: '+JSON.stringify(mori));
 
-  const noon={青森:['4R','12:13'],防府:['4R','12:26'],
+  const noon={青森:['5R','12:39'],防府:['5R','12:52'],
     豊橋:['1R','15:45'],久留米:['1R','15:59'],静岡:['1R','20:36'],
-    奈良:['1R','20:44'],武雄:['1R','20:52'],浜松:['5R','12:13'],
+    奈良:['1R','20:44'],武雄:['1R','20:52'],浜松:['6R','12:42'],
     川口:['1R','18:48']};
   for (const [name,[race,time]] of Object.entries(noon)) {
     const card=[...initial.keirin,...initial.auto].find(x=>x.name===name);
     if (!card || card.race!==race || card.time!==time ||
-        (card.soon !== (time==='12:13')))
+        (card.soon !== ['青森','防府','浜松'].includes(name)))
       fail(width+'px Nov 3 12:00 current race mismatch for '+name+': '+JSON.stringify(card));
   }
   if (!initial.keirin.find(x=>x.name==='小田原')?.ended)
@@ -322,9 +322,9 @@ async function checkCurrentPage(page, width) {
         .map(el=>getComputedStyle(el).color)
     };
   });
-  const expectedAlertColor='rgb(165, 55, 76)';
+  const expectedAlertColor='rgb(184, 71, 99)';
   const expectedAlertText='rgb(255, 255, 255)';
-  if (urgentPaint.venues.length!==2 || urgentPaint.featured.length!==1 ||
+  if (urgentPaint.venues.length!==3 || urgentPaint.featured.length!==1 ||
       [...urgentPaint.venues,...urgentPaint.featured].some(p=>
         p.bg!==expectedAlertColor || p.fg!==expectedAlertText || p.width<=0))
     fail(width+'px SCR-100 venue/featured deadline badges must be solid caution red with white text: '+
@@ -345,7 +345,7 @@ async function checkCurrentPage(page, width) {
   if (girlsIcons !== 5) fail(width + 'px expected one dummy and four active Girls icons, found ' + girlsIcons);
   const girlsColors = await page.locator('.venue-grid.g3 .girls .girls-heart-icon').evaluateAll(
     nodes => nodes.map(el => getComputedStyle(el).color));
-  if (girlsColors.some(color => color !== 'rgb(165, 55, 76)'))
+  if (girlsColors.some(color => color !== 'rgb(184, 71, 99)'))
     fail(width + 'px Girls icon must use canonical error color: ' + girlsColors.join(', '));
 
 
