@@ -187,6 +187,24 @@ async function checkCurrentPage(page, width) {
   }), expectedComputedStyles);
   styles.forEach((style, index) => eq(style.value, expectedComputedStyles[index][2], width + 'px ' + style.selector + '.' + style.prop));
   // Regression: the sport heading must immediately precede the autorace grid.
+  // Removing the accent bars must not remove heading hierarchy or section separation.
+  const headingSpacing=await page.locator('.scroll-area > .vgroup-head, .scroll-area > .section-header')
+    .evaluateAll(items=>items.map(el=>{
+      const title=el.querySelector('.vgroup-name, .section-title');
+      return {
+        label:title?.textContent?.trim(),
+        pseudo:getComputedStyle(title,'::before').content,
+        marginTop:getComputedStyle(el).marginTop,
+        fontSize:getComputedStyle(title).fontSize,
+        fontWeight:getComputedStyle(title).fontWeight
+      };
+    }));
+  if(headingSpacing.length!==5 || headingSpacing.some((x,i)=>
+      !['none','normal'].includes(x.pseudo) ||
+      x.marginTop!==(i===0?'0px':'8px') ||
+      x.fontSize!=='20px' || x.fontWeight!=='600'))
+    fail(width+'px SCR-100 section headings should have no bars and consistent spacing: '+
+      JSON.stringify(headingSpacing));
   const autoHeading=await page.locator('[data-home-venues="autorace"]').evaluate(grid => {
     const previous=grid.previousElementSibling;
     const heading=previous?.querySelector('.vgroup-name.auto.race-heading');
