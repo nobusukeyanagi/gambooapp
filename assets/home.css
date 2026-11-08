@@ -614,7 +614,6 @@ button,
       .pk3 .pk-explain {
         white-space: normal;
         overflow-wrap: anywhere;
-        padding-right: var(--space-24);
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
@@ -682,7 +681,6 @@ button,
         border-radius: var(--r-sm);
       }
       .pk3 {
-        position: relative;
         padding: var(--space-10) var(--space-content) var(--space-10) var(--space-10);
         align-items: center;
         gap: var(--space-section);
@@ -815,39 +813,19 @@ button,
         flex-wrap: wrap;
       }
 
-      /* Standard height is the original 86px for one or two riders.
-         Three or more grow to their natural content height. */
+      /* Compact for one/two riders; expand automatically only for 3+. */
       .pickup-card.pk3 {
         height: 86px;
         min-height: 86px;
       }
-      .pickup-card.pk3.pk-many-riders {
+      .pickup-card.pk3:has(.pk-two-rider-stack > .pk-player:nth-child(3)) {
         height: auto;
         min-height: 86px;
       }
-      .pk3 .pk-next {
-        position: absolute;
-        z-index: 1;
-        top: var(--space-3);
-        right: var(--space-3);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 24px;
-        height: 32px;
-        padding: 0;
-        border: var(--line-control);
-        border-radius: var(--r-sm);
-        background: var(--c-surface);
-        color: var(--c-silver);
-        box-shadow: var(--e1);
-        cursor: pointer;
+      .pk3:has(.pk-two-rider-stack > .pk-player:nth-child(3)) .pk-compact-row {
+        flex: 0 0 auto;
+        min-height: 0;
       }
-      .pk3 .pk-next .ic { width: 20px; height: 20px; }
-      .pk3 .pk-next:focus-visible { outline: var(--line-focus); outline-offset: 1px; }
-      .pk3.pk-many-riders .pk-compact-row { flex: 0 0 auto; min-height: 0; }
-      .pk3.pk-many-riders .pk-two-rider-stack { padding-bottom: 0; }
-      .pk3.pk-many-riders .pk-race-time { bottom: 0; }
       .pk3 .pk-two-rider-stack {
         display: flex;
         flex-direction: column;
@@ -995,9 +973,8 @@ button,
                   padding-top: var(--space-7);
                   padding-bottom: var(--space-7);
                 }
-                .pickup-card.pk3:not(.pk-many-riders) {
+                .pickup-card.pk3:not(:has(.pk-two-rider-stack > .pk-player:nth-child(3))) {
                   height: 80px;
                   min-height: 80px;
                 }
-                .pk3 .pk-next { top: var(--space-2); right: var(--space-2); }
       }
