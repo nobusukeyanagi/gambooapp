@@ -9,7 +9,7 @@ button,
       }
 
       .screen-label {
-        color: var(--c-silver-light);
+        color: var(--c-border);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         text-transform: uppercase;
@@ -268,7 +268,7 @@ button,
         height: 34px;
         color: var(--c-auto);
       }
-      .vgroup-name b { font-weight: var(--fw-strong); color: var(--c-silver); font-size: var(--fs-12); }
+      .vgroup-name b { font-weight: var(--fw-strong); color: var(--c-text-secondary); font-size: var(--fs-12); }
       .mori-venue-grid { row-gap: var(--space-card); }
       /* Mori's inactive date-tab rows leave no empty grid cells. */
       .venue-grid.g3.mori-venue-grid > .vcard[hidden] { display: none; }
@@ -362,7 +362,7 @@ button,
       .news-badge.keirin { background: var(--c-keirin); }
       .news-badge.auto { background: var(--c-auto); }
       /* Non-race categories use the same grey badge as その他. */
-      .news-badge:is(.other, .point, .community) { background: var(--c-silver); }
+      .news-badge:is(.other, .point, .community) { background: var(--c-text-secondary); }
       .news-badge.both {
         background: linear-gradient(90deg, var(--c-keirin) 0 50%, var(--c-auto) 50% 100%);
       }
@@ -375,7 +375,7 @@ button,
         align-items: center;
         justify-content: center;
         align-self: center;
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
       }
       .news-item > .news-arrow .ic { display: block; width: 18px; height: 18px; }
 
@@ -417,7 +417,7 @@ button,
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         cursor: pointer;
         
         letter-spacing: normal;
@@ -553,10 +553,10 @@ button,
         border-radius: var(--r-md);
         box-shadow: var(--e1);
         background: var(--c-bg);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
       }
       .bn-dots { display: flex; justify-content: center; gap: var(--space-5); }
-      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-silver-light); transition: width .2s; }
+      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-border); transition: width .2s; }
       .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-gold-light); }
       .pk3 .kun-ic {
         width: 64px;

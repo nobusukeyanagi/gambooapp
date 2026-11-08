@@ -300,7 +300,7 @@
   font-size: var(--fs-12);
   line-height: 1.2;
   font-weight: var(--fw-normal);
-  color: var(--c-silver);
+  color: var(--c-text-secondary);
 }
 .race-detail-scroll .mania-table tbody td .leg-tag {
   font-size: var(--fs-16);
@@ -366,7 +366,7 @@
 .race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate {
   display: block;
   margin-top: var(--space-5);
-  color: var(--c-silver);
+  color: var(--c-text-secondary);
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
   line-height: 1.2;
@@ -467,7 +467,7 @@
   display: block;
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
-  color: var(--c-silver);
+  color: var(--c-text-secondary);
   line-height: 1.2;
 }
 

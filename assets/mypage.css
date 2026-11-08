@@ -8,7 +8,7 @@
 .scroll-area { flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; background:var(--c-bg); scrollbar-width:none; }
 .scroll-area::-webkit-scrollbar { display:none; }
 .bottom-tab { display:flex; flex-shrink:0; background:var(--c-surface); border-top:var(--line-normal); }
-.bottom-tab .tab-item { flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--c-silver); }
+.bottom-tab .tab-item { flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--c-text-secondary); }
 .bottom-tab .tab-item.active { color:var(--c-gold); }
 .bottom-tab .tab-icon { display:flex; align-items:center; justify-content:center; }
 .ic { display:block; width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
@@ -181,13 +181,13 @@
   font-size: clamp(8px, 2.6vw, 10px);
   line-height: 1.15;
   font-weight: var(--fw-normal);
-  color: var(--c-silver);
+  color: var(--c-text-secondary);
   white-space: nowrap;
   letter-spacing: -0.06em;
 }
 .favorite-more-count {
   margin-top: var(--space-section);
-  color: var(--c-silver);
+  color: var(--c-text-secondary);
   font-size: var(--fs-12);
 }
 
@@ -240,8 +240,8 @@ button.menu-item { width:100%; border:0; border-bottom:var(--line-normal); color
 button.menu-item.settings-first { border-top:var(--line-normal); }
 .menu-item:focus-visible { outline:var(--line-focus); outline-offset:-3px; }
 .sport-order-value { flex:0 0 auto; font-size:var(--fs-16); font-weight:var(--fw-normal); white-space:nowrap; }
-.menu-icon { flex:0 0 var(--fs-20); display:flex; align-items:center; justify-content:center; color:var(--c-silver); }
+.menu-icon { flex:0 0 var(--fs-20); display:flex; align-items:center; justify-content:center; color:var(--c-text-secondary); }
 .menu-icon .ic { width:var(--fs-20); height:var(--fs-20); }
 .menu-text { flex:1; min-width:0; font-size:var(--fs-16); }
-.menu-arrow { flex:0 0 auto; color:var(--c-silver); font-size:var(--fs-20); }
+.menu-arrow { flex:0 0 auto; color:var(--c-text-secondary); font-size:var(--fs-20); }
 .content-end-spacer { height:var(--space-section); }

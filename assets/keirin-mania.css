@@ -70,7 +70,7 @@
         width: 36px;
         height: 4px;
         border-radius: var(--r-xxs);
-        background: var(--c-silver-light);
+        background: var(--c-border);
         margin: var(--space-card) auto var(--space-2);
         flex-shrink: 0;
       }
@@ -115,7 +115,7 @@
       }
       .detail-table th {
         background: var(--c-bg);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         font-weight: var(--fw-strong);
         padding: var(--space-small) var(--space-3);
         border-bottom: var(--line-normal);
@@ -140,7 +140,7 @@
       }
       .sheet-note {
         font-size: var(--fs-12);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         padding: var(--space-card) var(--space-content) var(--space-10);
       }
 
@@ -162,7 +162,7 @@
       .detail-table .dt-name { left: 26px; min-width: 64px; border-right: var(--line-normal); }
       .detail-table td.rt { min-width: 64px; padding: var(--space-3) var(--space-small) var(--space-small); text-align: right; vertical-align: top; }
       .detail-table .rt-v { display: block; font-weight: var(--fw-strong); color: var(--c-charcoal); line-height: 1.2; }
-      .detail-table .rt-n { display: block; font-size: var(--fs-12); color: var(--c-silver); line-height: 1.2; }
+      .detail-table .rt-n { display: block; font-size: var(--fs-12); color: var(--c-text-secondary); line-height: 1.2; }
       .detail-table .rt-bar { display: block; height: 6px; margin-top: var(--space-2); background: var(--w6); border-radius: 1px; }
       .detail-table .rt-out .rt-bar { background: var(--c-keirin); }
       .detail-table tbody tr:nth-child(even) td { background: var(--c-bg); }

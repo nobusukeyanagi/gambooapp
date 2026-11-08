@@ -16,7 +16,7 @@
 
 
       .screen-label {
-        color: var(--c-silver-light);
+        color: var(--c-border);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         text-transform: uppercase;
@@ -97,7 +97,7 @@
         justify-content: center;
         
         
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         cursor: pointer;
       }
       .tab-item.active {
@@ -144,7 +144,7 @@
         justify-content: center;
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         border-bottom: var(--line-emphasis-width) solid transparent;
         cursor: pointer;
       }
@@ -159,7 +159,7 @@
         font-weight: var(--fw-strong);
         white-space: nowrap;
         background: var(--c-bg);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         border: var(--line-normal);
         cursor: pointer;
       }
@@ -295,7 +295,7 @@
         background: var(--c-bg);
         
         font-size: var(--fs-12);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
@@ -307,14 +307,14 @@
       }
       .lineup-sep {
         font-size: var(--fs-12);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
       }
 
       .race-table-wrap {
         overflow-x: auto;
         flex: 1;
         scrollbar-width: thin;
-        scrollbar-color: var(--c-silver-light) transparent;
+        scrollbar-color: var(--c-border) transparent;
       }
       .race-table {
         min-width: 400px;
@@ -328,7 +328,7 @@
         text-align: center;
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         border-bottom: var(--line-normal);
         position: sticky;
         top: 0;
@@ -407,7 +407,7 @@
         text-align: center;
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         border-bottom: var(--line-normal);
         white-space: nowrap;
         position: sticky;
@@ -460,12 +460,12 @@
       }
       .res-time {
         font-size: var(--fs-12);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
       }
       .res-note {
         font-size: var(--fs-12);
         line-height: 1.1;
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
       }
 
       .lineup-bar {
@@ -557,7 +557,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         background: var(--c-surface);
         border: var(--line-normal);
         border-radius: var(--r-full);
@@ -694,7 +694,7 @@
 
       .race-tab.past {
         background: var(--c-surface);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         text-decoration: none;
       }
       .race-tab.canceled b { color: var(--c-red); }
@@ -715,7 +715,7 @@
       }
       .race-info-meta {
         font-size: var(--fs-12);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
         white-space: nowrap;
@@ -739,7 +739,7 @@
         justify-content: center;
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         white-space: nowrap;
         text-align: center;
         line-height: 1.2;
@@ -758,7 +758,7 @@
         min-width: 16px;
         padding: var(--space-2) var(--space-1);
         font-size: var(--fs-12);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
       }
       .mania-table .c-name {
         left: 42px;
@@ -779,7 +779,7 @@
       }
       .rider-meta {
         
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
         line-height: 1.2;
         white-space: nowrap;
         overflow: hidden;
@@ -856,7 +856,7 @@
 
       .mark { font-size: var(--fs-14); line-height: 1;  min-width: 16px; display: inline-block; }
       .mark.tri { color: var(--c-gold); }
-      .mark.x { color: var(--c-silver); }
+      .mark.x { color: var(--c-text-secondary); }
 
       .post-text .ic,
       .blog-list-title .ic,
@@ -873,7 +873,7 @@
       .mk-dbl, .mark.dbl { color: var(--c-red); }
       .mk-o, .mark.o { color: var(--c-gold); }
       .mk-tri, .mark.tri { color: var(--c-keirin); }
-      .mk-x, .mark.x { color: var(--c-silver); }
+      .mk-x, .mark.x { color: var(--c-text-secondary); }
       .mark { color: var(--c-charcoal); }
 
       .page-header-title {
@@ -940,7 +940,7 @@
         min-width: 0;
         
         font-weight: var(--fw-strong);
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
       }
       .ri-race {
         display: flex;
@@ -1058,10 +1058,10 @@
       .at .hd { font-size: var(--fs-16); }
       .at .fx2 { min-width: 108px; max-width: 108px; }
 
-      .mania-table .th-sub { font-size: var(--fs-12); font-weight: var(--fw-normal); color: var(--c-silver); }
+      .mania-table .th-sub { font-size: var(--fs-12); font-weight: var(--fw-normal); color: var(--c-text-secondary); }
       .mania-table .th-agari { color: var(--c-red); font-weight: var(--fw-strong); }
       .mania-table thead tr + tr th { top: auto; }
-      .mania-table td.cls small { font-size: var(--fs-12); color: var(--c-silver); }
+      .mania-table td.cls small { font-size: var(--fs-12); color: var(--c-text-secondary); }
       .mania-table td.rate { min-width: 30px; }
       .mania-table .res-cell { min-width: 0; }
       .mania-table .res-wrap { gap: var(--space-section); }
@@ -1077,19 +1077,19 @@
       .race-tabs { gap: var(--space-card); padding: var(--space-section); }
       .race-tab { min-width: 62px; min-height: 54px; padding: var(--space-3) var(--space-5); gap: 0; line-height: 1.15; }
       .race-tab b { font-size: var(--fs-16); font-weight: var(--fw-strong); }
-      .race-tab small { font-size: var(--fs-12); font-weight: var(--fw-normal); color: var(--c-silver); }
-      .race-tab.past b { color: var(--c-silver); font-weight: var(--fw-strong); }
-      .race-tab.past small { color: var(--c-silver); font-weight: var(--fw-strong); }
+      .race-tab small { font-size: var(--fs-12); font-weight: var(--fw-normal); color: var(--c-text-secondary); }
+      .race-tab.past b { color: var(--c-text-secondary); font-weight: var(--fw-strong); }
+      .race-tab.past small { color: var(--c-text-secondary); font-weight: var(--fw-strong); }
       .race-tab.active { min-width: 90px; }
       .race-tab.active b { color: var(--c-charcoal); }
       .race-tab.active small { color: var(--c-gold); font-weight: var(--fw-strong); }
       .race-tab.active.soon small { color: var(--c-red); }
-      .race-tab.canceled { background: var(--c-bg); border-color: var(--c-bg); color: var(--c-silver); cursor: default; }
+      .race-tab.canceled { background: var(--c-bg); border-color: var(--c-bg); color: var(--c-text-secondary); cursor: default; }
       .race-tab.canceled b,
-      .race-tab.canceled small { color: var(--c-silver); font-weight: var(--fw-strong); }
-      .ri-sub { margin-top: var(--space-2); font-size: var(--fs-12); color: var(--c-silver); font-family: var(--ff-ui); }
+      .race-tab.canceled small { color: var(--c-text-secondary); font-weight: var(--fw-strong); }
+      .ri-sub { margin-top: var(--space-2); font-size: var(--fs-12); color: var(--c-text-secondary); font-family: var(--ff-ui); }
       .lineup-title { font-size: var(--fs-12); font-weight: var(--fw-strong); white-space: nowrap; }
-      .lineup-dir { font-size: var(--fs-12); color: var(--c-silver); }
+      .lineup-dir { font-size: var(--fs-12); color: var(--c-text-secondary); }
       .lineup-bar { padding: var(--space-card) var(--space-10); }
       .lineup-bar .lineup-row { gap: var(--space-3); }
       .lineup-bar .lineup-car { width: 24px; height: 24px; font-size: var(--fs-14); border-radius: var(--r-sm); }
@@ -1151,7 +1151,7 @@
         background: var(--c-bg);
         font-size: var(--fs-12);
         line-height: 1.5;
-        color: var(--c-silver);
+        color: var(--c-text-secondary);
       }
       .rt-legend-title { font-size: var(--fs-14); font-weight: var(--fw-strong); color: var(--c-charcoal); margin-bottom: var(--space-small); }
       .rt-legend dl { display: grid; grid-template-columns: auto 1fr; gap: var(--space-small) var(--space-10); }

@@ -11,7 +11,7 @@
 .page-header .page-header-title .header-race-icon {
   width: var(--nav-icon-size);
   height: var(--nav-icon-size);
-  color: var(--c-silver);
+  color: var(--c-text-secondary);
   fill: currentColor;
 }
 .bottom-tab .tab-item.active .tab-icon .ic {

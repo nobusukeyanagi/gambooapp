@@ -79,7 +79,7 @@ body { font-weight: var(--fw-normal); }
 }
 /* Navigable bottom tabs use native links while retaining standard tab colors. */
 .bottom-tab a.tab-item {
-  color: var(--c-silver);
+  color: var(--c-text-secondary);
   text-decoration: none;
 }
 .bottom-tab a.tab-item.active {

@@ -83,13 +83,12 @@
   --c-magenta-light: color-mix(in srgb, var(--c-magenta) 40%, white 60%);
   --c-red-light: color-mix(in srgb, var(--c-red) 40%, white 60%);
 
-  /* ④ 根幹カラー：基本文字色・補助文字・背景・罫線・操作枠線。
+  /* ④ 根幹カラー：基本文字・補助文字・操作枠線・罫線・背景。
      HSL明度の低い順（暗い→明るい）に定義する。
-     銀の薄色は銀40%＋白60%から算出し、既存参照を維持する。 */
+     「補助文字」は旧「銀」と同じ色。銀の薄色は廃止し罫線色を直接参照する。 */
   --c-charcoal: #30363C;
-  --c-silver: #626C76;
+  --c-text-secondary: #626C76;
   --c-border-control: #9CA4A8;
-  --c-silver-light: color-mix(in srgb, var(--c-silver) 40%, white 60%);
   --c-border: #C9CFD5;
   --c-bg: #F8F7F4;
   --c-surface: #FFFFFF;

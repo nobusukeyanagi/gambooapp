@@ -37,7 +37,7 @@ button, input, select, textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--c-silver);
+  color: var(--c-text-secondary);
   cursor: pointer;
   
   letter-spacing: normal;
@@ -475,7 +475,7 @@ button, input, select, textarea {
   pointer-events: auto;
   cursor: pointer;
   appearance: none;
-  color: var(--c-silver);
+  color: var(--c-text-secondary);
   background: var(--c-bg);
   border: 0;
   border-radius: 0;
@@ -532,7 +532,7 @@ button, input, select, textarea {
 .rchip.canceled {
   background: var(--c-bg);
   border: var(--line-control);
-  color: var(--c-silver);
+  color: var(--c-text-secondary);
   cursor: pointer;
 }
 
