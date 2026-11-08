@@ -58,49 +58,21 @@
 .race-detail-scroll .mania-table tbody td.position-stat.position-zero {
   color: var(--c-text-primary);
 }
-/* Small badges remain for per-position results; the current lineup uses full-cell fills. */
-.race-detail-scroll .tone-tag {
-  display: inline-flex;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  padding: 0 var(--space-2);
-  border-radius: var(--r-xs);
-  font: inherit;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-.race-detail-scroll .tone-tag.tone-1 {
-  color: var(--c-text-primary);
-  background: var(--c-magenta-light);
-}
-.race-detail-scroll .tone-tag.tone-2 {
-  color: var(--c-text-primary);
-  background: var(--c-teal-light);
-}
-.race-detail-scroll .tone-tag.tone-3 {
-  color: var(--c-text-primary);
-  background: var(--c-yellowgreen-light);
-}
-.race-detail-scroll .tone-tag.tone-4 {
-  color: var(--c-text-primary);
-  background: var(--c-bronze-light);
-}
-/* The current lineup cell is filled edge to edge, rather than using a text badge.
-   Keep all four categories regular-weight with black text. */
+/* Both the current lineup and matching 1着～着外 result cells are
+   fully shaded. No text-only chips or colored group headings. */
 .race-detail-scroll .mania-table tbody tr td.position-stat.position-current {
   font-weight: var(--fw-normal);
   white-space: nowrap;
 }
-.race-detail-scroll .mania-table tbody tr td.position-stat.position-current.position-tone-1 {
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-tone-1 {
   background: var(--c-magenta-light);
 }
-.race-detail-scroll .mania-table tbody tr td.position-stat.position-current.position-tone-2 {
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-tone-2 {
   background: var(--c-teal-light);
 }
-.race-detail-scroll .mania-table tbody tr td.position-stat.position-current.position-tone-3 {
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-tone-3 {
   background: var(--c-yellowgreen-light);
 }
-.race-detail-scroll .mania-table tbody tr td.position-stat.position-current.position-tone-4 {
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-tone-4 {
   background: var(--c-bronze-light);
 }
