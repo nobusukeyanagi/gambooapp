@@ -270,7 +270,7 @@ button,
       .vgroup-name b { font-weight: var(--fw-strong); color: var(--c-silver); font-size: var(--fs-12); }
       .mori-venue-grid { row-gap: var(--space-card); }
       /* Mori's inactive date-tab rows leave no empty grid cells. */
-      .mori-venue-grid > .vcard[hidden] { display: none; }
+      .venue-grid.g3.mori-venue-grid > .vcard[hidden] { display: none; }
       .g3 .vcard {
         /* Equal 4px vertical insets: more space between four rows while
            avoiding an oversized gap below the last R/time row. */
