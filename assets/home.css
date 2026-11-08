@@ -966,6 +966,13 @@ button,
       /* Keep notice labels and dates legible at narrow phone widths. */
       /* Responsive adjustments: one breakpoint block per supported width. */
       @media (max-width: 359px) {
+        /* Keep Mori's 20px heading legible after adding the 37px auto logo.
+           The full text may wrap instead of overflowing narrow phones. */
+        .mori-heading .vgroup-name {
+          min-width: 0;
+          max-width: 100%;
+          white-space: normal;
+        }
         /* Keep 18px R/time typography and save width via spacing instead. */
                 .venue-grid.g3 .vcard:not(.mori-photo-tile) {
                   padding-inline: var(--space-3);
