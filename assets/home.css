@@ -255,14 +255,14 @@ button,
       .vgroup-name.race-heading .race-heading-icon {
         display: block;
         flex: 0 0 auto;
-        width: 45px;
-        height: 36px;
+        width: 42px;
+        height: 34px;
         fill: currentColor;
         color: var(--c-keirin);
       }
       .vgroup-name.race-heading.auto .race-heading-icon {
-        width: 39px;
-        height: 36px;
+        width: 37px;
+        height: 34px;
         color: var(--c-auto);
       }
       .vgroup-name b { font-weight: var(--fw-strong); color: var(--c-silver); font-size: var(--fs-12); }
@@ -339,6 +339,21 @@ button,
       }
       /* Align dates and status text vertically with the center of badge lettering. */
       .news-head :is(.news-date, .news-new) { display: inline-flex; align-items: center; line-height: 1; }
+      /* Red, white-on-red exclamation immediately following a critical notice date. */
+      .news-head .news-alert-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 20px;
+        width: 20px;
+        height: 20px;
+        border-radius: var(--r-full);
+        background: var(--c-red);
+        color: var(--c-surface);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-strong);
+        line-height: 1;
+      }
       .news-badge.keirin { background: var(--c-keirin); }
       .news-badge.auto { background: var(--c-auto); }
       /* Non-race categories use the same grey badge as その他. */
