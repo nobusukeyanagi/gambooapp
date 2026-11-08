@@ -118,7 +118,7 @@
       [44, {span:4, label:"競り", klass:"position-first"}],
       [48, {span:4, label:"イン粘り回数", klass:"position-first"}],
       [52, {span:4, label:"追い上げ回数", klass:"position-first"}],
-      [63, {span:6, label:"周長別", klass:"bl distance-section-start"}]
+      [62, {span:6, label:"周長別", klass:"bl distance-section-start"}]
     ]);
     const top = [], lower = [];
     for (let i=0; i<subheads.length;) {
