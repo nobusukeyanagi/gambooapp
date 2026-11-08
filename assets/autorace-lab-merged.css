@@ -9,7 +9,7 @@
 .at.auto-merged .auto-lab-start > span {
   display: block;
   font-size: var(--fs-12);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .at.auto-merged .auto-lab-start .rd-bar {
   position: static;

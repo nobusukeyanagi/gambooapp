@@ -24,7 +24,7 @@
   border: var(--line-control);
   border-radius: var(--r-control);
   background: var(--c-surface);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   box-shadow: var(--e1);
 }
 .venue-sort-options [data-sort="venue"] {

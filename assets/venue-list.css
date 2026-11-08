@@ -118,7 +118,7 @@ button, input, select, textarea {
   align-items: center;
   min-width: max-content;
   white-space: nowrap;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-size: var(--fs-14);
   font-weight: var(--fw-normal);
   line-height: 1.25;
@@ -197,7 +197,7 @@ button, input, select, textarea {
   border: var(--line-control);
   box-shadow: var(--e1);
   background: var(--c-surface);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -259,7 +259,7 @@ button, input, select, textarea {
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   flex: 0 1 auto;
   font-size: var(--fs-20);
   font-weight: var(--fw-strong);
@@ -344,7 +344,7 @@ button, input, select, textarea {
 
 .comment-row {
   gap: var(--space-section);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   margin: 0;
   padding: var(--space-7) var(--space-10);
   background: transparent;
@@ -364,7 +364,7 @@ button, input, select, textarea {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   font-weight: var(--fw-strong);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-size: var(--fs-14);
 }
 
@@ -386,7 +386,7 @@ button, input, select, textarea {
 
 .carno.w1 {
   background: var(--w1);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   border-color: var(--c-border-control);
 }
 
@@ -410,7 +410,7 @@ button, input, select, textarea {
 
 .carno.w5 {
   background: var(--w5);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   border-color: var(--w5);
 }
 
@@ -428,7 +428,7 @@ button, input, select, textarea {
 
 .carno.w8 {
   background: var(--w8);
-  color: color-mix(in srgb, var(--c-charcoal) 70%, black);
+  color: color-mix(in srgb, var(--c-text-primary) 70%, black);
   border-color: var(--w8);
 }
 
@@ -633,7 +633,7 @@ button, input, select, textarea {
 }
 
 .venue-card .rchip:not(.closed):not(.live):not(.canceled) > small {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 
 .venue-card .rchip.next.soon {
@@ -673,11 +673,11 @@ button, input, select, textarea {
 }
 
 .venue-card .rchip:not(.canceled) > b {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 
 .venue-card .rchip:is(.closed, .live) > small {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 
 .comment-row .carno {
@@ -693,7 +693,7 @@ button, input, select, textarea {
 .comment-row .cr-name {
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   min-width: 0;
 }
 
@@ -714,7 +714,7 @@ button, input, select, textarea {
   padding-left: var(--space-small);
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   line-height: 22px;
   white-space: nowrap;
   flex: 0 0 auto;

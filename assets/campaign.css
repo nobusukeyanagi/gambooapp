@@ -42,7 +42,7 @@
   border: 0;
   border-bottom: var(--line-emphasis-width) solid transparent;
   background: transparent;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-family: inherit;
   cursor: pointer;
 }
@@ -92,7 +92,7 @@
 .campaign-page-info {
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-variant-numeric: tabular-nums;
 }
 
@@ -138,7 +138,7 @@
 .cp-title {
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   line-height: 1.35;
   overflow-wrap: anywhere;
 }

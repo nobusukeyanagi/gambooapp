@@ -116,7 +116,7 @@
   min-width: 50px;
   font-size: var(--fs-12);
   line-height: 1;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .race-detail-scroll .mania-table .meeting-cell .meeting-meta .meeting-date,
 .race-detail-scroll .mania-table .meeting-cell .meeting-meta .meeting-venue {
@@ -328,7 +328,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   line-height: 1;
   vertical-align: middle;
 }
@@ -358,7 +358,7 @@
 }
 .race-detail-scroll .mania-table tbody td.recent4-cell .recent4-count {
   display: block;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-size: var(--fs-16);
   font-weight: var(--fw-normal);
   line-height: 1.2;
@@ -457,7 +457,7 @@
 .race-detail-scroll .mania-table tbody td.score .score-current {
   display: block;
   font-size: var(--fs-16);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   line-height: 1.2;
 }
 .race-detail-scroll .mania-table tbody td.score .score-current {

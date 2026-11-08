@@ -71,19 +71,19 @@
   border: var(--line-control);
   border-radius: var(--r-control);
   background: var(--c-surface);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   box-shadow: var(--e1);
   text-align: center;
   scroll-snap-align: none;
 }
 .race-detail-scroll .keirin-race-selector .race-tab > b {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-size: var(--fs-16);
   line-height: 1.2;
   font-weight: var(--fw-strong);
 }
 .race-detail-scroll .keirin-race-selector .race-tab > small {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-size: var(--fs-12);
   line-height: 1.2;
   white-space: nowrap;
@@ -97,7 +97,7 @@
 .race-detail-scroll .keirin-race-selector .race-tab.past > :is(b,small) { color: var(--c-text-secondary); }
 /* Status labels remain dark even when the race number uses the past-race grey. */
 .race-detail-scroll .keirin-race-selector .race-tab.past > small.race-status {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-weight: var(--fw-strong);
 }
 .race-detail-scroll .keirin-race-selector .race-tab.active:not(.soon):not(.rebate) {
@@ -206,7 +206,7 @@
 }
 .race-detail-scroll .ri-meeting .ri-race-label {
   flex: 0 0 auto;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
 }
@@ -315,7 +315,7 @@
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
   line-height: 1.3;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .race-detail-scroll .ri-kind {
   grid-area: kind;
@@ -351,7 +351,7 @@
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
   font-variant-numeric: tabular-nums;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .race-detail-scroll .ri-date-line {
   grid-area: detail;
@@ -395,11 +395,11 @@
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live {
   background: var(--c-surface);
   border: var(--line-control);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   box-shadow: var(--e1);
 }
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live .ic {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 
 /* Horizontal menu is explicitly one-axis: dragging cannot move it vertically. */
@@ -508,7 +508,7 @@
 .race-detail-scroll .lineup-bar .lineup-title {
   font-size: var(--fs-14);
   line-height: 1.25;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .race-detail-scroll .lineup-bar .lineup-row {
   margin: 0;
@@ -589,7 +589,7 @@
   border-radius: var(--r-control);
   background: var(--c-surface);
   box-shadow: var(--e1);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-family: var(--ff-ui);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);

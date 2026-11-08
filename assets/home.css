@@ -25,7 +25,7 @@ button,
         padding: 0 var(--space-content);
         flex-shrink: 0;
         border-bottom: var(--line-normal);
-        box-shadow: 0 1px 3px color-mix(in srgb, var(--c-charcoal) 6%, transparent);
+        box-shadow: 0 1px 3px color-mix(in srgb, var(--c-text-primary) 6%, transparent);
       }
       .logo {
 
@@ -33,7 +33,7 @@ button,
         letter-spacing: normal;
       }
       .logo span {
-        color: var(--c-charcoal);
+        color: var(--c-text-primary);
         font-size: var(--fs-12);
         font-weight: var(--fw-normal);
       }
@@ -77,7 +77,7 @@ button,
       }
 
       .section-title {
-        color: var(--c-charcoal);
+        color: var(--c-text-primary);
         display: flex;
         align-items: center;
         gap: var(--space-5);
@@ -157,7 +157,7 @@ button,
       .vcard-name {
 
         letter-spacing: normal;
-        color: var(--c-charcoal);
+        color: var(--c-text-primary);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -397,7 +397,7 @@ button,
 
       .screen-wrap:not(:only-child) .screen-label {
         display: block;
-        background: var(--c-charcoal);
+        background: var(--c-text-primary);
         color: var(--c-bg);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
@@ -493,7 +493,7 @@ button,
         border: var(--line-thin) solid transparent;
         font-family: var(--ff-ui);
       }
-      .carno.w1 { background: var(--w1); color: var(--c-charcoal); border-color: var(--c-border-control); }
+      .carno.w1 { background: var(--w1); color: var(--c-text-primary); border-color: var(--c-border-control); }
       .carno.w2 { background: var(--w2); color: var(--c-surface); border-color: var(--w2); }
       .carno.w3 { background: var(--w3); color: var(--c-surface); border-color: var(--w3); }
       .carno.w4 { background: var(--w4); color: var(--c-surface); border-color: var(--w4); }
@@ -526,7 +526,7 @@ button,
       }
 
       .venue-grid.g3 .vcard-r { font-size: var(--fs-18); font-weight: var(--fw-strong); line-height: 1.2; }
-      .venue-grid.g3 .vcard-dl { font-size: var(--fs-18); font-weight: var(--fw-strong); letter-spacing: normal; line-height: 1.2; color: var(--c-charcoal); font-family: var(--ff-ui); }
+      .venue-grid.g3 .vcard-dl { font-size: var(--fs-18); font-weight: var(--fw-strong); letter-spacing: normal; line-height: 1.2; color: var(--c-text-primary); font-family: var(--ff-ui); }
 
       .vcard:is(.ended, .presale) .vcard-bottom { justify-content: flex-end; }
       .venue-grid.g3 > .vcard[data-demo][hidden] { display: none; }
@@ -773,7 +773,7 @@ button,
          text-align: right;
          white-space: nowrap;
          font-weight: var(--fw-strong);
-         color: var(--c-charcoal);
+         color: var(--c-text-primary);
          font-family: var(--ff-ui);
          font-size: var(--fs-14);
          line-height: 1.25;
@@ -787,7 +787,7 @@ button,
       
 
       .venue-grid.g3 .vcard-dl[data-deadline] {
-        color: var(--c-charcoal);
+        color: var(--c-text-primary);
         display: inline-flex;
         align-items: center;
         justify-content: center;

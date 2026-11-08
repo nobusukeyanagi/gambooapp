@@ -28,7 +28,7 @@
   background: var(--c-surface);
 }
 .page-header .page-header-title:has(.header-race-icon) {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .page-header .page-header-title .header-race-icon:has(use[href$="#nav-keirin"]) {
   color: var(--c-keirin);

@@ -53,10 +53,10 @@
   font-weight: var(--fw-normal);
   font-variant-numeric: tabular-nums;
   background: var(--c-surface);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .race-detail-scroll .mania-table tbody td.position-stat.position-zero {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .race-detail-scroll .mania-table tbody tr td.position-stat.position-highlight-lead {
   background: color-mix(in srgb, var(--c-bronze) 20%, var(--c-surface));

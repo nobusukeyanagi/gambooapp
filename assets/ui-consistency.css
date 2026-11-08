@@ -37,7 +37,7 @@ body { font-weight: var(--fw-normal); }
 .news-date {
   font-size: var(--fs-14);
   font-weight: var(--fw-normal);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   line-height: 1.25;
   letter-spacing: normal;
 }
@@ -161,7 +161,7 @@ body { font-weight: var(--fw-normal); }
 }
 /* Unselected day tabs use dark UI text; selected day tabs retain gold. */
 .date-tabs .date-tab:not(.active) {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 
 /* SCR-100_bet.html reference: a 50px header and a 50px payout row
@@ -211,7 +211,7 @@ body { font-weight: var(--fw-normal); }
   justify-content: center;
   gap: var(--space-card);
   min-width: 0;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .page-header.page-header-simple .page-header-title > .header-page-icon {
   display: block;
@@ -238,7 +238,7 @@ body { font-weight: var(--fw-normal); }
   box-shadow: var(--e1);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -279,7 +279,7 @@ body { font-weight: var(--fw-normal); }
   flex: 1 1 auto;
   gap: var(--space-5);
   text-align: left;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
   font-size: var(--fs-18);
   font-weight: var(--fw-strong);
   line-height: 1.12;
@@ -313,7 +313,7 @@ body { font-weight: var(--fw-normal); }
   height: var(--h-control);
   flex: 0 0 var(--h-control);
   margin: 0;
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .shared-app-header .back-btn .ic {
   width: var(--fs-20);
@@ -372,7 +372,7 @@ body { font-weight: var(--fw-normal); }
   padding: 0 var(--space-section);
   border: var(--line-control);
   background: var(--c-surface);
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .shared-app-header .header-actions .cta-btn {
   padding: 0 var(--space-10);
@@ -395,7 +395,7 @@ body { font-weight: var(--fw-normal); }
 }
 /* Notification uses the standard neutral button style; deposit is teal. */
 .shared-app-header .header-actions .header-notification {
-  color: var(--c-charcoal);
+  color: var(--c-text-primary);
 }
 .shared-app-header .header-actions .badge {
   display: block;

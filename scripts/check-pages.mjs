@@ -1222,16 +1222,20 @@ async function checkSharedReferences(){
    fail('Shared gift icon lid must be symmetric and only 1px wider than gift body on each side');
  if(!/--fw-normal:\s*400\s*;/.test(tokens)||!/--fw-strong:\s*600\s*;/.test(tokens))
    fail('Canonical typography weights must be 400 and 600');
- if(!/--c-text-secondary:\s*#626C76\s*;/.test(tokens) ||
+ if(!/--c-text-primary:\s*#30363B\s*;/.test(tokens) ||
+    !/--c-text-secondary:\s*#606B76\s*;/.test(tokens) ||
+    !/--c-border-control:\s*#97A1AA\s*;/.test(tokens) ||
+    !/--c-border:\s*#D2D6DA\s*;/.test(tokens) ||
+    /--c-charcoal\b/.test(tokens) ||
     /--c-silver(?:-light)?\b/.test(tokens))
-   fail('Only auxiliary-text #626C76 is allowed; obsolete silver tokens must be retired');
+   fail('Canonical H210/S10 core colors or retired tokens are inconsistent');
  // No CSS may still reference the removed silver or silver-light variables.
  const {readdir}=await import('node:fs/promises');
  for(const filename of await readdir(path.join(ROOT,'assets'))){
    if(!filename.endsWith('.css'))continue;
    const contents=await readFile(path.join(ROOT,'assets',filename),'utf8');
-   if(/--c-silver(?:-light)?\b/.test(contents))
-     fail(filename+': retired silver variable reference remains');
+   if(/--c-(?:charcoal|silver(?:-light)?)\b/.test(contents))
+     fail(filename+': retired grayscale variable reference remains');
  }
  if(/--fw-\d{2}-(normal|strong)/.test(tokens))
    fail('Legacy size-specific weight token found');
