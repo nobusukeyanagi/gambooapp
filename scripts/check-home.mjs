@@ -349,7 +349,20 @@ async function checkCurrentPage(page, width) {
       campaignSvg:marker?.querySelector('use')?.getAttribute('href'),
       campaignAtRight:marker ?
         Math.abs(marker.getBoundingClientRect().right-
-          el.querySelector('.news-head').getBoundingClientRect().right)<1 : true
+          el.querySelector('.news-head').getBoundingClientRect().right)<1 : true,
+      titleFullyVisible:(()=>{
+        const elTitle=el.querySelector('.news-title');
+        const style=getComputedStyle(elTitle);
+        return style.overflow!=='hidden' && style.webkitLineClamp==='none' &&
+          elTitle.scrollHeight<=elTitle.clientHeight+1;
+      })(),
+      arrowCenteredToTitle:(()=>{
+        const title=el.querySelector('.news-title').getBoundingClientRect();
+        const arrow=el.querySelector('.news-arrow').getBoundingClientRect();
+        const head=el.querySelector('.news-head').getBoundingClientRect();
+        return Math.abs((title.top+title.bottom-arrow.top-arrow.bottom)/2)<=1.5 &&
+          arrow.top>=head.bottom-0.5;
+      })()
     };
   }));
   const expectedNews=[
@@ -369,6 +382,7 @@ async function checkCurrentPage(page, width) {
     return n.date!==date||n.kind!==kind||n.title!==title||
       !n.href?.startsWith('https://gamboo.jp/')||
       !n.href.includes(tid)||n.isCampaign!==(kind==='campaign')||
+      !n.titleFullyVisible||!n.arrowCenteredToTitle||
       (kind==='campaign' && (n.campaignLabel!=='キャンペーン'||
         !n.campaignSvg?.endsWith('#nav-campaign')||!n.campaignAtRight));
   }))
