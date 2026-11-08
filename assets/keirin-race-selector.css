@@ -17,98 +17,8 @@
   min-height: 0;
   overflow: visible;
 }
-/* The same edge-to-edge, full-height 44px chevrons as SCR-200. */
-.race-detail-scroll > .keirin-race-selector {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 58px;
-  flex: 0 0 auto;
-  background: var(--c-surface);
-  border-bottom: var(--line-normal);
-}
-.race-detail-scroll .keirin-race-selector > .hscroll-inner {
-  display: block;
-  flex: 1;
-  min-width: 0;
-  height: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: none;
-  -webkit-mask-image: none;
-  mask-image: none;
-  padding: var(--space-card) 44px;
-}
-.race-detail-scroll .keirin-race-selector > .hscroll-inner::-webkit-scrollbar { display: none; }
-.race-detail-scroll .keirin-race-selector .race-tabs {
-  display: flex;
-  width: max-content;
-  min-width: 100%;
-  height: 46px;
-  align-items: center;
-  gap: var(--space-card);
-  padding: 0;
-  overflow: visible;
-  border: 0;
-}
-.race-detail-scroll .keirin-race-selector .race-tab {
-  position: relative;
-  display: flex;
-  flex: 0 0 62px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 62px;
-  min-width: 62px;
-  max-width: 62px;
-  height: 46px;
-  min-height: 46px;
-  padding: var(--space-small) var(--space-2);
-  gap: var(--space-1);
-  overflow: hidden;
-  border: var(--line-control);
-  border-radius: var(--r-control);
-  background: var(--c-surface);
-  color: var(--c-text-primary);
-  box-shadow: var(--e1);
-  text-align: center;
-  scroll-snap-align: none;
-}
-.race-detail-scroll .keirin-race-selector .race-tab > b {
-  color: var(--c-text-primary);
-  font-size: var(--fs-16);
-  line-height: 1.2;
-  font-weight: var(--fw-strong);
-}
-.race-detail-scroll .keirin-race-selector .race-tab > small {
-  color: var(--c-text-primary);
-  font-size: var(--fs-12);
-  line-height: 1.2;
-  white-space: nowrap;
-  font-weight: var(--fw-normal);
-  font-variant-numeric: tabular-nums;
-}
-.race-detail-scroll .keirin-race-selector .race-tab.past {
-  background: var(--c-bg);
-  border-color: var(--c-border);
-}
-.race-detail-scroll .keirin-race-selector .race-tab.past > :is(b,small) { color: var(--c-text-secondary); }
-/* Status labels remain dark even when the race number uses the past-race grey. */
-.race-detail-scroll .keirin-race-selector .race-tab.past > small.race-status {
-  color: var(--c-text-primary);
-  font-weight: var(--fw-strong);
-}
-.race-detail-scroll .keirin-race-selector .race-tab.active:not(.soon):not(.rebate) {
-  background: var(--c-surface);
-  border: var(--line-emphasis-width) solid var(--c-border-control);
-}
-.race-detail-scroll .keirin-race-selector .race-tab.rebate {
-  background: var(--c-surface);
-  border: var(--line-emphasis-width) solid var(--c-gold);
-}
-.race-detail-scroll :is(.keirin-race-selector,.race-menu-scroll) > :is(.hscroll-cue,.hscroll-cue-l) {
+/* Non-race information menu arrows retain SCR-210 layout. */
+.race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l) {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -131,34 +41,27 @@
   pointer-events: auto;
   font-family: var(--ff-ui);
 }
-.race-detail-scroll :is(.keirin-race-selector,.race-menu-scroll) > .hscroll-cue-l {
+.race-detail-scroll .race-menu-scroll > .hscroll-cue-l {
   left: 0;
   border-right: var(--line-normal);
 }
-.race-detail-scroll :is(.keirin-race-selector,.race-menu-scroll) > .hscroll-cue {
+.race-detail-scroll .race-menu-scroll > .hscroll-cue {
   right: 0;
   border-left: var(--line-normal);
 }
-.race-detail-scroll :is(.keirin-race-selector,.race-menu-scroll) > :is(.hscroll-cue,.hscroll-cue-l) .ic {
+.race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l) .ic {
   width: 18px;
   height: 18px;
 }
-.race-detail-scroll :is(.keirin-race-selector,.race-menu-scroll) > :is(.hscroll-cue,.hscroll-cue-l)[hidden] {
+.race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l)[hidden] {
   display: none;
 }
-.race-detail-scroll :is(.keirin-race-selector,.race-menu-scroll) > :is(.hscroll-cue,.hscroll-cue-l):focus-visible {
+.race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l):focus-visible {
   outline: var(--line-focus);
   outline-offset: var(--space-2);
 }
 
-
 /* SCR-210 detail layout revision: shared token sizes, no other screens affected. */
-
-/* Urgent races use the SCR-200 red frame, not a remaining-minutes top band. */
-.race-detail-scroll .keirin-race-selector .race-tab.soon {
-  border: var(--line-emphasis-width) solid var(--c-red);
-  background: var(--c-surface);
-}
 
 /* SCR-210 summary: five evenly-spaced information rows on the left;
    the purchase and LIVE controls remain vertically balanced at the right. */

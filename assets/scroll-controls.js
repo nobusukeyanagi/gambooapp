@@ -32,7 +32,7 @@
   });
   /* SCR-200／SCR-300 venue rows and SCR-210 detailed race selector share full-height
      44px edge arrows; each tap jumps directly to the first or last race. */
-  if (mode === "venue-list" || mode === "keirin-detail") {
+  if (mode === "venue-list" || mode === "keirin-detail" || mode === "autorace-detail") {
     function initializeVenueRow(outer) {
       if (outer.dataset.arrowsReady === "true") return;
       var box = outer.querySelector(".hscroll-inner");
@@ -66,7 +66,7 @@
         new ResizeObserver(sync).observe(box);
       }
       requestAnimationFrame(function () {
-        if (mode === "keirin-detail") {
+        if (mode === "keirin-detail" || mode === "autorace-detail") {
           var selected = box.querySelector(".race-tab.active");
           if (selected) {
             var relativeLeft = selected.getBoundingClientRect().left -
@@ -79,9 +79,9 @@
       });
     }
     function initializeVenueRows() {
-      var selector = mode === "keirin-detail"
-        ? ".keirin-race-selector, .race-menu-scroll"
-        : ".venue-card .hscroll";
+      var selector = mode === "venue-list" ? ".venue-card .hscroll" :
+        mode === "keirin-detail" ? ".race-selector, .race-menu-scroll" :
+        ".race-selector";
       document.querySelectorAll(selector).forEach(initializeVenueRow);
     }
     initializeVenueRows();

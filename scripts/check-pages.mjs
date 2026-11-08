@@ -534,6 +534,75 @@ async function checkNavPredictionLinks(page, width, file) {
   console.log("BOTTOM NAV OK " + file + " " + width + "px");
 }
 
+/* SCR-210/310 share exactly the same race selection component and arrows. */
+async function checkSharedRaceSelector(page, width, isAuto) {
+  const selector=page.locator('.phone-inner .race-selector');
+  if(await selector.count()!==1)
+    fail(width+'px shared race selector missing or duplicated');
+  const detail=await selector.evaluate(bar=>{
+    const selected=bar.querySelector('.race-tab.active');
+    const first=bar.querySelector('.race-tab');
+    const past=bar.querySelector('.race-tab.past');
+    const canceled=bar.querySelector('.race-tab.canceled');
+    const get=(el)=>el?getComputedStyle(el):null;
+    const scroll=bar.querySelector('.hscroll-inner');
+    return {
+      height:bar.getBoundingClientRect().height,
+      tabWidth:first?.getBoundingClientRect().width,
+      tabHeight:first?.getBoundingClientRect().height,
+      font:get(first?.querySelector('b'))?.fontSize,
+      smallFont:get(first?.querySelector('small'))?.fontSize,
+      tabs:bar.querySelectorAll('.race-tab').length,
+      selected: selected?.dataset.race,
+      activeBackground:get(selected)?.backgroundColor,
+      activeNumber:get(selected?.querySelector('b'))?.color,
+      activeSmall:get(selected?.querySelector('small'))?.color,
+      activeBorder:get(selected)?.borderTopColor,
+      pastBg:get(past)?.backgroundColor,
+      pastSmall:get(past?.querySelector('small'))?.color,
+      canceledBg:get(canceled)?.backgroundColor,
+      canceledNumber:get(canceled?.querySelector('b'))?.color,
+      arrows:[...bar.querySelectorAll(':scope > .hscroll-cue-l, :scope > .hscroll-cue')].map(a=>({
+        tag:a.tagName,width:get(a)?.width,enabled:!a.disabled
+      })),
+      hasOverflow:scroll.scrollWidth>scroll.clientWidth+2,
+      races:[...bar.querySelectorAll('.race-tab')].map(el=>({
+        number:Number(el.querySelector('b')?.textContent.replace('R','')),
+        id:Number(el.dataset.race)
+      }))
+    };
+  });
+  const expected=isAuto?8:12;
+  if(detail.height!==58 || detail.tabWidth!==62 || detail.tabHeight!==46 ||
+     detail.font!=='16px'||detail.smallFont!=='12px'||
+     detail.tabs!==expected || detail.selected!==(isAuto?'3':'5') ||
+     detail.activeBackground!=='rgb(114, 109, 49)' ||
+     detail.activeNumber!=='rgb(255, 255, 255)' ||
+     detail.activeSmall!=='rgb(255, 255, 255)' ||
+     detail.activeBorder!=='rgb(184, 71, 99)' ||
+     detail.pastBg!=='rgb(248, 247, 244)' ||
+     detail.pastSmall!=='rgb(48, 54, 59)' ||
+     detail.arrows.length!==2||detail.arrows.some(a=>a.tag!=='BUTTON'||a.width!=='44px')||
+     !detail.hasOverflow ||
+     detail.races.some((r,i)=>r.number!==i+1||r.id!==i+1) ||
+     (isAuto && (detail.canceledBg!=='rgb(210, 214, 218)' ||
+      detail.canceledNumber!=='rgb(48, 54, 59)')))
+    fail(width+'px SCR-210/310 race selection designs must match: '+JSON.stringify(detail));
+  const scroll=selector.locator('.hscroll-inner');
+  await scroll.evaluate(el=>{el.scrollLeft=0;el.dispatchEvent(new Event('scroll'));});
+  await page.waitForFunction(()=>!document.querySelector('.race-selector > .hscroll-cue-l:not([hidden])'));
+  await selector.locator(':scope > .hscroll-cue').click();
+  await page.waitForFunction(()=>{
+    const el=document.querySelector('.race-selector > .hscroll-inner');
+    return el.scrollLeft>=el.scrollWidth-el.clientWidth-2;
+  },null,{timeout:6000});
+  await selector.locator(':scope > .hscroll-cue-l').click();
+  await page.waitForFunction(()=>{
+    const el=document.querySelector('.race-selector > .hscroll-inner');
+    return el.scrollLeft<=2;
+  },null,{timeout:6000});
+}
+
 async function checkKeirinMania(page, width) {
   const wrap = page.locator(".race-table-wrap");
   const table = wrap.locator("table.mania-table");
@@ -1303,8 +1372,13 @@ async function checkSharedReferences(){
   const commonRefs=css.filter(name=>/^ui-consistency\.css\?v=\d+$/.test(name));
   if(commonRefs.length!==1)fail(page+': shared UI stylesheet must be directly referenced exactly once');
   const commonLast=css.findIndex(name=>/^ui-consistency\.css\?v=\d+$/.test(name));
-  // SCR-210's grouped racecard has intentional page-specific styles after the shared layer.
-  if(page!=='SCR-210_racecardkeirin.html' && commonLast!==css.length-1)
+  // Both detail pages share the final race-picker stylesheet, after their local styles.
+  const detailPage=['SCR-210_racecardkeirin.html','SCR-310_racecardautorace.html'].includes(page);
+  const sharedSelectors=css.filter(name=>/^race-selector-shared\.css\?v=\d+$/.test(name));
+  if(detailPage && (sharedSelectors.length!==1 ||
+     !/^race-selector-shared\.css\?v=\d+$/.test(css.at(-1))))
+    fail(page+': detail race selectors must load the same stylesheet last');
+  if(!detailPage && (commonLast!==css.length-1 || sharedSelectors.length!==0))
     fail(page+': shared UI stylesheet must load last');
   for(const href of css){
    const pathname=href.split('?')[0];
@@ -1342,6 +1416,8 @@ try {
     if (file === 'SCR-400_campaign.html') await checkCampaignPage(a.page,w);
     if (file === 'SCR-500_mypage.html') await checkMyPage(a.page,w);
     if (file === 'SCR-200_keirin.html' || file === 'SCR-300_autorace.html') await checkPredictionSort(a.page,w,file === 'SCR-300_autorace.html');
+    if (file === 'SCR-210_racecardkeirin.html'||file === 'SCR-310_racecardautorace.html')
+      await checkSharedRaceSelector(a.page,w,file === 'SCR-310_racecardautorace.html');
     if (file === 'SCR-210_racecardkeirin.html') await checkKeirinMania(a.page,w);
     if (file === "SCR-310_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
     if (file !== "index.html") await checkNavPredictionLinks(a.page,w,file);
