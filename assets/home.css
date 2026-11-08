@@ -313,25 +313,6 @@ button,
         gap: var(--space-section);
         width: 100%;
       }
-      .news-campaign {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-small);
-        margin-left: auto;
-        white-space: nowrap;
-        color: var(--c-gold);
-        font-size: var(--fs-14);
-        font-weight: var(--fw-strong);
-        line-height: 1;
-      }
-      /* Only campaign news shows the shared SVG gift in the brand color. */
-      .news-head .news-campaign-icon {
-        width: 20px;
-        height: 20px;
-        flex: 0 0 20px;
-        color: var(--c-gold);
-        fill: currentColor;
-      }
       .news-badge {
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
@@ -356,6 +337,7 @@ button,
       .news-badge.keirin { background: var(--c-keirin); }
       .news-badge.auto { background: var(--c-auto); }
       .news-badge.other { background: var(--c-silver); }
+      .news-badge.community { background: var(--c-purple); }
       .news-badge.both {
         background: linear-gradient(90deg, var(--c-keirin) 0 50%, var(--c-auto) 50% 100%);
       }
