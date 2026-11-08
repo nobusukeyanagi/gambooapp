@@ -440,8 +440,8 @@
     return marks;
   };
   // Competition ranks (1, 1, 3, ...): equal values share one rank and
-  // one tint. All riders tied for a top-three rank receive that tint.
-  const topThreeRanks = (values) => {
+  // one tint. Select the top 3 or top 4 depending on the statistic.
+  const topThreeRanks = (values, maxRank = 3) => {
     const ranks=Array(values.length).fill(0);
     let previousValue;
     let rank=0;
@@ -450,7 +450,7 @@
       .sort((a,b)=>b.value-a.value||a.index-b.index)
       .forEach(({index,value},order)=>{
         if(order===0||value!==previousValue)rank=order+1;
-        if(rank<=3)ranks[index]=rank;
+        if(rank<=maxRank)ranks[index]=rank;
         previousValue=value;
       });
     return ranks;
@@ -483,12 +483,12 @@
         const value=entry?.points?.[k];
         return value===undefined||value===null||value===""?NaN:Number(value);
       });
-      topThreeRanks(values).forEach((rank,i)=>{pointRanks[i][k]=rank;});
+      topThreeRanks(values,4).forEach((rank,i)=>{pointRanks[i][k]=rank;});
     }
     const gRanks=topThreeRanks(DATA.basics.map(rider=>{
       const value=rider.g;
       return value===undefined||value===null||value===""?NaN:Number(value);
-    }));
+    }),4);
     return makeHead()+'<tbody>'+
       DATA.basics.map((r,i)=>renderRow(DATA,r,i,gMarks[i],scoreRanks[i],rateRanks[i],pointRanks[i],gRanks[i])).join("")+'</tbody>';
   };
