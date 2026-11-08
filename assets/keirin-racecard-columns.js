@@ -29,7 +29,9 @@
   const sub = (label, klass) => '<th' + (klass ? ' class="' + klass + '"' : '') + '>' + label + '</th>';
   const makeHead = () => {
     const subheads = [
-      sub("枠","c-waku player-section-start"),sub("車番","fx c-sha"),sub("選手名","c-name"),
+      sub("枠","c-waku player-section-start"),
+      sub('<button type="button" class="car-line-sort" aria-pressed="false" aria-label="ライン順に並べ替え">車番</button>',"fx c-sha"),
+      sub("選手名","c-name"),
       sub("級班","bl"),sub("脚質","bl"),sub("ギア比","bl"),
       sub("コメント","player-comment-heading"),
       ...["競走得点","失違","逃","捲","差","マ","B"].map((s,i)=>
@@ -299,6 +301,43 @@
     return makeHead()+'<tbody>'+
       DATA.basics.map((r,i)=>renderRow(DATA,r,i,gMarks[i],scoreRanks[i],rateRanks[i],pointRanks[i],gRanks[i])).join("")+'</tbody>';
   };
-  const render=(table,DATA)=>{if(table&&DATA)table.innerHTML=toHTML(DATA);};
+  // The vehicle-number header toggles between numeric car order and
+  // the full predicted lineup. Reordering existing <tr> nodes retains all
+  // values, links and scroll positions without regenerating the racecard.
+  const bindLineupSort = (table, DATA) => {
+    const button = table.querySelector("thead .car-line-sort");
+    const tbody = table.tBodies[0];
+    const lines = Array.isArray(DATA.lineup) ? DATA.lineup : [];
+    if (!button || !tbody || !lines.length) return;
+    const rows = Array.from(tbody.rows);
+    const carOf = (row) => Number(row.querySelector("td.c-sha .frame-cell")?.textContent?.trim());
+    const byCar = new Map(rows.map(row => [carOf(row), row]));
+    const lineupCars = lines.flat().map(Number);
+    if (byCar.size !== rows.length || lineupCars.length !== rows.length ||
+        lineupCars.some(car => !byCar.has(car)) ||
+        new Set(lineupCars).size !== rows.length) return;
+
+    const carOrder = [...byCar.keys()].sort((a,b) => a-b);
+    let isLineupOrder = false;
+    button.addEventListener("click", () => {
+      isLineupOrder = !isLineupOrder;
+      const orderedCars = isLineupOrder ? lineupCars : carOrder;
+      orderedCars.forEach(car => tbody.appendChild(byCar.get(car)));
+      rows.forEach(row => row.classList.remove("line-group-start"));
+      if (isLineupOrder) {
+        lines.slice(1).forEach(line => {
+          const firstCar = Number(line[0]);
+          byCar.get(firstCar)?.classList.add("line-group-start");
+        });
+      }
+      button.setAttribute("aria-pressed", String(isLineupOrder));
+      button.setAttribute("aria-label", isLineupOrder ? "車番順に戻す" : "ライン順に並べ替え");
+    });
+  };
+  const render=(table,DATA)=>{
+    if (!table || !DATA) return;
+    table.innerHTML=toHTML(DATA);
+    bindLineupSort(table,DATA);
+  };
   window.GambooKeirinRacecardColumns={toHTML,render};
 })();
