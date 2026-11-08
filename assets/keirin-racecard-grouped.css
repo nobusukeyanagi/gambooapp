@@ -409,20 +409,13 @@
   font-weight: var(--fw-normal);
 }
 /* The extra G-index mark has its own compact column. */
-.race-detail-scroll .mania-table :is(th,td).gindex-mark {
-  min-width: 48px;
-  text-align: center;
-}
-.race-detail-scroll .mania-table tbody td.gindex-mark .mk {
-  font-size: var(--fs-16);
-  font-weight: var(--fw-strong);
-}
+/* G指数と印は120pxの単一セル内で独立した塗りを使用する。 */
 /* Box-table main symbols and figures follow the shared 16px tier. */
 .race-detail-scroll .mania-table :is(.mark, .mk, .rate2 b, .rn b) {
   font-size: var(--fs-16);
 }
-/* All marks in the box table (Marutoku, G-index and mania ratings) are bold. */
-.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-mark, .distance-mark),
+/* All marks in the box table (Marutoku, G-index and distance ranking) are bold. */
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell, .distance-combined-cell),
 .race-detail-scroll .mania-table tbody td :is(.mk, .mark) {
   font-weight: var(--fw-strong);
 }
@@ -704,7 +697,7 @@
   line-height: 1.2;
 }
 
-/* Logical widths of the integrated 68-column table.
+/* Logical widths of the integrated 66-column table.
    The first six columns retain their declared widths above. Columns 15–18
    retain 60px minimums. Meeting columns 19–26 use 50px subcells. */
 .race-detail-scroll .mania-table tbody tr > td:is(:nth-child(7), :nth-child(27)),
@@ -714,14 +707,14 @@
   min-width: 100px !important;
   max-width: 100px !important;
 }
-.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(8), :nth-child(61)),
-.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(8), .gindex-section-start) {
+.race-detail-scroll .mania-table tbody tr > td:nth-child(8),
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(8) {
   box-sizing: border-box;
   width: 80px !important;
   min-width: 80px !important;
   max-width: 80px !important;
 }
-.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(28), :nth-child(57), :nth-child(58), :nth-child(59)),
+.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(28), :nth-child(58), :nth-child(59), :nth-child(60)),
 .race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(25), .marutoku-score-label:not(.marutoku-combined-heading)),
 .race-detail-scroll .mania-table tbody td.distance-rate,
 .race-detail-scroll .mania-table thead tr:nth-child(2) > th.distance-rate-heading {
@@ -730,8 +723,8 @@
   min-width: 60px !important;
   max-width: 60px !important;
 }
-.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(62), :nth-child(9), :nth-child(10), :nth-child(11), :nth-child(12), :nth-child(13), :nth-child(14), :nth-child(29), :nth-child(30), :nth-child(31), :nth-child(32), :nth-child(33), :nth-child(34), :nth-child(35), :nth-child(36), :nth-child(37), :nth-child(38), :nth-child(39), :nth-child(40), :nth-child(41), :nth-child(42), :nth-child(43), :nth-child(44), :nth-child(45), :nth-child(46), :nth-child(47), :nth-child(48), :nth-child(49), :nth-child(50), :nth-child(51), :nth-child(52), :nth-child(53), :nth-child(54), :nth-child(55), :nth-child(56)),
-.race-detail-scroll .mania-table thead tr:first-child > th:is(.gindex-mark, :nth-child(9), :nth-child(11)),
+.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(9), :nth-child(10), :nth-child(11), :nth-child(12), :nth-child(13), :nth-child(14), :nth-child(29), :nth-child(30), :nth-child(31), :nth-child(32), :nth-child(33), :nth-child(34), :nth-child(35), :nth-child(36), :nth-child(37), :nth-child(38), :nth-child(39), :nth-child(40), :nth-child(41), :nth-child(42), :nth-child(43), :nth-child(44), :nth-child(45), :nth-child(46), :nth-child(47), :nth-child(48), :nth-child(49), :nth-child(50), :nth-child(51), :nth-child(52), :nth-child(53), :nth-child(54), :nth-child(55), :nth-child(56)),
+.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(9), :nth-child(11)),
 .race-detail-scroll .mania-table thead tr:nth-child(2) > th:is(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6), :nth-child(7), :nth-child(8), :nth-child(9), :nth-child(10), :nth-child(11), :nth-child(12), :nth-child(13), :nth-child(14), :nth-child(15), :nth-child(16), :nth-child(17), :nth-child(18), :nth-child(19), :nth-child(20), :nth-child(21), :nth-child(22), :nth-child(23), :nth-child(24), :nth-child(25), :nth-child(26), :nth-child(27), :nth-child(28), :nth-child(29), :nth-child(30), :nth-child(31), :nth-child(32)) {
   box-sizing: border-box;
   width: 40px !important;
@@ -753,11 +746,48 @@
 .race-detail-scroll .mania-table tbody td.meeting-avg {
   min-width: 100px;
 }
-/* The former 70px total-P and 40px mark cells are now one 110px
-   column. Separate 32px and remaining score slots are aligned within it;
-   the mark and ranked score each retain their own isolated tint. */
-.race-detail-scroll .mania-table tbody tr > td.marutoku-combined-cell,
-.race-detail-scroll .mania-table thead tr:first-child > th.marutoku-combined-heading {
+/* Shared fixed mark-left/value-right layout for three integrated columns.
+   Empty mark slots remain occupied so every rider's value stays aligned.
+   A rank-number chip and the mark chip each keep their own background. */
+.race-detail-scroll .mania-table .stat-combined-layout {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  column-gap: var(--space-2);
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 24px;
+  padding: 0;
+  margin: 0;
+}
+.race-detail-scroll .mania-table .stat-combined-layout > .stat-combined-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  width: 32px;
+  min-width: 32px;
+  min-height: 24px;
+}
+.race-detail-scroll .mania-table .stat-combined-layout > .stat-combined-score {
+  display: block;
+  justify-self: center;
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell) .stat-combined-score {
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell, .distance-combined-cell) {
+  text-align: center;
+  background: var(--c-surface);
+  color: var(--c-text-primary);
+  font-size: var(--fs-16);
+}
+.race-detail-scroll .mania-table :is(th,td).marutoku-combined-heading,
+.race-detail-scroll .mania-table tbody td.marutoku-combined-cell {
   box-sizing: border-box;
   width: 110px !important;
   min-width: 110px !important;
@@ -765,26 +795,29 @@
   padding-left: var(--space-2);
   padding-right: var(--space-2);
 }
-/* 周長別 is part of the full table: 50px rank, 40px mark,
-   60px for each count + percentage column, matching basic results. */
-.race-detail-scroll .mania-table tbody td.distance-rank,
-.race-detail-scroll .mania-table thead tr:nth-child(2) > th.distance-rank-heading {
+.race-detail-scroll .mania-table thead tr:first-child > th.gindex-combined-heading,
+.race-detail-scroll .mania-table tbody td.gindex-combined-cell {
   box-sizing: border-box;
-  width: 50px !important;
-  min-width: 50px !important;
-  max-width: 50px !important;
+  width: 120px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
 }
-.race-detail-scroll .mania-table tbody td.distance-mark,
-.race-detail-scroll .mania-table thead tr:nth-child(2) > th.distance-mark-heading {
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th.distance-combined-heading,
+.race-detail-scroll .mania-table tbody td.distance-combined-cell {
   box-sizing: border-box;
-  width: 40px !important;
-  min-width: 40px !important;
-  max-width: 40px !important;
+  width: 90px !important;
+  min-width: 90px !important;
+  max-width: 90px !important;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
 }
+/* The four standalone 周長別 rates match four-month results (60px). */
 .race-detail-scroll .mania-table tbody td.distance-rate .recent4-rate {
   color: var(--c-text-primary);
 }
-.race-detail-scroll .mania-table tbody td:is(.distance-rank, .distance-mark, .distance-rate) {
+.race-detail-scroll .mania-table tbody td.distance-rate {
   text-align: center;
   background: var(--c-surface);
   color: var(--c-text-primary);
