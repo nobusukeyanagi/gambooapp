@@ -86,8 +86,7 @@
   background: var(--c-gold);
   color: var(--c-surface);
 }
-/* Buttons inside the selected mania section intentionally retain their
-   own original white surface, dark text, and independent active state. */
+/* The un-tabbed 周長別 group retains its ordinary column-heading appearance. */
 
 /* First grid line must appear to the left of the frame ("枠") column. */
 .race-detail-scroll .mania-table :is(th,td).c-waku {
@@ -97,7 +96,7 @@
   .player-section-start,.marutoku-section-start,
   .recent-section-start,
   .meeting-section-start,.position-section-start,
-  .mania-section-heading
+  .distance-section-start
 ) {
   border-left: var(--line-normal);
 }
@@ -705,7 +704,7 @@
   line-height: 1.2;
 }
 
-/* Logical widths after moving Marutoku immediately before G-index.
+/* Logical widths of the integrated 69-column table.
    The first six columns retain their declared widths above. Columns 15–18
    retain 60px minimums. Meeting columns 19–26 use 50px subcells. */
 .race-detail-scroll .mania-table tbody tr > td:is(:nth-child(7), :nth-child(27)),
@@ -722,8 +721,10 @@
   min-width: 80px !important;
   max-width: 80px !important;
 }
-.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(28), :nth-child(57), :nth-child(58), :nth-child(59), :nth-child(60), :nth-child(64), :nth-child(65), :nth-child(66), :nth-child(67), :nth-child(68), :nth-child(69), :nth-child(70), :nth-child(71), :nth-child(72)),
-.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(25), .c-item, .marutoku-score-label:not(.marutoku-total-heading):not(.marutoku-mark-label)) {
+.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(28), :nth-child(57), :nth-child(58), :nth-child(59), :nth-child(60)),
+.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(25), .marutoku-score-label:not(.marutoku-total-heading):not(.marutoku-mark-label)),
+.race-detail-scroll .mania-table tbody td.distance-rate,
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th.distance-rate-heading {
   box-sizing: border-box;
   width: 60px !important;
   min-width: 60px !important;
@@ -761,29 +762,38 @@
   min-width: 70px !important;
   max-width: 70px !important;
 }
-/* The nine mania-analysis columns are all 60px; header buttons fill
-   the available area except for the standard 3px/6px cell inset. */
-.race-detail-scroll .mania-table thead tr:first-child > th.c-item {
-  padding: var(--space-3) var(--space-card);
-}
-.race-detail-scroll .mania-table thead th.c-item .item-btn {
-  position: absolute;
-  inset: var(--space-3) var(--space-card);
+/* 周長別 is part of the full table: 50px rank, 40px mark,
+   60px for each count + percentage column, matching basic results. */
+.race-detail-scroll .mania-table tbody td.distance-rank,
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th.distance-rank-heading {
   box-sizing: border-box;
-  width: auto;
-  height: auto;
-  min-width: 0;
-  min-height: 0;
-  max-width: none;
+  width: 50px !important;
+  min-width: 50px !important;
+  max-width: 50px !important;
+}
+.race-detail-scroll .mania-table tbody td.distance-mark,
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th.distance-mark-heading {
+  box-sizing: border-box;
+  width: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+}
+.race-detail-scroll .mania-table tbody td.distance-rate .recent4-rate {
+  color: var(--c-text-primary);
+}
+.race-detail-scroll .mania-table tbody td:is(.distance-rank, .distance-mark, .distance-rate) {
+  text-align: center;
+  background: var(--c-surface);
+  color: var(--c-text-primary);
+}
+.race-detail-scroll .racecard-sample-note {
   margin: 0;
-  padding: 0;
+  padding: var(--space-2) var(--space-content);
+  background: var(--c-bg);
+  color: var(--c-text-secondary);
+  font-size: var(--fs-12);
+  line-height: 1.4;
 }
-.race-detail-scroll .mania-table thead th.c-item .item-btn > span {
-  display: block;
-  white-space: normal;
-  line-height: 1.2;
-}
-
 /* Preserve all four short vertical separators even when a race-day result
    is missing. Every empty placeholder retains the same visible grid cell. */
 .race-detail-scroll .mania-table .meeting-cell .res-wrap > .res.res-empty {
