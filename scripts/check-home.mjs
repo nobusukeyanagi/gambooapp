@@ -130,7 +130,7 @@ const expectedComputedStyles = [
   ['.date-tabs .date-tab', 'fontSize', '16px'],
   ['.date-tabs .date-tab', 'fontWeight', '600'],
   ['.date-tabs .date-tab:not(.active)', 'color', 'rgb(48, 54, 60)'],
-  ['.date-tabs .date-tab.active', 'color', 'rgb(134, 115, 58)'],
+  ['.date-tabs .date-tab.active', 'color', 'rgb(114, 109, 49)'],
   ['.venue-grid.g3 .vcard-r', 'fontWeight', '600'],
   ['.venue-grid.g3 .vcard-dl', 'fontWeight', '600'],
   ['.venue-grid.g3 .vcard', 'borderTopColor', 'rgb(208, 212, 214)'],
