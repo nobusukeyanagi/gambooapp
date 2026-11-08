@@ -5,8 +5,7 @@
     .replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const waku = [1,2,3,4,4,5,5,6,6];
   const legCss = {"追":"leg-chase","逃":"leg-escape","両":"leg-both"};
-  // All rank marks share one neutral stroke width and color rather than
-  // relying on unequal glyph outlines and per-symbol font colors.
+  // All mark symbols use the same outline and four shared text-backdrop tints.
   const markShapes = {
     "◎": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>',
     "○": '<circle cx="12" cy="12" r="9"/>',
@@ -16,8 +15,9 @@
   const marker = (x) => {
     if (!x) return "";
     const shape = markShapes[x];
+    const kind = {"◎":"mk-dbl","○":"mk-o","△":"mk-tri","×":"mk-x"}[x] || "";
     return shape
-      ? '<span class="mk" role="img" aria-label="' + escape(x) +
+      ? '<span class="mk ' + kind + '" role="img" aria-label="' + escape(x) +
         '"><svg class="mk-symbol" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
         shape + '</svg></span>'
       : '<span class="mk">' + escape(x) + '</span>';
@@ -153,7 +153,7 @@
       '<span class="meeting-date">'+escape(meta.date)+'</span></div>'+
       '<div class="res-wrap">'+slots.join("")+'</div></div></td>';
   };
-  const renderRow = (DATA,rider,i,gMark,scoreRank,rateRanks) => {
+  const renderRow = (DATA,rider,i,gMark,scoreRank,rateRanks,pointRanks,gRank) => {
     const p=DATA.marutoku[i],position=DATA.positionStats.rows[i];
     const grade=rider.grade.split("/");
     // Display name / prefecture(home) / training class and age on three lines.
@@ -215,11 +215,16 @@
       switchCounts.map((count,k)=>'<td class="position-stat position-switch'+
         (k%4===0?' position-first':'')+(count===0?' position-zero':'')+
         '">'+escape(count)+'</td>').join("")+
-      p.points.map((v,k)=>'<td class="'+(k===0?"bl ":"")+'marutoku-value'+
-        (k===3?" marutoku-total":"")+
-        (p.emphasis[k]?" marutoku-point-"+p.emphasis[k]:"")+'">'+escape(v)+'</td>').join("")+
+      p.points.map((v,k)=>{
+        const rank=pointRanks[k]||0;
+        const label=rank
+          ? '<span class="rank-number rank-tint-'+rank+'">'+escape(v)+'</span>'
+          : escape(v);
+        return '<td class="'+(k===0?"bl ":"")+'marutoku-value'+
+          (k===3?" marutoku-total":"")+'">'+label+'</td>';
+      }).join("")+
       '<td class="marutoku-mark">'+marker(p.mark)+'</td>'+
-      '<td class="bl c-g"><span class="g-val">'+escape(rider.g)+'</span></td>'+
+      '<td class="bl c-g"><span class="g-val'+(gRank?' rank-number rank-tint-'+gRank:'')+'">'+escape(rider.g)+'</span></td>'+
       '<td class="gindex-mark">'+marker(gMark)+'</td>'+
       rider.ratings.items.map((v,k)=>'<td class="mania-eval'+(k===0?' bl':'')+
         '" data-item="'+k+'">'+marker(v)+'</td>').join("")+
@@ -278,8 +283,20 @@
     const gMarks = getGMarks(DATA.basics);
     const scoreRanks=getScoreRanks(DATA.basics);
     const rateRanks=getRecentRateRanks(DATA.basics);
+    const pointRanks=DATA.basics.map(()=>[0,0,0,0]);
+    for(let k=0;k<4;k++){
+      const values=DATA.marutoku.map(entry=>{
+        const value=entry?.points?.[k];
+        return value===undefined||value===null||value===""?NaN:Number(value);
+      });
+      topThreeRanks(values).forEach((rank,i)=>{pointRanks[i][k]=rank;});
+    }
+    const gRanks=topThreeRanks(DATA.basics.map(rider=>{
+      const value=rider.g;
+      return value===undefined||value===null||value===""?NaN:Number(value);
+    }));
     return makeHead()+'<tbody>'+
-      DATA.basics.map((r,i)=>renderRow(DATA,r,i,gMarks[i],scoreRanks[i],rateRanks[i])).join("")+'</tbody>';
+      DATA.basics.map((r,i)=>renderRow(DATA,r,i,gMarks[i],scoreRanks[i],rateRanks[i],pointRanks[i],gRanks[i])).join("")+'</tbody>';
   };
   const render=(table,DATA)=>{if(table&&DATA)table.innerHTML=toHTML(DATA);};
   window.GambooKeirinRacecardColumns={toHTML,render};
