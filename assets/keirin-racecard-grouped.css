@@ -531,6 +531,45 @@
 .race-detail-scroll .mania-table tbody tr > td:first-child {
   border-left: var(--line-normal) !important;
 }
+/* The whole 50px vehicle-number header is a tap target for lineup sort.
+   Highlight the pressed state without changing the car-number cells. */
+.race-detail-scroll .mania-table thead tr:first-child th.c-sha {
+  padding: 0;
+}
+.race-detail-scroll .mania-table th.c-sha .car-line-sort {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.race-detail-scroll .mania-table th.c-sha .car-line-sort[aria-pressed="true"] {
+  background: var(--c-gold-light);
+}
+.race-detail-scroll .mania-table th.c-sha .car-line-sort:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: calc(-1 * var(--line-emphasis-width));
+}
+/* Only lineup mode inserts a 3px horizontal separator between lines.
+   Apply it to every physical cell, including the sticky car-number cell. */
+.race-detail-scroll .mania-table tbody tr.line-group-start > td {
+  border-top: var(--line-emphasis-width) solid var(--c-border) !important;
+}
+
 /* Fixed vehicle number: use its regular 1px border instead of the 2px
    inset shadow that made the separator oversized on horizontal scroll. */
 .race-detail-scroll .race-table-wrap.scrolled .mania-table :is(th,td).c-sha {
@@ -558,12 +597,13 @@
   padding-left: 0;
   padding-right: 0;
 }
+/* SCR-210: give the sticky vehicle-number column 10px more room. */
 .race-detail-scroll .mania-table thead tr:first-child > th:nth-child(2),
 .race-detail-scroll .mania-table tbody tr > td:nth-child(2) {
   box-sizing: border-box;
-  width: 40px;
-  min-width: 40px;
-  max-width: 40px;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
 }
 .race-detail-scroll .mania-table thead tr:first-child > th:nth-child(3),
 .race-detail-scroll .mania-table tbody tr > td:nth-child(3) {
