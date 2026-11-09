@@ -106,7 +106,7 @@ for(const width of [296,375,768]){
        Math.abs(x.dashScale-0.82)>0.001||JSON.stringify(x.carOffsets)!=='[0,36]'||
        x.dashFont!=='12px'||x.classes.some(y=>!y)||
        x.sizes.some(size=>size[0]!==22||size[1]!==22)||
-       (i===0?parseFloat(x.marginLeft)!==0:Math.abs(parseFloat(x.marginLeft)+parseFloat(supercon.row.gap)-22)>0.1))||
+       parseFloat(x.marginLeft)!==0)||
      supercon.hasRightButton||!supercon.placement||
      supercon.rowScrollStyle!=='auto'||supercon.rowOverflow<0)
     errorsNow.push('SCR-310 supercomputer prediction structure/fit mismatch: '+JSON.stringify(supercon));
@@ -186,7 +186,7 @@ for(const width of [296,375,768]){
      JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
      JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
-     deviations.headerCount!==57||deviations.cells.length!==8||
+     deviations.headerCount!==58||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!==['0.09','0.09','0.10','0.08','0.09','0.11','0.09','0.10'][i]||
        x.text[2]!==['0.09','0.08','0.10','0.08','0.10','0.10','0.09','0.10'][i]||
@@ -263,7 +263,7 @@ for(const width of [296,375,768]){
          !r.venue||!r.date||r.detailRows.length!==3)return true;
       if(r.gradeFont!=='12px'||r.metaAlign!=='left'||r.metaRows!=='16px 12px 12px'||
          r.metaInset!==6||r.metaWidth!==38||r.dateTextWidth>r.metaWidth+0.5||
-         r.rankRect.x!==47||r.detailInset!==78||r.rankRect.top!==3||
+         r.rankRect.x!==47||r.detailInset!==81||r.rankRect.top!==3||
          r.rankRect.width!==30||r.rankRect.height!==30||
          r.rankStyle.font!=='16px'||r.rankStyle.weight!=='600'||
          r.noteStyle.align!=='left'||r.noteStyle.x!==r.rankRect.x||
@@ -342,7 +342,7 @@ for(const width of [296,375,768]){
   const mismatches=[];
   if(matchupState.headers.length!==8||
      matchupState.preceding!=='湿着外着外率'||
-     matchupState.following!=='予想着順'||
+     matchupState.following!=='雨予想'||
      !matchupState.beforeRecent||!matchupState.afterAwards)mismatches.push('column position');
   if(matchupState.headers.some((x,i)=>x.text!=='vs'+(i+1)||
      x.vehicle!==String(i+1)||!x.iconClass.includes('f'+(i+1))||
@@ -498,8 +498,9 @@ for(const width of [296,375,768]){
   if(labState.headers.length!==8||labState.rows.length!==8||
      labState.hasHandicapAnalysis||labState.hasSuperconAnalysis||
      labState.headers.some((h,i)=>h.text!==expectedLabLabels[i]||
-       h.item!==String(i)||h.width!==expectedLabWidths[i]||
-       h.rowSpan!==2||h.buttonHeight!==40)||
+       (i===0?(h.item!==undefined||h.button!==undefined||h.buttonHeight!==0):
+        (h.item!==String(i)||h.buttonHeight!==40))||
+       h.width!==expectedLabWidths[i]||h.rowSpan!==2)||
      labState.rows.some((row,i)=>row.length!==8||row.some((m,j)=>
        m.text!==expectedLabMarks[i][j]||m.width!==expectedLabWidths[j]||
        m.font!=='16px'||m.weight!=='600'||
@@ -507,7 +508,7 @@ for(const width of [296,375,768]){
     errorsNow.push('lab marks/headers must reflect provided source: '+JSON.stringify(labState));
   const sourcePaths=[null,'situation','roadtemp','trialrun',
     'place','motorcycle','raceclass','racewin'];
-  for(let item=0;item<8;item++){
+  for(let item=1;item<8;item++){
     await page.locator('.auto-analyzer-btn[data-analyzer-item="'+item+'"]').click();
     const detail=await page.locator('.auto-analyzer-sheet').evaluate(sheet=>{
       const table=sheet.querySelector('.detail-table');
@@ -522,14 +523,13 @@ for(const width of [296,375,768]){
         link:sheet.querySelector('.auto-analyzer-source-link').href,
         note:sheet.querySelector('.auto-analyzer-source-note').textContent.trim()};
     });
-    const expectedDetail=item===0?expectedLabMarks:
-      expectedLabMarks.map(row=>[row[item],row[0]]);
+    const expectedDetail=expectedLabMarks.map(row=>[row[item],row[0]]);
     const expectedUrl='https://gamboo.jp/autorace/analyzer/'+
       (sourcePaths[item]?sourcePaths[item]+'/program':'marklist/')+
       '?rdt=20261109&rno=9&pid=2&rsp=3&rspl=02&rsrt=1&rsst=1';
     if(detail.hidden||detail.overlayHidden||detail.vehicleCount!==8||
        detail.title!=='データ解析ラボ：'+expectedLabLabels[item].replace('／','・')||
-       detail.heading.length!==(item===0?10:4)||
+       detail.heading.length!==4||
        JSON.stringify(detail.marks)!==JSON.stringify(expectedDetail)||
        detail.link!==expectedUrl||!detail.note.includes('詳細成績値は元HTMLに含まれない'))
       errorsNow.push('lab detail sheet mismatched for item '+item+': '+JSON.stringify(detail));
@@ -913,7 +913,7 @@ for(const width of [296,375,768]){
     return {total:table.querySelectorAll('thead th,tbody td').length,
       tableBorder:measure(table),invalid};
   });
-  if(borderGrid.total!==513||borderGrid.invalid.length||
+  if(borderGrid.total!==514||borderGrid.invalid.length||
       ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
     errorsNow.push('box-table single 1px grid / no duplicate header-top border mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
@@ -1006,6 +1006,8 @@ for(const width of [296,375,768]){
         if(heading.dataset.group===key)lower=second.slice(offset,offset+heading.colSpan);
         offset+=heading.colSpan;
       }
+      if(key==='supercon')
+        lower=[...table.tHead.rows[1].querySelectorAll('th[data-group="supercon"]')];
       const selected=[...upper,...lower];
       return {upper:upper.length,lower:lower.length,
         cells:selected.map(el=>({
@@ -1018,8 +1020,8 @@ for(const width of [296,375,768]){
         leftover:table.tHead.querySelectorAll('th.section-selected').length-selected.length
       };
     },key);
-    const expectUpper={last5:5,recent:4,good:3,last90:5,road:8,matchup:8,supercon:7,analyzer:8}[key];
-    const expectLower={last5:0,recent:0,good:0,last90:0,matchup:0,road:0,supercon:0,analyzer:0}[key];
+    const expectUpper={last5:5,recent:4,good:3,last90:5,road:8,matchup:8,supercon:6,analyzer:8}[key];
+    const expectLower={last5:0,recent:0,good:0,last90:0,matchup:0,road:0,supercon:2,analyzer:0}[key];
     if(colors.upper!==expectUpper||colors.lower!==expectLower||colors.leftover!==0||
        colors.cells.some(v=>!v.selected||v.bg!=='rgb(114, 103, 49)'||
          v.fg!=='rgb(255, 255, 255)')||
