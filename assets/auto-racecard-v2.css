@@ -320,12 +320,8 @@
   display:block; font-size:24px; font-weight:var(--fw-strong);
   line-height:1.15; color:var(--c-text-primary);
 }
-.sport-auto .auto-race-table .auto-last5-finish.is-special .auto-last5-rank,
-.sport-auto .auto-race-table .auto-last5-rank:not(:first-child) {
+.sport-auto .auto-race-table .auto-last5-finish.is-special .auto-last5-rank {
   font-size:var(--fs-12);
-}
-.sport-auto .auto-race-table .auto-last5-finish:has(.auto-last5-rank:is(:first-child)):not(.auto-last5-rank-1):not(.auto-last5-rank-2):not(.auto-last5-rank-3):not(.is-special) .auto-last5-rank {
-  font-size:24px;
 }
 .sport-auto .auto-race-table .auto-last5-rank-1 .auto-last5-rank {
   background:var(--c-gold-light); border-radius:var(--r-xs); padding-inline:var(--space-2);
