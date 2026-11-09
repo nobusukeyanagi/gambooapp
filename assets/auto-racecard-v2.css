@@ -126,10 +126,28 @@
   font-weight:var(--fw-strong);
 }
 .sport-auto .auto-race-table .col-t { width:70px; min-width:70px; }
-/* Two-tier trial deviation heading uses the shared SCR-210 table design. */
-.sport-auto .auto-race-table .col-deviation-head { width:140px; min-width:140px; }
-.sport-auto .auto-race-table .col-deviation-sub,
-.sport-auto .auto-race-table .col-deviation-value { width:70px; min-width:70px; }
+/* Trial deviation: official standard value on the first line and
+   Gamboo values below; reuse rider/rank font tokens and vertical rhythm. */
+.sport-auto .auto-race-table .col-deviation {
+  box-sizing:border-box; width:120px; min-width:120px; max-width:120px;
+}
+.sport-auto .auto-race-table .deviation-primary {
+  display:block; font-size:var(--fs-16); font-weight:var(--fw-normal);
+  color:var(--c-text-primary); text-align:center;
+  line-height:1; margin-bottom:var(--space-5);
+}
+.sport-auto .auto-race-table .deviation-line {
+  display:grid; grid-template-columns:54px minmax(0,1fr);
+  align-items:center; column-gap:var(--space-1);
+  font-size:var(--fs-12); font-weight:var(--fw-normal);
+  color:var(--c-text-secondary); text-align:left; line-height:1;
+}
+.sport-auto .auto-race-table .deviation-line:nth-child(2) {
+  margin-bottom:var(--space-3);
+}
+.sport-auto .auto-race-table .deviation-number {
+  text-align:left; font-variant-numeric:tabular-nums;
+}
 /* Emphasize only the same-day trial time, not the historical figures. */
 .sport-auto .race-detail-scroll .auto-race-table tbody td.col-t[title="当日試走タイム"] {
   font-weight:var(--fw-strong);
