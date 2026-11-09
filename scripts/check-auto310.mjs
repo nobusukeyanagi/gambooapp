@@ -160,7 +160,8 @@ for(const width of [296,375,768]){
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
      deviations.headerCount!==29||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
-       x.text[1]!== (i===0?'0.09':'—')||x.text[2]!== (i===0?'0.09':'—')||
+       x.text[1]!==['0.09','0.09','0.10','0.08','0.09','0.11','0.09','0.10'][i]||
+       x.text[2]!==['0.09','0.08','0.10','0.08','0.10','0.10','0.09','0.10'][i]||
        JSON.stringify(x.labels)!==JSON.stringify(['全R','2連対'])||
        x.primary.font!=='16px'||x.primary.weight!=='400'||x.primary.align!=='center'||
        x.secondary.some(y=>y.font!=='12px'||y.weight!=='400'||y.align!=='left')||
@@ -200,6 +201,10 @@ for(const width of [296,375,768]){
     ['良1着','勝率'],['良2着','2連対率'],['良3着','3連対率'],['良着外','着外率'],
     ['湿1着','勝率'],['湿2着','2連対率'],['湿3着','3連対率'],['湿着外','着外率']
   ];
+  const expectedGood180=[[6,7,9,27],[4,14,7,26],[7,12,6,37],
+    [7,9,13,29],[6,10,13,33],[9,11,3,32],[16,9,13,17],[22,7,6,13]];
+  const expectedWet180=[[2,1,1,2],[9,2,5,2],[1,1,1,13],
+    [0,2,0,8],[1,3,1,10],[3,6,1,6],[2,3,5,3]];
   const expectedLabels=[
     ['1着','勝率'],['2着','2連対率'],['3着','3連対率'],['着外','着外率'],
     ['平均','試走T'],['平均','競走T'],['最高','競走T'],
@@ -225,7 +230,11 @@ for(const width of [296,375,768]){
      JSON.stringify(basicStats.roadHeaders)!==JSON.stringify(expectedRoadHeaders)||
      basicStats.upperTitles.includes('近180日成績')||
      basicStats.roadCells.length!==8||
-     basicStats.roadCells.some(c=>c.length!==8||c[0][0]!=='—'||c[1][0]!=='—'||c[4][0]!=='—'||c[5][0]!=='—')||
+     basicStats.roadCells.some((cells,i)=>{
+       const format=counts=>counts.map((n,j)=>[String(n),expectedRate(counts)[j]]);
+       return JSON.stringify(cells)!==
+         JSON.stringify([...format(expectedGood180[i]),...format(expectedWet180[i])]);
+     })||
      basicStats.headerHeight!==48||
      basicStats.headerCss.font!=='12px'||basicStats.headerCss.weight!=='600'||
      basicStats.countCss.font!=='16px'||basicStats.countCss.weight!=='400'||
