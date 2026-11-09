@@ -48,7 +48,7 @@ const safe=t=>String(t).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAl
 const group=(key,title,count)=>'<th class="auto-section" colspan="'+count+'" data-group="'+key+'">'+title+'</th>';
 const th=(text,klass)=>'<th class="auto-value '+(klass||"")+'">'+text+'</th>';
 const header='<tr>'+
-'<th rowspan="2" class="col-sha"><button type="button" class="sort-car">車番</button></th>'+
+'<th rowspan="2" class="col-sha">車番</th>'+
 '<th rowspan="2" class="col-name">選手名</th>'+
 '<th rowspan="2" class="col-h">ハンデ</th><th rowspan="2" class="col-t">試走T</th>'+
 '<th rowspan="2" class="col-t">偏差</th><th rowspan="2" class="col-t">平均ST</th>'+
@@ -122,8 +122,9 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!sheet.hidden)close
 let initialY=null;
 sheet.querySelector(".sheet-handle").addEventListener("touchstart",e=>{initialY=e.touches[0]?.clientY??null;},{passive:true});
 sheet.querySelector(".sheet-handle").addEventListener("touchend",e=>{if(initialY!==null&&(e.changedTouches[0]?.clientY??initialY)-initialY>35)close();initialY=null;},{passive:true});
-const body=table.tBodies[0],order=[...body.rows],power=table.querySelector(".sort-power");
-table.querySelector(".sort-car").addEventListener("click",()=>{order.forEach(tr=>body.appendChild(tr));power.setAttribute("aria-pressed","false");});
+const body=table.tBodies[0],power=table.querySelector(".sort-power");
+// Car numbers are fixed identifiers, not a sort control.
+// The existing 審査P button alone toggles between descending score and vehicle order.
 power.addEventListener("click",()=>{const high=power.getAttribute("aria-pressed")!=="true";
  [...body.rows].sort((a,b)=>high?Number(b.dataset.power)-Number(a.dataset.power):Number(a.dataset.vehicle)-Number(b.dataset.vehicle))
  .forEach(tr=>body.appendChild(tr));power.setAttribute("aria-pressed",String(high));});

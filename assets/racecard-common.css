@@ -13,6 +13,11 @@
   color: var(--c-gold);
   border-bottom-color: var(--c-gold);
 }
+/* Unselected menu entries have exactly the same secondary label color
+   on both SCR-210 and SCR-310, including two-line button contents. */
+.race-detail-scroll .race-menu-scroll .info-tab:not(.active) {
+  color: var(--c-text-secondary);
+}
 
 /* One source for box-table foreground, stroke and column-heading typography. */
 .race-detail-scroll .mania-table {
@@ -47,6 +52,12 @@
 }
 .race-detail-scroll .mania-table thead th * {
   font-weight: var(--fw-strong);
+}
+/* Box-table column names outside the selected menu section always use the
+   same primary text tone, even if the label contains a nested button/span. */
+.race-detail-scroll .mania-table thead th:not(.section-selected),
+.race-detail-scroll .mania-table thead th:not(.section-selected) :is(button,span) {
+  color: var(--c-text-primary);
 }
 .race-detail-scroll .mania-table thead tr:first-child th {
   top: 0;

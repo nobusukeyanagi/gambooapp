@@ -55,6 +55,11 @@
 }
 /* Header rows, numeric text, row height and surfaces come from racecard-common.css. */
 .sport-auto .auto-race-table thead th { z-index:3; }
+/* The box table starts immediately under the menu. Draw its missing full-width
+   upper 1px rule across every first-row header, including rowspan cells. */
+.sport-auto .auto-race-table thead tr:first-child > th {
+  border-top:var(--line-normal);
+}
 .sport-auto .auto-race-table :is(th,td).col-sha {
   position:sticky; left:0; width:50px; min-width:50px; max-width:50px;
   padding-inline:var(--space-2); z-index:5;
@@ -86,7 +91,7 @@
   font-weight:var(--fw-strong); line-height:1.1;
 }
 .sport-auto .race-table-wrap.scrolled .auto-race-table .sha-nm { display:block; }
-.sport-auto .auto-race-table :is(.sort-car,.sort-power) {
+.sport-auto .auto-race-table .sort-power {
   padding:0; margin:0; border:0; background:transparent; color:inherit;
   font:inherit; font-weight:var(--fw-strong); cursor:pointer;
 }

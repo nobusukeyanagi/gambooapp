@@ -116,6 +116,37 @@ for(const width of [296,375,768]){
   if(positions.count!==2||Math.abs(positions.fifthHeight-29)>0.6||
     positions.heights.some(h=>Math.abs(h-14.4)>0.7)||positions.fit.some(x=>x.overflow>1))
     errorsNow.push('fifth-row content overflows/missing: '+JSON.stringify(positions));
+  const canonical=await page.evaluate(()=>{
+    const table=document.querySelector('.auto-race-table');
+    const head=table.tHead.rows[0].cells[0];
+    const th=[...table.tHead.querySelectorAll('th')].find(el=>el.textContent.includes('ハンデ'));
+    const nonselectedMenu=document.querySelector('.race-menu-scroll .info-tab:not(.active)');
+    const sample=el=>({color:getComputedStyle(el).color,
+      weight:getComputedStyle(el).fontWeight,size:getComputedStyle(el).fontSize});
+    return {topBorder:getComputedStyle(head).borderTopWidth,
+      topColor:getComputedStyle(head).borderTopColor,
+      column:sample(th),menu:sample(nonselectedMenu),
+      staticCar:head.textContent.trim()==='車番'&&head.querySelectorAll('button,a').length===0,
+      upperRows:[...table.tHead.rows[0].cells].map(th=>getComputedStyle(th).borderTopWidth)};
+  });
+  const referencePage=await browser.newPage({viewport:{width,height:900},deviceScaleFactor:1});
+  await referencePage.goto(origin+'/SCR-210_racecardkeirin.html',{waitUntil:'load'});
+  const referenceColors=await referencePage.evaluate(()=>{
+    const th=document.querySelector('.mania-table thead th:not(.section-selected)');
+    const menu=document.querySelector('.race-menu-scroll .info-tab:not(.active)');
+    const sample=el=>({color:getComputedStyle(el).color,
+      weight:getComputedStyle(el).fontWeight,size:getComputedStyle(el).fontSize});
+    return {column:sample(th),menu:sample(menu)};
+  });
+  await referencePage.close();
+  if(!canonical.staticCar||canonical.upperRows.some(x=>x!=='1px')||
+     canonical.column.color!==referenceColors.column.color||
+     canonical.column.weight!==referenceColors.column.weight||
+     canonical.column.size!==referenceColors.column.size||
+     canonical.menu.color!==referenceColors.menu.color||
+     canonical.menu.weight!==referenceColors.menu.weight||
+     canonical.menu.size!==referenceColors.menu.size)
+    errorsNow.push('upper border/static 車番/inactive colors mismatch '+JSON.stringify({canonical,referenceColors}));
   const styles=await page.evaluate(()=>{
     const root=document.querySelector('.auto-race-table');
     const head=root.tHead.querySelector('th[data-group="recent"]');
@@ -183,9 +214,11 @@ for(const width of [296,375,768]){
   await page.locator('.sort-power').click();
   const first=await page.locator('.auto-race-table tbody .rider-name').first().innerText();
   if(first!=='中村雅人')errorsNow.push('power sort failed: '+first);
-  await page.locator('.sort-car').click();
+  await page.locator('.sort-power').click();
   const reset=await page.locator('.auto-race-table tbody .rider-name').first().innerText();
-  if(reset!=='五十嵐一夫')errorsNow.push('car order restore failed');
+  if(reset!=='五十嵐一夫')errorsNow.push('power sort toggle failed to restore vehicle order');
+  if(await page.locator('.auto-race-table .sort-car').count())
+    errorsNow.push('車番 heading must not be a clickable sort control');
   console.log(width+'px result:',JSON.stringify(result),'UI errors:',JSON.stringify(errorsNow));
   problems.push(...errorsNow.map(x=>width+'px '+x));
  }catch(e){problems.push(width+'px exception '+e.message);console.error(e);}
