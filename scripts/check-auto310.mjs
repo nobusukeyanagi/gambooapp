@@ -574,14 +574,14 @@ for(const width of [296,375,768]){
      and rendered using SCR-210's two-row 28/36px headers, 44px rider rows,
      50px sticky vehicle column and compact 16/12px statistic stack. */
   const detailSpecs=[
-    ['situation','走路状況別成績',4,1,'20.0:2:10','27.8:5:18','2','20.0%'],
-    ['roadtemp','走路温度別成績',8,2,'6.5:2:31','38.9:14:36','2','6.5%'],
-    ['trialrun','試走タイム別成績',11,5,'3.69','0.0:0:0','3','75.0%'],
-    ['handicap','ハンデ別成績',12,3,'0','0.0:0:4','1','33.3%'],
-    ['place','レース場別成績',4,1,'33.3:2:6','0.0:0:4','2','33.3%'],
-    ['motorcycle','競走車別成績',5,1,'ボーリバージュ','42.9:3:7','15','11.7%'],
-    ['raceclass','レース種別・日程別成績',8,2,'0.0:0:1','40.0:2:5','0','0.0%'],
-    ['racewin','勝ち上がり実績',3,1,'53.8:14:26','9.1:1:11','14/26','53.8%']
+    ['situation','走路状況別成績',4,1,'20.0:2:10','27.8:5:18','2','20%'],
+    ['roadtemp','走路温度別成績',8,2,'6.5:2:31','38.9:14:36','2','7%'],
+    ['trialrun','試走タイム別成績',11,5,'3.69','0.0:0:0','3','75%'],
+    ['handicap','ハンデ別成績',12,3,'0','0.0:0:4','1','33%'],
+    ['place','レース場別成績',4,1,'33.3:2:6','0.0:0:4','2','33%'],
+    ['motorcycle','競走車別成績',5,1,'ボーリバージュ','42.9:3:7','15','12%'],
+    ['raceclass','レース種別・日程別成績',8,2,'0.0:0:1','40.0:2:5','0','0%'],
+    ['racewin','勝ち上がり実績',3,1,'53.8:14:26','9.1:1:11','14/26','54%']
   ];
   const buttonAlignment=await page.locator('.auto-analyzer-btn').evaluateAll(btns=>
     btns.map(btn=>{
@@ -642,12 +642,16 @@ for(const width of [296,375,768]){
     if(!closed.sheet||!closed.overlay)errorsNow.push('lab sheet did not close '+key);
   }
   await page.locator('.race-menu-scroll .info-tab[data-target="player"]').click();
-  const selectorLinks=await page.locator('.race-selector').evaluate(el=>
-    [...el.querySelectorAll('a.race-tab[href*="/autorace/program"]')].map(a=>a.href));
-  if(selectorLinks.length!==11||selectorLinks.some(url=>
-      !url.startsWith('https://gamboo.jp/autorace/program?pid=2&rdt=20261109&rno=')||
-      !url.endsWith('&pt=1')))
-    errorsNow.push('race selector should open Gamboo racecards pt=1: '+JSON.stringify(selectorLinks));
+  const raceTapControls=await page.locator('.race-selector').evaluate(el=>
+    [...el.querySelectorAll('.race-tab')].map(tab=>({
+      tag:tab.tagName.toLowerCase(),race:Number(tab.dataset.race),
+      hasHref:tab.hasAttribute('href'),isCurrent:tab.getAttribute('aria-current')==='true'
+    })));
+  if(raceTapControls.length!==12||raceTapControls.some((tab,i)=>
+      tab.tag!=='div'||tab.race!==i+1||tab.hasHref||
+      tab.isCurrent!==(i===8)))
+    errorsNow.push('race selector must be twelve tap-only controls like SCR-210: '+
+      JSON.stringify(raceTapControls));
   const awardState=await page.locator('.auto-race-table').evaluate(table=>{
     const h=table.tHead.rows[0].querySelector('th.auto-titles-column');
     const cells=[...table.tBodies[0].rows].map(row=>{
