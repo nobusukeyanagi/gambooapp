@@ -224,50 +224,133 @@
       inner.querySelectorAll(".mania-table .item-btn").forEach(btn=>
         btn.classList.toggle("active",Number(btn.dataset.item)===idx));
     };
+    // Move the entire detail panel with the finger. The wide results table
+    // still receives ordinary horizontal scrolling and taps.
+    let swipeStart=null;
+    let dismissing=false;
+    let animationToken=0;
+    let suppressTap=false;
+    const clearMotion=()=>{
+      sheet.classList.remove("is-dragging");
+      sheet.style.removeProperty("transition");
+      sheet.style.removeProperty("transform");
+      overlay.style.removeProperty("transition");
+      overlay.style.removeProperty("opacity");
+    };
+    const finishClose=()=>{
+      ++animationToken;
+      dismissing=false;
+      swipeStart=null;
+      sheet.hidden=true;
+      overlay.hidden=true;
+      clearMotion();
+      inner.querySelectorAll(".mania-table .item-btn").forEach(btn=>
+        btn.classList.remove("active"));
+    };
+    const closeSheet=(animated=false)=>{
+      if(sheet.hidden || dismissing)return;
+      if(!animated){finishClose();return;}
+      ++animationToken;
+      const token=animationToken;
+      dismissing=true;
+      swipeStart=null;
+      sheet.classList.remove("is-dragging");
+      sheet.style.transition="transform 180ms ease-out";
+      overlay.style.transition="opacity 180ms ease-out";
+      sheet.style.transform="translate3d(0,100%,0)";
+      overlay.style.opacity="0";
+      window.setTimeout(()=>{
+        if(token===animationToken)finishClose();
+      },200);
+    };
     const openSheet=idx=>{
       if(!categories[idx])return;
+      ++animationToken;
+      dismissing=false;
+      swipeStart=null;
+      clearMotion();
       sheet.hidden=false;
       overlay.hidden=false;
       renderSheet(idx);
     };
-    const closeSheet=()=>{
-      sheet.hidden=true;
-      overlay.hidden=true;
-      inner.querySelectorAll(".mania-table .item-btn").forEach(btn=>
-        btn.classList.remove("active"));
+    const snapBack=()=>{
+      ++animationToken;
+      const token=animationToken;
+      sheet.classList.remove("is-dragging");
+      sheet.style.transition="transform 180ms ease-out";
+      overlay.style.transition="opacity 180ms ease-out";
+      sheet.style.transform="translate3d(0,0,0)";
+      overlay.style.opacity="1";
+      window.setTimeout(()=>{
+        if(token===animationToken && !swipeStart && !dismissing && !sheet.hidden)
+          clearMotion();
+      },200);
     };
     inner.querySelectorAll(".mania-table .item-btn").forEach(btn=>
       btn.addEventListener("click",()=>openSheet(Number(btn.dataset.item))));
-    sheet.querySelector(".sheet-close").addEventListener("click",closeSheet);
+    sheet.querySelector(".sheet-close").addEventListener("click",()=>closeSheet());
     const dragHandle=sheet.querySelector(".sheet-handle");
-    // Keep the handle tap action, but accept a downward swipe started anywhere
-    // inside the panel (title, header, table or sticky rider column).
-    dragHandle?.addEventListener("click",closeSheet);
-    let swipeStart=null;
+    dragHandle?.addEventListener("click",()=>closeSheet());
     sheet.addEventListener("pointerdown",event=>{
-      if(sheet.hidden || !event.isPrimary ||
-        (event.pointerType==="mouse"&&event.button!==0))return;
-      swipeStart={id:event.pointerId,x:event.clientX,y:event.clientY};
+      if(sheet.hidden || dismissing || !event.isPrimary ||
+        (event.pointerType==="mouse" && event.button!==0))return;
+      swipeStart={
+        id:event.pointerId,x:event.clientX,y:event.clientY,axis:null,dragged:false
+      };
     });
+    window.addEventListener("pointermove",event=>{
+      const swipe=swipeStart;
+      if(!swipe || event.pointerId!==swipe.id || sheet.hidden || dismissing)return;
+      const dx=event.clientX-swipe.x;
+      const dy=event.clientY-swipe.y;
+      if(!swipe.axis && (Math.abs(dx)>7 || Math.abs(dy)>7)){
+        swipe.axis=dy>0 && dy>Math.abs(dx)*1.3?"down":"other";
+        if(swipe.axis==="down"){
+          sheet.classList.add("is-dragging");
+          sheet.style.transition="none";
+          overlay.style.transition="none";
+          try{sheet.setPointerCapture?.(swipe.id);}catch(_err){}
+        }
+      }
+      if(swipe.axis!=="down")return;
+      swipe.dragged=true;
+      const distance=Math.max(0,dy);
+      sheet.style.transform="translate3d(0,"+distance+"px,0)";
+      overlay.style.opacity=String(Math.max(0,1-distance/sheet.clientHeight));
+      if(event.cancelable)event.preventDefault();
+    },{passive:false});
     window.addEventListener("pointerup",event=>{
-      if(!swipeStart || event.pointerId!==swipeStart.id)return;
-      const dy=event.clientY-swipeStart.y;
-      const dx=event.clientX-swipeStart.x;
+      const swipe=swipeStart;
+      if(!swipe || event.pointerId!==swipe.id)return;
       swipeStart=null;
-      if(!sheet.hidden && dy>=48 && dy>Math.abs(dx)*1.3)closeSheet();
+      if(swipe.axis!=="down")return;
+      suppressTap=true;
+      window.setTimeout(()=>{suppressTap=false;},0);
+      const dy=event.clientY-swipe.y;
+      const dx=event.clientX-swipe.x;
+      if(dy>=48 && dy>Math.abs(dx)*1.3)closeSheet(true);
+      else snapBack();
     });
     window.addEventListener("pointercancel",event=>{
-      if(swipeStart?.id===event.pointerId)swipeStart=null;
+      if(swipeStart?.id!==event.pointerId)return;
+      const dragged=swipeStart.axis==="down";
+      swipeStart=null;
+      if(dragged)snapBack();
     });
-    // A downward wheel/trackpad scroll also dismisses the non-scrollable sheet.
-    // Horizontal gestures continue to scroll the wide stat table normally.
+    // Don't activate a header button at the end of a drag.
+    sheet.addEventListener("click",event=>{
+      if(!suppressTap)return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    },true);
+    // Mouse-wheel and trackpad downward scrolling use the same exit animation.
     sheet.addEventListener("wheel",event=>{
-      if(sheet.hidden || event.deltaY<=0 ||
+      if(sheet.hidden || dismissing || event.deltaY<=0 ||
         event.deltaY<=Math.abs(event.deltaX)*1.3)return;
       event.preventDefault();
-      closeSheet();
+      closeSheet(true);
     },{passive:false});
-    overlay.addEventListener("click",closeSheet);
+    overlay.addEventListener("click",()=>closeSheet());
     window.addEventListener("keydown",event=>{
       if(event.key==="Escape"&&!sheet.hidden)closeSheet();
     });
