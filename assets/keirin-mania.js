@@ -307,7 +307,7 @@
     gindex: gindexHeading, mania: maniaHeading
   };
   // Map both header rows to their logical column indices, including rowspans.
-  // The final マニア分析 tab scrolls to 周長別 and covers every analyzer group.
+  // The final マニア分析 tab scrolls to the leading 総合 column and covers every analyzer group.
   const grid = [];
   const headerCells = [];
   Array.from(table.tHead?.rows || []).forEach((row, rowIndex) => {
