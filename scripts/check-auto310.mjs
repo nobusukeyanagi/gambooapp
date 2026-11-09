@@ -126,7 +126,7 @@ for(const width of [296,375,768]){
    errorsNow.push('different shared heights '+[result.header,result.selector,result.summary,result.menu,result.bottom]);
   if(result.activeTitle!=='オートレース予想'||result.selectedRace!=='9'||result.races!==12||result.redFrame!=='3px')
    errorsNow.push('header/selected race mismatch');
-  if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==7)
+  if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==6)
    errorsNow.push('rider/table/menu mismatch');
   const deviations=await page.locator('.auto-race-table').evaluate(table=>{
     const styles=e=>{const c=getComputedStyle(e);return {font:c.fontSize,color:c.color,weight:c.fontWeight,align:c.textAlign}};
@@ -158,7 +158,7 @@ for(const width of [296,375,768]){
      JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
      JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
-     deviations.headerCount!==29||deviations.cells.length!==8||
+     deviations.headerCount!==28||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!==['0.09','0.09','0.10','0.08','0.09','0.11','0.09','0.10'][i]||
        x.text[2]!==['0.09','0.08','0.10','0.08','0.10','0.10','0.09','0.10'][i]||
@@ -168,6 +168,43 @@ for(const width of [296,375,768]){
        x.labelStyles.some(y=>y.font!=='12px'||y.weight!=='400'||y.align!=='left')||
        Math.abs(x.starts[0]-x.starts[1])>0.5||!x.noOverflow))
     errorsNow.push('three-line deviation columns/data/alignment failed: '+JSON.stringify(deviations));
+  const awardState=await page.locator('.auto-race-table').evaluate(table=>{
+    const h=table.tHead.rows[0].querySelector('th[data-group="titles"]');
+    const cells=[...table.tBodies[0].rows].map(row=>{
+      const td=row.querySelector('td.auto-titles-cell');
+      const lines=[...td.querySelectorAll('.auto-titles-line')];
+      return {contents:lines.map(x=>[...x.querySelectorAll('span')].map(n=>n.textContent.trim())),
+        font:lines.map(x=>getComputedStyle(x).fontSize),
+        weight:lines.map(x=>getComputedStyle(x).fontWeight),
+        align:[getComputedStyle(td).textAlign,...lines.map(x=>getComputedStyle(x).textAlign)],
+        left:lines.map(x=>x.querySelector('.auto-titles-label').getBoundingClientRect().left),
+        numberLeft:lines.map(x=>x.querySelector('.auto-titles-count').getBoundingClientRect().left),
+        width:Math.round(td.getBoundingClientRect().width),
+        overflow:lines.some(x=>x.scrollWidth>x.clientWidth+1)
+      };
+    });
+    return {header:h.textContent.trim(),rowSpan:h.rowSpan,headerWidth:Math.round(h.getBoundingClientRect().width),
+      labels:[...document.querySelectorAll('.race-menu-scroll .info-tab')].map(x=>x.textContent.trim()),
+      sheetCount:document.querySelectorAll('.sheet,.sheet-overlay,.auto-detail-button').length,
+      lastCells:[...table.tBodies[0].rows].map(x=>x.cells.length),
+      cells};
+  });
+  const expectedAwards=[[0,0,10],[3,0,0],[2,0,10],[4,0,20],[1,0,49],[6,1,33],[13,1,57],[10,1,71]];
+  if(awardState.header!=='優出・優勝'||awardState.rowSpan!==2||awardState.headerWidth!==120||
+     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','近10走','良10走','近90日','近180日','優出・優勝'])||
+     awardState.sheetCount!==0||awardState.lastCells.some(n=>n!==28)||
+     awardState.cells.length!==8||
+     awardState.cells.some((r,i)=>{
+       const expected=[['今年優出',String(expectedAwards[i][0])],
+         ['今年優勝',String(expectedAwards[i][1])],
+         ['通算優勝',String(expectedAwards[i][2])]];
+       return JSON.stringify(r.contents)!==JSON.stringify(expected)||
+        r.font.some(x=>x!=='14px')||r.weight.some(x=>x!=='400')||
+        r.align.some(x=>x!=='left')||r.width!==120||r.overflow||
+        Math.max(...r.left)-Math.min(...r.left)>0.5||
+        Math.max(...r.numberLeft)-Math.min(...r.numberLeft)>0.5;
+     }))
+    errorsNow.push('award consolidation and removed analysis mismatch: '+JSON.stringify(awardState));
   const basicStats=await page.locator('.auto-race-table').evaluate(table=>{
     const head=[...table.tHead.rows[0].cells];
     const groups=['recent','good','last90'].map(k=>table.querySelector('thead th[data-group="'+k+'"]'));
@@ -390,12 +427,13 @@ for(const width of [296,375,768]){
   await comparison.close();
   const autoHeaderHeights=await page.locator('.auto-race-table').evaluate(table=>{
     const h=cell=>Math.round(cell.getBoundingClientRect().height);
-    return {group:h(table.tHead.rows[0].querySelector('th.auto-section')),
-      sub:h(table.tHead.rows[1].cells[0]),
-      span:h(table.tHead.rows[0].querySelector('th[rowspan="2"]'))};
+    return {span:h(table.tHead.rows[0].querySelector('th[rowspan="2"]')),
+      lastSpan:h(table.tHead.rows[0].querySelector('th[data-group="titles"]')),
+      bottomCells:table.tHead.rows[1].cells.length};
   });
-  if(['group','sub','span'].some(key=>Math.abs(autoHeaderHeights[key]-keirinHeaderHeights[key])>1)||
-     JSON.stringify(autoHeaderHeights)!==JSON.stringify({group:24,sub:24,span:48}))
+  if(Math.abs(autoHeaderHeights.span-keirinHeaderHeights.span)>1||
+     autoHeaderHeights.span!==48||autoHeaderHeights.lastSpan!==48||
+     autoHeaderHeights.bottomCells!==0)
     errorsNow.push('header heights differ from 210: '+JSON.stringify({autoHeaderHeights,keirinHeaderHeights}));
   if(positions.rows.slice(0,4).some((v,i)=>Math.abs(v-reference[i])>0.6))
     errorsNow.push('first four rows differ from SCR-210: '+JSON.stringify({auto:positions.rows,keirin:reference}));
@@ -427,7 +465,7 @@ for(const width of [296,375,768]){
     return {total:table.querySelectorAll('thead th,tbody td').length,
       tableBorder:measure(table),invalid};
   });
-  if(borderGrid.total!==299||borderGrid.invalid.length||
+  if(borderGrid.total!==252||borderGrid.invalid.length||
       ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
     errorsNow.push('box-table 1px grid / outside frame mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
@@ -486,8 +524,6 @@ for(const width of [296,375,768]){
     });
     const css=getComputedStyle(head);
     const activeCSS=getComputedStyle(selected);
-    const button=root.querySelector('.auto-detail-button');
-    const btn=getComputedStyle(button);
     const live=document.querySelector('.shared-app-header .header-title-text');
     return {actual,expected,cols,selected:{color:activeCSS.color,background:activeCSS.backgroundColor},
       heading:{color:css.color,size:css.fontSize,weight:css.fontWeight},
@@ -495,10 +531,7 @@ for(const width of [296,375,768]){
       bodyFont:getComputedStyle(rows[0].querySelector('.auto-value')).fontSize,
       titleFont:getComputedStyle(live).fontSize,
       legendFont:getComputedStyle(document.querySelector('.rt-legend dl dd')).fontSize,
-      buttons:root.querySelectorAll('.item-btn.auto-detail-button').length,
-      buttonWidth:Math.round(button.getBoundingClientRect().width),
-      buttonHeight:Math.round(button.getBoundingClientRect().height),
-      buttonBorder:btn.borderTopWidth};
+      analysisButtons:root.querySelectorAll('.auto-detail-button').length};
   });
   if(styles.titleFont!=='18px'||styles.legendFont!=='14px'||
      styles.heading.color!=='rgb(48, 54, 59)'||
@@ -510,13 +543,12 @@ for(const width of [296,375,768]){
      styles.actual.some((x,i)=>x.size!==22||x.font!=='16px'||
        x.fg!==styles.expected[i].fg||x.bg!==styles.expected[i].bg||
        x.border!==styles.expected[i].border)||
-     styles.buttons!==24||styles.buttonWidth!==54||styles.buttonHeight!==36||
-     styles.buttonBorder!=='1px')
+     styles.analysisButtons!==0)
     errorsNow.push('common menu/table/jersey/analysis style mismatch: '+JSON.stringify(styles));
   if(errors.length)errorsNow.push('browser JS errors '+errors);
   await page.screenshot({path:path.join(folder,'SCR-310-'+width+'.png'),fullPage:true,animations:'disabled'});
   // A selected menu item must paint its entire (two-row) header area gold.
-  for(const key of ['recent','good','last90','road','titles','mania']){
+  for(const key of ['recent','good','last90','road','titles']){
     await page.locator('.race-menu-scroll .info-tab[data-target="'+key+'"]').click();
     const colors=await page.locator('.auto-race-table').evaluate((table,key)=>{
       const upper=[...table.tHead.rows[0].querySelectorAll('th[data-group="'+key+'"]')];
@@ -538,8 +570,8 @@ for(const width of [296,375,768]){
         leftover:table.tHead.querySelectorAll('th.section-selected').length-selected.length
       };
     },key);
-    const expectUpper={recent:4,good:3,last90:4,road:8,titles:1,mania:1}[key];
-    const expectLower={recent:0,good:0,last90:0,road:0,titles:3,mania:3}[key];
+    const expectUpper={recent:4,good:3,last90:4,road:8,titles:1}[key];
+    const expectLower={recent:0,good:0,last90:0,titles:0,road:0}[key];
     if(colors.upper!==expectUpper||colors.lower!==expectLower||colors.leftover!==0||
        colors.cells.some(v=>!v.selected||v.bg!=='rgb(114, 103, 49)'||
          v.fg!=='rgb(255, 255, 255)')||
@@ -563,7 +595,7 @@ for(const width of [296,375,768]){
       tableLeft:wrap.scrollLeft,activeVisible:!!visible&&visible.left>=viewport.left-2&&visible.right<=viewport.right+2,
       selected:[...document.querySelectorAll('.auto-race-table thead th.section-selected')].length};
   });
-  if(syncStatus.tableLeft<1100||!['last90','road','titles','mania'].includes(syncStatus.tab)||
+  if(syncStatus.tableLeft<1100||!['last90','road','titles'].includes(syncStatus.tab)||
      !syncStatus.activeVisible||syncStatus.selected===0)
     errorsNow.push('table scroll must sync selected menu and horizontal strip: '+JSON.stringify(syncStatus));
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');
@@ -584,14 +616,7 @@ for(const width of [296,375,768]){
   }));
   if(!scrollState.active||scrollState.labels.some(x=>x==='none'))
     errorsNow.push('fixed rider names not visible during horizontal scroll '+JSON.stringify(scrollState));
-  await page.locator('.auto-detail-button[data-report="road"]').first().click();
-  if(!(await page.locator('.sheet').isVisible())||(await page.locator('.sheet .detail-table tbody tr').count())!==8)
-   errorsNow.push('details sheet does not open with 8 rows');
-  const detailNames=await page.locator('.sheet .detail-table tbody .dt-vehicle-short').allTextContents();
-  if(JSON.stringify(detailNames)!==JSON.stringify(fullPrefix))
-    errorsNow.push('detail panel short names must be first 3 chars: '+JSON.stringify(detailNames));
-  await page.locator('.sheet-close').click();
-  if(await page.locator('.sheet').isVisible())errorsNow.push('details sheet did not close');
+
   await page.locator('.sort-power').click();
   const first=await page.locator('.auto-race-table tbody .rider-name').first().innerText();
   if(first!=='中村雅人')errorsNow.push('power sort failed: '+first);
@@ -612,4 +637,4 @@ for(const width of [296,375,768]){
 }
 await browser.close();
 if(problems.length){console.error('SCR-310 checks failed:',problems);process.exitCode=1;}
-else console.log('SCR-310 shared UI / accurate 8 riders / details / sorting checks PASSED');
+else console.log('SCR-310 shared UI / accurate 8 riders / awards / sorting checks PASSED');
