@@ -186,7 +186,7 @@ for(const width of [296,375,768]){
      JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
      JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
-     deviations.headerCount!==58||deviations.cells.length!==8||
+     deviations.headerCount!==56||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!==['0.09','0.09','0.10','0.08','0.09','0.11','0.09','0.10'][i]||
        x.text[2]!==['0.09','0.08','0.10','0.08','0.10','0.10','0.09','0.10'][i]||
@@ -223,6 +223,8 @@ for(const width of [296,375,768]){
         dateTextWidth:(()=>{const range=document.createRange();range.selectNodeContents(dateEl);
           const width=range.getBoundingClientRect().width;range.detach();return width;})(),
         detailInset:Math.round(detail.getBoundingClientRect().left-cell.getBoundingClientRect().left),
+        textInset:Math.round(cell.querySelector('.auto-last5-race').getBoundingClientRect().left-
+          cell.getBoundingClientRect().left),
         rank:rank.textContent.trim(),rankStyle:style(rank),
         rankRect:{x:Math.round(rank.getBoundingClientRect().left-cell.getBoundingClientRect().left),
           top:Math.round(rank.getBoundingClientRect().top-entry.getBoundingClientRect().top),
@@ -263,7 +265,7 @@ for(const width of [296,375,768]){
          !r.venue||!r.date||r.detailRows.length!==3)return true;
       if(r.gradeFont!=='12px'||r.metaAlign!=='left'||r.metaRows!=='16px 12px 12px'||
          r.metaInset!==6||r.metaWidth!==38||r.dateTextWidth>r.metaWidth+0.5||
-         r.rankRect.x!==47||r.detailInset!==81||r.rankRect.top!==3||
+         r.rankRect.x!==47||r.detailInset!==78||r.textInset!==81||r.rankRect.top!==3||
          r.rankRect.width!==30||r.rankRect.height!==30||
          r.rankStyle.font!=='16px'||r.rankStyle.weight!=='600'||
          r.noteStyle.align!=='left'||r.noteStyle.x!==r.rankRect.x||
