@@ -72,8 +72,9 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 62px;
-  height: 72%;
+  top: var(--h-header);
+  bottom: calc(var(--h-bottom-nav) + var(--space-2));
+  height: auto;
   z-index: 11;
   display: flex;
   flex-direction: column;
@@ -116,14 +117,9 @@
 .sheet-body {
   flex: 1 1 auto;
   min-height: 0;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-width: thin;
-}
-.sheet-note {
-  padding: var(--space-card) var(--space-content) var(--space-10);
-  font-size: var(--fs-12);
-  color: var(--c-text-secondary);
-  line-height: 1.4;
 }
 .sheet .detail-table {
   width: max-content;
@@ -151,17 +147,29 @@
 }
 .sheet .detail-table thead tr:first-child th {
   top: 0;
-  height: 32px;
+  height: 28px;
 }
 .sheet .detail-table thead tr:nth-child(2) th {
-  top: 32px;
-  height: 28px;
+  top: 28px;
+  height: 36px;
+}
+.sheet .detail-table thead th.dt-stat-heading {
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+}
+.sheet .detail-table thead th.dt-stat-heading .recent4-heading-main,
+.sheet .detail-table thead th.dt-stat-heading .recent4-heading-rate {
+  display: block;
+  font-size: var(--fs-12);
+  line-height: 1.3;
 }
 .sheet .detail-table thead th.dt-grp {
   font-size: var(--fs-12);
 }
 .sheet .detail-table tbody td {
-  height: 56px;
+  height: 42px;
+  padding-top: 0;
+  padding-bottom: 0;
   background: var(--c-surface);
 }
 .sheet .detail-table tbody tr:nth-child(even) td {
@@ -175,7 +183,7 @@
   width: 60px;
   min-width: 60px;
   max-width: 60px;
-  padding: var(--space-small);
+  padding: var(--space-1) var(--space-2);
   z-index: 4;
   background: var(--c-surface);
 }
@@ -190,22 +198,22 @@
 .sheet .detail-table .dt-vehicle-heading-sub {
   display: block;
   font-size: var(--fs-12);
-  font-weight: var(--fw-normal);
+  font-weight: var(--fw-strong);
 }
 .sheet .detail-table .dt-vehicle-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: var(--space-2);
 }
 .sheet .detail-table .dt-vehicle .frame-cell {
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   font-size: var(--fs-14);
 }
 .sheet .detail-table .dt-vehicle-short {
@@ -246,25 +254,45 @@
 }
 .sheet .detail-table .recent4-count {
   display: block;
-  font-size: var(--fs-14);
+  font-size: var(--fs-16);
   font-weight: var(--fw-normal);
-  line-height: 1.25;
+  line-height: 1.2;
   color: var(--c-text-primary);
   font-variant-numeric: tabular-nums;
 }
 .sheet .detail-table .recent4-rate {
   display: table;
-  margin: var(--space-2) auto 0;
+  width: max-content;
+  margin: var(--space-5) auto 0;
   padding: 0 var(--space-2);
   border-radius: var(--r-xs);
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
-  line-height: 1.25;
-  color: var(--c-text-primary);
+  line-height: 1.2;
+  color: var(--c-text-secondary);
   font-variant-numeric: tabular-nums;
+}
+.sheet .detail-table .recent4-rate:is(.recent4-rank-1,.recent4-rank-2,.recent4-rank-3) {
+  color: var(--c-text-primary);
 }
 .sheet .detail-table .dt-difference {
   color: var(--c-text-primary);
   font-size: var(--fs-14);
   font-variant-numeric: tabular-nums;
+}
+
+/* Nine complete rows without a second vertical scroll in short viewports. */
+@media (max-height: 590px) {
+  .sheet { top: 0; }
+}
+@media (max-height: 520px) {
+  .sheet-handle { display: none; }
+  .sheet .detail-table thead tr:first-child th { height: 26px; }
+  .sheet .detail-table thead tr:nth-child(2) th { top: 26px; height: 32px; }
+  .sheet .detail-table tbody td { height: 38px; }
+  .sheet .detail-table .dt-vehicle .frame-cell {
+    width: 20px;
+    height: 20px;
+    font-size: var(--fs-12);
+  }
 }
