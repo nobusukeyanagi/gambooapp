@@ -68,7 +68,7 @@
   const maniaItems = [
     ["周長","distance"],["見なし<br>直線","line"],
     ["レース<br>種別","race"],["レース<br>日程","day"],
-    ["グレード","grade"],["勝ち上<br>がり率","advance"],
+    ["グレ<br>ード","grade"],["勝ち上<br>がり率","advance"],
     ["車番","car"],["同県<br>選手","pref"]
   ];
   const placeGroups = ["ラインの先頭","2番手","3番手以降","単騎","競り"];
