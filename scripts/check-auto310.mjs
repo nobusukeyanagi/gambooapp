@@ -68,6 +68,10 @@ for(const width of [296,375,768]){
       }),
       hyphen:pair.querySelector('.auto-supercon-dash')?.textContent.trim(),
       dashWidth:Math.round(pair.querySelector('.auto-supercon-dash')?.getBoundingClientRect().width||0),
+      dashLayoutWidth:getComputedStyle(pair.querySelector('.auto-supercon-dash')).width,
+      dashScale:parseFloat(getComputedStyle(pair.querySelector('.auto-supercon-dash')).transform.match(/matrix\(([^,]+)/)?.[1]||'0'),
+      carOffsets:[...pair.querySelectorAll('.lineup-car')].map(car=>
+        Math.round(car.getBoundingClientRect().left-pair.getBoundingClientRect().left)),
       dashFont:getComputedStyle(pair.querySelector('.auto-supercon-dash')).fontSize,
       marginLeft:getComputedStyle(pair).marginLeft
     }));
@@ -98,7 +102,9 @@ for(const width of [296,375,768]){
      supercon.starsText!=='★★★'||supercon.starsColor!==supercon.goldToken||
      supercon.parts.length!==3||
      supercon.parts.map(x=>x.nums.join('-')).join('|')!=='1-8|8-1|1-5'||
-     supercon.parts.some((x,i)=>x.hyphen!=='―'||x.dashWidth!==12||x.dashFont!=='12px'||x.classes.some(y=>!y)||
+     supercon.parts.some((x,i)=>x.hyphen!=='―'||x.dashWidth!==10||x.dashLayoutWidth!=='12px'||
+       Math.abs(x.dashScale-0.82)>0.001||JSON.stringify(x.carOffsets)!=='[0,36]'||
+       x.dashFont!=='12px'||x.classes.some(y=>!y)||
        x.sizes.some(size=>size[0]!==22||size[1]!==22)||
        (i===0?parseFloat(x.marginLeft)!==0:Math.abs(parseFloat(x.marginLeft)+parseFloat(supercon.row.gap)-22)>0.1))||
      supercon.hasRightButton||!supercon.placement||
@@ -202,7 +208,9 @@ for(const width of [296,375,768]){
     rows:[...table.tBodies[0].rows].map(row=>[...row.querySelectorAll('td.auto-last5-cell')].map(cell=>{
       const grade=cell.querySelector('.auto-last5-grade'),meta=cell.querySelector('.auto-last5-meta'),
         entry=cell.querySelector('.auto-last5-entry'),rank=cell.querySelector('.auto-last5-rank'),
-        note=cell.querySelector('.auto-last5-flag');
+        note=cell.querySelector('.auto-last5-flag'),
+        noteText=note.querySelector('.auto-last5-flag-text'),dateEl=cell.querySelector('.auto-last5-date'),
+        detail=cell.querySelector('.auto-last5-detail'),track=cell.querySelector('.auto-last5-track');
       const style=el=>{const x=getComputedStyle(el);return {font:x.fontSize,weight:x.fontWeight,color:x.color}};
       return {
         grade:grade.textContent.trim(),gradeClass:grade.className,gradeFont:style(grade).font,
@@ -211,16 +219,24 @@ for(const width of [296,375,768]){
         metaRows:getComputedStyle(meta).gridTemplateRows,
         metaAlign:getComputedStyle(meta).textAlign,
         metaInset:Math.round(meta.getBoundingClientRect().left-cell.getBoundingClientRect().left),
+        metaWidth:Math.round(meta.getBoundingClientRect().width),
+        dateTextWidth:(()=>{const range=document.createRange();range.selectNodeContents(dateEl);
+          const width=range.getBoundingClientRect().width;range.detach();return width;})(),
+        detailInset:Math.round(detail.getBoundingClientRect().left-cell.getBoundingClientRect().left),
         rank:rank.textContent.trim(),rankStyle:style(rank),
         rankRect:{x:Math.round(rank.getBoundingClientRect().left-cell.getBoundingClientRect().left),
           top:Math.round(rank.getBoundingClientRect().top-entry.getBoundingClientRect().top),
           height:Math.round(rank.getBoundingClientRect().height),
           width:Math.round(rank.getBoundingClientRect().width)},
         flag:note.textContent.trim(),noteStyle:{...style(note),align:getComputedStyle(note).textAlign,
-          x:Math.round(note.getBoundingClientRect().left-cell.getBoundingClientRect().left)},
+          x:Math.round(note.getBoundingClientRect().left-cell.getBoundingClientRect().left),
+          noteWidth:Math.round(note.getBoundingClientRect().width),
+          textWidth:noteText.getBoundingClientRect().width,
+          transform:getComputedStyle(noteText).transform},
         detailRows:[...cell.querySelectorAll('.auto-last5-detail > div')].map(e=>e.textContent.trim()),
         numberStyles:[...cell.querySelectorAll('.auto-last5-number')].map(style),
         labelStyles:[...cell.querySelectorAll('.auto-last5-label')].map(style),
+        track:track.textContent.trim(),trackStyle:style(track),
         link:cell.querySelector('a.auto-last5-link')?.href||'',
         width:Math.round(cell.getBoundingClientRect().width)
       };
@@ -244,12 +260,16 @@ for(const width of [296,375,768]){
       if(r.width!==220||!r.link.includes('autorace.jp/netstadium/RaceResult/')||
          !r.venue||!r.date||r.detailRows.length!==3)return true;
       if(r.gradeFont!=='12px'||r.metaAlign!=='left'||r.metaRows!=='16px 12px 12px'||
-         r.metaInset!==6||r.rankRect.x!==54||r.rankRect.top!==3||
+         r.metaInset!==6||r.metaWidth!==38||r.dateTextWidth>r.metaWidth+0.5||
+         r.rankRect.x!==44||r.detailInset!==78||r.rankRect.top!==3||
          r.rankRect.width!==30||r.rankRect.height!==30||
          r.rankStyle.font!=='16px'||r.rankStyle.weight!=='600'||
          r.noteStyle.align!=='left'||r.noteStyle.x!==r.rankRect.x||
+         r.noteStyle.noteWidth!==30||r.noteStyle.textWidth>30.5||
          r.noteStyle.color!==expectedRed)return true;
-      if(!standardNumber(r)||!standardLabel(r))return true;
+      if(!standardNumber(r)||!standardLabel(r)||
+         r.trackStyle.font!=='12px'||r.trackStyle.weight!=='600'||
+         r.trackStyle.color!=='rgb(48, 54, 59)'||!r.track)return true;
       if(j>=2&&(r.grade!==expectedGrade(i)||!r.gradeClass.includes(expectedClass(i))))return true;
       return false;
     });
@@ -259,7 +279,7 @@ for(const width of [296,375,768]){
      lastFive.widths.some(x=>x!==220)||lastFive.headingFonts.some(x=>x!=='12px')||
      lastFive.headerBorders.some(([top,bottom])=>top!=='0px'||bottom!=='1px')||
      invalidLastFiveRows||
-     lastFive.rows[0][0].detailRows.join('|')!=='5R予選|試走3.35良H20|競3.439ST0.22'||
+     lastFive.rows[0][0].detailRows.join('|')!=='5R予選|試走3.35H20良|競3.439ST0.22'||
      lastFive.rows[2][0].flag!=='戒'||
      lastFive.rows[2][2].rank!=='-'||lastFive.rows[2][2].flag!=='自落'||
      lastFive.rows[5][3].rank!=='-'||lastFive.rows[5][3].flag!=='不成立'||
@@ -277,8 +297,11 @@ for(const width of [296,375,768]){
         labels:lines.map(x=>{const c=getComputedStyle(x.querySelector('.auto-titles-label'));return {font:c.fontSize,color:c.color,weight:c.fontWeight};}),
         values:lines.map(x=>{const c=getComputedStyle(x.querySelector('.auto-titles-count'));return {font:c.fontSize,color:c.color,weight:c.fontWeight};}),
         align:[getComputedStyle(td).textAlign,...lines.map(x=>getComputedStyle(x).textAlign)],
+        countAlign:lines.map(x=>getComputedStyle(x.querySelector('.auto-titles-count')).textAlign),
         left:lines.map(x=>x.querySelector('.auto-titles-label').getBoundingClientRect().left),
         numberLeft:lines.map(x=>x.querySelector('.auto-titles-count').getBoundingClientRect().left),
+        numberRight:lines.map(x=>x.querySelector('.auto-titles-count').getBoundingClientRect().right),
+        labelRight:lines.map(x=>x.querySelector('.auto-titles-label').getBoundingClientRect().right),
         width:Math.round(td.getBoundingClientRect().width),
         overflow:lines.some(x=>x.scrollWidth>x.clientWidth+1)
       };
@@ -290,7 +313,7 @@ for(const width of [296,375,768]){
       cells};
   });
   const expectedAwards=[[0,0,10],[3,0,0],[2,0,10],[4,0,20],[1,0,49],[6,1,33],[13,1,57],[10,1,71]];
-  if(awardState.header!=='優出・優勝'||awardState.rowSpan!==2||awardState.headerWidth!==120||
+  if(awardState.header!=='優出・優勝'||awardState.rowSpan!==2||awardState.headerWidth!==100||
      JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近10走','良10走','直近5レース出走表','直近90走','直近180日','優出・優勝'])||
      awardState.sheetCount!==0||awardState.lastCells.some(n=>n!==33)||
      awardState.cells.length!==8||
@@ -302,7 +325,9 @@ for(const width of [296,375,768]){
         r.font.some(x=>x!=='12px')||r.weight.some(x=>x!=='400')||
         r.labels.some(x=>x.font!=='12px'||x.color!=='rgb(96, 107, 118)'||x.weight!=='400')||
         r.values.some(x=>x.font!=='12px'||x.color!=='rgb(48, 54, 59)'||x.weight!=='400')||
-        r.align.some(x=>x!=='left')||r.width!==120||r.overflow||
+        r.align.some(x=>x!=='left')||r.countAlign.some(x=>x!=='right')||
+        r.width!==100||r.overflow||r.labelRight.some((x,k)=>x>r.numberLeft[k]+0.5)||
+        Math.max(...r.numberRight)-Math.min(...r.numberRight)>0.5||
         Math.max(...r.left)-Math.min(...r.left)>0.5||
         Math.max(...r.numberLeft)-Math.min(...r.numberLeft)>0.5;
      }))
