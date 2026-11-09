@@ -48,6 +48,22 @@ const best90Races=[
  ["3.439","川口"],["3.444","川口"],["3.418","飯塚"],["3.413","浜松"],
  ["3.408","川口"],["3.408","山陽"],["3.412","伊勢崎"],["3.398","川口"]
 ];
+/* 2026-11-09 川口9R. Fixed race snapshot from the user-supplied
+   スパコン直前予想 (良・走路温度:全) and スパコン前日予想.
+   Columns: predicted finish (order), ◎/○/△/× (mark), predicted race
+   time rounded to 3 decimals; strong point, form, passing/overtaking
+   ability, escape ability, and starting ability from the day-before page.
+   Row order is 1–8 (car number), independent of sorting. */
+const superconForecast=[
+ {order:1,mark:"◎",time:"3.724",strong:38.5,form:"up",handling:62,escape:69,start:54},
+ {order:7,mark:"",time:"3.783",strong:34.8,form:"flat",handling:81,escape:78,start:40},
+ {order:5,mark:"",time:"3.768",strong:42.6,form:"down",handling:59,escape:62,start:38},
+ {order:6,mark:"",time:"3.768",strong:52.6,form:"flat",handling:71,escape:83,start:58},
+ {order:3,mark:"△",time:"3.724",strong:49.1,form:"flat",handling:74,escape:78,start:45},
+ {order:8,mark:"",time:"3.923",strong:56.9,form:"flat",handling:77,escape:88,start:58},
+ {order:4,mark:"×",time:"3.736",strong:61.7,form:"flat",handling:90,escape:94,start:61},
+ {order:2,mark:"○",time:"3.709",strong:63.8,form:"up",handling:91,escape:96,start:65}
+];
 const players=raw.map((a,i)=>({name:a[0],short:Array.from(a[0]).slice(0,3).join(""),loc:a[2],ki:a[3],age:a[4],todayTrial:raceDayTrials[i],
  rank:a[5],prev:a[6],car:a[7],h:a[8],st:a[9],good10Diff:a[10],
   deviationNormal:superconDeviations[i].normal,deviationTop2:superconDeviations[i].top2,
@@ -186,6 +202,41 @@ const headToHeadCells=playerIndex=>headToHead360[playerIndex].map((record,j)=>{
   '<span class="auto-matchup-score">'+score+'</span>'+
   '<span class="auto-matchup-percent">'+percent+'</span></td>';
 }).join("");
+/* Descending competition ranking: tied values share the same rank.
+   Only top three ranks receive the common gold/blue/bronze text background. */
+const superconRanks=key=>{
+ const ranks=Array(8).fill(0);
+ const data=superconForecast.map((p,i)=>({i,value:p[key]}))
+   .sort((a,b)=>b.value-a.value||a.i-b.i);
+ let previous=null,rank=0;
+ for(let i=0;i<data.length;i++){
+  if(i===0||data[i].value!==previous)rank=i+1;
+  if(rank<=3)ranks[data[i].i]=rank;
+  previous=data[i].value;
+ }
+ return ranks;
+};
+const superconRanking={
+ strong:superconRanks("strong"),handling:superconRanks("handling"),
+ escape:superconRanks("escape"),start:superconRanks("start")
+};
+const superconNumber=(value,rank)=>'<span class="auto-sp-number'+
+ (rank?' auto-sp-rank-'+rank:'')+'">'+safe(value)+'</span>';
+const superconCells=i=>{
+ const p=superconForecast[i];
+ const formLabel={up:"上向き",flat:"平行",down:"下降"}[p.form];
+ const formArrow={up:"↑",flat:"→",down:"↓"}[p.form];
+ return '<td class="auto-sp-cell auto-sp-prediction auto-start">'+
+    '<span class="auto-sp-mark">'+safe(p.mark)+'</span>'+
+    '<span class="auto-sp-order">'+p.order+'着</span></td>'+
+  '<td class="auto-sp-cell auto-sp-racetime">'+safe(p.time)+'</td>'+
+  '<td class="auto-sp-cell">'+superconNumber(p.strong,superconRanking.strong[i])+'</td>'+
+  '<td class="auto-sp-cell auto-sp-form" aria-label="調子 '+formLabel+
+    '" title="調子 '+formLabel+'"><span class="auto-sp-form-'+p.form+'">'+formArrow+'</span></td>'+
+  '<td class="auto-sp-cell">'+superconNumber(p.handling,superconRanking.handling[i])+'</td>'+
+  '<td class="auto-sp-cell">'+superconNumber(p.escape,superconRanking.escape[i])+'</td>'+
+  '<td class="auto-sp-cell">'+superconNumber(p.start,superconRanking.start[i])+'</td>';
+};
 const roadHeaders=()=>["良","湿"].flatMap((track,k)=>
  [["1着","勝率"],["2着","2連対率"],["3着","3連対率"],["着外","着外率"]]
  .map(([name,rate],i)=>'<th rowspan="2" data-group="road" class="auto-value auto-stat-heading auto-road-heading'+
@@ -204,8 +255,15 @@ const header='<tr>'+
 last5Headers()+statHeaderGroup("recent")+timeHeader("平均","試走T",true)+
 timeHeader("平均","競走T",false)+timeHeader("最高","競走T",false)+
 statHeaderGroup("last90")+
-'<th rowspan="2" class="auto-best90-heading" data-group="last90">最高T</th>'+
-roadHeaders()+headToHeadHeaders()+'</tr>';
+'<th rowspan="2" class="auto-best90-heading" data-group="last90">最高競走T</th>'+
+roadHeaders()+headToHeadHeaders()+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-start">予想着順</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">予想競走T</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">ストロングP</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">調子</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">捌き力</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">逃げ力</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">スタート力</th></tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
 const subhead='<tr></tr>';
 table.tHead.innerHTML=header+subhead;
@@ -296,7 +354,7 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   const fields=main+titlesCell(p)+last5Cells(i)+
   statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+
   statCells(p.r90,last90Ranks[i])+best90Cell(p)+roadCells(p,i)+
-  headToHeadCells(i);
+  headToHeadCells(i)+superconCells(i);
   return '<tr data-vehicle="'+(i+1)+'" data-power="'+p.power+'">'+fields+'</tr>';
 }).join("");
 // Synchronize table drags, active menu and menu-strip position exactly as
