@@ -117,15 +117,11 @@
   gap: var(--space-card);
 }
 .race-detail-scroll .mania-table .meeting-cell .meeting-meta {
-  box-sizing: border-box;
   display: grid;
   grid-template-rows: 16px 12px 12px;
   row-gap: var(--space-3);
   justify-items: start;
   align-items: center;
-  flex: 0 0 50px;
-  width: 50px;
-  min-width: 50px;
   font-size: var(--fs-12);
   line-height: 1;
   color: var(--c-text-primary);
@@ -174,7 +170,6 @@
 /* Match 50px meeting labels and race-result tiles: four fullwidth characters
    at the shared 12px font size, with room for 2px of rendering tolerance. */
 .race-detail-scroll .mania-table .meeting-cell .res {
-  box-sizing: border-box;
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -182,9 +177,6 @@
   row-gap: var(--space-2);
   justify-items: center;
   align-items: center;
-  flex: 0 0 50px;
-  width: 50px;
-  min-width: 50px;
   height: 50px;
   min-height: 50px;
   margin: 0;
@@ -363,12 +355,7 @@
   text-align: left;
 }
 
-/* Explanation for first-time readers: a readable learning sequence. */
-.race-detail-scroll .rt-legend .rt-legend-intro {
-  margin: var(--space-card) 0 var(--space-section);
-  color: var(--c-text-primary);
-  font-size: var(--fs-14);
-}
+/* Compact, single-column glossary typography. */
 .race-detail-scroll .rt-legend dl dt {
   font-size: var(--fs-14);
   white-space: normal;
@@ -377,29 +364,12 @@
   font-size: var(--fs-14);
   line-height: 1.6;
 }
-.race-detail-scroll .rt-legend .rt-legend-tip {
-  margin: var(--space-section) 0 var(--space-card);
-  color: var(--c-text-primary);
-  font-size: var(--fs-14);
-  line-height: 1.6;
-}
-.race-detail-scroll .rt-legend .rt-legend-source {
-  margin: 0;
-  font-size: var(--fs-12);
-}
-.race-detail-scroll .rt-legend .rt-legend-source a {
-  color: var(--c-keirin);
-  text-decoration: underline;
-}
-
 /* Racecard-only typography: current grade and riding style are 16px;
    the previous grade appears below at 12px in muted grey. */
 .race-detail-scroll .mania-table tbody td.cls .grade-current {
   display: block;
   font-size: var(--fs-16);
   line-height: 1.2;
-}
-.race-detail-scroll .mania-table tbody td.cls .grade-current {
   margin-bottom: var(--space-5);
 }
 .race-detail-scroll .mania-table tbody td.cls .grade-prev {
