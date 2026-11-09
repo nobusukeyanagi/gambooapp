@@ -40,6 +40,7 @@ const superconDeviations=[
  {normal:"0.10",top2:"0.10"}
 ];
 // Same rule as SCR-210: the first three characters of the full rider name.
+const last5RaceResults=[[["11/8","川口","良","5R予選","2","3.439","3.35","0.22","20",""],["11/7","川口","良","8R予選","1","3.452","3.37","0.21","20",""],["10/25","伊勢崎","湿","4R一般","2","3.729","3.66","0.12","0",""],["10/24","伊勢崎","湿","8R一般","4","3.732","3.66","0.08","0",""],["10/23","伊勢崎","良","1R予選","5","3.468","3.40","0.16","0",""]],[["11/8","川口","良","1R予選","4","3.460","3.36","0.29","30",""],["11/7","川口","良","3R予選","3","3.455","3.36","0.10","40",""],["11/4","川口","湿","6R選抜","2","3.923","3.78","0.19","20",""],["11/3","川口","良","5R準決","6","3.452","3.36","0.15","20",""],["11/2","川口","湿","7R予選","1","3.767","3.68","0.19","30",""]],[["11/8","川口","良","11R予選","4","3.431","3.33","0.39","30","戒"],["11/7","川口","良","4R予選","1","3.443","3.37","0.30","40",""],["11/2","浜松","湿","5R一般","自落","-","3.63","0.42","0",""],["11/1","浜松","良","3R一般","7","3.477","3.38","0.28","0",""],["10/31","浜松","斑","1R予選","8","3.513","3.40","0.26","0",""]],[["11/8","川口","良","2R予選","1","3.422","3.38","0.25","50",""],["11/7","川口","良","11R予選","1","3.424","3.34","0.25","40",""],["11/3","浜松","斑","3R一般","2","3.413","3.34","0.08","0",""],["11/2","浜松","湿","3R一般","6","3.832","3.61","0.09","0",""],["11/1","浜松","良","5R予選","6","3.435","3.35","0.09","0",""]],[["11/8","川口","良","4R予選","1","3.413","3.29","0.25","50",""],["11/7","川口","良","10R予選","2","3.408","3.33","0.26","40",""],["11/3","浜松","良","4R一般","5","3.426","3.33","0.08","0",""],["11/2","浜松","斑","1R一般","7","3.442","3.35","0.03","0",""],["11/1","浜松","良","11R予選","4","3.410","3.32","0.14","0",""]],[["11/8","川口","良","8R予選","2","3.414","3.34","0.18","40",""],["11/7","川口","良","5R予選","1","3.416","3.30","0.19","50",""],["11/3","浜松","良","11R特選","8","3.426","3.31","0.04","0",""],["11/2","浜松","湿","12R準決","","不成立","-","-","-",""],["11/1","浜松","良","5R予選","4","3.432","3.32","0.02","0",""]],[["11/8","川口","良","3R予選","2","3.419","3.32","0.15","50",""],["11/7","川口","良","8R予選","3","3.436","3.36","0.18","40",""],["11/3","浜松","良","10R選抜","7","3.445","3.37","0.05","0",""],["11/2","浜松","湿","9R準決","7","3.651","3.64","0.12","0",""],["11/1","浜松","良","8R予選","3","3.432","3.34","0.09","0",""]],[["11/8","川口","良","12R予選","2","3.398","3.33","0.24","40",""],["11/7","川口","良","10R予選","1","3.401","3.31","0.24","40",""],["11/2","浜松","湿","3R一般","3","3.716","3.66","0.36","0",""],["11/1","浜松","良","3R一般","3","3.442","3.35","0.20","0",""],["10/31","浜松","風","11R予選","5","3.448","3.37","0.16","0",""]]];
 const players=raw.map((a,i)=>({name:a[0],short:Array.from(a[0]).slice(0,3).join(""),loc:a[2],ki:a[3],age:a[4],todayTrial:raceDayTrials[i],
  rank:a[5],prev:a[6],car:a[7],h:a[8],st:a[9],good10Diff:a[10],
   deviationNormal:superconDeviations[i].normal,deviationTop2:superconDeviations[i].top2,
@@ -86,6 +87,42 @@ const statHeaderGroup=key=>[
  statHeader("着外","着外率",false,key)
 ].join("");
 const timeHeader=(a,b,first)=>'<th rowspan="2" data-group="good" class="auto-value auto-time-heading'+(first?' auto-start':'')+'"><span>'+a+'</span><span>'+b+'</span></th>';
+
+/* Five horizontal race columns, recent first. The date/venue group is kept
+   small like SCR-210's meeting metadata; finish gets a large central area.
+   Only 11/7 onward can be labeled 普通 from the supplied current-meeting heading.
+   Older meeting grades are deliberately unknown (—) rather than invented. */
+const last5Headers=()=>["前走","2走前","3走前","4走前","5走前"]
+ .map((label,index)=>'<th rowspan="2" data-group="last5" class="auto-last5-heading'+
+ (index===0?' auto-start':'')+'">'+label+'</th>').join("");
+const placeSlug={"川口":"kawaguchi","浜松":"hamamatsu","伊勢崎":"isesaki"};
+const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
+ const [date,place,road,race,rank,finishTime,trialTime,st,handicap,flag]=entry;
+ const [month,day]=date.split("/");
+ const knownNormal=place==="川口"&&month==="11"&&Number(day)>=7&&Number(day)<=9;
+ const grade=knownNormal?"普通":"—";
+ const raceNo=/^(\d+)R/.exec(race)?.[1];
+ const destination=raceNo&&placeSlug[place]?"https://autorace.jp/netstadium/RaceResult/"+
+  placeSlug[place]+"/2026-"+month.padStart(2,"0")+"-"+day.padStart(2,"0")+"_"+raceNo:null;
+ const special=finishTime==="不成立";
+ const result= special?"不成立":rank||"—";
+ const rankClass=/^[1-3]$/.test(rank)?" auto-last5-rank-"+rank:"";
+ const label=place+" "+date+" "+race+" "+road+"走路 "+result+
+  (flag?" "+flag:"")+" 競走T "+finishTime+" 試走T "+trialTime+" ST "+st+" H"+handicap;
+ const inner='<div class="auto-last5-entry">'+
+  '<div class="auto-last5-meta"><span class="auto-last5-grade'+(knownNormal?' is-normal':'')+'">'+grade+
+  '</span><span>'+safe(place)+'</span><span>'+safe(date)+'</span></div>'+
+  '<div class="auto-last5-finish'+rankClass+(special?' is-special':'')+'">'+
+  '<span class="auto-last5-rank">'+safe(result)+'</span>'+
+  (flag?'<span class="auto-last5-flag">'+safe(flag)+'</span>':'')+'</div>'+
+  '<div class="auto-last5-detail"><span class="auto-last5-race">'+safe(race)+
+  '<small>'+safe(road)+'</small></span>'+
+  '<span><em>競</em>'+safe(finishTime)+'</span>'+
+  '<span class="auto-last5-other"><em>試</em>'+safe(trialTime)+
+  '<em>ST</em>'+safe(st)+'<em>H</em>'+safe(handicap)+'</span></div></div>';
+ return '<td class="auto-last5-cell'+(index===0?' auto-start':'')+'">'+
+  (destination?'<a href="'+destination+'" target="_blank" rel="noopener noreferrer" class="auto-last5-link" title="'+safe(label)+'" aria-label="'+safe(label)+'">'+inner+'</a>':inner)+'</td>';
+}).join("");
 const roadHeaders=()=>["良","湿"].flatMap((track,k)=>
  [["1着","勝率"],["2着","2連対率"],["3着","3連対率"],["着外","着外率"]]
  .map(([name,rate],i)=>'<th rowspan="2" data-group="road" class="auto-value auto-stat-heading auto-road-heading'+
@@ -102,7 +139,7 @@ const header='<tr>'+
 '<th rowspan="2" class="col-machine">競走車名</th>'+
 statHeaderGroup("recent")+timeHeader("平均","試走T",true)+
 timeHeader("平均","競走T",false)+timeHeader("最高","競走T",false)+
-statHeaderGroup("last90")+roadHeaders()+
+last5Headers()+statHeaderGroup("last90")+roadHeaders()+
 '<th rowspan="2" data-group="titles" class="auto-titles-column">優出・優勝</th></tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
 const subhead='<tr></tr>';
@@ -168,7 +205,7 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   deviationCell(p)+
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
-  const fields=main+statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+statCells(p.r90,last90Ranks[i])+
+  const fields=main+statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+last5Cells(i)+statCells(p.r90,last90Ranks[i])+
   roadCells(p,i)+titlesCell(p);
   return '<tr data-vehicle="'+(i+1)+'" data-power="'+p.power+'">'+fields+'</tr>';
 }).join("");
