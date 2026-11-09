@@ -98,7 +98,8 @@ for(const width of [296,375,768]){
     errorsNow.push('fifth-row content overflows/missing: '+JSON.stringify(positions));
   const styles=await page.evaluate(()=>{
     const root=document.querySelector('.auto-race-table');
-    const head=[...root.tHead.querySelectorAll('th')].find(el=>el.textContent.includes('偏差'));
+    const head=root.tHead.querySelector('th[data-group="recent"]');
+    const selected=root.tHead.querySelector('th.section-selected');
     const rows=[...root.tBodies[0].rows];
     const badges=rows.map(el=>el.querySelector('.frame-cell'));
     const expected=[];
@@ -119,10 +120,12 @@ for(const width of [296,375,768]){
       const css=getComputedStyle(el);return {left:css.borderLeftWidth,right:css.borderRightWidth};
     });
     const css=getComputedStyle(head);
+    const activeCSS=getComputedStyle(selected);
     const button=root.querySelector('.auto-detail-button');
     const btn=getComputedStyle(button);
     const live=document.querySelector('.shared-app-header .header-title-text');
-    return {actual,expected,cols,heading:{color:css.color,size:css.fontSize,weight:css.fontWeight},
+    return {actual,expected,cols,selected:{color:activeCSS.color,background:activeCSS.backgroundColor},
+      heading:{color:css.color,size:css.fontSize,weight:css.fontWeight},
       bodyColor:getComputedStyle(rows[0].querySelector('.auto-value')).color,
       bodyFont:getComputedStyle(rows[0].querySelector('.auto-value')).fontSize,
       titleFont:getComputedStyle(live).fontSize,
@@ -135,6 +138,8 @@ for(const width of [296,375,768]){
   if(styles.titleFont!=='18px'||styles.legendFont!=='14px'||
      styles.heading.color!=='rgb(48, 54, 59)'||
      styles.heading.size!=='12px'||styles.heading.weight!=='600'||
+     styles.selected.color!=='rgb(255, 255, 255)'||
+     styles.selected.background!=='rgb(114, 103, 49)'||
      styles.bodyColor!=='rgb(48, 54, 59)'||styles.bodyFont!=='16px'||
      styles.cols[0].left!=='1px'||styles.cols[1].left!=='0px'||
      styles.actual.some((x,i)=>x.size!==22||x.font!=='16px'||
