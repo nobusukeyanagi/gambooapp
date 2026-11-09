@@ -2,19 +2,20 @@
 /* Shared, immediate, one-time tactile feedback for the Gamboo wireframes.
    Do not bind the effect to click; click happens after the finger is lifted. */
 .tap-pressed {
-  /* One immediate, clearly visible darkening for every press target. */
-  filter: brightness(0.78) !important;
+  /* Every press target flashes the shared light gold, not a darkened version
+     of its normal background. Restore the original styling on release. */
+  filter: none !important;
+  background: var(--c-gold-light) !important;
+  color: var(--c-text-primary) !important;
   -webkit-tap-highlight-color: transparent;
 }
-.date-tabs .date-tab.tap-pressed,
-.pay-toggle.tap-pressed {
-  background-color: color-mix(in srgb, var(--c-text-primary) 11%, var(--c-surface));
+/* Readable dark labels and icons when originally white-on-brand controls
+   temporarily receive the light-gold background. */
+.tap-pressed :is(span, small, b, strong, svg, .ic) {
+  color: var(--c-text-primary) !important;
 }
 /* Links without destinations still receive visible feedback without navigating. */
 .see-all, .vgroup-link, .back-btn, [data-tap-feedback] {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-}
-:is(.see-all, .vgroup-link, .mori-page-link, .back-btn).tap-pressed {
-  background-color: color-mix(in srgb, var(--c-text-primary) 11%, var(--c-surface));
 }
