@@ -2,8 +2,7 @@
 /* SCR-310 uses SCR-210's canonical header, race selector, 120px summary,
    horizontal menu, racecard, glossary, bottom navigation and details sheet. */
 .sport-auto .shared-app-header .header-title-text { font-size: var(--fs-16); line-height: 1.1; }
-.sport-auto .shared-app-header .header-actions { gap: var(--space-small); }
-.sport-auto .shared-app-header .header-actions :is(.icon-btn,.cta-btn) { min-width: 65px; padding-inline: var(--space-card); }
+/* Header actions use the same 80px width and spacing as SCR-210. */
 .sport-auto .race-detail-scroll .ri-meeting .grade-normal { background: var(--c-bronze); color: var(--c-surface); }
 .sport-auto .race-info-bar .ri-event > .ell { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .sport-auto .race-detail-scroll .auto-weather-bar {

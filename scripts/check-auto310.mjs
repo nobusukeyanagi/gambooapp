@@ -32,6 +32,30 @@ for(const width of [296,375,768]){
      display:getComputedStyle(document.querySelector('.auto-race-table')).display};
   });
   const errorsNow=[];
+  const responsive=await page.evaluate(()=>{
+    const actions=[...document.querySelectorAll('.shared-app-header .header-actions :is(.icon-btn,.cta-btn)')].map(x=>Math.round(x.getBoundingClientRect().width));
+    const title=document.querySelector('.shared-app-header .header-title-text');
+    const text=title.querySelector('.fit-text-inner');
+    const extra=text?text.getBoundingClientRect().right-title.getBoundingClientRect().right:0;
+    return {actions,compressed:!!text,extra,loaded:!!window.GambooTextFit,
+      navLabels:document.querySelectorAll('.bottom-tab .tab-item > .fit-nav-label').length};
+  });
+  if(responsive.actions.join(',')!=='80,80')errorsNow.push('header action widths differ from SCR-210: '+JSON.stringify(responsive.actions));
+  if(!responsive.loaded||responsive.navLabels!==5||responsive.extra>1)
+    errorsNow.push('responsive text sizing/visible nav labels failed: '+JSON.stringify(responsive));
+  if(width===296&&!responsive.compressed)errorsNow.push('small-screen title not horizontally compressed');
+  const synthetic=await page.evaluate(async()=>{
+    const host=document.createElement('div');
+    host.style.cssText='position:fixed;left:0;top:0;width:72px;white-space:nowrap;z-index:-1';
+    host.textContent='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    document.body.appendChild(host);
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    const run=host.querySelector('.fit-text-inner');
+    const ok=!!run&&run.getBoundingClientRect().width<=host.clientWidth+1&&host.textContent==='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    host.remove();
+    return ok;
+  });
+  if(!synthetic)errorsNow.push('long line not fully preserved/fit');
   if([result.header,result.selector,result.summary,result.menu,result.bottom].join(',')!=='50,58,120,52,60')
    errorsNow.push('different shared heights '+[result.header,result.selector,result.summary,result.menu,result.bottom]);
   if(result.activeTitle!=='オートレース予想'||result.selectedRace!=='9'||result.races!==12||result.redFrame!=='3px')

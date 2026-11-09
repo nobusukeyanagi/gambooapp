@@ -342,12 +342,7 @@ body { font-weight: var(--fw-normal); }
 .shared-app-header .header-main:has(.back-btn) {
   gap: var(--space-5);
 }
-/* The eight-character auto racing title needs two lines on 296px screens. */
-@media (max-width: 320px) {
-  .shared-app-header .page-header-title:has(use[href$="#nav-auto"]) .header-title-text {
-    font-size: var(--fs-16);
-  }
-}
+/* Header fonts remain at their design size; width is adapted when necessary. */
 .shared-app-header .header-actions {
   display: flex;
   flex: 0 0 auto;
@@ -431,4 +426,14 @@ body { font-weight: var(--fw-normal); }
 .phone-inner .mania-table .item-btn,
 .phone-inner .at.auto-merged .lb-btn {
   border-radius: var(--r-control);
+}
+
+/* Bottom labels remain fully visible within each fixed-width navigation cell. */
+.bottom-tab .tab-item > .fit-nav-label {
+  display: block;
+  align-self: stretch;
+  width: 100%;
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
 }
