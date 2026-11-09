@@ -123,3 +123,8 @@
   --tap-min: 44px;
   --tap-dense: 36px;
 }
+/* Unified horizontal scroll boundary for every Gamboo screen.
+   Prevent rubber-band/blank-space reveal at either x edge without changing
+   scroll inertia, normal horizontal gestures or vertical overscroll.
+   !important takes priority over older per-screen overscroll shorthands. */
+* { overscroll-behavior-x: none !important; }
