@@ -45,6 +45,9 @@
   function findTarget(node) {
     var el = node && node.nodeType === 1 ? node : node && node.parentElement;
     if (!el || !el.closest) return null;
+    // Bottom navigation never receives the shared tap highlight.
+    // Its selected/unselected state stays governed by nav styles.
+    if (el.closest('.bottom-tab')) return null;
     // Informational cards can opt out without affecting their contents.
     if (el.closest('[data-no-tap-feedback]')) return null;
     var target = el.closest(targets);
