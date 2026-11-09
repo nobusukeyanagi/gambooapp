@@ -85,13 +85,32 @@
   box-shadow: 0 -4px 16px color-mix(in srgb, var(--c-text-primary) 15%, transparent);
 }
 .sheet-handle {
-  flex: 0 0 auto;
+  position: relative;
+  display: block;
+  flex: 0 0 16px;
+  width: 100%;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+}
+.sheet-handle::before {
+  content: "";
+  position: absolute;
+  top: var(--space-card);
+  left: 50%;
   width: 36px;
   height: 4px;
-  margin: var(--space-card) auto var(--space-2);
   border-radius: var(--r-xxs);
   background: var(--c-border);
+  transform: translateX(-50%);
+  pointer-events: none;
 }
+.sheet-handle:active { cursor: grabbing; }
+.sheet-handle:focus-visible { outline: var(--line-focus); outline-offset: -3px; }
 .sheet-head {
   display: flex;
   flex: 0 0 auto;
@@ -105,16 +124,23 @@
   color: var(--c-text-primary);
 }
 .sheet-close {
-  width: 24px;
-  height: 24px;
+  display: inline-flex;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   padding: 0;
-  border: 0;
+  border: var(--line-control);
   border-radius: var(--r-full);
-  background: var(--c-bg);
+  background: var(--c-surface);
   color: var(--c-text-primary);
-  font-size: var(--fs-12);
+  font-size: var(--fs-18);
+  font-weight: var(--fw-strong);
+  line-height: 1;
   cursor: pointer;
 }
+.sheet-close:focus-visible { outline: var(--line-focus); outline-offset: var(--space-2); }
 .sheet-body {
   flex: 0 1 auto;
   min-height: 0;
@@ -153,6 +179,7 @@
 .sheet .detail-table thead tr:first-child th {
   top: 0;
   height: 28px;
+  border-top: var(--line-normal);
 }
 .sheet .detail-table thead tr:nth-child(2) th {
   top: 28px;
@@ -177,6 +204,11 @@
   padding-top: 0;
   padding-bottom: 0;
   background: var(--c-surface);
+}
+/* The bottom-navigation already has a 1px top border. Avoid a second
+   coincident line at the bottom of the nine-rider detail table. */
+.sheet .detail-table tbody tr:last-child td {
+  border-bottom: 0;
 }
 /* Fixed first column combines the jersey number and abbreviated rider name. */
 .sheet .detail-table .dt-vehicle {
@@ -259,6 +291,12 @@
   color: var(--c-text-primary);
   font-variant-numeric: tabular-nums;
 }
+/* Advancement rates alone append the total in the 12px secondary font. */
+.sheet .detail-table .recent4-total {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+  color: var(--c-text-secondary);
+}
 .sheet .detail-table .recent4-rate {
   display: table;
   width: max-content;
@@ -294,15 +332,17 @@
   .sheet .detail-table { height: 100%; }
   .sheet .detail-table tbody tr,
   .sheet .detail-table tbody td {
-    height: max(40px, calc((100dvh - var(--h-bottom-nav) - 108px) / 9));
+    height: max(38px, calc((100dvh - var(--h-bottom-nav) - 128px) / 9));
   }
 }
 @media (max-height: 520px) {
-  .sheet-handle { display: none; }
+  .sheet-handle { flex-basis: 12px; height: 12px; }
   .sheet .detail-table thead tr:first-child th { height: 26px; }
   .sheet .detail-table thead tr:nth-child(2) th { top: 26px; height: 32px; }
   .sheet .detail-table tbody tr,
-  .sheet .detail-table tbody td { height: 38px; }
+  .sheet .detail-table tbody td {
+    height: max(34px, calc((100dvh - var(--h-bottom-nav) - 118px) / 9));
+  }
   .sheet .detail-table .dt-vehicle .frame-cell {
     width: 20px;
     height: 20px;
