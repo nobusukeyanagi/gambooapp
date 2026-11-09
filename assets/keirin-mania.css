@@ -119,7 +119,7 @@
   padding: var(--space-2) var(--space-content) var(--space-card);
 }
 .sheet-title {
-  font-size: var(--fs-14);
+  font-size: var(--fs-16);
   font-weight: var(--fw-strong);
   color: var(--c-text-primary);
 }
@@ -132,7 +132,7 @@
   height: 40px;
   padding: 0;
   border: var(--line-control);
-  border-radius: var(--r-full);
+  border-radius: var(--r-control);
   background: var(--c-surface);
   color: var(--c-text-primary);
   font-size: var(--fs-18);
@@ -211,6 +211,9 @@
   border-bottom: 0;
 }
 /* Fixed first column combines the jersey number and abbreviated rider name. */
+.sheet .detail-table :is(th,td).dt-vehicle {
+  border-left: var(--line-normal);
+}
 .sheet .detail-table .dt-vehicle {
   position: sticky;
   left: 0;
@@ -225,7 +228,40 @@
 .sheet .detail-table thead th.dt-vehicle {
   top: 0;
   z-index: 6;
+  padding: 0;
   background: var(--c-bg);
+}
+.sheet .detail-table .dt-car-sort {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 64px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1.25;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.sheet .detail-table .dt-car-sort .sort-mode-label { display: none; }
+.sheet .detail-table .dt-car-sort[aria-pressed="true"] .sort-mode-label {
+  display: block;
+}
+.sheet .detail-table .dt-car-sort:focus-visible {
+  outline: var(--line-focus);
+  outline-offset: calc(-1 * var(--line-emphasis-width));
+}
+/* Match the 3px line separators of the main racecard in predicted-line order. */
+.sheet .detail-table tbody tr.line-group-start > td {
+  border-top: var(--line-emphasis-width) solid var(--c-border);
 }
 .sheet .detail-table .dt-vehicle-content {
   display: flex;
@@ -339,6 +375,7 @@
   .sheet-handle { flex-basis: 12px; height: 12px; }
   .sheet .detail-table thead tr:first-child th { height: 26px; }
   .sheet .detail-table thead tr:nth-child(2) th { top: 26px; height: 32px; }
+  .sheet .detail-table .dt-car-sort { min-height: 58px; }
   .sheet .detail-table tbody tr,
   .sheet .detail-table tbody td {
     height: max(34px, calc((100dvh - var(--h-bottom-nav) - 118px) / 9));
