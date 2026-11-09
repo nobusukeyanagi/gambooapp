@@ -372,6 +372,7 @@
 .race-detail-scroll .mania-table tbody td.cls .grade-current {
   display: block;
   font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
   line-height: 1.2;
   margin-bottom: var(--space-5);
 }
@@ -384,7 +385,13 @@
 }
 .race-detail-scroll .mania-table tbody td .leg-tag {
   font-size: var(--fs-16);
-  font-weight: var(--fw-normal);
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table tbody td.gear-ratio {
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table tbody td.position-current {
+  font-weight: var(--fw-strong);
 }
 /* The extra G-index mark has its own compact column. */
 /* G指数と印は120pxの単一セル内で独立した塗りを使用する。 */
@@ -667,6 +674,7 @@
 /* Text-sized badges for top-three current scores; previous scores stay neutral. */
 .race-detail-scroll .mania-table tbody td.score .score-current {
   display: inline-block;
+  font-weight: var(--fw-strong);
   box-sizing: border-box;
   padding: var(--space-1) var(--space-2);
   border-radius: var(--r-xs);
