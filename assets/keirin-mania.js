@@ -113,9 +113,14 @@
         '<span class="recent4-total">/'+escapeHTML(total)+'</span></span>'+
       '<span class="recent4-rate">'+escapeHTML(rate)+'%</span></td>';
   };
-  const differenceCell=txt=>
-    '<td class="dt-rate dt-difference-cell"><span class="dt-difference">'+
+  // In the no-same-prefecture difference group, highlight positive 1st–3rd
+  // values only. The 4th (outside) value and all negative values stay neutral.
+  const differenceCell=(txt,index)=>{
+    const positive=index<3 && String(txt??"").trim().startsWith("+");
+    return '<td class="dt-rate dt-difference-cell"><span class="dt-difference'+
+      (positive?' dt-difference-positive':'')+'">'+
       escapeHTML(txt||"—")+'</span></td>';
+  };
   const ranksByRate = (rows, groupIndex, metricIndex, isPref) => {
     const indexes=rows.map((entry,i)=>{
       const numeric=Number(isPref?entry?.[2]?.[groupIndex]?.[metricIndex]?.[0]:
