@@ -617,6 +617,49 @@ for(const width of [296,375,768]){
     errorsNow.push('award consolidation and removed analysis mismatch: '+JSON.stringify(awardState));
   /* Verify the 90-day peak/venue from the user-supplied supercomputer page,
    separately from the existing "good 10 runs" best-time columns. */
+  /* Source-verified top-three for three 良10走 time columns and
+     the 90-day best racing time; lower times are better, ties share rank. */
+  const tokenColors=await page.evaluate(()=>{
+    const el=document.createElement('span');
+    document.body.appendChild(el);
+    const names=['gold','blue','bronze','green','magenta','teal','yellowgreen'];
+    const color=Object.fromEntries(names.map(x=>{el.style.background='var(--c-'+x+'-light)';
+      return [x,getComputedStyle(el).backgroundColor];}));
+    el.remove();
+    return color;
+  });
+  const expectedTimeRk=values=>{
+    const sorted=values.map((v,i)=>({i,v:Number(v)}))
+      .sort((a,b)=>a.v-b.v||a.i-b.i);
+    const out=Array(values.length).fill(0);
+    let previous=null,rank=0;
+    for(let k=0;k<sorted.length;k++){
+      if(k===0||sorted[k].v!==previous)rank=k+1;
+      if(rank<=3)out[sorted[k].i]=rank;
+      previous=sorted[k].v;
+    }
+    return out;
+  };
+  const goodRecords=[
+    ['3.38','3.462','3.439'],['3.37','3.470','3.444'],
+    ['3.36','3.455','3.418'],['3.37','3.453','3.422'],
+    ['3.34','3.431','3.408'],['3.33','3.441','3.414'],
+    ['3.34','3.434','3.413'],['3.34','3.433','3.398']
+  ];
+  const goodRks=[0,1,2].map(j=>expectedTimeRk(goodRecords.map(row=>row[j])));
+  const goodTint=await page.locator('.auto-race-table').evaluate(table=>
+    [...table.tBodies[0].rows].map(row=>
+      [...row.querySelectorAll('span.auto-good-time-text')].map(el=>({
+        text:el.textContent.trim(),cls:el.className,bg:getComputedStyle(el).backgroundColor,
+        size:getComputedStyle(el).fontSize}))));
+  const tintByRank={1:tokenColors.gold,2:tokenColors.blue,3:tokenColors.bronze};
+  if(goodTint.length!==8||goodTint.some((row,i)=>row.length!==3||row.some((x,j)=>{
+    const rank=goodRks[j][i];
+    return x.text!==goodRecords[i][j]||x.size!=='16px'||
+      x.cls!=='auto-good-time-text'+(rank?' auto-text-rank-'+rank:'')||
+      x.bg!==(rank?tintByRank[rank]:'rgba(0, 0, 0, 0)');
+  })))
+    errorsNow.push('good10 three fastest text-only tint mismatch: '+JSON.stringify(goodTint));
   const best90=await page.locator('.auto-race-table').evaluate(table=>{
     const head=table.tHead.querySelector('th.auto-best90-heading');
     const value=el=>({text:el.textContent.trim(),font:getComputedStyle(el).fontSize,
@@ -627,8 +670,11 @@ for(const width of [296,375,768]){
       rightOfOutside:head.previousElementSibling.textContent.trim(),
       rows:[...table.tBodies[0].rows].map(row=>{
         const td=row.querySelector('.auto-best90-cell');
+        const el=td.querySelector('.auto-best90-value');
         return {width:Math.round(td.getBoundingClientRect().width),
           time:value(td.querySelector('.auto-best90-time')),
+          tint:{text:el.textContent.trim(),cls:el.className,
+            bg:getComputedStyle(el).backgroundColor},
           venue:value(td.querySelector('.auto-best90-venue'))};
       })
     };
@@ -639,14 +685,19 @@ for(const width of [296,375,768]){
   ];
   if(best90.heading!=='最高競走T'||best90.group!=='last90'||
      best90.width!==80||best90.rightOfOutside!=='着外着外率'||
-     best90.rows.length!==8||best90.rows.some((r,i)=>
-       r.width!==80||r.time.text!==expectedBest90[i][0]||
+     best90.rows.length!==8||best90.rows.some((r,i)=>{
+       const rank=expectedTimeRk(expectedBest90.map(x=>x[0]))[i];
+       return r.width!==80||r.time.text!==expectedBest90[i][0]||
+       r.tint.text!==expectedBest90[i][0]||
+       r.tint.cls!=='auto-best90-value'+(rank?' auto-text-rank-'+rank:'')||
+       r.tint.bg!==(rank?tintByRank[rank]:'rgba(0, 0, 0, 0)')||
        r.venue.text!==expectedBest90[i][1]||
        r.time.font!=='16px'||r.time.weight!=='400'||
        r.time.color!=='rgb(48, 54, 59)'||
        r.venue.font!=='12px'||r.venue.weight!=='400'||
-       r.venue.color!=='rgb(96, 107, 118)'))
-    errorsNow.push('90-day peak time and venue mismatch: '+JSON.stringify(best90));
+       r.venue.color!=='rgb(96, 107, 118)';
+     }))
+    errorsNow.push('90-day peak time, venue and fastest-three tint mismatch: '+JSON.stringify(best90));
   const bestRanks=await page.locator('.auto-race-table').evaluate(table=>
     [...table.tBodies[0].rows].map(row=>{
       const read=td=>{const t=td.querySelector('.auto-top-time'),c=getComputedStyle(t);
