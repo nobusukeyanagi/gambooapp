@@ -62,11 +62,11 @@
   flex:0 0 auto;
   gap:var(--space-1);
 }
-/* Between adjacent vehicle pairs, reserve the same 14px car-to-car
-   distance as between the two cars separated by the 12px dash
-   (12px dash + two 1px inner gaps). Subtract the row's own 3px gap. */
+/* Match the actual 14px spacing from car to car inside each pair:
+   12px dash + 1px on both sides. The shared row already has a 1px gap,
+   so additional pair-to-pair margin must be 13px. */
 .sport-auto .race-detail-scroll .auto-supercon-row .auto-supercon-pair + .auto-supercon-pair {
-  margin-left:calc(var(--fs-12) + var(--space-1) + var(--space-1) - var(--space-3));
+  margin-left:calc(var(--fs-12) + var(--space-1));
 }
 .sport-auto .race-detail-scroll .auto-supercon-row .auto-supercon-dash {
   display:inline-flex;
