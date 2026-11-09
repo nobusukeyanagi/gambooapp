@@ -72,9 +72,10 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: var(--h-header);
+  top: auto;
   bottom: var(--h-bottom-nav);
-  height: auto;
+  height: max-content;
+  max-height: calc(100% - var(--h-bottom-nav));
   z-index: 11;
   display: flex;
   flex-direction: column;
@@ -115,7 +116,7 @@
   cursor: pointer;
 }
 .sheet-body {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-height: 0;
   overflow-x: auto;
   overflow-y: hidden;
@@ -127,7 +128,7 @@
 .sheet .detail-table {
   width: max-content;
   min-width: 100%;
-  height: 100%;
+  height: auto;
   border-collapse: separate;
   border-spacing: 0;
   font-size: var(--fs-12);
@@ -170,8 +171,9 @@
 .sheet .detail-table thead th.dt-grp {
   font-size: var(--fs-12);
 }
+.sheet .detail-table tbody tr,
 .sheet .detail-table tbody td {
-  height: 42px;
+  height: 56px;
   padding-top: 0;
   padding-bottom: 0;
   background: var(--c-surface);
@@ -219,9 +221,11 @@
 .sheet .detail-table td.dt-rank {
   min-width: 56px;
   width: 56px;
+  font-size: var(--fs-16);
 }
 .sheet .detail-table .rank-number {
   display: inline-block;
+  font-size: var(--fs-16);
   padding: 0 var(--space-2);
   border-radius: var(--r-xs);
   color: var(--c-text-primary);
@@ -241,9 +245,11 @@
 .sheet .detail-table .rank-tint-4 {
   background: var(--c-green-light);
 }
-.sheet .detail-table td.dt-rate {
-  width: 74px;
-  min-width: 74px;
+.sheet .detail-table :is(th.dt-stat-heading, td.dt-rate) {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
 }
 .sheet .detail-table .recent4-count {
   display: block;
@@ -274,14 +280,28 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Nine complete rows without a second vertical scroll in short viewports. */
-@media (max-height: 590px) {
-  .sheet { top: 0; }
+/* On sufficiently tall screens, the detail rows are exactly the main
+   racecard's 56px and the ninth bottom border touches the footer. On small
+   screens there is physically less room than 9x56px + the sheet heading,
+   so share the available height without introducing vertical scrolling. */
+@media (max-height: 700px) {
+  .sheet {
+    top: 0;
+    height: auto;
+    max-height: none;
+  }
+  .sheet-body { flex: 1 1 auto; }
+  .sheet .detail-table { height: 100%; }
+  .sheet .detail-table tbody tr,
+  .sheet .detail-table tbody td {
+    height: max(40px, calc((100dvh - var(--h-bottom-nav) - 108px) / 9));
+  }
 }
 @media (max-height: 520px) {
   .sheet-handle { display: none; }
   .sheet .detail-table thead tr:first-child th { height: 26px; }
   .sheet .detail-table thead tr:nth-child(2) th { top: 26px; height: 32px; }
+  .sheet .detail-table tbody tr,
   .sheet .detail-table tbody td { height: 38px; }
   .sheet .detail-table .dt-vehicle .frame-cell {
     width: 20px;
