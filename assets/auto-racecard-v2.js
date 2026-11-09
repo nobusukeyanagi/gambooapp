@@ -174,7 +174,7 @@ const headToHeadHeaders=()=>Array.from({length:8},(_,i)=>
   '<th rowspan="2" data-group="matchup" class="auto-matchup-heading'+
   (i===0?' auto-start':'')+'" aria-label="対戦相手 車番'+(i+1)+'">'+
   '<span class="auto-matchup-heading-label">vs</span>'+
-  '<span class="lineup-car f'+(i+1)+'">'+(i+1)+'</span></th>').join("");
+  '<span class="frame-cell f'+(i+1)+'">'+(i+1)+'</span></th>').join("");
 const headToHeadCells=playerIndex=>headToHead360[playerIndex].map((record,j)=>{
  const wins=record?.[0],losses=record?.[1],total=wins+losses;
  const verified=playerIndex!==j&&Number.isInteger(wins)&&Number.isInteger(losses)&&
@@ -200,12 +200,12 @@ const header='<tr>'+
 '<th rowspan="2" class="col-t">試走T</th><th rowspan="2" class="col-t col-deviation">試走偏差</th>'+
 '<th rowspan="2" class="col-rank"><button type="button" class="sort-power" aria-pressed="false" aria-label="審査ポイント順に並び替え"><span>ランク</span><span>審査P</span></button></th>'+
 '<th rowspan="2" class="col-machine">競走車名</th>'+
-statHeaderGroup("recent")+timeHeader("平均","試走T",true)+
+'<th rowspan="2" class="auto-titles-column">優出・優勝</th>'+
+last5Headers()+statHeaderGroup("recent")+timeHeader("平均","試走T",true)+
 timeHeader("平均","競走T",false)+timeHeader("最高","競走T",false)+
-last5Headers()+statHeaderGroup("last90")+
+statHeaderGroup("last90")+
 '<th rowspan="2" class="auto-best90-heading" data-group="last90">最高T</th>'+
-roadHeaders()+headToHeadHeaders()+
-'<th rowspan="2" data-group="titles" class="auto-titles-column">優出・優勝</th></tr>';
+roadHeaders()+headToHeadHeaders()+'</tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
 const subhead='<tr></tr>';
 table.tHead.innerHTML=header+subhead;
@@ -293,9 +293,10 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   deviationCell(p)+
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
-  const fields=main+statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+last5Cells(i)+
+  const fields=main+titlesCell(p)+last5Cells(i)+
+  statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+
   statCells(p.r90,last90Ranks[i])+best90Cell(p)+roadCells(p,i)+
-  headToHeadCells(i)+titlesCell(p);
+  headToHeadCells(i);
   return '<tr data-vehicle="'+(i+1)+'" data-power="'+p.power+'">'+fields+'</tr>';
 }).join("");
 // Synchronize table drags, active menu and menu-strip position exactly as
@@ -315,7 +316,7 @@ const scrollBehavior=window.matchMedia?.("(prefers-reduced-motion: reduce)").mat
 let activeSection="",navigationTarget=null,selectedByUser=null;
 function highlightHeader(key){
  table.tHead.querySelectorAll("th.section-selected").forEach(cell=>cell.classList.remove("section-selected"));
- const targets=key==="player"?[...table.tHead.rows[0].cells].slice(1,8):
+ const targets=key==="player"?[...table.tHead.rows[0].cells].slice(1,9):
  [...table.tHead.rows[0].querySelectorAll('th[data-group="'+key+'"]')];
  let offset=0;
  for(const heading of table.tHead.rows[0].querySelectorAll('th.auto-section[data-group]')){
