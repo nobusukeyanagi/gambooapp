@@ -689,6 +689,49 @@ for(const width of [296,375,768]){
  }catch(e){problems.push(width+'px exception '+e.message);console.error(e);}
  finally{await page.close();}
 }
+/* The width policy is managed in racecard-common.css and must match
+   in SCR-210 too (including direct text and two-line span labels). */
+for (const width of [296,375,768]) {
+ const page=await browser.newPage({viewport:{width,height:900},deviceScaleFactor:1});
+ try {
+  await page.goto(origin+'/SCR-210_racecardkeirin.html',{waitUntil:'networkidle'});
+  await page.waitForSelector('.race-menu-scroll .info-tab[data-target="mania"]',{timeout:8000});
+  const measurements=await page.locator('.race-menu-scroll .info-tab').evaluateAll(tabs=>tabs.map(tab=>{
+   const element=tab.querySelector('span');
+   let rect;
+   if(element)rect=element.getBoundingClientRect();
+   else {
+    const range=document.createRange();
+    range.selectNodeContents(tab);
+    rect=range.getBoundingClientRect();
+   }
+   const outer=tab.getBoundingClientRect();
+   const styles=getComputedStyle(tab);
+   return {
+    label:tab.textContent.replace(/\s+/g,'').trim(),
+    width:outer.width,
+    glyphWidth:rect.width,
+    left:rect.left-outer.left,
+    right:outer.right-rect.right,
+    paddingLeft:styles.paddingLeft,
+    paddingRight:styles.paddingRight,
+    minWidth:styles.minWidth
+   };
+  }));
+  const expectedLabels=['選手情報','直近4ヵ月基本成績','直近7開催着順・タイム',
+   '直近20走並び別成績','マル得ポイント','G指数','マニア分析'];
+  const bad=measurements.length!==expectedLabels.length||measurements.some((tab,index)=>
+    tab.label!==expectedLabels[index]||
+    tab.paddingLeft!=='13px'||tab.paddingRight!=='13px'||tab.minWidth!=='0px'||
+    Math.abs(tab.left-13)>0.8||Math.abs(tab.right-13)>0.8||
+    Math.abs(tab.width-tab.glyphWidth-26)>1
+  );
+  if(bad)problems.push(width+'px SCR-210 shared menu width mismatch: '+JSON.stringify(measurements));
+  else console.log(width+'px SCR-210 shared menu 13px each side PASSED',
+    measurements.map(x=>Math.round(x.width)));
+ }catch(e){problems.push(width+'px SCR-210 menu check exception '+e.message);}
+ finally {await page.close();}
+}
 await browser.close();
 if(problems.length){console.error('SCR-310 checks failed:',problems);process.exitCode=1;}
 else console.log('SCR-310 shared UI / accurate 8 riders / awards / sorting checks PASSED');
