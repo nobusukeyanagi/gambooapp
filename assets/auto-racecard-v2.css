@@ -62,10 +62,11 @@
   flex:0 0 auto;
   gap:var(--space-1);
 }
-/* The gap between pairs matches the narrow in-pair car/dash gap.
-   Do not reserve the previous extra 22px icon-width gutter. */
+/* Between adjacent vehicle pairs, reserve the same 14px car-to-car
+   distance as between the two cars separated by the 12px dash
+   (12px dash + two 1px inner gaps). Subtract the row's own 3px gap. */
 .sport-auto .race-detail-scroll .auto-supercon-row .auto-supercon-pair + .auto-supercon-pair {
-  margin-left:0;
+  margin-left:calc(var(--fs-12) + var(--space-1) + var(--space-1) - var(--space-3));
 }
 .sport-auto .race-detail-scroll .auto-supercon-row .auto-supercon-dash {
   display:inline-flex;
@@ -383,7 +384,7 @@
   white-space:nowrap; text-align:center;
 }
 .sport-auto .auto-race-table .auto-sp-mark {
-  display:inline-flex; width:18px; height:20px;
+  display:inline-flex; width:24px; height:24px;
   align-items:center; justify-content:center;
   margin-right:var(--space-3);
   color:var(--c-text-primary); font-size:var(--fs-16);
@@ -565,61 +566,59 @@
 /* SCR-310: Gamboo's データ解析の予想印, total first.
    Match SCR-210's compact .item-btn and 16px bold symbol conventions.
    Whole-table cells stay white; only their header section is highlighted. */
+/* SCR-210 マニア分析: all prediction-mark columns are 60px;
+   tap targets exactly match the shared .item-btn 54x36 dimension. */
 .sport-auto .auto-race-table :is(th.auto-analyzer-heading,td.auto-analyzer-cell) {
   box-sizing:border-box;
-  width:80px;min-width:80px;max-width:80px;
+  width:60px;min-width:60px;max-width:60px;
   text-align:center;white-space:nowrap;
 }
-.sport-auto .auto-race-table :is(th.auto-analyzer-heading[data-analyzer-first],td.auto-analyzer-cell.auto-start) {
-  width:60px;min-width:60px;max-width:60px;
-}
-.sport-auto .auto-race-table th.auto-analyzer-heading:nth-last-child(-n+2),
-.sport-auto .auto-race-table td.auto-analyzer-cell:nth-last-child(-n+2) {
-  width:100px;min-width:100px;max-width:100px;
-}
 .sport-auto .auto-race-table .auto-analyzer-btn {
-  width:calc(100% - 2px);
-  height:40px;
-  padding:var(--space-1) var(--space-2);
+  width:54px;
+  height:36px;
+  max-width:54px;
+  padding:0 var(--space-1);
   font-size:var(--fs-12);
   font-weight:var(--fw-strong);
-  line-height:1.2;
+  line-height:1.25;
   white-space:normal;
   text-align:center;
   word-break:keep-all;
-  overflow-wrap:normal;
 }
+/* SCR-210's unified 24x24 .mk marks in both analysis and forecasts. */
 .sport-auto .auto-race-table td.auto-analyzer-cell .auto-analyzer-mark,
-.sport-auto .auto-analyzer-sheet .auto-analyzer-detail-table td .auto-analyzer-mark {
+.sport-auto .auto-analyzer-sheet .auto-analyzer-detail-table td .auto-analyzer-mark,
+.sport-auto .auto-race-table td.auto-sp-prediction .auto-sp-mark {
   display:inline-flex;
   align-items:center;
   justify-content:center;
   box-sizing:border-box;
-  min-width:22px;
-  min-height:22px;
-  padding:var(--space-1) var(--space-2);
+  width:24px;min-width:24px;max-width:24px;
+  height:24px;min-height:24px;max-height:24px;
+  padding:var(--space-1);
   border-radius:var(--r-xs);
   font-size:var(--fs-16);
   font-weight:var(--fw-strong);
   color:var(--c-text-primary);
   line-height:1;
 }
-/* The original four prediction marks get consistent pale token fills. */
-.sport-auto .race-detail-scroll .auto-race-table .auto-analyzer-mark.auto-mark-double,
-.sport-auto .auto-analyzer-sheet .auto-analyzer-mark.auto-mark-double {
-  background:var(--c-magenta-light);
+/* SCR-210 ◎ gold, ○ blue, △ bronze, × green;
+   match backgrounds in main racecard, forecast, and analysis sheet. */
+.sport-auto .auto-race-table .auto-mark-double,
+.sport-auto .auto-analyzer-sheet .auto-mark-double {
+  background:var(--c-gold-light);
 }
-.sport-auto .race-detail-scroll .auto-race-table .auto-analyzer-mark.auto-mark-circle,
-.sport-auto .auto-analyzer-sheet .auto-analyzer-mark.auto-mark-circle {
-  background:var(--c-teal-light);
+.sport-auto .auto-race-table .auto-mark-circle,
+.sport-auto .auto-analyzer-sheet .auto-mark-circle {
+  background:var(--c-blue-light);
 }
-.sport-auto .race-detail-scroll .auto-race-table .auto-analyzer-mark.auto-mark-triangle,
-.sport-auto .auto-analyzer-sheet .auto-analyzer-mark.auto-mark-triangle {
-  background:var(--c-yellowgreen-light);
-}
-.sport-auto .race-detail-scroll .auto-race-table .auto-analyzer-mark.auto-mark-cross,
-.sport-auto .auto-analyzer-sheet .auto-analyzer-mark.auto-mark-cross {
+.sport-auto .auto-race-table .auto-mark-triangle,
+.sport-auto .auto-analyzer-sheet .auto-mark-triangle {
   background:var(--c-bronze-light);
+}
+.sport-auto .auto-race-table .auto-mark-cross,
+.sport-auto .auto-analyzer-sheet .auto-mark-cross {
+  background:var(--c-green-light);
 }
 .sport-auto .auto-race-table .auto-analyzer-total {
   display:inline-flex;
@@ -644,7 +643,7 @@
 .sport-auto .auto-analyzer-sheet .detail-table th:not(.dt-vehicle):not(.auto-analyzer-detail-name),
 .sport-auto .auto-analyzer-sheet .detail-table td.auto-analyzer-detail-mark {
   box-sizing:border-box;
-  width:80px;min-width:80px;
+  width:60px;min-width:60px;max-width:60px;
   font-size:var(--fs-12);
 }
 .sport-auto .auto-analyzer-sheet .detail-table td.auto-analyzer-detail-mark {
