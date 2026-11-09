@@ -252,7 +252,7 @@
 .sport-auto .auto-race-table .auto-titles-line {
   display:grid; grid-template-columns:70px minmax(0,1fr);
   align-items:center; font-size:var(--fs-14); font-weight:var(--fw-normal);
-  line-height:1.25; text-align:left;
+  line-height:1; text-align:left;
 }
 .sport-auto .auto-race-table .auto-titles-line + .auto-titles-line {
   margin-top:var(--space-3);
