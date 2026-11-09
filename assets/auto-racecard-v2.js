@@ -77,7 +77,7 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   const fields=main+num(p.r10)+num([p.trial,p.avg,p.best])+num(ninety)+
   num([...p.dry.map(v=>v.toFixed(1)+"%"),...p.wet.map(v=>v.toFixed(1)+"%")])+
   num(p.thisYear)+
-  ['road','last90','good'].map((key,j)=>'<td class="auto-value'+(j===0?' auto-start':'')+'"><button type="button" class="auto-detail-button" data-report="'+key+'">'+["走路別","近90日","タイム"][j]+'</button></td>').join("");
+  ['road','last90','good'].map((key,j)=>'<td class="auto-value'+(j===0?' auto-start':'')+'"><button type="button" class="item-btn auto-detail-button" data-report="'+key+'">'+["走路別","近90日","タイム"][j]+'</button></td>').join("");
   return '<tr data-vehicle="'+(i+1)+'" data-power="'+p.power+'">'+fields+'</tr>';
 }).join("");
 const menu=[...root.querySelectorAll(".race-menu-scroll .info-tab[data-target]")];
@@ -87,8 +87,15 @@ function choose(key){
  const x=wrap.scrollLeft+cell.getBoundingClientRect().left-wrap.getBoundingClientRect().left-50;
  wrap.scrollTo({left:Math.max(0,x),behavior:"smooth"});
  menu.forEach(t=>t.classList.toggle("active",t.dataset.target===key));
+ // Match SCR-210's gold/white highlight on the selected heading group.
+ table.querySelectorAll("thead th.section-selected").forEach(t=>t.classList.remove("section-selected"));
+ const targets=key==="player"?[...table.tHead.rows[0].cells].slice(2,8):
+   [...table.tHead.querySelectorAll('th[data-group="'+key+'"]')];
+ targets.forEach(t=>t.classList.add("section-selected"));
 }
 menu.forEach(t=>t.addEventListener("click",()=>choose(t.dataset.target)));
+// Initial menu state: player section, without changing initial horizontal scroll.
+[...table.tHead.rows[0].cells].slice(2,8).forEach(t=>t.classList.add("section-selected"));
 const sheet=root.querySelector(".sheet"),overlay=root.querySelector(".sheet-overlay");
 const report={
  road:{title:"近180日・走路別成績",heads:["良2連対率","良3連対率","湿2連対率","湿3連対率"],values:p=>[...p.dry,...p.wet].map(v=>v.toFixed(1)+"%")},

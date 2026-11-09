@@ -66,7 +66,7 @@ for(const width of [296,375,768]){
   if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==7)
    errorsNow.push('rider/table/menu mismatch');
   if(result.activeNav!=='オート予想'||!result.weather.includes('湿走路 11.0℃')||!result.weather.includes('90.0%')||
-     !result.date.includes('3100m(6周)')||!result.fourth.includes('天候 晴')||
+     !result.date.includes('3100m(6周)')||result.fourth.includes('天候')||!result.weather.endsWith('天候 晴')||
      result.standaloneWeather!==0||result.liveUnderline!=='none'||result.countdown!=='14分前')
    errorsNow.push('summary/weather/LIVE mismatch: '+JSON.stringify(result));
   const positions=await page.evaluate(()=>{
@@ -96,6 +96,53 @@ for(const width of [296,375,768]){
   if(positions.count!==2||Math.abs(positions.fifthHeight-29)>0.6||
     positions.heights.some(h=>Math.abs(h-14.4)>0.7)||positions.fit.some(x=>x.overflow>1))
     errorsNow.push('fifth-row content overflows/missing: '+JSON.stringify(positions));
+  const styles=await page.evaluate(()=>{
+    const root=document.querySelector('.auto-race-table');
+    const head=[...root.tHead.querySelectorAll('th')].find(el=>el.textContent.includes('偏差'));
+    const rows=[...root.tBodies[0].rows];
+    const badges=rows.map(el=>el.querySelector('.frame-cell'));
+    const expected=[];
+    for(let i=1;i<=8;i++){
+      const reference=document.createElement('span');
+      reference.className='frame-cell f'+i;
+      document.body.appendChild(reference);
+      const css=getComputedStyle(reference);
+      expected.push({bg:css.backgroundColor,fg:css.color,border:css.borderColor});
+      reference.remove();
+    }
+    const actual=badges.map(el=>{
+      const css=getComputedStyle(el);
+      return {bg:css.backgroundColor,fg:css.color,border:css.borderColor,
+        size:Math.round(el.getBoundingClientRect().width),font:css.fontSize};
+    });
+    const cols=[rows[0].cells[0],rows[0].cells[1]].map(el=>{
+      const css=getComputedStyle(el);return {left:css.borderLeftWidth,right:css.borderRightWidth};
+    });
+    const css=getComputedStyle(head);
+    const button=root.querySelector('.auto-detail-button');
+    const btn=getComputedStyle(button);
+    const live=document.querySelector('.shared-app-header .header-title-text');
+    return {actual,expected,cols,heading:{color:css.color,size:css.fontSize,weight:css.fontWeight},
+      bodyColor:getComputedStyle(rows[0].querySelector('.auto-value')).color,
+      bodyFont:getComputedStyle(rows[0].querySelector('.auto-value')).fontSize,
+      titleFont:getComputedStyle(live).fontSize,
+      legendFont:getComputedStyle(document.querySelector('.rt-legend dl dd')).fontSize,
+      buttons:root.querySelectorAll('.item-btn.auto-detail-button').length,
+      buttonWidth:Math.round(button.getBoundingClientRect().width),
+      buttonHeight:Math.round(button.getBoundingClientRect().height),
+      buttonBorder:btn.borderTopWidth};
+  });
+  if(styles.titleFont!=='18px'||styles.legendFont!=='14px'||
+     styles.heading.color!=='rgb(48, 54, 59)'||
+     styles.heading.size!=='12px'||styles.heading.weight!=='600'||
+     styles.bodyColor!=='rgb(48, 54, 59)'||styles.bodyFont!=='16px'||
+     styles.cols[0].left!=='1px'||styles.cols[1].left!=='0px'||
+     styles.actual.some((x,i)=>x.size!==22||x.font!=='16px'||
+       x.fg!==styles.expected[i].fg||x.bg!==styles.expected[i].bg||
+       x.border!==styles.expected[i].border)||
+     styles.buttons!==24||styles.buttonWidth!==54||styles.buttonHeight!==36||
+     styles.buttonBorder!=='1px')
+    errorsNow.push('common menu/table/jersey/analysis style mismatch: '+JSON.stringify(styles));
   if(errors.length)errorsNow.push('browser JS errors '+errors);
   await page.screenshot({path:path.join(folder,'SCR-310-'+width+'.png'),fullPage:true,animations:'disabled'});
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');
