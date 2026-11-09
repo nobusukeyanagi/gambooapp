@@ -78,6 +78,22 @@ for(const width of [296,375,768]){
         age:texts('.rider-age',rider),car:texts('.machine-name',machine),
         grade:texts('.machine-grade',machine),carStyle:style('.machine-name'),
         gradeStyle:style('.machine-grade'),
+        machineAlign:getComputedStyle(machine).textAlign,
+        carAlign:getComputedStyle(machine.querySelector('.machine-name')).textAlign,
+        gradeAlign:getComputedStyle(machine.querySelector('.machine-grade')).textAlign,
+        handicap:row.querySelector('.col-h')?.textContent.trim(),
+        handicapWeight:getComputedStyle(row.querySelector('.col-h')).fontWeight,
+        rank:[...row.querySelector('.col-rank').children].map(el=>el.textContent.trim()),
+        rankStyles:[...row.querySelector('.col-rank').children].map(el=>{
+          const cs=getComputedStyle(el);
+          return {size:cs.fontSize,weight:cs.fontWeight,color:cs.color,
+            lineHeight:cs.lineHeight,marginBottom:cs.marginBottom};
+        }),
+        riderStyles:[...rider.children].map(el=>{
+          const cs=getComputedStyle(el);
+          return {size:cs.fontSize,weight:cs.fontWeight,color:cs.color,
+            lineHeight:cs.lineHeight,marginBottom:cs.marginBottom};
+        }),
         height:Math.round(row.getBoundingClientRect().height)};
     });
     const primary=getComputedStyle(document.querySelector('.ri-meeting')).color;
@@ -90,15 +106,27 @@ for(const width of [296,375,768]){
   const expectedCohort=['21期 60歳','23期 56歳','28期 43歳','24期 52歳',
     '26期 49歳','25期 52歳','25期 52歳','28期 45歳'];
   if(riderCells.header[0]!=='車番'||riderCells.header[1]!=='選手名'||
-    riderCells.header[2]!=='競走車名'||
-    JSON.stringify(riderCells.active)!==JSON.stringify([1,2,3,4,5,6,7,8])||
+    riderCells.header[2]!=='ハンデ'||riderCells.header[6]!=='ランク審査P'||
+    riderCells.header[7]!=='競走車名'||riderCells.header.some(x=>x==='審査P')||
+    JSON.stringify(riderCells.active)!==JSON.stringify([1,2,3,4,5,6,7])||
     riderCells.entries.length!==8||
     riderCells.entries.some((r,i)=>r.name!==expected[i]||r.home!==expectedHome[i]||
       r.age!==expectedCohort[i]||r.car!==expectedCar[i]||r.grade!=='1級'||
       r.carStyle.size!=='12px'||r.gradeStyle.size!=='12px'||
       r.carStyle.color!==riderCells.primary||
       r.gradeStyle.color!==riderCells.secondary||
-      r.carStyle.weight!=='400'||r.gradeStyle.weight!=='400'||r.height!==56))
+      r.carStyle.weight!=='400'||r.gradeStyle.weight!=='400'||
+      r.machineAlign!=='left'||r.carAlign!=='left'||r.gradeAlign!=='left'||
+      r.handicap!==String([0,10,10,20,20,20,20,20][i])||r.handicapWeight!=='600'||
+      JSON.stringify(r.rank)!==JSON.stringify([
+        ['A-194','前A-73','63.758'],['A-90','前A-126','71.853'],
+        ['A-103','前A-6','71.279'],['A-17','前S-43','84.634'],
+        ['A-84','前A-23','73.386'],['S-35','前S-27','93.124'],
+        ['S-17','前S-18','112.716'],['S-11','前S-11','117.010']
+      ][i])||
+      r.rankStyles.length!==3||r.rankStyles.some((x,j)=>x.size!==r.riderStyles[j].size||
+       x.weight!==r.riderStyles[j].weight||x.lineHeight!==r.riderStyles[j].lineHeight||
+       x.marginBottom!==r.riderStyles[j].marginBottom)||r.height!==56))
     errorsNow.push('three-line rider / vehicle name & grade / initial gold selection mismatch: '+JSON.stringify(riderCells));
   // SCR-210 uses the first three characters of the complete name, not surname.
   const fullPrefix=expected.map(name=>Array.from(name).slice(0,3).join(''));
@@ -259,7 +287,7 @@ for(const width of [296,375,768]){
   await page.waitForTimeout(450);
   const highlight=await page.locator('.auto-race-table').evaluate(table=>({
     playerName:table.tHead.rows[0].cells[1].classList.contains('section-selected'),
-    carName:table.tHead.rows[0].cells[2].classList.contains('section-selected'),
+    carName:table.tHead.rows[0].cells[7].classList.contains('section-selected'),
     road:table.tHead.querySelector('th[data-group="road"]').classList.contains('section-selected')
   }));
   if(highlight.playerName||highlight.carName||!highlight.road)

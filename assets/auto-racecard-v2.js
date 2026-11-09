@@ -51,11 +51,11 @@ const th=(text,klass)=>'<th class="auto-value '+(klass||"")+'">'+text+'</th>';
 const header='<tr>'+
 '<th rowspan="2" class="col-sha">車番</th>'+
 '<th rowspan="2" class="col-name">選手名</th>'+
-'<th rowspan="2" class="col-machine">競走車名</th>'+
+
 '<th rowspan="2" class="col-h">ハンデ</th><th rowspan="2" class="col-t">試走T</th>'+
 '<th rowspan="2" class="col-t">偏差</th><th rowspan="2" class="col-t">平均ST</th>'+
-'<th rowspan="2" class="col-rank">ランク</th>'+
-'<th rowspan="2" class="col-power"><button type="button" class="sort-power" aria-pressed="false">審査P</button></th>'+
+'<th rowspan="2" class="col-rank"><button type="button" class="sort-power" aria-pressed="false" aria-label="審査ポイント順に並び替え"><span>ランク</span><span>審査P</span></button></th>'+
+'<th rowspan="2" class="col-machine">競走車名</th>'+
 group("recent","近10走",4)+group("good","良10走",3)+group("last90","近90日成績",6)+
 group("road","近180日成績",4)+group("titles","今年・通算優勝",3)+group("mania","マニア分析",3)+'</tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
@@ -71,11 +71,10 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   const total=p.r90.reduce((x,y)=>x+y,0),pct=(x)=>total?(100*x/total).toFixed(1)+"%":"—";
   const main='<td class="col-sha"><span class="frame-cell f'+(i+1)+'">'+(i+1)+'</span><span class="sha-nm">'+safe(p.short)+'</span></td>'+
   '<td class="col-name"><div class="rider-name">'+safe(p.name)+'</div><div class="rider-meta rider-home">'+safe(p.loc)+'</div><div class="rider-meta rider-age">'+p.ki+'期 '+p.age+'歳</div></td>'+
-  '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>'+
-  '<td class="col-h">'+p.h+'m</td><td class="col-t" title="試走タイム未収録">—</td>'+
+  '<td class="col-h">'+p.h+'</td><td class="col-t" title="試走タイム未収録">—</td>'+
   '<td class="col-t">'+p.diff+'</td><td class="col-t">'+p.st+'</td>'+
-  '<td class="col-rank"><span class="grade-current">'+p.rank+'</span><span class="grade-prev">前'+p.prev+'</span></td>'+
-  '<td class="col-power">'+p.power+'</td>';
+  '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
+  '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
   const ninety=[total,p.r90[0],p.r90[1],p.r90[2],pct(p.r90[0]+p.r90[1]),pct(p.r90[0]+p.r90[1]+p.r90[2])];
   const fields=main+num(p.r10)+num([p.trial,p.avg,p.best])+num(ninety)+
   num([...p.dry.map(v=>v.toFixed(1)+"%"),...p.wet.map(v=>v.toFixed(1)+"%")])+
@@ -92,13 +91,13 @@ function choose(key){
  menu.forEach(t=>t.classList.toggle("active",t.dataset.target===key));
  // Match SCR-210's gold/white highlight on the selected heading group.
  table.querySelectorAll("thead th.section-selected").forEach(t=>t.classList.remove("section-selected"));
- const targets=key==="player"?[...table.tHead.rows[0].cells].slice(1,9):
+ const targets=key==="player"?[...table.tHead.rows[0].cells].slice(1,8):
    [...table.tHead.querySelectorAll('th[data-group="'+key+'"]')];
  targets.forEach(t=>t.classList.add("section-selected"));
 }
 menu.forEach(t=>t.addEventListener("click",()=>choose(t.dataset.target)));
 // Initial menu state: player section, without changing initial horizontal scroll.
-[...table.tHead.rows[0].cells].slice(1,9).forEach(t=>t.classList.add("section-selected"));
+[...table.tHead.rows[0].cells].slice(1,8).forEach(t=>t.classList.add("section-selected"));
 const sheet=root.querySelector(".sheet"),overlay=root.querySelector(".sheet-overlay");
 const report={
  road:{title:"近180日・走路別成績",heads:["良2連対率","良3連対率","湿2連対率","湿3連対率"],values:p=>[...p.dry,...p.wet].map(v=>v.toFixed(1)+"%")},
@@ -127,7 +126,7 @@ sheet.querySelector(".sheet-handle").addEventListener("touchstart",e=>{initialY=
 sheet.querySelector(".sheet-handle").addEventListener("touchend",e=>{if(initialY!==null&&(e.changedTouches[0]?.clientY??initialY)-initialY>35)close();initialY=null;},{passive:true});
 const body=table.tBodies[0],power=table.querySelector(".sort-power");
 // Car numbers are fixed identifiers, not a sort control.
-// The existing 審査P button alone toggles between descending score and vehicle order.
+// The combined ランク / 審査P heading toggles between descending points and vehicle order.
 power.addEventListener("click",()=>{const high=power.getAttribute("aria-pressed")!=="true";
  [...body.rows].sort((a,b)=>high?Number(b.dataset.power)-Number(a.dataset.power):Number(a.dataset.vehicle)-Number(b.dataset.vehicle))
  .forEach(tr=>body.appendChild(tr));power.setAttribute("aria-pressed",String(high));});
