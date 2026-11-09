@@ -85,7 +85,10 @@
     "kind actions"
     "clock actions"
     "detail actions";
-  grid-template-rows: repeat(4, minmax(20px, auto)) minmax(18px, auto);
+  /* The 12px clock row must use its intrinsic line height; forcing it to
+     20px made the visual gap after the 16px kind row too large. Keep a
+     consistent 1px gap between rows 1–4. The detail row may expand. */
+  grid-template-rows: repeat(3, minmax(20px, auto)) max-content minmax(18px, auto);
   column-gap: var(--space-card);
   row-gap: var(--space-1);
   align-items: center;
@@ -269,12 +272,18 @@
   display: flex;
   align-self: center;
   align-items: center;
-  white-space: nowrap;
-  gap: var(--fs-12);
+  flex-wrap: wrap;
+  white-space: normal;
+  column-gap: var(--fs-12);
+  row-gap: 0;
   font-size: var(--fs-12);
   color: var(--c-text-secondary);
   font-family: var(--ff-ui);
   font-variant-numeric: tabular-nums;
+}
+/* The date and distance each stay intact, but may occupy separate lines. */
+.race-detail-scroll .ri-date-line > span {
+  white-space: nowrap;
 }
 .race-detail-scroll .ri-date-line .ri-sub {
   display: inline;
