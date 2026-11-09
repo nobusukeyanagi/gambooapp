@@ -525,7 +525,7 @@ for(const width of [296,375,768]){
       const firstHead=row===first;
       for(const cell of row.cells){
         const actual=measure(cell);
-        const expected={top:firstHead?'1px':'0px',right:'1px',bottom:'1px',
+        const expected={top:'0px',right:'1px',bottom:'1px',
           left:cell===row.cells[0]&&(firstHead||row.parentElement.tagName==='TBODY')?'1px':'0px'};
         for(const side of ['top','right','bottom','left'])
           if(actual[side]!==expected[side]||
@@ -539,7 +539,7 @@ for(const width of [296,375,768]){
   });
   if(borderGrid.total!==297||borderGrid.invalid.length||
       ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
-    errorsNow.push('box-table 1px grid / outside frame mismatch: '+JSON.stringify(borderGrid));
+    errorsNow.push('box-table single 1px grid / no duplicate header-top border mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
     const table=document.querySelector('.auto-race-table');
     const head=table.tHead.rows[0].cells[0];
@@ -563,7 +563,7 @@ for(const width of [296,375,768]){
     return {column:sample(th),menu:sample(menu)};
   });
   await referencePage.close();
-  if(!canonical.staticCar||canonical.upperRows.some(x=>x!=='1px')||
+  if(!canonical.staticCar||canonical.upperRows.some(x=>x!=='0px')||
      canonical.column.color!==referenceColors.column.color||
      canonical.column.weight!==referenceColors.column.weight||
      canonical.column.size!==referenceColors.column.size||
