@@ -291,6 +291,15 @@ for(const width of [296,375,768]){
      lastFive.rows.some(rs=>rs.some(r=>r.labelStyles.length<4)))
     errorsNow.push('recent-five table 210-aligned insets/positions, row styles and abnormal results mismatch: '+JSON.stringify(lastFive));
   
+  const tokenColors=await page.evaluate(()=>{
+    const el=document.createElement('span');
+    document.body.appendChild(el);
+    const names=['gold','blue','bronze','green','magenta','teal','yellowgreen'];
+    const color=Object.fromEntries(names.map(x=>{el.style.background='var(--c-'+x+'-light)';
+      return [x,getComputedStyle(el).backgroundColor];}));
+    el.remove();
+    return color;
+  });
   const matchupState=await page.locator('.auto-race-table').evaluate(table=>{
     const headers=[...table.tHead.querySelectorAll('th[data-group="matchup"]')].map(th=>{
       const icon=th.querySelector('.frame-cell');
@@ -650,15 +659,6 @@ for(const width of [296,375,768]){
    separately from the existing "good 10 runs" best-time columns. */
   /* Source-verified top-three for three 良10走 time columns and
      the 90-day best racing time; lower times are better, ties share rank. */
-  const tokenColors=await page.evaluate(()=>{
-    const el=document.createElement('span');
-    document.body.appendChild(el);
-    const names=['gold','blue','bronze','green','magenta','teal','yellowgreen'];
-    const color=Object.fromEntries(names.map(x=>{el.style.background='var(--c-'+x+'-light)';
-      return [x,getComputedStyle(el).backgroundColor];}));
-    el.remove();
-    return color;
-  });
   const expectedTimeRk=values=>{
     const sorted=values.map((v,i)=>({i,v:Number(v)}))
       .sort((a,b)=>a.v-b.v||a.i-b.i);
