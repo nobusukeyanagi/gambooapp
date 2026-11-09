@@ -212,6 +212,15 @@ for(const width of [296,375,768]){
     errorsNow.push('three-line deviation columns/data/alignment failed: '+JSON.stringify(deviations));
 
 
+  const rankColumnWidths=await page.locator('.auto-race-table').evaluate(table=>({
+    heading:Math.round(table.tHead.querySelector('th.col-rank').getBoundingClientRect().width),
+    body:[...table.tBodies[0].rows].map(row=>
+      Math.round(row.querySelector('td.col-rank').getBoundingClientRect().width))
+  }));
+  if(rankColumnWidths.heading!==80||
+     rankColumnWidths.body.some(w=>w!==80))
+    errorsNow.push('rank and judging-point column should be exactly 80px: '+
+      JSON.stringify(rankColumnWidths));
   const lastFive=await page.locator('.auto-race-table').evaluate(table=>({
     headings:[...table.tHead.querySelectorAll('th[data-group="last5"]')].map(h=>h.textContent.trim()),
     widths:[...table.tHead.querySelectorAll('th[data-group="last5"]')].map(h=>Math.round(h.getBoundingClientRect().width)),
@@ -273,7 +282,7 @@ for(const width of [296,375,768]){
   const invalidLastFiveRows=lastFive.rows.length!==8||lastFive.rows.some((rs,i)=>{
     if(rs.length!==5)return true;
     const badCells=rs.some((r,j)=>{
-      if(r.width!==220||!r.link.startsWith('https://gamboo.jp/autorace/program?pid=')||
+      if(r.width!==200||!r.link.startsWith('https://gamboo.jp/autorace/program?pid=')||
          !r.link.includes('&rdt=2026')||!r.link.includes('&rno=')||
          !r.link.includes('&pt=1')||
          !r.venue||!r.date||r.detailRows.length!==3)return true;
@@ -294,7 +303,7 @@ for(const width of [296,375,768]){
     return badCells||rs[0].date!=='11/8'||rs[1].date!=='11/7'||rs[0].grade!=='普通';
   });
   if(JSON.stringify(lastFive.headings)!==JSON.stringify(['前走','2走前','3走前','4走前','5走前'])||
-     lastFive.widths.some(x=>x!==220)||lastFive.headingFonts.some(x=>x!=='12px')||
+     lastFive.widths.some(x=>x!==200)||lastFive.headingFonts.some(x=>x!=='12px')||
      lastFive.headerBorders.some(([top,bottom])=>top!=='0px'||bottom!=='1px')||
      invalidLastFiveRows||
      lastFive.rows[0][0].detailRows.join('|')!=='5R予選|試走3.35H20良|競3.439ST0.22'||
@@ -457,8 +466,8 @@ for(const width of [296,375,768]){
     {mark:'○',order:2,time:'3.709',strong:63.8,form:'↑',condition:'調子 上向き',handling:91,escape:96,start:65}
   ];
   const expectedSPLabels=['雨予想','良走路SP','調子','捌き','逃げ','スタート','予想着順','予想競走T'];
-  const expectedSPHeaderWidths=[170,80,60,60,60,80,80,90];
-  const expectedSPBodyWidths=[80,90,80,60,60,60,80];
+  const expectedSPHeaderWidths=[160,80,60,60,60,60,80,80];
+  const expectedSPBodyWidths=[80,80,80,60,60,60,60];
   const expectedSPRowspans=[1,2,2,2,2,2,1,1];
   const expectedSPColspans=[2,1,1,1,1,1,1,1];
   const expectedSPOrderRanks=[1,0,0,0,3,0,4,2];
@@ -607,6 +616,17 @@ for(const width of [296,375,768]){
   /* The eight attached Gamboo HTML exports are imported as local source data
      and rendered using SCR-210's two-row 28/36px headers, 44px rider rows,
      50px sticky vehicle column and compact 16/12px statistic stack. */
+  const racecardHelp=await page.locator('.rt-legend').evaluate(root=>({
+    title:root.querySelector('.rt-legend-title')?.textContent.trim(),
+    heads:[...root.querySelectorAll('dt')].map(x=>x.textContent.trim()),
+    descriptions:[...root.querySelectorAll('dd')].map(x=>x.textContent.trim())
+  }));
+  if(racecardHelp.title!=='出走表の見方'||racecardHelp.heads.length!==20||
+     racecardHelp.heads.some(h=>h.includes('/')||h.includes('／'))||
+     racecardHelp.descriptions.length!==20||
+     racecardHelp.descriptions.some(d=>d.length<40))
+    errorsNow.push('SCR-310 extended racecard help needs 20 detailed slash-free headings: '+
+      JSON.stringify(racecardHelp));
   const detailSpecs=[
     ['situation','走路状況別成績',4,1,'20.0:2:10','27.8:5:18','2','20%'],
     ['roadtemp','走路温度別成績',8,2,'6.5:2:31','38.9:14:36','2','7%'],
@@ -794,10 +814,10 @@ for(const width of [296,375,768]){
     ['3.408','川口'],['3.408','山陽'],['3.412','伊勢崎'],['3.398','川口']
   ];
   if(best90.heading!=='最高競走T'||best90.group!=='last90'||
-     best90.width!==80||best90.rightOfOutside!=='着外着外率'||
+     best90.width!==70||best90.rightOfOutside!=='着外着外率'||
      best90.rows.length!==8||best90.rows.some((r,i)=>{
        const rank=expectedTimeRk(expectedBest90.map(x=>x[0]))[i];
-       return r.width!==80||r.time.text!==expectedBest90[i][0]||
+       return r.width!==70||r.time.text!==expectedBest90[i][0]||
        r.tint.text!==expectedBest90[i][0]||
        r.tint.cls!=='auto-best90-value'+(rank?' auto-text-rank-'+rank:'')||
        r.tint.bg!==(rank?tintByRank[rank]:'rgba(0, 0, 0, 0)')||
