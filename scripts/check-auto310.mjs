@@ -367,7 +367,7 @@ for(const width of [296,375,768]){
   const superconState=await page.locator('.auto-race-table').evaluate(table=>{
     const headings=[...table.tHead.querySelectorAll('th[data-group="supercon"]')].map(th=>
       ({text:th.textContent.trim(),width:Math.round(th.getBoundingClientRect().width),
-        rowspan:th.rowSpan}));
+        rowspan:th.rowSpan,colspan:th.colSpan}));
     const collect=td=>{
       const span=td.querySelector('.auto-sp-number');
       const cs=span?getComputedStyle(span):getComputedStyle(td);
@@ -378,15 +378,21 @@ for(const width of [296,375,768]){
     };
     const rows=[...table.tBodies[0].rows].map(row=>{
       const cells=[...row.querySelectorAll('td.auto-sp-cell')];
+      const predicted=(sel)=>{const el=row.querySelector(sel),c=getComputedStyle(el);
+        return {text:el.textContent.trim(),cls:el.className,bg:c.backgroundColor,
+          font:c.fontSize,color:c.color};};
       return {cells:cells.map(collect),
+        forecastOrder:predicted('.auto-sp-order .auto-prediction-value'),
+        forecastTime:predicted('td.auto-sp-racetime .auto-prediction-value'),
         mark:row.querySelector('.auto-sp-mark')?.textContent.trim(),
         markSize:getComputedStyle(row.querySelector('.auto-sp-mark')).fontSize,
         order:row.querySelector('.auto-sp-order')?.textContent.trim(),
         arrow:row.querySelector('.auto-sp-form span')?.textContent.trim(),
         condition:row.querySelector('.auto-sp-form')?.getAttribute('aria-label')};
     });
-    const rankColors=Object.fromEntries([1,2,3].map(rank=>{
-      const span=table.querySelector('.auto-top-time-'+rank);
+    const rankColors=Object.fromEntries([1,2,3,4].map(rank=>{
+      const span=table.querySelector(rank<=3?
+        '.auto-top-time-'+rank:'.auto-prediction-rank-4');
       return [rank,span?getComputedStyle(span).backgroundColor:null];
     }));
     return {headings,rows,rankColors};
@@ -401,8 +407,13 @@ for(const width of [296,375,768]){
     {mark:'×',order:4,time:'3.736',strong:61.7,form:'→',condition:'調子 横ばい',handling:90,escape:94,start:61},
     {mark:'○',order:2,time:'3.709',strong:63.8,form:'↑',condition:'調子 上向き',handling:91,escape:96,start:65}
   ];
-  const expectedSPLabels=['予想着順','予想競走T','ストロングP','調子','捌き力','逃げ力','スタート力'];
-  const expectedSPWidths=[80,90,80,60,60,60,80];
+  const expectedSPLabels=['雨予想','良走路SP','調子','捌き','逃げ','スタート','予想着順','予想競走T'];
+  const expectedSPHeaderWidths=[170,80,60,60,60,80,80,90];
+  const expectedSPBodyWidths=[80,90,80,60,60,60,80];
+  const expectedSPRowspans=[1,2,2,2,2,2,1,1];
+  const expectedSPColspans=[2,1,1,1,1,1,1,1];
+  const expectedSPOrderRanks=[1,0,0,0,3,0,4,2];
+  const expectedSPTimeRanks=[2,0,0,0,2,0,4,1];
   const expectedSPRanks={
     strong:[0,0,0,0,0,3,2,1],
     handling:[0,3,0,0,0,0,2,1],
@@ -411,21 +422,31 @@ for(const width of [296,375,768]){
   };
   const keysSP=['strong','handling','escape','start'];
   const mismatchedSP=[];
-  if(superconState.headings.length!==7||
+  if(superconState.headings.length!==8||
      superconState.headings.some((h,i)=>
-       h.text!==expectedSPLabels[i]||h.width!==expectedSPWidths[i]||h.rowspan!==2))
-    mismatchedSP.push('seven forecast headings');
+       h.text!==expectedSPLabels[i]||h.width!==expectedSPHeaderWidths[i]||
+       h.rowspan!==expectedSPRowspans[i]||
+       h.colspan!==expectedSPColspans[i]))
+    mismatchedSP.push('rain forecast merged first row and seven columns');
   if(superconState.rows.length!==8||
      superconState.rows.some((r,i)=>{
        const exp=expectedSP[i],xs=r.cells;
        if(xs.length!==7||r.mark!==exp.mark||r.markSize!=='16px'||
           r.order!==exp.order+'着'||r.arrow!==exp.form||r.condition!==exp.condition||
-          xs.some((x,j)=>x.width!==expectedSPWidths[j]))return true;
+          xs.some((x,j)=>x.width!==expectedSPBodyWidths[j]))return true;
        const values=[exp.order+'着',exp.time,String(exp.strong),exp.form,
          String(exp.handling),String(exp.escape),String(exp.start)];
        const positions=[2,4,5,6];
        if(xs.some((x,j)=>x.text!==values[j]&&(j!==0||x.text!==exp.mark+values[j])))return true;
        if(xs.some((x,j)=>x.font!=='16px'&&j!==3&&j!==0))return true;
+       for(const [field,rank] of [['forecastOrder',expectedSPOrderRanks[i]],
+         ['forecastTime',expectedSPTimeRanks[i]]]){
+         const p=r[field],target=field==='forecastOrder'?values[0]:values[1];
+         if(p.text!==target||p.font!=='16px'||p.color!=='rgb(48, 54, 59)'||
+            p.cls!=='auto-prediction-value'+(rank?' auto-prediction-rank-'+rank:'')||
+            p.bg!==(rank?superconState.rankColors[rank]:'rgba(0, 0, 0, 0)'))
+           return true;
+       }
        for(let k=0;k<4;k++){
          const x=xs[positions[k]],rank=expectedSPRanks[keysSP[k]][i];
          if(x.classes!=='auto-sp-number'+(rank?' auto-sp-rank-'+rank:'')||
