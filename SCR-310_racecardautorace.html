@@ -18,7 +18,7 @@
 
 
     <link rel="stylesheet" href="./assets/race-selector-shared.css?v=1" />
-    <link rel="stylesheet" href="./assets/auto-racecard-v2.css?v=15" />
+    <link rel="stylesheet" href="./assets/auto-racecard-v2.css?v=16" />
     <link rel="stylesheet" href="./assets/racecard-common.css?v=2" />
   </head>
   <body class="sport-auto">
@@ -89,9 +89,9 @@
               <div class="hscroll race-menu-scroll">
                 <button type="button" class="hscroll-cue-l" aria-label="前のメニューへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></button>
                 <div class="hscroll-inner"><div class="info-tabs"><button type="button" class="info-tab active" data-target="player"><span>選手情報</span></button>
-<button type="button" class="info-tab" data-target="recent"><span>近10走<br />着度数</span></button>
-<button type="button" class="info-tab" data-target="good"><span>良10走<br />タイム</span></button>
-<button type="button" class="info-tab" data-target="last90"><span>近90日<br />成績</span></button>
+<button type="button" class="info-tab" data-target="recent"><span>近10走</span></button>
+<button type="button" class="info-tab" data-target="good"><span>良10走</span></button>
+<button type="button" class="info-tab" data-target="last90"><span>近90日</span></button>
 <button type="button" class="info-tab" data-target="road"><span>近180日<br />走路別</span></button>
 <button type="button" class="info-tab" data-target="titles"><span>今年・通算<br />優勝</span></button>
 <button type="button" class="info-tab" data-target="mania"><span>マニア分析</span></button></div></div>
@@ -126,9 +126,9 @@
     <dt>ハンデ</dt><dd>スタートラインの位置差です。数字が大きいほど後方からのスタートになり、選手間の実力差を調整します。</dd>
     <dt>試走T・試走偏差</dt><dd>試走Tは当日発表されたレース前の試走タイムです。試走偏差は1行目が公式の標準偏差、2行目がGambooの全R、3行目がGambooの2連対時の偏差です。未確認の数値は「—」と表示します。</dd>
     <dt>平均ST・ランク／審査P</dt><dd>平均STはスタートタイミングの平均値です。ランク欄は現行・前期のランクと審査ポイントを3行で示します。見出しを押すと審査P順に並び替えられます。</dd>
-    <dt>近10走</dt><dd>直近の最大10走について、1着・2着・3着・着外の回数を表示します。競走数が10に満たない場合もあります。</dd>
+    <dt>近10走</dt><dd>直近の最大10走について、1着・2着・3着・着外の回数と、その下に勝率・2連対率・3連対率・着外率を表示します。集計対象が10走に満たない場合は、その対象走数から算出します。</dd>
     <dt>良10走</dt><dd>良走路での直近最大10走の平均試走タイム・平均競走タイム・最高競走タイムです。同条件では数値が小さいほど速いタイムです。</dd>
-    <dt>近90日成績</dt><dd>最近90日間の着度数と連対率です。2連対率は2着以内、3連対率は3着以内に入った割合を表します。</dd>
+    <dt>近90日</dt><dd>最近90日間の1着・2着・3着・着外の回数と各率です。勝率は1着、2連対率は2着以内、3連対率は3着以内、着外率は着外の割合を示します。</dd>
     <dt>近180日・走路別</dt><dd>良走路と湿走路での2連対率・3連対率を比較します。走路への適性を知る手掛かりになります。</dd>
     <dt>今年・通算優勝</dt><dd>優出は優勝戦への出場回数、Vは優勝回数です。今年の記録と通算の記録を区別しています。</dd>
     <dt>マニア分析</dt><dd>各ボタンを押すと、走路別成績・近90日成績・良走路のタイムを出場選手全員で比較できます。</dd>
@@ -179,7 +179,7 @@
     
     <script src="./assets/sport-display-order.js?v=2"></script>
     <script src="./assets/scroll-controls.js?v=7" data-scroll-mode="keirin-detail"></script>
-    <script src="./assets/auto-racecard-v2.js?v=13" defer></script>
+    <script src="./assets/auto-racecard-v2.js?v=14" defer></script>
     <script src="./assets/tap-feedback.js?v=4" defer></script>
     <script src="./assets/text-fit.js?v=1" defer></script>
 </body>

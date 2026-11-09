@@ -59,6 +59,14 @@ if(!table||!wrap)return;
 const safe=t=>String(t).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll('"',"&quot;");
 const group=(key,title,count)=>'<th class="auto-section" colspan="'+count+'" data-group="'+key+'">'+title+'</th>';
 const th=(text,klass)=>'<th class="auto-value '+(klass||"")+'">'+text+'</th>';
+const statHeader=(primary,rate,isFirst)=>'<th class="auto-value auto-stat-heading'+(isFirst?' auto-start':'')+'">'+
+ '<span class="recent4-heading-main">'+primary+'</span><span class="recent4-heading-rate">'+rate+'</span></th>';
+const statHeaderGroup=()=>[
+ statHeader("1着","勝率",true),
+ statHeader("2着","2連対率",false),
+ statHeader("3着","3連対率",false),
+ statHeader("着外","着外率",false)
+].join("");
 const header='<tr>'+
 '<th rowspan="2" class="col-sha">車番</th>'+
 '<th rowspan="2" class="col-name">選手名</th>'+
@@ -67,17 +75,28 @@ const header='<tr>'+
 '<th rowspan="2" class="col-t">試走T</th><th rowspan="2" class="col-t col-deviation">試走偏差</th>'+
 '<th rowspan="2" class="col-rank"><button type="button" class="sort-power" aria-pressed="false" aria-label="審査ポイント順に並び替え"><span>ランク</span><span>審査P</span></button></th>'+
 '<th rowspan="2" class="col-machine">競走車名</th>'+
-group("recent","近10走",4)+group("good","良10走",3)+group("last90","近90日成績",6)+
+group("recent","近10走",4)+group("good","良10走",3)+group("last90","近90日",4)+
 group("road","近180日成績",4)+group("titles","今年・通算優勝",3)+group("mania","マニア分析",3)+'</tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
-const subhead='<tr>'+sub(["1着","2着","3着","着外"])+
- sub(["平均試走T","平均競走T","最高競走T"])+
- sub(["出走","1着","2着","3着","2連対率","3連対率"])+
+const subhead='<tr>'+statHeaderGroup()+
+ '<th class="auto-value auto-time-heading auto-start"><span>平均</span><span>試走T</span></th>'+
+ '<th class="auto-value auto-time-heading"><span>平均</span><span>競走T</span></th>'+
+ '<th class="auto-value auto-time-heading"><span>最高</span><span>競走T</span></th>'+
+ statHeaderGroup()+
  sub(["良2連対率","良3連対率","湿2連対率","湿3連対率"])+
  sub(["今年優出","今年V","通算V"])+
  sub(["走路別","近90日","タイム"])+'</tr>';
 table.tHead.innerHTML=header+subhead;
 const num=(values)=>values.map((v,i)=>'<td class="auto-value'+(i===0?" auto-start":"")+'">'+v+'</td>').join("");
+const statCells=counts=>{
+ const total=counts.reduce((n,v)=>n+v,0);
+ const percentage=n=>total?Math.round(100*n/total)+"%":"—";
+ const rates=[percentage(counts[0]),percentage(counts[0]+counts[1]),
+  percentage(counts[0]+counts[1]+counts[2]),percentage(counts[3])];
+ return counts.map((v,i)=>'<td class="auto-value recent4-cell auto-stat-cell'+
+  (i===0?' auto-start':'')+'"><span class="recent4-count">'+v+
+  '</span><span class="recent4-rate">'+rates[i]+'</span></td>').join("");
+};
 const showDev=v=>v===null||v===undefined?"—":safe(v);
 const deviationCell=p=>'<td class="col-t col-deviation" title="試走偏差（公式／Gamboo全R／Gamboo2連対）">'+
  '<div class="deviation-primary">'+safe(p.good10Diff)+'</div>'+
@@ -85,7 +104,7 @@ const deviationCell=p=>'<td class="col-t col-deviation" title="試走偏差（�
  '<div class="deviation-line"><span class="deviation-label">2連対</span><span class="deviation-number">'+showDev(p.deviationTop2)+'</span></div>'+
  '</td>';
 table.tBodies[0].innerHTML=players.map((p,i)=>{
-  const total=p.r90.reduce((x,y)=>x+y,0),pct=(x)=>total?(100*x/total).toFixed(1)+"%":"—";
+  // 連対率: denominator = actual number of races in each window.
   const main='<td class="col-sha"><span class="frame-cell f'+(i+1)+'">'+(i+1)+'</span><span class="sha-nm">'+safe(p.short)+'</span></td>'+
   '<td class="col-name"><div class="rider-name">'+safe(p.name)+'</div><div class="rider-meta rider-home">'+safe(p.loc)+'</div><div class="rider-meta rider-age">'+p.ki+'期 '+p.age+'歳</div></td>'+
   '<td class="col-h">'+p.h+'</td><td class="col-t" title="平均ST">'+p.st+'</td>'+
@@ -93,8 +112,7 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   deviationCell(p)+
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
-  const ninety=[total,p.r90[0],p.r90[1],p.r90[2],pct(p.r90[0]+p.r90[1]),pct(p.r90[0]+p.r90[1]+p.r90[2])];
-  const fields=main+num(p.r10)+num([p.trial,p.avg,p.best])+num(ninety)+
+  const fields=main+statCells(p.r10)+num([p.trial,p.avg,p.best])+statCells(p.r90)+
   num([...p.dry.map(v=>v.toFixed(1)+"%"),...p.wet.map(v=>v.toFixed(1)+"%")])+
   num(p.thisYear)+
   ['road','last90','good'].map((key,j)=>'<td class="auto-value'+(j===0?' auto-start':'')+'"><button type="button" class="item-btn auto-detail-button" data-report="'+key+'">'+["走路別","近90日","タイム"][j]+'</button></td>').join("");

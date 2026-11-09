@@ -159,6 +159,34 @@
 .sport-auto .auto-race-table .col-rank { width:82px; min-width:82px; }
 .sport-auto .auto-race-table th.auto-section { width:auto; min-width:0; }
 .sport-auto .auto-race-table :is(th,td).auto-value { width:60px; min-width:60px; }
+/* SCR-210 直近4ヵ月基本成績: identical type scale and vertical rhythm
+   (16px normal counts, 12px secondary rates, 5px separation). */
+.sport-auto .race-detail-scroll .auto-race-table thead tr:nth-child(2) th {
+  height:32px;
+}
+.sport-auto .race-detail-scroll .auto-race-table thead tr:first-child th[rowspan="2"] {
+  height:56px;
+}
+.sport-auto .auto-race-table thead th:is(.auto-stat-heading,.auto-time-heading),
+.sport-auto .auto-race-table tbody td.auto-stat-cell {
+  width:72px; min-width:72px; max-width:72px;
+  text-align:center; white-space:nowrap;
+}
+.sport-auto .auto-race-table thead th.auto-time-heading {
+  width:72px; min-width:72px; max-width:72px;
+}
+.sport-auto .auto-race-table thead th:is(.auto-stat-heading,.auto-time-heading) > span {
+  display:block; font-size:var(--fs-12); font-weight:var(--fw-strong);
+  line-height:1.25;
+}
+.sport-auto .race-detail-scroll .auto-race-table tbody td.auto-stat-cell .recent4-count {
+  display:block; color:var(--c-text-primary); font-size:var(--fs-16);
+  font-weight:var(--fw-normal); line-height:1.2;
+}
+.sport-auto .race-detail-scroll .auto-race-table tbody td.auto-stat-cell .recent4-rate {
+  display:block; margin-top:var(--space-5); color:var(--c-text-secondary);
+  font-size:var(--fs-12); font-weight:var(--fw-normal); line-height:1.2;
+}
 .sport-auto .auto-race-table .rider-name {
   display:block; font-size:var(--fs-16); font-weight:var(--fw-strong);
   line-height:1; margin-bottom:var(--space-5);

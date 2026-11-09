@@ -167,6 +167,62 @@ for(const width of [296,375,768]){
        x.labelStyles.some(y=>y.font!=='12px'||y.weight!=='400'||y.align!=='left')||
        Math.abs(x.starts[0]-x.starts[1])>0.5||!x.noOverflow))
     errorsNow.push('three-line deviation columns/data/alignment failed: '+JSON.stringify(deviations));
+  const basicStats=await page.locator('.auto-race-table').evaluate(table=>{
+    const head=[...table.tHead.rows[0].cells];
+    const groups=['recent','good','last90'].map(k=>table.querySelector('thead th[data-group="'+k+'"]'));
+    const second=[...table.tHead.rows[1].cells];
+    const css=el=>{const v=getComputedStyle(el);return {font:v.fontSize,weight:v.fontWeight,color:v.color}};
+    const result=[...table.tBodies[0].rows].map(row=>{
+      const cells=[...row.querySelectorAll('td.auto-stat-cell')];
+      return {recent:cells.slice(0,4).map(cell=>[cell.querySelector('.recent4-count')?.textContent,cell.querySelector('.recent4-rate')?.textContent]),
+        last90:cells.slice(4).map(cell=>[cell.querySelector('.recent4-count')?.textContent,cell.querySelector('.recent4-rate')?.textContent])};
+    });
+    const first=table.tBodies[0].rows[0].querySelector('td.auto-stat-cell');
+    return {
+      menu:[...document.querySelectorAll('.race-menu-scroll .info-tab')].slice(0,4).map(el=>el.textContent.trim()),
+      groupTitle:groups.map(x=>x.textContent.trim()),
+      groupSpan:groups.map(x=>x.colSpan),
+      labels:second.slice(0,11).map(cell=>[...cell.querySelectorAll('span')].map(x=>x.textContent.trim())),
+      headerHeight:Math.round(second[0].getBoundingClientRect().height),
+      headerCss:css(second[0].querySelector('span')),
+      countCss:css(first.querySelector('.recent4-count')),
+      rateCss:css(first.querySelector('.recent4-rate')),
+      rateGap:getComputedStyle(first.querySelector('.recent4-rate')).marginTop,
+      result
+    };
+  });
+  const expectedTitles=['近10走','良10走','近90日'];
+  const expectedLabels=[
+    ['1着','勝率'],['2着','2連対率'],['3着','3連対率'],['着外','着外率'],
+    ['平均','試走T'],['平均','競走T'],['最高','競走T'],
+    ['1着','勝率'],['2着','2連対率'],['3着','3連対率'],['着外','着外率']
+  ];
+  const expectedR10=[
+    [1,4,1,4],[1,2,3,4],[2,1,0,6],[3,1,2,4],
+    [1,2,1,6],[1,3,0,4],[0,1,3,6],[2,2,2,4]
+  ],expectedR90=[
+    [2,5,4,6],[8,8,9,17],[4,8,3,29],[6,3,5,24],
+    [5,9,10,24],[3,5,3,28],[2,8,12,16],[8,6,9,12]
+  ];
+  const expectedRate=a=>{
+    const n=a.reduce((x,v)=>x+v,0);
+    const p=v=>n?Math.round(v*100/n)+'%':'—';
+    return [p(a[0]),p(a[0]+a[1]),p(a[0]+a[1]+a[2]),p(a[3])];
+  };
+  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','近10走','良10走','近90日'])||
+     JSON.stringify(basicStats.groupTitle)!==JSON.stringify(expectedTitles)||
+     JSON.stringify(basicStats.groupSpan)!==JSON.stringify([4,3,4])||
+     JSON.stringify(basicStats.labels)!==JSON.stringify(expectedLabels)||
+     basicStats.headerHeight!==32||
+     basicStats.headerCss.font!=='12px'||basicStats.headerCss.weight!=='600'||
+     basicStats.countCss.font!=='16px'||basicStats.countCss.weight!=='400'||
+     basicStats.countCss.color!=='rgb(48, 54, 59)'||
+     basicStats.rateCss.font!=='12px'||basicStats.rateCss.weight!=='400'||
+     basicStats.rateCss.color!=='rgb(96, 107, 118)'||
+     basicStats.rateGap!=='5px'||
+     basicStats.result.some((r,i)=>JSON.stringify(r.recent)!==JSON.stringify(expectedR10[i].map((v,j)=>[String(v),expectedRate(expectedR10[i])[j]]))||
+       JSON.stringify(r.last90)!==JSON.stringify(expectedR90[i].map((v,j)=>[String(v),expectedRate(expectedR90[i])[j]]))))
+    errorsNow.push('recent/good/90-day two-line rows mismatch: '+JSON.stringify(basicStats));
   const riderCells=await page.evaluate(()=>{
     const table=document.querySelector('.auto-race-table');
     const header=[...table.tHead.rows[0].cells].map(c=>c.textContent.trim());
