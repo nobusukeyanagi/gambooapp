@@ -654,13 +654,14 @@
   max-width: 60px;
 }
 
-/* 注目: match the 40px 脚質 column, preserving a vertical icon stack. */
+/* 注目: fit the 48px featured-player emblem into a 56px column.
+   Multiple emblems continue to stack vertically. */
 .race-detail-scroll .mania-table thead tr:first-child > th.player-featured-heading,
 .race-detail-scroll .mania-table tbody tr > td.player-featured {
   box-sizing: border-box;
-  width: 40px !important;
-  min-width: 40px !important;
-  max-width: 40px !important;
+  width: 56px !important;
+  min-width: 56px !important;
+  max-width: 56px !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
   text-align: center;
@@ -680,8 +681,8 @@
 }
 .race-detail-scroll .mania-table .player-featured-icons img {
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
 }
 
