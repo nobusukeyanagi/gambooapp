@@ -51,7 +51,7 @@ for(const width of [296,375,768]){
         fits:content.width<=outer.width+0.5};
     })
   );
-  if(menuSizing.length!==7||menuSizing[0].label!=='選手情報'||
+  if(menuSizing.length!==8||menuSizing[0].label!=='選手情報'||
      Math.abs(menuSizing[0].width-82)>1||
      menuSizing.some(m=>m.paddingLeft!=='13px'||m.paddingRight!=='13px'||
        m.minWidth!=='0px'||Math.abs(m.left-13)>0.6||
@@ -154,7 +154,7 @@ for(const width of [296,375,768]){
    errorsNow.push('different shared heights '+[result.header,result.selector,result.summary,result.menu,result.bottom]);
   if(result.activeTitle!=='オートレース予想'||result.selectedRace!=='9'||result.races!==12||result.redFrame!=='3px')
    errorsNow.push('header/selected race mismatch');
-  if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==7)
+  if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==8)
    errorsNow.push('rider/table/menu mismatch');
   const deviations=await page.locator('.auto-race-table').evaluate(table=>{
     const styles=e=>{const c=getComputedStyle(e);return {font:c.fontSize,color:c.color,weight:c.fontWeight,align:c.textAlign}};
@@ -186,7 +186,7 @@ for(const width of [296,375,768]){
      JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
      JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
-     deviations.headerCount!==42||deviations.cells.length!==8||
+     deviations.headerCount!==49||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!==['0.09','0.09','0.10','0.08','0.09','0.11','0.09','0.10'][i]||
        x.text[2]!==['0.09','0.08','0.10','0.08','0.10','0.10','0.09','0.10'][i]||
@@ -342,7 +342,7 @@ for(const width of [296,375,768]){
   const mismatches=[];
   if(matchupState.headers.length!==8||
      matchupState.preceding!=='湿着外着外率'||
-     matchupState.following!==undefined||
+     matchupState.following!=='予想着順'||
      !matchupState.beforeRecent||!matchupState.afterAwards)mismatches.push('column position');
   if(matchupState.headers.some((x,i)=>x.text!=='vs'+(i+1)||
      x.vehicle!==String(i+1)||!x.iconClass.includes('f'+(i+1))||
@@ -364,6 +364,98 @@ for(const width of [296,375,768]){
     mismatches.push('eight-by-eight results and styles');
   if(mismatches.length)
     errorsNow.push('360-day matchup grid '+mismatches.join('/')+': '+JSON.stringify(matchupState));
+  const superconState=await page.locator('.auto-race-table').evaluate(table=>{
+    const headings=[...table.tHead.querySelectorAll('th[data-group="supercon"]')].map(th=>
+      ({text:th.textContent.trim(),width:Math.round(th.getBoundingClientRect().width),
+        rowspan:th.rowSpan}));
+    const collect=td=>{
+      const span=td.querySelector('.auto-sp-number');
+      const cs=span?getComputedStyle(span):getComputedStyle(td);
+      return {text:td.textContent.trim(),width:Math.round(td.getBoundingClientRect().width),
+        value:span?.textContent.trim()||'',classes:span?.className||'',
+        numberBG:span?cs.backgroundColor:'',font:cs.fontSize,
+        color:cs.color,weight:cs.fontWeight};
+    };
+    const rows=[...table.tBodies[0].rows].map(row=>{
+      const cells=[...row.querySelectorAll('td.auto-sp-cell')];
+      return {cells:cells.map(collect),
+        mark:row.querySelector('.auto-sp-mark')?.textContent.trim(),
+        markSize:getComputedStyle(row.querySelector('.auto-sp-mark')).fontSize,
+        order:row.querySelector('.auto-sp-order')?.textContent.trim(),
+        arrow:row.querySelector('.auto-sp-form span')?.textContent.trim(),
+        condition:row.querySelector('.auto-sp-form')?.getAttribute('aria-label')};
+    });
+    const rankColors=Object.fromEntries([1,2,3].map(rank=>{
+      const span=table.querySelector('.auto-top-time-'+rank);
+      return [rank,span?getComputedStyle(span).backgroundColor:null];
+    }));
+    return {headings,rows,rankColors};
+  });
+  const expectedSP=[
+    {mark:'◎',order:1,time:'3.724',strong:38.5,form:'↑',condition:'調子 上向き',handling:62,escape:69,start:54},
+    {mark:'',order:7,time:'3.783',strong:34.8,form:'→',condition:'調子 平行',handling:81,escape:78,start:40},
+    {mark:'',order:5,time:'3.768',strong:42.6,form:'↓',condition:'調子 下降',handling:59,escape:62,start:38},
+    {mark:'',order:6,time:'3.768',strong:52.6,form:'→',condition:'調子 平行',handling:71,escape:83,start:58},
+    {mark:'△',order:3,time:'3.724',strong:49.1,form:'→',condition:'調子 平行',handling:74,escape:78,start:45},
+    {mark:'',order:8,time:'3.923',strong:56.9,form:'→',condition:'調子 平行',handling:77,escape:88,start:58},
+    {mark:'×',order:4,time:'3.736',strong:61.7,form:'→',condition:'調子 平行',handling:90,escape:94,start:61},
+    {mark:'○',order:2,time:'3.709',strong:63.8,form:'↑',condition:'調子 上向き',handling:91,escape:96,start:65}
+  ];
+  const expectedSPLabels=['予想着順','予想競走T','ストロングP','調子','捌き力','逃げ力','スタート力'];
+  const expectedSPWidths=[80,90,80,60,60,60,80];
+  const expectedSPRanks={
+    strong:[0,0,0,0,0,3,2,1],
+    handling:[0,3,0,0,0,0,2,1],
+    escape:[0,0,0,0,0,3,2,1],
+    start:[0,0,0,3,0,3,2,1]
+  };
+  const keysSP=['strong','handling','escape','start'];
+  const mismatchedSP=[];
+  if(superconState.headings.length!==7||
+     superconState.headings.some((h,i)=>
+       h.text!==expectedSPLabels[i]||h.width!==expectedSPWidths[i]||h.rowspan!==2))
+    mismatchedSP.push('seven forecast headings');
+  if(superconState.rows.length!==8||
+     superconState.rows.some((r,i)=>{
+       const exp=expectedSP[i],xs=r.cells;
+       if(xs.length!==7||r.mark!==exp.mark||r.markSize!=='16px'||
+          r.order!==exp.order+'着'||r.arrow!==exp.form||r.condition!==exp.condition||
+          xs.some((x,j)=>x.width!==expectedSPWidths[j]))return true;
+       const values=[exp.order+'着',exp.time,String(exp.strong),exp.form,
+         String(exp.handling),String(exp.escape),String(exp.start)];
+       const positions=[2,4,5,6];
+       if(xs.some((x,j)=>x.text!==values[j]&&(j!==0||x.text!==exp.mark+values[j])))return true;
+       if(xs.some((x,j)=>x.font!=='16px'&&j!==3&&j!==0))return true;
+       for(let k=0;k<4;k++){
+         const x=xs[positions[k]],rank=expectedSPRanks[keysSP[k]][i];
+         if(x.classes!=='auto-sp-number'+(rank?' auto-sp-rank-'+rank:'')||
+            x.value!==String(exp[keysSP[k]])||
+            x.numberBG!==(rank?superconState.rankColors[rank]:'rgba(0, 0, 0, 0)')||
+            x.font!=='16px'||x.color!=='rgb(48, 54, 59)')return true;
+       }
+       return false;
+     }))
+    mismatchedSP.push('eight riders data / rank highlights / font');
+  if(mismatchedSP.length)
+    errorsNow.push('seven-column supercomputer forecast mismatch '+
+      mismatchedSP.join('/')+': '+JSON.stringify(superconState));
+  // Vehicle-color contrast must not be overridden when the matchup tab is
+  // selected OR when another section is selected.
+  for(const section of ['matchup','supercon']){
+    await page.locator('.race-menu-scroll .info-tab[data-target="'+section+'"]').click();
+    const contrast=await page.locator('.auto-race-table').evaluate(table=>{
+      const headers=[...table.tHead.querySelectorAll('th.auto-matchup-heading .frame-cell')];
+      const fixed=[...table.tBodies[0].rows].map(tr=>tr.querySelector('.col-sha .frame-cell'));
+      return headers.map((h,i)=>{
+        const f=fixed.find(x=>x?.textContent.trim()===String(i+1));
+        return {number:i+1,headerColor:getComputedStyle(h).color,
+          fixedColor:f?getComputedStyle(f).color:null};
+      });
+    });
+    if(contrast.some(x=>x.headerColor!==x.fixedColor))
+      errorsNow.push('matchup icon contrast was reset to black with '+section+
+        ' menu active: '+JSON.stringify(contrast));
+  }
   const selectorLinks=await page.locator('.race-selector').evaluate(el=>
     [...el.querySelectorAll('a.race-tab[href*="/autorace/program"]')].map(a=>a.href));
   if(selectorLinks.length!==11||selectorLinks.some(url=>
@@ -400,8 +492,8 @@ for(const width of [296,375,768]){
   const expectedAwards=[[0,0,10],[3,0,0],[2,0,10],[4,0,20],[1,0,49],[6,1,33],[13,1,57],[10,1,71]];
   if(awardState.header!=='優出・優勝'||awardState.rowSpan!==2||awardState.headerWidth!==100||
      awardState.columnIndex!==8||!awardState.selectedOnPlayer||
-     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近5走出走表','直近10走','良10走','直近90日','直近180日','直近360日対戦成績'])||
-     awardState.sheetCount!==0||awardState.lastCells.some(n=>n!==42)||
+     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近5走出走表','直近10走','良10走','直近90日','直近180日','直近360日対戦成績','スパコン予想'])||
+     awardState.sheetCount!==0||awardState.lastCells.some(n=>n!==49)||
      awardState.cells.length!==8||
      awardState.cells.some((r,i)=>{
        const expected=[['今年優出',String(expectedAwards[i][0])],
@@ -440,7 +532,7 @@ for(const width of [296,375,768]){
     ['3.439','川口'],['3.444','川口'],['3.418','飯塚'],['3.413','浜松'],
     ['3.408','川口'],['3.408','山陽'],['3.412','伊勢崎'],['3.398','川口']
   ];
-  if(best90.heading!=='最高T'||best90.group!=='last90'||
+  if(best90.heading!=='最高競走T'||best90.group!=='last90'||
      best90.width!==80||best90.rightOfOutside!=='着外着外率'||
      best90.rows.length!==8||best90.rows.some((r,i)=>
        r.width!==80||r.time.text!==expectedBest90[i][0]||
@@ -737,7 +829,7 @@ for(const width of [296,375,768]){
     return {total:table.querySelectorAll('thead th,tbody td').length,
       tableBorder:measure(table),invalid};
   });
-  if(borderGrid.total!==378||borderGrid.invalid.length||
+  if(borderGrid.total!==441||borderGrid.invalid.length||
       ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
     errorsNow.push('box-table single 1px grid / no duplicate header-top border mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
@@ -820,7 +912,7 @@ for(const width of [296,375,768]){
   if(errors.length)errorsNow.push('browser JS errors '+errors);
   await page.screenshot({path:path.join(folder,'SCR-310-'+width+'.png'),fullPage:true,animations:'disabled'});
   // A selected menu item must paint its entire (two-row) header area gold.
-  for(const key of ['last5','recent','good','last90','road','matchup']){
+  for(const key of ['last5','recent','good','last90','road','matchup','supercon']){
     await page.locator('.race-menu-scroll .info-tab[data-target="'+key+'"]').click();
     const colors=await page.locator('.auto-race-table').evaluate((table,key)=>{
       const upper=[...table.tHead.rows[0].querySelectorAll('th[data-group="'+key+'"]')];
@@ -842,8 +934,8 @@ for(const width of [296,375,768]){
         leftover:table.tHead.querySelectorAll('th.section-selected').length-selected.length
       };
     },key);
-    const expectUpper={last5:5,recent:4,good:3,last90:5,road:8,matchup:8}[key];
-    const expectLower={last5:0,recent:0,good:0,last90:0,matchup:0,road:0}[key];
+    const expectUpper={last5:5,recent:4,good:3,last90:5,road:8,matchup:8,supercon:7}[key];
+    const expectLower={last5:0,recent:0,good:0,last90:0,matchup:0,road:0,supercon:0}[key];
     if(colors.upper!==expectUpper||colors.lower!==expectLower||colors.leftover!==0||
        colors.cells.some(v=>!v.selected||v.bg!=='rgb(114, 103, 49)'||
          v.fg!=='rgb(255, 255, 255)')||
@@ -867,7 +959,7 @@ for(const width of [296,375,768]){
       tableLeft:wrap.scrollLeft,activeVisible:!!visible&&visible.left>=viewport.left-2&&visible.right<=viewport.right+2,
       selected:[...document.querySelectorAll('.auto-race-table thead th.section-selected')].length};
   });
-  if(syncStatus.tableLeft<1100||!['last5','recent','good','last90','road','matchup'].includes(syncStatus.tab)||
+  if(syncStatus.tableLeft<1100||!['last5','recent','good','last90','road','matchup','supercon'].includes(syncStatus.tab)||
      !syncStatus.activeVisible||syncStatus.selected===0)
     errorsNow.push('table scroll must sync selected menu and horizontal strip: '+JSON.stringify(syncStatus));
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');
