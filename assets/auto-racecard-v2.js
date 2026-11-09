@@ -104,8 +104,9 @@ const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
  const raceNo=/^(\d+)R/.exec(race)?.[1];
  const destination=raceNo&&placeSlug[place]?"https://autorace.jp/netstadium/RaceResult/"+
   placeSlug[place]+"/2026-"+month.padStart(2,"0")+"-"+day.padStart(2,"0")+"_"+raceNo:null;
- const special=finishTime==="不成立"||!/^[0-9]+$/.test(rank);
- const result= special?"不成立":rank||"—";
+ const cancelled=finishTime==="不成立";
+ const special=cancelled||!/^[0-9]+$/.test(rank);
+ const result=cancelled?"不成立":rank||"—";
  const rankClass=/^[1-3]$/.test(rank)?" auto-last5-rank-"+rank:"";
  const label=place+" "+date+" "+race+" "+road+"走路 "+result+
   (flag?" "+flag:"")+" 競走T "+finishTime+" 試走T "+trialTime+" ST "+st+" H"+handicap;
