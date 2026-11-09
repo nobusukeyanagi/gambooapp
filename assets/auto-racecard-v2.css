@@ -535,10 +535,7 @@
   width:80px;min-width:80px;max-width:80px;
   text-align:center;white-space:nowrap;
 }
-.sport-auto .auto-race-table :is(th.auto-analyzer-heading:first-of-type,td.auto-analyzer-cell:first-of-type) {
-  width:60px;min-width:60px;max-width:60px;
-}
-.sport-auto .auto-race-table th.auto-analyzer-heading[data-analyzer-first] {
+.sport-auto .auto-race-table :is(th.auto-analyzer-heading[data-analyzer-first],td.auto-analyzer-cell.auto-start) {
   width:60px;min-width:60px;max-width:60px;
 }
 .sport-auto .auto-race-table th.auto-analyzer-heading:nth-last-child(-n+2),
