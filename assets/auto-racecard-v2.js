@@ -241,7 +241,8 @@ const superconCells=i=>{
  const formLabel={up:"上向き",flat:"横ばい",down:"下降"}[p.form];
  const formArrow={up:"↑",flat:"→",down:"↓"}[p.form];
  return '<td class="auto-sp-cell auto-sp-prediction auto-start">'+
-    '<span class="auto-sp-mark">'+safe(p.mark)+'</span>'+
+    '<span class="auto-sp-mark'+(analyzerMarkClass(p.mark)?' '+analyzerMarkClass(p.mark):'')+
+ '">'+safe(p.mark)+'</span>'+
     '<span class="auto-sp-order">'+forecastValue(p.order+'着',p.order)+'</span></td>'+
   '<td class="auto-sp-cell auto-sp-racetime">'+forecastValue(p.time,forecastTimeRanks[i])+'</td>'+
   '<td class="auto-sp-cell">'+superconNumber(p.strong,superconRanking.strong[i])+'</td>'+
@@ -251,31 +252,31 @@ const superconCells=i=>{
   '<td class="auto-sp-cell auto-sp-escape">'+superconNumber(p.escape,superconRanking.escape[i])+'</td>'+
   '<td class="auto-sp-cell">'+superconNumber(p.start,superconRanking.start[i])+'</td>';
 };
-/* Source: uploaded 2026-11-09 川口9R Gamboo
-   「データ解析の予想印」 HTML. Eight categories: total first,
-   followed by the seven data-lab analyses. The source only includes
-   marks and links to detail pages, not their numerical detail tables.
-   Therefore no numerical results or rankings are invented here.
-   ハンデ and スパコン columns from the source are deliberately excluded. */
+/* Source: user-supplied Gamboo 2026-11-09 川口9R
+   「データ解析の予想印」 HTML: overall (former last column) moved first,
+   followed by its original 8 analyzer factors in source order.
+   ハンデ is restored from the original source, only スパコン is excluded.
+   Numerical breakdowns are not supplied and are never invented. */
 const analyzerCategories=[
- {name:"総合",label:"総合",path:null},
- {name:"走路状況",label:"走路状況",condition:"濡走路",path:"situation"},
- {name:"走路温度",label:"走路温度",condition:"20℃未満",path:"roadtemp"},
- {name:"試走タイム",label:"試走タイム",condition:"試走T順位",path:"trialrun"},
- {name:"レース場",label:"レース場",condition:"川口",path:"place"},
- {name:"競走車",label:"競走車",path:"motorcycle"},
- {name:"レース種別・日程",label:"レース種別／日程",path:"raceclass"},
- {name:"勝ち上がり・優勝戦",label:"勝ち上がり／優勝戦",path:"racewin"}
+ {name:"総合",labelLines:["総合"],path:null},
+ {name:"走路状況",labelLines:["走路","状況"],condition:"濡走路",path:"situation"},
+ {name:"走路温度",labelLines:["走路","温度"],condition:"20℃未満",path:"roadtemp"},
+ {name:"試走タイム",labelLines:["試走","タイム"],condition:"試走T順位",path:"trialrun"},
+ {name:"ハンデ",labelLines:["ハンデ"],condition:"ハンデ順位",path:"handicap"},
+ {name:"レース場",labelLines:["レース","場"],condition:"川口",path:"place"},
+ {name:"競走車",labelLines:["競走車"],path:"motorcycle"},
+ {name:"レース種別・日程",labelLines:["レース","種別"],path:"raceclass"},
+ {name:"勝ち上がり・優勝戦",labelLines:["勝ち","上がり"],path:"racewin"}
 ];
 const analyzerMarks=[
- ["○","△","","◎","△","","",""],
- ["×","◎","○","","○","○","×",""],
- ["","","","","","","",""],
- ["","","","","","","◎","×"],
- ["","","","×","","","",""],
- ["","","△","","","△","○","△"],
- ["◎","○","◎","○","◎","◎","△","○"],
- ["△","×","×","△","×","×","","◎"]
+ ["○","△","","◎","◎","△","","",""],
+ ["×","◎","○","","","○","○","×",""],
+ ["","","","","△","","","",""],
+ ["","","","","","","","◎","×"],
+ ["","","","×","","","","",""],
+ ["","","△","","","","△","○","△"],
+ ["◎","○","◎","○","○","◎","◎","△","○"],
+ ["△","×","×","△","×","×","×","","◎"]
 ];
 const analyzerSourceBase="https://gamboo.jp/autorace/analyzer/";
 const analyzerSourceQuery="?rdt=20261109&rno=9&pid=2&rsp=3&rspl=02&rsrt=1&rsst=1";
@@ -292,7 +293,8 @@ const analyzerHeaders=()=>analyzerCategories.map((entry,index)=>
  '" data-group="analyzer"'+(index===0?' data-analyzer-first="true"':'')+'>'+
  (index===0?'<span class="auto-analyzer-total">総合</span>':
  '<button type="button" class="item-btn auto-analyzer-btn" data-analyzer-item="'+index+
- '" aria-label="'+safe(entry.name)+'の詳細を表示">'+safe(entry.label)+'</button>')+'</th>').join("");
+ '" aria-label="'+safe(entry.name)+'の詳細を表示">'+
+ entry.labelLines.map(line=>safe(line)).join('<br>')+'</button>')+'</th>').join("");
 const analyzerCells=playerIndex=>analyzerMarks[playerIndex].map((value,index)=>
  '<td class="auto-analyzer-cell'+(index===0?' auto-start':'')+
  '" aria-label="'+safe(analyzerCategories[index].name)+': '+(value||"印なし")+'">'+
