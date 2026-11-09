@@ -295,13 +295,13 @@
    racecard-common.css. Restore each original vehicle ink, including
    when the matchup menu is selected; keep shared background and borders. */
 .sport-auto .race-detail-scroll .auto-race-table thead th.auto-matchup-heading .frame-cell:is(.f1,.f5) {
-  color:var(--c-text-primary);
+  color:var(--c-text-primary) !important;
 }
 .sport-auto .race-detail-scroll .auto-race-table thead th.auto-matchup-heading .frame-cell:is(.f2,.f3,.f4,.f6,.f7) {
-  color:var(--c-surface);
+  color:var(--c-surface) !important;
 }
 .sport-auto .race-detail-scroll .auto-race-table thead th.auto-matchup-heading .frame-cell.f8 {
-  color:color-mix(in srgb, var(--c-text-primary) 70%, black);
+  color:color-mix(in srgb, var(--c-text-primary) 70%, black) !important;
 }
 .sport-auto .auto-race-table td.auto-matchup-cell > span {
   display:block; text-align:center;
@@ -315,6 +315,67 @@
   color:var(--c-text-secondary);
   font-size:var(--fs-12); font-weight:var(--fw-normal); line-height:1.2;
 }
+/* スパコン予想（川口9R）: compact seven-column projection.
+   Use the same 16px single-line figures and text-sized rank tints as
+   SCR-210's G指数・マル得ポイント (never shade the entire table cell). */
+.sport-auto .auto-race-table :is(th.auto-supercon-heading,td.auto-sp-cell) {
+  box-sizing:border-box; width:80px; min-width:80px; max-width:80px;
+  text-align:center; white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+.sport-auto .auto-race-table :is(th,td).auto-sp-racetime {
+  width:90px; min-width:90px; max-width:90px;
+}
+.sport-auto .auto-race-table th.auto-supercon-heading:nth-last-child(6) {
+  width:90px; min-width:90px; max-width:90px;
+}
+.sport-auto .auto-race-table :is(th,td).auto-sp-form {
+  width:60px; min-width:60px; max-width:60px;
+}
+.sport-auto .auto-race-table th.auto-supercon-heading:nth-last-child(4) {
+  width:60px; min-width:60px; max-width:60px;
+}
+.sport-auto .auto-race-table th.auto-supercon-heading:nth-last-child(3),
+.sport-auto .auto-race-table th.auto-supercon-heading:nth-last-child(2) {
+  width:60px; min-width:60px; max-width:60px;
+}
+.sport-auto .auto-race-table tbody td.auto-sp-cell {
+  font-size:var(--fs-16); font-weight:var(--fw-normal);
+  color:var(--c-text-primary); line-height:1.2;
+}
+.sport-auto .auto-race-table td.auto-sp-prediction {
+  font-size:var(--fs-16);
+  white-space:nowrap; text-align:center;
+}
+.sport-auto .auto-race-table .auto-sp-mark {
+  display:inline-flex; width:18px; height:20px;
+  align-items:center; justify-content:center;
+  margin-right:var(--space-3);
+  color:var(--c-text-primary); font-size:var(--fs-16);
+  font-weight:var(--fw-strong); vertical-align:middle;
+}
+.sport-auto .auto-race-table .auto-sp-order {
+  display:inline-block; color:var(--c-text-primary);
+  font-size:var(--fs-16); font-weight:var(--fw-normal);
+  vertical-align:middle;
+}
+.sport-auto .auto-race-table .auto-sp-number {
+  display:inline-block; width:max-content;
+  box-sizing:border-box; padding:var(--space-1) var(--space-2);
+  border-radius:var(--r-xs);
+  font-size:var(--fs-16); font-weight:var(--fw-normal);
+  color:var(--c-text-primary); white-space:nowrap;
+}
+.sport-auto .auto-race-table .auto-sp-rank-1 { background:var(--c-gold-light); }
+.sport-auto .auto-race-table .auto-sp-rank-2 { background:var(--c-blue-light); }
+.sport-auto .auto-race-table .auto-sp-rank-3 { background:var(--c-bronze-light); }
+.sport-auto .auto-race-table .auto-sp-form span {
+  display:inline-block; font-size:var(--fs-20); font-weight:var(--fw-strong);
+  line-height:1;
+}
+.sport-auto .auto-race-table .auto-sp-form-up { color:var(--c-red); }
+.sport-auto .auto-race-table .auto-sp-form-flat { color:var(--c-text-secondary); }
+.sport-auto .auto-race-table .auto-sp-form-down { color:var(--c-blue); }
 /* 優出・優勝: final player-info column, 100px; numbers share
    the same right edge, aligning their ones digits vertically. */
 .sport-auto .auto-race-table :is(th,td).auto-titles-column {
