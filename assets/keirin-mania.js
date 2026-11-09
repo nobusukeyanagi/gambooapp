@@ -132,6 +132,39 @@
   const overlay=inner.querySelector(".sheet-overlay");
   const sheetBody=sheet?.querySelector(".sheet-body");
   if (sheet && overlay && sheetBody) {
+    // Match the main racecard's 車番/並び順 toggle, including line breaks.
+    // The panel uses its own original data; sort only existing rider rows.
+    const bindDetailLineupSort=()=>{
+      const table=sheet.querySelector(".detail-table");
+      const button=table?.querySelector(".dt-car-sort");
+      const tbody=table?.tBodies[0];
+      const lines=Array.isArray(DATA.lineup)?DATA.lineup:[];
+      if(!button||!tbody||!lines.length)return;
+      const rows=Array.from(tbody.rows);
+      const carOf=row=>Number(row.querySelector("td.dt-vehicle .frame-cell")?.textContent?.trim());
+      const byCar=new Map(rows.map(row=>[carOf(row),row]));
+      const carOrder=[...byCar.keys()].sort((a,b)=>a-b);
+      const lineupCars=lines.flat().map(Number);
+      if(byCar.size!==rows.length||lineupCars.length!==rows.length||
+         lineupCars.some(car=>!byCar.has(car))||
+         new Set(lineupCars).size!==rows.length)return;
+      let mode="car";
+      button.addEventListener("click",()=>{
+        mode=mode==="lineup"?"car":"lineup";
+        const order=mode==="lineup"?lineupCars:carOrder;
+        order.forEach(car=>tbody.appendChild(byCar.get(car)));
+        rows.forEach(row=>row.classList.remove("line-group-start"));
+        if(mode==="lineup"){
+          lines.slice(1).forEach(line=>{
+            byCar.get(Number(line[0]))?.classList.add("line-group-start");
+          });
+        }
+        const active=mode==="lineup";
+        button.setAttribute("aria-pressed",String(active));
+        button.setAttribute("aria-label",
+          active?"車番順に戻す":"ライン順に並べ替え");
+      });
+    };
     const renderSheet=idx=>{
       const meta=categories[idx], src=meta&&detailSource[meta[0]];
       if (!src || !src.rows || src.rows.length!==9) return;
@@ -155,7 +188,10 @@
           placingHeaders.map(stackedHeading).join("");
       }).join("");
       sheet.querySelector(".detail-table thead").innerHTML=
-        '<tr><th class="dt-vehicle" rowspan="2">車番</th>'+
+        '<tr><th class="dt-vehicle" rowspan="2">'+
+          '<button type="button" class="dt-car-sort" aria-pressed="false" aria-label="ライン順に並べ替え">'+
+            '<span>車番</span><span class="sort-mode-label" aria-hidden="true">並び順</span>'+
+          '</button></th>'+
         groupHeaders.join("")+'</tr><tr>'+fields+'</tr>';
       const ranking=src.headers.map((_,k)=>src.type==="advance"?null:
         [0,1,2].map(metric=>ranksByRate(src.rows,k,metric,src.type==="pref")));
@@ -180,6 +216,7 @@
           '</span></td>'+cells+'</tr>';
       }).join("");
       sheet.querySelector(".detail-table tbody").innerHTML=html;
+      bindDetailLineupSort();
       sheetBody.scrollTop=0;
       sheetBody.scrollLeft=0;
       inner.querySelectorAll(".mania-table .item-btn").forEach(btn=>
