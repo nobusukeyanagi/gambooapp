@@ -175,7 +175,7 @@ for(const width of [296,375,768]){
     const result=[...table.tBodies[0].rows].map(row=>{
       const cells=[...row.querySelectorAll('td.auto-stat-cell')];
       return {recent:cells.slice(0,4).map(cell=>[cell.querySelector('.recent4-count')?.textContent,cell.querySelector('.recent4-rate')?.textContent]),
-        last90:cells.slice(4).map(cell=>[cell.querySelector('.recent4-count')?.textContent,cell.querySelector('.recent4-rate')?.textContent])};
+        last90:cells.slice(4,8).map(cell=>[cell.querySelector('.recent4-count')?.textContent,cell.querySelector('.recent4-rate')?.textContent])};
     });
     const first=table.tBodies[0].rows[0].querySelector('td.auto-stat-cell');
     return {
@@ -225,7 +225,7 @@ for(const width of [296,375,768]){
      JSON.stringify(basicStats.roadHeaders)!==JSON.stringify(expectedRoadHeaders)||
      basicStats.upperTitles.includes('近180日成績')||
      basicStats.roadCells.length!==8||
-     basicStats.roadCells.some(c=>c.length!==8||c.some(v=>v[0]!=='—'))||
+     basicStats.roadCells.some(c=>c.length!==8||c[0][0]!=='—'||c[1][0]!=='—'||c[4][0]!=='—'||c[5][0]!=='—')||
      basicStats.headerHeight!==48||
      basicStats.headerCss.font!=='12px'||basicStats.headerCss.weight!=='600'||
      basicStats.countCss.font!=='16px'||basicStats.countCss.weight!=='400'||
@@ -543,7 +543,7 @@ for(const width of [296,375,768]){
   await page.locator('.race-table-wrap').evaluate(el=>el.scrollLeft=0);
   await page.waitForTimeout(150);
   await page.locator('.race-table-wrap').evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true})));
-  await page.locator('.race-table-wrap').evaluate(el=>el.scrollLeft=800);
+  await page.locator('.race-table-wrap').evaluate(el=>el.scrollLeft=1600);
   await page.waitForTimeout(350);
   const syncStatus=await page.evaluate(()=>{
     const active=document.querySelector('.race-menu-scroll .info-tab.active');
@@ -552,7 +552,7 @@ for(const width of [296,375,768]){
     return {tab:active?.dataset.target,menuLeft:tabs.scrollLeft,tableLeft:wrap.scrollLeft,
       selected:[...document.querySelectorAll('.auto-race-table thead th.section-selected')].length};
   });
-  if(syncStatus.tableLeft<500||!['recent','good','last90','road'].includes(syncStatus.tab)||
+  if(syncStatus.tableLeft<1100||!['last90','road','titles'].includes(syncStatus.tab)||
      syncStatus.menuLeft<=0||syncStatus.selected===0)
     errorsNow.push('table scroll must sync selected menu and horizontal strip: '+JSON.stringify(syncStatus));
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');

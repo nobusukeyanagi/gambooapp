@@ -20,7 +20,20 @@ const raw=[
 // counts. The supplied pt=6 page gives top-two totals but not each finishing
 // place. Keep individual finish counts unavailable until the user's
 // road-specific distribution can be transcribed unambiguously.
-const roadPlacings=Array.from({length:8},()=>({good:null,wet:null}));
+// pt=6, uploaded 11/09 川口9R: top-two count and all starts in good/wet
+// conditions. Third-place and unplaced counts are uniquely derived where
+// the corresponding three-place rate agrees with those exact denominators.
+// 1st/2nd place counts cannot be split from the available ratios.
+const roadRecord=[
+ {good:{total:49,top2:13,top3:null},wet:{total:6,top2:3,top3:4}},
+ {good:{total:51,top2:18,top3:25},wet:{total:18,top2:11,top3:16}},
+ {good:{total:63,top2:19,top3:25},wet:{total:17,top2:2,top3:3}},
+ {good:{total:58,top2:16,top3:29},wet:{total:10,top2:2,top3:2}},
+ {good:{total:63,top2:16,top3:29},wet:{total:15,top2:4,top3:5}},
+ {good:{total:58,top2:20,top3:23},wet:{total:14,top2:4,top3:7}},
+ {good:{total:56,top2:25,top3:38},wet:{total:16,top2:9,top3:10}},
+ {good:{total:48,top2:29,top3:35},wet:{total:13,top2:5,top3:10}}
+];
 // Gamboo Supercomputer pre-day forecast trial deviation values:
  // vehicle 1 has explicitly user-confirmed figures; other values unverified.
  const superconDeviations=[
@@ -33,7 +46,7 @@ const players=raw.map((a,i)=>({name:a[0],short:Array.from(a[0]).slice(0,3).join(
   deviationNormal:superconDeviations[i].normal,deviationTop2:superconDeviations[i].top2,
   power:a[11],
  r10:a[12],r90:a[13],trial:a[14],avg:a[15],best:a[16],
- dry:a[17],wet:a[18],roadPlacings:roadPlacings[i],thisYear:a[19],vehicleGrade:a[20]}));
+ dry:a[17],wet:a[18],roadRecord:roadRecord[i],thisYear:a[19],vehicleGrade:a[20]}));
 const root=document.querySelector(".sport-auto .phone-inner");
 if(!root)return;
 /* Fit only auto-specific line contents horizontally, preserving the five-row
@@ -135,16 +148,18 @@ const statCells=(counts,ranks)=>{
 // The near-180-day screen uses the same two-line, 60px basic-stat cells.
  // Keep previously supplied 2/3-place rates when counts are unavailable.
  const roadCells=p=>["good","wet"].map((kind,k)=>{
-   const counts=p.roadPlacings[kind];
-   const knownRates=k===0?p.dry:p.wet;
-   if(Array.isArray(counts)&&counts.length===4){
-     return statCells(counts,[0,0,0]);
-   }
-   return [0,1,2,3].map(i=>'<td class="auto-value recent4-cell auto-stat-cell auto-road-cell'+
-     (i===0&&k===0?' auto-start':'')+'"><span class="recent4-count">—</span>'+
-     '<span class="recent4-rate">'+(i===1||i===2?knownRates[i-1].toFixed(1)+'%':'—')+
-     '</span></td>').join("");
- }).join("");
+ const rec=p.roadRecord[kind],hasTop3=Number.isInteger(rec.top3);
+ const counts=[null,null,hasTop3?rec.top3-rec.top2:null,
+   hasTop3?rec.total-rec.top3:null];
+ const rates=[null,100*rec.top2/rec.total,
+   hasTop3?100*rec.top3/rec.total:null,
+   hasTop3?100*(rec.total-rec.top3)/rec.total:null];
+ return counts.map((count,i)=>'<td class="auto-value recent4-cell auto-stat-cell auto-road-cell'+
+ (i===0&&k===0?' auto-start':'')+'"><span class="recent4-count">'+
+ (count===null?'—':count)+'</span><span class="recent4-rate">'+
+ (rates[i]===null?'—':Math.trunc(rates[i])+'%')+
+ '</span></td>').join("");
+}).join("");
 const showDev=v=>v===null||v===undefined?"—":safe(v);
 const deviationCell=p=>'<td class="col-t col-deviation" title="試走偏差（公式／Gamboo全R／Gamboo2連対）">'+
  '<div class="deviation-primary">'+safe(p.good10Diff)+'</div>'+
