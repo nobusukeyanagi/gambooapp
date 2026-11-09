@@ -437,3 +437,11 @@ body { font-weight: var(--fw-normal); }
   text-align: center;
   white-space: nowrap;
 }
+
+/* All app headings are informational: never imply clickability.
+   Links/buttons adjacent to headings keep their own pointer behavior. */
+:is(.page-header-title, .vgroup-head, .vgroup-name, .section-title,
+    .venue-header, .venue-title, .favorite-group-title,
+    .lineup-title, .rt-legend-title, .sheet-title) {
+  cursor: default;
+}
