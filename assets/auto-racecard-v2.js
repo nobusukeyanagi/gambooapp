@@ -88,14 +88,40 @@ const subhead='<tr>'+statHeaderGroup()+
  sub(["走路別","近90日","タイム"])+'</tr>';
 table.tHead.innerHTML=header+subhead;
 const num=(values)=>values.map((v,i)=>'<td class="auto-value'+(i===0?" auto-start":"")+'">'+v+'</td>').join("");
-const statCells=counts=>{
+/* Follow SCR-210: show integer rates, tint the three highest win /
+   two-place / three-place percentages by exact (unrounded) rate.
+   Ties receive competition ranks 1,1,3,...; outside rate is not ranked. */
+const statValues=counts=>{
  const total=counts.reduce((n,v)=>n+v,0);
- const percentage=n=>total?Math.round(100*n/total)+"%":"—";
- const rates=[percentage(counts[0]),percentage(counts[0]+counts[1]),
-  percentage(counts[0]+counts[1]+counts[2]),percentage(counts[3])];
+ return total?[
+  100*counts[0]/total,
+  100*(counts[0]+counts[1])/total,
+  100*(counts[0]+counts[1]+counts[2])/total,
+  100*counts[3]/total
+ ]:[NaN,NaN,NaN,NaN];
+};
+const statRanks=key=>{
+ const ranks=players.map(()=>[0,0,0]);
+ for(let k=0;k<3;k++){
+  let previous=NaN,rank=0;
+  players.map((p,index)=>({index,value:statValues(p[key])[k]}))
+   .filter(item=>Number.isFinite(item.value))
+   .sort((a,b)=>b.value-a.value||a.index-b.index)
+   .forEach(({index,value},order)=>{
+     if(order===0||value!==previous)rank=order+1;
+     if(rank<=3)ranks[index][k]=rank;
+     previous=value;
+   });
+ }
+ return ranks;
+};
+const recentRanks=statRanks("r10"),last90Ranks=statRanks("r90");
+const statCells=(counts,ranks)=>{
+ const rates=statValues(counts);
  return counts.map((v,i)=>'<td class="auto-value recent4-cell auto-stat-cell'+
   (i===0?' auto-start':'')+'"><span class="recent4-count">'+v+
-  '</span><span class="recent4-rate">'+rates[i]+'</span></td>').join("");
+  '</span><span class="recent4-rate'+(i<3&&ranks[i]?' recent4-rank-'+ranks[i]:'')+'">'+
+  (Number.isFinite(rates[i])?Math.trunc(rates[i])+"%":"—")+'</span></td>').join("");
 };
 const showDev=v=>v===null||v===undefined?"—":safe(v);
 const deviationCell=p=>'<td class="col-t col-deviation" title="試走偏差（公式／Gamboo全R／Gamboo2連対）">'+
@@ -112,7 +138,7 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   deviationCell(p)+
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
-  const fields=main+statCells(p.r10)+num([p.trial,p.avg,p.best])+statCells(p.r90)+
+  const fields=main+statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+statCells(p.r90,last90Ranks[i])+
   num([...p.dry.map(v=>v.toFixed(1)+"%"),...p.wet.map(v=>v.toFixed(1)+"%")])+
   num(p.thisYear)+
   ['road','last90','good'].map((key,j)=>'<td class="auto-value'+(j===0?' auto-start':'')+'"><button type="button" class="item-btn auto-detail-button" data-report="'+key+'">'+["走路別","近90日","タイム"][j]+'</button></td>').join("");

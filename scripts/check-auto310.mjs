@@ -206,14 +206,14 @@ for(const width of [296,375,768]){
   ];
   const expectedRate=a=>{
     const n=a.reduce((x,v)=>x+v,0);
-    const p=v=>n?Math.round(v*100/n)+'%':'—';
+    const p=v=>n?Math.trunc(v*100/n)+'%':'—';
     return [p(a[0]),p(a[0]+a[1]),p(a[0]+a[1]+a[2]),p(a[3])];
   };
   if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','近10走','良10走','近90日'])||
      JSON.stringify(basicStats.groupTitle)!==JSON.stringify(expectedTitles)||
      JSON.stringify(basicStats.groupSpan)!==JSON.stringify([4,3,4])||
      JSON.stringify(basicStats.labels)!==JSON.stringify(expectedLabels)||
-     basicStats.headerHeight!==32||
+     basicStats.headerHeight!==36||
      basicStats.headerCss.font!=='12px'||basicStats.headerCss.weight!=='600'||
      basicStats.countCss.font!=='16px'||basicStats.countCss.weight!=='400'||
      basicStats.countCss.color!=='rgb(48, 54, 59)'||
