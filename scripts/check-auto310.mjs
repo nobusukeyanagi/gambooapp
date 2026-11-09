@@ -44,7 +44,8 @@ for(const width of [296,375,768]){
       sizes:[...pair.querySelectorAll('.lineup-car')].map(c=>{
         const r=c.getBoundingClientRect();return [Math.round(r.width),Math.round(r.height)];
       }),
-      hyphen:pair.querySelector('.auto-supercon-dash')?.textContent.trim()
+      hyphen:pair.querySelector('.auto-supercon-dash')?.textContent.trim(),
+      marginLeft:getComputedStyle(pair).marginLeft
     }));
     const row=bar.querySelector('.lineup-row');
     const style=e=>{const s=getComputedStyle(e);return {
@@ -56,19 +57,28 @@ for(const width of [296,375,768]){
     return {
       first:bar.querySelector('.lineup-title')?.textContent.trim(),
       kind:bar.querySelector('.auto-supercon-kind')?.textContent.trim(),
+      kindSize:getComputedStyle(bar.querySelector('.auto-supercon-kind')).fontSize,
+      starsText:bar.querySelector('.auto-supercon-gold-stars')?.textContent,
+      starsColor:getComputedStyle(bar.querySelector('.auto-supercon-gold-stars')).color,
+      goldToken:getComputedStyle(document.querySelector('.auto-supercon-bar .lineup-title')).getPropertyValue('--c-gold').trim(),
       parts,bar:style(bar),title:style(bar.querySelector('.lineup-title')),
       row:style(row),hasRightButton:!!bar.querySelector('button,a,.aokei-paper-btn'),
       placement:Math.abs(rect(bar).top-rect(menu).bottom)<1&&
         Math.abs(rect(table).top-rect(bar).bottom)<1,
-      rowFits:row.scrollWidth<=row.clientWidth+1
+      rowOverflow:row.scrollWidth-row.clientWidth,
+      rowScrollStyle:getComputedStyle(row).overflowX
     };
   });
   if(supercon.first!=='スパコン直前予想　自信度★★★☆☆'||
-     supercon.kind!=='2連単'||supercon.parts.length!==3||
+     supercon.kind!=='2連単'||supercon.kindSize!==supercon.title.font||
+     supercon.starsText!=='★★★'||supercon.starsColor!==supercon.goldToken||
+     supercon.parts.length!==3||
      supercon.parts.map(x=>x.nums.join('-')).join('|')!=='1-8|8-1|1-5'||
-     supercon.parts.some(x=>x.hyphen!=='-'||x.classes.some(y=>!y)||
-       x.sizes.some(size=>size[0]!==22||size[1]!==22))||
-     supercon.hasRightButton||!supercon.placement||!supercon.rowFits)
+     supercon.parts.some((x,i)=>x.hyphen!=='-'||x.classes.some(y=>!y)||
+       x.sizes.some(size=>size[0]!==22||size[1]!==22)||
+       (i===0?parseFloat(x.marginLeft)!==0:Math.abs(parseFloat(x.marginLeft)+4-22)>0.1))||
+     supercon.hasRightButton||!supercon.placement||
+     supercon.rowScrollStyle!=='auto'||supercon.rowOverflow<0)
     errorsNow.push('SCR-310 supercomputer prediction structure/fit mismatch: '+JSON.stringify(supercon));
   const referenceLineup=await browser.newPage({viewport:{width,height:900},deviceScaleFactor:1});
   await referenceLineup.goto(origin+'/SCR-210_racecardkeirin.html',{waitUntil:'load'});
@@ -183,9 +193,9 @@ for(const width of [296,375,768]){
   const shortNames=await page.locator('.auto-race-table tbody .sha-nm').allTextContents();
   if(JSON.stringify(shortNames)!==JSON.stringify(fullPrefix))
     errorsNow.push('fixed vehicle column names must be first 3 chars: '+JSON.stringify(shortNames));
-  if(result.activeNav!=='オート予想'||!result.weather.includes('湿走路 11.0℃')||!result.weather.includes('90.0%')||
+  if(result.activeNav!=='オート予想'||!result.weather.includes('湿走路 12.0℃')||!result.weather.includes('90.0%')||
      !result.date.includes('3100m(6周)')||result.fourth.includes('天候')||
-     !result.weatherTop.endsWith('天候 晴')||result.weather.includes('天候')||
+     !result.weatherTop.endsWith('天候 小雨')||result.weather.includes('天候')||
      result.standaloneWeather!==0||result.liveUnderline!=='none'||result.countdown!=='14分前')
    errorsNow.push('summary/weather/LIVE mismatch: '+JSON.stringify(result));
   const conditionText=await page.evaluate(()=>{
@@ -202,8 +212,8 @@ for(const width of [296,375,768]){
       primary:getComputedStyle(root.querySelector('.ri-meeting')).color};
   });
   if(conditionText.red!=='rgb(184, 71, 99)'||
-     conditionText.topLast!=='天候 晴'||conditionText.values.length!==5||
-     conditionText.values.map(x=>x.text).join('|')!=='晴|湿走路|11.0℃|9.0℃|90.0%'||
+     conditionText.topLast!=='天候 小雨'||conditionText.values.length!==5||
+     conditionText.values.map(x=>x.text).join('|')!=='小雨|湿走路|12.0℃|9.0℃|90.0%'||
      conditionText.values.some(x=>x.weight!=='600'||x.color!==conditionText.primary))
     errorsNow.push('weather/countdown color/weight mismatch '+JSON.stringify(conditionText));
   const positions=await page.evaluate(()=>{

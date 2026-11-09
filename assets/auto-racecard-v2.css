@@ -42,13 +42,16 @@
   color:var(--c-text-primary);
 }
 .sport-auto .race-info-bar .ri-btn.live { text-decoration:none; }
+.sport-auto .race-detail-scroll .auto-supercon-gold-stars {
+  color:var(--c-gold);
+}
 /* SCR-310 prediction bar uses SCR-210's .lineup-bar, .lineup-main,
    .lineup-title, .lineup-row and .lineup-car directly. Only the auto-race
    2連単 pair layout needs new selectors; no right-side newspaper button. */
 .sport-auto .race-detail-scroll .auto-supercon-row .auto-supercon-kind {
   flex:0 0 auto;
   margin-right:var(--space-2);
-  font-size:var(--fs-12);
+  font-size:var(--fs-14);
   font-weight:var(--fw-strong);
   color:var(--c-text-primary);
   line-height:22px;
@@ -58,6 +61,11 @@
   align-items:center;
   flex:0 0 auto;
   gap:var(--space-1);
+}
+/* Pair-to-pair free space = the 22px width of one car icon; the shared
+   lineup row already contributes --space-1 between flex items. */
+.sport-auto .race-detail-scroll .auto-supercon-row .auto-supercon-pair + .auto-supercon-pair {
+  margin-left:calc(22px - var(--space-1));
 }
 .sport-auto .race-detail-scroll .auto-supercon-row .auto-supercon-dash {
   display:inline-flex;
