@@ -156,10 +156,20 @@ const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
  return '<td class="auto-last5-cell'+(index===0?' auto-start':'')+'">'+
   (destination?'<a href="'+destination+'" target="_blank" rel="noopener noreferrer" class="auto-last5-link" title="'+safe(label)+'" aria-label="'+safe(label)+'">'+inner+'</a>':inner)+'</td>';
 }).join("");
-/* The 360-day head-to-head matrix in Gamboo's member-only "スパコン前日予想"
-   is not included in the supplied page source. Keep unverified results empty
-   rather than make up historical wins/losses. Fill [wins, losses] once verified. */
-const headToHead360=Array.from({length:8},()=>Array(8).fill(null));
+/* Source: user-supplied Gamboo 2026-11-09 川口9R スパコン前日予想
+   HTML "対戦成績表（近360日）". Each row is a vehicle 1–8 and each pair is
+   [wins, losses] from the row rider's perspective. The symmetrical
+   outcomes were checked across all 28 pairs; null is self matchup. */
+const headToHead360=[
+ [null,[0,1],[1,0],[0,5],[0,0],[4,2],[1,4],[0,2]],
+ [[1,0],null,[0,2],[2,3],[1,2],[3,1],[0,1],[1,0]],
+ [[0,1],[2,0],null,[1,3],[6,4],[2,3],[0,5],[1,4]],
+ [[5,0],[3,2],[3,1],null,[0,4],[7,3],[3,7],[2,5]],
+ [[0,0],[2,1],[4,6],[4,0],null,[4,1],[0,2],[0,4]],
+ [[2,4],[1,3],[3,2],[3,7],[1,4],null,[4,6],[4,4]],
+ [[4,1],[1,0],[5,0],[7,3],[2,0],[6,4],null,[4,6]],
+ [[2,0],[0,1],[4,1],[5,2],[4,0],[4,4],[6,4],null]
+];
 const headToHeadHeaders=()=>Array.from({length:8},(_,i)=>
   '<th rowspan="2" data-group="matchup" class="auto-matchup-heading'+
   (i===0?' auto-start':'')+'" aria-label="対戦相手 車番'+(i+1)+'">'+
