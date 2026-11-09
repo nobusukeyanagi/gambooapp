@@ -88,10 +88,18 @@ const statHeaderGroup=key=>[
 ].join("");
 const timeHeader=(a,b,first)=>'<th rowspan="2" data-group="good" class="auto-value auto-time-heading'+(first?' auto-start':'')+'"><span>'+a+'</span><span>'+b+'</span></th>';
 
-/* Five horizontal race columns, recent first. The date/venue group is kept
-   small like SCR-210's meeting metadata; finish gets a large central area.
-   Only 11/7 onward can be labeled 普通 from the supplied current-meeting heading.
-   Older meeting grades are deliberately unknown (—) rather than invented. */
+/* Grade follows the past meeting, not the individual rider or result.
+   Use the same category names as SCR-210's grade badges. */
+const last5Grade=(place,month,day)=>{
+ const d=Number(day);
+ if(place==="川口"&&month==="11"&&((d>=1&&d<=4)||(d>=7&&d<=10)))
+   return ["普通","grade-normal"];
+ if(place==="伊勢崎"&&month==="10"&&d>=21&&d<=25)
+   return ["GⅡ","grade-g2"];
+ if(place==="浜松"&&((month==="10"&&d>=29)||(month==="11"&&d<=3)))
+   return ["SG","grade-sg"];
+ return ["—","grade-unknown"];
+};
 const last5Headers=()=>["前走","2走前","3走前","4走前","5走前"]
  .map((label,index)=>'<th rowspan="2" data-group="last5" class="auto-last5-heading'+
  (index===0?' auto-start':'')+'">'+label+'</th>').join("");
@@ -99,8 +107,7 @@ const placeSlug={"川口":"kawaguchi","浜松":"hamamatsu","伊勢崎":"isesaki"
 const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
  const [date,place,road,race,rank,finishTime,trialTime,st,handicap,flag]=entry;
  const [month,day]=date.split("/");
- const knownNormal=place==="川口"&&month==="11"&&Number(day)>=7&&Number(day)<=9;
- const grade=knownNormal?"普通":"—";
+ const [grade,gradeClass]=last5Grade(place,month,day);
  const raceNo=/^(\d+)R/.exec(race)?.[1];
  const destination=raceNo&&placeSlug[place]?"https://autorace.jp/netstadium/RaceResult/"+
   placeSlug[place]+"/2026-"+month.padStart(2,"0")+"-"+day.padStart(2,"0")+"_"+raceNo:null;
@@ -111,8 +118,8 @@ const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
  const label=place+" "+date+" "+race+" "+road+"走路 "+result+
   (flag?" "+flag:"")+" 競走T "+finishTime+" 試走T "+trialTime+" ST "+st+" H"+handicap;
  const inner='<div class="auto-last5-entry">'+
-  '<div class="auto-last5-meta"><span class="auto-last5-grade'+(knownNormal?' is-normal':'')+'">'+grade+
-  '</span><span>'+safe(place)+'</span><span>'+safe(date)+'</span></div>'+
+  '<div class="auto-last5-meta"><span class="auto-last5-grade grade-badge '+gradeClass+'">'+grade+
+  '</span><span class="auto-last5-venue">'+safe(place)+'</span><span class="auto-last5-date">'+safe(date)+'</span></div>'+
   '<div class="auto-last5-finish'+rankClass+(special?' is-special':'')+'">'+
   '<span class="auto-last5-rank">'+safe(result)+'</span>'+
   (flag?'<span class="auto-last5-flag">'+safe(flag)+'</span>':'')+'</div>'+
