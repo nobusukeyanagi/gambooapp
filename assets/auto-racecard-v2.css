@@ -526,3 +526,97 @@
 }
 .sport-auto .auto-race-table td.auto-last5-cell { text-align:left; }
 
+
+/* SCR-310: Gamboo's データ解析の予想印, total first.
+   Match SCR-210's compact .item-btn and 16px bold symbol conventions.
+   Whole-table cells stay white; only their header section is highlighted. */
+.sport-auto .auto-race-table :is(th.auto-analyzer-heading,td.auto-analyzer-cell) {
+  box-sizing:border-box;
+  width:80px;min-width:80px;max-width:80px;
+  text-align:center;white-space:nowrap;
+}
+.sport-auto .auto-race-table :is(th.auto-analyzer-heading:first-of-type,td.auto-analyzer-cell:first-of-type) {
+  width:60px;min-width:60px;max-width:60px;
+}
+.sport-auto .auto-race-table th.auto-analyzer-heading[data-analyzer-first] {
+  width:60px;min-width:60px;max-width:60px;
+}
+.sport-auto .auto-race-table th.auto-analyzer-heading:nth-last-child(-n+2),
+.sport-auto .auto-race-table td.auto-analyzer-cell:nth-last-child(-n+2) {
+  width:100px;min-width:100px;max-width:100px;
+}
+.sport-auto .auto-race-table .auto-analyzer-btn {
+  width:calc(100% - 2px);
+  height:40px;
+  padding:var(--space-1) var(--space-2);
+  font-size:var(--fs-12);
+  font-weight:var(--fw-strong);
+  line-height:1.2;
+  white-space:normal;
+  text-align:center;
+  word-break:keep-all;
+  overflow-wrap:normal;
+}
+.sport-auto .auto-race-table td.auto-analyzer-cell .auto-analyzer-mark {
+  display:inline-block;
+  font-size:var(--fs-16);
+  font-weight:var(--fw-strong);
+  color:var(--c-text-primary);
+  line-height:1;
+}
+.sport-auto .auto-analyzer-sheet .detail-table {
+  width:max-content;min-width:100%;
+}
+.sport-auto .auto-analyzer-sheet .detail-table th.auto-analyzer-detail-name,
+.sport-auto .auto-analyzer-sheet .detail-table td.auto-analyzer-detail-name {
+  box-sizing:border-box;
+  width:120px;min-width:120px;max-width:120px;
+  font-size:var(--fs-14);
+  text-align:left;
+}
+.sport-auto .auto-analyzer-sheet .detail-table th:not(.dt-vehicle):not(.auto-analyzer-detail-name),
+.sport-auto .auto-analyzer-sheet .detail-table td.auto-analyzer-detail-mark {
+  box-sizing:border-box;
+  width:80px;min-width:80px;
+  font-size:var(--fs-12);
+}
+.sport-auto .auto-analyzer-sheet .detail-table td.auto-analyzer-detail-mark {
+  font-size:var(--fs-16);
+  font-weight:var(--fw-strong);
+}
+.sport-auto .auto-analyzer-sheet .detail-table .dt-vehicle .frame-cell {
+  display:flex;align-items:center;justify-content:center;
+  box-sizing:border-box;
+  width:22px;height:22px;min-width:22px;
+  margin:0 auto;border-radius:var(--r-sm);
+  font-size:var(--fs-16);font-weight:var(--fw-strong);
+}
+.sport-auto .auto-analyzer-sheet .detail-table .dt-vehicle .sha-nm {
+  display:none;
+}
+.sport-auto .auto-analyzer-sheet.scrolled .detail-table .dt-vehicle .sha-nm {
+  display:block;
+  margin-top:var(--space-1);
+  font-size:10px;line-height:1.1;
+  color:var(--c-text-primary);
+}
+.sport-auto .auto-analyzer-source {
+  flex:0 0 auto;
+  display:flex;flex-direction:column;gap:var(--space-3);
+  padding:var(--space-card) var(--space-content);
+  background:var(--c-surface);
+  border-top:var(--line-normal);
+}
+.sport-auto .auto-analyzer-source-note {
+  margin:0;
+  color:var(--c-text-secondary);
+  font-size:var(--fs-12);
+  line-height:1.45;
+}
+.sport-auto .auto-analyzer-source-link {
+  align-self:flex-start;
+  font-size:var(--fs-14);
+  font-weight:var(--fw-strong);
+  text-decoration:underline;
+  color:var(--c-blue);
+}
