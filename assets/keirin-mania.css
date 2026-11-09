@@ -176,17 +176,14 @@
   padding-bottom: 0;
   background: var(--c-surface);
 }
-.sheet .detail-table tbody tr:nth-child(even) td {
-  background: var(--c-bg);
-}
 /* Fixed first column combines the jersey number and abbreviated rider name. */
 .sheet .detail-table .dt-vehicle {
   position: sticky;
   left: 0;
   box-sizing: border-box;
-  width: 60px;
-  min-width: 60px;
-  max-width: 60px;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
   padding: var(--space-1) var(--space-2);
   z-index: 4;
   background: var(--c-surface);
@@ -194,9 +191,6 @@
 .sheet .detail-table thead th.dt-vehicle {
   top: 0;
   z-index: 6;
-  background: var(--c-bg);
-}
-.sheet .detail-table tbody tr:nth-child(even) td.dt-vehicle {
   background: var(--c-bg);
 }
 .sheet .detail-table .dt-vehicle-content {
