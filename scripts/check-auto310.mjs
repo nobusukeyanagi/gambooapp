@@ -158,7 +158,7 @@ for(const width of [296,375,768]){
      JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
      JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
-     deviations.headerCount!==22||deviations.cells.length!==8||
+     deviations.headerCount!==29||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!== (i===0?'0.09':'—')||x.text[2]!== (i===0?'0.09':'—')||
        JSON.stringify(x.labels)!==JSON.stringify(['全R','2連対'])||
@@ -182,6 +182,10 @@ for(const width of [296,375,768]){
       menu:[...document.querySelectorAll('.race-menu-scroll .info-tab')].slice(0,4).map(el=>el.textContent.trim()),
       upperTitles:head.map(x=>x.textContent.trim()),
       upperSpan:groups.map(x=>x.rowSpan),
+      roadHeaders:head.filter(x=>x.dataset.group==='road').map(x=>
+       [...x.querySelectorAll('span')].map(y=>y.textContent.trim())),
+      roadCells:[...table.tBodies[0].rows].map(row=>[...row.querySelectorAll('td.auto-road-cell')].map(x=>
+       [x.querySelector('.recent4-count').textContent.trim(),x.querySelector('.recent4-rate').textContent.trim()])),
       labels:head.slice(8,19).map(cell=>[...cell.querySelectorAll('span')].map(x=>x.textContent.trim())),
       statWidths:head.slice(8,12).concat(head.slice(15,19)).map(c=>Math.round(c.getBoundingClientRect().width)),
       headerHeight:Math.round(head[8].getBoundingClientRect().height),
@@ -192,6 +196,10 @@ for(const width of [296,375,768]){
       result
     };
   });
+  const expectedRoadHeaders=[
+    ['良1着','勝率'],['良2着','2連対率'],['良3着','3連対率'],['良着外','着外率'],
+    ['湿1着','勝率'],['湿2着','2連対率'],['湿3着','3連対率'],['湿着外','着外率']
+  ];
   const expectedLabels=[
     ['1着','勝率'],['2着','2連対率'],['3着','3連対率'],['着外','着外率'],
     ['平均','試走T'],['平均','競走T'],['最高','競走T'],
@@ -214,6 +222,10 @@ for(const width of [296,375,768]){
      JSON.stringify(basicStats.upperSpan)!==JSON.stringify([2,2,2])||
      JSON.stringify(basicStats.labels)!==JSON.stringify(expectedLabels)||
      JSON.stringify(basicStats.statWidths)!==JSON.stringify(Array(8).fill(60))||
+     JSON.stringify(basicStats.roadHeaders)!==JSON.stringify(expectedRoadHeaders)||
+     basicStats.upperTitles.includes('近180日成績')||
+     basicStats.roadCells.length!==8||
+     basicStats.roadCells.some(c=>c.length!==8||c.some(v=>v[0]!=='—'))||
      basicStats.headerHeight!==48||
      basicStats.headerCss.font!=='12px'||basicStats.headerCss.weight!=='600'||
      basicStats.countCss.font!=='16px'||basicStats.countCss.weight!=='400'||
@@ -406,7 +418,7 @@ for(const width of [296,375,768]){
     return {total:table.querySelectorAll('thead th,tbody td').length,
       tableBorder:measure(table),invalid};
   });
-  if(borderGrid.total!==264||borderGrid.invalid.length||
+  if(borderGrid.total!==299||borderGrid.invalid.length||
       ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
     errorsNow.push('box-table 1px grid / outside frame mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
@@ -517,14 +529,32 @@ for(const width of [296,375,768]){
         leftover:table.tHead.querySelectorAll('th.section-selected').length-selected.length
       };
     },key);
-    const expectUpper={recent:4,good:3,last90:4,road:1,titles:1,mania:1}[key];
-    const expectLower={recent:0,good:0,last90:0,road:4,titles:3,mania:3}[key];
+    const expectUpper={recent:4,good:3,last90:4,road:8,titles:1,mania:1}[key];
+    const expectLower={recent:0,good:0,last90:0,road:0,titles:3,mania:3}[key];
     if(colors.upper!==expectUpper||colors.lower!==expectLower||colors.leftover!==0||
        colors.cells.some(v=>!v.selected||v.bg!=='rgb(114, 103, 49)'||
          v.fg!=='rgb(255, 255, 255)')||
        (expectLower===0&&colors.cells.some(v=>v.rowspan!==2||v.height!==48)))
       errorsNow.push(key+' both-row gold headers mismatch: '+JSON.stringify(colors));
   }
+  // SCR-210 behavior: table scroll changes menu selection and scroll position;
+  // menu click moves the table to that section.
+  await page.locator('.race-menu-scroll .info-tab[data-target="player"]').click();
+  await page.locator('.race-table-wrap').evaluate(el=>el.scrollLeft=0);
+  await page.waitForTimeout(150);
+  await page.locator('.race-table-wrap').evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true})));
+  await page.locator('.race-table-wrap').evaluate(el=>el.scrollLeft=800);
+  await page.waitForTimeout(350);
+  const syncStatus=await page.evaluate(()=>{
+    const active=document.querySelector('.race-menu-scroll .info-tab.active');
+    const tabs=document.querySelector('.race-menu-scroll .hscroll-inner');
+    const wrap=document.querySelector('.race-table-wrap');
+    return {tab:active?.dataset.target,menuLeft:tabs.scrollLeft,tableLeft:wrap.scrollLeft,
+      selected:[...document.querySelectorAll('.auto-race-table thead th.section-selected')].length};
+  });
+  if(syncStatus.tableLeft<500||!['recent','good','last90','road'].includes(syncStatus.tab)||
+     syncStatus.menuLeft<=0||syncStatus.selected===0)
+    errorsNow.push('table scroll must sync selected menu and horizontal strip: '+JSON.stringify(syncStatus));
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');
   await target.click();
   await page.waitForTimeout(450);

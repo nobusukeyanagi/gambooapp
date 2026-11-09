@@ -16,6 +16,11 @@ const raw=[
 ["若井友和","若井","川口",25,52,"S-17","S-18","モエルトウコン",20,"0.11","0.094","112.716",[0,1,3,6],[2,8,12,16],"3.34","3.434","3.413",[44.6,67.9],[56.3,62.5],[13,1,57],"1級"],
 ["中村雅人","中村","川口",28,45,"S-11","S-11","ＫＯモンソン",20,"0.16","0.093","117.010",[2,2,2,4],[8,6,9,12],"3.34","3.433","3.398",[60.4,72.9],[38.5,76.9],[10,1,71],"1級"]
 ];
+// Near-180-day Gamboo road records are sourced separately from near-90-day
+// counts. The supplied pt=6 page gives top-two totals but not each finishing
+// place. Keep individual finish counts unavailable until the user's
+// road-specific distribution can be transcribed unambiguously.
+const roadPlacings=Array.from({length:8},()=>({good:null,wet:null}));
 // Gamboo Supercomputer pre-day forecast trial deviation values:
  // vehicle 1 has explicitly user-confirmed figures; other values unverified.
  const superconDeviations=[
@@ -28,7 +33,7 @@ const players=raw.map((a,i)=>({name:a[0],short:Array.from(a[0]).slice(0,3).join(
   deviationNormal:superconDeviations[i].normal,deviationTop2:superconDeviations[i].top2,
   power:a[11],
  r10:a[12],r90:a[13],trial:a[14],avg:a[15],best:a[16],
- dry:a[17],wet:a[18],thisYear:a[19],vehicleGrade:a[20]}));
+ dry:a[17],wet:a[18],roadPlacings:roadPlacings[i],thisYear:a[19],vehicleGrade:a[20]}));
 const root=document.querySelector(".sport-auto .phone-inner");
 if(!root)return;
 /* Fit only auto-specific line contents horizontally, preserving the five-row
@@ -69,6 +74,12 @@ const statHeaderGroup=key=>[
  statHeader("着外","着外率",false,key)
 ].join("");
 const timeHeader=(a,b,first)=>'<th rowspan="2" data-group="good" class="auto-value auto-time-heading'+(first?' auto-start':'')+'"><span>'+a+'</span><span>'+b+'</span></th>';
+const roadHeaders=()=>["良","湿"].flatMap((track,k)=>
+ [["1着","勝率"],["2着","2連対率"],["3着","3連対率"],["着外","着外率"]]
+ .map(([name,rate],i)=>'<th rowspan="2" data-group="road" class="auto-value auto-stat-heading auto-road-heading'+
+ (i===0&&k===0?' auto-start':'')+'"><span class="recent4-heading-main">'+
+ track+name+'</span><span class="recent4-heading-rate">'+rate+'</span></th>')
+).join("");
 const header='<tr>'+
 '<th rowspan="2" class="col-sha">車番</th>'+
 '<th rowspan="2" class="col-name">選手名</th>'+
@@ -79,10 +90,9 @@ const header='<tr>'+
 '<th rowspan="2" class="col-machine">競走車名</th>'+
 statHeaderGroup("recent")+timeHeader("平均","試走T",true)+
 timeHeader("平均","競走T",false)+timeHeader("最高","競走T",false)+
-statHeaderGroup("last90")+group("road","近180日成績",4)+group("titles","今年・通算優勝",3)+group("mania","マニア分析",3)+'</tr>';
+statHeaderGroup("last90")+roadHeaders()+group("titles","今年・通算優勝",3)+group("mania","マニア分析",3)+'</tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
 const subhead='<tr>'+
- sub(["良2連対率","良3連対率","湿2連対率","湿3連対率"])+
  sub(["今年優出","今年V","通算V"])+
  sub(["走路別","近90日","タイム"])+'</tr>';
 table.tHead.innerHTML=header+subhead;
@@ -122,6 +132,19 @@ const statCells=(counts,ranks)=>{
   '</span><span class="recent4-rate'+(i<3&&ranks[i]?' recent4-rank-'+ranks[i]:'')+'">'+
   (Number.isFinite(rates[i])?Math.trunc(rates[i])+"%":"—")+'</span></td>').join("");
 };
+// The near-180-day screen uses the same two-line, 60px basic-stat cells.
+ // Keep previously supplied 2/3-place rates when counts are unavailable.
+ const roadCells=p=>["good","wet"].map((kind,k)=>{
+   const counts=p.roadPlacings[kind];
+   const knownRates=k===0?p.dry:p.wet;
+   if(Array.isArray(counts)&&counts.length===4){
+     return statCells(counts,[0,0,0]);
+   }
+   return [0,1,2,3].map(i=>'<td class="auto-value recent4-cell auto-stat-cell auto-road-cell'+
+     (i===0&&k===0?' auto-start':'')+'"><span class="recent4-count">—</span>'+
+     '<span class="recent4-rate">'+(i===1||i===2?knownRates[i-1].toFixed(1)+'%':'—')+
+     '</span></td>').join("");
+ }).join("");
 const showDev=v=>v===null||v===undefined?"—":safe(v);
 const deviationCell=p=>'<td class="col-t col-deviation" title="試走偏差（公式／Gamboo全R／Gamboo2連対）">'+
  '<div class="deviation-primary">'+safe(p.good10Diff)+'</div>'+
@@ -138,35 +161,85 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
   const fields=main+statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+statCells(p.r90,last90Ranks[i])+
-  num([...p.dry.map(v=>v.toFixed(1)+"%"),...p.wet.map(v=>v.toFixed(1)+"%")])+
+  roadCells(p)+
   num(p.thisYear)+
   ['road','last90','good'].map((key,j)=>'<td class="auto-value'+(j===0?' auto-start':'')+'"><button type="button" class="item-btn auto-detail-button" data-report="'+key+'">'+["走路別","近90日","タイム"][j]+'</button></td>').join("");
   return '<tr data-vehicle="'+(i+1)+'" data-power="'+p.power+'">'+fields+'</tr>';
 }).join("");
+// Synchronize table drags, active menu and menu-strip position exactly as
+// SCR-210: tap scrolls to a section; manual table scrolling follows the
+// currently visible section, including automatic horizontal menu movement.
 const menu=[...root.querySelectorAll(".race-menu-scroll .info-tab[data-target]")];
-function choose(key){
- const cell=key==="player"?table.querySelector(".col-name"):table.querySelector('[data-group="'+key+'"]');
- if(!cell)return;
- const x=wrap.scrollLeft+cell.getBoundingClientRect().left-wrap.getBoundingClientRect().left-50;
- wrap.scrollTo({left:Math.max(0,x),behavior:"smooth"});
- menu.forEach(t=>t.classList.toggle("active",t.dataset.target===key));
- // Match SCR-210's gold/white highlight on the selected heading group.
- table.querySelectorAll("thead th.section-selected").forEach(t=>t.classList.remove("section-selected"));
+const menuScroller=root.querySelector(".race-menu-scroll .hscroll-inner");
+const keys=menu.map(tab=>tab.dataset.target);
+const tabsByKey=Object.fromEntries(menu.map(tab=>[tab.dataset.target,tab]));
+const headingsByKey=Object.fromEntries(keys.map(key=>[
+ key,key==="player"?table.tHead.querySelector(".col-name"):
+ table.tHead.querySelector('tr:first-child th[data-group="'+key+'"]')
+]));
+const stickyColumnWidth=()=>table.tHead.querySelector(".col-sha")?.getBoundingClientRect().width||50;
+const headingOffset=cell=>wrap.scrollLeft+cell.getBoundingClientRect().left-wrap.getBoundingClientRect().left;
+const scrollBehavior=window.matchMedia?.("(prefers-reduced-motion: reduce)").matches?"instant":"smooth";
+let activeSection="",navigationTarget=null,selectedByUser=null;
+function highlightHeader(key){
+ table.tHead.querySelectorAll("th.section-selected").forEach(cell=>cell.classList.remove("section-selected"));
  const targets=key==="player"?[...table.tHead.rows[0].cells].slice(1,8):
-   [...table.tHead.rows[0].querySelectorAll('th[data-group="'+key+'"]')];
- // For groups with separate top and bottom headings, select both rows.
- // Recent/good/90-day column headings instead span both rows.
+ [...table.tHead.rows[0].querySelectorAll('th[data-group="'+key+'"]')];
  let offset=0;
  for(const heading of table.tHead.rows[0].querySelectorAll('th.auto-section[data-group]')){
    if(heading.dataset.group===key)
      targets.push(...[...table.tHead.rows[1].cells].slice(offset,offset+heading.colSpan));
    offset+=heading.colSpan;
  }
- targets.forEach(t=>t.classList.add("section-selected"));
+ targets.forEach(cell=>cell.classList.add("section-selected"));
 }
-menu.forEach(t=>t.addEventListener("click",()=>choose(t.dataset.target)));
-// Initial menu state: player section, without changing initial horizontal scroll.
-[...table.tHead.rows[0].cells].slice(1,8).forEach(t=>t.classList.add("section-selected"));
+function selectSection(key,animate=false){
+ if(key===activeSection)return;
+ activeSection=key;
+ menu.forEach(tab=>tab.classList.toggle("active",tab.dataset.target===key));
+ highlightHeader(key);
+ const tab=tabsByKey[key];
+ if(!tab||!menuScroller)return;
+ const destination=key==="player"?0:Math.max(0,
+   tab.offsetLeft-menuScroller.offsetLeft-Math.min(44,menuScroller.clientWidth/5));
+ menuScroller.scrollTo({left:destination,behavior:animate?scrollBehavior:"instant"});
+}
+function navigateSection(key){
+ const heading=headingsByKey[key];
+ if(!heading)return;
+ const maxLeft=Math.max(0,wrap.scrollWidth-wrap.clientWidth);
+ const destination=key==="player"?0:Math.max(0,Math.min(maxLeft,
+   headingOffset(heading)-stickyColumnWidth()));
+ navigationTarget=destination;
+ selectedByUser=key;
+ selectSection(key,true);
+ wrap.scrollTo({left:destination,behavior:scrollBehavior});
+ if(Math.abs(wrap.scrollLeft-destination)<=2)navigationTarget=null;
+}
+function syncSection(){
+ if(selectedByUser!==null)return;
+ if(navigationTarget!==null){
+   if(Math.abs(wrap.scrollLeft-navigationTarget)>2)return;
+   navigationTarget=null;
+ }
+ const atRight=wrap.scrollWidth-wrap.clientWidth-wrap.scrollLeft<=12;
+ const threshold=wrap.scrollLeft+stickyColumnWidth()+2;
+ let key="player";
+ if(atRight)key=keys[keys.length-1];
+ else for(const next of keys.slice(1)){
+   const heading=headingsByKey[next];
+   if(heading&&threshold>=headingOffset(heading))key=next;
+ }
+ selectSection(key);
+}
+function unlockSection(){selectedByUser=null;navigationTarget=null;}
+for(const tab of menu)tab.addEventListener("click",()=>navigateSection(tab.dataset.target));
+wrap.addEventListener("pointerdown",unlockSection,{passive:true});
+wrap.addEventListener("wheel",unlockSection,{passive:true});
+wrap.addEventListener("touchstart",unlockSection,{passive:true});
+wrap.addEventListener("scroll",syncSection,{passive:true});
+window.addEventListener("resize",syncSection);
+selectSection("player");
 const sheet=root.querySelector(".sheet"),overlay=root.querySelector(".sheet-overlay");
 const report={
  road:{title:"近180日・走路別成績",heads:["良2連対率","良3連対率","湿2連対率","湿3連対率"],values:p=>[...p.dry,...p.wet].map(v=>v.toFixed(1)+"%")},
