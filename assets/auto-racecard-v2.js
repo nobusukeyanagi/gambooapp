@@ -121,7 +121,7 @@ const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
  const destination=raceNo&&placePid[place]?
   "https://gamboo.jp/autorace/program?pid="+placePid[place]+
   "&rdt=2026"+month.padStart(2,"0")+day.padStart(2,"0")+
-  "&rno="+raceNo:null;
+  "&rno="+raceNo+"&pt=1":null;
  const abnormal=finishTime==="不成立"?"不成立":!/^[0-9]+$/.test(rank)?(rank||"—"):"";
  const result=abnormal?"-":rank;
  const rankClass=/^[1-3]$/.test(rank)?" auto-last5-rank-"+rank:"";
