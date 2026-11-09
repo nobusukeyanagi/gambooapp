@@ -291,6 +291,18 @@
   font-size:var(--fs-16); font-weight:var(--fw-strong); line-height:1;
   margin:0 0 0 var(--space-3);
 }
+/* Common non-selected table-heading color wins over .f1–.f8 in
+   racecard-common.css. Restore each original vehicle ink, including
+   when the matchup menu is selected; keep shared background and borders. */
+.sport-auto .race-detail-scroll .auto-race-table thead th.auto-matchup-heading .frame-cell:is(.f1,.f5) {
+  color:var(--c-text-primary);
+}
+.sport-auto .race-detail-scroll .auto-race-table thead th.auto-matchup-heading .frame-cell:is(.f2,.f3,.f4,.f6,.f7) {
+  color:var(--c-surface);
+}
+.sport-auto .race-detail-scroll .auto-race-table thead th.auto-matchup-heading .frame-cell.f8 {
+  color:color-mix(in srgb, var(--c-text-primary) 70%, black);
+}
 .sport-auto .auto-race-table td.auto-matchup-cell > span {
   display:block; text-align:center;
 }
