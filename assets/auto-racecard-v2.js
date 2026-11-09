@@ -110,14 +110,18 @@ const last5Grade=(place,month,day)=>{
 const last5Headers=()=>["前走","2走前","3走前","4走前","5走前"]
  .map((label,index)=>'<th rowspan="2" data-group="last5" class="auto-last5-heading'+
  (index===0?' auto-start':'')+'">'+label+'</th>').join("");
-const placeSlug={"川口":"kawaguchi","浜松":"hamamatsu","伊勢崎":"isesaki"};
+/* Link to Gamboo's racecard for the historical race itself.
+   Do not route the recent-race cards to the ticket window or official result. */
+const placePid={"川口":"2","伊勢崎":"3","浜松":"4","飯塚":"5","山陽":"6"};
 const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
  const [date,place,road,race,rank,finishTime,trialTime,st,handicap,flag]=entry;
  const [month,day]=date.split("/");
  const [grade,gradeClass]=last5Grade(place,month,day);
  const raceNo=/^(\d+)R/.exec(race)?.[1];
- const destination=raceNo&&placeSlug[place]?"https://autorace.jp/netstadium/RaceResult/"+
-  placeSlug[place]+"/2026-"+month.padStart(2,"0")+"-"+day.padStart(2,"0")+"_"+raceNo:null;
+ const destination=raceNo&&placePid[place]?
+  "https://gamboo.jp/autorace/program?pid="+placePid[place]+
+  "&rdt=2026"+month.padStart(2,"0")+day.padStart(2,"0")+
+  "&rno="+raceNo:null;
  const abnormal=finishTime==="不成立"?"不成立":!/^[0-9]+$/.test(rank)?(rank||"—"):"";
  const result=abnormal?"-":rank;
  const rankClass=/^[1-3]$/.test(rank)?" auto-last5-rank-"+rank:"";
@@ -152,6 +156,26 @@ const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
  return '<td class="auto-last5-cell'+(index===0?' auto-start':'')+'">'+
   (destination?'<a href="'+destination+'" target="_blank" rel="noopener noreferrer" class="auto-last5-link" title="'+safe(label)+'" aria-label="'+safe(label)+'">'+inner+'</a>':inner)+'</td>';
 }).join("");
+/* The 360-day head-to-head matrix in Gamboo's member-only "スパコン前日予想"
+   is not included in the supplied page source. Keep unverified results empty
+   rather than make up historical wins/losses. Fill [wins, losses] once verified. */
+const headToHead360=Array.from({length:8},()=>Array(8).fill(null));
+const headToHeadHeaders=()=>Array.from({length:8},(_,i)=>
+  '<th rowspan="2" data-group="matchup" class="auto-matchup-heading'+
+  (i===0?' auto-start':'')+'" aria-label="対戦相手 車番'+(i+1)+'">'+
+  '<span class="auto-matchup-heading-label">vs</span>'+
+  '<span class="lineup-car f'+(i+1)+'">'+(i+1)+'</span></th>').join("");
+const headToHeadCells=playerIndex=>headToHead360[playerIndex].map((record,j)=>{
+ const wins=record?.[0],losses=record?.[1],total=wins+losses;
+ const verified=playerIndex!==j&&Number.isInteger(wins)&&Number.isInteger(losses)&&
+   wins>=0&&losses>=0;
+ const score=verified?wins+'-'+losses:'—';
+ const percent=verified&&total>0?Math.round(wins*100/total)+'%':'—';
+ return '<td class="auto-matchup-cell'+(j===0?' auto-start':'')+
+  '" title="'+(verified?'対戦成績：'+score+' 勝率：'+percent:'対戦成績未確認')+'">'+
+  '<span class="auto-matchup-score">'+score+'</span>'+
+  '<span class="auto-matchup-percent">'+percent+'</span></td>';
+}).join("");
 const roadHeaders=()=>["良","湿"].flatMap((track,k)=>
  [["1着","勝率"],["2着","2連対率"],["3着","3連対率"],["着外","着外率"]]
  .map(([name,rate],i)=>'<th rowspan="2" data-group="road" class="auto-value auto-stat-heading auto-road-heading'+
@@ -170,7 +194,7 @@ statHeaderGroup("recent")+timeHeader("平均","試走T",true)+
 timeHeader("平均","競走T",false)+timeHeader("最高","競走T",false)+
 last5Headers()+statHeaderGroup("last90")+
 '<th rowspan="2" class="auto-best90-heading" data-group="last90">最高T</th>'+
-roadHeaders()+
+roadHeaders()+headToHeadHeaders()+
 '<th rowspan="2" data-group="titles" class="auto-titles-column">優出・優勝</th></tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
 const subhead='<tr></tr>';
@@ -260,7 +284,8 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
   const fields=main+statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+last5Cells(i)+
-  statCells(p.r90,last90Ranks[i])+best90Cell(p)+roadCells(p,i)+titlesCell(p);
+  statCells(p.r90,last90Ranks[i])+best90Cell(p)+roadCells(p,i)+
+  headToHeadCells(i)+titlesCell(p);
   return '<tr data-vehicle="'+(i+1)+'" data-power="'+p.power+'">'+fields+'</tr>';
 }).join("");
 // Synchronize table drags, active menu and menu-strip position exactly as
