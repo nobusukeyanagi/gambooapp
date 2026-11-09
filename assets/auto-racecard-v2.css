@@ -323,20 +323,10 @@
   text-align:center; white-space:nowrap;
   font-variant-numeric:tabular-nums;
 }
-.sport-auto .auto-race-table :is(th,td).auto-sp-racetime {
-  width:90px; min-width:90px; max-width:90px;
-}
-.sport-auto .auto-race-table th.auto-supercon-heading:nth-last-child(6) {
+.sport-auto .auto-race-table :is(th.auto-sp-h-racetime,td.auto-sp-racetime) {
   width:90px; min-width:90px; max-width:90px;
 }
 .sport-auto .auto-race-table :is(th.auto-sp-h-short,td.auto-sp-form,td.auto-sp-handling,td.auto-sp-escape) {
-  width:60px; min-width:60px; max-width:60px;
-}
-.sport-auto .auto-race-table th.auto-supercon-heading:nth-last-child(4) {
-  width:60px; min-width:60px; max-width:60px;
-}
-.sport-auto .auto-race-table th.auto-supercon-heading:nth-last-child(3),
-.sport-auto .auto-race-table th.auto-supercon-heading:nth-last-child(2) {
   width:60px; min-width:60px; max-width:60px;
 }
 .sport-auto .auto-race-table tbody td.auto-sp-cell {
