@@ -103,6 +103,16 @@
       '<span class="recent4-count">'+escapeHTML(actualCount??count)+'</span>'+
       '<span class="recent4-rate'+rankClass+'">'+escapeHTML(rate)+'%</span></td>';
   };
+  // Only the advancement stats show "number of successes / number of starts".
+  // Other conditions keep their simple, per-placing count in the top line.
+  const advanceRateCell=stat=>{
+    if(!stat)return '<td class="dt-rate">—</td>';
+    const [rate,count,total]=stat;
+    return '<td class="dt-rate">'+
+      '<span class="recent4-count">'+escapeHTML(count)+
+        '<span class="recent4-total">/'+escapeHTML(total)+'</span></span>'+
+      '<span class="recent4-rate">'+escapeHTML(rate)+'%</span></td>';
+  };
   const differenceCell=txt=>
     '<td class="dt-rate"><span class="dt-difference">'+escapeHTML(txt||"—")+'</span></td>';
   const ranksByRate = (rows, groupIndex, metricIndex, isPref) => {
@@ -153,7 +163,7 @@
         const [name,,groups]=record;
         const cells=groups.map((group,k)=>{
           if(src.type==="advance"){
-            return rankCell(group[0])+rateCell(group[1],0);
+            return rankCell(group[0])+advanceRateCell(group[1]);
           }
           if(src.type==="pref") {
             return k===2
@@ -190,6 +200,28 @@
     inner.querySelectorAll(".mania-table .item-btn").forEach(btn=>
       btn.addEventListener("click",()=>openSheet(Number(btn.dataset.item))));
     sheet.querySelector(".sheet-close").addEventListener("click",closeSheet);
+    const dragHandle=sheet.querySelector(".sheet-handle");
+    if(dragHandle){
+      // Give the top drag bar a full-width touch target; don't interfere with
+      // the table's horizontal scrolling. Pointer capture supports mobile and mouse.
+      let downPointer=null;
+      let startY=0;
+      dragHandle.addEventListener("pointerdown",event=>{
+        if(!event.isPrimary || (event.pointerType==="mouse" && event.button!==0))return;
+        downPointer=event.pointerId;
+        startY=event.clientY;
+        dragHandle.setPointerCapture?.(event.pointerId);
+      });
+      dragHandle.addEventListener("pointerup",event=>{
+        if(event.pointerId!==downPointer)return;
+        const distance=event.clientY-startY;
+        downPointer=null;
+        if(distance>=48)closeSheet();
+      });
+      dragHandle.addEventListener("pointercancel",()=>{downPointer=null;});
+      dragHandle.addEventListener("lostpointercapture",()=>{downPointer=null;});
+      dragHandle.addEventListener("click",closeSheet);
+    }
     overlay.addEventListener("click",closeSheet);
     window.addEventListener("keydown",event=>{
       if(event.key==="Escape"&&!sheet.hidden)closeSheet();
