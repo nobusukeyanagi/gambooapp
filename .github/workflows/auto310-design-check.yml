@@ -1,0 +1,36 @@
+name: Verify SCR-310
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'SCR-310_racecardautorace.html'
+      - 'assets/auto-racecard-v2.css'
+      - 'assets/auto-racecard-v2.js'
+      - 'scripts/check-auto310.mjs'
+      - '.github/workflows/auto310-design-check.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Start server
+        run: python3 -m http.server 4173 --bind 127.0.0.1 --directory . > /tmp/gamboo-auto310.log 2>&1 &
+      - name: Verify fixed layouts and interactions
+        run: node scripts/check-auto310.mjs
+      - name: Upload screen previews
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: scr-310-previews
+          path: /tmp/gamboo-auto310
+          if-no-files-found: ignore
+          retention-days: 7
