@@ -214,7 +214,7 @@ for(const width of [296,375,768]){
      JSON.stringify(basicStats.upperSpan)!==JSON.stringify([2,2,2])||
      JSON.stringify(basicStats.labels)!==JSON.stringify(expectedLabels)||
      JSON.stringify(basicStats.statWidths)!==JSON.stringify(Array(8).fill(60))||
-     basicStats.headerHeight!==60||
+     basicStats.headerHeight!==48||
      basicStats.headerCss.font!=='12px'||basicStats.headerCss.weight!=='600'||
      basicStats.countCss.font!=='16px'||basicStats.countCss.weight!=='400'||
      basicStats.countCss.color!=='rgb(48, 54, 59)'||
@@ -360,12 +360,55 @@ for(const width of [296,375,768]){
     }));
   if(keirinNames.length!==9||keirinNames.some(r=>r.alignment.some(a=>a!=='left')))
     errorsNow.push('SCR-210 rider name / home / age must all align left '+JSON.stringify(keirinNames));
+  const keirinHeaderHeights=await comparison.locator('.mania-table').evaluate(table=>{
+    const h=cell=>Math.round(cell.getBoundingClientRect().height);
+    return {group:h(table.tHead.rows[0].querySelector('th.box-group')),
+      sub:h(table.tHead.rows[1].cells[0]),
+      span:h(table.tHead.rows[0].querySelector('th[rowspan="2"]'))};
+  });
   await comparison.close();
+  const autoHeaderHeights=await page.locator('.auto-race-table').evaluate(table=>{
+    const h=cell=>Math.round(cell.getBoundingClientRect().height);
+    return {group:h(table.tHead.rows[0].querySelector('th.auto-section')),
+      sub:h(table.tHead.rows[1].cells[0]),
+      span:h(table.tHead.rows[0].querySelector('th[rowspan="2"]'))};
+  });
+  if(JSON.stringify(autoHeaderHeights)!==JSON.stringify(keirinHeaderHeights)||
+     JSON.stringify(autoHeaderHeights)!==JSON.stringify({group:24,sub:24,span:48}))
+    errorsNow.push('header heights differ from 210: '+JSON.stringify({autoHeaderHeights,keirinHeaderHeights}));
   if(positions.rows.slice(0,4).some((v,i)=>Math.abs(v-reference[i])>0.6))
     errorsNow.push('first four rows differ from SCR-210: '+JSON.stringify({auto:positions.rows,keirin:reference}));
   if(positions.count!==2||Math.abs(positions.fifthHeight-29)>0.6||
     positions.heights.some(h=>Math.abs(h-14.4)>0.7)||positions.fit.some(x=>x.overflow>1))
     errorsNow.push('fifth-row content overflows/missing: '+JSON.stringify(positions));
+  const borderGrid=await page.locator('.auto-race-table').evaluate(table=>{
+    const measure=el=>{
+      const c=getComputedStyle(el);
+      return {top:c.borderTopWidth,right:c.borderRightWidth,bottom:c.borderBottomWidth,
+        left:c.borderLeftWidth,topColor:c.borderTopColor,rightColor:c.borderRightColor,
+        bottomColor:c.borderBottomColor,leftColor:c.borderLeftColor};
+    };
+    const invalid=[];
+    const first=table.tHead.rows[0];
+    for(const row of [...table.tHead.rows,...table.tBodies[0].rows]){
+      const firstHead=row===first;
+      for(const cell of row.cells){
+        const actual=measure(cell);
+        const expected={top:firstHead?'1px':'0px',right:'1px',bottom:'1px',
+          left:cell===row.cells[0]&&(firstHead||row.parentElement.tagName==='TBODY')?'1px':'0px'};
+        for(const side of ['top','right','bottom','left'])
+          if(actual[side]!==expected[side]||
+            (expected[side]==='1px'&&actual[side+'Color']!=='rgb(210, 214, 218)'))
+            if(invalid.length<8)invalid.push({section:row.parentElement.tagName,
+              row:row.rowIndex,cell:cell.cellIndex,side,expected:expected[side],actual});
+      }
+    }
+    return {total:table.querySelectorAll('thead th,tbody td').length,
+      tableBorder:measure(table),invalid};
+  });
+  if(borderGrid.total<300||borderGrid.invalid.length||
+      ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
+    errorsNow.push('box-table 1px grid / outside frame mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
     const table=document.querySelector('.auto-race-table');
     const head=table.tHead.rows[0].cells[0];
@@ -479,7 +522,7 @@ for(const width of [296,375,768]){
     if(colors.upper!==expectUpper||colors.lower!==expectLower||colors.leftover!==0||
        colors.cells.some(v=>!v.selected||v.bg!=='rgb(114, 103, 49)'||
          v.fg!=='rgb(255, 255, 255)')||
-       (expectLower===0&&colors.cells.some(v=>v.rowspan!==2||v.height!==60)))
+       (expectLower===0&&colors.cells.some(v=>v.rowspan!==2||v.height!==48)))
       errorsNow.push(key+' both-row gold headers mismatch: '+JSON.stringify(colors));
   }
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');

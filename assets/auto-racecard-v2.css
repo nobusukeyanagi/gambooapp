@@ -85,17 +85,27 @@
 .sport-auto .race-detail-scroll .auto-race-table {
   border-collapse:separate; border-spacing:0; width:max-content; min-width:max-content;
   table-layout:fixed; font-family:var(--ff-ui); font-variant-numeric:tabular-nums;
+  border:0;
 }
 .sport-auto .auto-race-table :is(th,td) {
   padding:var(--space-2) var(--space-card); white-space:nowrap;
 }
-/* Header rows, numeric text, row height and surfaces come from racecard-common.css. */
-.sport-auto .auto-race-table thead th { z-index:3; }
-/* The box table starts immediately under the menu. Draw its missing full-width
-   upper 1px rule across every first-row header, including rowspan cells. */
-.sport-auto .auto-race-table thead tr:first-child > th {
-  border-top:var(--line-normal);
+/* 1px grid, including the four outer edges. One stroke per boundary. */
+.sport-auto .race-detail-scroll .auto-race-table :is(th,td) {
+  border-top:0 !important;
+  border-left:0 !important;
+  border-right:var(--line-normal) !important;
+  border-bottom:var(--line-normal) !important;
 }
+.sport-auto .race-detail-scroll .auto-race-table thead tr:first-child > th {
+  border-top:var(--line-normal) !important;
+}
+.sport-auto .race-detail-scroll .auto-race-table thead tr:first-child > th:first-child,
+.sport-auto .race-detail-scroll .auto-race-table tbody tr > td:first-child {
+  border-left:var(--line-normal) !important;
+}
+/* Header height is inherited from the shared SCR-210 racecard-common.css. */
+.sport-auto .auto-race-table thead th { z-index:3; }
 .sport-auto .auto-race-table :is(th,td).col-sha {
   position:sticky; left:0; width:50px; min-width:50px; max-width:50px;
   padding-inline:var(--space-2); z-index:5;
@@ -161,12 +171,6 @@
 .sport-auto .auto-race-table :is(th,td).auto-value { width:60px; min-width:60px; }
 /* SCR-210 直近4ヵ月基本成績: identical type scale and vertical rhythm
    (16px normal counts, 12px secondary rates, 5px separation). */
-.sport-auto .race-detail-scroll .auto-race-table thead tr:nth-child(2) th {
-  height:36px;
-}
-.sport-auto .race-detail-scroll .auto-race-table thead tr:first-child th[rowspan="2"] {
-  height:60px;
-}
 .sport-auto .auto-race-table thead th.auto-stat-heading,
 .sport-auto .auto-race-table tbody td.auto-stat-cell {
   box-sizing:border-box; width:60px; min-width:60px; max-width:60px;
