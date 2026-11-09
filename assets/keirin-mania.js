@@ -95,13 +95,19 @@
     }
     return count;
   };
+  // Keep ranking comparisons on the original fractional percentages;
+  // round only the displayed percentage in every mania-analysis panel.
+  const displayPercent = rate => {
+    const text=String(rate??"").trim(), n=Number(text);
+    return text!==""&&Number.isFinite(n)?Math.round(n)+"%":"—";
+  };
   const rateCell = (stat, rateRank, actualCount) => {
     if (!stat) return '<td class="dt-rate">—</td>';
     const [rate,count]=stat;
     const rankClass=rateRank>=1&&rateRank<=3?" recent4-rank-"+rateRank:"";
     return '<td class="dt-rate">'+
       '<span class="recent4-count">'+escapeHTML(actualCount??count)+'</span>'+
-      '<span class="recent4-rate'+rankClass+'">'+escapeHTML(rate)+'%</span></td>';
+      '<span class="recent4-rate'+rankClass+'">'+escapeHTML(displayPercent(rate))+'</span></td>';
   };
   // Only the advancement stats show "number of successes / number of starts".
   // Other conditions keep their simple, per-placing count in the top line.
@@ -111,7 +117,7 @@
     return '<td class="dt-rate">'+
       '<span class="recent4-count">'+escapeHTML(count)+
         '<span class="recent4-total">/'+escapeHTML(total)+'</span></span>'+
-      '<span class="recent4-rate">'+escapeHTML(rate)+'%</span></td>';
+      '<span class="recent4-rate">'+escapeHTML(displayPercent(rate))+'</span></td>';
   };
   // In the no-same-prefecture difference group, highlight positive 1st–3rd
   // values only. The 4th (outside) value and all negative values stay neutral.
