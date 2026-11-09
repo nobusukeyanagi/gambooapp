@@ -549,11 +549,13 @@ for(const width of [296,375,768]){
     const active=document.querySelector('.race-menu-scroll .info-tab.active');
     const tabs=document.querySelector('.race-menu-scroll .hscroll-inner');
     const wrap=document.querySelector('.race-table-wrap');
-    return {tab:active?.dataset.target,menuLeft:tabs.scrollLeft,tableLeft:wrap.scrollLeft,
+    const visible=active?.getBoundingClientRect(),viewport=tabs.getBoundingClientRect();
+    return {tab:active?.dataset.target,menuLeft:tabs.scrollLeft,menuMax:tabs.scrollWidth-tabs.clientWidth,
+      tableLeft:wrap.scrollLeft,activeVisible:!!visible&&visible.left>=viewport.left-2&&visible.right<=viewport.right+2,
       selected:[...document.querySelectorAll('.auto-race-table thead th.section-selected')].length};
   });
-  if(syncStatus.tableLeft<1100||!['last90','road','titles'].includes(syncStatus.tab)||
-     syncStatus.menuLeft<=0||syncStatus.selected===0)
+  if(syncStatus.tableLeft<1100||!['last90','road','titles','mania'].includes(syncStatus.tab)||
+     !syncStatus.activeVisible||syncStatus.selected===0)
     errorsNow.push('table scroll must sync selected menu and horizontal strip: '+JSON.stringify(syncStatus));
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');
   await target.click();
