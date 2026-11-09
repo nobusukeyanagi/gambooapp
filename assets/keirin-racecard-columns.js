@@ -305,7 +305,7 @@
       '<td class="bl cls"><span class="grade-current">'+escape(grade[0])+
         '</span><span class="grade-prev">前'+escape(grade[1] || "—")+'</span></td>'+
       '<td class="bl"><span class="leg-tag '+(legCss[rider.leg]||"leg-both")+'">'+escape(rider.leg)+'</span></td>'+
-      '<td class="bl">'+escape(rider.gear||"—")+'</td>'+
+      '<td class="bl gear-ratio">'+escape(rider.gear||"—")+'</td>'+
       '<td class="player-comment">'+escape(p.comment)+'</td>'+
       renderFeatured(rider)+
       '<td class="bl score"><span class="score-current'+(scoreRank?' score-rank-'+scoreRank:'')+'">'+escape(rider.score)+'</span>'+
