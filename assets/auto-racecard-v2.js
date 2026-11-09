@@ -16,30 +16,29 @@ const raw=[
 ["若井友和","若井","川口",25,52,"S-17","S-18","モエルトウコン",20,"0.11","0.094","112.716",[0,1,3,6],[2,8,12,16],"3.34","3.434","3.413",[44.6,67.9],[56.3,62.5],[13,1,57],"1級"],
 ["中村雅人","中村","川口",28,45,"S-11","S-11","ＫＯモンソン",20,"0.16","0.093","117.010",[2,2,2,4],[8,6,9,12],"3.34","3.433","3.398",[60.4,72.9],[38.5,76.9],[10,1,71],"1級"]
 ];
-// Near-180-day Gamboo road records are sourced separately from near-90-day
-// counts. The supplied pt=6 page gives top-two totals but not each finishing
-// place. Keep individual finish counts unavailable until the user's
-// road-specific distribution can be transcribed unambiguously.
-// pt=6, uploaded 11/09 川口9R: top-two count and all starts in good/wet
-// conditions. Third-place and unplaced counts are uniquely derived where
-// the corresponding three-place rate agrees with those exact denominators.
-// 1st/2nd place counts cannot be split from the available ratios.
+// 2026-11-09 川口9R: near-180-day placing counts provided by the user,
+// each array ordered 1st, 2nd, 3rd, unplaced; good/wet separately.
 const roadRecord=[
- {good:{total:49,top2:13,top3:null},wet:{total:6,top2:3,top3:4}},
- {good:{total:51,top2:18,top3:25},wet:{total:18,top2:11,top3:16}},
- {good:{total:63,top2:19,top3:25},wet:{total:17,top2:2,top3:3}},
- {good:{total:58,top2:16,top3:29},wet:{total:10,top2:2,top3:2}},
- {good:{total:63,top2:16,top3:29},wet:{total:15,top2:4,top3:5}},
- {good:{total:58,top2:20,top3:23},wet:{total:14,top2:4,top3:7}},
- {good:{total:56,top2:25,top3:38},wet:{total:16,top2:9,top3:10}},
- {good:{total:48,top2:29,top3:35},wet:{total:13,top2:5,top3:10}}
+ {good:[6,7,9,27],wet:[2,1,1,2]},
+ {good:[4,14,7,26],wet:[9,2,5,2]},
+ {good:[7,12,6,37],wet:[1,1,1,13]},
+ {good:[7,9,13,29],wet:[0,2,0,8]},
+ {good:[6,10,13,33],wet:[1,3,1,10]},
+ {good:[9,11,3,32],wet:[1,3,3,7]},
+ {good:[16,9,13,17],wet:[3,6,1,6]},
+ {good:[22,7,6,13],wet:[2,3,5,3]}
 ];
-// Gamboo Supercomputer pre-day forecast trial deviation values:
- // vehicle 1 has explicitly user-confirmed figures; other values unverified.
- const superconDeviations=[
-  {normal:"0.09",top2:"0.09"},
-  ...Array.from({length:7},()=>({normal:null,top2:null}))
- ];
+// Gamboo trial deviations (normal/全R, top2/2連対時), car 1–8.
+const superconDeviations=[
+ {normal:"0.09",top2:"0.09"},
+ {normal:"0.09",top2:"0.08"},
+ {normal:"0.10",top2:"0.10"},
+ {normal:"0.08",top2:"0.08"},
+ {normal:"0.09",top2:"0.10"},
+ {normal:"0.11",top2:"0.10"},
+ {normal:"0.09",top2:"0.09"},
+ {normal:"0.10",top2:"0.10"}
+];
 // Same rule as SCR-210: the first three characters of the full rider name.
 const players=raw.map((a,i)=>({name:a[0],short:Array.from(a[0]).slice(0,3).join(""),loc:a[2],ki:a[3],age:a[4],todayTrial:raceDayTrials[i],
  rank:a[5],prev:a[6],car:a[7],h:a[8],st:a[9],good10Diff:a[10],
@@ -122,11 +121,11 @@ const statValues=counts=>{
   100*counts[3]/total
  ]:[NaN,NaN,NaN,NaN];
 };
-const statRanks=key=>{
+const statRanks=selector=>{
  const ranks=players.map(()=>[0,0,0]);
  for(let k=0;k<3;k++){
   let previous=NaN,rank=0;
-  players.map((p,index)=>({index,value:statValues(p[key])[k]}))
+  players.map((p,index)=>({index,value:statValues(selector(p))[k]}))
    .filter(item=>Number.isFinite(item.value))
    .sort((a,b)=>b.value-a.value||a.index-b.index)
    .forEach(({index,value},order)=>{
@@ -137,29 +136,19 @@ const statRanks=key=>{
  }
  return ranks;
 };
-const recentRanks=statRanks("r10"),last90Ranks=statRanks("r90");
-const statCells=(counts,ranks)=>{
+const recentRanks=statRanks(p=>p.r10),last90Ranks=statRanks(p=>p.r90);
+const roadGoodRanks=statRanks(p=>p.roadRecord.good),roadWetRanks=statRanks(p=>p.roadRecord.wet);
+const statCells=(counts,ranks,extraClass="")=>{
  const rates=statValues(counts);
  return counts.map((v,i)=>'<td class="auto-value recent4-cell auto-stat-cell'+
-  (i===0?' auto-start':'')+'"><span class="recent4-count">'+v+
+  (extraClass?' '+extraClass:'')+(i===0?' auto-start':'')+'"><span class="recent4-count">'+v+
   '</span><span class="recent4-rate'+(i<3&&ranks[i]?' recent4-rank-'+ranks[i]:'')+'">'+
   (Number.isFinite(rates[i])?Math.trunc(rates[i])+"%":"—")+'</span></td>').join("");
 };
-// The near-180-day screen uses the same two-line, 60px basic-stat cells.
- // Keep previously supplied 2/3-place rates when counts are unavailable.
- const roadCells=p=>["good","wet"].map((kind,k)=>{
- const rec=p.roadRecord[kind],hasTop3=Number.isInteger(rec.top3);
- const counts=[null,null,hasTop3?rec.top3-rec.top2:null,
-   hasTop3?rec.total-rec.top3:null];
- const rates=[null,100*rec.top2/rec.total,
-   hasTop3?100*rec.top3/rec.total:null,
-   hasTop3?100*(rec.total-rec.top3)/rec.total:null];
- return counts.map((count,i)=>'<td class="auto-value recent4-cell auto-stat-cell auto-road-cell'+
- (i===0&&k===0?' auto-start':'')+'"><span class="recent4-count">'+
- (count===null?'—':count)+'</span><span class="recent4-rate">'+
- (rates[i]===null?'—':Math.trunc(rates[i])+'%')+
- '</span></td>').join("");
-}).join("");
+// SCR-210-style placing count, rate and rank highlighting, by road condition.
+const roadCells=(p,i)=>
+ statCells(p.roadRecord.good,roadGoodRanks[i],"auto-road-cell")+
+ statCells(p.roadRecord.wet,roadWetRanks[i],"auto-road-cell");
 const showDev=v=>v===null||v===undefined?"—":safe(v);
 const deviationCell=p=>'<td class="col-t col-deviation" title="試走偏差（公式／Gamboo全R／Gamboo2連対）">'+
  '<div class="deviation-primary">'+safe(p.good10Diff)+'</div>'+
@@ -176,7 +165,7 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
   const fields=main+statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+statCells(p.r90,last90Ranks[i])+
-  roadCells(p)+
+  roadCells(p,i)+
   num(p.thisYear)+
   ['road','last90','good'].map((key,j)=>'<td class="auto-value'+(j===0?' auto-start':'')+'"><button type="button" class="item-btn auto-detail-button" data-report="'+key+'">'+["走路別","近90日","タイム"][j]+'</button></td>').join("");
   return '<tr data-vehicle="'+(i+1)+'" data-power="'+p.power+'">'+fields+'</tr>';
@@ -257,7 +246,12 @@ window.addEventListener("resize",syncSection);
 selectSection("player");
 const sheet=root.querySelector(".sheet"),overlay=root.querySelector(".sheet-overlay");
 const report={
- road:{title:"近180日・走路別成績",heads:["良2連対率","良3連対率","湿2連対率","湿3連対率"],values:p=>[...p.dry,...p.wet].map(v=>v.toFixed(1)+"%")},
+ road:{title:"近180日・走路別成績",
+ heads:["良1着","良2着","良3着","良着外","湿1着","湿2着","湿3着","湿着外"],
+ values:p=>["good","wet"].flatMap(track=>{
+   const counts=p.roadRecord[track],rates=statValues(counts);
+   return counts.map((v,i)=>v+"（"+Math.trunc(rates[i])+"%）");
+ })},
  last90:{title:"近90日成績",heads:["出走","1着","2着","3着","着外","2連対率","3連対率"],values:p=>{const n=p.r90.reduce((a,b)=>a+b,0);const pct=x=>n?(100*x/n).toFixed(1)+"%":"—";return [n,...p.r90,pct(p.r90[0]+p.r90[1]),pct(p.r90[0]+p.r90[1]+p.r90[2])]}},
  good:{title:"良走路・近10走タイム",heads:["平均試走T","平均競走T","最高競走T"],values:p=>[p.trial,p.avg,p.best]}
 };
