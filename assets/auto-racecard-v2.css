@@ -167,9 +167,9 @@
 .sport-auto .race-detail-scroll .auto-race-table thead tr:first-child th[rowspan="2"] {
   height:60px;
 }
-.sport-auto .auto-race-table thead th:is(.auto-stat-heading,.auto-time-heading),
+.sport-auto .auto-race-table thead th.auto-stat-heading,
 .sport-auto .auto-race-table tbody td.auto-stat-cell {
-  width:72px; min-width:72px; max-width:72px;
+  box-sizing:border-box; width:60px; min-width:60px; max-width:60px;
   text-align:center; white-space:nowrap;
 }
 .sport-auto .auto-race-table thead th.auto-time-heading {

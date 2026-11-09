@@ -59,14 +59,16 @@ if(!table||!wrap)return;
 const safe=t=>String(t).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll('"',"&quot;");
 const group=(key,title,count)=>'<th class="auto-section" colspan="'+count+'" data-group="'+key+'">'+title+'</th>';
 const th=(text,klass)=>'<th class="auto-value '+(klass||"")+'">'+text+'</th>';
-const statHeader=(primary,rate,isFirst)=>'<th class="auto-value auto-stat-heading'+(isFirst?' auto-start':'')+'">'+
+// These section names appear in the menu, not in the box-table header.
+const statHeader=(primary,rate,isFirst,key)=>'<th rowspan="2" data-group="'+key+'" class="auto-value auto-stat-heading'+(isFirst?' auto-start':'')+'">'+
  '<span class="recent4-heading-main">'+primary+'</span><span class="recent4-heading-rate">'+rate+'</span></th>';
-const statHeaderGroup=()=>[
- statHeader("1着","勝率",true),
- statHeader("2着","2連対率",false),
- statHeader("3着","3連対率",false),
- statHeader("着外","着外率",false)
+const statHeaderGroup=key=>[
+ statHeader("1着","勝率",true,key),
+ statHeader("2着","2連対率",false,key),
+ statHeader("3着","3連対率",false,key),
+ statHeader("着外","着外率",false,key)
 ].join("");
+const timeHeader=(a,b,first)=>'<th rowspan="2" data-group="good" class="auto-value auto-time-heading'+(first?' auto-start':'')+'"><span>'+a+'</span><span>'+b+'</span></th>';
 const header='<tr>'+
 '<th rowspan="2" class="col-sha">車番</th>'+
 '<th rowspan="2" class="col-name">選手名</th>'+
@@ -75,14 +77,11 @@ const header='<tr>'+
 '<th rowspan="2" class="col-t">試走T</th><th rowspan="2" class="col-t col-deviation">試走偏差</th>'+
 '<th rowspan="2" class="col-rank"><button type="button" class="sort-power" aria-pressed="false" aria-label="審査ポイント順に並び替え"><span>ランク</span><span>審査P</span></button></th>'+
 '<th rowspan="2" class="col-machine">競走車名</th>'+
-group("recent","近10走",4)+group("good","良10走",3)+group("last90","近90日",4)+
-group("road","近180日成績",4)+group("titles","今年・通算優勝",3)+group("mania","マニア分析",3)+'</tr>';
+statHeaderGroup("recent")+timeHeader("平均","試走T",true)+
+timeHeader("平均","競走T",false)+timeHeader("最高","競走T",false)+
+statHeaderGroup("last90")+group("road","近180日成績",4)+group("titles","今年・通算優勝",3)+group("mania","マニア分析",3)+'</tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
-const subhead='<tr>'+statHeaderGroup()+
- '<th class="auto-value auto-time-heading auto-start"><span>平均</span><span>試走T</span></th>'+
- '<th class="auto-value auto-time-heading"><span>平均</span><span>競走T</span></th>'+
- '<th class="auto-value auto-time-heading"><span>最高</span><span>競走T</span></th>'+
- statHeaderGroup()+
+const subhead='<tr>'+
  sub(["良2連対率","良3連対率","湿2連対率","湿3連対率"])+
  sub(["今年優出","今年V","通算V"])+
  sub(["走路別","近90日","タイム"])+'</tr>';
@@ -154,7 +153,15 @@ function choose(key){
  // Match SCR-210's gold/white highlight on the selected heading group.
  table.querySelectorAll("thead th.section-selected").forEach(t=>t.classList.remove("section-selected"));
  const targets=key==="player"?[...table.tHead.rows[0].cells].slice(1,8):
-   [...table.tHead.querySelectorAll('th[data-group="'+key+'"]')];
+   [...table.tHead.rows[0].querySelectorAll('th[data-group="'+key+'"]')];
+ // For groups with separate top and bottom headings, select both rows.
+ // Recent/good/90-day column headings instead span both rows.
+ let offset=0;
+ for(const heading of table.tHead.rows[0].querySelectorAll('th.auto-section[data-group]')){
+   if(heading.dataset.group===key)
+     targets.push(...[...table.tHead.rows[1].cells].slice(offset,offset+heading.colSpan));
+   offset+=heading.colSpan;
+ }
  targets.forEach(t=>t.classList.add("section-selected"));
 }
 menu.forEach(t=>t.addEventListener("click",()=>choose(t.dataset.target)));
