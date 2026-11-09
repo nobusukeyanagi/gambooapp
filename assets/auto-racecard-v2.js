@@ -269,7 +269,7 @@ const analyzerSourceUrl=entry=>analyzerSourceBase+
  (entry.path?entry.path+"/program":"marklist/")+analyzerSourceQuery;
 const analyzerHeaders=()=>analyzerCategories.map((entry,index)=>
  '<th rowspan="2" class="auto-analyzer-heading'+(index===0?' auto-start':'')+
- '" data-group="analyzer">'+
+ '" data-group="analyzer"'+(index===0?' data-analyzer-first="true"':'')+'>'+
  '<button type="button" class="item-btn auto-analyzer-btn" data-analyzer-item="'+index+
  '" aria-label="'+safe(entry.name)+'の詳細を表示">'+safe(entry.label)+'</button></th>').join("");
 const analyzerCells=playerIndex=>analyzerMarks[playerIndex].map((value,index)=>
@@ -451,6 +451,8 @@ table.tHead.querySelectorAll(".auto-analyzer-btn").forEach(button=>{
 analyzerSheet?.querySelector(".sheet-close").addEventListener("click",closeAnalyzer);
 analyzerSheet?.querySelector(".sheet-handle").addEventListener("click",closeAnalyzer);
 analyzerOverlay?.addEventListener("click",closeAnalyzer);
+analyzerSheet?.querySelector(".sheet-body").addEventListener("scroll",event=>
+ analyzerSheet.classList.toggle("scrolled",event.currentTarget.scrollLeft>1),{passive:true});
 document.addEventListener("keydown",event=>{
  if(event.key==="Escape"&&!analyzerSheet?.hidden)closeAnalyzer();
 });
