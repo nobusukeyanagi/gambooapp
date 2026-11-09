@@ -390,7 +390,9 @@
 .race-detail-scroll .mania-table tbody td.gear-ratio {
   font-weight: var(--fw-strong);
 }
-.race-detail-scroll .mania-table tbody td.position-current {
+/* Match the specificity of keirin-position.css's 400-weight rule,
+   so the current lineup really renders at 600 (not just the other cells). */
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-current {
   font-weight: var(--fw-strong);
 }
 /* The extra G-index mark has its own compact column. */
