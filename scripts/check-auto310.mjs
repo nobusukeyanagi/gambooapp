@@ -194,8 +194,19 @@ for(const width of [296,375,768]){
   const lastFive=await page.locator('.auto-race-table').evaluate(table=>({
     headings:[...table.tHead.querySelectorAll('th[data-group="last5"]')].map(h=>h.textContent.trim()),
     widths:[...table.tHead.querySelectorAll('th[data-group="last5"]')].map(h=>Math.round(h.getBoundingClientRect().width)),
+    headingFonts:[...table.tHead.querySelectorAll('th[data-group="last5"]')].map(h=>getComputedStyle(h).fontSize),
+    headerBorders:[...table.tHead.rows[0].cells].map(h=>{
+      const cs=getComputedStyle(h);return [cs.borderTopWidth,cs.borderBottomWidth];
+    }),
     rows:[...table.tBodies[0].rows].map(row=>[...row.querySelectorAll('td.auto-last5-cell')].map(cell=>({
       grade:cell.querySelector('.auto-last5-grade')?.textContent.trim(),
+      gradeClass:cell.querySelector('.auto-last5-grade')?.className,
+      gradeFont:getComputedStyle(cell.querySelector('.auto-last5-grade')).fontSize,
+      metaRows:getComputedStyle(cell.querySelector('.auto-last5-meta')).gridTemplateRows,
+      metaAlign:getComputedStyle(cell.querySelector('.auto-last5-meta')).textAlign,
+      rankSize:[getComputedStyle(cell.querySelector('.auto-last5-rank')).fontSize,
+        Math.round(cell.querySelector('.auto-last5-rank').getBoundingClientRect().height),
+        Math.round(cell.querySelector('.auto-last5-rank').getBoundingClientRect().width)],
       venue:cell.querySelector('.auto-last5-meta span:nth-child(2)')?.textContent.trim(),
       date:cell.querySelector('.auto-last5-meta span:nth-child(3)')?.textContent.trim(),
       rank:cell.querySelector('.auto-last5-rank')?.textContent.trim(),
@@ -209,10 +220,17 @@ for(const width of [296,375,768]){
   }));
   if(JSON.stringify(lastFive.headings)!==JSON.stringify(['前走','2走前','3走前','4走前','5走前'])||
      lastFive.widths.some(x=>x!==220)||
+     lastFive.headingFonts.some(x=>x!=='12px')||
+     lastFive.headerBorders.some(([top,bottom])=>top!=='0px'||bottom!=='1px')||
      lastFive.rows.length!==8||lastFive.rows.some(rs=>rs.length!==5||
        rs.some((r,j)=>r.width!==220||!r.link.includes('autorace.jp/netstadium/RaceResult/')||
          !r.venue||!r.date||!r.race||!r.road||r.values.length!==2)||
-       rs[0].date!=='11/8'||rs[1].date!=='11/7'||rs[0].grade!=='普通')||
+       rs[0].date!=='11/8'||rs[1].date!=='11/7'||rs[0].grade!=='普通'||
+       rs.some(r=>r.gradeFont!=='12px'||r.metaAlign!=='left'||
+         r.metaRows!=='16px 12px 12px'||r.rankSize[0]!==((r.rank==='不成立'||r.rank==='自落')?'12px':'16px')||
+         r.rankSize[1]!==30||((r.rank==='不成立'||r.rank==='自落')?r.rankSize[2]>50:r.rankSize[2]!==30)))||
+     lastFive.rows.some((rs,i)=>rs.slice(2).some(r=>r.grade!==(i===0?'GⅡ':i===1?'普通':'SG')||
+       !r.gradeClass.includes(i===0?'grade-g2':i===1?'grade-normal':'grade-sg')))||
      lastFive.rows[2][0].flag!=='戒'||
      lastFive.rows[2][2].rank!=='自落'||
      lastFive.rows[5][3].rank!=='不成立'||
