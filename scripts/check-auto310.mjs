@@ -312,6 +312,7 @@ for(const width of [296,375,768]){
           score:score.textContent.trim(),percent:pct.textContent.trim(),
           scoreFont:a.fontSize,percentFont:b.fontSize,
           scoreColor:a.color,percentColor:b.color,
+          percentClass:pct.className,percentBG:b.backgroundColor,
           scoreWeight:a.fontWeight,percentWeight:b.fontWeight};
       }));
     const fixed=[...table.tBodies[0].rows].map(row=>row.querySelector('.col-sha .frame-cell'))
@@ -339,6 +340,7 @@ for(const width of [296,375,768]){
   const expectedScore=m=>m?m[0]+'-'+m[1]:'—';
   const expectedPercent=m=>m&&m[0]+m[1]>0?
     Math.round(100*m[0]/(m[0]+m[1]))+'%':'—';
+  const expectedWinning=m=>!!m&&m[0]+m[1]>0&&m[0]*2>m[0]+m[1];
   const mismatches=[];
   if(matchupState.headers.length!==8||
      matchupState.preceding!=='湿着外着外率'||
@@ -360,6 +362,10 @@ for(const width of [296,375,768]){
        x.width!==60||x.scoreFont!=='16px'||x.percentFont!=='12px'||
        x.scoreColor!=='rgb(48, 54, 59)'||
        x.percentColor!=='rgb(96, 107, 118)'||
+       x.percentClass!=='auto-matchup-percent'+
+         (expectedWinning(expectedMatchups[i][j])?' auto-matchup-winning':'')||
+       x.percentBG!==(expectedWinning(expectedMatchups[i][j])?
+          tokenColors.gold:'rgba(0, 0, 0, 0)')||
        x.scoreWeight!=='400'||x.percentWeight!=='400')))
     mismatches.push('eight-by-eight results and styles');
   if(mismatches.length)
@@ -497,6 +503,12 @@ for(const width of [296,375,768]){
     ['△','×','×','△','×','×','','◎']
   ];
   const expectedLabWidths=[60,80,80,80,80,80,100,100];
+  const labSymbolColors={
+    '◎':tokenColors.magenta,'○':tokenColors.teal,
+    '△':tokenColors.yellowgreen,'×':tokenColors.bronze};
+  const labSymbolClasses={
+    '◎':'auto-mark-double','○':'auto-mark-circle',
+    '△':'auto-mark-triangle','×':'auto-mark-cross'};
   const labState=await page.locator('.auto-race-table').evaluate(table=>{
     const headers=[...table.tHead.querySelectorAll('th[data-group="analyzer"]')].map(th=>{
       const b=th.querySelector('button[data-analyzer-item]');
@@ -508,7 +520,8 @@ for(const width of [296,375,768]){
     const rows=[...table.tBodies[0].rows].map(tr=>
       [...tr.querySelectorAll('td.auto-analyzer-cell')].map(td=>{
         const mark=td.querySelector('.auto-analyzer-mark'),cs=getComputedStyle(mark);
-        return {text:mark.textContent.trim(),width:Math.round(td.getBoundingClientRect().width),
+        return {text:mark.textContent.trim(),cls:mark.className,
+          bg:cs.backgroundColor,width:Math.round(td.getBoundingClientRect().width),
           font:cs.fontSize,weight:cs.fontWeight,color:cs.color};
       })
     );
@@ -524,6 +537,11 @@ for(const width of [296,375,768]){
        h.width!==expectedLabWidths[i]||h.rowSpan!==2)||
      labState.rows.some((row,i)=>row.length!==8||row.some((m,j)=>
        m.text!==expectedLabMarks[i][j]||m.width!==expectedLabWidths[j]||
+       m.cls!=='auto-analyzer-mark'+
+         (labSymbolClasses[expectedLabMarks[i][j]]?
+          ' '+labSymbolClasses[expectedLabMarks[i][j]]:'')||
+       m.bg!==(labSymbolColors[expectedLabMarks[i][j]]||
+         'rgba(0, 0, 0, 0)')||
        m.font!=='16px'||m.weight!=='600'||
        m.color!=='rgb(48, 54, 59)')))
     errorsNow.push('lab marks/headers must reflect provided source: '+JSON.stringify(labState));
@@ -535,7 +553,12 @@ for(const width of [296,375,768]){
       const table=sheet.querySelector('.detail-table');
       const markRows=[...table.tBodies[0].rows].map(tr=>
         [...tr.querySelectorAll('td.auto-analyzer-detail-mark')].map(td=>td.textContent.trim()));
-      return {hidden:sheet.hidden,
+      const markStyles=[...table.tBodies[0].rows].map(tr=>
+        [...tr.querySelectorAll('td.auto-analyzer-detail-mark')].map(td=>{
+          const span=td.querySelector('.auto-analyzer-mark'),cs=getComputedStyle(span);
+          return {cls:span.className,bg:cs.backgroundColor};
+        }));
+      return {hidden:sheet.hidden,markStyles,
         overlayHidden:document.querySelector('.auto-analyzer-overlay').hidden,
         title:sheet.querySelector('.sheet-title').textContent.trim(),
         heading:[...table.tHead.rows[0].cells].map(th=>th.textContent.trim()),
@@ -552,6 +575,12 @@ for(const width of [296,375,768]){
        detail.title!=='データ解析ラボ：'+expectedLabLabels[item].replace('／','・')||
        detail.heading.length!==4||
        JSON.stringify(detail.marks)!==JSON.stringify(expectedDetail)||
+       detail.markStyles.some((row,i)=>row.some((m,j)=>{
+         const symbol=expectedDetail[i][j];
+         return m.cls!=='auto-analyzer-mark'+
+           (labSymbolClasses[symbol]?' '+labSymbolClasses[symbol]:'')||
+           m.bg!==(labSymbolColors[symbol]||'rgba(0, 0, 0, 0)');
+       }))||
        detail.link!==expectedUrl||!detail.note.includes('詳細成績値は元HTMLに含まれない'))
       errorsNow.push('lab detail sheet mismatched for item '+item+': '+JSON.stringify(detail));
     await page.locator('.auto-analyzer-sheet .sheet-close').click();
