@@ -392,8 +392,11 @@
 }
 .sport-auto .auto-race-table .auto-sp-order {
   display:inline-block; color:var(--c-text-primary);
-  font-size:var(--fs-16); font-weight:var(--fw-normal);
+  font-size:var(--fs-16); font-weight:var(--fw-strong);
   vertical-align:middle;
+}
+.sport-auto .auto-race-table .auto-sp-order .auto-prediction-value {
+  font-weight:var(--fw-strong);
 }
 .sport-auto .auto-race-table .auto-sp-number {
   display:inline-block; width:max-content;
@@ -406,12 +409,30 @@
 .sport-auto .auto-race-table .auto-sp-rank-2 { background:var(--c-blue-light); }
 .sport-auto .auto-race-table .auto-sp-rank-3 { background:var(--c-bronze-light); }
 .sport-auto .auto-race-table .auto-sp-form span {
-  display:inline-block; font-size:var(--fs-20); font-weight:var(--fw-strong);
+  display:inline-flex;
+  box-sizing:border-box;
+  align-items:center;
+  justify-content:center;
+  min-width:24px;
+  min-height:24px;
+  padding:var(--space-1) var(--space-2);
+  border-radius:var(--r-xs);
+  font-size:var(--fs-20);
+  font-weight:var(--fw-strong);
   line-height:1;
 }
-.sport-auto .auto-race-table .auto-sp-form-up { color:var(--c-red); }
-.sport-auto .auto-race-table .auto-sp-form-flat { color:var(--c-text-secondary); }
-.sport-auto .auto-race-table .auto-sp-form-down { color:var(--c-blue); }
+.sport-auto .auto-race-table .auto-sp-form .auto-sp-form-up {
+  color:var(--c-red);
+  background:var(--c-red-light);
+}
+.sport-auto .auto-race-table .auto-sp-form .auto-sp-form-down {
+  color:var(--c-blue);
+  background:var(--c-blue-light);
+}
+.sport-auto .auto-race-table .auto-sp-form .auto-sp-form-flat {
+  color:var(--c-green);
+  background:var(--c-green-light);
+}
 /* 優出・優勝: final player-info column, 100px; numbers share
    the same right edge, aligning their ones digits vertically. */
 .sport-auto .auto-race-table :is(th,td).auto-titles-column {
@@ -611,6 +632,30 @@
   font-weight:var(--fw-strong);
   color:var(--c-text-primary);
   line-height:1;
+}
+/* Identical vector stroke geometry to SCR-210's .mk-symbol: 18px icon,
+   24px viewBox, 2px black stroke with round ends and joins. */
+.sport-auto :is(.auto-race-table,.auto-analyzer-sheet) .auto-mark-symbol {
+  display:block;
+  width:18px;
+  height:18px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  flex:none;
+}
+.sport-auto :is(.auto-race-table,.auto-analyzer-sheet) .auto-mark-label {
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
 }
 /* SCR-210 ◎ gold, ○ blue, △ bronze, × green;
    match backgrounds in main racecard, forecast, and analysis sheet. */
