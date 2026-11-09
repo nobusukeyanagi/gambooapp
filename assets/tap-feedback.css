@@ -15,10 +15,25 @@ html {
 .tap-pressed :is(span, small, b, strong, em, i, svg, .ic) {
   color: var(--c-gold) !important;
 }
-/* Some controls draw their visible fill on a child rather than the link
-   itself. Tint those fills too, so the full pressed button is light gold. */
-.tap-pressed :is(.ri-race-purchase, .rchip-warning, .rchip-rebate) {
+/* The purchase control draws its button face on a child of the link.
+   Tint that face only; its border remains its original red. */
+.tap-pressed .ri-race-purchase {
   background: var(--c-gold-light) !important;
+}
+/* Status strips, race countdown/rebate bands and category badges are
+   independent from the button's press effect: preserve their original
+   colored backgrounds, white text, and borders during the press. */
+.tap-pressed :is(
+  .rchip-warning, .rchip-rebate, .bn-status,
+  .news-badge, .news-alert-icon, .grade-badge, .rebate-badge,
+  .mori-today-strip
+),
+.tap-pressed :is(
+  .rchip-warning, .rchip-rebate, .bn-status,
+  .news-badge, .news-alert-icon, .grade-badge, .rebate-badge,
+  .mori-today-strip
+) :is(span, small, b, strong, em, i, svg, .ic) {
+  color: var(--c-surface) !important;
 }
 /* Explicitly disable the browser's default dark flash on press targets even
    before JavaScript applies the pressed class. */
