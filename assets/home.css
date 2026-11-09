@@ -595,13 +595,6 @@ button,
         letter-spacing: normal;
       }
 
-      .app-header .icon-btn > .badge {
-        width: 13px;
-        height: 13px;
-        top: -3px;
-        right: -3px;
-      }
-
       .mori-heading {
         cursor: default;
         gap: var(--space-5);
