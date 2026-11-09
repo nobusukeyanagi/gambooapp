@@ -18,7 +18,7 @@
 
 
     <link rel="stylesheet" href="./assets/race-selector-shared.css?v=1" />
-    <link rel="stylesheet" href="./assets/auto-racecard-v2.css?v=38" />
+    <link rel="stylesheet" href="./assets/auto-racecard-v2.css?v=39" />
     <link rel="stylesheet" href="./assets/racecard-common.css?v=3" />
   </head>
   <body class="sport-auto">
@@ -95,7 +95,8 @@
 <button type="button" class="info-tab" data-target="last90"><span>直近90日</span></button>
 <button type="button" class="info-tab" data-target="road"><span>直近180日</span></button>
 <button type="button" class="info-tab" data-target="matchup"><span>直近360日<br />対戦成績</span></button>
-<button type="button" class="info-tab" data-target="supercon"><span>スパコン予想</span></button></div></div>
+<button type="button" class="info-tab" data-target="supercon"><span>スパコン予想</span></button>
+<button type="button" class="info-tab" data-target="analyzer"><span>データ解析ラボ</span></button></div></div>
                 <button type="button" class="hscroll-cue" aria-label="次のメニューへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></button>
               </div>
               <div class="lineup-bar auto-supercon-bar" aria-label="スパコン直前予想">
@@ -134,10 +135,28 @@
     <dt>直近180日</dt><dd>良走路と湿走路別に1着・2着・3着・着外の回数と、勝率・2連対率・3連対率・着外率を2行で表示します。率は各走路の着度数合計を分母に計算しています。</dd>
     <dt>直近360日/対戦成績</dt><dd>出走選手同士の過去360日間の勝敗・勝率です。1行目が勝敗（勝ち数-負け数）、2行目が勝率です。同じ選手同士の欄と対戦がない場合の勝率は「—」を表示します。</dd>
     <dt>スパコン予想</dt><dd>予想着順と予想競走Tは、スパコン直前予想（良走路・温度「全」）による推定値です。予想着順は印と着順を併記します。ストロングP・調子・捌き力・逃げ力・スタート力はスパコン前日予想の値です。調子は「↑」上向き、「→」横ばい、「↓」下向きを示します。ストロングP・捌き力・逃げ力・スタート力は数値が大きい順に上位3位の文字背景を着色します。</dd>
+    <dt>データ解析ラボ</dt><dd>元の「データ解析の予想印」のうち、総合・走路状況・走路温度・試走タイム・レース場・競走車・レース種別／日程・勝ち上がり／優勝戦の8項目です。ハンデとスパコンの予想印は含めていません。各見出しボタンから選手別の印を詳細表示します。元のHTMLには詳細な成績値が含まれないため、詳細画面からGambooの元データを参照できます。</dd>
   </dl>
 </div>
               </div>
             </div><!-- /race-detail-scroll -->
+            <div class="sheet-overlay auto-analyzer-overlay" hidden></div>
+            <section class="sheet auto-analyzer-sheet" role="dialog" aria-modal="true" aria-label="データ解析ラボ詳細" hidden>
+              <button type="button" class="sheet-handle" aria-label="詳細を閉じる"></button>
+              <div class="sheet-head">
+                <div class="sheet-title"></div>
+                <button type="button" class="sheet-close" aria-label="閉じる">✕</button>
+              </div>
+              <div class="sheet-body">
+                <table class="detail-table auto-analyzer-detail-table">
+                  <thead></thead><tbody></tbody>
+                </table>
+              </div>
+              <div class="auto-analyzer-source">
+                <p class="auto-analyzer-source-note"></p>
+                <a class="auto-analyzer-source-link" href="https://gamboo.jp/autorace/analyzer/marklist/?rdt=20261109&amp;rno=9&amp;pid=2&amp;rsp=3&amp;rspl=02&amp;rsrt=1&amp;rsst=1" target="_blank" rel="noopener noreferrer">Gambooの詳細を見る</a>
+              </div>
+            </section>
             <div class="bottom-tab">
               <a class="tab-item" href="./SCR-100_bet.html">
                 <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-ticket"></use></svg></div>
@@ -167,7 +186,7 @@
     
     <script src="./assets/sport-display-order.js?v=2"></script>
     <script src="./assets/scroll-controls.js?v=7" data-scroll-mode="keirin-detail"></script>
-    <script src="./assets/auto-racecard-v2.js?v=30" defer></script>
+    <script src="./assets/auto-racecard-v2.js?v=31" defer></script>
     <script src="./assets/tap-feedback.js?v=4" defer></script>
     <script src="./assets/text-fit.js?v=1" defer></script>
 </body>
