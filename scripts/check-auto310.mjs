@@ -456,6 +456,9 @@ for(const width of [296,375,768]){
       errorsNow.push('matchup icon contrast was reset to black with '+section+
         ' menu active: '+JSON.stringify(contrast));
   }
+  // Restore the initial player tab before testing default rider-group
+  // highlights and the integrated 優出・優勝 column.
+  await page.locator('.race-menu-scroll .info-tab[data-target="player"]').click();
   const selectorLinks=await page.locator('.race-selector').evaluate(el=>
     [...el.querySelectorAll('a.race-tab[href*="/autorace/program"]')].map(a=>a.href));
   if(selectorLinks.length!==11||selectorLinks.some(url=>
