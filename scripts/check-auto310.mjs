@@ -570,51 +570,76 @@ for(const width of [296,375,768]){
        m.font!=='16px'||m.weight!=='600'||
        m.color!=='rgb(48, 54, 59)')))
     errorsNow.push('lab marks/headers must reflect provided source: '+JSON.stringify(labState));
-  const sourcePaths=[null,'situation','roadtemp','trialrun',
-    'handicap','place','motorcycle','raceclass','racewin'];
-  const detailTitles=['総合','走路状況','走路温度','試走タイム','ハンデ',
-    'レース場','競走車','レース種別・日程','勝ち上がり・優勝戦'];
-  for(let item=1;item<9;item++){
-    await page.locator('.auto-analyzer-btn[data-analyzer-item="'+item+'"]').click();
+  /* The eight attached Gamboo HTML exports are imported as local source data
+     and rendered using SCR-210's two-row 28/36px headers, 44px rider rows,
+     50px sticky vehicle column and compact 16/12px statistic stack. */
+  const detailSpecs=[
+    ['situation','走路状況別成績',4,1,'20.0:2:10','27.8:5:18','2','20.0%'],
+    ['roadtemp','走路温度別成績',8,2,'6.5:2:31','38.9:14:36','2','6.5%'],
+    ['trialrun','試走タイム別成績',11,5,'3.69','0.0:0:0','3','75.0%'],
+    ['handicap','ハンデ別成績',12,3,'0','0.0:0:4','1','33.3%'],
+    ['place','レース場別成績',4,1,'33.3:2:6','0.0:0:4','2','33.3%'],
+    ['motorcycle','競走車別成績',5,1,'ボーリバージュ','42.9:3:7','15','11.7%'],
+    ['raceclass','レース種別・日程別成績',8,2,'0.0:0:1','40.0:2:5','0','0.0%'],
+    ['racewin','勝ち上がり実績',3,1,'53.8:14:26','9.1:1:11','14/26','53.8%']
+  ];
+  const buttonAlignment=await page.locator('.auto-analyzer-btn').evaluateAll(btns=>
+    btns.map(btn=>{
+      const t=btn.closest('th').getBoundingClientRect(),
+        b=btn.getBoundingClientRect(),s=getComputedStyle(btn.closest('th'));
+      return {left:Math.round((b.left-t.left)*10)/10,
+        right:Math.round((t.right-b.right)*10)/10,
+        padding:[s.paddingLeft,s.paddingRight]};
+    }));
+  if(buttonAlignment.length!==8||buttonAlignment.some(x=>
+    Math.abs(x.left-3)>0.6||Math.abs(x.right-3)>0.6))
+    errorsNow.push('analyzer buttons must be exactly centered as SCR-210: '+
+      JSON.stringify(buttonAlignment));
+  for(let i=0;i<detailSpecs.length;i++){
+    const [key,title,width,groups,first,last,firstCount,firstPct]=detailSpecs[i];
+    await page.locator('.auto-analyzer-btn[data-analyzer-item="'+(i+1)+'"]').click();
     const detail=await page.locator('.auto-analyzer-sheet').evaluate(sheet=>{
-      const table=sheet.querySelector('.detail-table');
-      const markRows=[...table.tBodies[0].rows].map(tr=>
-        [...tr.querySelectorAll('td.auto-analyzer-detail-mark')].map(td=>td.textContent.trim()));
-      const markStyles=[...table.tBodies[0].rows].map(tr=>
-        [...tr.querySelectorAll('td.auto-analyzer-detail-mark')].map(td=>{
-          const span=td.querySelector('.auto-analyzer-mark'),cs=getComputedStyle(span);
-          return {cls:span.className,bg:cs.backgroundColor};
-        }));
-      return {hidden:sheet.hidden,markStyles,
-        overlayHidden:document.querySelector('.auto-analyzer-overlay').hidden,
+      const table=sheet.querySelector('.detail-table'),th=table.tHead,
+        trs=[...table.tBodies[0].rows],firstCell=trs[0].querySelector('td.dt-vehicle'),
+        val=trs[0].querySelector('td.dt-rate');
+      return {hidden:sheet.hidden,overlay:document.querySelector('.auto-analyzer-overlay').hidden,
         title:sheet.querySelector('.sheet-title').textContent.trim(),
-        heading:[...table.tHead.rows[0].cells].map(th=>th.textContent.trim()),
-        marks:markRows,
-        vehicleCount:table.tBodies[0].rows.length,
-        link:sheet.querySelector('.auto-analyzer-source-link').href,
-        note:sheet.querySelector('.auto-analyzer-source-note').textContent.trim()};
+        groups:th.rows[0].cells.length-1,
+        totalSpan:[...th.rows[0].cells].slice(1).reduce((n,c)=>n+c.colSpan,0),
+        cols:th.rows[1]?.cells.length,
+        bodyCols:trs.map(row=>row.cells.length),
+        heights:[...th.rows].map(row=>Math.round(row.getBoundingClientRect().height)),
+        bodyHeight:Math.round(trs[0].getBoundingClientRect().height),
+        vehicle:{width:Math.round(firstCell.getBoundingClientRect().width),
+          sticky:getComputedStyle(firstCell).position,left:getComputedStyle(firstCell).left},
+        count:val?.querySelector('.recent4-count')?.textContent.trim(),
+        pct:val?.querySelector('.recent4-rate')?.textContent.trim(),
+        countFont:getComputedStyle(val.querySelector('.recent4-count')).fontSize,
+        pctFont:getComputedStyle(val.querySelector('.recent4-rate')).fontSize,
+        extraSource:!!sheet.querySelector('.auto-analyzer-source')};
     });
-    const expectedDetail=expectedLabMarks.map(row=>[row[item],row[0]]);
-    const expectedUrl='https://gamboo.jp/autorace/analyzer/'+
-      (sourcePaths[item]?sourcePaths[item]+'/program':'marklist/')+
-      '?rdt=20261109&rno=9&pid=2&rsp=3&rspl=02&rsrt=1&rsst=1';
-    if(detail.hidden||detail.overlayHidden||detail.vehicleCount!==8||
-       detail.title!=='データ解析ラボ：'+detailTitles[item]||
-       detail.heading.length!==4||
-       JSON.stringify(detail.marks)!==JSON.stringify(expectedDetail)||
-       detail.markStyles.some((row,i)=>row.some((m,j)=>{
-         const symbol=expectedDetail[i][j];
-         return m.cls!=='auto-analyzer-mark'+
-           (labSymbolClasses[symbol]?' '+labSymbolClasses[symbol]:'')||
-           m.bg!==(labSymbolColors[symbol]||'rgba(0, 0, 0, 0)');
-       }))||
-       detail.link!==expectedUrl||!detail.note.includes('詳細成績値は元HTMLに含まれない'))
-      errorsNow.push('lab detail sheet mismatched for item '+item+': '+JSON.stringify(detail));
+    const source=await page.evaluate(key=>{
+      const rows=window.GambooAutoAnalyzerDetail?.[key];
+      return {length:rows?.length,first:rows?.[0]?.[0],
+        last:rows?.[7]?.at(-1),widths:rows?.map(r=>r.length)};
+    },key);
+    if(detail.hidden||detail.overlay||detail.title!==title||
+       detail.groups!==groups||detail.totalSpan!==width||detail.cols!==width||
+       detail.bodyCols.length!==8||detail.bodyCols.some(n=>n!==width+1)||
+       detail.bodyHeight!==44||
+       JSON.stringify(detail.heights)!=='[64,36]'||
+       detail.vehicle.width!==50||detail.vehicle.sticky!=='sticky'||
+       detail.vehicle.left!=='0px'||detail.extraSource||
+       detail.count!==firstCount||detail.pct!==firstPct||
+       detail.countFont!=='16px'||detail.pctFont!=='12px'||
+       source.length!==8||source.first!==first||source.last!==last||
+       source.widths?.some(n=>n!==width))
+      errorsNow.push('sourced SCR-210 sheet mismatch '+key+': '+JSON.stringify({detail,source}));
     await page.locator('.auto-analyzer-sheet .sheet-close').click();
     const closed=await page.evaluate(()=>({
       sheet:document.querySelector('.auto-analyzer-sheet').hidden,
       overlay:document.querySelector('.auto-analyzer-overlay').hidden}));
-    if(!closed.sheet||!closed.overlay)errorsNow.push('lab sheet did not close for '+item);
+    if(!closed.sheet||!closed.overlay)errorsNow.push('lab sheet did not close '+key);
   }
   await page.locator('.race-menu-scroll .info-tab[data-target="player"]').click();
   const selectorLinks=await page.locator('.race-selector').evaluate(el=>
