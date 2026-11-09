@@ -138,11 +138,13 @@ for(const width of [296,375,768]){
         labels:labels.map(x=>x.textContent),primary:styles(primary),
         secondary:nums.map(styles),labelStyles:labels.map(styles),
         starts:nums.map(x=>x.getBoundingClientRect().left),
+        noOverflow:[...labels,...nums].every(el=>el.scrollWidth<=el.clientWidth+1)&&
+          nums.every(el=>el.getBoundingClientRect().right<=cell.getBoundingClientRect().right+0.5),
         rows:[primary,...cell.querySelectorAll('.deviation-line')].map(x=>x.getBoundingClientRect().height)
       };
     });
     const heads=[...table.tHead.rows[0].cells];
-    const widths=heads.slice(1,6).map(el=>Math.round(parseFloat(getComputedStyle(el).width)));
+    const widths=heads.slice(1,6).map(el=>Math.round(el.getBoundingClientRect().width));
     const bodyOrder=[...table.tBodies[0].rows].map(row=>[...row.cells].slice(3,6)
       .map(cell=>cell.classList.contains('col-deviation')?'試走偏差':
        cell.getAttribute('title')==='当日試走タイム'?'試走T':
@@ -153,9 +155,9 @@ for(const width of [296,375,768]){
   });
   const expectedOfficial=['0.082','0.100','0.095','0.083','0.091','0.111','0.094','0.093'];
   if(deviations.heading!=='試走偏差'||deviations.headerSpan!==2||
-     JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','試走T','平均ST','試走偏差'])||
-     JSON.stringify(deviations.widths)!==JSON.stringify([120,60,70,70,120])||
-     deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['試走T','平均ST','試走偏差']))||
+     JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
+     JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
+     deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
      deviations.headerCount!==14||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!== (i===0?'0.09':'—')||x.text[2]!== (i===0?'0.09':'—')||
@@ -163,7 +165,7 @@ for(const width of [296,375,768]){
        x.primary.font!=='16px'||x.primary.weight!=='400'||x.primary.align!=='center'||
        x.secondary.some(y=>y.font!=='12px'||y.weight!=='400'||y.align!=='left')||
        x.labelStyles.some(y=>y.font!=='12px'||y.weight!=='400'||y.align!=='left')||
-       Math.abs(x.starts[0]-x.starts[1])>0.5))
+       Math.abs(x.starts[0]-x.starts[1])>0.5||!x.noOverflow))
     errorsNow.push('three-line deviation columns/data/alignment failed: '+JSON.stringify(deviations));
   const riderCells=await page.evaluate(()=>{
     const table=document.querySelector('.auto-race-table');
@@ -421,12 +423,12 @@ for(const width of [296,375,768]){
   await page.locator('.sort-power').click();
   const first=await page.locator('.auto-race-table tbody .rider-name').first().innerText();
   if(first!=='中村雅人')errorsNow.push('power sort failed: '+first);
-  const firstTrial=await page.locator('.auto-race-table tbody tr').first().locator('td.col-t').first().innerText();
+  const firstTrial=await page.locator('.auto-race-table tbody tr').first().locator('td.col-t[title="当日試走タイム"]').innerText();
   if(firstTrial!=='3.68')errorsNow.push('trial time detached from rider after score sorting: '+firstTrial);
   await page.locator('.sort-power').click();
   const reset=await page.locator('.auto-race-table tbody .rider-name').first().innerText();
   if(reset!=='五十嵐一夫')errorsNow.push('power sort toggle failed to restore vehicle order');
-  const resetTrials=await page.locator('.auto-race-table tbody tr').evaluateAll(rows=>rows.map(row=>row.querySelector('td.col-t')?.textContent.trim()));
+  const resetTrials=await page.locator('.auto-race-table tbody tr').evaluateAll(rows=>rows.map(row=>row.querySelector('td.col-t[title="当日試走タイム"]')?.textContent.trim()));
   if(JSON.stringify(resetTrials)!==JSON.stringify(expectedDayTrials))
     errorsNow.push('trial times in vehicle order not restored: '+JSON.stringify(resetTrials));
   if(await page.locator('.auto-race-table .sort-car').count())
