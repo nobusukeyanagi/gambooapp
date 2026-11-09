@@ -126,6 +126,10 @@
   font-weight:var(--fw-strong);
 }
 .sport-auto .auto-race-table .col-t { width:70px; min-width:70px; }
+/* Emphasize only the same-day trial time, not the historical figures. */
+.sport-auto .race-detail-scroll .auto-race-table tbody td.col-t[title="当日試走タイム"] {
+  font-weight:var(--fw-strong);
+}
 .sport-auto .auto-race-table .col-rank { width:82px; min-width:82px; }
 .sport-auto .auto-race-table th.auto-section { width:auto; min-width:0; }
 .sport-auto .auto-race-table :is(th,td).auto-value { width:60px; min-width:60px; }
@@ -138,10 +142,10 @@
   color:var(--c-text-secondary); line-height:1;
 }
 .sport-auto .auto-race-table .rider-home { margin-bottom:var(--space-3); }
-/* Same 16/12/12 type, weight and vertical spacing as the three rider
-   name/home/cohort lines: current rank, former rank, examination points. */
+/* Match the 16/12/12 type and spacing of the rider's three lines,
+   but keep current rank, former rank and examination points regular. */
 .sport-auto .auto-race-table .grade-current {
-  display:block; font-size:var(--fs-16); font-weight:var(--fw-strong);
+  display:block; font-size:var(--fs-16); font-weight:var(--fw-normal);
   line-height:1; margin-bottom:var(--space-5);
 }
 .sport-auto .auto-race-table :is(.grade-prev,.grade-power) {

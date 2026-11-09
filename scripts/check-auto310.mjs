@@ -145,6 +145,9 @@ for(const width of [296,375,768]){
         gradeAlign:getComputedStyle(machine.querySelector('.machine-grade')).textAlign,
         trial:row.querySelector('td.col-t')?.textContent.trim(),
         trialTitle:row.querySelector('td.col-t')?.getAttribute('title'),
+        trialWeight:getComputedStyle(row.querySelector('td.col-t[title="当日試走タイム"]')).fontWeight,
+        otherTimingWeights:[...row.querySelectorAll('td.col-t:not([title="当日試走タイム"])')]
+          .map(td=>getComputedStyle(td).fontWeight),
         handicap:row.querySelector('.col-h')?.textContent.trim(),
         handicapWeight:getComputedStyle(row.querySelector('.col-h')).fontWeight,
         rank:[...row.querySelector('.col-rank').children].map(el=>el.textContent.trim()),
@@ -183,6 +186,8 @@ for(const width of [296,375,768]){
       r.carStyle.weight!=='400'||r.gradeStyle.weight!=='400'||
       r.machineAlign!=='left'||r.carAlign!=='left'||r.gradeAlign!=='left'||
       r.trial!==expectedDayTrials[i]||r.trialTitle!=='当日試走タイム'||
+      r.trialWeight!=='600'||r.otherTimingWeights.length!==2||
+      r.otherTimingWeights.some(w=>w!=='400')||
       r.handicap!==String([0,10,10,20,20,20,20,20][i])||r.handicapWeight!=='600'||
       JSON.stringify(r.rank)!==JSON.stringify([
         ['A-194','前A-73','63.758'],['A-90','前A-126','71.853'],
@@ -191,7 +196,7 @@ for(const width of [296,375,768]){
         ['S-17','前S-18','112.716'],['S-11','前S-11','117.010']
       ][i])||
       r.rankStyles.length!==3||r.rankStyles.some((x,j)=>x.size!==r.riderStyles[j].size||
-       x.weight!==r.riderStyles[j].weight||x.lineHeight!==r.riderStyles[j].lineHeight||
+       x.weight!=='400'||x.lineHeight!==r.riderStyles[j].lineHeight||
        x.marginBottom!==r.riderStyles[j].marginBottom)||r.height!==56))
     errorsNow.push('three-line rider / vehicle name & grade / initial gold selection mismatch: '+JSON.stringify(riderCells));
   // SCR-210 uses the first three characters of the complete name, not surname.
