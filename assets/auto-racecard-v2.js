@@ -1,5 +1,5 @@
 /* SCR-310 川口 2026-11-09 9R: record data distinct by statistical source.
-   Gamboo Supercomputer deviations (all tracks, and top-2 finishes)
+   Gamboo Supercomputer deviations (all races, and top-2 finishes)
    must never be replaced by 良10走 / official site deviation data. */
 (() => {
 "use strict";
@@ -79,9 +79,9 @@ const subhead='<tr>'+sub(["1着","2着","3着","着外"])+
 table.tHead.innerHTML=header+subhead;
 const num=(values)=>values.map((v,i)=>'<td class="auto-value'+(i===0?" auto-start":"")+'">'+v+'</td>').join("");
 const showDev=v=>v===null||v===undefined?"—":safe(v);
-const deviationCell=p=>'<td class="col-t col-deviation" title="試走偏差（公式／Gamboo全レース／Gamboo2連対）">'+
+const deviationCell=p=>'<td class="col-t col-deviation" title="試走偏差（公式／Gamboo全R／Gamboo2連対）">'+
  '<div class="deviation-primary">'+safe(p.good10Diff)+'</div>'+
- '<div class="deviation-line"><span class="deviation-label">全レース</span><span class="deviation-number">'+showDev(p.deviationNormal)+'</span></div>'+
+ '<div class="deviation-line"><span class="deviation-label">全R</span><span class="deviation-number">'+showDev(p.deviationNormal)+'</span></div>'+
  '<div class="deviation-line"><span class="deviation-label">2連対</span><span class="deviation-number">'+showDev(p.deviationTop2)+'</span></div>'+
  '</td>';
 table.tBodies[0].innerHTML=players.map((p,i)=>{

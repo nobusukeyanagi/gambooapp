@@ -150,7 +150,7 @@ for(const width of [296,375,768]){
      deviations.headerCount!==14||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!== (i===0?'0.09':'—')||x.text[2]!== (i===0?'0.09':'—')||
-       JSON.stringify(x.labels)!==JSON.stringify(['全レース','2連対'])||
+       JSON.stringify(x.labels)!==JSON.stringify(['全R','2連対'])||
        x.primary.font!=='16px'||x.primary.weight!=='400'||x.primary.align!=='center'||
        x.secondary.some(y=>y.font!=='12px'||y.weight!=='400'||y.align!=='left')||
        x.labelStyles.some(y=>y.font!=='12px'||y.weight!=='400'||y.align!=='left')||
@@ -215,7 +215,7 @@ for(const width of [296,375,768]){
       r.carStyle.weight!=='400'||r.gradeStyle.weight!=='400'||
       r.machineAlign!=='left'||r.carAlign!=='left'||r.gradeAlign!=='left'||
       r.trial!==expectedDayTrials[i]||r.trialTitle!=='当日試走タイム'||
-      r.deviationTitle!=='試走偏差（公式／Gamboo全レース／Gamboo2連対）'||
+      r.deviationTitle!=='試走偏差（公式／Gamboo全R／Gamboo2連対）'||
       r.trialWeight!=='600'||r.otherTimingWeights.length!==2||
       r.otherTimingWeights.some(w=>w!=='400')||
       r.handicap!==String([0,10,10,20,20,20,20,20][i])||r.handicapWeight!=='600'||
