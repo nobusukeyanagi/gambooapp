@@ -85,9 +85,9 @@
     "kind actions"
     "clock actions"
     "detail actions";
-  grid-template-rows: repeat(5, minmax(20px, auto));
+  grid-template-rows: repeat(4, minmax(20px, auto)) minmax(18px, auto);
   column-gap: var(--space-card);
-  row-gap: var(--space-2);
+  row-gap: var(--space-1);
   align-items: center;
   min-width: 0;
 }
@@ -107,6 +107,11 @@
 .race-detail-scroll .ri-meeting .ri-day {
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
+}
+.race-detail-scroll .ri-meeting .venue-girls {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
 }
 .race-detail-scroll .ri-meeting .ri-race-label {
   flex: 0 0 auto;
@@ -139,9 +144,9 @@
 .race-detail-scroll .race-info-bar .ri-race {
   grid-area: auto;
   align-self: center;
-  flex: 0 0 52px;
+  flex: 0 0 48px;
   width: 80px;
-  height: 52px;
+  height: 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -160,14 +165,14 @@
 .race-detail-scroll .ri-race .ri-race-purchase {
   box-sizing: border-box;
   display: flex;
-  flex: 0 0 52px;
+  flex: 0 0 48px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: var(--space-card);
   width: 80px;
-  height: 52px;
-  min-height: 52px;
+  height: 48px;
+  min-height: 48px;
   border: var(--line-emphasis-width) solid var(--c-red);
   border-radius: var(--r-control);
   background: var(--c-red);
