@@ -18,7 +18,7 @@
 
 
     <link rel="stylesheet" href="./assets/race-selector-shared.css?v=1" />
-    <link rel="stylesheet" href="./assets/auto-racecard-v2.css?v=43" />
+    <link rel="stylesheet" href="./assets/auto-racecard-v2.css?v=44" />
     <link rel="stylesheet" href="./assets/racecard-common.css?v=3" />
   </head>
   <body class="sport-auto">
@@ -135,7 +135,7 @@
     <dt>直近180日／良湿別着度数</dt><dd>良走路と湿走路別に1着・2着・3着・着外の回数と、勝率・2連対率・3連対率・着外率を2行で表示します。率は各走路の着度数合計を分母に計算しています。</dd>
     <dt>直近360日/対戦成績</dt><dd>出走選手同士の過去360日間の勝敗・勝率です。1行目が勝敗（勝ち数-負け数）、2行目が勝率です。同じ選手同士の欄と対戦がない場合の勝率は「—」を表示します。勝率が50%を超える場合は薄金色の文字背景になります。</dd>
     <dt>スパコン／予想</dt><dd>「雨予想」内の予想着順・予想競走Tは、共有されたスパコン直前予想の推定値です（元データの条件は良走路・温度「全」）。予想着順は印と着順を併記し、両項目とも上位4位まで文字背景を着色します。良走路SP・調子・捌き・逃げ・スタートはスパコン前日予想の値です。調子は「↑」上向き、「→」横ばい、「↓」下向きを示します。良走路SP・捌き・逃げ・スタートは数値が大きい順に上位3位の文字背景を着色します。</dd>
-    <dt>データ／解析ラボ</dt><dd>元の「データ解析の予想印」を基に、総合と8種類のデータ解析（走路状況・走路温度・試走タイム・ハンデ・レース場・競走車・レース種別・勝ち上がり）を表示します。スパコンの予想印は含めていません。印の背景はSCR-210と共通で、◎は薄金・○は薄青・△は薄銅・×は薄緑です。総合は遷移しない見出しで、ほかの8項目は見出しから詳細表示します。元HTMLに含まれない詳細数値は作成せず、元ページへのリンクを設けています。</dd>
+    <dt>データ／解析ラボ</dt><dd>元の「データ解析の予想印」を基に、総合と8種類のデータ解析（走路状況・走路温度・試走タイム・ハンデ・レース場・競走車・レース種別・勝ち上がり）を表示します。スパコンの予想印は含めていません。印の背景はSCR-210と共通で、◎は薄金・○は薄青・△は薄銅・×は薄緑です。総合は遷移しない見出しで、ほかの8項目は見出しから詳細表示します。詳細パネルには共有された8種類の表データを収録しています。SCR-210と同様に全国順位は省き、上位の連対率などは文字背景を着色します。</dd>
   </dl>
 </div>
               </div>
@@ -151,10 +151,6 @@
                 <table class="detail-table auto-analyzer-detail-table">
                   <thead></thead><tbody></tbody>
                 </table>
-              </div>
-              <div class="auto-analyzer-source">
-                <p class="auto-analyzer-source-note"></p>
-                <a class="auto-analyzer-source-link" href="https://gamboo.jp/autorace/analyzer/marklist/?rdt=20261109&amp;rno=9&amp;pid=2&amp;rsp=3&amp;rspl=02&amp;rsrt=1&amp;rsst=1" target="_blank" rel="noopener noreferrer">Gambooの詳細を見る</a>
               </div>
             </section>
             <div class="bottom-tab">
@@ -186,7 +182,8 @@
     
     <script src="./assets/sport-display-order.js?v=2"></script>
     <script src="./assets/scroll-controls.js?v=7" data-scroll-mode="keirin-detail"></script>
-    <script src="./assets/auto-racecard-v2.js?v=34" defer></script>
+    <script src="./assets/auto-analyzer-detail-source.js?v=1" defer></script>
+    <script src="./assets/auto-racecard-v2.js?v=35" defer></script>
     <script src="./assets/tap-feedback.js?v=4" defer></script>
     <script src="./assets/text-fit.js?v=1" defer></script>
 </body>
