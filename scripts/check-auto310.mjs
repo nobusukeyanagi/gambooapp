@@ -119,7 +119,7 @@ for(const width of [296,375,768]){
   const canonical=await page.evaluate(()=>{
     const table=document.querySelector('.auto-race-table');
     const head=table.tHead.rows[0].cells[0];
-    const th=[...table.tHead.querySelectorAll('th')].find(el=>el.textContent.includes('ハンデ'));
+    const th=table.tHead.querySelector('th[data-group="recent"]:not(.section-selected)');
     const nonselectedMenu=document.querySelector('.race-menu-scroll .info-tab:not(.active)');
     const sample=el=>({color:getComputedStyle(el).color,
       weight:getComputedStyle(el).fontWeight,size:getComputedStyle(el).fontSize});
