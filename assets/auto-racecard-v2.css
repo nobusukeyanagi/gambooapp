@@ -640,8 +640,12 @@
   font-weight:var(--fw-strong);
   color:inherit;
 }
+/* SCR-210 uses a 50px sticky 車番 column. For source groups narrower
+   than the viewport, do not stretch the table to 100% and accidentally
+   inflate that fixed column to 65–82px. */
 .sport-auto .auto-analyzer-sheet .detail-table {
-  width:max-content;min-width:100%;
+  width:max-content;
+  min-width:0;
 }
 /* SCR-210 panel rendering: no second player-name column. Use the
    shared detail-table, dt-vehicle, dt-stat-heading and dt-rate styles. */
