@@ -150,7 +150,7 @@
   box-sizing:border-box; width:80px; min-width:80px; max-width:80px;
 }
 .sport-auto .auto-race-table .deviation-primary {
-  display:block; font-size:var(--fs-16); font-weight:var(--fw-normal);
+  display:block; font-size:var(--fs-16); font-weight:var(--fw-strong);
   color:var(--c-text-primary); text-align:center;
   line-height:1; margin-bottom:var(--space-5);
 }
@@ -166,10 +166,20 @@
 .sport-auto .auto-race-table .deviation-number {
   text-align:left; font-variant-numeric:tabular-nums;
 }
-/* Emphasize only the same-day trial time, not the historical figures. */
-.sport-auto .race-detail-scroll .auto-race-table tbody td.col-t[title="当日試走タイム"] {
+/* Emphasize average ST and the same-day trial time, not historical times.
+   Individual top-three values get only a soft text-sized highlight. */
+.sport-auto .race-detail-scroll .auto-race-table tbody td.col-t:is([title="平均ST"],[title="当日試走タイム"]) {
   font-weight:var(--fw-strong);
 }
+.sport-auto .auto-race-table .auto-top-time {
+  display:table; width:max-content; margin-inline:auto;
+  padding-inline:var(--space-2); border-radius:var(--r-xs);
+  font-size:var(--fs-16); font-weight:var(--fw-strong);
+  color:var(--c-text-primary);
+}
+.sport-auto .auto-race-table .auto-top-time-1 { background:var(--c-gold-light); }
+.sport-auto .auto-race-table .auto-top-time-2 { background:var(--c-blue-light); }
+.sport-auto .auto-race-table .auto-top-time-3 { background:var(--c-bronze-light); }
 .sport-auto .auto-race-table .col-rank { width:82px; min-width:82px; }
 .sport-auto .auto-race-table th.auto-section { width:auto; min-width:0; }
 .sport-auto .auto-race-table :is(th,td).auto-value { width:60px; min-width:60px; }
@@ -222,7 +232,7 @@
 /* Match the 16/12/12 type and spacing of the rider's three lines,
    but keep current rank, former rank and examination points regular. */
 .sport-auto .auto-race-table .grade-current {
-  display:block; font-size:var(--fs-16); font-weight:var(--fw-normal);
+  display:block; font-size:var(--fs-16); font-weight:var(--fw-strong);
   line-height:1; margin-bottom:var(--space-5);
 }
 .sport-auto .auto-race-table :is(.grade-prev,.grade-power) {
@@ -243,6 +253,22 @@
 }
 .sport-auto .auto-race-table .sort-power > span {
   display:block; line-height:1.25;
+}
+/* Within 90 days: fastest competition time (not the "良10走" best)
+   above its race venue, using the standard 16/12 two-line cell design. */
+.sport-auto .auto-race-table :is(th.auto-best90-heading,td.auto-best90-cell) {
+  box-sizing:border-box; width:80px; min-width:80px; max-width:80px;
+  text-align:center;
+}
+.sport-auto .auto-race-table td.auto-best90-cell > span { display:block; }
+.sport-auto .auto-race-table .auto-best90-time {
+  font-size:var(--fs-16); font-weight:var(--fw-normal);
+  color:var(--c-text-primary); line-height:1.2;
+}
+.sport-auto .auto-race-table .auto-best90-venue {
+  margin-top:var(--space-5);
+  font-size:var(--fs-12); font-weight:var(--fw-normal);
+  color:var(--c-text-secondary); line-height:1.2;
 }
 /* 優出・優勝: slim 100px column in 10px steps; numbers share
    the same right edge, aligning their ones digits vertically. */
