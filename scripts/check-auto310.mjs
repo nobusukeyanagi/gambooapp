@@ -60,7 +60,7 @@ for(const width of [296,375,768]){
       kindSize:getComputedStyle(bar.querySelector('.auto-supercon-kind')).fontSize,
       starsText:bar.querySelector('.auto-supercon-gold-stars')?.textContent,
       starsColor:getComputedStyle(bar.querySelector('.auto-supercon-gold-stars')).color,
-      goldToken:getComputedStyle(document.querySelector('.auto-supercon-bar .lineup-title')).getPropertyValue('--c-gold').trim(),
+      goldToken:(()=>{const tester=document.createElement('span');tester.style.color='var(--c-gold)';bar.appendChild(tester);const color=getComputedStyle(tester).color;tester.remove();return color;})(),
       parts,bar:style(bar),title:style(bar.querySelector('.lineup-title')),
       row:style(row),hasRightButton:!!bar.querySelector('button,a,.aokei-paper-btn'),
       placement:Math.abs(rect(bar).top-rect(menu).bottom)<1&&
@@ -76,7 +76,7 @@ for(const width of [296,375,768]){
      supercon.parts.map(x=>x.nums.join('-')).join('|')!=='1-8|8-1|1-5'||
      supercon.parts.some((x,i)=>x.hyphen!=='-'||x.classes.some(y=>!y)||
        x.sizes.some(size=>size[0]!==22||size[1]!==22)||
-       (i===0?parseFloat(x.marginLeft)!==0:Math.abs(parseFloat(x.marginLeft)+4-22)>0.1))||
+       (i===0?parseFloat(x.marginLeft)!==0:Math.abs(parseFloat(x.marginLeft)+parseFloat(supercon.row.gap)-22)>0.1))||
      supercon.hasRightButton||!supercon.placement||
      supercon.rowScrollStyle!=='auto'||supercon.rowOverflow<0)
     errorsNow.push('SCR-310 supercomputer prediction structure/fit mismatch: '+JSON.stringify(supercon));
