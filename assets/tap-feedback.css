@@ -19,7 +19,6 @@ html {
    itself. Tint those fills too, so the full pressed button is light gold. */
 .tap-pressed :is(.ri-race-purchase, .rchip-warning, .rchip-rebate) {
   background: var(--c-gold-light) !important;
-  border-color: var(--c-gold) !important;
 }
 /* Explicitly disable the browser's default dark flash on press targets even
    before JavaScript applies the pressed class. */
