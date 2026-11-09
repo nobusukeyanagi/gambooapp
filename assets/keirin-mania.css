@@ -64,7 +64,7 @@
 }
 .sheet-overlay {
   position: absolute;
-  inset: 0 0 62px;
+  inset: 0 0 var(--h-bottom-nav);
   z-index: 10;
   background: color-mix(in srgb, var(--c-text-primary) 40%, transparent);
 }
@@ -73,7 +73,7 @@
   left: 0;
   right: 0;
   top: var(--h-header);
-  bottom: calc(var(--h-bottom-nav) + var(--space-2));
+  bottom: var(--h-bottom-nav);
   height: auto;
   z-index: 11;
   display: flex;
@@ -119,11 +119,15 @@
   min-height: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+}
+.sheet-body::-webkit-scrollbar {
+  display: none;
 }
 .sheet .detail-table {
   width: max-content;
   min-width: 100%;
+  height: 100%;
   border-collapse: separate;
   border-spacing: 0;
   font-size: var(--fs-12);
@@ -194,11 +198,6 @@
 }
 .sheet .detail-table tbody tr:nth-child(even) td.dt-vehicle {
   background: var(--c-bg);
-}
-.sheet .detail-table .dt-vehicle-heading-sub {
-  display: block;
-  font-size: var(--fs-12);
-  font-weight: var(--fw-strong);
 }
 .sheet .detail-table .dt-vehicle-content {
   display: flex;
