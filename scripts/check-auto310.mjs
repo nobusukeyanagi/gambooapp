@@ -186,12 +186,12 @@ for(const width of [296,375,768]){
      JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
      JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
-     deviations.headerCount!==33||deviations.cells.length!==8||
+     deviations.headerCount!==34||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!==['0.09','0.09','0.10','0.08','0.09','0.11','0.09','0.10'][i]||
        x.text[2]!==['0.09','0.08','0.10','0.08','0.10','0.10','0.09','0.10'][i]||
        JSON.stringify(x.labels)!==JSON.stringify(['全R','2連対'])||
-       x.primary.font!=='16px'||x.primary.weight!=='400'||x.primary.align!=='center'||
+       x.primary.font!=='16px'||x.primary.weight!=='600'||x.primary.align!=='center'||
        x.secondary.some(y=>y.font!=='12px'||y.weight!=='400'||y.align!=='left')||
        x.labelStyles.some(y=>y.font!=='12px'||y.weight!=='400'||y.align!=='left')||
        Math.abs(x.starts[0]-x.starts[1])>0.5||!x.noOverflow))
@@ -314,8 +314,8 @@ for(const width of [296,375,768]){
   });
   const expectedAwards=[[0,0,10],[3,0,0],[2,0,10],[4,0,20],[1,0,49],[6,1,33],[13,1,57],[10,1,71]];
   if(awardState.header!=='優出・優勝'||awardState.rowSpan!==2||awardState.headerWidth!==100||
-     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近10走','良10走','直近5レース出走表','直近90走','直近180日','優出・優勝'])||
-     awardState.sheetCount!==0||awardState.lastCells.some(n=>n!==33)||
+     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近10走','良10走','直近5レース出走表','直近90日','直近180日','優出・優勝'])||
+     awardState.sheetCount!==0||awardState.lastCells.some(n=>n!==34)||
      awardState.cells.length!==8||
      awardState.cells.some((r,i)=>{
        const expected=[['今年優出',String(expectedAwards[i][0])],
@@ -332,6 +332,60 @@ for(const width of [296,375,768]){
         Math.max(...r.numberLeft)-Math.min(...r.numberLeft)>0.5;
      }))
     errorsNow.push('award consolidation and removed analysis mismatch: '+JSON.stringify(awardState));
+  /* Verify the 90-day peak/venue from the user-supplied supercomputer page,
+   separately from the existing "good 10 runs" best-time columns. */
+  const best90=await page.locator('.auto-race-table').evaluate(table=>{
+    const head=table.tHead.querySelector('th.auto-best90-heading');
+    const value=el=>({text:el.textContent.trim(),font:getComputedStyle(el).fontSize,
+      weight:getComputedStyle(el).fontWeight,color:getComputedStyle(el).color});
+    return {
+      heading:head.textContent.trim(),group:head.dataset.group,
+      width:Math.round(head.getBoundingClientRect().width),
+      rightOfOutside:head.previousElementSibling.textContent.trim(),
+      rows:[...table.tBodies[0].rows].map(row=>{
+        const td=row.querySelector('.auto-best90-cell');
+        return {width:Math.round(td.getBoundingClientRect().width),
+          time:value(td.querySelector('.auto-best90-time')),
+          venue:value(td.querySelector('.auto-best90-venue'))};
+      })
+    };
+  });
+  const expectedBest90=[
+    ['3.439','川口'],['3.444','川口'],['3.418','飯塚'],['3.413','浜松'],
+    ['3.408','川口'],['3.408','山陽'],['3.412','伊勢崎'],['3.398','川口']
+  ];
+  if(best90.heading!=='最高T'||best90.group!=='last90'||
+     best90.width!==80||best90.rightOfOutside!=='着外着外率'||
+     best90.rows.length!==8||best90.rows.some((r,i)=>
+       r.width!==80||r.time.text!==expectedBest90[i][0]||
+       r.venue.text!==expectedBest90[i][1]||
+       r.time.font!=='16px'||r.time.weight!=='400'||
+       r.time.color!=='rgb(48, 54, 59)'||
+       r.venue.font!=='12px'||r.venue.weight!=='400'||
+       r.venue.color!=='rgb(96, 107, 118)'))
+    errorsNow.push('90-day peak time and venue mismatch: '+JSON.stringify(best90));
+  const bestRanks=await page.locator('.auto-race-table').evaluate(table=>
+    [...table.tBodies[0].rows].map(row=>{
+      const read=td=>{const t=td.querySelector('.auto-top-time'),c=getComputedStyle(t);
+        return {text:t.textContent.trim(),cls:t.className,font:c.fontSize,
+          weight:c.fontWeight,color:c.color,bg:c.backgroundColor};};
+      return [read(row.querySelector('td[title="平均ST"]')),
+        read(row.querySelector('td[title="当日試走タイム"]'))];
+    })
+  );
+  const expectedTimes=[
+    ['0.14','3.69'],['0.19','3.70'],['0.21','3.69'],
+    ['0.13','3.69'],['0.16','3.65'],['0.11','3.76'],
+    ['0.11','3.69'],['0.16','3.68']
+  ];
+  const expectedTimeRanks=[[0,3],[0,0],[0,3],[3,3],[0,1],[1,0],[1,3],[0,2]];
+  if(bestRanks.length!==8||bestRanks.some((pair,i)=>pair.length!==2||
+    pair.some((t,j)=>t.text!==expectedTimes[i][j]||
+      t.cls!=='auto-top-time'+(expectedTimeRanks[i][j]?' auto-top-time-'+expectedTimeRanks[i][j]:'')||
+      t.font!=='16px'||t.weight!=='600'||t.color!=='rgb(48, 54, 59)'||
+      (expectedTimeRanks[i][j]?(t.bg==='rgba(0, 0, 0, 0)'||t.bg==='rgb(255, 255, 255)'):
+       t.bg!=='rgba(0, 0, 0, 0)'))))
+    errorsNow.push('average ST and trial top-three tinted ranks mismatch: '+JSON.stringify(bestRanks));
   const basicStats=await page.locator('.auto-race-table').evaluate(table=>{
     const head=[...table.tHead.rows[0].cells];
     const groups=['recent','good','last90'].map(k=>table.querySelector('thead th[data-group="'+k+'"]'));
@@ -386,8 +440,8 @@ for(const width of [296,375,768]){
     const p=v=>n?Math.trunc(v*100/n)+'%':'—';
     return [p(a[0]),p(a[0]+a[1]),p(a[0]+a[1]+a[2]),p(a[3])];
   };
-  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','直近10走','良10走','直近5レース出走表','直近90走'])||
-     basicStats.upperTitles.some(t=>['直近10走','良10走','直近90走'].includes(t))||
+  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','直近10走','良10走','直近5レース出走表','直近90日'])||
+     basicStats.upperTitles.some(t=>['直近10走','良10走','直近90日'].includes(t))||
      JSON.stringify(basicStats.upperSpan)!==JSON.stringify([2,2,2])||
      JSON.stringify(basicStats.labels)!==JSON.stringify(expectedLabels)||
      JSON.stringify(basicStats.statWidths)!==JSON.stringify(Array(8).fill(60))||
@@ -470,7 +524,7 @@ for(const width of [296,375,768]){
       r.trial!==expectedDayTrials[i]||r.trialTitle!=='当日試走タイム'||
       r.deviationTitle!=='試走偏差（公式／Gamboo全R／Gamboo2連対）'||
       r.trialWeight!=='600'||r.otherTimingWeights.length!==2||
-      r.otherTimingWeights.some(w=>w!=='400')||
+      JSON.stringify(r.otherTimingWeights)!==JSON.stringify(['600','400'])||
       r.handicap!==String([0,10,10,20,20,20,20,20][i])||r.handicapWeight!=='600'||
       JSON.stringify(r.rank)!==JSON.stringify([
         ['A-194','前A-73','63.758'],['A-90','前A-126','71.853'],
@@ -479,7 +533,7 @@ for(const width of [296,375,768]){
         ['S-17','前S-18','112.716'],['S-11','前S-11','117.010']
       ][i])||
       r.rankStyles.length!==3||r.rankStyles.some((x,j)=>x.size!==r.riderStyles[j].size||
-       x.weight!=='400'||x.lineHeight!==r.riderStyles[j].lineHeight||
+       x.weight!==(j===0?'600':'400')||x.lineHeight!==r.riderStyles[j].lineHeight||
        x.marginBottom!==r.riderStyles[j].marginBottom)||r.height!==56))
     errorsNow.push('three-line rider / vehicle name & grade / initial gold selection mismatch: '+JSON.stringify(riderCells));
   // SCR-210 uses the first three characters of the complete name, not surname.
@@ -592,7 +646,7 @@ for(const width of [296,375,768]){
     return {total:table.querySelectorAll('thead th,tbody td').length,
       tableBorder:measure(table),invalid};
   });
-  if(borderGrid.total!==297||borderGrid.invalid.length||
+  if(borderGrid.total!==306||borderGrid.invalid.length||
       ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
     errorsNow.push('box-table single 1px grid / no duplicate header-top border mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
@@ -697,7 +751,7 @@ for(const width of [296,375,768]){
         leftover:table.tHead.querySelectorAll('th.section-selected').length-selected.length
       };
     },key);
-    const expectUpper={recent:4,good:3,last90:4,road:8,titles:1}[key];
+    const expectUpper={recent:4,good:3,last90:5,road:8,titles:1}[key];
     const expectLower={recent:0,good:0,last90:0,titles:0,road:0}[key];
     if(colors.upper!==expectUpper||colors.lower!==expectLower||colors.leftover!==0||
        colors.cells.some(v=>!v.selected||v.bg!=='rgb(114, 103, 49)'||
