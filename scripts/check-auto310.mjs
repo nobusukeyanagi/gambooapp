@@ -698,7 +698,7 @@ for(const width of [296,375,768]){
   const autoHeaderHeights=await page.locator('.auto-race-table').evaluate(table=>{
     const h=cell=>Math.round(cell.getBoundingClientRect().height);
     return {span:h(table.tHead.rows[0].querySelector('th[rowspan="2"]')),
-      lastSpan:h(table.tHead.rows[0].querySelector('th[data-group="titles"]')),
+      lastSpan:h(table.tHead.rows[0].querySelector('th.auto-titles-column')),
       bottomCells:table.tHead.rows[1].cells.length};
   });
   if(Math.abs(autoHeaderHeights.span-keirinHeaderHeights.span)>1||
