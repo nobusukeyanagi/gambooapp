@@ -66,6 +66,11 @@ for(const width of [296,375,768]){
    errorsNow.push('header/selected race mismatch');
   if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==7)
    errorsNow.push('rider/table/menu mismatch');
+  // SCR-210 uses the first three characters of the complete name, not surname.
+  const fullPrefix=expected.map(name=>Array.from(name).slice(0,3).join(''));
+  const shortNames=await page.locator('.auto-race-table tbody .sha-nm').allTextContents();
+  if(JSON.stringify(shortNames)!==JSON.stringify(fullPrefix))
+    errorsNow.push('fixed vehicle column names must be first 3 chars: '+JSON.stringify(shortNames));
   if(result.activeNav!=='オート予想'||!result.weather.includes('湿走路 11.0℃')||!result.weather.includes('90.0%')||
      !result.date.includes('3100m(6周)')||result.fourth.includes('天候')||
      !result.weatherTop.endsWith('天候 晴')||result.weather.includes('天候')||
@@ -206,9 +211,18 @@ for(const width of [296,375,768]){
   await page.waitForTimeout(450);
   const menuLeft=await page.locator('.race-table-wrap').evaluate(el=>el.scrollLeft);
   if(menuLeft<100)errorsNow.push('horizontal menu failed to scroll table');
+  const scrollState=await page.locator('.race-table-wrap').evaluate(el=>({
+    active:el.classList.contains('scrolled'),
+    labels:[...el.querySelectorAll('tbody .sha-nm')].map(x=>getComputedStyle(x).display)
+  }));
+  if(!scrollState.active||scrollState.labels.some(x=>x==='none'))
+    errorsNow.push('fixed rider names not visible during horizontal scroll '+JSON.stringify(scrollState));
   await page.locator('.auto-detail-button[data-report="road"]').first().click();
   if(!(await page.locator('.sheet').isVisible())||(await page.locator('.sheet .detail-table tbody tr').count())!==8)
    errorsNow.push('details sheet does not open with 8 rows');
+  const detailNames=await page.locator('.sheet .detail-table tbody .dt-vehicle-short').allTextContents();
+  if(JSON.stringify(detailNames)!==JSON.stringify(fullPrefix))
+    errorsNow.push('detail panel short names must be first 3 chars: '+JSON.stringify(detailNames));
   await page.locator('.sheet-close').click();
   if(await page.locator('.sheet').isVisible())errorsNow.push('details sheet did not close');
   await page.locator('.sort-power').click();

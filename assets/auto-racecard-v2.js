@@ -13,7 +13,8 @@ const raw=[
 ["若井友和","若井","川口",25,52,"S-17","S-18","モエルトウコン",20,"0.11","0.094","112.716",[0,1,3,6],[2,8,12,16],"3.34","3.434","3.413",[44.6,67.9],[56.3,62.5],[13,1,57]],
 ["中村雅人","中村","川口",28,45,"S-11","S-11","ＫＯモンソン",20,"0.16","0.093","117.010",[2,2,2,4],[8,6,9,12],"3.34","3.433","3.398",[60.4,72.9],[38.5,76.9],[10,1,71]]
 ];
-const players=raw.map(a=>({name:a[0],short:a[1],loc:a[2],ki:a[3],age:a[4],
+// Same rule as SCR-210: the first three characters of the full rider name.
+const players=raw.map(a=>({name:a[0],short:Array.from(a[0]).slice(0,3).join(""),loc:a[2],ki:a[3],age:a[4],
  rank:a[5],prev:a[6],car:a[7],h:a[8],st:a[9],diff:a[10],power:a[11],
  r10:a[12],r90:a[13],trial:a[14],avg:a[15],best:a[16],
  dry:a[17],wet:a[18],thisYear:a[19]}));
