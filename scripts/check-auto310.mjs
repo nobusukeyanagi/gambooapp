@@ -26,7 +26,10 @@ for(const width of [296,375,768]){
      columns:document.querySelectorAll('.auto-race-table thead tr').length,
      menuCount:document.querySelectorAll('.race-menu-scroll .info-tab').length,
      activeNav:document.querySelector('.bottom-tab .tab-item.active')?.textContent.trim(),
-     weather:document.querySelector('.auto-weather-bar')?.textContent.replace(/\s+/g,' ').trim(),
+     weather:document.querySelector('.race-info-bar .ri-auto-detail-line:last-child')?.textContent.replace(/\s+/g,' ').trim(),
+     fourth:document.querySelector('.race-info-bar .race-info-row')?.textContent.replace(/\s+/g,' ').trim(),
+     standaloneWeather:document.querySelectorAll('.auto-weather-bar').length,
+     liveUnderline:getComputedStyle(document.querySelector('.race-info-bar .ri-btn.live')).textDecorationLine,
      date:document.querySelector('.ri-date-line')?.textContent.replace(/\s+/g,' ').trim(),
      countdown:document.querySelector('.race-countdown')?.textContent.trim(),
      display:getComputedStyle(document.querySelector('.auto-race-table')).display};
@@ -62,9 +65,37 @@ for(const width of [296,375,768]){
    errorsNow.push('header/selected race mismatch');
   if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==7)
    errorsNow.push('rider/table/menu mismatch');
-  if(result.activeNav!=='オート予想'||!result.weather.includes('湿走路')||!result.weather.includes('90.0%')||
-     !result.date.includes('3100m(6周)')||result.countdown!=='14分前')
-   errorsNow.push('context/bottom menu mismatch');
+  if(result.activeNav!=='オート予想'||!result.weather.includes('湿走路 11.0℃')||!result.weather.includes('90.0%')||
+     !result.date.includes('3100m(6周)')||!result.fourth.includes('天候 晴')||
+     result.standaloneWeather!==0||result.liveUnderline!=='none'||result.countdown!=='14分前')
+   errorsNow.push('summary/weather/LIVE mismatch: '+JSON.stringify(result));
+  const positions=await page.evaluate(()=>{
+    const root=document.querySelector('.race-info-bar');
+    const relative=sel=>Math.round((root.querySelector(sel).getBoundingClientRect().top-root.getBoundingClientRect().top)*10)/10;
+    const fifth=root.querySelector('.ri-date-line');
+    const lines=[...fifth.querySelectorAll('.ri-auto-detail-line')];
+    const fit=[...root.querySelectorAll('.ri-auto-fit-row')].map(el=>{
+      const a=el.querySelector('.ri-auto-inline').getBoundingClientRect();
+      const b=el.getBoundingClientRect();
+      return {overflow:Math.max(0,a.right-b.right),transform:getComputedStyle(el.querySelector('.ri-auto-inline')).transform};
+    });
+    return {rows:['.ri-meeting','.ri-event','.ri-kind','.race-info-row','.ri-date-line'].map(relative),
+      count:lines.length,heights:lines.map(x=>x.getBoundingClientRect().height),
+      fifthHeight:fifth.getBoundingClientRect().height,fit};
+  });
+  const comparison=await browser.newPage({viewport:{width,height:900},deviceScaleFactor:1});
+  await comparison.goto(origin+'/SCR-210_racecardkeirin.html',{waitUntil:'load'});
+  const reference=await comparison.evaluate(()=>{
+    const root=document.querySelector('.race-info-bar');
+    return ['.ri-meeting','.ri-event','.ri-kind','.race-info-row','.ri-date-line']
+      .map(q=>Math.round((root.querySelector(q).getBoundingClientRect().top-root.getBoundingClientRect().top)*10)/10);
+  });
+  await comparison.close();
+  if(positions.rows.slice(0,4).some((v,i)=>Math.abs(v-reference[i])>0.6))
+    errorsNow.push('first four rows differ from SCR-210: '+JSON.stringify({auto:positions.rows,keirin:reference}));
+  if(positions.count!==2||Math.abs(positions.fifthHeight-29)>0.6||
+    positions.heights.some(h=>Math.abs(h-14.4)>0.7)||positions.fit.some(x=>x.overflow>1))
+    errorsNow.push('fifth-row content overflows/missing: '+JSON.stringify(positions));
   if(errors.length)errorsNow.push('browser JS errors '+errors);
   await page.screenshot({path:path.join(folder,'SCR-310-'+width+'.png'),fullPage:true,animations:'disabled'});
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');

@@ -19,6 +19,29 @@ const players=raw.map(a=>({name:a[0],short:a[1],loc:a[2],ki:a[3],age:a[4],
  dry:a[17],wet:a[18],thisYear:a[19]}));
 const root=document.querySelector(".sport-auto .phone-inner");
 if(!root)return;
+/* Fit only auto-specific line contents horizontally, preserving the five-row
+   SCR-210 layout, original font sizes, and line heights. */
+function fitRaceInfoLines(){
+ for(const holder of root.querySelectorAll(".race-info-bar .ri-auto-fit-row")){
+  const inner=holder.querySelector(":scope > .ri-auto-inline");
+  if(!inner)continue;
+  inner.style.transform="none";
+  const natural=inner.getBoundingClientRect().width;
+  const available=holder.getBoundingClientRect().width;
+  const scale=natural>0&&available>0?Math.min(1,Math.max(.01,(available-.5)/natural)):1;
+  inner.style.transform=scale<1?"scaleX("+scale.toFixed(6)+")":"none";
+ }
+}
+let raceInfoFitScheduled=false;
+function scheduleRaceInfoFit(){
+ if(raceInfoFitScheduled)return;
+ raceInfoFitScheduled=true;
+ requestAnimationFrame(()=>{raceInfoFitScheduled=false;fitRaceInfoLines();});
+}
+fitRaceInfoLines();
+window.addEventListener("resize",scheduleRaceInfoFit,{passive:true});
+document.fonts?.ready.then(scheduleRaceInfoFit);
+
 const table=root.querySelector(".auto-race-table"),wrap=root.querySelector(".race-table-wrap");
 if(!table||!wrap)return;
 const safe=t=>String(t).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll('"',"&quot;");
