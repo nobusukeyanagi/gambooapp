@@ -51,7 +51,7 @@ for(const width of [296,375,768]){
         fits:content.width<=outer.width+0.5};
     })
   );
-  if(menuSizing.length!==8||menuSizing[0].label!=='選手情報'||
+  if(menuSizing.length!==9||menuSizing[0].label!=='選手情報'||
      Math.abs(menuSizing[0].width-82)>1||
      menuSizing.some(m=>m.paddingLeft!=='13px'||m.paddingRight!=='13px'||
        m.minWidth!=='0px'||Math.abs(m.left-13)>0.6||
@@ -154,7 +154,7 @@ for(const width of [296,375,768]){
    errorsNow.push('different shared heights '+[result.header,result.selector,result.summary,result.menu,result.bottom]);
   if(result.activeTitle!=='オートレース予想'||result.selectedRace!=='9'||result.races!==12||result.redFrame!=='3px')
    errorsNow.push('header/selected race mismatch');
-  if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==8)
+  if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==9)
    errorsNow.push('rider/table/menu mismatch');
   const deviations=await page.locator('.auto-race-table').evaluate(table=>{
     const styles=e=>{const c=getComputedStyle(e);return {font:c.fontSize,color:c.color,weight:c.fontWeight,align:c.textAlign}};
@@ -186,7 +186,7 @@ for(const width of [296,375,768]){
      JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
      JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
-     deviations.headerCount!==49||deviations.cells.length!==8||
+     deviations.headerCount!==57||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!==['0.09','0.09','0.10','0.08','0.09','0.11','0.09','0.10'][i]||
        x.text[2]!==['0.09','0.08','0.10','0.08','0.10','0.10','0.09','0.10'][i]||
@@ -459,6 +459,87 @@ for(const width of [296,375,768]){
   // Restore the initial player tab before testing default rider-group
   // highlights and the integrated 優出・優勝 column.
   await page.locator('.race-menu-scroll .info-tab[data-target="player"]').click();
+  /* Gamboo 11/09 川口9R marklist: 8 categories (総合 first) and
+     eight cars. ハンデ and スパコン source marks must not be displayed.
+     A selected category opens the same detail-sheet interaction as SCR-210,
+     with a source link for numerical detail data not in the uploaded page. */
+  const expectedLabLabels=['総合','走路状況','走路温度','試走タイム',
+    'レース場','競走車','レース種別／日程','勝ち上がり／優勝戦'];
+  const expectedLabMarks=[
+    ['○','△','','◎','△','','',''],
+    ['×','◎','○','','○','○','×',''],
+    ['','','','','','','',''],
+    ['','','','','','','','◎','×'],
+    ['','','','×','','','',''],
+    ['','','△','','','△','○','△'],
+    ['◎','○','◎','○','◎','◎','△','○'],
+    ['△','×','×','△','×','×','','◎']
+  ];
+  const expectedLabWidths=[60,80,80,80,80,80,100,100];
+  const labState=await page.locator('.auto-race-table').evaluate(table=>{
+    const headers=[...table.tHead.querySelectorAll('th[data-group="analyzer"]')].map(th=>{
+      const b=th.querySelector('button[data-analyzer-item]');
+      return {text:th.textContent.trim(),button:b?.textContent.trim(),
+        width:Math.round(th.getBoundingClientRect().width),
+        rowSpan:th.rowSpan,item:b?.dataset.analyzerItem,
+        buttonHeight:Math.round(b?.getBoundingClientRect().height||0)};
+    });
+    const rows=[...table.tBodies[0].rows].map(tr=>
+      [...tr.querySelectorAll('td.auto-analyzer-cell')].map(td=>{
+        const mark=td.querySelector('.auto-analyzer-mark'),cs=getComputedStyle(mark);
+        return {text:mark.textContent.trim(),width:Math.round(td.getBoundingClientRect().width),
+          font:cs.fontSize,weight:cs.fontWeight,color:cs.color};
+      })
+    );
+    return {headers,rows,
+      hasHandicapAnalysis:headers.some(x=>x.text==='ハンデ'),
+      hasSuperconAnalysis:headers.some(x=>x.text==='スパコン')};
+  });
+  if(labState.headers.length!==8||labState.rows.length!==8||
+     labState.hasHandicapAnalysis||labState.hasSuperconAnalysis||
+     labState.headers.some((h,i)=>h.text!==expectedLabLabels[i]||
+       h.item!==String(i)||h.width!==expectedLabWidths[i]||
+       h.rowSpan!==2||h.buttonHeight!==40)||
+     labState.rows.some((row,i)=>row.length!==8||row.some((m,j)=>
+       m.text!==expectedLabMarks[i][j]||m.width!==expectedLabWidths[j]||
+       m.font!=='16px'||m.weight!=='600'||
+       m.color!=='rgb(48, 54, 59)')))
+    errorsNow.push('lab marks/headers must reflect provided source: '+JSON.stringify(labState));
+  const sourcePaths=[null,'situation','roadtemp','trialrun',
+    'place','motorcycle','raceclass','racewin'];
+  for(let item=0;item<8;item++){
+    await page.locator('.auto-analyzer-btn[data-analyzer-item="'+item+'"]').click();
+    const detail=await page.locator('.auto-analyzer-sheet').evaluate(sheet=>{
+      const table=sheet.querySelector('.detail-table');
+      const markRows=[...table.tBodies[0].rows].map(tr=>
+        [...tr.querySelectorAll('td.auto-analyzer-detail-mark')].map(td=>td.textContent.trim()));
+      return {hidden:sheet.hidden,
+        overlayHidden:document.querySelector('.auto-analyzer-overlay').hidden,
+        title:sheet.querySelector('.sheet-title').textContent.trim(),
+        heading:[...table.tHead.rows[0].cells].map(th=>th.textContent.trim()),
+        marks:markRows,
+        vehicleCount:table.tBodies[0].rows.length,
+        link:sheet.querySelector('.auto-analyzer-source-link').href,
+        note:sheet.querySelector('.auto-analyzer-source-note').textContent.trim()};
+    });
+    const expectedDetail=item===0?expectedLabMarks:
+      expectedLabMarks.map(row=>[row[item],row[0]]);
+    const expectedUrl='https://gamboo.jp/autorace/analyzer/'+
+      (sourcePaths[item]?sourcePaths[item]+'/program':'marklist/')+
+      '?rdt=20261109&rno=9&pid=2&rsp=3&rspl=02&rsrt=1&rsst=1';
+    if(detail.hidden||detail.overlayHidden||detail.vehicleCount!==8||
+       detail.title!=='データ解析ラボ：'+expectedLabLabels[item].replace('／','・')||
+       detail.heading.length!==(item===0?10:4)||
+       JSON.stringify(detail.marks)!==JSON.stringify(expectedDetail)||
+       detail.link!==expectedUrl||!detail.note.includes('詳細成績値は元HTMLに含まれない'))
+      errorsNow.push('lab detail sheet mismatched for item '+item+': '+JSON.stringify(detail));
+    await page.locator('.auto-analyzer-sheet .sheet-close').click();
+    const closed=await page.evaluate(()=>({
+      sheet:document.querySelector('.auto-analyzer-sheet').hidden,
+      overlay:document.querySelector('.auto-analyzer-overlay').hidden}));
+    if(!closed.sheet||!closed.overlay)errorsNow.push('lab sheet did not close for '+item);
+  }
+  await page.locator('.race-menu-scroll .info-tab[data-target="player"]').click();
   const selectorLinks=await page.locator('.race-selector').evaluate(el=>
     [...el.querySelectorAll('a.race-tab[href*="/autorace/program"]')].map(a=>a.href));
   if(selectorLinks.length!==11||selectorLinks.some(url=>
@@ -495,8 +576,8 @@ for(const width of [296,375,768]){
   const expectedAwards=[[0,0,10],[3,0,0],[2,0,10],[4,0,20],[1,0,49],[6,1,33],[13,1,57],[10,1,71]];
   if(awardState.header!=='優出・優勝'||awardState.rowSpan!==2||awardState.headerWidth!==100||
      awardState.columnIndex!==8||!awardState.selectedOnPlayer||
-     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近5走出走表','直近10走','良10走','直近90日','直近180日','直近360日対戦成績','スパコン予想'])||
-     awardState.sheetCount!==0||awardState.lastCells.some(n=>n!==49)||
+     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近5走出走表','直近10走','良10走','直近90日','直近180日','直近360日対戦成績','スパコン予想','データ解析ラボ'])||
+     awardState.sheetCount!==2||awardState.lastCells.some(n=>n!==57)||
      awardState.cells.length!==8||
      awardState.cells.some((r,i)=>{
        const expected=[['今年優出',String(expectedAwards[i][0])],
@@ -832,7 +913,7 @@ for(const width of [296,375,768]){
     return {total:table.querySelectorAll('thead th,tbody td').length,
       tableBorder:measure(table),invalid};
   });
-  if(borderGrid.total!==441||borderGrid.invalid.length||
+  if(borderGrid.total!==513||borderGrid.invalid.length||
       ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
     errorsNow.push('box-table single 1px grid / no duplicate header-top border mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
@@ -915,7 +996,7 @@ for(const width of [296,375,768]){
   if(errors.length)errorsNow.push('browser JS errors '+errors);
   await page.screenshot({path:path.join(folder,'SCR-310-'+width+'.png'),fullPage:true,animations:'disabled'});
   // A selected menu item must paint its entire (two-row) header area gold.
-  for(const key of ['last5','recent','good','last90','road','matchup','supercon']){
+  for(const key of ['last5','recent','good','last90','road','matchup','supercon','analyzer']){
     await page.locator('.race-menu-scroll .info-tab[data-target="'+key+'"]').click();
     const colors=await page.locator('.auto-race-table').evaluate((table,key)=>{
       const upper=[...table.tHead.rows[0].querySelectorAll('th[data-group="'+key+'"]')];
@@ -937,8 +1018,8 @@ for(const width of [296,375,768]){
         leftover:table.tHead.querySelectorAll('th.section-selected').length-selected.length
       };
     },key);
-    const expectUpper={last5:5,recent:4,good:3,last90:5,road:8,matchup:8,supercon:7}[key];
-    const expectLower={last5:0,recent:0,good:0,last90:0,matchup:0,road:0,supercon:0}[key];
+    const expectUpper={last5:5,recent:4,good:3,last90:5,road:8,matchup:8,supercon:7,analyzer:8}[key];
+    const expectLower={last5:0,recent:0,good:0,last90:0,matchup:0,road:0,supercon:0,analyzer:0}[key];
     if(colors.upper!==expectUpper||colors.lower!==expectLower||colors.leftover!==0||
        colors.cells.some(v=>!v.selected||v.bg!=='rgb(114, 103, 49)'||
          v.fg!=='rgb(255, 255, 255)')||
@@ -962,7 +1043,7 @@ for(const width of [296,375,768]){
       tableLeft:wrap.scrollLeft,activeVisible:!!visible&&visible.left>=viewport.left-2&&visible.right<=viewport.right+2,
       selected:[...document.querySelectorAll('.auto-race-table thead th.section-selected')].length};
   });
-  if(syncStatus.tableLeft<1100||!['last5','recent','good','last90','road','matchup','supercon'].includes(syncStatus.tab)||
+  if(syncStatus.tableLeft<1100||!['last5','recent','good','last90','road','matchup','supercon','analyzer'].includes(syncStatus.tab)||
      !syncStatus.activeVisible||syncStatus.selected===0)
     errorsNow.push('table scroll must sync selected menu and horizontal strip: '+JSON.stringify(syncStatus));
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');
