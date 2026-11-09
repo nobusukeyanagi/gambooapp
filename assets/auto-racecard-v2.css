@@ -270,6 +270,37 @@
   font-size:var(--fs-12); font-weight:var(--fw-normal);
   color:var(--c-text-secondary); line-height:1.2;
 }
+/* 直近360日・対戦成績表: eight 60px columns, one per opponent.
+   The matchup numbers use the same 16px / 12px vertical rhythm as
+   recent statistics; icons reuse the existing vehicle colors. */
+.sport-auto .auto-race-table :is(th.auto-matchup-heading,td.auto-matchup-cell) {
+  box-sizing:border-box; width:60px; min-width:60px; max-width:60px;
+  text-align:center; white-space:nowrap;
+}
+.sport-auto .auto-race-table .auto-matchup-heading-label {
+  display:inline-block; vertical-align:middle;
+  font-size:var(--fs-12); font-weight:var(--fw-strong);
+  line-height:22px;
+}
+.sport-auto .auto-race-table .auto-matchup-heading .lineup-car {
+  display:inline-flex; vertical-align:middle;
+  width:22px; min-width:22px; height:22px;
+  align-items:center; justify-content:center;
+  margin-left:var(--space-3);
+  font-size:var(--fs-12); font-weight:var(--fw-strong);
+}
+.sport-auto .auto-race-table td.auto-matchup-cell > span {
+  display:block; text-align:center;
+}
+.sport-auto .auto-race-table .auto-matchup-score {
+  color:var(--c-text-primary);
+  font-size:var(--fs-16); font-weight:var(--fw-normal); line-height:1.2;
+}
+.sport-auto .auto-race-table .auto-matchup-percent {
+  margin-top:var(--space-5);
+  color:var(--c-text-secondary);
+  font-size:var(--fs-12); font-weight:var(--fw-normal); line-height:1.2;
+}
 /* 優出・優勝: slim 100px column in 10px steps; numbers share
    the same right edge, aligning their ones digits vertically. */
 .sport-auto .auto-race-table :is(th,td).auto-titles-column {
