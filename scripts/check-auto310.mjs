@@ -51,7 +51,7 @@ for(const width of [296,375,768]){
         fits:content.width<=outer.width+0.5};
     })
   );
-  if(menuSizing.length!==6||menuSizing[0].label!=='選手情報'||
+  if(menuSizing.length!==7||menuSizing[0].label!=='選手情報'||
      Math.abs(menuSizing[0].width-82)>1||
      menuSizing.some(m=>m.paddingLeft!=='13px'||m.paddingRight!=='13px'||
        m.minWidth!=='0px'||Math.abs(m.left-13)>0.6||
@@ -148,7 +148,7 @@ for(const width of [296,375,768]){
    errorsNow.push('different shared heights '+[result.header,result.selector,result.summary,result.menu,result.bottom]);
   if(result.activeTitle!=='オートレース予想'||result.selectedRace!=='9'||result.races!==12||result.redFrame!=='3px')
    errorsNow.push('header/selected race mismatch');
-  if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==6)
+  if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==7)
    errorsNow.push('rider/table/menu mismatch');
   const deviations=await page.locator('.auto-race-table').evaluate(table=>{
     const styles=e=>{const c=getComputedStyle(e);return {font:c.fontSize,color:c.color,weight:c.fontWeight,align:c.textAlign}};
@@ -180,7 +180,7 @@ for(const width of [296,375,768]){
      JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
      JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
-     deviations.headerCount!==28||deviations.cells.length!==8||
+     deviations.headerCount!==33||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!==['0.09','0.09','0.10','0.08','0.09','0.11','0.09','0.10'][i]||
        x.text[2]!==['0.09','0.08','0.10','0.08','0.10','0.10','0.09','0.10'][i]||
@@ -190,6 +190,34 @@ for(const width of [296,375,768]){
        x.labelStyles.some(y=>y.font!=='12px'||y.weight!=='400'||y.align!=='left')||
        Math.abs(x.starts[0]-x.starts[1])>0.5||!x.noOverflow))
     errorsNow.push('three-line deviation columns/data/alignment failed: '+JSON.stringify(deviations));
+
+  const lastFive=await page.locator('.auto-race-table').evaluate(table=>({
+    headings:[...table.tHead.querySelectorAll('th[data-group="last5"]')].map(h=>h.textContent.trim()),
+    widths:[...table.tHead.querySelectorAll('th[data-group="last5"]')].map(h=>Math.round(h.getBoundingClientRect().width)),
+    rows:[...table.tBodies[0].rows].map(row=>[...row.querySelectorAll('td.auto-last5-cell')].map(cell=>({
+      grade:cell.querySelector('.auto-last5-grade')?.textContent.trim(),
+      venue:cell.querySelector('.auto-last5-meta span:nth-child(2)')?.textContent.trim(),
+      date:cell.querySelector('.auto-last5-meta span:nth-child(3)')?.textContent.trim(),
+      rank:cell.querySelector('.auto-last5-rank')?.textContent.trim(),
+      flag:cell.querySelector('.auto-last5-flag')?.textContent.trim()||'',
+      road:cell.querySelector('.auto-last5-race small')?.textContent.trim(),
+      race:cell.querySelector('.auto-last5-race')?.firstChild?.textContent.trim(),
+      values:[...cell.querySelectorAll('.auto-last5-detail > span')].slice(1).map(e=>e.textContent.trim()),
+      link:cell.querySelector('a.auto-last5-link')?.href||'',
+      width:Math.round(cell.getBoundingClientRect().width)
+    })))
+  }));
+  if(JSON.stringify(lastFive.headings)!==JSON.stringify(['前走','2走前','3走前','4走前','5走前'])||
+     lastFive.widths.some(x=>x!==220)||
+     lastFive.rows.length!==8||lastFive.rows.some(rs=>rs.length!==5||
+       rs.some((r,j)=>r.width!==220||!r.link.includes('autorace.jp/netstadium/RaceResult/')||
+         !r.venue||!r.date||!r.race||!r.road||r.values.length!==2)||
+       rs[0].date!=='11/8'||rs[1].date!=='11/7'||rs[0].grade!=='普通')||
+     lastFive.rows[2][0].flag!=='戒'||
+     lastFive.rows[2][2].rank!=='自落'||
+     lastFive.rows[5][3].rank!=='不成立'||
+     lastFive.rows[5][3].values[0]!=='競不成立')
+    errorsNow.push('last-five race columns/data mismatch: '+JSON.stringify(lastFive));
   const awardState=await page.locator('.auto-race-table').evaluate(table=>{
     const h=table.tHead.rows[0].querySelector('th[data-group="titles"]');
     const cells=[...table.tBodies[0].rows].map(row=>{
@@ -215,8 +243,8 @@ for(const width of [296,375,768]){
   });
   const expectedAwards=[[0,0,10],[3,0,0],[2,0,10],[4,0,20],[1,0,49],[6,1,33],[13,1,57],[10,1,71]];
   if(awardState.header!=='優出・優勝'||awardState.rowSpan!==2||awardState.headerWidth!==120||
-     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','近10走','良10走','近90日','近180日','優出・優勝'])||
-     awardState.sheetCount!==0||awardState.lastCells.some(n=>n!==28)||
+     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','近10走','良10走','直近5レース出走表','近90日','近180日','優出・優勝'])||
+     awardState.sheetCount!==0||awardState.lastCells.some(n=>n!==33)||
      awardState.cells.length!==8||
      awardState.cells.some((r,i)=>{
        const expected=[['今年優出',String(expectedAwards[i][0])],
@@ -243,15 +271,15 @@ for(const width of [296,375,768]){
     });
     const first=table.tBodies[0].rows[0].querySelector('td.auto-stat-cell');
     return {
-      menu:[...document.querySelectorAll('.race-menu-scroll .info-tab')].slice(0,4).map(el=>el.textContent.trim()),
+      menu:[...document.querySelectorAll('.race-menu-scroll .info-tab')].slice(0,5).map(el=>el.textContent.trim()),
       upperTitles:head.map(x=>x.textContent.trim()),
       upperSpan:groups.map(x=>x.rowSpan),
       roadHeaders:head.filter(x=>x.dataset.group==='road').map(x=>
        [...x.querySelectorAll('span')].map(y=>y.textContent.trim())),
       roadCells:[...table.tBodies[0].rows].map(row=>[...row.querySelectorAll('td.auto-road-cell')].map(x=>
        [x.querySelector('.recent4-count').textContent.trim(),x.querySelector('.recent4-rate').textContent.trim()])),
-      labels:head.slice(8,19).map(cell=>[...cell.querySelectorAll('span')].map(x=>x.textContent.trim())),
-      statWidths:head.slice(8,12).concat(head.slice(15,19)).map(c=>Math.round(c.getBoundingClientRect().width)),
+      labels:head.slice(8,15).concat(head.slice(20,24)).map(cell=>[...cell.querySelectorAll('span')].map(x=>x.textContent.trim())),
+      statWidths:head.slice(8,12).concat(head.slice(20,24)).map(c=>Math.round(c.getBoundingClientRect().width)),
       headerHeight:Math.round(head[8].getBoundingClientRect().height),
       headerCss:css(head[8].querySelector('span')),
       countCss:css(first.querySelector('.recent4-count')),
@@ -285,7 +313,7 @@ for(const width of [296,375,768]){
     const p=v=>n?Math.trunc(v*100/n)+'%':'—';
     return [p(a[0]),p(a[0]+a[1]),p(a[0]+a[1]+a[2]),p(a[3])];
   };
-  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','近10走','良10走','近90日'])||
+  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','近10走','良10走','直近5レース出走表','近90日'])||
      basicStats.upperTitles.some(t=>['近10走','良10走','近90日'].includes(t))||
      JSON.stringify(basicStats.upperSpan)!==JSON.stringify([2,2,2])||
      JSON.stringify(basicStats.labels)!==JSON.stringify(expectedLabels)||
@@ -491,7 +519,7 @@ for(const width of [296,375,768]){
     return {total:table.querySelectorAll('thead th,tbody td').length,
       tableBorder:measure(table),invalid};
   });
-  if(borderGrid.total!==252||borderGrid.invalid.length||
+  if(borderGrid.total!==297||borderGrid.invalid.length||
       ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
     errorsNow.push('box-table 1px grid / outside frame mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
@@ -621,7 +649,7 @@ for(const width of [296,375,768]){
       tableLeft:wrap.scrollLeft,activeVisible:!!visible&&visible.left>=viewport.left-2&&visible.right<=viewport.right+2,
       selected:[...document.querySelectorAll('.auto-race-table thead th.section-selected')].length};
   });
-  if(syncStatus.tableLeft<1100||!['last90','road','titles'].includes(syncStatus.tab)||
+  if(syncStatus.tableLeft<1100||!['last5','last90','road','titles'].includes(syncStatus.tab)||
      !syncStatus.activeVisible||syncStatus.selected===0)
     errorsNow.push('table scroll must sync selected menu and horizontal strip: '+JSON.stringify(syncStatus));
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');
