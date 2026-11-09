@@ -259,6 +259,7 @@ for(const width of [296,375,768]){
     const badCells=rs.some((r,j)=>{
       if(r.width!==220||!r.link.startsWith('https://gamboo.jp/autorace/program?pid=')||
          !r.link.includes('&rdt=2026')||!r.link.includes('&rno=')||
+         !r.link.includes('&pt=1')||
          !r.venue||!r.date||r.detailRows.length!==3)return true;
       if(r.gradeFont!=='12px'||r.metaAlign!=='left'||r.metaRows!=='16px 12px 12px'||
          r.metaInset!==6||r.metaWidth!==38||r.dateTextWidth>r.metaWidth+0.5||
@@ -287,7 +288,69 @@ for(const width of [296,375,768]){
      lastFive.rows[5][3].detailRows[2]!=='競不成立ST-'||
      lastFive.rows.some(rs=>rs.some(r=>r.labelStyles.length<4)))
     errorsNow.push('recent-five table 210-aligned insets/positions, row styles and abnormal results mismatch: '+JSON.stringify(lastFive));
-    const awardState=await page.locator('.auto-race-table').evaluate(table=>{
+  
+  const matchupState=await page.locator('.auto-race-table').evaluate(table=>{
+    const headers=[...table.tHead.querySelectorAll('th[data-group="matchup"]')].map(th=>{
+      const icon=th.querySelector('.lineup-car');
+      return {text:th.textContent.trim(),vehicle:icon?.textContent.trim(),
+        iconClass:icon?.className,
+        width:Math.round(th.getBoundingClientRect().width),
+        iconWidth:Math.round(icon?.getBoundingClientRect().width||0),
+        rowspan:th.rowSpan};
+    });
+    const rows=[...table.tBodies[0].rows].map(tr=>
+      [...tr.querySelectorAll('td.auto-matchup-cell')].map(td=>{
+        const score=td.querySelector('.auto-matchup-score');
+        const pct=td.querySelector('.auto-matchup-percent');
+        const a=getComputedStyle(score),b=getComputedStyle(pct);
+        return {width:Math.round(td.getBoundingClientRect().width),
+          score:score.textContent.trim(),percent:pct.textContent.trim(),
+          scoreFont:a.fontSize,percentFont:b.fontSize,
+          scoreColor:a.color,percentColor:b.color,
+          scoreWeight:a.fontWeight,percentWeight:b.fontWeight};
+      }));
+    return {headers,rows,preceding:table.tHead.querySelector('th[data-group="matchup"]')?.previousElementSibling?.textContent.trim(),
+      following:table.tHead.querySelectorAll('th[data-group="matchup"]')[7]?.nextElementSibling?.textContent.trim()};
+  });
+  const expectedMatchups=[
+    [null,[0,1],[1,0],[0,5],[0,0],[4,2],[1,4],[0,2]],
+    [[1,0],null,[0,2],[2,3],[1,2],[3,1],[0,1],[1,0]],
+    [[0,1],[2,0],null,[1,3],[6,4],[2,3],[0,5],[1,4]],
+    [[5,0],[3,2],[3,1],null,[0,4],[7,3],[3,7],[2,5]],
+    [[0,0],[2,1],[4,6],[4,0],null,[4,1],[0,2],[0,4]],
+    [[2,4],[1,3],[3,2],[3,7],[1,4],null,[4,6],[4,4]],
+    [[4,1],[1,0],[5,0],[7,3],[2,0],[6,4],null,[4,6]],
+    [[2,0],[0,1],[4,1],[5,2],[4,0],[4,4],[6,4],null]
+  ];
+  const expectedScore=m=>m?m[0]+'-'+m[1]:'—';
+  const expectedPercent=m=>m&&m[0]+m[1]>0?
+    Math.round(100*m[0]/(m[0]+m[1]))+'%':'—';
+  const mismatches=[];
+  if(matchupState.headers.length!==8||
+     matchupState.preceding!=='湿着外着外率'||
+     matchupState.following!=='優出・優勝')mismatches.push('column position');
+  if(matchupState.headers.some((x,i)=>x.text!=='vs'+(i+1)||
+     x.vehicle!==String(i+1)||!x.iconClass.includes('f'+(i+1))||
+     x.width!==60||x.iconWidth!==22||x.rowspan!==2))
+    mismatches.push('headers');
+  if(matchupState.rows.length!==8||matchupState.rows.some((row,i)=>
+     row.length!==8||row.some((x,j)=>
+       x.score!==expectedScore(expectedMatchups[i][j])||
+       x.percent!==expectedPercent(expectedMatchups[i][j])||
+       x.width!==60||x.scoreFont!=='16px'||x.percentFont!=='12px'||
+       x.scoreColor!=='rgb(48, 54, 59)'||
+       x.percentColor!=='rgb(96, 107, 118)'||
+       x.scoreWeight!=='400'||x.percentWeight!=='400')))
+    mismatches.push('eight-by-eight results and styles');
+  if(mismatches.length)
+    errorsNow.push('360-day matchup grid '+mismatches.join('/')+': '+JSON.stringify(matchupState));
+  const selectorLinks=await page.locator('.race-selector').evaluate(el=>
+    [...el.querySelectorAll('a.race-tab[href*="/autorace/program"]')].map(a=>a.href));
+  if(selectorLinks.length!==11||selectorLinks.some(url=>
+      !url.startsWith('https://gamboo.jp/autorace/program?pid=2&rdt=20261109&rno=')||
+      !url.endsWith('&pt=1')))
+    errorsNow.push('race selector should open Gamboo racecards pt=1: '+JSON.stringify(selectorLinks));
+  const awardState=await page.locator('.auto-race-table').evaluate(table=>{
     const h=table.tHead.rows[0].querySelector('th[data-group="titles"]');
     const cells=[...table.tBodies[0].rows].map(row=>{
       const td=row.querySelector('td.auto-titles-cell');
