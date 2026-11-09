@@ -191,6 +191,7 @@ for(const width of [296,375,768]){
        Math.abs(x.starts[0]-x.starts[1])>0.5||!x.noOverflow))
     errorsNow.push('three-line deviation columns/data/alignment failed: '+JSON.stringify(deviations));
 
+
   const lastFive=await page.locator('.auto-race-table').evaluate(table=>({
     headings:[...table.tHead.querySelectorAll('th[data-group="last5"]')].map(h=>h.textContent.trim()),
     widths:[...table.tHead.querySelectorAll('th[data-group="last5"]')].map(h=>Math.round(h.getBoundingClientRect().width)),
@@ -198,44 +199,59 @@ for(const width of [296,375,768]){
     headerBorders:[...table.tHead.rows[0].cells].map(h=>{
       const cs=getComputedStyle(h);return [cs.borderTopWidth,cs.borderBottomWidth];
     }),
-    rows:[...table.tBodies[0].rows].map(row=>[...row.querySelectorAll('td.auto-last5-cell')].map(cell=>({
-      grade:cell.querySelector('.auto-last5-grade')?.textContent.trim(),
-      gradeClass:cell.querySelector('.auto-last5-grade')?.className,
-      gradeFont:getComputedStyle(cell.querySelector('.auto-last5-grade')).fontSize,
-      metaRows:getComputedStyle(cell.querySelector('.auto-last5-meta')).gridTemplateRows,
-      metaAlign:getComputedStyle(cell.querySelector('.auto-last5-meta')).textAlign,
-      rankSize:[getComputedStyle(cell.querySelector('.auto-last5-rank')).fontSize,
-        Math.round(cell.querySelector('.auto-last5-rank').getBoundingClientRect().height),
-        Math.round(cell.querySelector('.auto-last5-rank').getBoundingClientRect().width)],
-      venue:cell.querySelector('.auto-last5-meta span:nth-child(2)')?.textContent.trim(),
-      date:cell.querySelector('.auto-last5-meta span:nth-child(3)')?.textContent.trim(),
-      rank:cell.querySelector('.auto-last5-rank')?.textContent.trim(),
-      flag:cell.querySelector('.auto-last5-flag')?.textContent.trim()||'',
-      road:cell.querySelector('.auto-last5-race small')?.textContent.trim(),
-      race:cell.querySelector('.auto-last5-race')?.firstChild?.textContent.trim(),
-      values:[...cell.querySelectorAll('.auto-last5-detail > span')].slice(1).map(e=>e.textContent.trim()),
-      link:cell.querySelector('a.auto-last5-link')?.href||'',
-      width:Math.round(cell.getBoundingClientRect().width)
-    })))
+    rows:[...table.tBodies[0].rows].map(row=>[...row.querySelectorAll('td.auto-last5-cell')].map(cell=>{
+      const grade=cell.querySelector('.auto-last5-grade'),meta=cell.querySelector('.auto-last5-meta'),
+        entry=cell.querySelector('.auto-last5-entry'),rank=cell.querySelector('.auto-last5-rank'),
+        note=cell.querySelector('.auto-last5-flag');
+      const style=el=>{const x=getComputedStyle(el);return {font:x.fontSize,weight:x.fontWeight,color:x.color}};
+      return {
+        grade:grade.textContent.trim(),gradeClass:grade.className,gradeFont:style(grade).font,
+        venue:cell.querySelector('.auto-last5-venue').textContent.trim(),
+        date:cell.querySelector('.auto-last5-date').textContent.trim(),
+        metaRows:getComputedStyle(meta).gridTemplateRows,
+        metaAlign:getComputedStyle(meta).textAlign,
+        metaInset:Math.round(meta.getBoundingClientRect().left-cell.getBoundingClientRect().left),
+        rank:rank.textContent.trim(),rankStyle:style(rank),
+        rankRect:{x:Math.round(rank.getBoundingClientRect().left-cell.getBoundingClientRect().left),
+          top:Math.round(rank.getBoundingClientRect().top-entry.getBoundingClientRect().top),
+          height:Math.round(rank.getBoundingClientRect().height),
+          width:Math.round(rank.getBoundingClientRect().width)},
+        flag:note.textContent.trim(),noteStyle:{...style(note),align:getComputedStyle(note).textAlign,
+          x:Math.round(note.getBoundingClientRect().left-cell.getBoundingClientRect().left)},
+        detailRows:[...cell.querySelectorAll('.auto-last5-detail > div')].map(e=>e.textContent.trim()),
+        numberStyles:[...cell.querySelectorAll('.auto-last5-number')].map(style),
+        labelStyles:[...cell.querySelectorAll('.auto-last5-label')].map(style),
+        link:cell.querySelector('a.auto-last5-link')?.href||'',
+        width:Math.round(cell.getBoundingClientRect().width)
+      };
+    }))
   }));
+  const expectedGrade=i=>i===0?'GⅡ':i===1?'普通':'SG';
+  const expectedClass=i=>i===0?'grade-g2':i===1?'grade-normal':'grade-sg';
+  const standardNumber=r=>r.numberStyles.every(z=>z.font==='12px'&&z.weight==='600'&&z.color==='rgb(48, 54, 59)');
+  const standardLabel=r=>r.labelStyles.every(z=>z.font==='12px'&&z.weight==='400'&&z.color==='rgb(96, 107, 118)');
   if(JSON.stringify(lastFive.headings)!==JSON.stringify(['前走','2走前','3走前','4走前','5走前'])||
-     lastFive.widths.some(x=>x!==220)||
-     lastFive.headingFonts.some(x=>x!=='12px')||
+     lastFive.widths.some(x=>x!==220)||lastFive.headingFonts.some(x=>x!=='12px')||
      lastFive.headerBorders.some(([top,bottom])=>top!=='0px'||bottom!=='1px')||
-     lastFive.rows.length!==8||lastFive.rows.some(rs=>rs.length!==5||
-       rs.some((r,j)=>r.width!==220||!r.link.includes('autorace.jp/netstadium/RaceResult/')||
-         !r.venue||!r.date||!r.race||!r.road||r.values.length!==2)||
-       rs[0].date!=='11/8'||rs[1].date!=='11/7'||rs[0].grade!=='普通'||
-       rs.some(r=>r.gradeFont!=='12px'||r.metaAlign!=='left'||
-         r.metaRows!=='16px 12px 12px'||r.rankSize[0]!==((r.rank==='不成立'||r.rank==='自落')?'12px':'16px')||
-         r.rankSize[1]!==30||((r.rank==='不成立'||r.rank==='自落')?r.rankSize[2]>50:r.rankSize[2]!==30)))||
-     lastFive.rows.some((rs,i)=>rs.slice(2).some(r=>r.grade!==(i===0?'GⅡ':i===1?'普通':'SG')||
-       !r.gradeClass.includes(i===0?'grade-g2':i===1?'grade-normal':'grade-sg')))||
+     lastFive.rows.length!==8||lastFive.rows.some((rs,i)=>rs.length!==5||
+      rs.some((r,j)=>r.width!==220||!r.link.includes('autorace.jp/netstadium/RaceResult/')||
+        !r.venue||!r.date||r.detailRows.length!==3||
+        r.gradeFont!=='12px'||r.metaAlign!=='left'||r.metaRows!=='16px 12px 12px'||
+        r.metaInset!==6||r.rankRect.x!==54||r.rankRect.top!==3||
+        r.rankRect.width!==30||r.rankRect.height!==30||
+        r.rankStyle.font!=='16px'||r.rankStyle.weight!=='600'||
+        r.noteStyle.align!=='left'||r.noteStyle.x!==r.rankRect.x||
+        r.noteStyle.color!=='rgb(183, 71, 95)'||
+        !standardNumber(r)||!standardLabel(r)||
+        (j>=2&&(r.grade!==expectedGrade(i)||!r.gradeClass.includes(expectedClass(i)))))||
+      rs[0].date!=='11/8'||rs[1].date!=='11/7'||rs[0].grade!=='普通'))||
+     lastFive.rows[0][0].detailRows.join('|')!=='5R予選|試走3.35良H20|競3.439ST0.22'||
      lastFive.rows[2][0].flag!=='戒'||
-     lastFive.rows[2][2].rank!=='自落'||
-     lastFive.rows[5][3].rank!=='不成立'||
-     lastFive.rows[5][3].values[0]!=='競不成立')
-    errorsNow.push('last-five race columns/data mismatch: '+JSON.stringify(lastFive));
+     lastFive.rows[2][2].rank!=='-'||lastFive.rows[2][2].flag!=='自落'||
+     lastFive.rows[5][3].rank!=='-'||lastFive.rows[5][3].flag!=='不成立'||
+     lastFive.rows[5][3].detailRows[2]!=='競不成立ST-'||
+     lastFive.rows.some(rs=>rs.some(r=>r.labelStyles.length<4)))
+    errorsNow.push('recent-five table 210-aligned insets/positions, row styles and abnormal results mismatch: '+JSON.stringify(lastFive));
   const awardState=await page.locator('.auto-race-table').evaluate(table=>{
     const h=table.tHead.rows[0].querySelector('th[data-group="titles"]');
     const cells=[...table.tBodies[0].rows].map(row=>{
@@ -261,7 +277,7 @@ for(const width of [296,375,768]){
   });
   const expectedAwards=[[0,0,10],[3,0,0],[2,0,10],[4,0,20],[1,0,49],[6,1,33],[13,1,57],[10,1,71]];
   if(awardState.header!=='優出・優勝'||awardState.rowSpan!==2||awardState.headerWidth!==120||
-     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','近10走','良10走','直近5レース出走表','近90日','近180日','優出・優勝'])||
+     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近10走','良10走','直近5レース出走表','直近90走','直近180日','優出・優勝'])||
      awardState.sheetCount!==0||awardState.lastCells.some(n=>n!==33)||
      awardState.cells.length!==8||
      awardState.cells.some((r,i)=>{
@@ -331,8 +347,8 @@ for(const width of [296,375,768]){
     const p=v=>n?Math.trunc(v*100/n)+'%':'—';
     return [p(a[0]),p(a[0]+a[1]),p(a[0]+a[1]+a[2]),p(a[3])];
   };
-  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','近10走','良10走','直近5レース出走表','近90日'])||
-     basicStats.upperTitles.some(t=>['近10走','良10走','近90日'].includes(t))||
+  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','直近10走','良10走','直近5レース出走表','直近90走'])||
+     basicStats.upperTitles.some(t=>['直近10走','良10走','直近90走'].includes(t))||
      JSON.stringify(basicStats.upperSpan)!==JSON.stringify([2,2,2])||
      JSON.stringify(basicStats.labels)!==JSON.stringify(expectedLabels)||
      JSON.stringify(basicStats.statWidths)!==JSON.stringify(Array(8).fill(60))||
