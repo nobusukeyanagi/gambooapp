@@ -241,11 +241,24 @@
 .sport-auto .auto-race-table .sort-power > span {
   display:block; line-height:1.25;
 }
-/* Auto analysis buttons inherit the shared 54×36px .item-btn style. */
-.sport-auto .auto-race-table td:has(.auto-detail-button) {
-  padding-inline:var(--space-2);
+/* 優出・優勝: one column with 3 equally aligned 14px text rows. */
+.sport-auto .auto-race-table :is(th,td).auto-titles-column {
+  box-sizing:border-box; width:120px; min-width:120px; max-width:120px;
 }
-.sport-auto .auto-detail-button:focus-visible { outline:var(--line-focus); }
-.sport-auto .sheet .detail-table .dt-auto-name { min-width:100px; text-align:left; }
-.sport-auto .sheet .detail-table :is(th,td) { white-space:nowrap; }
+.sport-auto .race-detail-scroll .auto-race-table tbody td.auto-titles-cell {
+  text-align:left; font-size:var(--fs-14);
+  font-weight:var(--fw-normal); color:var(--c-text-primary);
+}
+.sport-auto .auto-race-table .auto-titles-line {
+  display:grid; grid-template-columns:70px minmax(0,1fr);
+  align-items:center; font-size:var(--fs-14); font-weight:var(--fw-normal);
+  line-height:1.25; text-align:left;
+}
+.sport-auto .auto-race-table .auto-titles-line + .auto-titles-line {
+  margin-top:var(--space-3);
+}
+.sport-auto .auto-race-table :is(.auto-titles-label,.auto-titles-count) {
+  font-size:var(--fs-14); font-weight:var(--fw-normal);
+  color:var(--c-text-primary); text-align:left; white-space:nowrap;
+}
 .sport-auto .rt-legend { margin-top:0; }
