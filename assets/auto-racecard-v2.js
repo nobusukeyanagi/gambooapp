@@ -115,6 +115,10 @@ const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
  const result=abnormal?"-":rank;
  const rankClass=/^[1-3]$/.test(rank)?" auto-last5-rank-"+rank:"";
  const note=[abnormal,flag].filter(Boolean).join(" ");
+ // One-digit/three-glyph notes occupy the same 30px width as the rank tile.
+ // Only compress when necessary; full-width glyphs are approximately 12px.
+ const noteUnits=Array.from(note).reduce((sum,ch)=>sum+(ch===" "?0.35:1),0);
+ const noteScale=noteUnits>0?Math.min(1,29/(noteUnits*12)):1;
  const label=place+" "+date+" "+race+" "+road+"走路 "+(abnormal||rank||"-")+
   (flag?" "+flag:"")+" 競走T "+finishTime+" 試走T "+trialTime+" ST "+st+" H"+handicap;
  const numOrUnknown=value=>/^[0-9]+(?:\.[0-9]+)?$/.test(String(value))?
@@ -125,14 +129,15 @@ const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
   '</span><span class="auto-last5-venue">'+safe(place)+'</span><span class="auto-last5-date">'+safe(date)+'</span></div>'+
   '<div class="auto-last5-finish'+rankClass+'">'+
   '<span class="auto-last5-rank">'+safe(result)+'</span>'+
-  '<span class="auto-last5-flag">'+safe(note)+'</span></div>'+
+  '<span class="auto-last5-flag"><span class="auto-last5-flag-text" style="--note-scale:'+
+  noteScale.toFixed(3)+'">'+safe(note)+'</span></span></div>'+
   '<div class="auto-last5-detail">'+
   '<div class="auto-last5-race">'+safe(race)+'</div>'+
   '<div class="auto-last5-data-row"><span class="auto-last5-label">試走</span>'+
   numOrUnknown(trialTime)+
-  '<span class="auto-last5-label">'+safe(road)+'</span>'+
   '<span class="auto-last5-group"><span class="auto-last5-label">H</span>'+
-  numOrUnknown(handicap)+'</span></div>'+
+  numOrUnknown(handicap)+'</span>'+
+  '<strong class="auto-last5-track">'+safe(road)+'</strong></div>'+
   '<div class="auto-last5-data-row"><span class="auto-last5-label">競</span>'+
   numOrUnknown(finishTime)+
   '<span class="auto-last5-group"><span class="auto-last5-label">ST</span>'+
