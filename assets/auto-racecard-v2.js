@@ -197,10 +197,12 @@ const headToHeadCells=playerIndex=>headToHead360[playerIndex].map((record,j)=>{
    wins>=0&&losses>=0;
  const score=verified?wins+'-'+losses:'—';
  const percent=verified&&total>0?Math.round(wins*100/total)+'%':'—';
+ const winning=verified&&total>0&&wins*2>total;
  return '<td class="auto-matchup-cell'+(j===0?' auto-start':'')+
   '" title="'+(verified?'対戦成績：'+score+' 勝率：'+percent:'対戦成績未確認')+'">'+
   '<span class="auto-matchup-score">'+score+'</span>'+
-  '<span class="auto-matchup-percent">'+percent+'</span></td>';
+  '<span class="auto-matchup-percent'+(winning?' auto-matchup-winning':'')+
+ '">'+percent+'</span></td>';
 }).join("");
 /* Descending competition ranking: tied values share the same rank.
    Only top three ranks receive the common gold/blue/bronze text background. */
@@ -222,14 +224,26 @@ const superconRanking={
 };
 const superconNumber=(value,rank)=>'<span class="auto-sp-number'+
  (rank?' auto-sp-rank-'+rank:'')+'">'+safe(value)+'</span>';
+/* Prediction ranks are competition ranks (ties share rank, next rank skips).
+   SCR-210 uses green as fourth, after gold/blue/bronze. */
+const forecastTimeRanks=(()=>{const rank=Array(8).fill(0);
+ const sorted=superconForecast.map((p,i)=>({i,value:Number(p.time)}))
+  .sort((a,b)=>a.value-b.value||a.i-b.i);
+ let previous=NaN,current=0;
+ sorted.forEach((item,index)=>{if(index===0||item.value!==previous)current=index+1;
+  if(current<=4)rank[item.i]=current;previous=item.value;});
+ return rank;
+})();
+const forecastValue=(value,rank)=>'<span class="auto-prediction-value'+
+ (rank&&rank<=4?' auto-prediction-rank-'+rank:'')+'">'+safe(value)+'</span>';
 const superconCells=i=>{
  const p=superconForecast[i];
  const formLabel={up:"上向き",flat:"横ばい",down:"下降"}[p.form];
  const formArrow={up:"↑",flat:"→",down:"↓"}[p.form];
  return '<td class="auto-sp-cell auto-sp-prediction auto-start">'+
     '<span class="auto-sp-mark">'+safe(p.mark)+'</span>'+
-    '<span class="auto-sp-order">'+p.order+'着</span></td>'+
-  '<td class="auto-sp-cell auto-sp-racetime">'+safe(p.time)+'</td>'+
+    '<span class="auto-sp-order">'+forecastValue(p.order+'着',p.order)+'</span></td>'+
+  '<td class="auto-sp-cell auto-sp-racetime">'+forecastValue(p.time,forecastTimeRanks[i])+'</td>'+
   '<td class="auto-sp-cell">'+superconNumber(p.strong,superconRanking.strong[i])+'</td>'+
   '<td class="auto-sp-cell auto-sp-form" aria-label="調子 '+formLabel+
     '" title="調子 '+formLabel+'"><span class="auto-sp-form-'+p.form+'">'+formArrow+'</span></td>'+
@@ -267,15 +281,22 @@ const analyzerSourceBase="https://gamboo.jp/autorace/analyzer/";
 const analyzerSourceQuery="?rdt=20261109&rno=9&pid=2&rsp=3&rspl=02&rsrt=1&rsst=1";
 const analyzerSourceUrl=entry=>analyzerSourceBase+
  (entry.path?entry.path+"/program":"marklist/")+analyzerSourceQuery;
+/* Original ◎/○/△/× marks use four different pale token backgrounds,
+   not a full-cell wash. Blank means no prediction and stays uncolored. */
+const analyzerMarkClass=value=>({"◎":"auto-mark-double","○":"auto-mark-circle",
+ "△":"auto-mark-triangle","×":"auto-mark-cross"}[value]||"");
+const analyzerMarkHTML=value=>'<span class="auto-analyzer-mark'+
+ (analyzerMarkClass(value)?' '+analyzerMarkClass(value):'')+'">'+safe(value)+'</span>';
 const analyzerHeaders=()=>analyzerCategories.map((entry,index)=>
  '<th rowspan="2" class="auto-analyzer-heading'+(index===0?' auto-start':'')+
  '" data-group="analyzer"'+(index===0?' data-analyzer-first="true"':'')+'>'+
+ (index===0?'<span class="auto-analyzer-total">総合</span>':
  '<button type="button" class="item-btn auto-analyzer-btn" data-analyzer-item="'+index+
- '" aria-label="'+safe(entry.name)+'の詳細を表示">'+safe(entry.label)+'</button></th>').join("");
+ '" aria-label="'+safe(entry.name)+'の詳細を表示">'+safe(entry.label)+'</button>')+'</th>').join("");
 const analyzerCells=playerIndex=>analyzerMarks[playerIndex].map((value,index)=>
  '<td class="auto-analyzer-cell'+(index===0?' auto-start':'')+
  '" aria-label="'+safe(analyzerCategories[index].name)+': '+(value||"印なし")+'">'+
- '<span class="auto-analyzer-mark">'+safe(value)+'</span></td>').join("");
+ analyzerMarkHTML(value)+'</td>').join("");
 const roadHeaders=()=>["良","湿"].flatMap((track,k)=>
  [["1着","勝率"],["2着","2連対率"],["3着","3連対率"],["着外","着外率"]]
  .map(([name,rate],i)=>'<th rowspan="2" data-group="road" class="auto-value auto-stat-heading auto-road-heading'+
@@ -296,16 +317,18 @@ timeHeader("平均","競走T",false)+timeHeader("最高","競走T",false)+
 statHeaderGroup("last90")+
 '<th rowspan="2" class="auto-best90-heading" data-group="last90">最高競走T</th>'+
 roadHeaders()+headToHeadHeaders()+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-start">予想着順</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-racetime">予想競走T</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">ストロングP</th>'+
+'<th colspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-rain-group auto-start">雨予想</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">良走路SP</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">調子</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">捌き力</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">逃げ力</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">スタート力</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">捌き</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">逃げ</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">スタート</th>'+
 analyzerHeaders()+'</tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
-const subhead='<tr></tr>';
+const subhead='<tr>'+
+ '<th data-group="supercon" class="auto-supercon-heading auto-sp-rain-sub auto-sp-h-prediction">予想着順</th>'+
+ '<th data-group="supercon" class="auto-supercon-heading auto-sp-rain-sub auto-sp-h-racetime">予想競走T</th>'+
+ '</tr>';
 table.tHead.innerHTML=header+subhead;
 const num=(values)=>values.map((v,i)=>'<td class="auto-value'+(i===0?" auto-start":"")+'">'+v+'</td>').join("");
 /* Follow SCR-210: show integer rates, tint the three highest win /
@@ -338,7 +361,7 @@ const statRanks=selector=>{
 const recentRanks=statRanks(p=>p.r10),last90Ranks=statRanks(p=>p.r90);
 /* Small average starting time / trial time are better. Competition ranking
    handles ties consistently with existing top-3 percentage highlights. */
-const topTimeRanks=selector=>{
+const topTimeRanks=(selector,maxRank=3)=>{
  const ranks=players.map(()=>0);
  let previous=NaN,rank=0;
  players.map((p,index)=>({index,value:Number(selector(p))}))
@@ -346,16 +369,27 @@ const topTimeRanks=selector=>{
   .sort((a,b)=>a.value-b.value||a.index-b.index)
   .forEach(({index,value},order)=>{
     if(order===0||value!==previous)rank=order+1;
-    if(rank<=3)ranks[index]=rank;
+    if(rank<=maxRank)ranks[index]=rank;
     previous=value;
   });
  return ranks;
 };
 const stRanks=topTimeRanks(p=>p.st),trialRanks=topTimeRanks(p=>p.todayTrial);
+const goodTrialRanks=topTimeRanks(p=>p.trial),
+ goodAvgRanks=topTimeRanks(p=>p.avg),goodBestRanks=topTimeRanks(p=>p.best),
+ best90Ranks=topTimeRanks(p=>p.best90[0]);
 const highlightedTime=(value,rank)=>'<span class="auto-top-time'+
  (rank?' auto-top-time-'+rank:'')+'">'+safe(value)+'</span>';
-const best90Cell=p=>'<td class="auto-best90-cell">'+
- '<span class="auto-best90-time">'+safe(p.best90[0])+'</span>'+
+const highlightedGood=(value,rank)=>'<span class="auto-good-time-text'+
+ (rank?' auto-text-rank-'+rank:'')+'">'+safe(value)+'</span>';
+const goodTimeCells=(p,i)=>[p.trial,p.avg,p.best].map((value,j)=>
+ '<td class="auto-value'+(j===0?' auto-start':'')+'">'+
+ highlightedGood(value,[goodTrialRanks,goodAvgRanks,goodBestRanks][j][i])+
+ '</td>').join("");
+const best90Cell=(p,i)=>'<td class="auto-best90-cell">'+
+ '<span class="auto-best90-time"><span class="auto-best90-value'+
+ (best90Ranks[i]?' auto-text-rank-'+best90Ranks[i]:'')+'">'+safe(p.best90[0])+
+ '</span></span>'+
  '<span class="auto-best90-venue">'+safe(p.best90[1])+'</span></td>';
 const roadGoodRanks=statRanks(p=>p.roadRecord.good),roadWetRanks=statRanks(p=>p.roadRecord.wet);
 const statCells=(counts,ranks,extraClass="")=>{
@@ -392,8 +426,8 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
   const fields=main+titlesCell(p)+last5Cells(i)+
-  statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+
-  statCells(p.r90,last90Ranks[i])+best90Cell(p)+roadCells(p,i)+
+  statCells(p.r10,recentRanks[i])+goodTimeCells(p,i)+
+  statCells(p.r90,last90Ranks[i])+best90Cell(p,i)+roadCells(p,i)+
   headToHeadCells(i)+superconCells(i)+analyzerCells(i);
   return '<tr data-vehicle="'+(i+1)+'" data-power="'+p.power+'">'+fields+'</tr>';
 }).join("");
@@ -430,7 +464,7 @@ function openAnalyzer(index,button){
    const name='<td class="auto-analyzer-detail-name">'+safe(p.name)+'</td>';
    const values=index===0?analyzerMarks[car]:[analyzerMarks[car][index],analyzerMarks[car][0]];
    return '<tr>'+vehicle+name+values.map(v=>
-    '<td class="auto-analyzer-detail-mark">'+safe(v)+'</td>').join("")+'</tr>';
+    '<td class="auto-analyzer-detail-mark">'+analyzerMarkHTML(v)+'</td>').join("")+'</tr>';
  }).join("");
  const note=analyzerSheet.querySelector(".auto-analyzer-source-note");
  note.textContent="添付HTMLに収録された印を表示しています。"+
@@ -475,6 +509,8 @@ function highlightHeader(key){
  table.tHead.querySelectorAll("th.section-selected").forEach(cell=>cell.classList.remove("section-selected"));
  const targets=key==="player"?[...table.tHead.rows[0].cells].slice(1,9):
  [...table.tHead.rows[0].querySelectorAll('th[data-group="'+key+'"]')];
+ if(key==="supercon")
+   targets.push(...table.tHead.rows[1].querySelectorAll('th[data-group="supercon"]'));
  let offset=0;
  for(const heading of table.tHead.rows[0].querySelectorAll('th.auto-section[data-group]')){
    if(heading.dataset.group===key)
