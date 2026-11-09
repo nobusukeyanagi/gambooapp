@@ -1,6 +1,6 @@
-/* SCR-310 川口 2026-11-09 9R: verified rider/handicap/statistical snapshot.
-   Racecard structure and interactions follow SCR-210; blank pre-race trial times
-   are explicitly unconfirmed and never filled with estimates. */
+/* SCR-310 川口 2026-11-09 9R: record data distinct by statistical source.
+   Gamboo Supercomputer deviations (all tracks, and top-2 finishes)
+   must never be replaced by 良10走 / official site deviation data. */
 (() => {
 "use strict";
 // Official race-day trial times supplied for Kawaguchi 9R (2026-11-09),
@@ -16,9 +16,14 @@ const raw=[
 ["若井友和","若井","川口",25,52,"S-17","S-18","モエルトウコン",20,"0.11","0.094","112.716",[0,1,3,6],[2,8,12,16],"3.34","3.434","3.413",[44.6,67.9],[56.3,62.5],[13,1,57],"1級"],
 ["中村雅人","中村","川口",28,45,"S-11","S-11","ＫＯモンソン",20,"0.16","0.093","117.010",[2,2,2,4],[8,6,9,12],"3.34","3.433","3.398",[60.4,72.9],[38.5,76.9],[10,1,71],"1級"]
 ];
+// This snapshot does not include the two values from Gamboo's pt=7
+// pre-day Supercomputer page. Until verified, show missing data explicitly.
+const superconDeviations=Array.from({length:8},()=>({normal:null,top2:null}));
 // Same rule as SCR-210: the first three characters of the full rider name.
 const players=raw.map((a,i)=>({name:a[0],short:Array.from(a[0]).slice(0,3).join(""),loc:a[2],ki:a[3],age:a[4],todayTrial:raceDayTrials[i],
- rank:a[5],prev:a[6],car:a[7],h:a[8],st:a[9],diff:a[10],power:a[11],
+ rank:a[5],prev:a[6],car:a[7],h:a[8],st:a[9],good10Diff:a[10],
+  deviationNormal:superconDeviations[i].normal,deviationTop2:superconDeviations[i].top2,
+  power:a[11],
  r10:a[12],r90:a[13],trial:a[14],avg:a[15],best:a[16],
  dry:a[17],wet:a[18],thisYear:a[19],vehicleGrade:a[20]}));
 const root=document.querySelector(".sport-auto .phone-inner");
@@ -56,13 +61,13 @@ const header='<tr>'+
 '<th rowspan="2" class="col-name">選手名</th>'+
 
 '<th rowspan="2" class="col-h">ハンデ</th><th rowspan="2" class="col-t">試走T</th>'+
-'<th rowspan="2" class="col-t">偏差</th><th rowspan="2" class="col-t">平均ST</th>'+
+'<th colspan="2" class="col-deviation-head">試走偏差</th><th rowspan="2" class="col-t">平均ST</th>'+
 '<th rowspan="2" class="col-rank"><button type="button" class="sort-power" aria-pressed="false" aria-label="審査ポイント順に並び替え"><span>ランク</span><span>審査P</span></button></th>'+
 '<th rowspan="2" class="col-machine">競走車名</th>'+
 group("recent","近10走",4)+group("good","良10走",3)+group("last90","近90日成績",6)+
 group("road","近180日成績",4)+group("titles","今年・通算優勝",3)+group("mania","マニア分析",3)+'</tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
-const subhead='<tr>'+sub(["1着","2着","3着","着外"])+
+const subhead='<tr><th class="col-t col-deviation-sub">通常</th><th class="col-t col-deviation-sub">2連対時</th>'+sub(["1着","2着","3着","着外"])+
  sub(["平均試走T","平均競走T","最高競走T"])+
  sub(["出走","1着","2着","3着","2連対率","3連対率"])+
  sub(["良2連対率","良3連対率","湿2連対率","湿3連対率"])+
@@ -70,12 +75,15 @@ const subhead='<tr>'+sub(["1着","2着","3着","着外"])+
  sub(["走路別","近90日","タイム"])+'</tr>';
 table.tHead.innerHTML=header+subhead;
 const num=(values)=>values.map((v,i)=>'<td class="auto-value'+(i===0?" auto-start":"")+'">'+v+'</td>').join("");
+const showDev=v=>v===null||v===undefined?"—":safe(v);
 table.tBodies[0].innerHTML=players.map((p,i)=>{
   const total=p.r90.reduce((x,y)=>x+y,0),pct=(x)=>total?(100*x/total).toFixed(1)+"%":"—";
   const main='<td class="col-sha"><span class="frame-cell f'+(i+1)+'">'+(i+1)+'</span><span class="sha-nm">'+safe(p.short)+'</span></td>'+
   '<td class="col-name"><div class="rider-name">'+safe(p.name)+'</div><div class="rider-meta rider-home">'+safe(p.loc)+'</div><div class="rider-meta rider-age">'+p.ki+'期 '+p.age+'歳</div></td>'+
   '<td class="col-h">'+p.h+'</td><td class="col-t" title="当日試走タイム">'+safe(p.todayTrial)+'</td>'+
-  '<td class="col-t">'+p.diff+'</td><td class="col-t">'+p.st+'</td>'+
+  '<td class="col-t col-deviation-value" title="スパコン試走偏差（通常・全走路）">'+showDev(p.deviationNormal)+'</td>'+
+  '<td class="col-t col-deviation-value" title="スパコン試走偏差（2連対時）">'+showDev(p.deviationTop2)+'</td>'+
+  '<td class="col-t">'+p.st+'</td>'+
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
   const ninety=[total,p.r90[0],p.r90[1],p.r90[2],pct(p.r90[0]+p.r90[1]),pct(p.r90[0]+p.r90[1]+p.r90[2])];

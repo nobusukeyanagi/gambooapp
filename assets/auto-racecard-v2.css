@@ -126,6 +126,10 @@
   font-weight:var(--fw-strong);
 }
 .sport-auto .auto-race-table .col-t { width:70px; min-width:70px; }
+/* Two-tier trial deviation heading uses the shared SCR-210 table design. */
+.sport-auto .auto-race-table .col-deviation-head { width:140px; min-width:140px; }
+.sport-auto .auto-race-table .col-deviation-sub,
+.sport-auto .auto-race-table .col-deviation-value { width:70px; min-width:70px; }
 /* Emphasize only the same-day trial time, not the historical figures. */
 .sport-auto .race-detail-scroll .auto-race-table tbody td.col-t[title="当日試走タイム"] {
   font-weight:var(--fw-strong);

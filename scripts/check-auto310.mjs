@@ -128,6 +128,15 @@ for(const width of [296,375,768]){
    errorsNow.push('header/selected race mismatch');
   if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==7)
    errorsNow.push('rider/table/menu mismatch');
+  const deviationHeaders=await page.locator('.auto-race-table').evaluate(table=>({
+    top:[...table.tHead.rows[0].cells].map(c=>({text:c.textContent.trim(),span:c.colSpan})),
+    sub:[...table.tHead.rows[1].cells].slice(0,2).map(c=>c.textContent.trim()),
+    values:[...table.tBodies[0].rows].map(row=>[...row.querySelectorAll('td.col-deviation-value')].map(td=>td.textContent.trim()))
+  }));
+  if(deviationHeaders.top[4]?.text!=='試走偏差'||deviationHeaders.top[4]?.span!==2||
+    JSON.stringify(deviationHeaders.sub)!==JSON.stringify(['通常','2連対時'])||
+    deviationHeaders.values.length!==8||deviationHeaders.values.some(row=>row.length!==2||row.some(v=>v!=='—')))
+    errorsNow.push('trial deviation two-tier headings and missing values mismatch: '+JSON.stringify(deviationHeaders));
   const riderCells=await page.evaluate(()=>{
     const table=document.querySelector('.auto-race-table');
     const header=[...table.tHead.rows[0].cells].map(c=>c.textContent.trim());
@@ -145,6 +154,7 @@ for(const width of [296,375,768]){
         gradeAlign:getComputedStyle(machine.querySelector('.machine-grade')).textAlign,
         trial:row.querySelector('td.col-t')?.textContent.trim(),
         trialTitle:row.querySelector('td.col-t')?.getAttribute('title'),
+        deviationTitles:[...row.querySelectorAll('td.col-deviation-value')].map(td=>td.getAttribute('title')),
         trialWeight:getComputedStyle(row.querySelector('td.col-t[title="当日試走タイム"]')).fontWeight,
         otherTimingWeights:[...row.querySelectorAll('td.col-t:not([title="当日試走タイム"])')]
           .map(td=>getComputedStyle(td).fontWeight),
@@ -186,7 +196,8 @@ for(const width of [296,375,768]){
       r.carStyle.weight!=='400'||r.gradeStyle.weight!=='400'||
       r.machineAlign!=='left'||r.carAlign!=='left'||r.gradeAlign!=='left'||
       r.trial!==expectedDayTrials[i]||r.trialTitle!=='当日試走タイム'||
-      r.trialWeight!=='600'||r.otherTimingWeights.length!==2||
+      JSON.stringify(r.deviationTitles)!==JSON.stringify(['スパコン試走偏差（通常・全走路）','スパコン試走偏差（2連対時）'])||
+      r.trialWeight!=='600'||r.otherTimingWeights.length!==3||
       r.otherTimingWeights.some(w=>w!=='400')||
       r.handicap!==String([0,10,10,20,20,20,20,20][i])||r.handicapWeight!=='600'||
       JSON.stringify(r.rank)!==JSON.stringify([
