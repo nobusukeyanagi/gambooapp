@@ -149,6 +149,20 @@ for(const width of [296,375,768]){
     return ['.ri-meeting','.ri-event','.ri-kind','.race-info-row','.ri-date-line']
       .map(q=>Math.round((root.querySelector(q).getBoundingClientRect().top-root.getBoundingClientRect().top)*10)/10);
   });
+  // SCR-210 row 2 (home) and row 3 (cohort and age) must be
+  // left-aligned like the first rider name despite shared centered table cells.
+  const keirinNames=await comparison.evaluate(()=>[...document.querySelectorAll('.mania-table tbody .c-name')]
+    .map(td=>{
+      const name=td.querySelector('.rider-name');
+      const home=td.querySelector('.rider-home');
+      const age=td.querySelector('.rider-age');
+      return {
+        content:[name?.textContent.trim(),home?.textContent.trim(),age?.textContent.trim()],
+        alignment:[name,home,age].map(el=>el?getComputedStyle(el).textAlign:null)
+      };
+    }));
+  if(keirinNames.length!==9||keirinNames.some(r=>r.alignment.some(a=>a!=='left')))
+    errorsNow.push('SCR-210 rider name / home / age must all align left '+JSON.stringify(keirinNames));
   await comparison.close();
   if(positions.rows.slice(0,4).some((v,i)=>Math.abs(v-reference[i])>0.6))
     errorsNow.push('first four rows differ from SCR-210: '+JSON.stringify({auto:positions.rows,keirin:reference}));

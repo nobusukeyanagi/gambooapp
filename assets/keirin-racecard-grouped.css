@@ -60,6 +60,9 @@
   display: block;
   line-height: 1;
   white-space: nowrap;
+  /* Keep the home and cohort/age lines aligned with the rider name.
+     The shared table cell remains centered for other numeric columns. */
+  text-align: left;
 }
 .race-detail-scroll .mania-table td.c-name .rider-home {
   margin-bottom: var(--space-3);
