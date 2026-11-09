@@ -283,7 +283,7 @@
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
   line-height: 1;
-  text-align: center;
+  text-align: left;
   white-space: nowrap;
 }
 .race-detail-scroll .mania-table .meeting-avg {
