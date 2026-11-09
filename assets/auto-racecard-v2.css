@@ -384,6 +384,10 @@
   font-size:var(--fs-12); font-weight:var(--fw-strong);
   color:var(--c-text-primary);
 }
+.sport-auto .auto-race-table .auto-last5-track {
+  font-size:var(--fs-12); font-weight:var(--fw-strong);
+  color:var(--c-text-primary);
+}
 .sport-auto .auto-race-table .auto-last5-group {
   display:inline-flex; align-items:baseline; gap:0;
 }
