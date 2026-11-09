@@ -250,7 +250,7 @@ const superconCells=i=>{
     '" title="調子 '+formLabel+'"><span class="auto-sp-form-'+p.form+'">'+formArrow+'</span></td>'+
   '<td class="auto-sp-cell auto-sp-handling">'+superconNumber(p.handling,superconRanking.handling[i])+'</td>'+
   '<td class="auto-sp-cell auto-sp-escape">'+superconNumber(p.escape,superconRanking.escape[i])+'</td>'+
-  '<td class="auto-sp-cell">'+superconNumber(p.start,superconRanking.start[i])+'</td>';
+  '<td class="auto-sp-cell auto-sp-start">'+superconNumber(p.start,superconRanking.start[i])+'</td>';
 };
 /* Source: user-supplied Gamboo 2026-11-09 川口9R
    「データ解析の予想印」 HTML: overall (former last column) moved first,
@@ -338,7 +338,7 @@ roadHeaders()+headToHeadHeaders()+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">調子</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">捌き</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">逃げ</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">スタート</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-start">スタート</th>'+
 analyzerHeaders()+'</tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
 const subhead='<tr>'+
@@ -472,9 +472,9 @@ const analysisRates=start=>autoAnalyzerRateHeaders.map(([main,rate],j)=>
  ({kind:"rate",i:start+j,main,rate,metric:j}));
 const analysisAdvance=(i,label)=>({kind:"advance",i,label});
 const analysisGroups={
- situation:[["走路状況別成績（濡走路）",analysisRates(0)]],
- roadtemp:[["走路温度別成績（低温20℃未満）",analysisRates(0)],
-           ["季節別成績（秋9～11月）",analysisRates(4)]],
+ situation:[["走路状況別成績：湿走路",analysisRates(0)]],
+ roadtemp:[["走路温度別成績：低温20℃未満",analysisRates(0)],
+           ["季節別成績：秋9～11月",analysisRates(4)]],
  trialrun:[["試走T・順位",[analysisValue(0,"試走T"),analysisValue(1,"順位")]],
            ["試走タイム傾向",[
              analysisValue(2,"最高"),analysisValue(3,"平均"),
@@ -490,11 +490,11 @@ const analysisGroups={
              analysisValue(2,"ハンデ"),...analysisRates(3)]],
            ["ハンデ順位別成績",[
              analysisValue(7,"H順位"),...analysisRates(8)]]],
- place:[["レース場別成績（川口）",analysisRates(0)]],
+ place:[["レース場別成績：川口",analysisRates(0)]],
  motorcycle:[["競走車別成績",[
               analysisValue(0,"競走車",120),...analysisRates(1)]]],
- raceclass:[["レース種別成績（準決勝戦）",analysisRates(0)],
-            ["レース日程成績（中間日・準決勝）",analysisRates(4)]],
+ raceclass:[["レース種別成績：準決勝戦",analysisRates(0)],
+            ["レース日程成績：中間日・準決勝",analysisRates(4)]],
  racewin:[["勝ち上がり実績",[
             analysisAdvance(0,"準決勝進出率"),
             analysisAdvance(1,"優勝戦進出率"),
