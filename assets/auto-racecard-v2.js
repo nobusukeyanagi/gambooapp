@@ -242,7 +242,7 @@ const superconCells=i=>{
  const formArrow={up:"↑",flat:"→",down:"↓"}[p.form];
  return '<td class="auto-sp-cell auto-sp-prediction auto-start">'+
     '<span class="auto-sp-mark'+(analyzerMarkClass(p.mark)?' '+analyzerMarkClass(p.mark):'')+
- '">'+safe(p.mark)+'</span>'+
+ '">'+autoMarkGlyph(p.mark)+'</span>'+
     '<span class="auto-sp-order">'+forecastValue(p.order+'着',p.order)+'</span></td>'+
   '<td class="auto-sp-cell auto-sp-racetime">'+forecastValue(p.time,forecastTimeRanks[i])+'</td>'+
   '<td class="auto-sp-cell">'+superconNumber(p.strong,superconRanking.strong[i])+'</td>'+
@@ -286,8 +286,22 @@ const analyzerSourceUrl=entry=>analyzerSourceBase+
    not a full-cell wash. Blank means no prediction and stays uncolored. */
 const analyzerMarkClass=value=>({"◎":"auto-mark-double","○":"auto-mark-circle",
  "△":"auto-mark-triangle","×":"auto-mark-cross"}[value]||"");
+/* Use the exact 24px-viewBox geometry and 2px vector strokes of SCR-210's
+   .mk-symbol. Preserve the original symbol as visually hidden accessible
+   text so that source labels and diagnostic text remain intact. */
+const autoMarkShapes={
+ "◎":'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>',
+ "○":'<circle cx="12" cy="12" r="9"/>',
+ "△":'<path d="M12 3 L21 21 H3 Z"/>',
+ "×":'<path d="M5 5 L19 19 M19 5 L5 19"/>'
+};
+const autoMarkGlyph=value=>autoMarkShapes[value]
+ ?'<svg class="auto-mark-symbol" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+
+  autoMarkShapes[value]+'</svg><span class="auto-mark-label">'+safe(value)+'</span>'
+ :safe(value);
 const analyzerMarkHTML=value=>'<span class="auto-analyzer-mark'+
- (analyzerMarkClass(value)?' '+analyzerMarkClass(value):'')+'">'+safe(value)+'</span>';
+ (analyzerMarkClass(value)?' '+analyzerMarkClass(value):'')+'">'+
+ autoMarkGlyph(value)+'</span>';
 const analyzerHeaders=()=>analyzerCategories.map((entry,index)=>
  '<th rowspan="2" class="auto-analyzer-heading'+(index===0?' auto-start':'')+
  '" data-group="analyzer"'+(index===0?' data-analyzer-first="true"':'')+'>'+
@@ -496,6 +510,13 @@ const parseAnalysisRate=value=>{
  const m=/^([0-9]+(?:\.[0-9]+)?):(\d+):(\d+)$/.exec(value||"");
  return m?{rate:m[1],count:Number(m[2]),total:Number(m[3])}:null;
 };
+/* Only format display: keep original fractional rates and exact count/total
+   ratios for top-three tint ranking. */
+const formatAnalyzerPercent=rate=>{
+ const n=Number(rate);
+ return rate!==null&&String(rate).trim()!==""&&Number.isFinite(n)
+   ?Math.round(n)+"%":"—";
+};
 function openAnalyzer(index,button){
  const entry=analyzerCategories[index];
  const rows=window.GambooAutoAnalyzerDetail?.[entry?.path];
@@ -554,7 +575,7 @@ function openAnalyzer(index,button){
      return '<td class="dt-rate auto-analyzer-advance">'+
        '<span class="recent4-count">'+stat.count+
          '<span class="recent4-total">/'+stat.total+'</span></span>'+
-       '<span class="recent4-rate">'+safe(stat.rate)+'%</span></td>';
+       '<span class="recent4-rate">'+safe(formatAnalyzerPercent(stat.rate))+'</span></td>';
    }
    let count=stat.count;
    if(field.metric===1||field.metric===2){
@@ -565,7 +586,7 @@ function openAnalyzer(index,button){
    return '<td class="dt-rate">'+
      '<span class="recent4-count">'+count+'</span>'+
      '<span class="recent4-rate'+(rank?' recent4-rank-'+rank:'')+'">'+
-       safe(stat.rate)+'%</span></td>';
+       safe(formatAnalyzerPercent(stat.rate))+'</span></td>';
  };
  tbody.innerHTML=rows.map((row,car)=>{
    const p=players[car];
