@@ -491,10 +491,12 @@ for(const width of [296,375,768]){
        [...x.querySelectorAll('span')].map(y=>y.textContent.trim())),
       roadCells:[...table.tBodies[0].rows].map(row=>[...row.querySelectorAll('td.auto-road-cell')].map(x=>
        [x.querySelector('.recent4-count').textContent.trim(),x.querySelector('.recent4-rate').textContent.trim()])),
-      labels:head.filter(h=>h.classList.contains('auto-stat-heading')||
-        h.classList.contains('auto-time-heading'))
+      labels:head.filter(h=>['recent','good','last90'].includes(h.dataset.group)&&
+        (h.classList.contains('auto-stat-heading')||
+         h.classList.contains('auto-time-heading')))
         .map(cell=>[...cell.querySelectorAll('span')].map(x=>x.textContent.trim())),
-      statWidths:head.filter(h=>h.classList.contains('auto-stat-heading'))
+      statWidths:head.filter(h=>['recent','last90'].includes(h.dataset.group)&&
+         h.classList.contains('auto-stat-heading'))
         .map(c=>Math.round(c.getBoundingClientRect().width)),
       headerHeight:Math.round(head.find(h=>h.dataset.group==='recent').getBoundingClientRect().height),
       headerCss:css(head.find(h=>h.dataset.group==='recent').querySelector('span')),
@@ -601,7 +603,7 @@ for(const width of [296,375,768]){
   if(riderCells.header[0]!=='車番'||riderCells.header[1]!=='選手名'||
     riderCells.header[2]!=='ハンデ'||riderCells.header[6]!=='ランク審査P'||
     riderCells.header[7]!=='競走車名'||riderCells.header.some(x=>x==='審査P')||
-    JSON.stringify(riderCells.active)!==JSON.stringify([1,2,3,4,5,6,7])||
+    JSON.stringify(riderCells.active)!==JSON.stringify([1,2,3,4,5,6,7,8])||
     riderCells.entries.length!==8||
     riderCells.entries.some((r,i)=>r.name!==expected[i]||r.home!==expectedHome[i]||
       r.age!==expectedCohort[i]||r.car!==expectedCar[i]||r.grade!=='1級'||
