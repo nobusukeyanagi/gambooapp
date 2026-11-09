@@ -66,6 +66,40 @@ for(const width of [296,375,768]){
    errorsNow.push('header/selected race mismatch');
   if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==7)
    errorsNow.push('rider/table/menu mismatch');
+  const riderCells=await page.evaluate(()=>{
+    const table=document.querySelector('.auto-race-table');
+    const header=[...table.tHead.rows[0].cells].map(c=>c.textContent.trim());
+    const active=[...table.tHead.rows[0].cells].map((c,i)=>c.classList.contains('section-selected')?i:-1).filter(x=>x>=0);
+    const entries=[...table.tBodies[0].rows].map(row=>{
+      const rider=row.querySelector('.col-name'),machine=row.querySelector('.col-machine');
+      const texts=(q,root)=>root.querySelector(q)?.textContent.trim();
+      const style=sel=>{const c=getComputedStyle(machine.querySelector(sel));return {color:c.color,size:c.fontSize,weight:c.fontWeight};};
+      return {name:texts('.rider-name',rider),home:texts('.rider-home',rider),
+        age:texts('.rider-age',rider),car:texts('.machine-name',machine),
+        grade:texts('.machine-grade',machine),carStyle:style('.machine-name'),
+        gradeStyle:style('.machine-grade'),
+        height:Math.round(row.getBoundingClientRect().height)};
+    });
+    const primary=getComputedStyle(document.querySelector('.ri-meeting')).color;
+    const secondary=getComputedStyle(document.querySelector('.race-menu-scroll .info-tab:not(.active)')).color;
+    return {header,active,entries,primary,secondary};
+  });
+  const expectedHome=['川口','浜松','飯塚','川口','飯塚','川口','川口','川口'];
+  const expectedCar=['ボーリバージュ','フィールミー','シャーロット','ライキリ',
+    'レイリー','Ｍニジュウサン','モエルトウコン','ＫＯモンソン'];
+  const expectedCohort=['21期 60歳','23期 56歳','28期 43歳','24期 52歳',
+    '26期 49歳','25期 52歳','25期 52歳','28期 45歳'];
+  if(riderCells.header[0]!=='車番'||riderCells.header[1]!=='選手名'||
+    riderCells.header[2]!=='競走車名'||
+    JSON.stringify(riderCells.active)!==JSON.stringify([1,2,3,4,5,6,7,8])||
+    riderCells.entries.length!==8||
+    riderCells.entries.some((r,i)=>r.name!==expected[i]||r.home!==expectedHome[i]||
+      r.age!==expectedCohort[i]||r.car!==expectedCar[i]||r.grade!=='1級'||
+      r.carStyle.size!=='12px'||r.gradeStyle.size!=='12px'||
+      r.carStyle.color!==riderCells.primary||
+      r.gradeStyle.color!==riderCells.secondary||
+      r.carStyle.weight!=='400'||r.gradeStyle.weight!=='400'||r.height!==56))
+    errorsNow.push('three-line rider / vehicle name & grade / initial gold selection mismatch: '+JSON.stringify(riderCells));
   // SCR-210 uses the first three characters of the complete name, not surname.
   const fullPrefix=expected.map(name=>Array.from(name).slice(0,3).join(''));
   const shortNames=await page.locator('.auto-race-table tbody .sha-nm').allTextContents();
@@ -209,6 +243,13 @@ for(const width of [296,375,768]){
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');
   await target.click();
   await page.waitForTimeout(450);
+  const highlight=await page.locator('.auto-race-table').evaluate(table=>({
+    playerName:table.tHead.rows[0].cells[1].classList.contains('section-selected'),
+    carName:table.tHead.rows[0].cells[2].classList.contains('section-selected'),
+    road:table.tHead.querySelector('th[data-group="road"]').classList.contains('section-selected')
+  }));
+  if(highlight.playerName||highlight.carName||!highlight.road)
+    errorsNow.push('selection range must change when other menu tabs are active: '+JSON.stringify(highlight));
   const menuLeft=await page.locator('.race-table-wrap').evaluate(el=>el.scrollLeft);
   if(menuLeft<100)errorsNow.push('horizontal menu failed to scroll table');
   const scrollState=await page.locator('.race-table-wrap').evaluate(el=>({

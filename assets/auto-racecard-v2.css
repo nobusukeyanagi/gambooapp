@@ -68,6 +68,19 @@
 .sport-auto .auto-race-table tbody .col-sha { background:var(--c-surface); }
 .sport-auto .auto-race-table .col-name { width:120px; min-width:120px; max-width:120px; }
 .sport-auto .auto-race-table tbody .col-name { text-align:left; }
+/* 車名 has its own column directly after the three-line rider-information cell. */
+.sport-auto .auto-race-table .col-machine {
+  box-sizing:border-box; width:120px; min-width:120px; max-width:120px;
+}
+.sport-auto .auto-race-table .machine-name,
+.sport-auto .auto-race-table .machine-grade {
+  display:block; font-family:var(--ff-ui); font-size:var(--fs-12);
+  font-weight:var(--fw-normal); line-height:1.2; white-space:nowrap;
+}
+.sport-auto .auto-race-table .machine-name {
+  color:var(--c-text-primary); margin-bottom:var(--space-3);
+}
+.sport-auto .auto-race-table .machine-grade { color:var(--c-text-secondary); }
 .sport-auto .auto-race-table .col-h { width:60px; min-width:60px; }
 .sport-auto .auto-race-table .col-t { width:70px; min-width:70px; }
 .sport-auto .auto-race-table .col-rank { width:82px; min-width:82px; }
@@ -76,11 +89,11 @@
 .sport-auto .auto-race-table :is(th,td).auto-value { width:60px; min-width:60px; }
 .sport-auto .auto-race-table .rider-name {
   display:block; font-size:var(--fs-16); font-weight:var(--fw-strong);
-  line-height:1.15; margin-bottom:var(--space-3);
+  line-height:1; margin-bottom:var(--space-5);
 }
 .sport-auto .auto-race-table .rider-meta {
   display:block; font-size:var(--fs-12); font-weight:var(--fw-normal);
-  color:var(--c-text-secondary); line-height:1.15;
+  color:var(--c-text-secondary); line-height:1;
 }
 .sport-auto .auto-race-table .rider-home { margin-bottom:var(--space-3); }
 .sport-auto .auto-race-table .grade-current { display:block; font-size:var(--fs-16); }

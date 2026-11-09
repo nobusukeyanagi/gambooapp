@@ -4,20 +4,20 @@
 (() => {
 "use strict";
 const raw=[
-["五十嵐一夫","五十嵐","川口",21,60,"A-194","A-73","ボーリバージュ",0,"0.14","0.082","63.758",[1,4,1,4],[2,5,4,6],"3.38","3.462","3.439",[41.2,64.7],[50.0,66.7],[0,0,10]],
-["長谷晴久","長谷","浜松",23,56,"A-90","A-126","フィールミー",10,"0.19","0.100","71.853",[1,2,3,4],[8,8,9,17],"3.37","3.470","3.444",[35.3,49.0],[61.1,88.9],[3,0,0]],
-["井村淳一","井村","飯塚",28,43,"A-103","A-6","シャーロット",10,"0.21","0.095","71.279",[2,1,0,6],[4,8,3,29],"3.36","3.455","3.418",[30.2,39.7],[11.8,17.6],[2,0,10]],
-["佐藤裕二","佐藤","川口",24,52,"A-17","S-43","ライキリ",20,"0.13","0.083","84.634",[3,1,2,4],[6,3,5,24],"3.37","3.453","3.422",[27.6,50.0],[20.0,20.0],[4,0,20]],
-["田中茂","田中","飯塚",26,49,"A-84","A-23","レイリー",20,"0.16","0.091","73.386",[1,2,1,6],[5,9,10,24],"3.34","3.431","3.408",[25.4,46.0],[26.7,33.3],[1,0,49]],
-["森且行","森","川口",25,52,"S-35","S-27","Ｍニジュウサン",20,"0.11","0.111","93.124",[1,3,0,4],[3,5,3,28],"3.33","3.441","3.414",[34.5,39.7],[28.6,50.0],[6,1,33]],
-["若井友和","若井","川口",25,52,"S-17","S-18","モエルトウコン",20,"0.11","0.094","112.716",[0,1,3,6],[2,8,12,16],"3.34","3.434","3.413",[44.6,67.9],[56.3,62.5],[13,1,57]],
-["中村雅人","中村","川口",28,45,"S-11","S-11","ＫＯモンソン",20,"0.16","0.093","117.010",[2,2,2,4],[8,6,9,12],"3.34","3.433","3.398",[60.4,72.9],[38.5,76.9],[10,1,71]]
+["五十嵐一夫","五十嵐","川口",21,60,"A-194","A-73","ボーリバージュ",0,"0.14","0.082","63.758",[1,4,1,4],[2,5,4,6],"3.38","3.462","3.439",[41.2,64.7],[50.0,66.7],[0,0,10],"1級"],
+["長谷晴久","長谷","浜松",23,56,"A-90","A-126","フィールミー",10,"0.19","0.100","71.853",[1,2,3,4],[8,8,9,17],"3.37","3.470","3.444",[35.3,49.0],[61.1,88.9],[3,0,0],"1級"],
+["井村淳一","井村","飯塚",28,43,"A-103","A-6","シャーロット",10,"0.21","0.095","71.279",[2,1,0,6],[4,8,3,29],"3.36","3.455","3.418",[30.2,39.7],[11.8,17.6],[2,0,10],"1級"],
+["佐藤裕二","佐藤","川口",24,52,"A-17","S-43","ライキリ",20,"0.13","0.083","84.634",[3,1,2,4],[6,3,5,24],"3.37","3.453","3.422",[27.6,50.0],[20.0,20.0],[4,0,20],"1級"],
+["田中茂","田中","飯塚",26,49,"A-84","A-23","レイリー",20,"0.16","0.091","73.386",[1,2,1,6],[5,9,10,24],"3.34","3.431","3.408",[25.4,46.0],[26.7,33.3],[1,0,49],"1級"],
+["森且行","森","川口",25,52,"S-35","S-27","Ｍニジュウサン",20,"0.11","0.111","93.124",[1,3,0,4],[3,5,3,28],"3.33","3.441","3.414",[34.5,39.7],[28.6,50.0],[6,1,33],"1級"],
+["若井友和","若井","川口",25,52,"S-17","S-18","モエルトウコン",20,"0.11","0.094","112.716",[0,1,3,6],[2,8,12,16],"3.34","3.434","3.413",[44.6,67.9],[56.3,62.5],[13,1,57],"1級"],
+["中村雅人","中村","川口",28,45,"S-11","S-11","ＫＯモンソン",20,"0.16","0.093","117.010",[2,2,2,4],[8,6,9,12],"3.34","3.433","3.398",[60.4,72.9],[38.5,76.9],[10,1,71],"1級"]
 ];
 // Same rule as SCR-210: the first three characters of the full rider name.
 const players=raw.map(a=>({name:a[0],short:Array.from(a[0]).slice(0,3).join(""),loc:a[2],ki:a[3],age:a[4],
  rank:a[5],prev:a[6],car:a[7],h:a[8],st:a[9],diff:a[10],power:a[11],
  r10:a[12],r90:a[13],trial:a[14],avg:a[15],best:a[16],
- dry:a[17],wet:a[18],thisYear:a[19]}));
+ dry:a[17],wet:a[18],thisYear:a[19],vehicleGrade:a[20]}));
 const root=document.querySelector(".sport-auto .phone-inner");
 if(!root)return;
 /* Fit only auto-specific line contents horizontally, preserving the five-row
@@ -51,6 +51,7 @@ const th=(text,klass)=>'<th class="auto-value '+(klass||"")+'">'+text+'</th>';
 const header='<tr>'+
 '<th rowspan="2" class="col-sha">車番</th>'+
 '<th rowspan="2" class="col-name">選手名</th>'+
+'<th rowspan="2" class="col-machine">競走車名</th>'+
 '<th rowspan="2" class="col-h">ハンデ</th><th rowspan="2" class="col-t">試走T</th>'+
 '<th rowspan="2" class="col-t">偏差</th><th rowspan="2" class="col-t">平均ST</th>'+
 '<th rowspan="2" class="col-rank">ランク</th>'+
@@ -69,7 +70,8 @@ const num=(values)=>values.map((v,i)=>'<td class="auto-value'+(i===0?" auto-star
 table.tBodies[0].innerHTML=players.map((p,i)=>{
   const total=p.r90.reduce((x,y)=>x+y,0),pct=(x)=>total?(100*x/total).toFixed(1)+"%":"—";
   const main='<td class="col-sha"><span class="frame-cell f'+(i+1)+'">'+(i+1)+'</span><span class="sha-nm">'+safe(p.short)+'</span></td>'+
-  '<td class="col-name"><div class="rider-name">'+safe(p.name)+'</div><div class="rider-meta rider-home">'+safe(p.car)+'</div><div class="rider-meta rider-age">'+p.loc+" "+p.ki+"期 "+p.age+'歳</div></td>'+
+  '<td class="col-name"><div class="rider-name">'+safe(p.name)+'</div><div class="rider-meta rider-home">'+safe(p.loc)+'</div><div class="rider-meta rider-age">'+p.ki+'期 '+p.age+'歳</div></td>'+
+  '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>'+
   '<td class="col-h">'+p.h+'m</td><td class="col-t" title="試走タイム未収録">—</td>'+
   '<td class="col-t">'+p.diff+'</td><td class="col-t">'+p.st+'</td>'+
   '<td class="col-rank"><span class="grade-current">'+p.rank+'</span><span class="grade-prev">前'+p.prev+'</span></td>'+
@@ -90,13 +92,13 @@ function choose(key){
  menu.forEach(t=>t.classList.toggle("active",t.dataset.target===key));
  // Match SCR-210's gold/white highlight on the selected heading group.
  table.querySelectorAll("thead th.section-selected").forEach(t=>t.classList.remove("section-selected"));
- const targets=key==="player"?[...table.tHead.rows[0].cells].slice(2,8):
+ const targets=key==="player"?[...table.tHead.rows[0].cells].slice(1,9):
    [...table.tHead.querySelectorAll('th[data-group="'+key+'"]')];
  targets.forEach(t=>t.classList.add("section-selected"));
 }
 menu.forEach(t=>t.addEventListener("click",()=>choose(t.dataset.target)));
 // Initial menu state: player section, without changing initial horizontal scroll.
-[...table.tHead.rows[0].cells].slice(2,8).forEach(t=>t.classList.add("section-selected"));
+[...table.tHead.rows[0].cells].slice(1,9).forEach(t=>t.classList.add("section-selected"));
 const sheet=root.querySelector(".sheet"),overlay=root.querySelector(".sheet-overlay");
 const report={
  road:{title:"近180日・走路別成績",heads:["良2連対率","良3連対率","湿2連対率","湿3連対率"],values:p=>[...p.dry,...p.wet].map(v=>v.toFixed(1)+"%")},
