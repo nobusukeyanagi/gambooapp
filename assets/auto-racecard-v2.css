@@ -329,7 +329,7 @@
 .sport-auto .auto-race-table th.auto-supercon-heading:nth-last-child(6) {
   width:90px; min-width:90px; max-width:90px;
 }
-.sport-auto .auto-race-table :is(th,td).auto-sp-form {
+.sport-auto .auto-race-table :is(td.auto-sp-form,td.auto-sp-handling,td.auto-sp-escape) {
   width:60px; min-width:60px; max-width:60px;
 }
 .sport-auto .auto-race-table th.auto-supercon-heading:nth-last-child(4) {
