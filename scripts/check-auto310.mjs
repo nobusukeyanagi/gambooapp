@@ -117,7 +117,7 @@ for(const width of [296,375,768]){
        Math.abs(x.dashScale-0.82)>0.001||JSON.stringify(x.carOffsets)!=='[0,36]'||
        x.dashFont!=='12px'||x.classes.some(y=>!y)||
        x.sizes.some(size=>size[0]!==22||size[1]!==22)||
-       (i===0?parseFloat(x.marginLeft)!==0:parseFloat(x.marginLeft)!==11))||
+       (i===0?parseFloat(x.marginLeft)!==0:parseFloat(x.marginLeft)!==13))||
      supercon.pairSpacing.length!==2||
      supercon.pairSpacing.some(v=>Math.abs(v-14)>0.2)||
      supercon.internalSpacing.some(v=>Math.abs(v-14)>0.2)||
