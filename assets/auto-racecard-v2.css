@@ -62,10 +62,10 @@
   flex:0 0 auto;
   gap:var(--space-1);
 }
-/* Pair-to-pair free space = the 22px width of one car icon; the shared
-   lineup row already contributes --space-1 between flex items. */
+/* The gap between pairs matches the narrow in-pair car/dash gap.
+   Do not reserve the previous extra 22px icon-width gutter. */
 .sport-auto .race-detail-scroll .auto-supercon-row .auto-supercon-pair + .auto-supercon-pair {
-  margin-left:calc(22px - var(--space-1));
+  margin-left:0;
 }
 .sport-auto .race-detail-scroll .auto-supercon-row .auto-supercon-dash {
   display:inline-flex;
@@ -265,6 +265,27 @@
   font-size:var(--fs-16); font-weight:var(--fw-normal);
   color:var(--c-text-primary); line-height:1.2;
 }
+/* Rank marks tint only the text, not the row or full table cell. */
+.sport-auto .auto-race-table :is(.auto-good-time-text,.auto-best90-value,.auto-prediction-value) {
+  display:inline-block;
+  box-sizing:border-box;
+  width:max-content;
+  padding:var(--space-1) var(--space-2);
+  border-radius:var(--r-xs);
+  font-size:var(--fs-16);
+  font-weight:var(--fw-normal);
+  line-height:1.2;
+  color:var(--c-text-primary);
+  white-space:nowrap;
+}
+.sport-auto .auto-race-table .auto-text-rank-1,
+.sport-auto .auto-race-table .auto-prediction-rank-1 { background:var(--c-gold-light); }
+.sport-auto .auto-race-table .auto-text-rank-2,
+.sport-auto .auto-race-table .auto-prediction-rank-2 { background:var(--c-blue-light); }
+.sport-auto .auto-race-table .auto-text-rank-3,
+.sport-auto .auto-race-table .auto-prediction-rank-3 { background:var(--c-bronze-light); }
+.sport-auto .auto-race-table .auto-prediction-rank-4 { background:var(--c-green-light); }
+
 .sport-auto .auto-race-table .auto-best90-venue {
   margin-top:var(--space-5);
   font-size:var(--fs-12); font-weight:var(--fw-normal);
@@ -315,6 +336,16 @@
   color:var(--c-text-secondary);
   font-size:var(--fs-12); font-weight:var(--fw-normal); line-height:1.2;
 }
+.sport-auto .auto-race-table .auto-matchup-percent.auto-matchup-winning {
+  display:table;
+  box-sizing:border-box;
+  width:max-content;
+  margin-left:auto;
+  margin-right:auto;
+  padding:0 var(--space-2);
+  border-radius:var(--r-xs);
+  background:var(--c-gold-light);
+}
 /* スパコン予想（川口9R）: compact seven-column projection.
    Use the same 16px single-line figures and text-sized rank tints as
    SCR-210's G指数・マル得ポイント (never shade the entire table cell). */
@@ -322,6 +353,20 @@
   box-sizing:border-box; width:80px; min-width:80px; max-width:80px;
   text-align:center; white-space:nowrap;
   font-variant-numeric:tabular-nums;
+}
+.sport-auto .auto-race-table th.auto-sp-rain-group {
+  box-sizing:border-box;
+  width:170px; min-width:170px; max-width:170px;
+  height:24px;
+  font-weight:var(--fw-strong);
+}
+.sport-auto .auto-race-table th.auto-sp-rain-sub {
+  box-sizing:border-box;
+  height:24px;
+  font-weight:var(--fw-strong);
+}
+.sport-auto .auto-race-table th.auto-sp-h-prediction {
+  width:80px; min-width:80px; max-width:80px;
 }
 .sport-auto .auto-race-table :is(th.auto-sp-h-racetime,td.auto-sp-racetime) {
   width:90px; min-width:90px; max-width:90px;
@@ -487,7 +532,7 @@
 .sport-auto .auto-race-table .auto-last5-detail {
   display:grid; grid-template-rows:16px 12px 12px;
   row-gap:var(--space-3); align-items:center; min-width:0;
-  padding-left:0; text-align:left; line-height:1;
+  padding-left:var(--space-3); text-align:left; line-height:1;
   white-space:nowrap; font-size:var(--fs-12);
 }
 .sport-auto .auto-race-table .auto-last5-race {
@@ -544,12 +589,47 @@
   word-break:keep-all;
   overflow-wrap:normal;
 }
-.sport-auto .auto-race-table td.auto-analyzer-cell .auto-analyzer-mark {
-  display:inline-block;
+.sport-auto .auto-race-table td.auto-analyzer-cell .auto-analyzer-mark,
+.sport-auto .auto-analyzer-sheet .auto-analyzer-detail-table td .auto-analyzer-mark {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  min-width:22px;
+  min-height:22px;
+  padding:var(--space-1) var(--space-2);
+  border-radius:var(--r-xs);
   font-size:var(--fs-16);
   font-weight:var(--fw-strong);
   color:var(--c-text-primary);
   line-height:1;
+}
+/* The original four prediction marks get consistent pale token fills. */
+.sport-auto .race-detail-scroll .auto-race-table .auto-analyzer-mark.auto-mark-double,
+.sport-auto .auto-analyzer-sheet .auto-analyzer-mark.auto-mark-double {
+  background:var(--c-magenta-light);
+}
+.sport-auto .race-detail-scroll .auto-race-table .auto-analyzer-mark.auto-mark-circle,
+.sport-auto .auto-analyzer-sheet .auto-analyzer-mark.auto-mark-circle {
+  background:var(--c-teal-light);
+}
+.sport-auto .race-detail-scroll .auto-race-table .auto-analyzer-mark.auto-mark-triangle,
+.sport-auto .auto-analyzer-sheet .auto-analyzer-mark.auto-mark-triangle {
+  background:var(--c-yellowgreen-light);
+}
+.sport-auto .race-detail-scroll .auto-race-table .auto-analyzer-mark.auto-mark-cross,
+.sport-auto .auto-analyzer-sheet .auto-analyzer-mark.auto-mark-cross {
+  background:var(--c-bronze-light);
+}
+.sport-auto .auto-race-table .auto-analyzer-total {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-height:40px;
+  font-size:var(--fs-12);
+  font-weight:var(--fw-strong);
+  color:inherit;
 }
 .sport-auto .auto-analyzer-sheet .detail-table {
   width:max-content;min-width:100%;
