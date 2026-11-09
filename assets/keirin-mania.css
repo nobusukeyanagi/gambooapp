@@ -200,9 +200,10 @@
 .sheet .detail-table thead th.dt-grp {
   font-size: var(--fs-12);
 }
+/* Detail panel only: 44px rows (the main racecard remains 56px). */
 .sheet .detail-table tbody tr,
 .sheet .detail-table tbody td {
-  height: 56px;
+  height: 44px;
   padding-top: 0;
   padding-bottom: 0;
   background: var(--c-surface);
@@ -370,23 +371,17 @@
   border-radius: var(--r-xs);
 }
 
-/* On sufficiently tall screens, the detail rows are exactly the main
-   racecard's 56px and the ninth bottom border touches the footer. On small
-   screens there is physically less room than 9x56px + the sheet heading,
-   so share the available height without introducing vertical scrolling. */
+/* Compact the detail panel further in short viewports instead of
+   stretching its table to screen height. Keep the footer's 60px clear.
+   128px reserves the handle (16), title/close (48), and table headers (64). */
 @media (max-height: 700px) {
-  .sheet {
-    top: 0;
-    height: auto;
-    max-height: none;
-  }
-  .sheet-body { flex: 1 1 auto; }
-  .sheet .detail-table { height: 100%; }
   .sheet .detail-table tbody tr,
   .sheet .detail-table tbody td {
-    height: max(38px, calc((100dvh - var(--h-bottom-nav) - 128px) / 9));
+    height: min(44px, calc((100dvh - var(--h-bottom-nav) - 128px) / 9));
   }
 }
+/* Below 520px, reduce non-row overhead by 10px and remove only the
+   internal vertical gaps. This keeps nine two-line riders visible at 480px. */
 @media (max-height: 520px) {
   .sheet-handle { flex-basis: 12px; height: 12px; }
   .sheet .detail-table thead tr:first-child th { height: 26px; }
@@ -394,11 +389,14 @@
   .sheet .detail-table .dt-car-sort { min-height: 58px; }
   .sheet .detail-table tbody tr,
   .sheet .detail-table tbody td {
-    height: max(34px, calc((100dvh - var(--h-bottom-nav) - 118px) / 9));
+    height: min(44px, max(32px, calc((100dvh - var(--h-bottom-nav) - 118px) / 9)));
   }
+  .sheet .detail-table .dt-vehicle-content { gap: 0; }
   .sheet .detail-table .dt-vehicle .frame-cell {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     font-size: var(--fs-12);
   }
+  .sheet .detail-table .recent4-count { line-height: 1.1; }
+  .sheet .detail-table .recent4-rate { margin-top: 0; }
 }
