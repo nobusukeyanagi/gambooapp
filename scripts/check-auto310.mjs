@@ -147,7 +147,7 @@ for(const width of [296,375,768]){
   });
   const expectedOfficial=['0.082','0.100','0.095','0.083','0.091','0.111','0.094','0.093'];
   if(deviations.heading!=='試走偏差'||deviations.headerSpan!==2||
-     deviations.headerCount!==8||deviations.cells.length!==8||
+     deviations.headerCount!==14||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!== (i===0?'0.09':'—')||x.text[2]!== (i===0?'0.09':'—')||
        JSON.stringify(x.labels)!==JSON.stringify(['全レース','2連対'])||
