@@ -308,11 +308,19 @@ for(const width of [296,375,768]){
   const tokenColors=await page.evaluate(()=>{
     const el=document.createElement('span');
     document.body.appendChild(el);
-    const names=['gold','blue','bronze','green','magenta','teal','yellowgreen'];
+    const names=['gold','blue','bronze','green','red','magenta','teal','yellowgreen'];
     const color=Object.fromEntries(names.map(x=>{el.style.background='var(--c-'+x+'-light)';
       return [x,getComputedStyle(el).backgroundColor];}));
     el.remove();
     return color;
+  });
+  const formInk=await page.evaluate(()=>{
+    const probe=document.createElement('span');document.body.appendChild(probe);
+    const values=Object.fromEntries(['red','blue','green'].map(name=>{
+      probe.style.color='var(--c-'+name+')';
+      return [name,getComputedStyle(probe).color];
+    }));
+    probe.remove();return values;
   });
   const matchupState=await page.locator('.auto-race-table').evaluate(table=>{
     const headers=[...table.tHead.querySelectorAll('th[data-group="matchup"]')].map(th=>{
@@ -411,8 +419,18 @@ for(const width of [296,375,768]){
       const cells=[...row.querySelectorAll('td.auto-sp-cell')];
       const predicted=(sel)=>{const el=row.querySelector(sel),c=getComputedStyle(el);
         return {text:el.textContent.trim(),cls:el.className,bg:c.backgroundColor,
-          font:c.fontSize,color:c.color};};
+          font:c.fontSize,color:c.color,weight:c.fontWeight};};
+      const markSpan=row.querySelector('.auto-sp-mark'),formSpan=row.querySelector('.auto-sp-form span');
+      const markSvg=markSpan?.querySelector('.auto-mark-symbol');
+      const svgCss=markSvg?getComputedStyle(markSvg):null;
+      const formCss=getComputedStyle(formSpan);
       return {cells:cells.map(collect),
+        markSvg:markSvg?{width:Math.round(markSvg.getBoundingClientRect().width),
+          height:Math.round(markSvg.getBoundingClientRect().height),
+          stroke:parseFloat(svgCss.strokeWidth),fill:svgCss.fill}:null,
+        formStyle:{bg:formCss.backgroundColor,color:formCss.color,
+          width:Math.round(formSpan.getBoundingClientRect().width),
+          height:Math.round(formSpan.getBoundingClientRect().height)},
         forecastOrder:predicted('.auto-sp-order .auto-prediction-value'),
         forecastTime:predicted('td.auto-sp-racetime .auto-prediction-value'),
         mark:row.querySelector('.auto-sp-mark')?.textContent.trim(),
@@ -452,6 +470,8 @@ for(const width of [296,375,768]){
     start:[0,0,0,3,0,3,2,1]
   };
   const keysSP=['strong','handling','escape','start'];
+  const formBG={'↑':tokenColors.red,'↓':tokenColors.blue,'→':tokenColors.green};
+  const formFG={'↑':formInk.red,'↓':formInk.blue,'→':formInk.green};
   const mismatchedSP=[];
   if(superconState.headings.length!==8||
      superconState.headings.some((h,i)=>
@@ -464,6 +484,11 @@ for(const width of [296,375,768]){
        const exp=expectedSP[i],xs=r.cells;
        if(xs.length!==7||r.mark!==exp.mark||r.markSize!=='16px'||
           r.order!==exp.order+'着'||r.arrow!==exp.form||r.condition!==exp.condition||
+          r.formStyle.bg!==formBG[exp.form]||r.formStyle.color!==formFG[exp.form]||
+          r.formStyle.width!==24||r.formStyle.height!==24||
+          (!!r.markSvg)!==!!exp.mark||
+          (r.markSvg&&(r.markSvg.width!==18||r.markSvg.height!==18||
+            r.markSvg.stroke!==2||r.markSvg.fill!=='none'))||
           xs.some((x,j)=>x.width!==expectedSPBodyWidths[j]))return true;
        const values=[exp.order+'着',exp.time,String(exp.strong),exp.form,
          String(exp.handling),String(exp.escape),String(exp.start)];
@@ -474,6 +499,7 @@ for(const width of [296,375,768]){
          ['forecastTime',expectedSPTimeRanks[i]]]){
          const p=r[field],target=field==='forecastOrder'?values[0]:values[1];
          if(p.text!==target||p.font!=='16px'||p.color!=='rgb(48, 54, 59)'||
+            (field==='forecastOrder'&&p.weight!=='600')||
             p.cls!=='auto-prediction-value'+(rank?' auto-prediction-rank-'+rank:'')||
             p.bg!==(rank?superconState.rankColors[rank]:'rgba(0, 0, 0, 0)'))
            return true;
@@ -545,9 +571,14 @@ for(const width of [296,375,768]){
     const rows=[...table.tBodies[0].rows].map(tr=>
       [...tr.querySelectorAll('td.auto-analyzer-cell')].map(td=>{
         const mark=td.querySelector('.auto-analyzer-mark'),cs=getComputedStyle(mark);
+        const svg=mark.querySelector('.auto-mark-symbol');
+        const svgc=svg?getComputedStyle(svg):null;
         return {text:mark.textContent.trim(),cls:mark.className,
           bg:cs.backgroundColor,width:Math.round(td.getBoundingClientRect().width),
-          font:cs.fontSize,weight:cs.fontWeight,color:cs.color};
+          font:cs.fontSize,weight:cs.fontWeight,color:cs.color,
+          svg:svg?{width:Math.round(svg.getBoundingClientRect().width),
+            height:Math.round(svg.getBoundingClientRect().height),
+            stroke:parseFloat(svgc.strokeWidth),fill:svgc.fill}:null};
       })
     );
     return {headers,rows,
@@ -568,6 +599,9 @@ for(const width of [296,375,768]){
        m.bg!==(labSymbolColors[expectedLabMarks[i][j]]||
          'rgba(0, 0, 0, 0)')||
        m.font!=='16px'||m.weight!=='600'||
+       (!!m.svg)!==!!expectedLabMarks[i][j]||
+       (m.svg&&(m.svg.width!==18||m.svg.height!==18||
+         m.svg.stroke!==2||m.svg.fill!=='none'))||
        m.color!=='rgb(48, 54, 59)')))
     errorsNow.push('lab marks/headers must reflect provided source: '+JSON.stringify(labState));
   /* The eight attached Gamboo HTML exports are imported as local source data
