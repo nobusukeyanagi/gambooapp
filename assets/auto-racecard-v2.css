@@ -181,7 +181,7 @@
 .sport-auto .auto-race-table .auto-top-time-1 { background:var(--c-gold-light); }
 .sport-auto .auto-race-table .auto-top-time-2 { background:var(--c-blue-light); }
 .sport-auto .auto-race-table .auto-top-time-3 { background:var(--c-bronze-light); }
-.sport-auto .auto-race-table .col-rank { width:82px; min-width:82px; }
+.sport-auto .auto-race-table .col-rank { width:80px; min-width:80px; }
 .sport-auto .auto-race-table th.auto-section { width:auto; min-width:0; }
 .sport-auto .auto-race-table :is(th,td).auto-value { width:60px; min-width:60px; }
 /* SCR-210 直近4ヵ月基本成績: identical type scale and vertical rhythm
@@ -258,7 +258,7 @@
 /* Within 90 days: fastest competition time (not the "良10走" best)
    above its race venue, using the standard 16/12 two-line cell design. */
 .sport-auto .auto-race-table :is(th.auto-best90-heading,td.auto-best90-cell) {
-  box-sizing:border-box; width:80px; min-width:80px; max-width:80px;
+  box-sizing:border-box; width:70px; min-width:70px; max-width:70px;
   text-align:center;
 }
 .sport-auto .auto-race-table td.auto-best90-cell > span { display:block; }
@@ -357,7 +357,7 @@
 }
 .sport-auto .auto-race-table th.auto-sp-rain-group {
   box-sizing:border-box;
-  width:170px; min-width:170px; max-width:170px;
+  width:160px; min-width:160px; max-width:160px;
   height:24px;
   font-weight:var(--fw-strong);
 }
@@ -370,9 +370,9 @@
   width:80px; min-width:80px; max-width:80px;
 }
 .sport-auto .auto-race-table :is(th.auto-sp-h-racetime,td.auto-sp-racetime) {
-  width:90px; min-width:90px; max-width:90px;
+  width:80px; min-width:80px; max-width:80px;
 }
-.sport-auto .auto-race-table :is(th.auto-sp-h-short,td.auto-sp-form,td.auto-sp-handling,td.auto-sp-escape) {
+.sport-auto .auto-race-table :is(th.auto-sp-h-short,th.auto-sp-h-start,td.auto-sp-form,td.auto-sp-handling,td.auto-sp-escape,td.auto-sp-start) {
   width:60px; min-width:60px; max-width:60px;
 }
 .sport-auto .auto-race-table tbody td.auto-sp-cell {
@@ -466,11 +466,11 @@
 .sport-auto .rt-legend { margin-top:0; }
 
 
-/* SCR-310 直近5レース：220px columns. A 38px meeting area
+/* SCR-310 直近5レース：200px columns. A 38px meeting area
    accommodates five-character dates (e.g. 12/30) and moves the
    30px rank badge left without overlap; data starts nearer the badge. */
 .sport-auto .auto-race-table :is(th.auto-last5-heading,td.auto-last5-cell) {
-  box-sizing:border-box; width:220px; min-width:220px; max-width:220px;
+  box-sizing:border-box; width:200px; min-width:200px; max-width:200px;
   padding-inline:var(--space-card);
 }
 .sport-auto .auto-race-table th.auto-last5-heading {
