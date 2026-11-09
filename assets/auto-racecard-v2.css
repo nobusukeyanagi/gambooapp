@@ -282,12 +282,12 @@
   font-size:var(--fs-12); font-weight:var(--fw-strong);
   line-height:22px;
 }
-.sport-auto .auto-race-table .auto-matchup-heading .lineup-car {
+/* Same shared .frame-cell vehicle icon as the left fixed car-number column.
+   Only inline placement differs; dimensions, borders, colors and font
+   continue to come from the shared .frame-cell and f1-f9 rules. */
+.sport-auto .auto-race-table .auto-matchup-heading .frame-cell {
   display:inline-flex; vertical-align:middle;
-  width:22px; min-width:22px; height:22px;
-  align-items:center; justify-content:center;
-  margin-left:var(--space-3);
-  font-size:var(--fs-12); font-weight:var(--fw-strong);
+  margin:0 0 0 var(--space-3);
 }
 .sport-auto .auto-race-table td.auto-matchup-cell > span {
   display:block; text-align:center;
@@ -301,7 +301,7 @@
   color:var(--c-text-secondary);
   font-size:var(--fs-12); font-weight:var(--fw-normal); line-height:1.2;
 }
-/* 優出・優勝: slim 100px column in 10px steps; numbers share
+/* 優出・優勝: final player-info column, 100px; numbers share
    the same right edge, aligning their ones digits vertically. */
 .sport-auto .auto-race-table :is(th,td).auto-titles-column {
   box-sizing:border-box; width:100px; min-width:100px; max-width:100px;
@@ -386,6 +386,7 @@
 }
 .sport-auto .auto-race-table .auto-last5-finish {
   display:grid; grid-template-rows:36px 12px; row-gap:var(--space-2);
+  box-sizing:border-box; padding-left:var(--space-3);
   align-items:center; justify-items:start; height:50px; min-width:0;
 }
 .sport-auto .auto-race-table .auto-last5-rank {
