@@ -111,23 +111,32 @@ const last5Cells=playerIndex=>last5RaceResults[playerIndex].map((entry,index)=>{
  const raceNo=/^(\d+)R/.exec(race)?.[1];
  const destination=raceNo&&placeSlug[place]?"https://autorace.jp/netstadium/RaceResult/"+
   placeSlug[place]+"/2026-"+month.padStart(2,"0")+"-"+day.padStart(2,"0")+"_"+raceNo:null;
- const cancelled=finishTime==="不成立";
- const special=cancelled||!/^[0-9]+$/.test(rank);
- const result=cancelled?"不成立":rank||"—";
+ const abnormal=finishTime==="不成立"?"不成立":!/^[0-9]+$/.test(rank)?(rank||"—"):"";
+ const result=abnormal?"-":rank;
  const rankClass=/^[1-3]$/.test(rank)?" auto-last5-rank-"+rank:"";
- const label=place+" "+date+" "+race+" "+road+"走路 "+result+
+ const note=[abnormal,flag].filter(Boolean).join(" ");
+ const label=place+" "+date+" "+race+" "+road+"走路 "+(abnormal||rank||"-")+
   (flag?" "+flag:"")+" 競走T "+finishTime+" 試走T "+trialTime+" ST "+st+" H"+handicap;
+ const numOrUnknown=value=>/^[0-9]+(?:\.[0-9]+)?$/.test(String(value))?
+  '<strong class="auto-last5-number">'+safe(value)+'</strong>':
+  '<span class="auto-last5-label">'+safe(value)+'</span>';
  const inner='<div class="auto-last5-entry">'+
   '<div class="auto-last5-meta"><span class="auto-last5-grade grade-badge '+gradeClass+'">'+grade+
   '</span><span class="auto-last5-venue">'+safe(place)+'</span><span class="auto-last5-date">'+safe(date)+'</span></div>'+
-  '<div class="auto-last5-finish'+rankClass+(special?' is-special':'')+'">'+
+  '<div class="auto-last5-finish'+rankClass+'">'+
   '<span class="auto-last5-rank">'+safe(result)+'</span>'+
-  (flag?'<span class="auto-last5-flag">'+safe(flag)+'</span>':'')+'</div>'+
-  '<div class="auto-last5-detail"><span class="auto-last5-race">'+safe(race)+
-  '<small>'+safe(road)+'</small></span>'+
-  '<span><em>競</em>'+safe(finishTime)+'</span>'+
-  '<span class="auto-last5-other"><em>試</em>'+safe(trialTime)+
-  '<em>ST</em>'+safe(st)+'<em>H</em>'+safe(handicap)+'</span></div></div>';
+  '<span class="auto-last5-flag">'+safe(note)+'</span></div>'+
+  '<div class="auto-last5-detail">'+
+  '<div class="auto-last5-race">'+safe(race)+'</div>'+
+  '<div class="auto-last5-data-row"><span class="auto-last5-label">試走</span>'+
+  numOrUnknown(trialTime)+
+  '<span class="auto-last5-label">'+safe(road)+'</span>'+
+  '<span class="auto-last5-group"><span class="auto-last5-label">H</span>'+
+  numOrUnknown(handicap)+'</span></div>'+
+  '<div class="auto-last5-data-row"><span class="auto-last5-label">競</span>'+
+  numOrUnknown(finishTime)+
+  '<span class="auto-last5-group"><span class="auto-last5-label">ST</span>'+
+  numOrUnknown(st)+'</span></div></div></div>';
  return '<td class="auto-last5-cell'+(index===0?' auto-start':'')+'">'+
   (destination?'<a href="'+destination+'" target="_blank" rel="noopener noreferrer" class="auto-last5-link" title="'+safe(label)+'" aria-label="'+safe(label)+'">'+inner+'</a>':inner)+'</td>';
 }).join("");
