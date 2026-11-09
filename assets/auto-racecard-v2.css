@@ -104,7 +104,11 @@
 .sport-auto .race-detail-scroll .auto-race-table tbody tr > td:first-child {
   border-left:var(--line-normal) !important;
 }
-/* Header height is inherited from the shared SCR-210 racecard-common.css. */
+/* The shared 210 header declares 24+24/48px, but renders at 25+25/49px
+   in the current grouped table. Match that actual on-screen geometry. */
+.sport-auto .race-detail-scroll .auto-race-table thead tr:first-child th { height:25px; }
+.sport-auto .race-detail-scroll .auto-race-table thead tr:nth-child(2) th { height:25px; }
+.sport-auto .race-detail-scroll .auto-race-table thead tr:first-child th[rowspan="2"] { height:49px; }
 .sport-auto .auto-race-table thead th { z-index:3; }
 .sport-auto .auto-race-table :is(th,td).col-sha {
   position:sticky; left:0; width:50px; min-width:50px; max-width:50px;

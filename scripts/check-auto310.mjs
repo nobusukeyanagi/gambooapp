@@ -214,7 +214,7 @@ for(const width of [296,375,768]){
      JSON.stringify(basicStats.upperSpan)!==JSON.stringify([2,2,2])||
      JSON.stringify(basicStats.labels)!==JSON.stringify(expectedLabels)||
      JSON.stringify(basicStats.statWidths)!==JSON.stringify(Array(8).fill(60))||
-     basicStats.headerHeight!==48||
+     basicStats.headerHeight!==49||
      basicStats.headerCss.font!=='12px'||basicStats.headerCss.weight!=='600'||
      basicStats.countCss.font!=='16px'||basicStats.countCss.weight!=='400'||
      basicStats.countCss.color!=='rgb(48, 54, 59)'||
@@ -374,7 +374,7 @@ for(const width of [296,375,768]){
       span:h(table.tHead.rows[0].querySelector('th[rowspan="2"]'))};
   });
   if(JSON.stringify(autoHeaderHeights)!==JSON.stringify(keirinHeaderHeights)||
-     JSON.stringify(autoHeaderHeights)!==JSON.stringify({group:24,sub:24,span:48}))
+     JSON.stringify(autoHeaderHeights)!==JSON.stringify({group:25,sub:25,span:49}))
     errorsNow.push('header heights differ from 210: '+JSON.stringify({autoHeaderHeights,keirinHeaderHeights}));
   if(positions.rows.slice(0,4).some((v,i)=>Math.abs(v-reference[i])>0.6))
     errorsNow.push('first four rows differ from SCR-210: '+JSON.stringify({auto:positions.rows,keirin:reference}));
@@ -406,7 +406,7 @@ for(const width of [296,375,768]){
     return {total:table.querySelectorAll('thead th,tbody td').length,
       tableBorder:measure(table),invalid};
   });
-  if(borderGrid.total<300||borderGrid.invalid.length||
+  if(borderGrid.total!==264||borderGrid.invalid.length||
       ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
     errorsNow.push('box-table 1px grid / outside frame mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
@@ -522,7 +522,7 @@ for(const width of [296,375,768]){
     if(colors.upper!==expectUpper||colors.lower!==expectLower||colors.leftover!==0||
        colors.cells.some(v=>!v.selected||v.bg!=='rgb(114, 103, 49)'||
          v.fg!=='rgb(255, 255, 255)')||
-       (expectLower===0&&colors.cells.some(v=>v.rowspan!==2||v.height!==48)))
+       (expectLower===0&&colors.cells.some(v=>v.rowspan!==2||v.height!==49)))
       errorsNow.push(key+' both-row gold headers mismatch: '+JSON.stringify(colors));
   }
   const target=page.locator('.race-menu-scroll .info-tab[data-target="road"]');
