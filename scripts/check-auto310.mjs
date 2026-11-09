@@ -182,8 +182,8 @@ for(const width of [296,375,768]){
         machineAlign:getComputedStyle(machine).textAlign,
         carAlign:getComputedStyle(machine.querySelector('.machine-name')).textAlign,
         gradeAlign:getComputedStyle(machine.querySelector('.machine-grade')).textAlign,
-        trial:row.querySelector('td.col-t')?.textContent.trim(),
-        trialTitle:row.querySelector('td.col-t')?.getAttribute('title'),
+        trial:row.querySelector('td.col-t[title="当日試走タイム"]')?.textContent.trim(),
+        trialTitle:row.querySelector('td.col-t[title="当日試走タイム"]')?.getAttribute('title'),
         deviationTitle:row.querySelector('td.col-deviation')?.getAttribute('title'),
         trialWeight:getComputedStyle(row.querySelector('td.col-t[title="当日試走タイム"]')).fontWeight,
         otherTimingWeights:[...row.querySelectorAll('td.col-t:not([title="当日試走タイム"])')]
