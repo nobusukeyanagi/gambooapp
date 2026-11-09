@@ -279,7 +279,9 @@
 .race-detail-scroll .mania-table .meeting-cell .res-time {
   display: block;
   grid-column: 1;
+  box-sizing: border-box;
   width: 100%;
+  padding-left: var(--space-card);
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
   line-height: 1;
