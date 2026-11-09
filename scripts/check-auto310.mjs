@@ -627,7 +627,7 @@ for(const width of [296,375,768]){
        detail.groups!==groups||detail.totalSpan!==width||detail.cols!==width||
        detail.bodyCols.length!==8||detail.bodyCols.some(n=>n!==width+1)||
        detail.bodyHeight!==44||
-       JSON.stringify(detail.heights)!=='[64,36]'||
+       JSON.stringify(detail.heights)!=='[28,36]'||
        detail.vehicle.width!==50||detail.vehicle.sticky!=='sticky'||
        detail.vehicle.left!=='0px'||detail.extraSource||
        detail.count!==firstCount||detail.pct!==firstPct||
