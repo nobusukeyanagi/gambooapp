@@ -18,7 +18,7 @@
 
 
     <link rel="stylesheet" href="./assets/race-selector-shared.css?v=1" />
-    <link rel="stylesheet" href="./assets/auto-racecard-v2.css?v=33" />
+    <link rel="stylesheet" href="./assets/auto-racecard-v2.css?v=34" />
     <link rel="stylesheet" href="./assets/racecard-common.css?v=3" />
   </head>
   <body class="sport-auto">
@@ -89,13 +89,12 @@
               <div class="hscroll race-menu-scroll">
                 <button type="button" class="hscroll-cue-l" aria-label="前のメニューへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevronl"></use></svg></button>
                 <div class="hscroll-inner"><div class="info-tabs"><button type="button" class="info-tab active" data-target="player"><span>選手情報</span></button>
+<button type="button" class="info-tab" data-target="last5"><span>直近5走<br />出走表</span></button>
 <button type="button" class="info-tab" data-target="recent"><span>直近10走</span></button>
 <button type="button" class="info-tab" data-target="good"><span>良10走</span></button>
-<button type="button" class="info-tab" data-target="last5"><span>直近5レース<br />出走表</span></button>
 <button type="button" class="info-tab" data-target="last90"><span>直近90日</span></button>
 <button type="button" class="info-tab" data-target="road"><span>直近180日</span></button>
-<button type="button" class="info-tab" data-target="matchup"><span>直近360日<br />対戦成績表</span></button>
-<button type="button" class="info-tab" data-target="titles"><span>優出・優勝</span></button></div></div>
+<button type="button" class="info-tab" data-target="matchup"><span>直近360日<br />対戦成績</span></button></div></div>
                 <button type="button" class="hscroll-cue" aria-label="次のメニューへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></button>
               </div>
               <div class="lineup-bar auto-supercon-bar" aria-label="スパコン直前予想">
@@ -123,17 +122,16 @@
   <div class="rt-legend-title">出走表の見方</div>
   <dl>
     <dt>車番・選手名</dt><dd>車番は競走車の番号です。選手名の下には所属・期別・年齢を表示します。</dd>
-    <dt>競走車名・車級</dt><dd>選手が使用する競走車の名前と、1級・2級の車級を表示します。</dd>
+    <dt>競走車名・車級・優出・優勝</dt><dd>選手が使用する競走車の名前、1級・2級の車級を表示します。選手情報の最後には今年の優勝戦出場回数、今年の優勝回数、通算優勝回数を表示します。</dd>
     <dt>ハンデ</dt><dd>スタートラインの位置差です。数字が大きいほど後方からのスタートになり、選手間の実力差を調整します。</dd>
     <dt>試走T・試走偏差</dt><dd>試走Tは当日発表されたレース前の試走タイムです。試走偏差は1行目が公式の標準偏差、2行目がGambooの全R、3行目がGambooの2連対時の偏差です。未確認の数値は「—」と表示します。</dd>
     <dt>平均ST・ランク／審査P</dt><dd>平均STはスタートタイミングの平均値です。ランク欄は現行・前期のランクと審査ポイントを3行で示します。見出しを押すと審査P順に並び替えられます。</dd>
+    <dt>直近5走/出走表</dt><dd>前走から5走前までを新しい順に表示します。各列は開催情報（グレード・場・日付）、着順、レース・走路、競走T・試走T・ST・ハンデです。「自落」「不成立」などの異常着順は着順枠内を「-」にし、枠下に赤字で注記します。「戒」も枠下に表示します。過去開催もGⅡ・普通・SGのグレードを表示します。</dd>
     <dt>直近10走</dt><dd>直近の最大10走について、1着・2着・3着・着外の回数と、その下に勝率・2連対率・3連対率・着外率を表示します。集計対象が10走に満たない場合は、その対象走数から算出します。</dd>
     <dt>良10走</dt><dd>良走路での直近最大10走の平均試走タイム・平均競走タイム・最高競走タイムです。同条件では数値が小さいほど速いタイムです。</dd>
-    <dt>直近5レース/出走表</dt><dd>前走から5走前までを新しい順に表示します。各列は開催情報（グレード・場・日付）、着順、レース・走路、競走T・試走T・ST・ハンデです。「自落」「不成立」などの異常着順は着順枠内を「-」にし、枠下に赤字で注記します。「戒」も枠下に表示します。過去開催もGⅡ・普通・SGのグレードを表示します。</dd>
     <dt>直近90日</dt><dd>最近90日間の1着・2着・3着・着外の回数と各率、さらに期間中の最高競走タイムと記録した場を示します。勝率は1着、2連対率は2着以内、3連対率は3着以内、着外率は着外の割合を示します。</dd>
     <dt>直近180日</dt><dd>良走路と湿走路別に1着・2着・3着・着外の回数と、勝率・2連対率・3連対率・着外率を2行で表示します。率は各走路の着度数合計を分母に計算しています。</dd>
-        <dt>直近360日/対戦成績表</dt><dd>出走選手同士の過去360日間の勝敗・勝率です。1行目が勝敗（勝ち数-負け数）、2行目が勝率です。同じ選手同士の欄と対戦がない場合の勝率は「—」を表示します。</dd>
-    <dt>優出・優勝</dt><dd>今年の優勝戦出場回数、今年の優勝回数、通算優勝回数を1列にまとめて表示します。</dd>
+    <dt>直近360日/対戦成績</dt><dd>出走選手同士の過去360日間の勝敗・勝率です。1行目が勝敗（勝ち数-負け数）、2行目が勝率です。同じ選手同士の欄と対戦がない場合の勝率は「—」を表示します。</dd>
   </dl>
 </div>
               </div>
@@ -167,7 +165,7 @@
     
     <script src="./assets/sport-display-order.js?v=2"></script>
     <script src="./assets/scroll-controls.js?v=7" data-scroll-mode="keirin-detail"></script>
-    <script src="./assets/auto-racecard-v2.js?v=27" defer></script>
+    <script src="./assets/auto-racecard-v2.js?v=28" defer></script>
     <script src="./assets/tap-feedback.js?v=4" defer></script>
     <script src="./assets/text-fit.js?v=1" defer></script>
 </body>
