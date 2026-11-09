@@ -84,12 +84,23 @@
       : escapeHTML(label);
     return '<td class="dt-rank">'+value+'</td>';
   };
-  const rateCell = (stat, rateRank) => {
+  // Source counts are cumulative: 1st, top-2, top-3, outside.
+  // Display exact finishes above the source's cumulative percentages.
+  const placingCount=(stats,index)=>{
+    const count=Number(stats?.[index]?.[1]);
+    if(!Number.isFinite(count))return "—";
+    if(index===1||index===2){
+      const prev=Number(stats?.[index-1]?.[1]);
+      return Number.isFinite(prev)?count-prev:"—";
+    }
+    return count;
+  };
+  const rateCell = (stat, rateRank, actualCount) => {
     if (!stat) return '<td class="dt-rate">—</td>';
-    const [rate, count, total]=stat;
+    const [rate,count]=stat;
     const rankClass=rateRank>=1&&rateRank<=3?" recent4-rank-"+rateRank:"";
     return '<td class="dt-rate">'+
-      '<span class="recent4-count">'+escapeHTML(count)+"/"+escapeHTML(total)+'</span>'+
+      '<span class="recent4-count">'+escapeHTML(actualCount??count)+'</span>'+
       '<span class="recent4-rate'+rankClass+'">'+escapeHTML(rate)+'%</span></td>';
   };
   const differenceCell=txt=>
@@ -114,23 +125,24 @@
     const renderSheet=idx=>{
       const meta=categories[idx], src=meta&&detailSource[meta[0]];
       if (!src || !src.rows || src.rows.length!==9) return;
-      const [key,title,sourceRace]=meta;
+      const [,title]=meta;
       sheet.querySelector(".sheet-title").textContent=title;
-      sheet.querySelector(".sheet-note").textContent=
-        "参考データ：2026年11月8日・"+sourceRace+
-        "。現在の出走表（防府5R）とは別レースです。";
-      const fieldLabels=src.type==="advance"?["順位","進出率"]:
-        src.type==="pref"?["勝率","2連対率","3連対率","着外率"]:
-        ["順位","勝率","2連対率","3連対率","着外率"];
+      const placingHeaders=[["1着","勝率"],["2着","2連対率"],
+        ["3着","3連対率"],["着外","着外率"]];
+      const stackedHeading=([top,bottom])=>
+        '<th class="dt-stat-heading">'+
+        '<span class="recent4-heading-main">'+escapeHTML(top)+'</span>'+
+        '<span class="recent4-heading-rate">'+escapeHTML(bottom)+'</span></th>';
       const groupHeaders=src.type==="advance"
         ? src.headers.map((text,i)=>'<th class="dt-grp" colspan="2">'+escapeHTML(text)+'</th>')
         : src.headers.map((text,i)=>'<th class="dt-grp" colspan="'+(src.type==="pref"?4:5)+'">'+
             escapeHTML(text)+'</th>');
       const fields=src.headers.map((_,groupIndex)=>{
-        const labels=src.type==="advance"
-          ? ["順位",groupIndex===2?"優勝率":"進出率"]
-          : fieldLabels;
-        return labels.map(label=>'<th>'+escapeHTML(label)+'</th>').join("");
+        if(src.type==="advance")
+          return '<th>順位</th><th>'+
+            escapeHTML(groupIndex===2?"優勝率":"進出率")+'</th>';
+        return (src.type==="pref"?"":'<th>順位</th>')+
+          placingHeaders.map(stackedHeading).join("");
       }).join("");
       sheet.querySelector(".detail-table thead").innerHTML=
         '<tr><th class="dt-vehicle" rowspan="2">車番<span class="dt-vehicle-heading-sub">選手</span></th>'+
@@ -138,7 +150,7 @@
       const ranking=src.headers.map((_,k)=>src.type==="advance"?null:
         [0,1,2].map(metric=>ranksByRate(src.rows,k,metric,src.type==="pref")));
       const html=src.rows.map((record,index)=>{
-        const [name,short,groups]=record;
+        const [name,,groups]=record;
         const cells=groups.map((group,k)=>{
           if(src.type==="advance"){
             return rankCell(group[0])+rateCell(group[1],0);
@@ -146,15 +158,15 @@
           if(src.type==="pref") {
             return k===2
               ? group.map(differenceCell).join("")
-              : group.map((rate,j)=>rateCell(rate,j===3?0:ranking[k][j][index+1])).join("");
+              : group.map((rate,j)=>rateCell(rate,j===3?0:ranking[k][j][index+1],placingCount(src.type==="pref"?group:group[1],j))).join("");
           }
           return rankCell(group[0])+
-            group[1].map((rate,j)=>rateCell(rate,j===3?0:ranking[k][j][index+1])).join("");
+            group[1].map((rate,j)=>rateCell(rate,j===3?0:ranking[k][j][index+1],placingCount(src.type==="pref"?group:group[1],j))).join("");
         }).join("");
         return '<tr><td class="dt-vehicle" title="'+escapeHTML(name)+'">'+
           '<span class="dt-vehicle-content">'+
             '<span class="frame-cell f'+(index+1)+'">'+(index+1)+'</span>'+
-            '<span class="dt-vehicle-short">'+escapeHTML(short)+'</span>'+
+            '<span class="dt-vehicle-short">'+escapeHTML(Array.from(name).slice(0,3).join(""))+'</span>'+
           '</span></td>'+cells+'</tr>';
       }).join("");
       sheet.querySelector(".detail-table tbody").innerHTML=html;
