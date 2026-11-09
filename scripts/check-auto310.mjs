@@ -141,6 +141,8 @@ for(const width of [296,375,768]){
         machineAlign:getComputedStyle(machine).textAlign,
         carAlign:getComputedStyle(machine.querySelector('.machine-name')).textAlign,
         gradeAlign:getComputedStyle(machine.querySelector('.machine-grade')).textAlign,
+        trial:row.querySelector('td.col-t')?.textContent.trim(),
+        trialTitle:row.querySelector('td.col-t')?.getAttribute('title'),
         handicap:row.querySelector('.col-h')?.textContent.trim(),
         handicapWeight:getComputedStyle(row.querySelector('.col-h')).fontWeight,
         rank:[...row.querySelector('.col-rank').children].map(el=>el.textContent.trim()),
@@ -160,6 +162,7 @@ for(const width of [296,375,768]){
     const secondary=getComputedStyle(document.querySelector('.race-menu-scroll .info-tab:not(.active)')).color;
     return {header,active,entries,primary,secondary};
   });
+  const expectedDayTrials=['3.69','3.70','3.69','3.69','3.65','3.76','3.69','3.68'];
   const expectedHome=['川口','浜松','飯塚','川口','飯塚','川口','川口','川口'];
   const expectedCar=['ボーリバージュ','フィールミー','シャーロット','ライキリ',
     'レイリー','Ｍニジュウサン','モエルトウコン','ＫＯモンソン'];
@@ -177,6 +180,7 @@ for(const width of [296,375,768]){
       r.gradeStyle.color!==riderCells.secondary||
       r.carStyle.weight!=='400'||r.gradeStyle.weight!=='400'||
       r.machineAlign!=='left'||r.carAlign!=='left'||r.gradeAlign!=='left'||
+      r.trial!==expectedDayTrials[i]||r.trialTitle!=='当日試走タイム'||
       r.handicap!==String([0,10,10,20,20,20,20,20][i])||r.handicapWeight!=='600'||
       JSON.stringify(r.rank)!==JSON.stringify([
         ['A-194','前A-73','63.758'],['A-90','前A-126','71.853'],
@@ -371,9 +375,14 @@ for(const width of [296,375,768]){
   await page.locator('.sort-power').click();
   const first=await page.locator('.auto-race-table tbody .rider-name').first().innerText();
   if(first!=='中村雅人')errorsNow.push('power sort failed: '+first);
+  const firstTrial=await page.locator('.auto-race-table tbody tr').first().locator('td.col-t').first().innerText();
+  if(firstTrial!=='3.68')errorsNow.push('trial time detached from rider after score sorting: '+firstTrial);
   await page.locator('.sort-power').click();
   const reset=await page.locator('.auto-race-table tbody .rider-name').first().innerText();
   if(reset!=='五十嵐一夫')errorsNow.push('power sort toggle failed to restore vehicle order');
+  const resetTrials=await page.locator('.auto-race-table tbody tr').evaluateAll(rows=>rows.map(row=>row.querySelector('td.col-t')?.textContent.trim()));
+  if(JSON.stringify(resetTrials)!==JSON.stringify(expectedDayTrials))
+    errorsNow.push('trial times in vehicle order not restored: '+JSON.stringify(resetTrials));
   if(await page.locator('.auto-race-table .sort-car').count())
     errorsNow.push('車番 heading must not be a clickable sort control');
   console.log(width+'px result:',JSON.stringify(result),'UI errors:',JSON.stringify(errorsNow));

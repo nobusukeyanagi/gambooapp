@@ -3,6 +3,9 @@
    are explicitly unconfirmed and never filled with estimates. */
 (() => {
 "use strict";
+// Official race-day trial times supplied for Kawaguchi 9R (2026-11-09),
+// indexed by vehicle number 1–8. Keep distinct from the 10-race average.
+const raceDayTrials=["3.69","3.70","3.69","3.69","3.65","3.76","3.69","3.68"];
 const raw=[
 ["五十嵐一夫","五十嵐","川口",21,60,"A-194","A-73","ボーリバージュ",0,"0.14","0.082","63.758",[1,4,1,4],[2,5,4,6],"3.38","3.462","3.439",[41.2,64.7],[50.0,66.7],[0,0,10],"1級"],
 ["長谷晴久","長谷","浜松",23,56,"A-90","A-126","フィールミー",10,"0.19","0.100","71.853",[1,2,3,4],[8,8,9,17],"3.37","3.470","3.444",[35.3,49.0],[61.1,88.9],[3,0,0],"1級"],
@@ -14,7 +17,7 @@ const raw=[
 ["中村雅人","中村","川口",28,45,"S-11","S-11","ＫＯモンソン",20,"0.16","0.093","117.010",[2,2,2,4],[8,6,9,12],"3.34","3.433","3.398",[60.4,72.9],[38.5,76.9],[10,1,71],"1級"]
 ];
 // Same rule as SCR-210: the first three characters of the full rider name.
-const players=raw.map(a=>({name:a[0],short:Array.from(a[0]).slice(0,3).join(""),loc:a[2],ki:a[3],age:a[4],
+const players=raw.map((a,i)=>({name:a[0],short:Array.from(a[0]).slice(0,3).join(""),loc:a[2],ki:a[3],age:a[4],todayTrial:raceDayTrials[i],
  rank:a[5],prev:a[6],car:a[7],h:a[8],st:a[9],diff:a[10],power:a[11],
  r10:a[12],r90:a[13],trial:a[14],avg:a[15],best:a[16],
  dry:a[17],wet:a[18],thisYear:a[19],vehicleGrade:a[20]}));
@@ -71,7 +74,7 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   const total=p.r90.reduce((x,y)=>x+y,0),pct=(x)=>total?(100*x/total).toFixed(1)+"%":"—";
   const main='<td class="col-sha"><span class="frame-cell f'+(i+1)+'">'+(i+1)+'</span><span class="sha-nm">'+safe(p.short)+'</span></td>'+
   '<td class="col-name"><div class="rider-name">'+safe(p.name)+'</div><div class="rider-meta rider-home">'+safe(p.loc)+'</div><div class="rider-meta rider-age">'+p.ki+'期 '+p.age+'歳</div></td>'+
-  '<td class="col-h">'+p.h+'</td><td class="col-t" title="試走タイム未収録">—</td>'+
+  '<td class="col-h">'+p.h+'</td><td class="col-t" title="当日試走タイム">'+safe(p.todayTrial)+'</td>'+
   '<td class="col-t">'+p.diff+'</td><td class="col-t">'+p.st+'</td>'+
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
