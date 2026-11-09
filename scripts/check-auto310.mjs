@@ -511,26 +511,26 @@ for(const width of [296,375,768]){
   // Restore the initial player tab before testing default rider-group
   // highlights and the integrated 優出・優勝 column.
   await page.locator('.race-menu-scroll .info-tab[data-target="player"]').click();
-  /* Gamboo 11/09 川口9R marklist: 8 categories (総合 first) and
-     eight cars. ハンデ and スパコン source marks must not be displayed.
+  /* Gamboo 11/09 川口9R marklist: 9 categories (総合 first) and
+     eight cars. Original ハンデ is restored; only スパコン is omitted.
      A selected category opens the same detail-sheet interaction as SCR-210,
      with a source link for numerical detail data not in the uploaded page. */
-  const expectedLabLabels=['総合','走路状況','走路温度','試走タイム',
-    'レース場','競走車','レース種別／日程','勝ち上がり／優勝戦'];
+  const expectedLabLabels=['総合','走路状況','走路温度','試走タイム','ハンデ',
+    'レース場','競走車','レース種別','勝ち上がり'];
   const expectedLabMarks=[
-    ['○','△','','◎','△','','',''],
-    ['×','◎','○','','○','○','×',''],
-    ['','','','','','','',''],
-    ['','','','','','','◎','×'],
-    ['','','','×','','','',''],
-    ['','','△','','','△','○','△'],
-    ['◎','○','◎','○','◎','◎','△','○'],
-    ['△','×','×','△','×','×','','◎']
+    ['○','△','','◎','◎','△','','',''],
+    ['×','◎','○','','','○','○','×',''],
+    ['','','','','△','','','',''],
+    ['','','','','','','','◎','×'],
+    ['','','','×','','','','',''],
+    ['','','△','','','','△','○','△'],
+    ['◎','○','◎','○','○','◎','◎','△','○'],
+    ['△','×','×','△','×','×','×','','◎']
   ];
-  const expectedLabWidths=[60,80,80,80,80,80,100,100];
+  const expectedLabWidths=Array(9).fill(60);
   const labSymbolColors={
-    '◎':tokenColors.magenta,'○':tokenColors.teal,
-    '△':tokenColors.yellowgreen,'×':tokenColors.bronze};
+    '◎':tokenColors.gold,'○':tokenColors.blue,
+    '△':tokenColors.bronze,'×':tokenColors.green};
   const labSymbolClasses={
     '◎':'auto-mark-double','○':'auto-mark-circle',
     '△':'auto-mark-triangle','×':'auto-mark-cross'};
@@ -554,13 +554,13 @@ for(const width of [296,375,768]){
       hasHandicapAnalysis:headers.some(x=>x.text==='ハンデ'),
       hasSuperconAnalysis:headers.some(x=>x.text==='スパコン')};
   });
-  if(labState.headers.length!==8||labState.rows.length!==8||
-     labState.hasHandicapAnalysis||labState.hasSuperconAnalysis||
+  if(labState.headers.length!==9||labState.rows.length!==8||
+     !labState.hasHandicapAnalysis||labState.hasSuperconAnalysis||
      labState.headers.some((h,i)=>h.text!==expectedLabLabels[i]||
        (i===0?(h.item!==undefined||h.button!==undefined||h.buttonHeight!==0):
-        (h.item!==String(i)||h.buttonHeight!==40))||
+        (h.item!==String(i)||h.buttonHeight!==36))||
        h.width!==expectedLabWidths[i]||h.rowSpan!==2)||
-     labState.rows.some((row,i)=>row.length!==8||row.some((m,j)=>
+     labState.rows.some((row,i)=>row.length!==9||row.some((m,j)=>
        m.text!==expectedLabMarks[i][j]||m.width!==expectedLabWidths[j]||
        m.cls!=='auto-analyzer-mark'+
          (labSymbolClasses[expectedLabMarks[i][j]]?
@@ -571,8 +571,10 @@ for(const width of [296,375,768]){
        m.color!=='rgb(48, 54, 59)')))
     errorsNow.push('lab marks/headers must reflect provided source: '+JSON.stringify(labState));
   const sourcePaths=[null,'situation','roadtemp','trialrun',
-    'place','motorcycle','raceclass','racewin'];
-  for(let item=1;item<8;item++){
+    'handicap','place','motorcycle','raceclass','racewin'];
+  const detailTitles=['総合','走路状況','走路温度','試走タイム','ハンデ',
+    'レース場','競走車','レース種別・日程','勝ち上がり・優勝戦'];
+  for(let item=1;item<9;item++){
     await page.locator('.auto-analyzer-btn[data-analyzer-item="'+item+'"]').click();
     const detail=await page.locator('.auto-analyzer-sheet').evaluate(sheet=>{
       const table=sheet.querySelector('.detail-table');
@@ -597,7 +599,7 @@ for(const width of [296,375,768]){
       (sourcePaths[item]?sourcePaths[item]+'/program':'marklist/')+
       '?rdt=20261109&rno=9&pid=2&rsp=3&rspl=02&rsrt=1&rsst=1';
     if(detail.hidden||detail.overlayHidden||detail.vehicleCount!==8||
-       detail.title!=='データ解析ラボ：'+expectedLabLabels[item].replace('／','・')||
+       detail.title!=='データ解析ラボ：'+detailTitles[item]||
        detail.heading.length!==4||
        JSON.stringify(detail.marks)!==JSON.stringify(expectedDetail)||
        detail.markStyles.some((row,i)=>row.some((m,j)=>{
