@@ -278,3 +278,88 @@
   color:var(--c-text-primary);
 }
 .sport-auto .rt-legend { margin-top:0; }
+
+
+/* SCR-310 直近5レース：one 220px compound column per run.
+   The three vertical date/location lines follow SCR-210 meeting metadata;
+   a larger finish sits between metadata and compact time / ST / H details. */
+.sport-auto .auto-race-table :is(th.auto-last5-heading,td.auto-last5-cell) {
+  box-sizing:border-box; width:220px; min-width:220px; max-width:220px;
+  padding-inline:var(--space-1);
+}
+.sport-auto .auto-race-table th.auto-last5-heading {
+  font-size:var(--fs-14); font-weight:var(--fw-strong); white-space:nowrap;
+}
+.sport-auto .auto-race-table .auto-last5-link {
+  display:block; width:100%; color:inherit; text-decoration:none;
+}
+.sport-auto .auto-race-table .auto-last5-link:focus-visible {
+  outline:2px solid var(--c-blue); outline-offset:-2px;
+}
+.sport-auto .auto-race-table .auto-last5-entry {
+  display:grid; grid-template-columns:48px 44px minmax(0,1fr);
+  align-items:stretch; width:100%; min-height:50px;
+  font-variant-numeric:tabular-nums;
+}
+.sport-auto .auto-race-table .auto-last5-meta {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:3px; min-width:0; text-align:center;
+  font-size:var(--fs-12); line-height:1.05; color:var(--c-text-secondary);
+}
+.sport-auto .auto-race-table .auto-last5-meta > span {
+  display:block; white-space:nowrap;
+}
+.sport-auto .auto-race-table .auto-last5-grade.is-normal {
+  color:var(--c-text-primary); font-weight:var(--fw-strong);
+}
+.sport-auto .auto-race-table .auto-last5-finish {
+  display:flex; flex-direction:column; justify-content:center;
+  align-items:center; min-width:0; gap:0;
+}
+.sport-auto .auto-race-table .auto-last5-rank {
+  display:block; font-size:24px; font-weight:var(--fw-strong);
+  line-height:1.15; color:var(--c-text-primary);
+}
+.sport-auto .auto-race-table .auto-last5-finish.is-special .auto-last5-rank,
+.sport-auto .auto-race-table .auto-last5-rank:not(:first-child) {
+  font-size:var(--fs-12);
+}
+.sport-auto .auto-race-table .auto-last5-finish:has(.auto-last5-rank:is(:first-child)):not(.auto-last5-rank-1):not(.auto-last5-rank-2):not(.auto-last5-rank-3):not(.is-special) .auto-last5-rank {
+  font-size:24px;
+}
+.sport-auto .auto-race-table .auto-last5-rank-1 .auto-last5-rank {
+  background:var(--c-gold-light); border-radius:var(--r-xs); padding-inline:var(--space-2);
+}
+.sport-auto .auto-race-table .auto-last5-rank-2 .auto-last5-rank {
+  background:var(--c-blue-light); border-radius:var(--r-xs); padding-inline:var(--space-2);
+}
+.sport-auto .auto-race-table .auto-last5-rank-3 .auto-last5-rank {
+  background:var(--c-bronze-light); border-radius:var(--r-xs); padding-inline:var(--space-2);
+}
+.sport-auto .auto-race-table .auto-last5-flag {
+  display:block; font-size:var(--fs-12); color:var(--c-red);
+  line-height:1; font-weight:var(--fw-strong);
+}
+.sport-auto .auto-race-table .auto-last5-detail {
+  display:flex; flex-direction:column; justify-content:center;
+  align-items:flex-start; gap:3px; min-width:0;
+  padding-left:var(--space-2); color:var(--c-text-primary);
+  text-align:left; font-size:var(--fs-12); line-height:1.05;
+  white-space:nowrap;
+}
+.sport-auto .auto-race-table .auto-last5-race {
+  display:flex; align-items:center; gap:var(--space-2);
+  font-weight:var(--fw-strong);
+}
+.sport-auto .auto-race-table .auto-last5-race small {
+  font-size:var(--fs-12); font-weight:var(--fw-normal);
+  color:var(--c-text-secondary);
+}
+.sport-auto .auto-race-table .auto-last5-detail em {
+  font-style:normal; color:var(--c-text-secondary);
+  font-size:var(--fs-12); margin-right:2px;
+}
+.sport-auto .auto-race-table .auto-last5-other {
+  display:flex; gap:3px; align-items:baseline;
+}
+.sport-auto .auto-race-table td.auto-last5-cell { text-align:center; }
