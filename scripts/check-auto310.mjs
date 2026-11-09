@@ -228,23 +228,37 @@ for(const width of [296,375,768]){
   }));
   const expectedGrade=i=>i===0?'GⅡ':i===1?'普通':'SG';
   const expectedClass=i=>i===0?'grade-g2':i===1?'grade-normal':'grade-sg';
+  const expectedRed=await page.evaluate(()=>{
+    const sample=document.createElement('span');
+    sample.style.color='var(--c-red)';
+    document.body.appendChild(sample);
+    const color=getComputedStyle(sample).color;
+    sample.remove();
+    return color;
+  });
   const standardNumber=r=>r.numberStyles.every(z=>z.font==='12px'&&z.weight==='600'&&z.color==='rgb(48, 54, 59)');
   const standardLabel=r=>r.labelStyles.every(z=>z.font==='12px'&&z.weight==='400'&&z.color==='rgb(96, 107, 118)');
+  const invalidLastFiveRows=lastFive.rows.length!==8||lastFive.rows.some((rs,i)=>{
+    if(rs.length!==5)return true;
+    const badCells=rs.some((r,j)=>{
+      if(r.width!==220||!r.link.includes('autorace.jp/netstadium/RaceResult/')||
+         !r.venue||!r.date||r.detailRows.length!==3)return true;
+      if(r.gradeFont!=='12px'||r.metaAlign!=='left'||r.metaRows!=='16px 12px 12px'||
+         r.metaInset!==6||r.rankRect.x!==54||r.rankRect.top!==3||
+         r.rankRect.width!==30||r.rankRect.height!==30||
+         r.rankStyle.font!=='16px'||r.rankStyle.weight!=='600'||
+         r.noteStyle.align!=='left'||r.noteStyle.x!==r.rankRect.x||
+         r.noteStyle.color!==expectedRed)return true;
+      if(!standardNumber(r)||!standardLabel(r))return true;
+      if(j>=2&&(r.grade!==expectedGrade(i)||!r.gradeClass.includes(expectedClass(i))))return true;
+      return false;
+    });
+    return badCells||rs[0].date!=='11/8'||rs[1].date!=='11/7'||rs[0].grade!=='普通';
+  });
   if(JSON.stringify(lastFive.headings)!==JSON.stringify(['前走','2走前','3走前','4走前','5走前'])||
      lastFive.widths.some(x=>x!==220)||lastFive.headingFonts.some(x=>x!=='12px')||
      lastFive.headerBorders.some(([top,bottom])=>top!=='0px'||bottom!=='1px')||
-     lastFive.rows.length!==8||lastFive.rows.some((rs,i)=>rs.length!==5||
-      rs.some((r,j)=>r.width!==220||!r.link.includes('autorace.jp/netstadium/RaceResult/')||
-        !r.venue||!r.date||r.detailRows.length!==3||
-        r.gradeFont!=='12px'||r.metaAlign!=='left'||r.metaRows!=='16px 12px 12px'||
-        r.metaInset!==6||r.rankRect.x!==54||r.rankRect.top!==3||
-        r.rankRect.width!==30||r.rankRect.height!==30||
-        r.rankStyle.font!=='16px'||r.rankStyle.weight!=='600'||
-        r.noteStyle.align!=='left'||r.noteStyle.x!==r.rankRect.x||
-        r.noteStyle.color!=='rgb(183, 71, 95)'||
-        !standardNumber(r)||!standardLabel(r)||
-        (j>=2&&(r.grade!==expectedGrade(i)||!r.gradeClass.includes(expectedClass(i)))))||
-      rs[0].date!=='11/8'||rs[1].date!=='11/7'||rs[0].grade!=='普通'))||
+     invalidLastFiveRows||
      lastFive.rows[0][0].detailRows.join('|')!=='5R予選|試走3.35良H20|競3.439ST0.22'||
      lastFive.rows[2][0].flag!=='戒'||
      lastFive.rows[2][2].rank!=='-'||lastFive.rows[2][2].flag!=='自落'||
@@ -252,7 +266,7 @@ for(const width of [296,375,768]){
      lastFive.rows[5][3].detailRows[2]!=='競不成立ST-'||
      lastFive.rows.some(rs=>rs.some(r=>r.labelStyles.length<4)))
     errorsNow.push('recent-five table 210-aligned insets/positions, row styles and abnormal results mismatch: '+JSON.stringify(lastFive));
-  const awardState=await page.locator('.auto-race-table').evaluate(table=>{
+    const awardState=await page.locator('.auto-race-table').evaluate(table=>{
     const h=table.tHead.rows[0].querySelector('th[data-group="titles"]');
     const cells=[...table.tBodies[0].rows].map(row=>{
       const td=row.querySelector('td.auto-titles-cell');
