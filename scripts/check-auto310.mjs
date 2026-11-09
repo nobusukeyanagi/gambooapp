@@ -76,7 +76,7 @@ for(const width of [296,375,768]){
      supercon.starsText!=='★★★'||supercon.starsColor!==supercon.goldToken||
      supercon.parts.length!==3||
      supercon.parts.map(x=>x.nums.join('-')).join('|')!=='1-8|8-1|1-5'||
-     supercon.parts.some((x,i)=>x.hyphen!=='―'||x.dashWidth!==16||x.dashFont!=='16px'||x.classes.some(y=>!y)||
+     supercon.parts.some((x,i)=>x.hyphen!=='―'||x.dashWidth!==12||x.dashFont!=='12px'||x.classes.some(y=>!y)||
        x.sizes.some(size=>size[0]!==22||size[1]!==22)||
        (i===0?parseFloat(x.marginLeft)!==0:Math.abs(parseFloat(x.marginLeft)+parseFloat(supercon.row.gap)-22)>0.1))||
      supercon.hasRightButton||!supercon.placement||
