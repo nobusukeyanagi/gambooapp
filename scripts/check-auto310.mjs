@@ -75,6 +75,17 @@ for(const width of [296,375,768]){
       dashFont:getComputedStyle(pair.querySelector('.auto-supercon-dash')).fontSize,
       marginLeft:getComputedStyle(pair).marginLeft
     }));
+    const pairSpacing=parts.slice(0,-1).map((_,i)=>{
+      const pairs=[...bar.querySelectorAll('.auto-supercon-pair')];
+      const last=pairs[i].querySelectorAll('.lineup-car')[1].getBoundingClientRect();
+      const next=pairs[i+1].querySelectorAll('.lineup-car')[0].getBoundingClientRect();
+      return Math.round((next.left-last.right)*100)/100;
+    });
+    const internalSpacing=[...bar.querySelectorAll('.auto-supercon-pair')].map(pair=>{
+      const cars=pair.querySelectorAll('.lineup-car');
+      return Math.round((cars[1].getBoundingClientRect().left-
+        cars[0].getBoundingClientRect().right)*100)/100;
+    });
     const row=bar.querySelector('.lineup-row');
     const style=e=>{const s=getComputedStyle(e);return {
       font:s.fontSize,color:s.color,bg:s.backgroundColor,padding:s.padding,
@@ -89,7 +100,7 @@ for(const width of [296,375,768]){
       starsText:bar.querySelector('.auto-supercon-gold-stars')?.textContent,
       starsColor:getComputedStyle(bar.querySelector('.auto-supercon-gold-stars')).color,
       goldToken:(()=>{const tester=document.createElement('span');tester.style.color='var(--c-gold)';bar.appendChild(tester);const color=getComputedStyle(tester).color;tester.remove();return color;})(),
-      parts,bar:style(bar),title:style(bar.querySelector('.lineup-title')),
+      parts,pairSpacing,internalSpacing,bar:style(bar),title:style(bar.querySelector('.lineup-title')),
       row:style(row),hasRightButton:!!bar.querySelector('button,a,.aokei-paper-btn'),
       placement:Math.abs(rect(bar).top-rect(menu).bottom)<1&&
         Math.abs(rect(table).top-rect(bar).bottom)<1,
@@ -106,7 +117,10 @@ for(const width of [296,375,768]){
        Math.abs(x.dashScale-0.82)>0.001||JSON.stringify(x.carOffsets)!=='[0,36]'||
        x.dashFont!=='12px'||x.classes.some(y=>!y)||
        x.sizes.some(size=>size[0]!==22||size[1]!==22)||
-       parseFloat(x.marginLeft)!==0)||
+       (i===0?parseFloat(x.marginLeft)!==0:parseFloat(x.marginLeft)!==11))||
+     supercon.pairSpacing.length!==2||
+     supercon.pairSpacing.some(v=>Math.abs(v-14)>0.2)||
+     supercon.internalSpacing.some(v=>Math.abs(v-14)>0.2)||
      supercon.hasRightButton||!supercon.placement||
      supercon.rowScrollStyle!=='auto'||supercon.rowOverflow<0)
     errorsNow.push('SCR-310 supercomputer prediction structure/fit mismatch: '+JSON.stringify(supercon));
@@ -186,7 +200,7 @@ for(const width of [296,375,768]){
      JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
      JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
-     deviations.headerCount!==56||deviations.cells.length!==8||
+     deviations.headerCount!==57||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!==['0.09','0.09','0.10','0.08','0.09','0.11','0.09','0.10'][i]||
        x.text[2]!==['0.09','0.08','0.10','0.08','0.10','0.10','0.09','0.10'][i]||
@@ -637,8 +651,8 @@ for(const width of [296,375,768]){
   const expectedAwards=[[0,0,10],[3,0,0],[2,0,10],[4,0,20],[1,0,49],[6,1,33],[13,1,57],[10,1,71]];
   if(awardState.header!=='優出・優勝'||awardState.rowSpan!==2||awardState.headerWidth!==100||
      awardState.columnIndex!==8||!awardState.selectedOnPlayer||
-     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近5走出走表','直近10走','良10走','直近90日','直近180日','直近360日対戦成績','スパコン予想','データ解析ラボ'])||
-     awardState.sheetCount!==2||awardState.lastCells.some(n=>n!==57)||
+     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近5走出走表','直近10走着度数','直近良10走タイム','直近90日着度数','直近180日良湿別着度数','直近360日対戦成績','スパコン予想','データ解析ラボ'])||
+     awardState.sheetCount!==2||awardState.lastCells.some(n=>n!==58)||
      awardState.cells.length!==8||
      awardState.cells.some((r,i)=>{
        const expected=[['今年優出',String(expectedAwards[i][0])],
@@ -810,7 +824,7 @@ for(const width of [296,375,768]){
     const p=v=>n?Math.trunc(v*100/n)+'%':'—';
     return [p(a[0]),p(a[0]+a[1]),p(a[0]+a[1]+a[2]),p(a[3])];
   };
-  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','直近5走出走表','直近10走','良10走','直近90日'])||
+  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','直近5走出走表','直近10走着度数','直近良10走タイム','直近90日着度数'])||
      basicStats.upperTitles.some(t=>['直近10走','良10走','直近90日'].includes(t))||
      JSON.stringify(basicStats.upperSpan)!==JSON.stringify([2,2,2])||
      JSON.stringify(basicStats.labels)!==JSON.stringify(expectedLabels)||
@@ -1020,7 +1034,7 @@ for(const width of [296,375,768]){
     return {total:table.querySelectorAll('thead th,tbody td').length,
       tableBorder:measure(table),invalid};
   });
-  if(borderGrid.total!==514||borderGrid.invalid.length||
+  if(borderGrid.total!==523||borderGrid.invalid.length||
       ['top','right','bottom','left'].some(side=>borderGrid.tableBorder[side]!=='0px'))
     errorsNow.push('box-table single 1px grid / no duplicate header-top border mismatch: '+JSON.stringify(borderGrid));
   const canonical=await page.evaluate(()=>{
@@ -1127,7 +1141,7 @@ for(const width of [296,375,768]){
         leftover:table.tHead.querySelectorAll('th.section-selected').length-selected.length
       };
     },key);
-    const expectUpper={last5:5,recent:4,good:3,last90:5,road:8,matchup:8,supercon:6,analyzer:8}[key];
+    const expectUpper={last5:5,recent:4,good:3,last90:5,road:8,matchup:8,supercon:6,analyzer:9}[key];
     const expectLower={last5:0,recent:0,good:0,last90:0,matchup:0,road:0,supercon:2,analyzer:0}[key];
     if(colors.upper!==expectUpper||colors.lower!==expectLower||colors.leftover!==0||
        colors.cells.some(v=>!v.selected||v.bg!=='rgb(114, 103, 49)'||
