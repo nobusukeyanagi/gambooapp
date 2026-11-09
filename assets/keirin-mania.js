@@ -114,7 +114,8 @@
       '<span class="recent4-rate">'+escapeHTML(rate)+'%</span></td>';
   };
   const differenceCell=txt=>
-    '<td class="dt-rate"><span class="dt-difference">'+escapeHTML(txt||"—")+'</span></td>';
+    '<td class="dt-rate dt-difference-cell"><span class="dt-difference">'+
+      escapeHTML(txt||"—")+'</span></td>';
   const ranksByRate = (rows, groupIndex, metricIndex, isPref) => {
     const indexes=rows.map((entry,i)=>{
       const numeric=Number(isPref?entry?.[2]?.[groupIndex]?.[metricIndex]?.[0]:
@@ -172,8 +173,8 @@
       sheet.querySelector(".sheet-title").textContent=title;
       const placingHeaders=[["1着","勝率"],["2着","2連対率"],
         ["3着","3連対率"],["着外","着外率"]];
-      const stackedHeading=([top,bottom])=>
-        '<th class="dt-stat-heading">'+
+      const stackedHeading=([top,bottom],isDifference=false)=>
+        '<th class="dt-stat-heading'+(isDifference?" dt-difference-heading":"")+'">'+
         '<span class="recent4-heading-main">'+escapeHTML(top)+'</span>'+
         '<span class="recent4-heading-rate">'+escapeHTML(bottom)+'</span></th>';
       const groupHeaders=src.type==="advance"
@@ -185,7 +186,8 @@
           return '<th>順位</th><th>'+
             escapeHTML(groupIndex===2?"優勝率":"進出率")+'</th>';
         return (src.type==="pref"?"":'<th>順位</th>')+
-          placingHeaders.map(stackedHeading).join("");
+          placingHeaders.map(label=>
+            stackedHeading(label,src.type==="pref"&&groupIndex===2)).join("");
       }).join("");
       sheet.querySelector(".detail-table thead").innerHTML=
         '<tr><th class="dt-vehicle" rowspan="2">'+
@@ -238,27 +240,33 @@
       btn.addEventListener("click",()=>openSheet(Number(btn.dataset.item))));
     sheet.querySelector(".sheet-close").addEventListener("click",closeSheet);
     const dragHandle=sheet.querySelector(".sheet-handle");
-    if(dragHandle){
-      // Give the top drag bar a full-width touch target; don't interfere with
-      // the table's horizontal scrolling. Pointer capture supports mobile and mouse.
-      let downPointer=null;
-      let startY=0;
-      dragHandle.addEventListener("pointerdown",event=>{
-        if(!event.isPrimary || (event.pointerType==="mouse" && event.button!==0))return;
-        downPointer=event.pointerId;
-        startY=event.clientY;
-        dragHandle.setPointerCapture?.(event.pointerId);
-      });
-      dragHandle.addEventListener("pointerup",event=>{
-        if(event.pointerId!==downPointer)return;
-        const distance=event.clientY-startY;
-        downPointer=null;
-        if(distance>=48)closeSheet();
-      });
-      dragHandle.addEventListener("pointercancel",()=>{downPointer=null;});
-      dragHandle.addEventListener("lostpointercapture",()=>{downPointer=null;});
-      dragHandle.addEventListener("click",closeSheet);
-    }
+    // Keep the handle tap action, but accept a downward swipe started anywhere
+    // inside the panel (title, header, table or sticky rider column).
+    dragHandle?.addEventListener("click",closeSheet);
+    let swipeStart=null;
+    sheet.addEventListener("pointerdown",event=>{
+      if(sheet.hidden || !event.isPrimary ||
+        (event.pointerType==="mouse"&&event.button!==0))return;
+      swipeStart={id:event.pointerId,x:event.clientX,y:event.clientY};
+    });
+    window.addEventListener("pointerup",event=>{
+      if(!swipeStart || event.pointerId!==swipeStart.id)return;
+      const dy=event.clientY-swipeStart.y;
+      const dx=event.clientX-swipeStart.x;
+      swipeStart=null;
+      if(!sheet.hidden && dy>=48 && dy>Math.abs(dx)*1.3)closeSheet();
+    });
+    window.addEventListener("pointercancel",event=>{
+      if(swipeStart?.id===event.pointerId)swipeStart=null;
+    });
+    // A downward wheel/trackpad scroll also dismisses the non-scrollable sheet.
+    // Horizontal gestures continue to scroll the wide stat table normally.
+    sheet.addEventListener("wheel",event=>{
+      if(sheet.hidden || event.deltaY<=0 ||
+        event.deltaY<=Math.abs(event.deltaX)*1.3)return;
+      event.preventDefault();
+      closeSheet();
+    },{passive:false});
     overlay.addEventListener("click",closeSheet);
     window.addEventListener("keydown",event=>{
       if(event.key==="Escape"&&!sheet.hidden)closeSheet();
