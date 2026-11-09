@@ -78,16 +78,7 @@
   font-size:var(--fs-12);
   line-height:1;
 }
-/* SCR-310 menu width policy:
-   The reference "選手情報" is four 14px JP glyphs (56px) with
-   13px left/right clearance = 82px. All remaining labels use the
-   same side clearance and intrinsic text width, without per-tab minima.
-   Only SCR-310 changes; SCR-210 keeps its own multi-line widths. */
-.sport-auto .race-detail-scroll .race-menu-scroll .info-tab {
-  min-width: 0;
-  width: max-content;
-  padding-inline: 13px;
-}
+/* Racecard menu widths/padding are defined once in racecard-common.css. */
 /* Menu typography and selection use SCR-210 shared styles. */
 .sport-auto .race-detail-scroll .rt-area { flex:none; height:auto; overflow:visible; }
 .sport-auto .race-detail-scroll .race-table-wrap { display:block; overflow-x:auto; overflow-y:hidden; scrollbar-width:none; }
