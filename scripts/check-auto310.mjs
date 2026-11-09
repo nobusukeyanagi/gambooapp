@@ -393,12 +393,12 @@ for(const width of [296,375,768]){
   });
   const expectedSP=[
     {mark:'◎',order:1,time:'3.724',strong:38.5,form:'↑',condition:'調子 上向き',handling:62,escape:69,start:54},
-    {mark:'',order:7,time:'3.783',strong:34.8,form:'→',condition:'調子 平行',handling:81,escape:78,start:40},
+    {mark:'',order:7,time:'3.783',strong:34.8,form:'→',condition:'調子 横ばい',handling:81,escape:78,start:40},
     {mark:'',order:5,time:'3.768',strong:42.6,form:'↓',condition:'調子 下降',handling:59,escape:62,start:38},
-    {mark:'',order:6,time:'3.768',strong:52.6,form:'→',condition:'調子 平行',handling:71,escape:83,start:58},
-    {mark:'△',order:3,time:'3.724',strong:49.1,form:'→',condition:'調子 平行',handling:74,escape:78,start:45},
-    {mark:'',order:8,time:'3.923',strong:56.9,form:'→',condition:'調子 平行',handling:77,escape:88,start:58},
-    {mark:'×',order:4,time:'3.736',strong:61.7,form:'→',condition:'調子 平行',handling:90,escape:94,start:61},
+    {mark:'',order:6,time:'3.768',strong:52.6,form:'→',condition:'調子 横ばい',handling:71,escape:83,start:58},
+    {mark:'△',order:3,time:'3.724',strong:49.1,form:'→',condition:'調子 横ばい',handling:74,escape:78,start:45},
+    {mark:'',order:8,time:'3.923',strong:56.9,form:'→',condition:'調子 横ばい',handling:77,escape:88,start:58},
+    {mark:'×',order:4,time:'3.736',strong:61.7,form:'→',condition:'調子 横ばい',handling:90,escape:94,start:61},
     {mark:'○',order:2,time:'3.709',strong:63.8,form:'↑',condition:'調子 上向き',handling:91,escape:96,start:65}
   ];
   const expectedSPLabels=['予想着順','予想競走T','ストロングP','調子','捌き力','逃げ力','スタート力'];
