@@ -36,6 +36,7 @@
   --h-date-tab: 50px;
   --h-section: 44px;
   --h-bottom-nav: 60px;
+  --h-race-info-summary: 128px; /* SCR-210 / SCR-310: room for two 12px detail lines */
   --h-control: 40px;
   --h-icon-button: 44px;
 
