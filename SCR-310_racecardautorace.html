@@ -18,7 +18,7 @@
 
 
     <link rel="stylesheet" href="./assets/race-selector-shared.css?v=1" />
-    <link rel="stylesheet" href="./assets/auto-racecard-v2.css?v=21" />
+    <link rel="stylesheet" href="./assets/auto-racecard-v2.css?v=22" />
     <link rel="stylesheet" href="./assets/racecard-common.css?v=2" />
   </head>
   <body class="sport-auto">
@@ -93,8 +93,7 @@
 <button type="button" class="info-tab" data-target="good"><span>良10走</span></button>
 <button type="button" class="info-tab" data-target="last90"><span>近90日</span></button>
 <button type="button" class="info-tab" data-target="road"><span>近180日</span></button>
-<button type="button" class="info-tab" data-target="titles"><span>今年・通算<br />優勝</span></button>
-<button type="button" class="info-tab" data-target="mania"><span>マニア分析</span></button></div></div>
+<button type="button" class="info-tab" data-target="titles"><span>優出・優勝</span></button></div></div>
                 <button type="button" class="hscroll-cue" aria-label="次のメニューへスクロール"><svg class="ic" aria-hidden="true"><use href="#ic-chevron"></use></svg></button>
               </div>
               <div class="lineup-bar auto-supercon-bar" aria-label="スパコン直前予想">
@@ -130,26 +129,11 @@
     <dt>良10走</dt><dd>良走路での直近最大10走の平均試走タイム・平均競走タイム・最高競走タイムです。同条件では数値が小さいほど速いタイムです。</dd>
     <dt>近90日</dt><dd>最近90日間の1着・2着・3着・着外の回数と各率です。勝率は1着、2連対率は2着以内、3連対率は3着以内、着外率は着外の割合を示します。</dd>
     <dt>近180日</dt><dd>良走路と湿走路別に1着・2着・3着・着外の回数と、勝率・2連対率・3連対率・着外率を2行で表示します。率は各走路の着度数合計を分母に計算しています。</dd>
-    <dt>今年・通算優勝</dt><dd>優出は優勝戦への出場回数、Vは優勝回数です。今年の記録と通算の記録を区別しています。</dd>
-    <dt>マニア分析</dt><dd>各ボタンを押すと、走路別成績・近90日成績・良走路のタイムを出場選手全員で比較できます。</dd>
+    <dt>優出・優勝</dt><dd>今年の優勝戦出場回数、今年の優勝回数、通算優勝回数を1列にまとめて表示します。</dd>
   </dl>
 </div>
               </div>
             </div><!-- /race-detail-scroll -->
-            <div class="sheet-overlay" hidden></div>
-            <section class="sheet" role="dialog" aria-modal="true" aria-label="オートレース マニア分析詳細" hidden>
-              <button type="button" class="sheet-handle" aria-label="下にスワイプするかタップして詳細を閉じる"></button>
-              <div class="sheet-head">
-                <div class="sheet-title"></div>
-                <button type="button" class="sheet-close" aria-label="閉じる">✕</button>
-              </div>
-              <div class="sheet-body">
-                <table class="detail-table">
-                  <thead></thead>
-                  <tbody></tbody>
-                </table>
-              </div>
-            </section>
             <div class="bottom-tab">
               <a class="tab-item" href="./SCR-100_bet.html">
                 <div class="tab-icon"><svg class="ic" aria-hidden="true"><use href="./assets/bottom-nav-icons.svg?v=16#nav-ticket"></use></svg></div>
@@ -179,7 +163,7 @@
     
     <script src="./assets/sport-display-order.js?v=2"></script>
     <script src="./assets/scroll-controls.js?v=7" data-scroll-mode="keirin-detail"></script>
-    <script src="./assets/auto-racecard-v2.js?v=19" defer></script>
+    <script src="./assets/auto-racecard-v2.js?v=20" defer></script>
     <script src="./assets/tap-feedback.js?v=4" defer></script>
     <script src="./assets/text-fit.js?v=1" defer></script>
 </body>
