@@ -45,6 +45,8 @@ for(const width of [296,375,768]){
         const r=c.getBoundingClientRect();return [Math.round(r.width),Math.round(r.height)];
       }),
       hyphen:pair.querySelector('.auto-supercon-dash')?.textContent.trim(),
+      dashWidth:Math.round(pair.querySelector('.auto-supercon-dash')?.getBoundingClientRect().width||0),
+      dashFont:getComputedStyle(pair.querySelector('.auto-supercon-dash')).fontSize,
       marginLeft:getComputedStyle(pair).marginLeft
     }));
     const row=bar.querySelector('.lineup-row');
@@ -69,12 +71,12 @@ for(const width of [296,375,768]){
       rowScrollStyle:getComputedStyle(row).overflowX
     };
   });
-  if(supercon.first!=='スパコン直前予想　自信度★★★☆☆'||
+  if(supercon.first!=='スパコン直前予想　自信度：★★★☆☆'||
      supercon.kind!=='2連単'||supercon.kindSize!==supercon.title.font||
      supercon.starsText!=='★★★'||supercon.starsColor!==supercon.goldToken||
      supercon.parts.length!==3||
      supercon.parts.map(x=>x.nums.join('-')).join('|')!=='1-8|8-1|1-5'||
-     supercon.parts.some((x,i)=>x.hyphen!=='-'||x.classes.some(y=>!y)||
+     supercon.parts.some((x,i)=>x.hyphen!=='―'||x.dashWidth!==16||x.dashFont!=='16px'||x.classes.some(y=>!y)||
        x.sizes.some(size=>size[0]!==22||size[1]!==22)||
        (i===0?parseFloat(x.marginLeft)!==0:Math.abs(parseFloat(x.marginLeft)+parseFloat(supercon.row.gap)-22)>0.1))||
      supercon.hasRightButton||!supercon.placement||
