@@ -446,34 +446,138 @@ function closeAnalyzer(){
  analyzerOpenedBy?.focus({preventScroll:true});
  analyzerOpenedBy=null;
 }
+/* Analysis detail uses the same panel and two-tier box table as SCR-210.
+   The eight sets of values are copied from the eight user-provided
+   Gamboo 2026-11-09 Kawaguchi 9R HTML pages; no national rank is shown. */
+const autoAnalyzerRateHeaders=[
+ ["1着","勝率"],["2着","2連対率"],["3着","3連対率"],["着外","着外率"]
+];
+const analysisValue=(i,label,width=60)=>({kind:"value",i,label,width});
+const analysisRate=(i,label,metric=-1)=>({kind:"rate",i,label,metric});
+const analysisRates=start=>autoAnalyzerRateHeaders.map(([main,rate],j)=>
+ ({kind:"rate",i:start+j,main,rate,metric:j}));
+const analysisAdvance=(i,label)=>({kind:"advance",i,label});
+const analysisGroups={
+ situation:[["走路状況別成績（濡走路）",analysisRates(0)]],
+ roadtemp:[["走路温度別成績（低温20℃未満）",analysisRates(0)],
+           ["季節別成績（秋9～11月）",analysisRates(4)]],
+ trialrun:[["試走T・順位",[analysisValue(0,"試走T"),analysisValue(1,"順位")]],
+           ["試走タイム傾向",[
+             analysisValue(2,"最高"),analysisValue(3,"平均"),
+             analysisValue(4,"偏差1"),analysisValue(5,"偏差2")]],
+           ["試走T順位別成績",[
+             analysisValue(6,"試走T順位"),analysisRate(7,"2連対率")]],
+           ["試走／本走順位",[
+             analysisValue(8,"順位差平均"),analysisValue(9,"相関係数")]],
+           ["再試走",[analysisRate(10,"2連対率")]]],
+ handicap:[["ハンデ・順位",[
+             analysisValue(0,"ハンデ"),analysisValue(1,"順位")]],
+           ["ハンデ別成績",[
+             analysisValue(2,"ハンデ"),...analysisRates(3)]],
+           ["ハンデ順位別成績",[
+             analysisValue(7,"H順位"),...analysisRates(8)]]],
+ place:[["レース場別成績（川口）",analysisRates(0)]],
+ motorcycle:[["競走車別成績",[
+              analysisValue(0,"競走車",120),...analysisRates(1)]]],
+ raceclass:[["レース種別成績（準決勝戦）",analysisRates(0)],
+            ["レース日程成績（中間日・準決勝）",analysisRates(4)]],
+ racewin:[["勝ち上がり実績",[
+            analysisAdvance(0,"準決勝進出率"),
+            analysisAdvance(1,"優勝戦進出率"),
+            analysisAdvance(2,"優勝率")]]]
+};
+const analyzerDetailTitles={
+ situation:"走路状況別成績",roadtemp:"走路温度別成績",
+ trialrun:"試走タイム別成績",handicap:"ハンデ別成績",
+ place:"レース場別成績",motorcycle:"競走車別成績",
+ raceclass:"レース種別・日程別成績",racewin:"勝ち上がり実績"
+};
+const parseAnalysisRate=value=>{
+ const m=/^([0-9]+(?:\.[0-9]+)?):(\d+):(\d+)$/.exec(value||"");
+ return m?{rate:m[1],count:Number(m[2]),total:Number(m[3])}:null;
+};
 function openAnalyzer(index,button){
  const entry=analyzerCategories[index];
- if(!entry||!analyzerSheet||!analyzerOverlay)return;
+ const rows=window.GambooAutoAnalyzerDetail?.[entry?.path];
+ const groups=analysisGroups[entry?.path];
+ if(!entry||!Array.isArray(rows)||rows.length!==players.length||
+    !groups||!analyzerSheet||!analyzerOverlay)return;
+ const fields=groups.flatMap(([,items])=>items);
+ if(rows.some(row=>row.length!==fields.length))return;
  analyzerOpenedBy=button;
- analyzerSheet.querySelector(".sheet-title").textContent=
-  index===0?"データ解析ラボ：総合":"データ解析ラボ："+entry.name;
+ analyzerSheet.querySelector(".sheet-title").textContent=analyzerDetailTitles[entry.path];
  const head=analyzerSheet.querySelector(".detail-table thead");
  const tbody=analyzerSheet.querySelector(".detail-table tbody");
- const markHeader=value=>'<th>'+safe(value)+'</th>';
- // Total shows all seven factor marks. Individual views show the
- // selected factor and the overall mark side by side.
- head.innerHTML='<tr><th class="dt-vehicle">車番</th><th class="auto-analyzer-detail-name">選手名</th>'+
-  (index===0?analyzerCategories.map(x=>markHeader(x.name)).join(""):
-   markHeader(entry.name)+markHeader("総合"))+'</tr>';
- tbody.innerHTML=players.map((p,car)=>{
-   const vehicle='<td class="dt-vehicle"><span class="frame-cell f'+(car+1)+
-    '">'+(car+1)+'</span><span class="sha-nm">'+safe(p.short)+'</span></td>';
-   const name='<td class="auto-analyzer-detail-name">'+safe(p.name)+'</td>';
-   const values=index===0?analyzerMarks[car]:[analyzerMarks[car][index],analyzerMarks[car][0]];
-   return '<tr>'+vehicle+name+values.map(v=>
-    '<td class="auto-analyzer-detail-mark">'+analyzerMarkHTML(v)+'</td>').join("")+'</tr>';
+ const groupHead=groups.map(([name,items])=>
+   '<th class="dt-grp" colspan="'+items.length+'">'+safe(name)+'</th>').join("");
+ const columnHead=fields.map(field=>{
+   if(field.kind==="rate"&&field.metric>=0)
+     return '<th class="dt-stat-heading"><span class="recent4-heading-main">'+
+       safe(field.main)+'</span><span class="recent4-heading-rate">'+
+       safe(field.rate)+'</span></th>';
+   return '<th class="'+(field.kind==="rate"?"dt-stat-heading":
+      field.kind==="advance"?"dt-advance-heading":"auto-analyzer-value-heading")+
+      (field.width===120?" auto-analyzer-wide":"")+'">'+
+     safe(field.label)+'</th>';
  }).join("");
- const note=analyzerSheet.querySelector(".auto-analyzer-source-note");
- note.textContent="添付HTMLに収録された印を表示しています。"+
-  "項目別の詳細成績値は元HTMLに含まれないため、元データの詳細ページをご参照ください。";
- const link=analyzerSheet.querySelector(".auto-analyzer-source-link");
- link.href=analyzerSourceUrl(entry);
- link.textContent="Gambooの"+entry.name+"の詳細を見る";
+ head.innerHTML='<tr><th class="dt-vehicle" rowspan="2">車番</th>'+
+   groupHead+'</tr><tr>'+columnHead+'</tr>';
+ // SCR-210's 1st/2nd/3rd cumulative percentage tint, ranked on exact
+ // numerator/denominator (never the rounded source display percentage).
+ const rankByField={};
+ for(const field of fields){
+   if(field.kind!=="rate"||field.metric<0||field.metric>=3)continue;
+   const ordered=rows.map((row,car)=>{
+     const stat=parseAnalysisRate(row[field.i]);
+     return {car,value:stat&&stat.total?stat.count/stat.total:NaN};
+   }).filter(o=>Number.isFinite(o.value))
+    .sort((a,b)=>b.value-a.value||a.car-b.car);
+   const ranks=[];
+   ordered.forEach((o,j)=>{
+     const rank=j&&ordered[j-1].value===o.value?
+       ranks[ordered[j-1].car]:j+1;
+     ranks[o.car]=rank<=3?rank:0;
+   });
+   rankByField[field.i]=ranks;
+ }
+ const renderField=(field,row,car)=>{
+   if(field.kind==="value"){
+     const original=row[field.i]||"—";
+     const rank=/^[1-4]位$/.test(original)?Number(original[0]):0;
+     return '<td class="auto-analyzer-value'+(field.width===120?' auto-analyzer-wide':'')+'">'+
+       '<span class="recent4-count'+(field.width===120?' auto-analyzer-machine':'')+
+       (rank?' rank-number rank-tint-'+rank:'')+'">'+safe(original)+'</span></td>';
+   }
+   const stat=parseAnalysisRate(row[field.i]);
+   if(!stat)return '<td class="dt-rate">—</td>';
+   if(field.kind==="advance"){
+     return '<td class="dt-rate auto-analyzer-advance">'+
+       '<span class="recent4-count">'+stat.count+
+         '<span class="recent4-total">/'+stat.total+'</span></span>'+
+       '<span class="recent4-rate">'+safe(stat.rate)+'%</span></td>';
+   }
+   let count=stat.count;
+   if(field.metric===1||field.metric===2){
+     const prev=parseAnalysisRate(row[field.i-1]);
+     if(prev)count-=prev.count;
+   }
+   const rank=rankByField[field.i]?.[car]||0;
+   return '<td class="dt-rate">'+
+     '<span class="recent4-count">'+count+'</span>'+
+     '<span class="recent4-rate'+(rank?' recent4-rank-'+rank:'')+'">'+
+       safe(stat.rate)+'%</span></td>';
+ };
+ tbody.innerHTML=rows.map((row,car)=>{
+   const p=players[car];
+   return '<tr><td class="dt-vehicle" title="'+safe(p.name)+'">'+
+     '<span class="dt-vehicle-content">'+
+       '<span class="frame-cell f'+(car+1)+'">'+(car+1)+'</span>'+
+       '<span class="dt-vehicle-short">'+safe(p.short)+'</span>'+
+     '</span></td>'+
+     fields.map(field=>renderField(field,row,car)).join("")+'</tr>';
+ }).join("");
+ analyzerSheet.classList.remove("scrolled");
+ analyzerSheet.querySelector(".sheet-body").scrollLeft=0;
  analyzerSheet.hidden=false;
  analyzerOverlay.hidden=false;
  analyzerSheet.querySelector(".sheet-close").focus({preventScroll:true});
