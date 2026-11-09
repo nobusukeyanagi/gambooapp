@@ -36,6 +36,56 @@ for(const width of [296,375,768]){
      display:getComputedStyle(document.querySelector('.auto-race-table')).display};
   });
   const errorsNow=[];
+  const supercon=await page.evaluate(()=>{
+    const bar=document.querySelector('.auto-supercon-bar');
+    const parts=[...bar.querySelectorAll('.auto-supercon-pair')].map(pair=>({
+      nums:[...pair.querySelectorAll('.lineup-car')].map(c=>c.textContent.trim()),
+      classes:[...pair.querySelectorAll('.lineup-car')].map(c=>c.classList.contains('f'+c.textContent.trim())),
+      sizes:[...pair.querySelectorAll('.lineup-car')].map(c=>{
+        const r=c.getBoundingClientRect();return [Math.round(r.width),Math.round(r.height)];
+      }),
+      hyphen:pair.querySelector('.auto-supercon-dash')?.textContent.trim()
+    }));
+    const row=bar.querySelector('.lineup-row');
+    const style=e=>{const s=getComputedStyle(e);return {
+      font:s.fontSize,color:s.color,bg:s.backgroundColor,padding:s.padding,
+      gap:s.gap,borderBottom:s.borderBottomWidth,display:s.display
+    }};
+    const rect=e=>e.getBoundingClientRect();
+    const menu=document.querySelector('.race-menu-scroll'),table=document.querySelector('.rt-area');
+    return {
+      first:bar.querySelector('.lineup-title')?.textContent.trim(),
+      kind:bar.querySelector('.auto-supercon-kind')?.textContent.trim(),
+      parts,bar:style(bar),title:style(bar.querySelector('.lineup-title')),
+      row:style(row),hasRightButton:!!bar.querySelector('button,a,.aokei-paper-btn'),
+      placement:Math.abs(rect(bar).top-rect(menu).bottom)<1&&
+        Math.abs(rect(table).top-rect(bar).bottom)<1,
+      rowFits:row.scrollWidth<=row.clientWidth+1
+    };
+  });
+  if(supercon.first!=='スパコン直前予想　自信度★★★☆☆'||
+     supercon.kind!=='2連単'||supercon.parts.length!==3||
+     supercon.parts.map(x=>x.nums.join('-')).join('|')!=='1-8|8-1|1-5'||
+     supercon.parts.some(x=>x.hyphen!=='-'||x.classes.some(y=>!y)||
+       x.sizes.some(size=>size[0]!==22||size[1]!==22))||
+     supercon.hasRightButton||!supercon.placement||!supercon.rowFits)
+    errorsNow.push('SCR-310 supercomputer prediction structure/fit mismatch: '+JSON.stringify(supercon));
+  const referenceLineup=await browser.newPage({viewport:{width,height:900},deviceScaleFactor:1});
+  await referenceLineup.goto(origin+'/SCR-210_racecardkeirin.html',{waitUntil:'load'});
+  const style210=await referenceLineup.evaluate(()=>{
+    const bar=document.querySelector('.lineup-bar'),title=bar.querySelector('.lineup-title'),
+      row=bar.querySelector('.lineup-row');
+    const style=e=>{const s=getComputedStyle(e);return {
+      font:s.fontSize,color:s.color,bg:s.backgroundColor,padding:s.padding,
+      gap:s.gap,borderBottom:s.borderBottomWidth,display:s.display
+    }};
+    return {bar:style(bar),title:style(title),row:style(row)};
+  });
+  await referenceLineup.close();
+  if(JSON.stringify(supercon.bar)!==JSON.stringify(style210.bar)||
+     JSON.stringify(supercon.title)!==JSON.stringify(style210.title)||
+     JSON.stringify(supercon.row)!==JSON.stringify(style210.row))
+    errorsNow.push('prediction bar should share SCR-210 lineup styles: '+JSON.stringify({supercon,style210}));
   const responsive=await page.evaluate(()=>{
     const actions=[...document.querySelectorAll('.shared-app-header .header-actions :is(.icon-btn,.cta-btn)')].map(x=>Math.round(x.getBoundingClientRect().width));
     const title=document.querySelector('.shared-app-header .header-title-text');
