@@ -98,9 +98,7 @@
   border-right:var(--line-normal) !important;
   border-bottom:var(--line-normal) !important;
 }
-.sport-auto .race-detail-scroll .auto-race-table thead tr:first-child > th {
-  border-top:var(--line-normal) !important;
-}
+/* No extra top stroke: the 1px section divider above is sufficient. */
 .sport-auto .race-detail-scroll .auto-race-table thead tr:first-child > th:first-child,
 .sport-auto .race-detail-scroll .auto-race-table tbody tr > td:first-child {
   border-left:var(--line-normal) !important;
@@ -279,7 +277,7 @@
   padding-inline:var(--space-1);
 }
 .sport-auto .auto-race-table th.auto-last5-heading {
-  font-size:var(--fs-14); font-weight:var(--fw-strong); white-space:nowrap;
+  font-size:var(--fs-12); font-weight:var(--fw-strong); white-space:nowrap;
 }
 .sport-auto .auto-race-table .auto-last5-link {
   display:block; width:100%; color:inherit; text-decoration:none;
@@ -287,41 +285,64 @@
 .sport-auto .auto-race-table .auto-last5-link:focus-visible {
   outline:2px solid var(--c-blue); outline-offset:-2px;
 }
+/* Match SCR-210's 3-line meeting metadata and 30px result badge. */
 .sport-auto .auto-race-table .auto-last5-entry {
-  display:grid; grid-template-columns:48px 44px minmax(0,1fr);
-  align-items:stretch; width:100%; min-height:50px;
+  display:grid; grid-template-columns:48px 52px minmax(0,1fr);
+  align-items:center; width:100%; min-height:50px;
   font-variant-numeric:tabular-nums;
 }
 .sport-auto .auto-race-table .auto-last5-meta {
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:3px; min-width:0; text-align:center;
-  font-size:var(--fs-12); line-height:1.05; color:var(--c-text-secondary);
+  display:grid; grid-template-rows:16px 12px 12px;
+  row-gap:var(--space-3); justify-items:start; align-items:center;
+  min-width:0; text-align:left;
+  font-size:var(--fs-12); line-height:1; color:var(--c-text-primary);
 }
 .sport-auto .auto-race-table .auto-last5-meta > span {
-  display:block; white-space:nowrap;
+  display:block; width:100%; text-align:left; white-space:nowrap;
 }
-.sport-auto .auto-race-table .auto-last5-grade.is-normal {
-  color:var(--c-text-primary); font-weight:var(--fw-strong);
+.sport-auto .auto-race-table .auto-last5-meta > span.auto-last5-grade {
+  display:inline-flex; box-sizing:border-box; align-items:center;
+  justify-content:center; width:max-content; min-width:31px;
+  padding:var(--space-1) var(--space-2);
+  font-size:var(--fs-12); line-height:1; border-radius:var(--r-sm);
+  font-weight:var(--fw-strong); color:var(--c-surface);
+}
+.sport-auto .auto-race-table .auto-last5-grade.grade-sg {
+  background:var(--c-magenta);
+}
+.sport-auto .auto-race-table .auto-last5-grade.grade-g2 {
+  background:var(--c-green);
+}
+.sport-auto .auto-race-table .auto-last5-grade.grade-normal {
+  background:var(--c-bronze);
+}
+.sport-auto .auto-race-table .auto-last5-grade.grade-unknown {
+  background:transparent; color:var(--c-text-primary);
 }
 .sport-auto .auto-race-table .auto-last5-finish {
   display:flex; flex-direction:column; justify-content:center;
   align-items:center; min-width:0; gap:0;
 }
 .sport-auto .auto-race-table .auto-last5-rank {
-  display:block; font-size:24px; font-weight:var(--fw-strong);
-  line-height:1.15; color:var(--c-text-primary);
+  display:inline-flex; box-sizing:border-box; align-items:center;
+  justify-content:center; width:30px; height:30px; min-width:30px;
+  border:0; border-radius:var(--r-xs);
+  font-size:var(--fs-16); font-weight:var(--fw-strong);
+  line-height:1; color:var(--c-text-primary); text-align:center;
+  background:color-mix(in srgb, var(--c-border) 70%, var(--c-surface) 30%);
 }
 .sport-auto .auto-race-table .auto-last5-finish.is-special .auto-last5-rank {
+  width:max-content; max-width:50px; padding-inline:var(--space-2);
   font-size:var(--fs-12);
 }
 .sport-auto .auto-race-table .auto-last5-rank-1 .auto-last5-rank {
-  background:var(--c-gold-light); border-radius:var(--r-xs); padding-inline:var(--space-2);
+  background:var(--c-gold-light);
 }
 .sport-auto .auto-race-table .auto-last5-rank-2 .auto-last5-rank {
-  background:var(--c-blue-light); border-radius:var(--r-xs); padding-inline:var(--space-2);
+  background:var(--c-blue-light);
 }
 .sport-auto .auto-race-table .auto-last5-rank-3 .auto-last5-rank {
-  background:var(--c-bronze-light); border-radius:var(--r-xs); padding-inline:var(--space-2);
+  background:var(--c-bronze-light);
 }
 .sport-auto .auto-race-table .auto-last5-flag {
   display:block; font-size:var(--fs-12); color:var(--c-red);
