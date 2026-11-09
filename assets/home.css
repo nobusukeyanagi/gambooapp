@@ -257,7 +257,7 @@ button,
       }
 
       /* Common layout belongs to assets/ui-consistency.css. */
-      .vgroup-head { cursor: pointer; }
+      .vgroup-head { cursor: default; }
       .vgroup-name {
         display: flex;
         align-items: center;
