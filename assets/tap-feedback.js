@@ -14,7 +14,7 @@
     '.menu-item', '.news-item', '.blog-card', '.feature-card', '.feature-cta',
     '.venue-tile', '.vcard', '.race-tile', '.dokanto-card', '.hero-banner',
     '.pickup-card', '.rebate-chip', '.bn', '.tsubu-link', '.pay-toggle',
-    '.mori-sp', '.mori-next', '.vgroup-head:not(.mori-heading)',
+    '.mori-sp', '.mori-next',
     '.see-all', '.vgroup-link', '.mori-page-link', '.back-btn',
     '[data-tap-feedback]',
     '.sort-btn', '.sort-opt', '.rchip', '.compact-row', '.op-btn', '.rpred',
@@ -48,6 +48,9 @@
     // Bottom navigation never receives the shared tap highlight.
     // Its selected/unselected state stays governed by nav styles.
     if (el.closest('.bottom-tab')) return null;
+    // Headings are labels, not navigation or press targets, on every screen.
+    // Explicit adjacent controls (e.g. a see-all or back link) remain interactive.
+    if (el.closest('.page-header-title, .vgroup-name, .section-title, .venue-header-line, .favorite-group-title, .lineup-title, .rt-legend-title, .sheet-title')) return null;
     // Informational cards can opt out without affecting their contents.
     if (el.closest('[data-no-tap-feedback]')) return null;
     var target = el.closest(targets);
