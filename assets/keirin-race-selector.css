@@ -386,11 +386,10 @@
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  min-width: 82px;
   height: 52px;
   min-height: 52px;
   box-sizing: border-box;
-  padding: var(--space-2) var(--space-card);
+  padding-block: var(--space-2);
   margin: 0;
   margin-bottom: 0;
   line-height: 1.25;
@@ -405,13 +404,7 @@
   white-space: normal;
   text-align: center;
 }
-.race-detail-scroll .race-menu-scroll .info-tab[data-target="player"] { min-width: 82px; }
-.race-detail-scroll .race-menu-scroll .info-tab[data-target="marutoku"] { min-width: 90px; }
-.race-detail-scroll .race-menu-scroll .info-tab[data-target="recent"] { min-width: 112px; }
-.race-detail-scroll .race-menu-scroll .info-tab[data-target="meeting"] { min-width: 108px; }
-.race-detail-scroll .race-menu-scroll .info-tab[data-target="position"] { min-width: 108px; }
-.race-detail-scroll .race-menu-scroll .info-tab[data-target="gindex"] { min-width: 72px; }
-.race-detail-scroll .race-menu-scroll .info-tab[data-target="mania"] { min-width: 90px; }
+/* All menu label widths / horizontal padding are owned by racecard-common.css. */
 
 /* The lineup has exactly two rows and a right-hand newspaper control. */
 .race-detail-scroll .lineup-bar {
