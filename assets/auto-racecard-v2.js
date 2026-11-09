@@ -699,6 +699,7 @@ const body=table.tBodies[0],power=table.querySelector(".sort-power");
 power.addEventListener("click",()=>{const high=power.getAttribute("aria-pressed")!=="true";
  [...body.rows].sort((a,b)=>high?Number(b.dataset.power)-Number(a.dataset.power):Number(a.dataset.vehicle)-Number(b.dataset.vehicle))
  .forEach(tr=>body.appendChild(tr));power.setAttribute("aria-pressed",String(high));});
-root.querySelector('.race-tab[data-race="9"]')?.addEventListener("click",e=>e.preventDefault());
+// The selector matches SCR-210: all race tiles are visual mock controls,
+ // with shared tap feedback and no navigation or race-selection handler.
 root.querySelector('.race-tab[data-race="9"]')?.setAttribute("aria-current","true");
 })();
