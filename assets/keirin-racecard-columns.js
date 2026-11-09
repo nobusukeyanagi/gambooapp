@@ -20,7 +20,7 @@
     const icons = tags.map(label => {
       const image = featuredIconFiles[label];
       return image ? '<img src="./assets/images/'+image+'" alt="'+escape(label)+
-        '" title="'+escape(label)+'" width="24" height="24">' : "";
+        '" title="'+escape(label)+'" width="48" height="48">' : "";
     }).join("");
     return '<td class="player-featured">'+
       (icons ? '<div class="player-featured-icons">'+icons+'</div>' : "")+
@@ -106,12 +106,12 @@
       ...["1着P","2着P","3着P"].map(label=>
         sub(label,"marutoku-score-label")),
       sub("G指数","bl gindex-section-start gindex-combined-heading"),
+      sub("総合","c-item bl mania-total mania-section-start mania-section-heading"),
       ...maniaItems.map(([label],i)=>
         sub('<button type="button" class="item-btn" data-item="'+i+
           '" aria-label="'+label.replace(/<br\s*\/?\s*>/g,"")+'の成績を開く">'+
           '<span>'+label+'</span></button>',
-          'c-item'+(i===0?' bl mania-section-start mania-section-heading':''))),
-      sub("総合","c-item mania-total")
+          'c-item'))
     ];
     // Grouped headings share columns across the two header rows.
     // Mark-and-value headings use the same fixed left/center grid as data.
@@ -346,14 +346,14 @@
         statCombo(marker(gMark),
           '<span class="g-val'+(gRank?' rank-number rank-tint-'+gRank:'')+'">'+
             escape(rider.g)+'</span>')+'</td>'+
+      '<td class="bl mania-eval mania-total">'+
+        marker(window.GambooKeirinAnalyzerEvaluation?.[rider.car-1]?.[9]||"")+
+      '</td>'+
       maniaItems.map((item,i)=>{
         const evaluation=window.GambooKeirinAnalyzerEvaluation?.[rider.car-1]?.[i]||"";
-        return '<td class="mania-eval'+(i===0?' bl':'')+
-          '" data-item="'+i+'">'+marker(evaluation)+'</td>';
-      }).join("")+
-      '<td class="mania-eval mania-total">'+
-        marker(window.GambooKeirinAnalyzerEvaluation?.[rider.car-1]?.[9]||"")+
-      '</td></tr>';
+        return '<td class="mania-eval" data-item="'+i+'">'+
+          marker(evaluation)+'</td>';
+      }).join("")+'</tr>';
   };
   // Rank G-index values numerically, descending. The four highest riders
   // receive ◎, ○, △ and × respectively; all others have an empty mark.
