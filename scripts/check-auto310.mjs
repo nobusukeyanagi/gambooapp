@@ -198,6 +198,8 @@ for(const width of [296,375,768]){
       return {contents:lines.map(x=>[...x.querySelectorAll('span')].map(n=>n.textContent.trim())),
         font:lines.map(x=>getComputedStyle(x).fontSize),
         weight:lines.map(x=>getComputedStyle(x).fontWeight),
+        labels:lines.map(x=>{const c=getComputedStyle(x.querySelector('.auto-titles-label'));return {font:c.fontSize,color:c.color,weight:c.fontWeight};}),
+        values:lines.map(x=>{const c=getComputedStyle(x.querySelector('.auto-titles-count'));return {font:c.fontSize,color:c.color,weight:c.fontWeight};}),
         align:[getComputedStyle(td).textAlign,...lines.map(x=>getComputedStyle(x).textAlign)],
         left:lines.map(x=>x.querySelector('.auto-titles-label').getBoundingClientRect().left),
         numberLeft:lines.map(x=>x.querySelector('.auto-titles-count').getBoundingClientRect().left),
@@ -221,7 +223,9 @@ for(const width of [296,375,768]){
          ['今年優勝',String(expectedAwards[i][1])],
          ['通算優勝',String(expectedAwards[i][2])]];
        return JSON.stringify(r.contents)!==JSON.stringify(expected)||
-        r.font.some(x=>x!=='14px')||r.weight.some(x=>x!=='400')||
+        r.font.some(x=>x!=='12px')||r.weight.some(x=>x!=='400')||
+        r.labels.some(x=>x.font!=='12px'||x.color!=='rgb(96, 107, 118)'||x.weight!=='400')||
+        r.values.some(x=>x.font!=='12px'||x.color!=='rgb(48, 54, 59)'||x.weight!=='400')||
         r.align.some(x=>x!=='left')||r.width!==120||r.overflow||
         Math.max(...r.left)-Math.min(...r.left)>0.5||
         Math.max(...r.numberLeft)-Math.min(...r.numberLeft)>0.5;
