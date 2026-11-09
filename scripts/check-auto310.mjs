@@ -36,6 +36,28 @@ for(const width of [296,375,768]){
      display:getComputedStyle(document.querySelector('.auto-race-table')).display};
   });
   const errorsNow=[];
+  // Every SCR-310 menu label has the same 13px side clearance.
+  // The "選手情報" tab itself retains its baseline 82px.
+  const menuSizing=await page.locator('.race-menu-scroll .info-tab').evaluateAll(tabs=>
+    tabs.map(tab=>{
+      const content=tab.querySelector('span').getBoundingClientRect(),
+        outer=tab.getBoundingClientRect(),style=getComputedStyle(tab);
+      return {label:tab.textContent.trim(),width:Math.round(outer.width*100)/100,
+        left:Math.round((content.left-outer.left)*100)/100,
+        right:Math.round((outer.right-content.right)*100)/100,
+        textWidth:Math.round(content.width*100)/100,
+        paddingLeft:style.paddingLeft,paddingRight:style.paddingRight,
+        minWidth:style.minWidth,
+        fits:content.width<=outer.width+0.5};
+    })
+  );
+  if(menuSizing.length!==6||menuSizing[0].label!=='選手情報'||
+     Math.abs(menuSizing[0].width-82)>1||
+     menuSizing.some(m=>m.paddingLeft!=='13px'||m.paddingRight!=='13px'||
+       m.minWidth!=='0px'||Math.abs(m.left-13)>0.6||
+       Math.abs(m.right-13)>0.6||!m.fits||
+       Math.abs(m.width-m.textWidth-26)>0.6))
+    errorsNow.push('menu label-based widths / horizontal padding mismatch: '+JSON.stringify(menuSizing));
   const supercon=await page.evaluate(()=>{
     const bar=document.querySelector('.auto-supercon-bar');
     const parts=[...bar.querySelectorAll('.auto-supercon-pair')].map(pair=>({
