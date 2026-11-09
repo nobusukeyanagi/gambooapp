@@ -203,7 +203,10 @@
       const ranking=src.headers.map((_,k)=>src.type==="advance"?null:
         [0,1,2].map(metric=>ranksByRate(src.rows,k,metric,src.type==="pref")));
       const html=src.rows.map((record,index)=>{
-        const [name,,groups]=record;
+        const [sourceName,,groups]=record;
+        // Detail statistics are sample values from different races. For this
+        // SCR-210 mock, only the displayed rider names match the current race.
+        const name=DATA.basics.find(rider=>Number(rider.car)===index+1)?.name || sourceName;
         const cells=groups.map((group,k)=>{
           if(src.type==="advance"){
             return rankCell(group[0])+advanceRateCell(group[1]);
