@@ -102,11 +102,10 @@ const header='<tr>'+
 '<th rowspan="2" class="col-machine">競走車名</th>'+
 statHeaderGroup("recent")+timeHeader("平均","試走T",true)+
 timeHeader("平均","競走T",false)+timeHeader("最高","競走T",false)+
-statHeaderGroup("last90")+roadHeaders()+group("titles","今年・通算優勝",3)+group("mania","マニア分析",3)+'</tr>';
+statHeaderGroup("last90")+roadHeaders()+
+'<th rowspan="2" data-group="titles" class="auto-titles-column">優出・優勝</th></tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
-const subhead='<tr>'+
- sub(["今年優出","今年V","通算V"])+
- sub(["走路別","近90日","タイム"])+'</tr>';
+const subhead='<tr></tr>';
 table.tHead.innerHTML=header+subhead;
 const num=(values)=>values.map((v,i)=>'<td class="auto-value'+(i===0?" auto-start":"")+'">'+v+'</td>').join("");
 /* Follow SCR-210: show integer rates, tint the three highest win /
@@ -149,6 +148,11 @@ const statCells=(counts,ranks,extraClass="")=>{
 const roadCells=(p,i)=>
  statCells(p.roadRecord.good,roadGoodRanks[i],"auto-road-cell")+
  statCells(p.roadRecord.wet,roadWetRanks[i],"auto-road-cell");
+const titlesCell=p=>'<td class="auto-titles-column auto-titles-cell">'+
+ ["今年優出","今年優勝","通算優勝"].map((name,i)=>
+ '<div class="auto-titles-line"><span class="auto-titles-label">'+name+
+ '</span><span class="auto-titles-count">'+safe(p.thisYear[i])+'</span></div>').join("")+
+ '</td>';
 const showDev=v=>v===null||v===undefined?"—":safe(v);
 const deviationCell=p=>'<td class="col-t col-deviation" title="試走偏差（公式／Gamboo全R／Gamboo2連対）">'+
  '<div class="deviation-primary">'+safe(p.good10Diff)+'</div>'+
@@ -165,9 +169,7 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
   const fields=main+statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+statCells(p.r90,last90Ranks[i])+
-  roadCells(p,i)+
-  num(p.thisYear)+
-  ['road','last90','good'].map((key,j)=>'<td class="auto-value'+(j===0?' auto-start':'')+'"><button type="button" class="item-btn auto-detail-button" data-report="'+key+'">'+["走路別","近90日","タイム"][j]+'</button></td>').join("");
+  roadCells(p,i)+titlesCell(p);
   return '<tr data-vehicle="'+(i+1)+'" data-power="'+p.power+'">'+fields+'</tr>';
 }).join("");
 // Synchronize table drags, active menu and menu-strip position exactly as
@@ -244,37 +246,6 @@ wrap.addEventListener("touchstart",unlockSection,{passive:true});
 wrap.addEventListener("scroll",syncSection,{passive:true});
 window.addEventListener("resize",syncSection);
 selectSection("player");
-const sheet=root.querySelector(".sheet"),overlay=root.querySelector(".sheet-overlay");
-const report={
- road:{title:"近180日・走路別成績",
- heads:["良1着","良2着","良3着","良着外","湿1着","湿2着","湿3着","湿着外"],
- values:p=>["good","wet"].flatMap(track=>{
-   const counts=p.roadRecord[track],rates=statValues(counts);
-   return counts.map((v,i)=>v+"（"+Math.trunc(rates[i])+"%）");
- })},
- last90:{title:"近90日成績",heads:["出走","1着","2着","3着","着外","2連対率","3連対率"],values:p=>{const n=p.r90.reduce((a,b)=>a+b,0);const pct=x=>n?(100*x/n).toFixed(1)+"%":"—";return [n,...p.r90,pct(p.r90[0]+p.r90[1]),pct(p.r90[0]+p.r90[1]+p.r90[2])]}},
- good:{title:"良走路・近10走タイム",heads:["平均試走T","平均競走T","最高競走T"],values:p=>[p.trial,p.avg,p.best]}
-};
-function close(){sheet.hidden=true;overlay.hidden=true;}
-function open(key){
- const it=report[key];if(!it)return;
- sheet.querySelector(".sheet-title").textContent=it.title;
- const detail=sheet.querySelector(".detail-table");
- detail.tHead.innerHTML='<tr><th class="dt-vehicle" rowspan="2">車番</th><th class="dt-auto-name" rowspan="2">選手名</th><th colspan="'+it.heads.length+'">'+it.title+'</th></tr><tr>'+
- it.heads.map(s=>'<th>'+safe(s)+'</th>').join("")+'</tr>';
- detail.tBodies[0].innerHTML=players.map((p,i)=>'<tr><td class="dt-vehicle"><div class="dt-vehicle-content"><span class="frame-cell f'+(i+1)+'">'+(i+1)+'</span><span class="dt-vehicle-short">'+safe(p.short)+'</span></div></td>'+
- '<td class="dt-auto-name">'+safe(p.name)+'</td>'+it.values(p).map(v=>'<td>'+v+'</td>').join("")+'</tr>').join("");
- sheet.hidden=false;overlay.hidden=false;
- sheet.querySelector(".sheet-close").focus({preventScroll:true});
-}
-root.querySelectorAll(".auto-detail-button").forEach(t=>t.addEventListener("click",()=>open(t.dataset.report)));
-sheet.querySelector(".sheet-close").addEventListener("click",close);
-sheet.querySelector(".sheet-handle").addEventListener("click",close);
-overlay.addEventListener("click",close);
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!sheet.hidden)close();});
-let initialY=null;
-sheet.querySelector(".sheet-handle").addEventListener("touchstart",e=>{initialY=e.touches[0]?.clientY??null;},{passive:true});
-sheet.querySelector(".sheet-handle").addEventListener("touchend",e=>{if(initialY!==null&&(e.changedTouches[0]?.clientY??initialY)-initialY>35)close();initialY=null;},{passive:true});
 const body=table.tBodies[0],power=table.querySelector(".sort-power");
 // Car numbers are fixed identifiers, not a sort control.
 // The combined ランク / 審査P heading toggles between descending points and vehicle order.
