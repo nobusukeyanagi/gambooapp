@@ -224,7 +224,7 @@ const superconNumber=(value,rank)=>'<span class="auto-sp-number'+
  (rank?' auto-sp-rank-'+rank:'')+'">'+safe(value)+'</span>';
 const superconCells=i=>{
  const p=superconForecast[i];
- const formLabel={up:"上向き",flat:"平行",down:"下降"}[p.form];
+ const formLabel={up:"上向き",flat:"横ばい",down:"下降"}[p.form];
  const formArrow={up:"↑",flat:"→",down:"↓"}[p.form];
  return '<td class="auto-sp-cell auto-sp-prediction auto-start">'+
     '<span class="auto-sp-mark">'+safe(p.mark)+'</span>'+
@@ -233,8 +233,8 @@ const superconCells=i=>{
   '<td class="auto-sp-cell">'+superconNumber(p.strong,superconRanking.strong[i])+'</td>'+
   '<td class="auto-sp-cell auto-sp-form" aria-label="調子 '+formLabel+
     '" title="調子 '+formLabel+'"><span class="auto-sp-form-'+p.form+'">'+formArrow+'</span></td>'+
-  '<td class="auto-sp-cell">'+superconNumber(p.handling,superconRanking.handling[i])+'</td>'+
-  '<td class="auto-sp-cell">'+superconNumber(p.escape,superconRanking.escape[i])+'</td>'+
+  '<td class="auto-sp-cell auto-sp-handling">'+superconNumber(p.handling,superconRanking.handling[i])+'</td>'+
+  '<td class="auto-sp-cell auto-sp-escape">'+superconNumber(p.escape,superconRanking.escape[i])+'</td>'+
   '<td class="auto-sp-cell">'+superconNumber(p.start,superconRanking.start[i])+'</td>';
 };
 const roadHeaders=()=>["良","湿"].flatMap((track,k)=>
