@@ -297,7 +297,7 @@ statHeaderGroup("last90")+
 '<th rowspan="2" class="auto-best90-heading" data-group="last90">最高競走T</th>'+
 roadHeaders()+headToHeadHeaders()+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-start">予想着順</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">予想競走T</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-racetime">予想競走T</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading">ストロングP</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">調子</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">捌き力</th>'+
