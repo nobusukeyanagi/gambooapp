@@ -1,18 +1,30 @@
 @charset "UTF-8";
-/* Shared, immediate, one-time tactile feedback for the Gamboo wireframes.
-   Do not bind the effect to click; click happens after the finger is lifted. */
-.tap-pressed {
-  /* Every press target flashes the shared light gold, not a darkened version
-     of its normal background. Restore the original styling on release. */
-  filter: none !important;
-  background: var(--c-gold-light) !important;
-  color: var(--c-text-primary) !important;
+/* Shared immediate tap feedback: light-gold background with gold labels.
+   Do not depend on native WebKit tap effects (which can flash dark). */
+html {
   -webkit-tap-highlight-color: transparent;
 }
-/* Readable dark labels and icons when originally white-on-brand controls
-   temporarily receive the light-gold background. */
-.tap-pressed :is(span, small, b, strong, svg, .ic) {
-  color: var(--c-text-primary) !important;
+.tap-pressed {
+  filter: none !important;
+  background: var(--c-gold-light) !important;
+  color: var(--c-gold) !important;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Every text/icon inside a pressed target uses gold, never charcoal/black.
+   This includes the red 210 purchase button and 200 countdown chips. */
+.tap-pressed :is(span, small, b, strong, em, i, svg, .ic) {
+  color: var(--c-gold) !important;
+}
+/* Some controls draw their visible fill on a child rather than the link
+   itself. Tint those fills too, so the full pressed button is light gold. */
+.tap-pressed :is(.ri-race-purchase, .rchip-warning, .rchip-rebate) {
+  background: var(--c-gold-light) !important;
+  border-color: var(--c-gold) !important;
+}
+/* Explicitly disable the browser's default dark flash on press targets even
+   before JavaScript applies the pressed class. */
+:is(a, button, [role="button"], [role="link"], [role="tab"], [data-tap-feedback]) {
+  -webkit-tap-highlight-color: transparent;
 }
 /* Links without destinations still receive visible feedback without navigating. */
 .see-all, .vgroup-link, .back-btn, [data-tap-feedback] {
