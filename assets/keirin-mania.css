@@ -364,6 +364,11 @@
   font-size: var(--fs-14);
   font-variant-numeric: tabular-nums;
 }
+/* Positive 1–3着 deltas only: highlight text background, not the whole cell. */
+.sheet .detail-table .dt-difference-positive {
+  background: var(--c-gold-light);
+  border-radius: var(--r-xs);
+}
 
 /* On sufficiently tall screens, the detail rows are exactly the main
    racecard's 56px and the ninth bottom border touches the footer. On small
