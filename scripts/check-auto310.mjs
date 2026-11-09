@@ -980,11 +980,15 @@ for(const width of [296,375,768]){
     const h=cell=>Math.round(cell.getBoundingClientRect().height);
     return {span:h(table.tHead.rows[0].querySelector('th[rowspan="2"]')),
       lastSpan:h(table.tHead.rows[0].querySelector('th.auto-titles-column')),
+      rainGroup:h(table.tHead.querySelector('th.auto-sp-rain-group')),
+      rainSub:[...table.tHead.querySelectorAll('th.auto-sp-rain-sub')].map(h),
       bottomCells:table.tHead.rows[1].cells.length};
   });
   if(Math.abs(autoHeaderHeights.span-keirinHeaderHeights.span)>1||
      autoHeaderHeights.span!==48||autoHeaderHeights.lastSpan!==48||
-     autoHeaderHeights.bottomCells!==0)
+     autoHeaderHeights.rainGroup!==24||
+     JSON.stringify(autoHeaderHeights.rainSub)!=='[24,24]'||
+     autoHeaderHeights.bottomCells!==2)
     errorsNow.push('header heights differ from 210: '+JSON.stringify({autoHeaderHeights,keirinHeaderHeights}));
   if(positions.rows.slice(0,4).some((v,i)=>Math.abs(v-reference[i])>0.6))
     errorsNow.push('first four rows differ from SCR-210: '+JSON.stringify({auto:positions.rows,keirin:reference}));
