@@ -3,7 +3,14 @@
    Race-specific column widths and data are intentionally kept in their own CSS. */
 
 /* Both menus keep the same type and selected-state treatment. */
+/* Same horizontal whitespace for both racecards:
+   13px on each side of the actual text, regardless of one/two lines.
+   4 full-width 14px glyphs (選手情報) = 56px + 26px = 82px. */
 .race-detail-scroll .race-menu-scroll .info-tab {
+  flex: 0 0 auto;
+  min-width: 0;
+  width: max-content;
+  padding-inline: 13px;
   color: var(--c-text-secondary);
   font-family: var(--ff-ui);
   font-size: var(--fs-14);
