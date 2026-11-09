@@ -145,7 +145,7 @@
           placingHeaders.map(stackedHeading).join("");
       }).join("");
       sheet.querySelector(".detail-table thead").innerHTML=
-        '<tr><th class="dt-vehicle" rowspan="2">車番<span class="dt-vehicle-heading-sub">選手</span></th>'+
+        '<tr><th class="dt-vehicle" rowspan="2">車番</th>'+
         groupHeaders.join("")+'</tr><tr>'+fields+'</tr>';
       const ranking=src.headers.map((_,k)=>src.type==="advance"?null:
         [0,1,2].map(metric=>ranksByRate(src.rows,k,metric,src.type==="pref")));
