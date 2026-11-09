@@ -1975,7 +1975,11 @@
       .lb-btn.active { background: var(--c-gold-light); border-color: var(--c-gold); color: var(--c-text-primary); }
       .at .lb-div { border-left: var(--line-normal); }
       .at.lab .rn small.rk { margin-top: 2px; }
+      /* Keep auto and keirin race summaries equal in height. Reserve the
+         5th information line for up to two lines of 12px auxiliary text. */
       .race-info-bar.ri-has-act {
+        box-sizing: border-box;
+        height: var(--h-race-info-summary);
         display: flex;
         align-items: center;
         gap: 10px;
