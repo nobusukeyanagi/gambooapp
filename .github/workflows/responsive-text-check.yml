@@ -1,0 +1,30 @@
+name: Verify Responsive Text
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'SCR-*.html'
+      - 'index.html'
+      - 'assets/text-fit.js'
+      - 'assets/ui-consistency.css'
+      - 'assets/auto-racecard-v2.css'
+      - 'scripts/check-responsive-text.mjs'
+      - '.github/workflows/responsive-text-check.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Start local server
+        run: python3 -m http.server 4173 --bind 127.0.0.1 --directory . > /tmp/gamboo-text.log 2>&1 &
+      - name: Verify all pages at three viewport widths
+        run: node scripts/check-responsive-text.mjs
