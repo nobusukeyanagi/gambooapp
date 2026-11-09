@@ -23,9 +23,24 @@
   transform-origin:left center; line-height:1.2;
 }
 .sport-auto .race-detail-scroll .ri-auto-detail-line .ri-auto-inline { gap:var(--space-content); }
-.sport-auto .race-info-bar .ri-auto-weather { color:var(--c-text-primary); white-space:nowrap; }
+/* The countdown is nested inside the horizontally compressed span, so it
+   requires a descendant selector in addition to SCR-210's shared rule. */
+.sport-auto .race-detail-scroll .race-info-meta .race-countdown {
+  color:var(--c-red);
+  font-size:var(--fs-12);
+  font-weight:var(--fw-strong);
+}
+/* Weather labels retain the shared secondary tone. All requested values,
+   including road condition, are bold and use the primary dark text color. */
+.sport-auto .race-info-bar .ri-auto-weather {
+  color:var(--c-text-secondary);
+  white-space:nowrap;
+}
 .sport-auto .race-info-bar .ri-auto-detail-line strong,
-.sport-auto .race-info-bar .ri-auto-weather strong { font-weight:var(--fw-strong); }
+.sport-auto .race-info-bar .ri-auto-weather strong {
+  font-weight:var(--fw-strong);
+  color:var(--c-text-primary);
+}
 .sport-auto .race-info-bar .ri-btn.live { text-decoration:none; }
 /* Menu widths, typography and selection use SCR-210 shared styles. */
 .sport-auto .race-detail-scroll .rt-area { flex:none; height:auto; overflow:visible; }

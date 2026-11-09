@@ -27,6 +27,7 @@ for(const width of [296,375,768]){
      menuCount:document.querySelectorAll('.race-menu-scroll .info-tab').length,
      activeNav:document.querySelector('.bottom-tab .tab-item.active')?.textContent.trim(),
      weather:document.querySelector('.race-info-bar .ri-auto-detail-line:last-child')?.textContent.replace(/\s+/g,' ').trim(),
+     weatherTop:document.querySelector('.race-info-bar .ri-auto-detail-line:first-child')?.textContent.replace(/\s+/g,' ').trim(),
      fourth:document.querySelector('.race-info-bar .race-info-row')?.textContent.replace(/\s+/g,' ').trim(),
      standaloneWeather:document.querySelectorAll('.auto-weather-bar').length,
      liveUnderline:getComputedStyle(document.querySelector('.race-info-bar .ri-btn.live')).textDecorationLine,
@@ -66,9 +67,28 @@ for(const width of [296,375,768]){
   if(JSON.stringify(result.riders)!==JSON.stringify(expected)||result.columns!==2||result.menuCount!==7)
    errorsNow.push('rider/table/menu mismatch');
   if(result.activeNav!=='オート予想'||!result.weather.includes('湿走路 11.0℃')||!result.weather.includes('90.0%')||
-     !result.date.includes('3100m(6周)')||result.fourth.includes('天候')||!result.weather.endsWith('天候 晴')||
+     !result.date.includes('3100m(6周)')||result.fourth.includes('天候')||
+     !result.weatherTop.endsWith('天候 晴')||result.weather.includes('天候')||
      result.standaloneWeather!==0||result.liveUnderline!=='none'||result.countdown!=='14分前')
    errorsNow.push('summary/weather/LIVE mismatch: '+JSON.stringify(result));
+  const conditionText=await page.evaluate(()=>{
+    const root=document.querySelector('.race-info-bar');
+    const red=getComputedStyle(root.querySelector('.race-countdown')).color;
+    const indicators=[
+      root.querySelector('.ri-auto-weather strong'),
+      ...root.querySelectorAll('.ri-auto-detail-line:last-child strong')
+    ];
+    const values=indicators.map(e=>({text:e.textContent.trim(),
+      color:getComputedStyle(e).color,weight:getComputedStyle(e).fontWeight}));
+    return {red,values,
+      topLast:root.querySelector('.ri-auto-detail-line:first-child .ri-auto-inline').lastElementChild?.textContent.trim(),
+      primary:getComputedStyle(root.querySelector('.ri-meeting')).color};
+  });
+  if(conditionText.red!=='rgb(184, 71, 99)'||
+     conditionText.topLast!=='天候 晴'||conditionText.values.length!==5||
+     conditionText.values.map(x=>x.text).join('|')!=='晴|湿走路|11.0℃|9.0℃|90.0%'||
+     conditionText.values.some(x=>x.weight!=='600'||x.color!==conditionText.primary))
+    errorsNow.push('weather/countdown color/weight mismatch '+JSON.stringify(conditionText));
   const positions=await page.evaluate(()=>{
     const root=document.querySelector('.race-info-bar');
     const relative=sel=>Math.round((root.querySelector(sel).getBoundingClientRect().top-root.getBoundingClientRect().top)*10)/10;
