@@ -299,9 +299,9 @@ roadHeaders()+headToHeadHeaders()+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-start">予想着順</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading">予想競走T</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading">ストロングP</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">調子</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">捌き力</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">逃げ力</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">調子</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">捌き力</th>'+
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading auto-sp-h-short">逃げ力</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading">スタート力</th>'+
 analyzerHeaders()+'</tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
