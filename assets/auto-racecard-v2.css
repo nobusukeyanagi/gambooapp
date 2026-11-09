@@ -1,0 +1,97 @@
+@charset "UTF-8";
+/* SCR-310 uses SCR-210's canonical header, race selector, 120px summary,
+   horizontal menu, racecard, glossary, bottom navigation and details sheet. */
+.sport-auto .shared-app-header .header-title-text { font-size: var(--fs-16); line-height: 1.1; }
+.sport-auto .shared-app-header .header-actions { gap: var(--space-small); }
+.sport-auto .shared-app-header .header-actions :is(.icon-btn,.cta-btn) { min-width: 65px; padding-inline: var(--space-card); }
+.sport-auto .race-detail-scroll .ri-meeting .grade-normal { background: var(--c-bronze); color: var(--c-surface); }
+.sport-auto .race-info-bar .ri-event > .ell { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sport-auto .race-detail-scroll .auto-weather-bar {
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-2) var(--space-content);
+  padding:var(--space-card) var(--space-content); border-bottom:var(--line-normal);
+  background:var(--c-surface); color:var(--c-text-secondary);
+  font-size:var(--fs-12); line-height:1.4;
+}
+.sport-auto .auto-weather-bar span { white-space:nowrap; }
+.sport-auto .auto-weather-bar strong { font-weight:var(--fw-strong); color:var(--c-text-primary); }
+.sport-auto .race-detail-scroll .race-menu-scroll .info-tab { min-width:100px; }
+.sport-auto .race-detail-scroll .race-menu-scroll .info-tab[data-target="player"] { min-width:82px; }
+.sport-auto .race-detail-scroll .rt-area { flex:none; height:auto; overflow:visible; }
+.sport-auto .race-detail-scroll .race-table-wrap { display:block; overflow-x:auto; overflow-y:hidden; scrollbar-width:none; }
+.sport-auto .race-detail-scroll .race-table-wrap::-webkit-scrollbar { display:none; }
+.sport-auto .race-detail-scroll .auto-race-table {
+  border-collapse:separate; border-spacing:0; width:max-content; min-width:max-content;
+  table-layout:fixed; font-family:var(--ff-ui); font-variant-numeric:tabular-nums;
+}
+.sport-auto .auto-race-table :is(th,td) {
+  box-sizing:border-box; border-bottom:var(--line-normal); border-right:var(--line-normal);
+  padding:var(--space-2) var(--space-card); text-align:center;
+  vertical-align:middle; white-space:nowrap; font-family:var(--ff-ui);
+}
+.sport-auto .auto-race-table thead th {
+  position:sticky; top:0; z-index:3; height:24px; background:var(--c-bg);
+  color:var(--c-text-primary); font-size:var(--fs-12);
+  font-weight:var(--fw-strong); line-height:1.2;
+}
+.sport-auto .auto-race-table thead tr:first-child th[rowspan="2"] { height:48px; }
+.sport-auto .auto-race-table thead tr:nth-child(2) th { top:24px; height:24px; }
+.sport-auto .auto-race-table tbody td { height:56px; font-size:var(--fs-16); background:var(--c-surface); }
+.sport-auto .auto-race-table :is(th,td).col-sha {
+  position:sticky; left:0; width:50px; min-width:50px; max-width:50px;
+  padding-inline:var(--space-2); z-index:5;
+}
+.sport-auto .auto-race-table thead .col-sha { z-index:7; background:var(--c-bg); }
+.sport-auto .auto-race-table tbody .col-sha { background:var(--c-surface); }
+.sport-auto .auto-race-table .col-name { width:120px; min-width:120px; max-width:120px; }
+.sport-auto .auto-race-table tbody .col-name { text-align:left; }
+.sport-auto .auto-race-table .col-h { width:60px; min-width:60px; }
+.sport-auto .auto-race-table .col-t { width:70px; min-width:70px; }
+.sport-auto .auto-race-table .col-rank { width:82px; min-width:82px; }
+.sport-auto .auto-race-table .col-power { width:82px; min-width:82px; }
+.sport-auto .auto-race-table th.auto-section { width:auto; min-width:0; }
+.sport-auto .auto-race-table :is(th,td).auto-start { border-left:var(--line-normal); }
+.sport-auto .auto-race-table :is(th,td).auto-value { width:60px; min-width:60px; }
+.sport-auto .auto-race-table .rider-name {
+  display:block; font-size:var(--fs-16); font-weight:var(--fw-strong);
+  line-height:1.15; margin-bottom:var(--space-3);
+}
+.sport-auto .auto-race-table .rider-meta {
+  display:block; font-size:var(--fs-12); font-weight:var(--fw-normal);
+  color:var(--c-text-secondary); line-height:1.15;
+}
+.sport-auto .auto-race-table .rider-home { margin-bottom:var(--space-3); }
+.sport-auto .auto-race-table .grade-current { display:block; font-size:var(--fs-16); }
+.sport-auto .auto-race-table .grade-prev { display:block; font-size:var(--fs-12); color:var(--c-text-secondary); }
+.sport-auto .auto-race-table .frame-cell {
+  display:flex; align-items:center; justify-content:center; width:22px; height:22px;
+  margin:auto; border-radius:var(--r-sm); font-size:var(--fs-14);
+  font-weight:var(--fw-strong); color:var(--c-surface);
+}
+.sport-auto .auto-race-table .frame-cell.f1 { background:var(--w1); color:var(--c-text-primary); border:var(--line-normal); }
+.sport-auto .auto-race-table .frame-cell.f2 { background:var(--w2); }
+.sport-auto .auto-race-table .frame-cell.f3 { background:var(--w3); }
+.sport-auto .auto-race-table .frame-cell.f4 { background:var(--w4); }
+.sport-auto .auto-race-table .frame-cell.f5 { background:var(--w5); color:var(--c-text-primary); }
+.sport-auto .auto-race-table .frame-cell.f6 { background:var(--w6); }
+.sport-auto .auto-race-table .frame-cell.f7 { background:var(--w7); }
+.sport-auto .auto-race-table .frame-cell.f8 { background:var(--w8); }
+.sport-auto .auto-race-table .sha-nm {
+  display:none; margin-top:var(--space-2); font-size:var(--fs-12);
+  font-weight:var(--fw-strong); line-height:1.1;
+}
+.sport-auto .race-table-wrap.scrolled .auto-race-table .sha-nm { display:block; }
+.sport-auto .auto-race-table :is(.sort-car,.sort-power) {
+  padding:0; margin:0; border:0; background:transparent; color:inherit;
+  font:inherit; font-weight:var(--fw-strong); cursor:pointer;
+}
+.sport-auto .auto-detail-button {
+  display:inline-flex; align-items:center; justify-content:center; width:100%;
+  min-height:40px; border:var(--line-control); border-radius:var(--r-control);
+  padding-inline:var(--space-small); background:var(--c-surface);
+  color:var(--c-text-primary); font-family:var(--ff-ui);
+  font-size:var(--fs-12); font-weight:var(--fw-strong); cursor:pointer;
+}
+.sport-auto .auto-detail-button:focus-visible { outline:var(--line-focus); }
+.sport-auto .sheet .detail-table .dt-auto-name { min-width:100px; text-align:left; }
+.sport-auto .sheet .detail-table :is(th,td) { white-space:nowrap; }
+.sport-auto .rt-legend { margin-top:0; }
