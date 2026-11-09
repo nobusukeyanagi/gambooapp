@@ -237,6 +237,45 @@ const superconCells=i=>{
   '<td class="auto-sp-cell auto-sp-escape">'+superconNumber(p.escape,superconRanking.escape[i])+'</td>'+
   '<td class="auto-sp-cell">'+superconNumber(p.start,superconRanking.start[i])+'</td>';
 };
+/* Source: uploaded 2026-11-09 川口9R Gamboo
+   「データ解析の予想印」 HTML. Eight categories: total first,
+   followed by the seven data-lab analyses. The source only includes
+   marks and links to detail pages, not their numerical detail tables.
+   Therefore no numerical results or rankings are invented here.
+   ハンデ and スパコン columns from the source are deliberately excluded. */
+const analyzerCategories=[
+ {name:"総合",label:"総合",path:null},
+ {name:"走路状況",label:"走路状況",condition:"濡走路",path:"situation"},
+ {name:"走路温度",label:"走路温度",condition:"20℃未満",path:"roadtemp"},
+ {name:"試走タイム",label:"試走タイム",condition:"試走T順位",path:"trialrun"},
+ {name:"レース場",label:"レース場",condition:"川口",path:"place"},
+ {name:"競走車",label:"競走車",path:"motorcycle"},
+ {name:"レース種別・日程",label:"レース種別／日程",path:"raceclass"},
+ {name:"勝ち上がり・優勝戦",label:"勝ち上がり／優勝戦",path:"racewin"}
+];
+const analyzerMarks=[
+ ["○","△","","◎","△","","",""],
+ ["×","◎","○","","○","○","×",""],
+ ["","","","","","","",""],
+ ["","","","","","","◎","×"],
+ ["","","","×","","","",""],
+ ["","","△","","","△","○","△"],
+ ["◎","○","◎","○","◎","◎","△","○"],
+ ["△","×","×","△","×","×","","◎"]
+];
+const analyzerSourceBase="https://gamboo.jp/autorace/analyzer/";
+const analyzerSourceQuery="?rdt=20261109&rno=9&pid=2&rsp=3&rspl=02&rsrt=1&rsst=1";
+const analyzerSourceUrl=entry=>analyzerSourceBase+
+ (entry.path?entry.path+"/program":"marklist/")+analyzerSourceQuery;
+const analyzerHeaders=()=>analyzerCategories.map((entry,index)=>
+ '<th rowspan="2" class="auto-analyzer-heading'+(index===0?' auto-start':'')+
+ '" data-group="analyzer">'+
+ '<button type="button" class="item-btn auto-analyzer-btn" data-analyzer-item="'+index+
+ '" aria-label="'+safe(entry.name)+'の詳細を表示">'+safe(entry.label)+'</button></th>').join("");
+const analyzerCells=playerIndex=>analyzerMarks[playerIndex].map((value,index)=>
+ '<td class="auto-analyzer-cell'+(index===0?' auto-start':'')+
+ '" aria-label="'+safe(analyzerCategories[index].name)+': '+(value||"印なし")+'">'+
+ '<span class="auto-analyzer-mark">'+safe(value)+'</span></td>').join("");
 const roadHeaders=()=>["良","湿"].flatMap((track,k)=>
  [["1着","勝率"],["2着","2連対率"],["3着","3連対率"],["着外","着外率"]]
  .map(([name,rate],i)=>'<th rowspan="2" data-group="road" class="auto-value auto-stat-heading auto-road-heading'+
@@ -263,7 +302,8 @@ roadHeaders()+headToHeadHeaders()+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading">調子</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading">捌き力</th>'+
 '<th rowspan="2" data-group="supercon" class="auto-supercon-heading">逃げ力</th>'+
-'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">スタート力</th></tr>';
+'<th rowspan="2" data-group="supercon" class="auto-supercon-heading">スタート力</th>'+
+analyzerHeaders()+'</tr>';
 const sub=(labels)=>labels.map((v,i)=>th(v,i===0?"auto-start":"")).join("");
 const subhead='<tr></tr>';
 table.tHead.innerHTML=header+subhead;
@@ -354,9 +394,66 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   const fields=main+titlesCell(p)+last5Cells(i)+
   statCells(p.r10,recentRanks[i])+num([p.trial,p.avg,p.best])+
   statCells(p.r90,last90Ranks[i])+best90Cell(p)+roadCells(p,i)+
-  headToHeadCells(i)+superconCells(i);
+  headToHeadCells(i)+superconCells(i)+analyzerCells(i);
   return '<tr data-vehicle="'+(i+1)+'" data-power="'+p.power+'">'+fields+'</tr>';
 }).join("");
+/* SCR-210-style analysis sheets. Each item opens its own real source
+   marks for all eight entrants; the category's separate source page is
+   linked for numerical breakdowns absent from this uploaded marklist. */
+const analyzerSheet=root.querySelector(".auto-analyzer-sheet");
+const analyzerOverlay=root.querySelector(".auto-analyzer-overlay");
+let analyzerOpenedBy=null;
+function closeAnalyzer(){
+ if(!analyzerSheet||analyzerSheet.hidden)return;
+ analyzerSheet.hidden=true;
+ analyzerOverlay.hidden=true;
+ analyzerOpenedBy?.focus({preventScroll:true});
+ analyzerOpenedBy=null;
+}
+function openAnalyzer(index,button){
+ const entry=analyzerCategories[index];
+ if(!entry||!analyzerSheet||!analyzerOverlay)return;
+ analyzerOpenedBy=button;
+ analyzerSheet.querySelector(".sheet-title").textContent=
+  index===0?"データ解析ラボ：総合":"データ解析ラボ："+entry.name;
+ const head=analyzerSheet.querySelector(".detail-table thead");
+ const tbody=analyzerSheet.querySelector(".detail-table tbody");
+ const markHeader=value=>'<th>'+safe(value)+'</th>';
+ // Total shows all seven factor marks. Individual views show the
+ // selected factor and the overall mark side by side.
+ head.innerHTML='<tr><th class="dt-vehicle">車番</th><th class="auto-analyzer-detail-name">選手名</th>'+
+  (index===0?analyzerCategories.map(x=>markHeader(x.name)).join(""):
+   markHeader(entry.name)+markHeader("総合"))+'</tr>';
+ tbody.innerHTML=players.map((p,car)=>{
+   const vehicle='<td class="dt-vehicle"><span class="frame-cell f'+(car+1)+
+    '">'+(car+1)+'</span><span class="sha-nm">'+safe(p.short)+'</span></td>';
+   const name='<td class="auto-analyzer-detail-name">'+safe(p.name)+'</td>';
+   const values=index===0?analyzerMarks[car]:[analyzerMarks[car][index],analyzerMarks[car][0]];
+   return '<tr>'+vehicle+name+values.map(v=>
+    '<td class="auto-analyzer-detail-mark">'+safe(v)+'</td>').join("")+'</tr>';
+ }).join("");
+ const note=analyzerSheet.querySelector(".auto-analyzer-source-note");
+ note.textContent="添付HTMLに収録された印を表示しています。"+
+  "項目別の詳細成績値は元HTMLに含まれないため、元データの詳細ページをご参照ください。";
+ const link=analyzerSheet.querySelector(".auto-analyzer-source-link");
+ link.href=analyzerSourceUrl(entry);
+ link.textContent="Gambooの"+entry.name+"の詳細を見る";
+ analyzerSheet.hidden=false;
+ analyzerOverlay.hidden=false;
+ analyzerSheet.querySelector(".sheet-close").focus({preventScroll:true});
+}
+table.tHead.querySelectorAll(".auto-analyzer-btn").forEach(button=>{
+ button.addEventListener("click",()=>{
+  const index=Number(button.dataset.analyzerItem);
+  openAnalyzer(index,button);
+ });
+});
+analyzerSheet?.querySelector(".sheet-close").addEventListener("click",closeAnalyzer);
+analyzerSheet?.querySelector(".sheet-handle").addEventListener("click",closeAnalyzer);
+analyzerOverlay?.addEventListener("click",closeAnalyzer);
+document.addEventListener("keydown",event=>{
+ if(event.key==="Escape"&&!analyzerSheet?.hidden)closeAnalyzer();
+});
 // Synchronize table drags, active menu and menu-strip position exactly as
 // SCR-210: tap scrolls to a section; manual table scrolling follows the
 // currently visible section, including automatic horizontal menu movement.
