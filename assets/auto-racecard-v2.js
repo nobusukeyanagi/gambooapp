@@ -64,7 +64,7 @@ const header='<tr>'+
 '<th rowspan="2" class="col-name">選手名</th>'+
 
 '<th rowspan="2" class="col-h">ハンデ</th><th rowspan="2" class="col-t">試走T</th>'+
-'<th rowspan="2" class="col-t col-deviation">試走偏差</th><th rowspan="2" class="col-t">平均ST</th>'+
+'<th rowspan="2" class="col-t">平均ST</th><th rowspan="2" class="col-t col-deviation">試走偏差</th>'+
 '<th rowspan="2" class="col-rank"><button type="button" class="sort-power" aria-pressed="false" aria-label="審査ポイント順に並び替え"><span>ランク</span><span>審査P</span></button></th>'+
 '<th rowspan="2" class="col-machine">競走車名</th>'+
 group("recent","近10走",4)+group("good","良10走",3)+group("last90","近90日成績",6)+
@@ -89,8 +89,8 @@ table.tBodies[0].innerHTML=players.map((p,i)=>{
   const main='<td class="col-sha"><span class="frame-cell f'+(i+1)+'">'+(i+1)+'</span><span class="sha-nm">'+safe(p.short)+'</span></td>'+
   '<td class="col-name"><div class="rider-name">'+safe(p.name)+'</div><div class="rider-meta rider-home">'+safe(p.loc)+'</div><div class="rider-meta rider-age">'+p.ki+'期 '+p.age+'歳</div></td>'+
   '<td class="col-h">'+p.h+'</td><td class="col-t" title="当日試走タイム">'+safe(p.todayTrial)+'</td>'+
-  deviationCell(p)+
   '<td class="col-t">'+p.st+'</td>'+
+  deviationCell(p)+
   '<td class="col-rank"><span class="grade-current">'+safe(p.rank)+'</span><span class="grade-prev">前'+safe(p.prev)+'</span><span class="grade-power">'+safe(p.power)+'</span></td>'+
   '<td class="col-machine"><span class="machine-name">'+safe(p.car)+'</span><span class="machine-grade">'+safe(p.vehicleGrade)+'</span></td>';
   const ninety=[total,p.r90[0],p.r90[1],p.r90[2],pct(p.r90[0]+p.r90[1]),pct(p.r90[0]+p.r90[1]+p.r90[2])];

@@ -141,12 +141,21 @@ for(const width of [296,375,768]){
         rows:[primary,...cell.querySelectorAll('.deviation-line')].map(x=>x.getBoundingClientRect().height)
       };
     });
-    return {heading:table.tHead.rows[0].cells[4].textContent.trim(),
-      headerSpan:table.tHead.rows[0].cells[4].rowSpan,
-      headerCount:table.tHead.rows[0].cells.length,cells};
+    const heads=[...table.tHead.rows[0].cells];
+    const widths=heads.slice(1,6).map(el=>Math.round(parseFloat(getComputedStyle(el).width)));
+    const bodyOrder=[...table.tBodies[0].rows].map(row=>[...row.cells].slice(3,6)
+      .map(cell=>cell.classList.contains('col-deviation')?'試走偏差':
+       cell.getAttribute('title')==='当日試走タイム'?'試走T':
+       cell.classList.contains('col-t')?'平均ST':'unknown'));
+    return {heading:heads[5].textContent.trim(),headerSpan:heads[5].rowSpan,
+      headerOrder:heads.slice(1,6).map(el=>el.textContent.trim()),
+      widths,bodyOrder,headerCount:heads.length,cells};
   });
   const expectedOfficial=['0.082','0.100','0.095','0.083','0.091','0.111','0.094','0.093'];
   if(deviations.heading!=='試走偏差'||deviations.headerSpan!==2||
+     JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','試走T','平均ST','試走偏差'])||
+     JSON.stringify(deviations.widths)!==JSON.stringify([120,60,70,70,120])||
+     deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['試走T','平均ST','試走偏差']))||
      deviations.headerCount!==14||deviations.cells.length!==8||
      deviations.cells.some((x,i)=>x.text[0]!==expectedOfficial[i]||
        x.text[1]!== (i===0?'0.09':'—')||x.text[2]!== (i===0?'0.09':'—')||
