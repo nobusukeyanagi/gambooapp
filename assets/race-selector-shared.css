@@ -50,7 +50,7 @@
   max-width: 62px;
   height: 46px;
   min-height: 46px;
-  padding: var(--space-small) var(--space-2);
+  padding: var(--space-4) var(--space-2);
   gap: var(--space-1);
   overflow: hidden;
   border: var(--line-control);
