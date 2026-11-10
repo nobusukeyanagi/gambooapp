@@ -351,7 +351,7 @@
 .sheet .detail-table .recent4-rate {
   display: table;
   width: max-content;
-  margin: var(--space-5) auto 0;
+  margin: var(--space-4) auto 0;
   padding: 0 var(--space-2);
   border-radius: var(--r-xs);
   font-size: var(--fs-12);
