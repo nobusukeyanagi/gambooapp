@@ -23,8 +23,8 @@
   white-space: nowrap;
   border: var(--line-control);
   border-radius: var(--r-control);
-  background: var(--c-surface);
-  color: var(--c-text-primary);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
   box-shadow: var(--e1);
 }
 .venue-sort-options [data-sort="venue"] {
@@ -44,7 +44,7 @@
 
 .venue-sort-options .chip.active {
   background: var(--c-gold);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
   border-color: var(--c-gold);
 }
 .venue-sort-options .chip:focus-visible {
