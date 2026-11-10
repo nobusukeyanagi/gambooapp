@@ -1,0 +1,184 @@
+@charset "UTF-8";
+/* SCR-400 Campaign. Shared design tokens are referenced directly without aliases.
+   The app shell and compact header are supplied by app-base and ui-consistency. */
+
+.ic {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+.page-header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.scroll-area {
+  min-height: 0;
+}
+
+
+/* Shared tab appearance belongs to ui-consistency.css.
+   Preserve campaign-specific width and native button resets. */
+.campaign-tabs .date-tab {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0;
+  border-top: 0;
+  border-inline: 0;
+  background: transparent;
+  color: var(--c-gray-1);
+  font-family: inherit;
+}
+.campaign-tabs .date-tab:focus-visible,
+.campaign-page-arrow:focus-visible,
+.cp-banner-link:focus-visible,
+.cp-btn:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: calc(-1 * var(--space-2));
+}
+
+/* Third bar appears only when viewing completed campaigns. */
+.campaign-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  height: var(--h-tab);
+  padding: 0 var(--space-12);
+  background: var(--c-gray-5);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+}
+.campaign-pagination[hidden] { display: none; }
+.campaign-page-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-family: var(--ff-ui);
+  font-size: var(--fs-20);
+  font-weight: var(--fw-strong);
+  color: var(--c-gray-2);
+  border: var(--line-thin) solid var(--c-gray-4);
+  border-radius: var(--r-9);
+  background: var(--c-bg);
+  cursor: pointer;
+}
+.campaign-page-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.campaign-page-info {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  color: var(--c-gray-1);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Each card uses a square banner on the left and content on the right. */
+.cp-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: stretch;
+  margin: var(--space-8);
+  padding: var(--space-6);
+
+}
+.cp-card[hidden] { display: none; }
+.cp-banner-link {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  align-self: start;
+  overflow: hidden;
+  border-radius: var(--r-6);
+  text-decoration: none;
+}
+.cp-banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  align-self: start;
+  object-fit: cover;
+  border-radius: var(--r-6);
+}
+.cp-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: var(--space-4);
+  padding: 0;
+}
+.cp-title {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  color: var(--c-gray-1);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.cp-period {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: auto;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  line-height: 1.25;
+  color: var(--c-red);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+/* Closed campaigns retain the deadline layout; their date is no longer an alert. */
+.cp-card[data-status="closed"] .cp-period {
+  color: var(--c-gray-2);
+}
+/* Campaign and point shortcut buttons share their complete visual design in ui-consistency.css. */
+.campaign-empty {
+  margin: var(--space-8);
+  padding: var(--space-12);
+  color: var(--c-gray-2);
+  font-size: var(--fs-14);
+  text-align: center;
+}
+.campaign-empty[hidden] { display: none; }
+
+/* Existing 60px navigation: icons and labels remain governed by shared CSS. */
+
+.tab-item {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  
+  cursor: pointer;
+}
+.tab-item .tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tablet and desktop: a campaign remains a compact, phone-sized card.
+   More available width produces additional cards per row, not larger banners. */
+@media (min-width: 600px) {
+  #campaign-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(0, 340px));
+    align-content: start;
+  }
+  #campaign-list > .cp-card {
+    min-width: 0;
+  }
+  #campaign-list > .campaign-empty {
+    grid-column: 1 / -1;
+  }
+}
