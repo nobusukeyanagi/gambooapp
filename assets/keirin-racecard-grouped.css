@@ -1,10 +1,6 @@
 @charset "UTF-8";
 /* SCR-210: one consolidated seven-section racecard. Shared design tokens
    and the existing fixed car-number column stay authoritative. */
-.race-detail-scroll .mania-table {
-  border-spacing: 0;
-  width: max-content;
-}
 /* Two-tier column headers. Group headings occupy the first 24px row;
    other columns rowspan both rows. Keep both rows sticky while scrolling. */
 .race-detail-scroll .mania-table thead tr:first-child th {
