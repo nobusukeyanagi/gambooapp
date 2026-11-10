@@ -187,7 +187,7 @@ button,
         padding: var(--space-8) var(--space-8);
         background: var(--c-gray-5);
         border: var(--line-thin) solid var(--c-gray-4);
-        border-radius: var(--r-md);
+        border-radius: var(--r-12);
         box-shadow: var(--e1);
         display: flex;
         align-items: center;
@@ -216,7 +216,7 @@ button,
         display: block;
         outline: none;
         outline-offset: 1px;
-        border-radius: var(--r-xs);
+        border-radius: var(--r-3);
       }
 
       /* Common layout belongs to assets/ui-consistency.css. */
@@ -311,7 +311,7 @@ button,
         text-align: center;
         margin-top: 0;
         padding: 0;
-        border-radius: var(--r-sm);
+        border-radius: var(--r-6);
         outline: none;
         outline-offset: 1px;
       }
@@ -325,7 +325,7 @@ button,
         flex: 0 0 20px;
         width: 20px;
         height: 20px;
-        border-radius: var(--r-full);
+        border-radius: var(--r-9999);
         background: var(--c-red);
         color: var(--c-gray-5);
         font-size: var(--fs-14);
@@ -461,7 +461,7 @@ button,
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         padding: 0;
-        border-radius: var(--r-sm);
+        border-radius: var(--r-6);
         flex-shrink: 0;
         letter-spacing: 0;
         white-space: nowrap;
@@ -511,14 +511,14 @@ button,
         justify-content: center;
         width: 100%;
         aspect-ratio: 1 / 1;
-        border-radius: var(--r-md);
+        border-radius: var(--r-12);
         box-shadow: var(--e1);
         background: var(--c-bg);
         color: var(--c-gray-2);
       }
       .bn-dots { display: flex; justify-content: center; gap: var(--space-4); }
       .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-gray-4); transition: width .2s; }
-      .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-gold-light); }
+      .bn-dots i.on { width: 16px; border-radius: var(--r-3); background: var(--c-gold-light); }
       .pk3 .kun-ic {
         width: 64px;
         height: 64px;
@@ -575,7 +575,7 @@ button,
       .mori-page-link:focus-visible {
         outline: var(--line-thick) solid var(--c-purple);
         outline-offset: 2px;
-        border-radius: var(--r-sm);
+        border-radius: var(--r-6);
       }
       /* Featured keirin races: same heading hierarchy as the venue lists. */
 
@@ -613,7 +613,7 @@ button,
         box-sizing: border-box;
         width: 100%;
         padding: var(--space-2) var(--space-8);
-        border-radius: var(--r-full);
+        border-radius: var(--r-9999);
         background: var(--c-red);
         color: var(--c-gray-5);
         font-size: var(--fs-16);
@@ -630,7 +630,7 @@ button,
         width: 100%;
         height: auto;
         aspect-ratio: 1 / 1;
-        border-radius: var(--r-md);
+        border-radius: var(--r-12);
         box-shadow: var(--e1);
         object-fit: cover;
         object-position: center;
@@ -653,7 +653,7 @@ button,
       .featured-races-header .see-all:focus-visible {
         outline: var(--line-thick) solid var(--c-purple);
         outline-offset: 2px;
-        border-radius: var(--r-sm);
+        border-radius: var(--r-6);
       }
       .pk3 {
         padding: var(--space-8) var(--space-12) var(--space-8) var(--space-8);
@@ -746,7 +746,7 @@ button,
         justify-content: center;
         width: fit-content;
         padding: var(--space-2) 0;
-        border-radius: var(--r-xs);
+        border-radius: var(--r-3);
         gap: var(--space-3);
         font-variant-numeric: tabular-nums;
       }
@@ -768,7 +768,7 @@ button,
       .pk3 .pk-deadline.soon {
         color: var(--c-gray-5);
         background: var(--c-red);
-        border-radius: var(--r-xs);
+        border-radius: var(--r-3);
         padding: var(--space-2) var(--space-4);
       }
 
