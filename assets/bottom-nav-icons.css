@@ -11,7 +11,7 @@
 .bottom-tab .tab-item .tab-icon .ic {
   width: var(--nav-icon-size);
   height: var(--nav-icon-size);
-  color: var(--c-border-control);
+  color: var(--c-gray-3);
   fill: currentColor;
 }
 .bottom-tab .tab-item.active .tab-icon .ic {
@@ -23,15 +23,15 @@
   width: var(--nav-icon-size);
   height: var(--nav-icon-size);
   flex: 0 0 auto;
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   fill: currentColor;
 }
 /* Prediction headers: white background, sport-colored shared SVG and dark text. */
 .page-header:has(.header-race-icon) {
-  background: var(--c-surface);
+  background: var(--c-gray-5);
 }
 .page-header .page-header-title:has(.header-race-icon) {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 .page-header .page-header-title .header-race-icon:has(use[href$="#nav-keirin"]) {
   color: var(--c-keirin);
