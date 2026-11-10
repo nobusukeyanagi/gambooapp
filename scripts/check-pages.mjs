@@ -1505,10 +1505,10 @@ async function checkSharedReferences(){
    fail('Shared gift icon lid must be symmetric and only 1px wider than gift body on each side');
  if(!/--fw-normal:\s*400\s*;/.test(tokens)||!/--fw-strong:\s*600\s*;/.test(tokens))
    fail('Canonical typography weights must be 400 and 600');
- if(!/--c-text-primary:\s*#30363B\s*;/.test(tokens) ||
-    !/--c-text-secondary:\s*#606B76\s*;/.test(tokens) ||
-    !/--c-border-control:\s*#97A1AA\s*;/.test(tokens) ||
-    !/--c-border:\s*#D2D6DA\s*;/.test(tokens) ||
+ if(!/--c-gray-1:\s*#30363B\s*;/.test(tokens) ||
+    !/--c-gray-2:\s*#606B76\s*;/.test(tokens) ||
+    !/--c-gray-3:\s*#97A1AA\s*;/.test(tokens) ||
+    !/--c-gray-4:\s*#D2D6DA\s*;/.test(tokens) ||
     /--c-charcoal\b/.test(tokens) ||
     /--c-silver(?:-light)?\b/.test(tokens))
    fail('Canonical H210/S10 core colors or retired tokens are inconsistent');
