@@ -43,11 +43,11 @@
 }
 .race-detail-scroll .race-menu-scroll > .hscroll-cue-l {
   left: 0;
-  border-right: var(--line-normal);
+  border-right: var(--line-thin) solid var(--c-gray-4);
 }
 .race-detail-scroll .race-menu-scroll > .hscroll-cue {
   right: 0;
-  border-left: var(--line-normal);
+  border-left: var(--line-thin) solid var(--c-gray-4);
 }
 .race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l) .ic {
   width: 18px;
@@ -57,7 +57,7 @@
   display: none;
 }
 .race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l):focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
 }
 
@@ -164,7 +164,7 @@
   cursor: pointer;
 }
 .race-detail-scroll .race-info-bar .ri-race:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
   border-radius: var(--r-control);
 }
@@ -320,7 +320,7 @@
 }
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live {
   background: var(--c-gray-5);
-  border: var(--line-control);
+  border: var(--line-thin) solid var(--c-gray-3);
   color: var(--c-gray-1);
   box-shadow: var(--e1);
 }
@@ -414,7 +414,7 @@
   gap: var(--space-6);
   padding: var(--space-6) var(--space-8);
   background: var(--c-bg);
-  border-bottom: var(--line-normal);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
 }
 .race-detail-scroll .lineup-main {
   flex: 1 1 auto;
@@ -513,7 +513,7 @@
 }
 
 .race-detail-scroll .aokei-paper-btn:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
 }
 
