@@ -17,9 +17,9 @@
 .ic { display:block; width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
 
 /* Inset avatar on a white identity card with a restrained gold accent line. */
-.user-card { margin:var(--space-section); padding:0; overflow:hidden; }
-.user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-content)) minmax(0, 1fr); align-items:center; column-gap:var(--space-section); row-gap:var(--space-10); padding:var(--space-section) var(--space-content); background:var(--c-surface); border-top:var(--line-emphasis-width) solid var(--c-gold); border-bottom:var(--line-normal); }
-.user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-content)); height:calc(var(--h-control) + var(--space-content)); flex:0 0 calc(var(--h-control) + var(--space-content)); overflow:hidden; border-radius:var(--r-md); background:var(--c-gold-light); box-shadow:var(--e1); color:var(--c-gold); }
+.user-card { margin:var(--space-8); padding:0; overflow:hidden; }
+.user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-12)) minmax(0, 1fr); align-items:center; column-gap:var(--space-8); row-gap:var(--space-10); padding:var(--space-8) var(--space-12); background:var(--c-surface); border-top:var(--line-emphasis-width) solid var(--c-gold); border-bottom:var(--line-normal); }
+.user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-12)); height:calc(var(--h-control) + var(--space-12)); flex:0 0 calc(var(--h-control) + var(--space-12)); overflow:hidden; border-radius:var(--r-md); background:var(--c-gold-light); box-shadow:var(--e1); color:var(--c-gold); }
 .user-avatar-photo { display:block; width:100%; height:100%; object-fit:cover; }
 .user-avatar [hidden] { display:none; }
 .user-name { grid-column:2; min-width:0; font-size:var(--fs-18); font-weight:var(--fw-strong); line-height:1.2; overflow-wrap:anywhere; color:var(--c-text-primary); }
@@ -40,7 +40,7 @@
   justify-content:center;
   padding-inline:var(--space-card);
 }
-.user-points { display:block; padding:0 var(--space-content); background:var(--c-surface); }
+.user-points { display:block; padding:0 var(--space-12); background:var(--c-surface); }
 .pt3-row + .pt3-row { border-top:var(--line-normal); }
 .pt3-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-10); min-height:var(--h-control); padding:0; }
 .point-label { flex:1; min-width:0; }
@@ -52,13 +52,13 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-card);
-  padding: var(--space-card) var(--space-content) var(--space-content);
+  padding: var(--space-card) var(--space-12) var(--space-12);
   background: var(--c-surface);
 }
 .point-actions .point-action {
   flex-direction: column;
   min-width: 0;
-  min-height: calc(var(--h-control) + var(--fs-20) + var(--space-section));
+  min-height: calc(var(--h-control) + var(--fs-20) + var(--space-8));
   padding: var(--space-5) var(--space-2);
   line-height: 1.25;
   white-space: normal;
@@ -75,7 +75,7 @@
 /* Shared headings remain 20px/600 with no decorative accent bar.
    Separate sections by whitespace; competition SVGs stay aligned with text. */
 .section-header .section-title { display:inline-flex; align-items:center; gap:var(--space-5); color:var(--c-text-primary); }
-.scroll-area > .section-header { margin-top:var(--space-section); }
+.scroll-area > .section-header { margin-top:var(--space-8); }
 
 
 /* One registration section and one card contain both reorderable sports. */
@@ -83,7 +83,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin: var(--space-card) var(--space-10) var(--space-section);
+  margin: var(--space-card) var(--space-10) var(--space-8);
   border: var(--line-normal);
   border-radius: var(--r-md);
   background: var(--c-surface);
@@ -108,14 +108,14 @@
 }
 .favorite-sport-icon { color: var(--c-keirin); }
 .favorite-sport--auto .favorite-sport-icon { color: var(--c-auto); }
-.favorite-group { padding: var(--space-10) var(--space-content) var(--space-content); }
+.favorite-group { padding: var(--space-10) var(--space-12) var(--space-12); }
 .favorite-group + .favorite-group { border-top: var(--line-normal); }
 .favorite-group-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
-  margin-bottom: var(--space-section);
+  margin-bottom: var(--space-8);
   color: var(--c-text-primary);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
@@ -187,7 +187,7 @@
   letter-spacing: -0.06em;
 }
 .favorite-more-count {
-  margin-top: var(--space-section);
+  margin-top: var(--space-8);
   color: var(--c-text-secondary);
   font-size: var(--fs-12);
 }
@@ -212,8 +212,8 @@
 .mypage-result-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-section);
-  padding: var(--space-card) var(--space-content) var(--space-section);
+  gap: var(--space-8);
+  padding: var(--space-card) var(--space-12) var(--space-8);
 }
 .mypage-result-actions .mypage-result-action {
   display: inline-flex;
@@ -230,7 +230,7 @@
 
 /* Settings rows: links share the same dimensions as the order toggle. */
 .divider { height:var(--space-card); background:var(--c-bg); }
-.menu-item { display:flex; align-items:center; gap:var(--space-section); min-height:56px; padding:var(--space-10) var(--space-content); background:var(--c-surface); border-bottom:var(--line-normal); }
+.menu-item { display:flex; align-items:center; gap:var(--space-8); min-height:56px; padding:var(--space-10) var(--space-12); background:var(--c-surface); border-bottom:var(--line-normal); }
 .settings-first { border-top:var(--line-normal); }
 a.menu-item { color:var(--c-text-primary); text-decoration:none; }
 button.menu-item { width:100%; border:0; border-bottom:var(--line-normal); color:var(--c-text-primary); font:inherit; text-align:left; cursor:pointer; }
@@ -241,7 +241,7 @@ button.menu-item.settings-first { border-top:var(--line-normal); }
 .menu-icon .ic { width:var(--fs-20); height:var(--fs-20); }
 .menu-text { flex:1; min-width:0; font-size:var(--fs-16); }
 .menu-arrow { flex:0 0 auto; color:var(--c-text-secondary); font-size:var(--fs-20); }
-.content-end-spacer { height:var(--space-section); }
+.content-end-spacer { height:var(--space-8); }
 
 /* Tablet and desktop: point and favorite buttons keep phone-like dimensions.
    Rows gain columns instead of stretching the existing two/three buttons. */
