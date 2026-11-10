@@ -201,7 +201,7 @@ button, input, select, textarea {
   display: block;
   outline: none;
   outline-offset: 1px;
-  border-radius: var(--r-xxs);
+  border-radius: var(--r-xs);
 }
 
 /* Horizontal race scrolling */
@@ -332,7 +332,7 @@ button, input, select, textarea {
   gap: var(--space-section);
   color: var(--c-text-primary);
   margin: 0;
-  padding: var(--space-7) var(--space-10);
+  padding: var(--space-section) var(--space-10);
   background: transparent;
   border: 0;
   font-size: var(--fs-14);
