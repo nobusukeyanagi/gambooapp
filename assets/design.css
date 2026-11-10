@@ -30,6 +30,7 @@
   --h-tab: 50px;
   --h-section: 45px;
   --h-bottom-nav: 60px;
+  --nav-icon-size: 32px;
   --h-race-info-summary: 120px; /* SCR-210 / SCR-310: tight two-line 12px detail area */
 
   /* ① 競技色 */
@@ -109,11 +110,4 @@
   --r-full: 9999px;
 
   --e1: 0 1px 2px color-mix(in srgb, var(--c-gray-1) 10%, transparent);
-
-
 }
-/* Unified horizontal scroll boundary for every Gamboo screen.
-   Prevent rubber-band/blank-space reveal at either x edge without changing
-   scroll inertia, normal horizontal gestures or vertical overscroll.
-   !important takes priority over older per-screen overscroll shorthands. */
-* { overscroll-behavior-x: none !important; }
