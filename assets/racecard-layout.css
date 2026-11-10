@@ -85,7 +85,7 @@
       .venue-card {
         background: var(--c-gray-5);
         margin: var(--space-4) var(--space-8);
-        border-radius: var(--r-md);
+        border-radius: var(--r-12);
         box-shadow: var(--e1);
         overflow: hidden;
       }
@@ -94,7 +94,7 @@
         color: var(--c-gray-1);
         font-weight: var(--fw-strong);
         padding: var(--space-1) var(--space-6);
-        border-radius: var(--r-sm);
+        border-radius: var(--r-6);
         flex-shrink: 0;
         font-size: var(--fs-14);
       }
@@ -189,7 +189,7 @@
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         padding: var(--space-1) var(--space-4);
-        border-radius: var(--r-xs);
+        border-radius: var(--r-3);
       }
       .leg-escape {
         background: var(--c-red-light);
@@ -316,7 +316,7 @@
         display: block;
         outline: none;
         outline-offset: 1px;
-        border-radius: var(--r-xs);
+        border-radius: var(--r-3);
       }
 
       .hscroll {
@@ -529,7 +529,7 @@
       .frame-cell {
         width: 24px;
         height: 24px;
-        border-radius: var(--r-sm);
+        border-radius: var(--r-6);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -549,7 +549,7 @@
       .lineup-car {
         width: 22px;
         height: 22px;
-        border-radius: var(--r-sm);
+        border-radius: var(--r-6);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         display: flex;
@@ -718,7 +718,7 @@
       .ri-sub { margin-top: var(--space-2); font-size: var(--fs-12); color: var(--c-gray-2); font-family: var(--ff-ui); }
       .lineup-title { font-size: var(--fs-12); font-weight: var(--fw-strong); white-space: nowrap; }
       .lineup-dir { font-size: var(--fs-12); color: var(--c-gray-2); }
-      .lineup-bar .lineup-car { width: 24px; height: 24px; font-size: var(--fs-14); border-radius: var(--r-sm); }
+      .lineup-bar .lineup-car { width: 24px; height: 24px; font-size: var(--fs-14); border-radius: var(--r-6); }
       .lineup-bar .lineup-sep { font-size: var(--fs-12); margin: 0 var(--space-1); }
       .rt-area {
         flex: 1;
