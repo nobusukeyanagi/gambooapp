@@ -1,6 +1,7 @@
 /**
  * Structural quality gate for all app CSS and directly linked assets.
- * Top-level duplicate selectors, raw CSS colors and mismatched asset versions are prohibited.\n * Responsive @media overrides remain intentional.
+ * Verify canonical tokens, CSS/JS references, CSS colors, and synchronized cache versions.
+ * Preserve valid per-component overrides from the consolidated stylesheets.
  * Run: npm run check:shared-css
  */
 import { readFile, readdir } from 'node:fs/promises';
@@ -9,7 +10,6 @@ import postcss from 'postcss';
 
 const root = process.cwd();
 const shared = ['racecard.css'];
-const noImportant = new Set();
 const screenNames = ['SCR-210_racecardkeirin.html', 'SCR-310_racecardautorace.html'];
 const allScreens = ['SCR-100_bet.html', 'SCR-200_keirin.html', ...screenNames,
   'SCR-300_autorace.html', 'SCR-400_campaign.html', 'SCR-500_mypage.html', 'index.html'];
@@ -75,13 +75,6 @@ for (const filename of allCSS) {
     ast.walkAtRules('import', rule => {
       issues.push(`${filename}:${rule.source.start.line} uses @import; HTML must reference shared CSS directly`);
     });
-    if (noImportant.has(filename)) {
-      ast.walkDecls(decl => {
-        if (decl.important) {
-          issues.push(`${filename}:${decl.source.start.line} has unnecessary !important on ${decl.prop}`);
-        }
-      });
-    }
     if (filename !== 'design.css') {
       ast.walkDecls(decl => {
         if (/(?:#[0-9a-f]{3,8}\b|(?:rgb|rgba|hsl|hsla)\s*\()/i.test(decl.value)) {
