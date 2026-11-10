@@ -26,8 +26,7 @@
 
   /* Cross-screen component heights. */
   --h-header: 50px;
-  --h-balance: 50px;
-  --h-date-tab: 50px;
+  --h-tab: 50px;
   --h-section: 45px;
   --h-bottom-nav: 60px;
   --h-race-info-summary: 120px; /* SCR-210 / SCR-310: tight two-line 12px detail area */
