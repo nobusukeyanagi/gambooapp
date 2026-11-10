@@ -25,7 +25,6 @@
       }
       .icon-btn {
 
-
         border-radius: var(--r-full);
         background: var(--c-bg);
         display: flex;
@@ -154,25 +153,7 @@
       .race-tabs::-webkit-scrollbar {
         display: none;
       }
-      .race-tab {
 
-        height: 32px;
-
-
-
-        font-size: var(--fs-12);
-        font-weight: var(--fw-strong);
-
-        border-bottom: var(--line-emphasis-width) solid transparent;
-
-        white-space: nowrap;
-
-        flex-shrink: 0;
-      }
-      .race-tab.active {
-
-        border-bottom-color: var(--c-gold);
-      }
 
       .lineup-bar {
         background: var(--c-bg);
@@ -393,20 +374,27 @@
 
       .icon-btn::before { content: ""; position: absolute; inset: -4px; }
       .race-tab {
+        height: 32px;
+        font-size: var(--fs-12);
+        font-weight: var(--fw-strong);
+        border-bottom: var(--line-emphasis-width) solid transparent;
+        white-space: nowrap;
+        flex-shrink: 0;
         flex: 0 0 auto;
-
-
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-
         border: var(--line-normal);
         background: var(--c-surface);
         color: var(--c-text-primary);
         cursor: pointer;
-
         text-decoration: none;
+        min-width: 62px;
+        min-height: 54px;
+        padding: var(--space-3) var(--space-5);
+        gap: 0;
+        line-height: 1.15;
       }
       .race-tab small {
         font-family: var(--ff-ui);
@@ -414,10 +402,12 @@
         font-size: var(--fs-12); font-weight: var(--fw-normal); color: var(--c-text-secondary);
       }
       .race-tab.active {
+        border-bottom-color: var(--c-gold);
         background: var(--c-gold-light);
         border-color: var(--c-gold);
         color: var(--c-text-primary);
         box-shadow: var(--e1);
+        min-width: 90px;
       }
 
       .race-tab.past {
@@ -715,16 +705,16 @@
       .mania-table td.cls small { font-size: var(--fs-12); color: var(--c-text-secondary); }
       .mania-table td.rate { min-width: 30px; }
       .mania-table .res-cell { min-width: 0; }
-      .mania-table .res-wrap { gap: var(--space-section); }
+
       .mania-table .res-note {
         color: var(--c-gold);
         grid-column: 2; font-size: var(--fs-12); line-height: 1.1; text-align: left;
       }
-      .race-tab { min-width: 62px; min-height: 54px; padding: var(--space-3) var(--space-5); gap: 0; line-height: 1.15; }
+
       .race-tab b { font-size: var(--fs-16); font-weight: var(--fw-strong); }
       .race-tab.past b { color: var(--c-text-secondary); font-weight: var(--fw-strong); }
       .race-tab.past small { color: var(--c-text-secondary); font-weight: var(--fw-strong); }
-      .race-tab.active { min-width: 90px; }
+
       .race-tab.active b { color: var(--c-text-primary); }
       .race-tab.active small { color: var(--c-gold); font-weight: var(--fw-strong); }
       .race-tab.active.soon small { color: var(--c-red); }
@@ -772,6 +762,7 @@
       .race-table-wrap.scrolled .sha-nm { display: block; }
 
       .mania-table .res-wrap {
+        gap: var(--space-section);
         display: grid;
         grid-auto-flow: column;
         grid-auto-columns: 40px;
