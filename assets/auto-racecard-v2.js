@@ -485,8 +485,7 @@ const analysisGroups={
              analysisValue(8,"順位差\n平均"),analysisValue(9,"相関係数")]],
            ["再試走",[analysisRate(10,"2連対率")]]],
  handicap:[["ハンデ別成績",[
-             analysisValue(0,"ハンデ"),analysisValue(1,"順位"),
-             ...analysisRates(3)]],
+             analysisValue(0,"ハンデ"),...analysisRates(3)]],
            ["ハンデ順位別成績",[
              analysisValue(7,"ハンデ\n順位",70),...analysisRates(8)]]],
  place:[["レース場別成績：川口",analysisRates(0)]],
@@ -586,9 +585,8 @@ function openAnalyzer(index,button){
  const renderField=(field,row,car)=>{
    if(field.kind==="value"){
      const original=row[field.i]||"—";
-     // The ハンデ順位 and 試走T順位 are plain ordinal labels, without tint.
-     const plainRank=(entry.path==="handicap"&&field.i===1)||
-       (entry.path==="trialrun"&&field.i===6);
+     // The trial-run rank is an ordinal label, without background tint.
+     const plainRank=entry.path==="trialrun"&&field.i===6;
      const rank=plainRank?0:
        (rankByField[field.i]?.[car]||
         (/^[1-4]位$/.test(original)?Number(original[0]):0));
