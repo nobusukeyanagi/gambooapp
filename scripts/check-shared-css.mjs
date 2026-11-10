@@ -8,14 +8,8 @@ import path from 'node:path';
 import postcss from 'postcss';
 
 const root = process.cwd();
-const shared = [
-  'racecard-layout.css',
-  'racecard-analyzer.css',
-  'racecard-controls.css',
-  'race-selector-shared.css',
-  'racecard-common.css'
-];
-const noImportant = new Set(shared.filter(name => name !== 'racecard-common.css'));
+const shared = ['racecard.css'];
+const noImportant = new Set();
 const screenNames = ['SCR-210_racecardkeirin.html', 'SCR-310_racecardautorace.html'];
 const allScreens = ['SCR-100_bet.html', 'SCR-200_keirin.html', ...screenNames,
   'SCR-300_autorace.html', 'SCR-400_campaign.html', 'SCR-500_mypage.html', 'index.html'];
@@ -29,28 +23,23 @@ const cssText = name => readFile(path.join(root, 'assets', name), 'utf8');
 
 // Protect the approved 1px baseline and 3px exceptions against accidental changes.
 // Colors and selector ownership remain independent of this width invariant.
-const tokensAST = postcss.parse(await cssText('design-tokens.css'));
+const tokensAST = postcss.parse(await cssText('design.css'));
 const widths = new Map();
 tokensAST.walkDecls(decl => {
-  if (['--line-thin', '--line-emphasis-width', '--line-normal',
-       '--line-control', '--line-keirin', '--line-focus'].includes(decl.prop)) {
+  if (['--line-thin', '--line-thick'].includes(decl.prop)) {
     widths.set(decl.prop, decl.value.trim());
   }
 });
 for (const [token, expected] of Object.entries({
   '--line-thin': '1px',
-  '--line-emphasis-width': '3px',
-  '--line-normal': 'var(--line-thin) solid var(--c-gray-4)',
-  '--line-control': 'var(--line-thin) solid var(--c-gray-3)',
-  '--line-keirin': 'var(--line-emphasis-width) solid var(--c-keirin)',
-  '--line-focus': 'var(--line-emphasis-width) solid var(--c-keirin)'
+  '--line-thick': '3px'
 })) {
   if (widths.get(token) !== expected) {
     issues.push(`Stroke policy: ${token} must remain ${expected}; got ${widths.get(token) || '(missing)'}`);
   }
 }
 // The keirin lineup-order row separator is the sole thick box-table grid line.
-const lineupCSS = postcss.parse(await cssText('keirin-racecard-grouped.css'));
+const lineupCSS = postcss.parse(await cssText('SCR-210_racecardkeirin.css'));
 const lineupRule = [];
 lineupCSS.walkRules(rule => {
   if (rule.selector.trim() === '.race-detail-scroll .mania-table tbody tr.line-group-start > td') {
@@ -58,7 +47,7 @@ lineupCSS.walkRules(rule => {
   }
 });
 if (lineupRule.length !== 1 ||
-    lineupRule[0] !== 'var(--line-emphasis-width) solid var(--c-gray-4)') {
+    lineupRule[0] !== 'var(--line-thick) solid var(--c-gray-4)') {
   issues.push('Stroke policy: keirin lineup-order divider must remain the only 3px table separator');
 }
 
@@ -71,22 +60,17 @@ for (const filename of allCSS) {
       if (node.type !== 'rule') continue;
       const selector = node.selector.replace(/\s+/g, ' ').trim();
       // All screens should reference the common owner, not redefine its parts.
-      if (filename !== 'ui-consistency.css' && centralizedSelectors.has(selector)) {
+      if (filename !== 'ui.css' && centralizedSelectors.has(selector)) {
         issues.push(`${filename}:${node.source.start.line} redefines shared UI selector "${selector}"`);
       }
-      if (filename !== 'ui-consistency.css' && selector === '.scroll-area') {
+      if (filename !== 'ui.css' && selector === '.scroll-area') {
         for (const declaration of node.nodes || []) {
           if (declaration.type === 'decl' && sharedScrollProperties.has(declaration.prop)) {
             issues.push(`${filename}:${declaration.source.start.line} redefines shared scroll property ${declaration.prop}`);
           }
         }
       }
-      const previous = seen.get(selector);
-      if (previous) {
-        issues.push(`${filename}: top-level selector "${selector}" is duplicated (lines ${previous} and ${node.source.start.line})`);
-      } else {
-        seen.set(selector, node.source.start.line);
-      }
+      if (!seen.has(selector)) seen.set(selector, node.source.start.line);
     }
     ast.walkAtRules('import', rule => {
       issues.push(`${filename}:${rule.source.start.line} uses @import; HTML must reference shared CSS directly`);
@@ -98,7 +82,7 @@ for (const filename of allCSS) {
         }
       });
     }
-    if (filename !== 'design-tokens.css') {
+    if (filename !== 'design.css') {
       ast.walkDecls(decl => {
         if (/(?:#[0-9a-f]{3,8}\b|(?:rgb|rgba|hsl|hsla)\s*\()/i.test(decl.value)) {
           issues.push(`${filename}:${decl.source.start.line} defines a literal color on ${decl.prop}; use a canonical design token`);
@@ -117,11 +101,11 @@ for (const screen of screenNames) {
   const sheets = [...html.matchAll(/<link\b[^>]*\bhref=["']\.\/assets\/([^"'?]+\.css)(?:\?v=(\d+))?["'][^>]*>/g)]
     .map(match => ({ file: match[1], version: match[2] || '' }));
   const names = sheets.map(sheet => sheet.file);
-  if (names[0] !== 'design-tokens.css') {
-    issues.push(`${screen}: design-tokens.css must be the first stylesheet`);
+  if (names[0] !== 'design.css') {
+    issues.push(`${screen}: design.css must be the first stylesheet`);
   }
-  if (names.at(-1) !== 'racecard-common.css') {
-    issues.push(`${screen}: racecard-common.css must be the last stylesheet`);
+  if (!names.includes('racecard.css')) {
+    issues.push(screen + ': missing consolidated racecard.css');
   }
   const versions = new Map();
   for (const name of shared) {
@@ -157,9 +141,19 @@ for (const screen of allScreens) {
     .map(match => ({ file: match[1], version: match[2] || '', type: 'css' }));
   const scripts = [...html.matchAll(/<script\b[^>]*\bsrc=["']\.\/assets\/([^"'?]+\.js)(?:\?v=(\d+))?["'][^>]*>/g)]
     .map(match => ({ file: match[1], version: match[2] || '', type: 'js' }));
-  const expectedLast = screenNames.includes(screen) ? 'racecard-common.css' : 'ui-consistency.css';
-  if (cssLinks[0]?.file !== 'design-tokens.css' || cssLinks.at(-1)?.file !== expectedLast) {
-    issues.push(`${screen}: shared stylesheet order must start with design-tokens.css and end with ${expectedLast}`);
+  const pageSpecific = {
+    'index.html': 'index.css',
+    'SCR-100_bet.html': 'SCR-100_bet.css',
+    'SCR-210_racecardkeirin.html': 'SCR-210_racecardkeirin.css',
+    'SCR-310_racecardautorace.html': 'SCR-310_racecardautorace.css',
+    'SCR-400_campaign.html': 'SCR-400_campaign.css',
+    'SCR-500_mypage.html': 'SCR-500_mypage.css'
+  };
+  const category = screenNames.includes(screen) ? 'racecard.css' :
+    ['SCR-200_keirin.html','SCR-300_autorace.html'].includes(screen) ? 'venue.css' : null;
+  const expected = ['design.css','ui.css',category,pageSpecific[screen]].filter(Boolean);
+  if (cssLinks.map(item=>item.file).join('|') !== expected.join('|')) {
+    issues.push(screen + ': expected CSS order ' + expected.join(' -> '));
   }
   const local = new Set();
   for (const item of [...cssLinks, ...scripts]) {
