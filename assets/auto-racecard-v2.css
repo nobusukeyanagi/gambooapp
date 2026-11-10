@@ -96,17 +96,10 @@
 .sport-auto .auto-race-table :is(th,td) {
   padding:var(--space-2) var(--space-card); white-space:nowrap;
 }
-/* 1px grid, including the four outer edges. One stroke per boundary. */
+/* Shared 1px grid (left/right/bottom and outer edges) comes directly from
+   racecard-common.css. Keep the top clear: the preceding section provides it. */
 .sport-auto .race-detail-scroll .auto-race-table :is(th,td) {
-  border-top:0 !important;
-  border-left:0 !important;
-  border-right:var(--line-normal) !important;
-  border-bottom:var(--line-normal) !important;
-}
-/* No extra top stroke: the 1px section divider above is sufficient. */
-.sport-auto .race-detail-scroll .auto-race-table thead tr:first-child > th:first-child,
-.sport-auto .race-detail-scroll .auto-race-table tbody tr > td:first-child {
-  border-left:var(--line-normal) !important;
+  border-top: 0 !important;
 }
 /* SCR-310 inherits SCR-210's canonical 24px + 24px / 48px
    header height directly from racecard-common.css, without overrides. */
