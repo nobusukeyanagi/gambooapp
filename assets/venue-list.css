@@ -16,8 +16,6 @@ button, input, select, textarea {
 
 
 
-
-
 .tab-item {
   flex: 1;
   display: flex;
@@ -358,73 +356,18 @@ button, input, select, textarea {
 
 /* Rider numbers */
 
-.carno {
-  width: 22px;
-  height: 22px;
-  border-radius: var(--r-sm);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--fs-14);
-  font-weight: var(--fw-strong);
-  flex-shrink: 0;
-  border: var(--line-thin) solid transparent;
-  font-family: var(--ff-ui);
-}
 
-.carno.w1 {
-  background: var(--w1);
-  color: var(--c-text-primary);
-  border-color: var(--c-border-control);
-}
 
-.carno.w2 {
-  background: var(--w2);
-  color: var(--c-surface);
-  border-color: var(--w2);
-}
 
-.carno.w3 {
-  background: var(--w3);
-  color: var(--c-surface);
-  border-color: var(--w3);
-}
 
-.carno.w4 {
-  background: var(--w4);
-  color: var(--c-surface);
-  border-color: var(--w4);
-}
 
-.carno.w5 {
-  background: var(--w5);
-  color: var(--c-text-primary);
-  border-color: var(--w5);
-}
 
-.carno.w6 {
-  background: var(--w6);
-  color: var(--c-surface);
-  border-color: var(--w6);
-}
 
-.carno.w7 {
-  background: var(--w7);
-  color: var(--c-surface);
-  border-color: var(--w7);
-}
 
-.carno.w8 {
-  background: var(--w8);
-  color: color-mix(in srgb, var(--c-text-primary) 70%, black);
-  border-color: var(--w8);
-}
 
-.carno.w9 {
-  background: var(--w9);
-  color: var(--c-surface);
-  border-color: var(--w9);
-}
+
+
+
 
 .rchip.live {
   background: var(--c-bg);

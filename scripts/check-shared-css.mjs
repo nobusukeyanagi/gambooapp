@@ -21,6 +21,9 @@ const allScreens = ['SCR-100_bet.html', 'SCR-200_keirin.html', ...screenNames,
   'SCR-300_autorace.html', 'SCR-400_campaign.html', 'SCR-500_mypage.html', 'index.html'];
 const allAssets = new Set(await readdir(path.join(root, 'assets')));
 const allCSS = [...allAssets].filter(filename => filename.endsWith('.css')).sort();
+const centralizedSelectors = new Set(['.bottom-tab', '.scroll-area::-webkit-scrollbar',
+  '.carno', ...Array.from({ length: 9 }, (_, i) => '.carno.w' + (i + 1))]);
+const sharedScrollProperties = new Set(['flex', 'overflow-y', 'overflow-x', 'background', 'scrollbar-width']);
 const issues = [];
 const cssText = name => readFile(path.join(root, 'assets', name), 'utf8');
 
@@ -32,6 +35,17 @@ for (const filename of allCSS) {
     for (const node of ast.nodes) {
       if (node.type !== 'rule') continue;
       const selector = node.selector.replace(/\s+/g, ' ').trim();
+      // All screens should reference the common owner, not redefine its parts.
+      if (filename !== 'ui-consistency.css' && centralizedSelectors.has(selector)) {
+        issues.push(`${filename}:${node.source.start.line} redefines shared UI selector "${selector}"`);
+      }
+      if (filename !== 'ui-consistency.css' && selector === '.scroll-area') {
+        for (const declaration of node.nodes || []) {
+          if (declaration.type === 'decl' && sharedScrollProperties.has(declaration.prop)) {
+            issues.push(`${filename}:${declaration.source.start.line} redefines shared scroll property ${declaration.prop}`);
+          }
+        }
+      }
       const previous = seen.get(selector);
       if (previous) {
         issues.push(`${filename}: top-level selector "${selector}" is duplicated (lines ${previous} and ${node.source.start.line})`);
