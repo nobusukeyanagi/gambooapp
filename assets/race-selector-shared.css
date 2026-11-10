@@ -87,16 +87,16 @@
 }
 .phone-inner .race-selector .race-tab.active:not(.soon):not(.rebate) {
   background: var(--c-gray-5);
-  border: var(--line-emphasis-width) solid var(--c-gray-3);
+  border: var(--line-thick) solid var(--c-gray-3);
 }
 .phone-inner .race-selector .race-tab.rebate {
   background: var(--c-gray-5);
-  border: var(--line-emphasis-width) solid var(--c-gold);
+  border: var(--line-thick) solid var(--c-gold);
 }
 
 /* Keep SCR-210's 3px red urgent frame, including when the race is selected. */
 .phone-inner .race-selector .race-tab.soon {
-  border: var(--line-emphasis-width) solid var(--c-red);
+  border: var(--line-thick) solid var(--c-red);
   background: var(--c-gray-5);
 }
 /* Neutral canceled race: the same restrained fill as the prediction pages. */
