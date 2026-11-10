@@ -349,10 +349,13 @@ async function checkMyPage(page, width) {
       x:el.getBoundingClientRect().x,y:el.getBoundingClientRect().y,
       width:el.getBoundingClientRect().width,
       height:el.getBoundingClientRect().height})));
+  const compactPoints=width<600;
   if (points.length!==7 || points.some(p=>!p.href?.startsWith('https://') || p.height<44) ||
-      !(points[0].width > points[1].width*2) ||
-      !(points[1].y===points[2].y && points[2].y===points[3].y) ||
-      !(points[4].y===points[5].y && points[5].y===points[6].y))
+      (compactPoints ?
+        (!(points[0].width > points[1].width*2) ||
+         !(points[1].y===points[2].y && points[2].y===points[3].y) ||
+         !(points[4].y===points[5].y && points[5].y===points[6].y)) :
+        !(points.slice(0,6).every(p=>p.y===points[0].y) && points[6].y>points[0].y)))
     fail(width+'px point shortcuts must have one full-width and two three-column rows: '+
       JSON.stringify(points));
 
@@ -406,7 +409,7 @@ async function checkMyPage(page, width) {
     fail(width+'px favorite-athlete groups or editor links changed: '+JSON.stringify(sports));
   const grids=await page.locator('.favorite-player-grid').evaluateAll(items=>items.map(el=>
     getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length));
-  if(grids.some(n=>n!==3))fail(width+'px athlete tiles must use three columns: '+grids);
+  if(grids.some(n=>n!==(width>=600?6:3)))fail(width+'px athlete tiles must match responsive grid: '+grids);
 
   const results=await page.locator('.mypage-result-actions a').evaluateAll(items=>
     items.map(el=>{
@@ -1551,14 +1554,22 @@ async function checkSharedReferences(){
   const commonRefs=css.filter(name=>/^ui\.css\?v=\d+$/.test(name));
   if(commonRefs.length!==1)fail(page+': shared UI stylesheet must be directly referenced exactly once');
   const commonLast=css.findIndex(name=>/^ui\.css\?v=\d+$/.test(name));
-  // Both detail pages share the final race-picker stylesheet, after their local styles.
+  // Stylesheets follow the actual dependency order:
+  // design -> ui -> optional venue/racecard -> page-specific CSS.
   const detailPage=['SCR-210_racecardkeirin.html','SCR-310_racecardautorace.html'].includes(page);
-  const sharedSelectors=css.filter(name=>/^race-selector-shared\.css\?v=\d+$/.test(name));
-  if(detailPage && (sharedSelectors.length!==1 ||
-     !/^racecard-common\.css\?v=\d+$/.test(css.at(-1))))
-    fail(page+': detail screens must load the shared racecard stylesheet last');
-  if(!detailPage && (commonLast!==css.length-1 || sharedSelectors.length!==0))
-    fail(page+': shared UI stylesheet must load last');
+  if(css[0]?.split('?')[0]!=='design.css'||commonLast!==1)
+    fail(page+': canonical design and UI stylesheets must load first');
+  const expectedGroup=detailPage?'racecard.css':
+    ['SCR-200_keirin.html','SCR-300_autorace.html'].includes(page)?'venue.css':null;
+  if(expectedGroup && css[2]?.split('?')[0]!==expectedGroup)
+    fail(page+': missing or misplaced shared group stylesheet '+expectedGroup);
+  const pageSpecific=['SCR-100_bet.html','SCR-210_racecardkeirin.html',
+    'SCR-310_racecardautorace.html','SCR-400_campaign.html',
+    'SCR-500_mypage.html','index.html'].includes(page);
+  if(pageSpecific && css.at(-1)?.split('?')[0]!==page.replace(/\.html$/,'.css'))
+    fail(page+': page-specific CSS must be last');
+  if(!pageSpecific && css.length!==3)
+    fail(page+': prediction page should use exactly three shared stylesheets');
   for(const href of css){
    const pathname=href.split('?')[0];
    try{await readFile(path.join(ROOT,'assets',pathname));}
