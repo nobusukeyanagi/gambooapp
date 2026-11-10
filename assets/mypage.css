@@ -5,9 +5,12 @@
 
 /* Page shell: keep only layout not supplied by shared app styles. */
 .page-header { display:flex; align-items:center; flex-shrink:0; }
-.scroll-area { flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; background:var(--c-bg); scrollbar-width:none; }
-.scroll-area::-webkit-scrollbar { display:none; }
-.bottom-tab { display:flex; flex-shrink:0; background:var(--c-surface); border-top:var(--line-normal); }
+
+.scroll-area {
+  min-height: 0;
+}
+
+
 .bottom-tab .tab-item { flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--c-text-secondary); }
 .bottom-tab .tab-item.active { color:var(--c-gold); }
 .bottom-tab .tab-icon { display:flex; align-items:center; justify-content:center; }

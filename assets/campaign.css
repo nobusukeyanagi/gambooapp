@@ -14,15 +14,11 @@
   align-items: center;
   flex-shrink: 0;
 }
+
 .scroll-area {
-  flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: var(--c-bg);
-  scrollbar-width: none;
 }
-.scroll-area::-webkit-scrollbar { display: none; }
+
 
 /* Match the common "Yesterday / Today / Tomorrow" date tab structure.
    Shared font sizes, weights and row heights are taken directly from ui-consistency.css. */
@@ -171,12 +167,7 @@
 .campaign-empty[hidden] { display: none; }
 
 /* Existing 60px navigation: icons and labels remain governed by shared CSS. */
-.bottom-tab {
-  display: flex;
-  flex-shrink: 0;
-  background: var(--c-surface);
-  border-top: var(--line-normal);
-}
+
 .tab-item {
   display: flex;
   flex: 1 1 0;

@@ -12,24 +12,11 @@ button, input, select, textarea {
   display: none;
 }
 
-.scroll-area {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: var(--c-bg);
-  scrollbar-width: none;
-}
 
-.scroll-area::-webkit-scrollbar {
-  display: none;
-}
 
-.bottom-tab {
-  background: var(--c-surface);
-  display: flex;
-  border-top: var(--line-normal);
-  flex-shrink: 0;
-}
+
+
+
 
 .tab-item {
   flex: 1;

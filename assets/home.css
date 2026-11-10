@@ -62,16 +62,8 @@ button,
         border: var(--line-thin) solid var(--c-surface);
       }
 
-      .scroll-area {
-        flex: 1;
-        overflow-y: auto;
-        overflow-x: hidden;
-        background: var(--c-bg);
-        scrollbar-width: none;
-      }
-      .scroll-area::-webkit-scrollbar {
-        display: none;
-      }
+
+
       .tab-item.active {
         color: var(--c-gold);
       }
@@ -118,14 +110,7 @@ button,
         overflow: hidden;
       }
 
-      .bottom-tab {
-        background: var(--c-surface);
-        display: flex;
-        border-top: var(--line-normal);
-        flex-shrink: 0;
-        
-        padding-bottom: 0;
-      }
+
 
       .icon-btn::before { content: ""; position: absolute; inset: -4px; }
       .see-all .ic { width: 16px; height: 16px; }

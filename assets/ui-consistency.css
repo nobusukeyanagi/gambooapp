@@ -155,7 +155,22 @@ body { font-weight: var(--fw-normal); }
 /* Canonical sizes. Legacy per-page height overrides have been removed. */
 .app-header { height: var(--h-header); }
 .page-header { height: var(--h-header); }
-.bottom-tab { height: var(--h-bottom-nav); }
+.bottom-tab {
+  height: var(--h-bottom-nav);
+  background: var(--c-surface);
+  display: flex;
+  border-top: var(--line-normal);
+  flex-shrink: 0;
+  padding-bottom: 0;
+}
+.scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--c-bg);
+  scrollbar-width: none;
+}
+.scroll-area::-webkit-scrollbar { display: none; }
 .icon-btn { width: var(--h-icon-button); height: var(--h-icon-button); }
 .cta-btn { min-height: var(--h-control); }
 .date-tab, .top-tab { min-height: var(--h-date-tab); font-size: var(--fs-14); }

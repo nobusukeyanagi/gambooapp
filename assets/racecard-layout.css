@@ -57,13 +57,7 @@
         padding: 0 var(--space-14); font-size: var(--fs-14);
       }
 
-      .bottom-tab {
-        background: var(--c-surface);
-        display: flex;
-        border-top: var(--line-normal);
-        flex-shrink: 0;
-        padding-bottom: 0;
-      }
+
       .tab-item {
         flex: 1;
         display: flex;
