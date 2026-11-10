@@ -321,12 +321,12 @@ const roadHeaders=()=>["良","湿"].flatMap((track,k)=>
 ).join("");
 const header='<tr>'+
 '<th rowspan="2" class="col-sha">車番</th>'+
-'<th rowspan="2" class="col-name">選手名</th>'+
+'<th rowspan="2" class="col-name">選手</th>'+
 
 '<th rowspan="2" class="col-h">ハンデ</th><th rowspan="2" class="col-t">平均ST</th>'+
 '<th rowspan="2" class="col-t">試走T</th><th rowspan="2" class="col-t col-deviation">試走偏差</th>'+
 '<th rowspan="2" class="col-rank"><button type="button" class="sort-power" aria-pressed="false" aria-label="審査ポイント順に並び替え"><span>ランク</span><span>審査P</span></button></th>'+
-'<th rowspan="2" class="col-machine">競走車名</th>'+
+'<th rowspan="2" class="col-machine">競走車</th>'+
 '<th rowspan="2" class="auto-titles-column">優出・優勝</th>'+
 last5Headers()+statHeaderGroup("recent")+timeHeader("平均","試走T",true)+
 timeHeader("平均","競走T",false)+timeHeader("最高","競走T",false)+
