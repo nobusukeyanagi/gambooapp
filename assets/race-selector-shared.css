@@ -24,7 +24,7 @@
   scroll-snap-type: none;
   -webkit-mask-image: none;
   mask-image: none;
-  padding: var(--space-card) 44px;
+  padding: var(--space-6) 44px;
 }
 .phone-inner .race-selector > .hscroll-inner::-webkit-scrollbar { display: none; }
 .phone-inner .race-selector .race-tabs {
@@ -33,7 +33,7 @@
   min-width: 100%;
   height: 46px;
   align-items: center;
-  gap: var(--space-card);
+  gap: var(--space-6);
   padding: 0;
   overflow: visible;
   border: 0;
