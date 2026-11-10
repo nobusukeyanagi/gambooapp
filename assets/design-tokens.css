@@ -101,12 +101,12 @@
   --line-thick: 3px;
 
   /* Shared radii, shadows, and tap dimensions */
-  --r-xs: 3px; /* compact chips */
-  --r-sm: 6px;
-  --r-control: 9px; /* header control corners */
-  --r-md: 12px;
-  --r-lg: 20px;
-  --r-full: 9999px;
+  --r-3: 3px; /* compact chips */
+  --r-6: 6px;
+  --r-9: 9px; /* header control corners */
+  --r-12: 12px;
+  --r-24: 24px;
+  --r-9999: 9999px;
 
   --e1: 0 1px 2px color-mix(in srgb, var(--c-gray-1) 10%, transparent);
 
