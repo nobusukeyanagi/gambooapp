@@ -95,7 +95,7 @@ body { font-weight: var(--fw-normal); }
   color: var(--c-gold);
 }
 .bottom-tab a.tab-item:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: -2px;
 }
 
@@ -129,7 +129,7 @@ body { font-weight: var(--fw-normal); }
   height: var(--h-bottom-nav);
   background: var(--c-gray-5);
   display: flex;
-  border-top: var(--line-normal);
+  border-top: var(--line-thin) solid var(--c-gray-4);
   flex-shrink: 0;
   padding-bottom: 0;
 }
@@ -214,7 +214,7 @@ body { font-weight: var(--fw-normal); }
   display: flex;
   flex-shrink: 0;
   background: var(--c-gray-5);
-  border-bottom: var(--line-normal);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
 }
 :where(.date-tabs, .campaign-tabs) .date-tab {
   display: flex;
@@ -232,7 +232,7 @@ body { font-weight: var(--fw-normal); }
    :where keeps page-specific geometry and left stripes authoritative. */
 :where(.vcard, .venue-card, .cp-card, .user-card) {
   background: var(--c-gray-5);
-  border: var(--line-normal);
+  border: var(--line-thin) solid var(--c-gray-4);
   border-radius: var(--r-md);
   box-shadow: var(--e1);
 }
@@ -285,7 +285,7 @@ body { font-weight: var(--fw-normal); }
   background: var(--c-gray-5);
   justify-content: center;
   padding: 0 var(--space-12);
-  border-bottom: var(--line-normal);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
 }
 .page-header.page-header-simple > .page-header-title {
   flex: 0 1 auto;
@@ -325,7 +325,7 @@ body { font-weight: var(--fw-normal); }
 /* Common outline-button appearance; layout and typography remain owned
    by the original components, including the compact Aokei newspaper action. */
 :where(.cp-btn, .point-action, .oshi-act, .os-btn, .favorite-player-card, .race-detail-scroll .aokei-paper-btn) {
-  border: var(--line-control);
+  border: var(--line-thin) solid var(--c-gray-3);
   border-radius: var(--r-control);
   background: var(--c-gray-5);
   box-shadow: var(--e1);
@@ -342,7 +342,7 @@ body { font-weight: var(--fw-normal); }
   justify-content: space-between;
   gap: var(--space-4);
   padding: 0 var(--space-8);
-  border-bottom: var(--line-normal);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
   background: var(--c-gray-5);
   flex-shrink: 0;
 }
@@ -453,7 +453,7 @@ body { font-weight: var(--fw-normal); }
 .shared-app-header .header-actions .icon-btn {
   width: auto;
   padding: 0 var(--space-8);
-  border: var(--line-control);
+  border: var(--line-thin) solid var(--c-gray-3);
   background: var(--c-gray-5);
   color: var(--c-gray-1);
 }
@@ -492,7 +492,7 @@ body { font-weight: var(--fw-normal); }
   background: var(--c-red);
 }
 .shared-app-header .header-actions :is(.icon-btn, .cta-btn):focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
 }
 
