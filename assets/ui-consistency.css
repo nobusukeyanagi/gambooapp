@@ -157,49 +157,49 @@ body { font-weight: var(--fw-normal); }
   font-family: var(--ff-ui);
 }
 .carno.w1 {
-  background: var(--w1);
+  background: var(--c-w1);
   color: var(--c-text-primary);
   border-color: var(--c-border-control);
 }
 .carno.w2 {
-  background: var(--w2);
+  background: var(--c-w2);
   color: var(--c-surface);
-  border-color: var(--w2);
+  border-color: var(--c-w2);
 }
 .carno.w3 {
-  background: var(--w3);
+  background: var(--c-w3);
   color: var(--c-surface);
-  border-color: var(--w3);
+  border-color: var(--c-w3);
 }
 .carno.w4 {
-  background: var(--w4);
+  background: var(--c-w4);
   color: var(--c-surface);
-  border-color: var(--w4);
+  border-color: var(--c-w4);
 }
 .carno.w5 {
-  background: var(--w5);
+  background: var(--c-w5);
   color: var(--c-text-primary);
-  border-color: var(--w5);
+  border-color: var(--c-w5);
 }
 .carno.w6 {
-  background: var(--w6);
+  background: var(--c-w6);
   color: var(--c-surface);
-  border-color: var(--w6);
+  border-color: var(--c-w6);
 }
 .carno.w7 {
-  background: var(--w7);
+  background: var(--c-w7);
   color: var(--c-surface);
-  border-color: var(--w7);
+  border-color: var(--c-w7);
 }
 .carno.w8 {
-  background: var(--w8);
+  background: var(--c-w8);
   color: color-mix(in srgb, var(--c-text-primary) 70%, black);
-  border-color: var(--w8);
+  border-color: var(--c-w8);
 }
 .carno.w9 {
-  background: var(--w9);
+  background: var(--c-w9);
   color: var(--c-surface);
-  border-color: var(--w9);
+  border-color: var(--c-w9);
 }
 .icon-btn { width: var(--h-icon-button); height: var(--h-icon-button); }
 .cta-btn { min-height: var(--h-control); }
