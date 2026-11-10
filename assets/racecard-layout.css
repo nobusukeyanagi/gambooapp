@@ -123,7 +123,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: var(--space-5);
+        gap: var(--space-4);
         min-width: 0;
       }
       .race-info-meta {
@@ -386,7 +386,7 @@
         text-decoration: none;
         min-width: 62px;
         min-height: 54px;
-        padding: var(--space-3) var(--space-5);
+        padding: var(--space-3) var(--space-4);
         gap: 0;
         line-height: 1.15;
       }
@@ -491,7 +491,7 @@
       .mania-table td,
       .race-table td {
         height: 46px;
-        padding: var(--space-3) var(--space-5);
+        padding: var(--space-3) var(--space-4);
         font-size: var(--fs-16);
       }
       .mania-table tbody tr:nth-child(even) td { background: var(--c-bg); }
