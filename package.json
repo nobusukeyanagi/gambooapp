@@ -2,7 +2,7 @@
   "name": "gamboo-home-quality",
   "private": true,
   "version": "1.0.0",
-  "description": "CSS and browser regression checks for Gamboo Home",
+  "description": "CSS and browser regression checks for Gamboo app",
   "type": "module",
   "scripts": {
     "check:home": "node scripts/check-home.mjs"

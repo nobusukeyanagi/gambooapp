@@ -20,7 +20,8 @@
 ## JavaScript の責務
 
 - `assets/scroll-controls.js`：スクロール操作の共通制御。
-- `assets/home.js`：ホーム固有のバナー、払戻金表示切替、デモ用締切表示。
+- `assets/home.js`：ホーム固有のバナー、開催日切替、表示の更新。
+- `assets/payout-bar.js`：払戻金の表示切替。
 - `assets/tap-feedback.js`：共通のタップ・押下表現。
 
 ホームHTMLから画面固有のインラインスクリプトを排除し、JSの変更は専用ファイルで行う。スクリプトのDOM実行順序を変えない。共有JSの変更は他画面も確認する。

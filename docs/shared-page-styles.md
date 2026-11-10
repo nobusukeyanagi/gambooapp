@@ -1,46 +1,53 @@
-# 全ページ共通CSSの運用方針
+# 全画面共通スタイルの管理方針
 
-## 読み込み順序
+更新日：2026-11-10。対象は SCR-100／200／210／300／310／400／500 の7画面と、QR入口の `index.html`。
 
-アプリ7画面とQR入口（計8HTML）は以下をHTMLの `<link rel="stylesheet">` から**直接**読み込む。CSSの `@import`、他の変数を参照するだけの別名トークンは用いない。
+## 設計原則
 
-1. `assets/design-tokens.css` — 色、余白、フォント、罫線、角丸などの共通変数
-2. `assets/bottom-nav-icons.css` — ボトムナビを持つアプリ画面
-3. `assets/app-base.css` — 通常のアプリ画面の外枠・レイアウト基盤
-4. ページ専用CSS — 各画面の固有配置・コンテンツ
-5. `assets/tap-feedback.css` — 共通の押下反応
-6. `assets/ui-consistency.css` — 共通UIの最終定義。CSS群の末尾で読み込む
+- 色・フォント・ウェイト・余白・罫線・角丸・影・共通寸法は `assets/design-tokens.css` を正本とし、利用箇所から `var(--...)` で直接参照する。
+- HTMLは必要な共通CSSを `<link rel="stylesheet">` で直接読み込む。CSS の `@import` や値の別名を作るだけの中間変数は設けない。
+- 同じ役割の部品は同じCSSに置き、競技固有の項目・列幅・データ構造は専用CSS／JSに残す。
+- `!important`、重複したセレクター、ページ単位の追加上書きは、新規導入しない。既存のものは変更前後の画像比較を伴って段階的に減らす。
+- CSSの読み込み順序は表示結果に影響するため、原則として自動的に並べ替えない。
 
-`index.html` はQR・パスワード入口専用画面のため、**画面外枠の配置に影響する `app-base.css` のみ例外**として読まず、`qr-index.css` で専用レイアウトを維持する。共通の `design-tokens.css`、`tap-feedback.css`、`ui-consistency.css` は直接読み込む。
+## 共通CSSと直接参照先
 
-ホーム専用の `home.css` を他画面へ流用しない。共有すべき部品は共通CSSに移した上で、各ページはその共通CSSを直接参照する。
+| CSS | 対象 | 責務 |
+| --- | --- | --- |
+| `design-tokens.css` | 全8HTML | 基本値の一元管理 |
+| `app-base.css` | アプリ7画面 | アプリ外枠と基本レイアウト |
+| `bottom-nav-icons.css` | アプリ7画面 | 競技・ナビアイコン |
+| `tap-feedback.css` | 全8HTML | タップ状態 |
+| `ui-consistency.css` | 全8HTML | 共通ヘッダー、ボトムナビ、共通UI |
+| `venue-list.css`, `venue-sort.css` | SCR-200・300 | 開催場一覧と並び順 |
+| `payout-bar.css` | SCR-100・500 | 払戻金表示 |
+| `racecard-layout.css` | SCR-210・310 | 出走表画面の基本レイアウト（旧 keirin-detail.css） |
+| `racecard-analyzer.css` | SCR-210・310 | 分析タブ／詳細シート（旧 keirin-mania.css） |
+| `racecard-controls.css` | SCR-210・310 | レース選択と情報バー等（旧 keirin-race-selector.css） |
+| `race-selector-shared.css` | SCR-210・310 | レースボタン・スクロール境界 |
+| `racecard-common.css` | SCR-210・310 | 出走表の箱表・メニューバー共通指定 |
 
-全画面でフォントウェイトは通常400・強調600を使用する。共通トークンは `--fw-normal`／`--fw-strong` の2つで、旧サイズ別ウェイト変数は廃止した。個別CSSでの旧700／800／900指定も600に統一する。
+共有ファイルは、どちらの画面からも**同じファイルを直接読み込む**。SCR-210・310は `racecard-common.css` を末尾に読み込む。その他のアプリ画面とQR入口は `ui-consistency.css` を最後の共通スタイルとして読み込む。参照順は表示差分を検証しながら管理する。
 
-## ページ専用CSS
+## ページ固有CSS／JS
 
-- ホーム：`home.css`
-- 競輪予想（`SCR-200_keirin.html`）・オートレース予想（`SCR-300_autorace.html`）：`venue-list.css` と `venue-sort.css`。共通の並び替え制御に `venue-sort.js` を使用。未使用だったオート専用 `venue-list-auto-overrides.css` は廃止
-- 出走表・競輪（`SCR-201_racecardkeirin.html`）：`keirin-detail.css` と `keirin-detail-9car.css`、マニア分析統合用 `keirin-mania.css`／`keirin-mania.js`
-- 出走表・オートレース（`SCR-301_racecardautorace.html`）：`auto-detail.css` と統合列用 `autorace-lab-merged.css`、操作用 `auto-detail.js`
-- マイページ：`mypage.css`
-- キャンペーン：`campaign.css`
-- QR入口：`qr-index.css`
+- SCR-100：`home.css`／`home.js`
+- SCR-200・300：開催場・予想表示の共通CSS／JS（`venue-list`、`venue-sort`、`venue-calendar`）
+- SCR-210：`keirin-racecard-grouped.css`、`keirin-detail-9car.css`、`keirin-marutoku.css`、`keirin-position.css`、競輪用データ・描画JS
+- SCR-310：`auto-racecard-v2.css`、`auto-racecard-v2.js`、`auto-analyzer-detail-source.js`
+- SCR-400：`campaign.css`／`campaign.js`
+- SCR-500：`mypage.css`
+- QR入口：`qr-index.css`／`qr-index.js`、QR生成ライブラリ
 
-## 現行対応範囲
+JSは操作共通化が成立する場合だけ共有し、競輪とオートレースの異なるレースデータや解析計算を無理に同一化しない。`keirin-hofu5-data.js` は `keirin-mania.js` が動的に読み込むため、HTMLに直接記載されていなくても使用中である。
 
-ページ内の `<style>` は撤廃して専用CSSへ分離済み。2026-10-30、予想2画面の `venue-list.css` に残っていた旧画面専用・上書き重複指定を整理し、2画面で一つの共通スタイルを利用する。R番号は競技共通の本文色、中止Rのみ補助文字色とする。還元ラベルは大会名と「5%還元」の2行表示。フォントは `design-tokens.css` で Noto Sans JP を第一候補とし、フォント実体がない端末ではフォールバックする。ほかの画面固有CSSは機能・デザイン維持のため一括削除せず段階的に確認する。
+## 整理で廃止した旧ファイル
 
-## 検証
+現行8HTMLとJSから参照されていない旧オートレース画面の `auto-detail.css`、`auto-detail.js`、`autorace-lab-merged.css` は削除。整理前の完全な状態は Git ブランチ `refactor-baseline-20261110` に保管。
 
-`scripts/check-pages.mjs` と `.github/workflows/pages-refactor-check.yml` が、アプリ7画面とQR入口（計8HTML）のCSS直接参照・ファイル存在・読み込み順を検査し、6の非ホームページについて296/390/768px、上部・下部でChromiumの画像を取得する。
+## 検証と変更手順
 
-画像比較は GitHub Actionsの `Verify Non-Home Pages` の手動起動時、`baseline_commit` にGitコミットSHAを入力する。画像の変更許容率は原則0.005%。操作状態や全OSの見た目までの完全一致を保証するものではない。
-
-## 競輪出走表へのマニア分析統合
-
-出走表の「前開催成績」の右側に、総合評価と8評価項目の列を追加した。従来の「マニア分析タブ」の独立画面および別CSSを廃止し、横スクロール位置に応じて上部メニューの出走表／マニア分析の選択を切り替える。評価項目を押すと、同じ画面内で既存の条件別詳細シートを開く。元のデモ評価値は1〜7車に引き継ぎ、8・9車は未設定とする。詳細シートは現行出走表の9選手を対象に計算する。
-
-## オートレース出走表へのデータ解析ラボ統合
-
-オートレース出走表には「前開催成績」列がないため、最後の「通算V」の右側にデータ解析ラボ（総合評価と9評価項目）を接続した。走路状況、走路温度、試走タイム、ハンデ、レース場、競走車、レース種別、レース日程、勝ち上がりの各項目に関する8選手分の詳細表示、良走路／湿走路切替を維持する。横スクロールの位置により「出走表」「データ解析ラボ」のメニュー選択が切り替わる。「過去10走成績」「対戦成績表」は独立した表示タブとして維持する。独立した旧データ解析ラボHTMLと、旧名の出走表HTMLを削除する。
+1. 現行の意図した画面・データ・操作をテスト期待値の基準とする。古い項目名や廃止されたUIを基準にしない。
+2. 変更を機能単位の小さなコミットに分ける。
+3. CSS変更は `Verify Gamboo Home`／`Verify Non-Home Pages` の Chromium 画像比較で整理前コミットとの差分を確認する。さらに `Verify SCR-310`、`Verify Responsive Text` を確認する。
+4. 意図しない見た目・機能差分があれば整理を戻す。視覚テストが通っても全操作の同一性まで保証できないため、タブ、並び替え、スクロール、遷移は別途確認する。

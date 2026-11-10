@@ -1,6 +1,6 @@
 # Gambooアプリ 共通スタイルガイド
 
-更新日：2026-11-08。**本書は現行 `main` の実装を基準とする。** 変更履歴はGitのコミット履歴を参照する。
+更新日：2026-11-10。**本書は現行 `main` の実装を基準とする。** 変更履歴はGitのコミット履歴を参照する。
 
 ## 適用範囲と管理ファイル
 
@@ -9,7 +9,7 @@
 | ファイル | 対象 | 役割 |
 | --- | --- | --- |
 | `assets/design-tokens.css` | 全8HTML | フォント、文字サイズ、色、余白、寸法、罫線、角丸、影 |
-| `assets/ui-consistency.css` | 全8HTML | 共通UIの最終指定。各ページでCSSの最後に読み込む |
+| `assets/ui-consistency.css` | 全8HTML | 共通UI。出走表2画面では後続に racecard-common.css を読み込む |
 | `assets/tap-feedback.css`／`assets/tap-feedback.js` | 全8HTML | タップフィードバック |
 | `assets/bottom-nav-icons.css`／`assets/bottom-nav-icons.svg` | アプリ7画面 | 競技SVGを含むナビアイコン |
 | `assets/app-base.css` | アプリ7画面 | アプリ外枠・本文の共通スタイル |
@@ -376,7 +376,7 @@ Rボタンは共通幅90px、グリッド4行。締切予告・R番号・発走�
 - G指数も数値降順の上位1～3位に同じ薄金・薄青・薄銅を適用。数値の背景だけを塗り、セル全体は塗らない。
 - 各項目の順位は同点を同順位・同色にする標準競技順位方式（1位・1位・3位など）で統一。
 - **印を表示する全領域**は、マル得ポイントの統合セル内の印、G指数の印、周長別の印について、SVGマーク周囲だけ共通の薄色背景に統一する。◎＝薄金（`--c-gold-light`）、○＝薄青（`--c-blue-light`）、△＝薄銅（`--c-bronze-light`）、×＝薄緑（`--c-green-light`）。文字・図形は基本文字色、24×24pxの共通インライン領域で表示する。印のない領域は無着色。
-- CSSは`assets/keirin-racecard-grouped.css`に新しい順位数値および印の着色規則を集約し、`assets/keirin-marutoku.css`の旧セル着色と`assets/keirin-mania.css`の旧印文字色規則を撤去。初期HTMLと`assets/keirin-racecard-columns.js`の再描画を一致させる。
+- CSSは`assets/keirin-racecard-grouped.css`に新しい順位数値および印の着色規則を集約し、`assets/keirin-marutoku.css`の旧セル着色と`assets/racecard-analyzer.css`の旧印文字色規則を撤去。初期HTMLと`assets/keirin-racecard-columns.js`の再描画を一致させる。
 
 ## SCR-210 直近7開催の着順塗り拡大・枠線廃止（2026-11-08）
 
@@ -485,7 +485,7 @@ Rボタンは共通幅90px、グリッド4行。締切予告・R番号・発走�
 - 各詳細には先ほどの「○○別成績」をそのまま採用。周長別・見なし直線別・レース種別・日程別・グレード別・車番別は順位［印＋順位］、1着・2着・3着・着外（上段件数、下段率）。勝ち上がり率は準決勝／決勝／優勝の順位と進出率（件数・率）の6列、同県選手同乗時は順位なしの1着・2着・3着・着外4列。順位1～4位の文字背景は薄金・薄青・薄銅・薄緑。印は共通SVG背景を用い、文字背景とは連結しない。
 - 詳細シートには元資料の**四日市6R／12Rの選手名と車番**を表示し、防府5Rの選手名と混同しない。データは`assets/keirin-analyzer-sample.js`（7種統計＋早見表評価印）および`assets/keirin-racecard-columns.js`に保持した周長400mの元資料を利用する。各詳細の対象レース・条件はシート内で明記する。
 - **箱表直下の「マニア分析は参考表示：～」の説明文を削除**。併せて「出走表の見方」の古い「直近20走・周長別」という一体説明を「直近20走」に変更した。出典の注記はボトムシート内部にのみ置く。
-- 旧デザインの下部シート・8評価ボタンを`assets/keirin-mania.css`で復元。データ・ボタン・メニュー同期は`assets/keirin-mania.js`と共通レンダラ`assets/keirin-racecard-columns.js`に実装。初期HTMLと動的描画を一致させる。更新クエリ：`keirin-racecard-grouped.css?v=63`、`keirin-mania.css?v=14`、`keirin-racecard-columns.js?v=41`、`keirin-mania.js?v=34`、`keirin-analyzer-sample.js?v=2`。
+- 旧デザインの下部シート・8評価ボタンを`assets/racecard-analyzer.css`で復元。データ・ボタン・メニュー同期は`assets/keirin-mania.js`と共通レンダラ`assets/keirin-racecard-columns.js`に実装。初期HTMLと動的描画を一致させる。更新クエリ：`keirin-racecard-grouped.css?v=63`、`racecard-analyzer.css?v=14`、`keirin-racecard-columns.js?v=41`、`keirin-mania.js?v=34`、`keirin-analyzer-sample.js?v=2`。
 
 ## SCR-210 マニア分析詳細シートの最終調整（2026-11-08）
 
@@ -499,8 +499,8 @@ Rボタンは共通幅90px、グリッド4行。締切予告・R番号・発走�
 - 見なし直線別・レース種別・日程別・グレード別・車番別もそれぞれ**対象条件の成績＋すべての成績**を2組とも表示する。成績セルは元資料の累積件数（例：19/61）を上段、該当の率（例：31.1%）を下段に表示し、元資料の率・件数・分母を省略しない。件数を着順別の差分に置き換えない。
 - 勝ち上がり率は元資料どおり「準決勝進出率／決勝進出率／優勝率」の3グループ（各「順位／進出率または優勝率」2列、合計車番＋6＝7列）。同県選手同乗時は「同県選手同乗／同県選手不在／差分（なし－あり）」の3グループ（各4率、合計車番＋12＝13列）。もともと存在しない順位は付け足さない。
 - データはユーザーが共有した元HTML8種類を解析して、一元管理ファイル`assets/keirin-analyzer-full.js`に格納。8分類×9車＝**72行**について、双方のグループ、累積件数・出走回数・割合・元資料の出場選手中順位を保持した。分析早見表（`assets/keirin-analyzer-sample.js`）はそのまま。
-- 表示は`assets/keirin-mania.js`、スタイルは未使用の旧シートルールを整理した`assets/keirin-mania.css`で管理する。共通色／車番色は従来の直接参照を維持。箱表内評価一覧は従来の70論理列を維持する。
-- 適用読み込み番号は`keirin-analyzer-full.js?v=1`、`keirin-mania.js?v=35`、`keirin-mania.css?v=15`、`keirin-racecard-columns.js?v=42`。
+- 表示は`assets/keirin-mania.js`、スタイルは未使用の旧シートルールを整理した`assets/racecard-analyzer.css`で管理する。共通色／車番色は従来の直接参照を維持。箱表内評価一覧は従来の70論理列を維持する。
+- 適用読み込み番号は`keirin-analyzer-full.js?v=1`、`keirin-mania.js?v=35`、`racecard-analyzer.css?v=15`、`keirin-racecard-columns.js?v=42`。
 
 
 ## SCR-210 マニア分析詳細シート表示統一（2026-11-09）
@@ -509,4 +509,4 @@ Rボタンは共通幅90px、グリッド4行。締切予告・R番号・発走�
 - 各条件別成績／全成績の見出しは「順位」、続く「1着／勝率」「2着／2連対率」「3着／3連対率」「着外／着外率」を同じセルの上下2段で表示。出場選手中順位の順位塗分けは維持。同県選手同乗時は元データにない順位を加えない。勝ち上がり率は順位・進出率・優勝率を維持。
 - 出走表本体の基本成績に揃え、上段はその着順の実件数、下段は累積率。元資料の2連対・3連対の累積件数から2着数=2連対累計−1着数、3着数=3連対累計−2連対累計を算出。表示で分子／分母の形式は使わない。数値16px、率12px、率の上位3位の背景着色は維持。元データ自体は変更しない。
 - 詳細シート末尾の参考データ注記を削除。9人全員を一度に表示するため行高42pxを基準にシートを上下へ広げ、縦スクロールを禁止。横スクロールは継続。画面高590px以下・520px以下には省スペース用CSSを設置。
-- 読み込みバージョン：keirin-mania.js?v=37、keirin-mania.css?v=16。
+- 読み込みバージョン：keirin-mania.js?v=37、racecard-analyzer.css?v=16。

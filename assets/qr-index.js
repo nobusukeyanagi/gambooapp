@@ -1,0 +1,110 @@
+'use strict';
+    const PAGES = [
+    { "file": "SCR-100_bet.html", "code": "SCR-100", "title": "車券購入" },
+    { "file": "SCR-200_keirin.html", "code": "SCR-200", "title": "競輪予想" },
+    { "file": "SCR-210_racecardkeirin.html", "code": "SCR-210", "title": "競輪出走表" },
+    { "file": "SCR-300_autorace.html", "code": "SCR-300", "title": "オートレース予想" },
+    { "file": "SCR-310_racecardautorace.html", "code": "SCR-310", "title": "オートレース出走表" },
+    { "file": "SCR-400_campaign.html", "code": "SCR-400", "title": "キャンペーン" },
+    { "file": "SCR-500_mypage.html", "code": "SCR-500", "title": "マイページ" }
+  ];
+    // This is a client-side display gate only, not HTTP Basic authentication.
+    // GitHub Pages is static; the original HTML files can still be opened directly.
+    const PASSWORD_SHA256 = '7578ca5ba39028f7f0b0a9005de573b1187eff96afd0bfbbd2d9849e4a3973ad';
+    const AUTH_KEY = 'gambooapp-qr-index-unlocked';
+    const loginView = document.getElementById('login-view');
+    const galleryView = document.getElementById('gallery-view');
+    const loginForm = document.getElementById('login-form');
+    const passwordInput = document.getElementById('password');
+    const errorText = document.getElementById('login-error');
+    const qrGrid = document.getElementById('qr-grid');
+    let built = false;
+
+    async function sha256(input) {
+      const encoded = new TextEncoder().encode(input);
+      const hash = await crypto.subtle.digest('SHA-256', encoded);
+      return Array.from(new Uint8Array(hash), b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function createQR(url) {
+      const qr = new GambooQRCode.QRCode(0, GambooQRCode.ErrorCorrectLevel.M);
+      qr.addData(url);
+      qr.make();
+      const count = qr.getModuleCount();
+      const quiet = 4;
+      const size = count + quiet * 2;
+      const ns = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('viewBox', `0 0 ${size} ${size}`);
+      svg.setAttribute('role','img');
+      svg.setAttribute('aria-label','QRコード');
+      svg.setAttribute('shape-rendering','crispEdges');
+      const bg = document.createElementNS(ns, 'rect');
+      bg.setAttribute('width', String(size));
+      bg.setAttribute('height', String(size));
+      bg.setAttribute('fill','#ffffff');
+      svg.appendChild(bg);
+      const dark = document.createElementNS(ns, 'path');
+      dark.setAttribute('fill', '#111111');
+      const fragments = [];
+      for (let y = 0; y < count; y++) {
+        for (let x = 0; x < count; x++) {
+          if (qr.isDark(y, x)) fragments.push(`M${x + quiet} ${y + quiet}h1v1h-1z`);
+        }
+      }
+      dark.setAttribute('d', fragments.join(''));
+      svg.appendChild(dark);
+      return svg;
+    }
+
+    function renderGallery() {
+      if (built) return;
+      const frag = document.createDocumentFragment();
+      const base = new URL('./', document.baseURI);
+      for (const page of PAGES) {
+        const url = new URL(page.file, base).href;
+        const card = document.createElement('article');
+        card.className = 'card';
+        const qrLink = document.createElement('a');
+        qrLink.className = 'qr-link';
+        qrLink.href = url;
+        qrLink.target = '_blank';
+        qrLink.rel = 'noopener noreferrer';
+        qrLink.title = `${page.code}${page.title}を開く`;
+        qrLink.appendChild(createQR(url));
+        const code = document.createElement('div');
+        code.className = 'code';
+        code.textContent = page.code;
+        const title = document.createElement('h3');
+        title.className = 'screen-name';
+        title.textContent = page.title;
+        card.append(qrLink, code, title);
+        frag.append(card);
+      }
+      qrGrid.append(frag);
+      built = true;
+    }
+
+    function unlock() {
+      try { sessionStorage.setItem(AUTH_KEY, '1'); } catch (_) { /* Private mode */ }
+      loginView.classList.add('hidden');
+      galleryView.classList.remove('hidden');
+      errorText.textContent = '';
+      passwordInput.value = '';
+      renderGallery();
+    }
+
+    loginForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      errorText.textContent = '';
+      try {
+        if (await sha256(passwordInput.value) === PASSWORD_SHA256) unlock();
+        else { errorText.textContent = 'パスワードが違います。'; passwordInput.select(); }
+      } catch (_) {
+        errorText.textContent = '認証できませんでした。HTTPSで開き直してください。';
+      }
+    });
+    try {
+      if (sessionStorage.getItem(AUTH_KEY) === '1') unlock();
+      else passwordInput.focus();
+    } catch (_) { passwordInput.focus(); }
