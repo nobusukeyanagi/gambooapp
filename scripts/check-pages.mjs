@@ -134,8 +134,8 @@ async function checkCampaignPage(page, width) {
       a.font !== '16px' || a.weight !== '600' || a.height !== 50 ||
       a.bottomWidth !== '3px' || a.background !== 'rgba(0, 0, 0, 0)' ||
       a.shadow !== 'none' || a.radius !== '0px') ||
-      tabAppearance[0].color !== 'rgb(114, 109, 49)' ||
-      tabAppearance[0].bottomColor !== 'rgb(114, 109, 49)' ||
+      tabAppearance[0].color !== 'rgb(114, 103, 49)' ||
+      tabAppearance[0].bottomColor !== 'rgb(114, 103, 49)' ||
       tabAppearance[1].color !== 'rgb(48, 54, 59)' ||
       tabAppearance[1].bottomColor !== 'rgba(0, 0, 0, 0)')
     fail(width + 'px campaign status tabs must look like the canonical date tabs: '+
@@ -220,8 +220,8 @@ async function checkCampaignPage(page, width) {
   const closedTab=await closed.evaluate(el => ({
     color:getComputedStyle(el).color,border:getComputedStyle(el).borderBottomColor
   }));
-  if (closedTab.color !== 'rgb(114, 109, 49)' ||
-      closedTab.border !== 'rgb(114, 109, 49)')
+  if (closedTab.color !== 'rgb(114, 103, 49)' ||
+      closedTab.border !== 'rgb(114, 103, 49)')
     fail(width + 'px ended campaign date tab must have gold active underline: '+JSON.stringify(closedTab));
   const archiveValues = await cards.evaluateAll(els => els.filter(el => !el.hidden).map(el => ({
     status:el.dataset.status,color:getComputedStyle(el.querySelector('.cp-period')).color
@@ -279,7 +279,7 @@ async function checkFixedBottomNav(page, context) {
       label:getComputedStyle(a).color,
       icon:getComputedStyle(a.querySelector('.tab-icon .ic')).color})));
   if(navColors.length!==5 || navColors.some(x=>{
-    const expected=x.active?'rgb(114, 109, 49)':'rgb(151, 161, 170)';
+    const expected=x.active?'rgb(114, 103, 49)':'rgb(151, 161, 170)';
     return x.label!==expected||x.icon!==expected;
   }))
     fail(context+' inactive footer labels and icons must use lighter neutral: '+
@@ -319,7 +319,7 @@ async function checkMyPage(page, width) {
     const st=getComputedStyle(el);
     return {color:st.borderTopColor,width:st.borderTopWidth};
   });
-  if(userCardAccent.color!=='rgb(114, 109, 49)'||userCardAccent.width!=='3px')
+  if(userCardAccent.color!=='rgb(114, 103, 49)'||userCardAccent.width!=='3px')
     fail(width+'px user card top band must match solid gold accents: '+JSON.stringify(userCardAccent));
   const sportOrderIcon=await page.locator('.sport-order-toggle .menu-icon .ic use')
     .getAttribute('href');
@@ -593,7 +593,7 @@ async function checkSharedRaceSelector(page, width, isAuto) {
   if(detail.height!==58 || detail.tabWidth!==62 || detail.tabHeight!==46 ||
      detail.font!=='16px'||detail.smallFont!=='12px'||
      detail.tabs!==expected || detail.selected!==(isAuto?'3':'5') ||
-     detail.activeBackground!=='rgb(114, 109, 49)' ||
+     detail.activeBackground!=='rgb(114, 103, 49)' ||
      detail.activeNumber!=='rgb(255, 255, 255)' ||
      detail.activeSmall!=='rgb(255, 255, 255)' ||
      detail.activeBorder!=='rgb(184, 71, 99)' ||
@@ -803,7 +803,7 @@ async function checkKeirinMania(page, width) {
     hasIntro:!!el.querySelector('.rt-legend-intro')
   }));
   const mustExplain=['並び予想','競走得点','脚質','マル得ポイント','G指数',
-    '直近7場所','直近20走','マニア分析'];
+    '直近7開催','上がりタイム'];
   if(legend.sections.length!==14||
      mustExplain.some(term=>!legend.text.includes(term))||
      legend.text.includes('選手のコメントを表示'))
@@ -837,76 +837,49 @@ async function checkKeirinMania(page, width) {
   console.log("KEIRIN MANIA OK " + width + "px (8 detail views, 9 riders, 2-way navigation)");
 }
 
-async function checkAutoraceLabMerged(page, width) {
-  const entry = page.locator('.at-wrap[data-panel="entry"]');
-  const table = entry.locator('table.auto-merged');
-  const labTab = page.locator('.info-tab[data-tab="lab"]');
-  const entryTab = page.locator('.info-tab[data-tab="entry"]');
-  const sheet = page.locator(".lsheet");
-  if (await page.locator(".screen-wrap").count() !== 1)
-    fail(width + "px autorace merged screen duplication");
-  if (await page.locator('.at-wrap[data-panel="lab"]').count() !== 0)
-    fail(width + "px redundant lab panel present");
-  if (await table.locator("tbody tr").count() !== 8)
-    fail(width + "px autorace entry did not retain eight drivers");
-  if (await table.locator(".lb-btn").count() !== 9)
-    fail(width + "px lab detail buttons not preserved");
-  if (await table.locator(".lb-v").count() !== 72 || await table.locator(".lb-tot").count() !== 8)
-    fail(width + "px lab evaluation data missing");
-  if (await sheet.isVisible()) fail(width + "px lab detail sheet initially open");
 
-  await labTab.click();
-  await page.waitForFunction(() =>
-    document.querySelector('.at-wrap[data-panel="entry"]').scrollLeft > 100);
-  if (!await labTab.evaluate(el=>el.classList.contains("active")))
-    fail(width + "px lab tab not active after tap");
-  for (let i = 0; i < 9; i++) {
-    await table.locator('.lb-btn[data-item="' + i + '"]').click();
-    if (!await sheet.isVisible()) fail(width + "px detail " + i + " did not open");
-    if (await sheet.locator(".ldt tbody tr").count() !== 8)
-      fail(width + "px lab detail " + i + " lost eight drivers");
-    if (!(await sheet.locator(".lsheet-title").innerText()).trim())
-      fail(width + "px lab detail title missing " + i);
-    await sheet.locator(".lsheet-close").click();
-    if (await sheet.isVisible()) fail(width + "px lab detail " + i + " did not close");
+async function checkAutoraceLabMerged(page,width){
+  // Current SCR-310: one horizontally scrolling table and an eight-category sheet.
+  const table=page.locator('.auto-race-table');
+  const sheet=page.locator('.auto-analyzer-sheet');
+  const overlay=page.locator('.auto-analyzer-overlay');
+  if(await page.locator('.screen-wrap').count()!==1||
+     await table.locator('tbody tr').count()!==8||
+     await table.locator('.auto-analyzer-btn').count()!==8||
+     await page.locator('.at-wrap[data-panel="lab"],.lsheet').count()!==0)
+    fail(width+'px SCR-310 entry/analyzer structure mismatch');
+  if(await sheet.isVisible()||await overlay.isVisible())
+    fail(width+'px SCR-310 analyzer unexpectedly open');
+
+  await page.locator('.race-menu-scroll .info-tab[data-target="analyzer"]').click();
+  const specs=[
+    ['走路状況別成績',4],
+    ['走路温度別成績',8],
+    ['試走タイム別成績',10],
+    ['ハンデ別成績',10],
+    ['レース場別成績',4],
+    ['競走車別成績',5],
+    ['レース種別・日程別成績',8],
+    ['勝ち上がり別成績',3]
+  ];
+  for(let i=0;i<specs.length;i++){
+    await table.locator('.auto-analyzer-btn[data-analyzer-item="'+(i+1)+'"]').click();
+    const state=await sheet.evaluate(el=>({
+      visible:!el.hidden,
+      title:el.querySelector('.sheet-title')?.textContent.trim(),
+      groupColumns:el.querySelector('.detail-table thead tr:nth-child(2)')?.cells.length,
+      rows:el.querySelectorAll('.detail-table tbody tr').length,
+      rowCells:[...el.querySelectorAll('.detail-table tbody tr')].map(r=>r.cells.length)
+    }));
+    if(!state.visible||state.title!==specs[i][0]||
+       state.groupColumns!==specs[i][1]||state.rows!==8||
+       state.rowCells.some(n=>n!==specs[i][1]+1))
+      fail(width+'px SCR-310 analyzer '+i+' mismatch: '+JSON.stringify(state));
+    await sheet.locator('.sheet-close').click();
+    if(await sheet.isVisible()||await overlay.isVisible())
+      fail(width+'px SCR-310 analyzer '+i+' did not close');
   }
-  await entry.locator(".rd-sw").click();
-  if (await entry.locator(".rd-sw").getAttribute("aria-checked") !== "true")
-    fail(width + "px wet track switch failed");
-  const wet = await entry.locator(".lb-tot").first().getAttribute("data-w");
-  const actual = (await entry.locator(".lb-tot").first().innerText()).trim();
-  if (wet !== actual) fail(width + "px wet track evaluations failed");
-  await entry.locator('.rd-lab[data-side="g"]').click();
-  if (await entry.locator(".rd-sw").getAttribute("aria-checked") !== "false")
-    fail(width + "px good track switch failed");
-
-  await page.locator('.info-tab[data-tab="past"]').click();
-  if (!await page.locator('.at-wrap[data-panel="past"]').isVisible())
-    fail(width + "px past-ten-races panel missing");
-  if (await page.locator('.at-wrap[data-panel="past"] tbody tr').count() !== 8)
-    fail(width + "px past-ten-races driver data missing");
-  await page.locator('.at-wrap[data-panel="past"] .dt-bar .sw').click();
-  if (!await page.locator('.at-wrap[data-panel="past"]').evaluate(el=>el.classList.contains("detail")))
-    fail(width + "px past-ten-races detail switch failed");
-
-  await page.locator('.info-tab[data-tab="vs"]').click();
-  if (!await page.locator('.at-wrap[data-panel="vs"]').isVisible())
-    fail(width + "px head-to-head panel missing");
-  if (await page.locator('.at-wrap[data-panel="vs"] tbody tr').count() !== 8)
-    fail(width + "px head-to-head driver data missing");
-
-  await entryTab.click();
-  if (!await entry.isVisible() || await entry.evaluate(el=>el.scrollLeft)!==0)
-    fail(width + "px entry menu did not return to first column");
-  if (!await entryTab.evaluate(el=>el.classList.contains("active")))
-    fail(width + "px entry tab did not reactivate");
-  await entry.evaluate(el=>{
-    el.scrollLeft=el.scrollWidth;
-    el.dispatchEvent(new Event("scroll",{bubbles:true}));
-  });
-  await page.waitForFunction(() =>
-    document.querySelector('.info-tab[data-tab="lab"]').classList.contains("active"));
-  console.log("AUTORACE LAB OK " + width + "px (9 detail views, 8 drivers, wet/dry, past/vs, 2-way scroll)");
+  console.log('SCR-310 ANALYZER OK '+width+'px (8 detail views, 8 drivers)');
 }
 
 async function checkPredictionSort(page, width, isAutorace) {
@@ -988,7 +961,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   const dayColors = await page.locator('.date-tabs .date-tab').evaluateAll(nodes =>
     nodes.map(node => ({active: node.classList.contains('active'),
       color: getComputedStyle(node).color})));
-  if (dayColors.some(item => item.color !== (item.active ? 'rgb(114, 109, 49)' : 'rgb(48, 54, 59)')))
+  if (dayColors.some(item => item.color !== (item.active ? 'rgb(114, 103, 49)' : 'rgb(48, 54, 59)')))
     fail(width + 'px date tabs must use dark unselected text and gold active text');
   const raceWeights = await page.locator('.venue-card .rchip:not(.canceled) > b, .venue-card .rchip > small')
     .evaluateAll(nodes => [...new Set(nodes.map(n => getComputedStyle(n).fontWeight))]);
@@ -1020,7 +993,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   for (const st of raceStyles) {
     if (st.shadow === 'none') fail(width + 'px race button missing shadow: ' + st.classes);
     if (st.classes.includes('canceled') || st.classes.includes('soon')) continue;
-    const expectedBorder=st.hasRebate?'rgb(114, 109, 49)':'rgb(151, 161, 170)';
+    const expectedBorder=st.hasRebate?'rgb(114, 103, 49)':'rgb(151, 161, 170)';
     const expectedWidth=st.hasRebate?'3px':'1px';
     if(st.border!==expectedBorder || st.borderWidth!==expectedWidth)
       fail(width + 'px rebate buttons need gold 3px borders; other actions use grey 1px: '+
@@ -1161,9 +1134,9 @@ async function checkPredictionSort(page, width, isAutorace) {
       (x.gift && (x.text!=='5%還元' ||
         (x.warning ?
           (x.display!=='none' || x.border!=='rgb(184, 71, 99)') :
-          (x.background!=='rgb(114, 109, 49)' || x.color!=='rgb(255, 255, 255)' ||
+          (x.background!=='rgb(114, 103, 49)' || x.color!=='rgb(255, 255, 255)' ||
            x.font!=='12px' || x.weight!=='600' || x.position!=='absolute' ||
-           x.height!==18 || x.border!=='rgb(114, 109, 49)' ||
+           x.height!==18 || x.border!=='rgb(114, 103, 49)' ||
            x.borderWidth!=='3px' || x.centered>1 ||
            Math.abs(x.inset.top-3)>1 || Math.abs(x.inset.left-3)>1 ||
            Math.abs(x.inset.right-3)>1))))))
@@ -1191,7 +1164,7 @@ async function checkPredictionSort(page, width, isAutorace) {
     return {goldBorder,redBorder,hidden,shown,giftVisible,
       restored:getComputedStyle(rebate).display!=='none'};
   });
-  if(countdownPriority.goldBorder!=='rgb(114, 109, 49)' ||
+  if(countdownPriority.goldBorder!=='rgb(114, 103, 49)' ||
       countdownPriority.redBorder!=='rgb(184, 71, 99)' ||
       !countdownPriority.giftVisible ||
       !countdownPriority.hidden || !countdownPriority.shown || !countdownPriority.restored)
@@ -1202,7 +1175,7 @@ async function checkPredictionSort(page, width, isAutorace) {
       finalIcons.some(r=>r.count !== (r.eligible?1:0)) ||
       finalIcons.filter(r=>r.eligible).some(r=>
         !r.source?.endsWith('#nav-campaign') ||
-        r.color !== 'rgb(114, 109, 49)' || r.width !== '16px' || r.height !== '16px' ||
+        r.color !== 'rgb(114, 103, 49)' || r.width !== '16px' || r.height !== '16px' ||
         !r.fits || r.centered > 1 ||
         r.iconOrder.join('|') !== r.iconOrder.slice().sort(
           (a,b)=>['girls','campaign','featured'].indexOf(a)-
@@ -1290,7 +1263,7 @@ async function checkPredictionSort(page, width, isAutorace) {
     if(headers.some(h=>eligible.has(h.venue)
        ? !h.hasLogo||h.label!=='決勝5%還元'||
          !h.symbol?.endsWith('#nav-campaign')||
-         h.logoColor!=='rgb(114, 109, 49)'||h.day!=='最終日'
+         h.logoColor!=='rgb(114, 103, 49)'||h.day!=='最終日'
        : h.hasLogo))
       fail(width+'px keirin three rebate venues must have right-aligned icon: '+
         JSON.stringify(headers));
@@ -1298,7 +1271,7 @@ async function checkPredictionSort(page, width, isAutorace) {
     if(headers.some(h=>h.venue==='浜松'
        ? !h.hasLogo||h.label!=='5%還元'||
          !h.symbol?.endsWith('#nav-campaign')||
-         h.logoColor!=='rgb(114, 109, 49)'
+         h.logoColor!=='rgb(114, 103, 49)'
        : h.hasLogo))
       fail(width+'px autorace SG venue refund must be right-aligned: '+
         JSON.stringify(headers));

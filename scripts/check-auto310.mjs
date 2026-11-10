@@ -977,9 +977,9 @@ for(const width of [296,375,768]){
     'レイリー','Ｍニジュウサン','モエルトウコン','ＫＯモンソン'];
   const expectedCohort=['21期 60歳','23期 56歳','28期 43歳','24期 52歳',
     '26期 49歳','25期 52歳','25期 52歳','28期 45歳'];
-  if(riderCells.header[0]!=='車番'||riderCells.header[1]!=='選手名'||
+  if(riderCells.header[0]!=='車番'||riderCells.header[1]!=='選手'||
     riderCells.header[2]!=='ハンデ'||riderCells.header[6]!=='ランク審査P'||
-    riderCells.header[7]!=='競走車名'||riderCells.header.some(x=>x==='審査P')||
+    riderCells.header[7]!=='競走車'||riderCells.header.some(x=>x==='審査P')||
     JSON.stringify(riderCells.active)!==JSON.stringify([1,2,3,4,5,6,7,8])||
     riderCells.entries.length!==8||
     riderCells.entries.some((r,i)=>r.name!==expected[i]||r.home!==expectedHome[i]||
