@@ -38,7 +38,7 @@ button,
       }
       .header-actions {
         display: flex;
-        gap: var(--space-card);
+        gap: var(--space-6);
         align-items: center;
       }
       .icon-btn {
@@ -115,8 +115,8 @@ button,
       .venue-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: var(--space-card);
-        padding: var(--space-card) var(--space-8) var(--space-8);
+        gap: var(--space-6);
+        padding: var(--space-6) var(--space-8) var(--space-8);
       }
       .vcard {
         border-left: var(--line-keirin);
@@ -183,7 +183,7 @@ button,
       .vcard.auto .g-g2 { background: var(--c-green); color: var(--c-surface); }
 
       .pickup-card {
-        margin: 0 var(--space-8) var(--space-card);
+        margin: 0 var(--space-8) var(--space-6);
         padding: var(--space-8) var(--space-10);
         background: var(--c-surface);
         border: var(--line-normal);
@@ -242,13 +242,13 @@ button,
         color: var(--c-auto);
       }
       .vgroup-name b { font-weight: var(--fw-strong); color: var(--c-text-secondary); font-size: var(--fs-12); }
-      .mori-venue-grid { row-gap: var(--space-card); }
+      .mori-venue-grid { row-gap: var(--space-6); }
       /* Mori's inactive date-tab rows leave no empty grid cells. */
       .venue-grid.g3.mori-venue-grid > .vcard[hidden] { display: none; }
       .g3 .vcard {
         /* Equal 4px vertical insets: more space between four rows while
            avoiding an oversized gap below the last R/time row. */
-        padding: var(--space-4) var(--space-card) var(--space-4) var(--space-8);
+        padding: var(--space-4) var(--space-6) var(--space-4) var(--space-8);
         border-left-width: var(--line-emphasis-width);
         gap: var(--space-2);
       }
@@ -353,7 +353,7 @@ button,
       .news-item > .news-arrow .ic { display: block; width: 18px; height: 18px; }
 
       .venue-grid.g3 {
-        gap: var(--space-card);
+        gap: var(--space-6);
         padding: 0 var(--space-8) var(--space-8);
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
@@ -474,7 +474,7 @@ button,
       .g3 .vcard-top {
         
         justify-content: flex-start;
-        gap: var(--space-card);
+        gap: var(--space-6);
       }
 
       .vcard-tags {
@@ -495,8 +495,8 @@ button,
       .bn-carousel { position: relative; padding-bottom: var(--space-8); }
       .bn-track {
         display: flex;
-        gap: var(--space-card);
-        padding: var(--space-2) var(--space-8) var(--space-card);
+        gap: var(--space-6);
+        padding: var(--space-2) var(--space-8) var(--space-6);
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-padding: 0 var(--space-8);
