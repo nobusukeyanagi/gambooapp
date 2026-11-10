@@ -80,7 +80,7 @@
     const subheads = [
       sub("枠","c-waku player-section-start"),
       sub('<button type="button" class="car-line-sort racecard-sort-button" aria-pressed="false" aria-label="ライン順に並べ替え"><span>車番</span><span class="sort-mode-label" aria-hidden="true">並び順</span></button>',"fx c-sha"),
-      sub("選手名","c-name"),
+      sub("選手","c-name"),
       sub("級班","bl"),sub("脚質","bl"),sub("ギア比","bl"),
       sub("コメント","player-comment-heading"),
       sub("注目","player-featured-heading"),
