@@ -220,7 +220,7 @@ body { font-weight: var(--fw-normal); }
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: var(--line-emphasis-width) solid transparent;
+  border-bottom: var(--line-thick) solid transparent;
   cursor: pointer;
 }
 :where(.date-tabs, .campaign-tabs) .date-tab.active {
