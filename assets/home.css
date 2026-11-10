@@ -8,7 +8,7 @@ button,
       }
 
       .screen-label {
-        color: var(--c-border);
+        color: var(--c-gray-4);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         text-transform: uppercase;
@@ -16,7 +16,7 @@ button,
       }
 
       .app-header {
-        background: var(--c-surface);
+        background: var(--c-gray-5);
         
         display: flex;
         align-items: center;
@@ -24,7 +24,7 @@ button,
         padding: 0 var(--space-12);
         flex-shrink: 0;
         border-bottom: var(--line-normal);
-        box-shadow: 0 1px 3px color-mix(in srgb, var(--c-text-primary) 6%, transparent);
+        box-shadow: 0 1px 3px color-mix(in srgb, var(--c-gray-1) 6%, transparent);
       }
       .logo {
 
@@ -32,7 +32,7 @@ button,
         letter-spacing: normal;
       }
       .logo span {
-        color: var(--c-text-primary);
+        color: var(--c-gray-1);
         font-size: var(--fs-12);
         font-weight: var(--fw-normal);
       }
@@ -58,7 +58,7 @@ button,
         height: 8px;
         background: var(--c-red);
         border-radius: 50%;
-        border: var(--line-thin) solid var(--c-surface);
+        border: var(--line-thin) solid var(--c-gray-5);
       }
 
 
@@ -67,7 +67,7 @@ button,
       }
 
       .section-title {
-        color: var(--c-text-primary);
+        color: var(--c-gray-1);
         display: flex;
         align-items: center;
         gap: var(--space-4);
@@ -145,7 +145,7 @@ button,
       .vcard-name {
 
         letter-spacing: normal;
-        color: var(--c-text-primary);
+        color: var(--c-gray-1);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -173,19 +173,19 @@ button,
       .vcard-dl .ic { width: 12px; height: 12px; }
 
       /* 競輪: GP/GⅠ=赤紫、GⅡ=青、GⅢ=緑、FⅠ=金、FⅡ=銅。 */
-      .g-gp, .g-g1, .g-sg { background: var(--c-magenta); color: var(--c-surface); }
-      .g-g2 { background: var(--c-blue); color: var(--c-surface); }
-      .g-g3 { background: var(--c-green); color: var(--c-surface); }
-      .g-f1 { background: var(--c-gold); color: var(--c-surface); }
-      .g-f2 { background: var(--c-bronze); color: var(--c-surface); }
+      .g-gp, .g-g1, .g-sg { background: var(--c-magenta); color: var(--c-gray-5); }
+      .g-g2 { background: var(--c-blue); color: var(--c-gray-5); }
+      .g-g3 { background: var(--c-green); color: var(--c-gray-5); }
+      .g-f1 { background: var(--c-gold); color: var(--c-gray-5); }
+      .g-f2 { background: var(--c-bronze); color: var(--c-gray-5); }
       /* オート: SG=赤紫、GⅠ/特GⅠ=青、GⅡ=緑、普通=銅。 */
-      .vcard.auto .g-g1 { background: var(--c-blue); color: var(--c-surface); }
-      .vcard.auto .g-g2 { background: var(--c-green); color: var(--c-surface); }
+      .vcard.auto .g-g1 { background: var(--c-blue); color: var(--c-gray-5); }
+      .vcard.auto .g-g2 { background: var(--c-green); color: var(--c-gray-5); }
 
       .pickup-card {
         margin: 0 var(--space-8) var(--space-6);
         padding: var(--space-8) var(--space-8);
-        background: var(--c-surface);
+        background: var(--c-gray-5);
         border: var(--line-normal);
         border-radius: var(--r-md);
         box-shadow: var(--e1);
@@ -241,7 +241,7 @@ button,
         height: 34px;
         color: var(--c-auto);
       }
-      .vgroup-name b { font-weight: var(--fw-strong); color: var(--c-text-secondary); font-size: var(--fs-12); }
+      .vgroup-name b { font-weight: var(--fw-strong); color: var(--c-gray-2); font-size: var(--fs-12); }
       .mori-venue-grid { row-gap: var(--space-6); }
       /* Mori's inactive date-tab rows leave no empty grid cells. */
       .venue-grid.g3.mori-venue-grid > .vcard[hidden] { display: none; }
@@ -274,7 +274,7 @@ button,
         column-gap: var(--space-4);
         row-gap: var(--space-3);
         border-bottom: var(--line-normal);
-        background: var(--c-surface);
+        background: var(--c-gray-5);
         cursor: pointer;
         min-height: 48px;
         padding: var(--space-8) var(--space-12);
@@ -299,7 +299,7 @@ button,
       .news-badge {
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        color: var(--c-surface);
+        color: var(--c-gray-5);
         white-space: nowrap;
         flex-shrink: 0;
         width: 88px;
@@ -327,7 +327,7 @@ button,
         height: 20px;
         border-radius: var(--r-full);
         background: var(--c-red);
-        color: var(--c-surface);
+        color: var(--c-gray-5);
         font-size: var(--fs-14);
         font-weight: var(--fw-strong);
         line-height: 1;
@@ -335,7 +335,7 @@ button,
       .news-badge.keirin { background: var(--c-keirin); }
       .news-badge.auto { background: var(--c-auto); }
       /* Non-race categories use the same grey badge as その他. */
-      .news-badge:is(.other, .point, .community) { background: var(--c-text-secondary); }
+      .news-badge:is(.other, .point, .community) { background: var(--c-gray-2); }
       .news-badge.both {
         background: linear-gradient(90deg, var(--c-keirin) 0 50%, var(--c-auto) 50% 100%);
       }
@@ -348,7 +348,7 @@ button,
         align-items: center;
         justify-content: center;
         align-self: center;
-        color: var(--c-text-secondary);
+        color: var(--c-gray-2);
       }
       .news-item > .news-arrow .ic { display: block; width: 18px; height: 18px; }
 
@@ -370,7 +370,7 @@ button,
 
       .screen-wrap:not(:only-child) .screen-label {
         display: block;
-        background: var(--c-text-primary);
+        background: var(--c-gray-1);
         color: var(--c-bg);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
@@ -390,7 +390,7 @@ button,
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: var(--c-text-secondary);
+        color: var(--c-gray-2);
         cursor: pointer;
         
         letter-spacing: normal;
@@ -415,7 +415,7 @@ button,
       }
 
       .cta-btn {
-        color: var(--c-surface);
+        color: var(--c-gray-5);
         font-weight: var(--fw-strong);
         
         white-space: nowrap;
@@ -428,7 +428,7 @@ button,
         font-size: var(--fs-14);
       }
       .cta-btn .ic {
-        outline-color: color-mix(in srgb, var(--c-surface) 75%, transparent);
+        outline-color: color-mix(in srgb, var(--c-gray-5) 75%, transparent);
         width: 18px;
         height: 18px;
       }
@@ -485,7 +485,7 @@ button,
       }
 
       .venue-grid.g3 .vcard-r { font-size: var(--fs-18); font-weight: var(--fw-strong); line-height: 1.2; }
-      .venue-grid.g3 .vcard-dl { font-size: var(--fs-18); font-weight: var(--fw-strong); letter-spacing: normal; line-height: 1.2; color: var(--c-text-primary); font-family: var(--ff-ui); }
+      .venue-grid.g3 .vcard-dl { font-size: var(--fs-18); font-weight: var(--fw-strong); letter-spacing: normal; line-height: 1.2; color: var(--c-gray-1); font-family: var(--ff-ui); }
 
       .vcard:is(.ended, .presale) .vcard-bottom { justify-content: flex-end; }
       .venue-grid.g3 > .vcard[data-demo][hidden] { display: none; }
@@ -514,10 +514,10 @@ button,
         border-radius: var(--r-md);
         box-shadow: var(--e1);
         background: var(--c-bg);
-        color: var(--c-text-secondary);
+        color: var(--c-gray-2);
       }
       .bn-dots { display: flex; justify-content: center; gap: var(--space-4); }
-      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-border); transition: width .2s; }
+      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-gray-4); transition: width .2s; }
       .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-gold-light); }
       .pk3 .kun-ic {
         width: 64px;
@@ -615,7 +615,7 @@ button,
         padding: var(--space-2) var(--space-8);
         border-radius: var(--r-full);
         background: var(--c-red);
-        color: var(--c-surface);
+        color: var(--c-gray-5);
         font-size: var(--fs-16);
         font-weight: var(--fw-strong);
         line-height: 1.25;
@@ -727,7 +727,7 @@ button,
          text-align: right;
          white-space: nowrap;
          font-weight: var(--fw-strong);
-         color: var(--c-text-primary);
+         color: var(--c-gray-1);
          font-family: var(--ff-ui);
          font-size: var(--fs-14);
          line-height: 1.25;
@@ -740,7 +740,7 @@ button,
        }
 
       .venue-grid.g3 .vcard-dl[data-deadline] {
-        color: var(--c-text-primary);
+        color: var(--c-gray-1);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -766,7 +766,7 @@ button,
       }
       .venue-grid.g3 .vcard.deadline-soon .vcard-dl.soon,
       .pk3 .pk-deadline.soon {
-        color: var(--c-surface);
+        color: var(--c-gray-5);
         background: var(--c-red);
         border-radius: var(--r-xs);
         padding: var(--space-2) var(--space-4);
@@ -873,7 +873,7 @@ button,
         padding: 0;
         overflow: hidden;
         border-left: var(--line-normal);
-        background: var(--c-surface);
+        background: var(--c-gray-5);
         cursor: default;
         pointer-events: none;
       }
@@ -886,7 +886,7 @@ button,
         justify-content: center;
         align-items: center;
         background: var(--c-auto);
-        color: var(--c-surface);
+        color: var(--c-gray-5);
         font-size: var(--fs-14);
         font-weight: var(--fw-strong);
         line-height: 1;
