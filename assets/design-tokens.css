@@ -56,7 +56,7 @@
      彩度・明度は従来の見た目を維持し、白地の文字／白文字の背景で共用。 */
   --c-bronze: hsl(20 41.82% 43.14%);
   --c-gold: hsl(50 39.88% 31.96%);
-  --c-yellowgreen: hsl(95 40.48% 32.94%);
+  --c-lime: hsl(95 40.48% 32.94%);
   --c-green: hsl(135 42.20% 33.92%);
   --c-teal: hsl(175 41.67% 32.94%);
   --c-blue: hsl(220 42.17% 48.82%);
@@ -70,7 +70,7 @@
      白80%自動混色は使用しない。 */
   --c-bronze-light: hsl(20 65.79% 85.10%);
   --c-gold-light: hsl(50 71.43% 84.90%);
-  --c-yellowgreen-light: hsl(95 60.61% 87.06%);
+  --c-lime-light: hsl(95 60.61% 87.06%);
   --c-green-light: hsl(135 60.61% 87.06%);
   --c-teal-light: hsl(175 60.61% 87.06%);
   --c-blue-light: hsl(220 67.21% 88.04%);
@@ -89,9 +89,6 @@
   --c-bg: #F8F7F4;
   --c-gray-5: #FFFFFF;
 
-  /* Venue-day label keeps its distinct H210 / S10 / L41 tone. */
-  --c-venue-day: hsl(210 10% 41%);
-
   /* Canonical stroke policy (2026-11-10):
    * 1px: all ordinary borders and table grid lines across every screen.
    * 3px exceptions ONLY: selected-tab underline, selected/deadline-near
@@ -101,16 +98,16 @@
    * All widths come from these two tokens, without duplicate aliases.
    */
   --line-thin: 1px;
-  --line-emphasis-width: 3px;
+  --line-thick: 3px;
   --line-normal: var(--line-thin) solid var(--c-gray-4);
   --line-control: var(--line-thin) solid var(--c-gray-3);
-  --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
-  --line-focus: var(--line-emphasis-width) solid var(--c-keirin);
+  --line-keirin: var(--line-thick) solid var(--c-keirin);
+  --line-focus: var(--line-thick) solid var(--c-keirin);
 
   /* Shared radii, shadows, and tap dimensions */
   --r-xs: 3px; /* compact chips */
   --r-sm: 6px;
-  --r-control: 8px; /* header control corners */
+  --r-control: 9px; /* header control corners */
   --r-md: 12px;
   --r-lg: 20px;
   --r-full: 9999px;
