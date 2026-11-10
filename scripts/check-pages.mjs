@@ -708,7 +708,7 @@ async function checkKeirinMania(page, width) {
     const palette={
       1:["#30363B","--c-red-light"],
       2:["#30363B","--c-teal-light"],
-      3:["#30363B","--c-yellowgreen-light"],
+      3:["#30363B","--c-lime-light"],
       4:["#30363B","--c-bronze-light"]
     };
     const rankPalette={
@@ -747,7 +747,7 @@ async function checkKeirinMania(page, width) {
           bounds.height===matching.getBoundingClientRect().height};
     });
     const rows=[...document.querySelectorAll('.mania-table tbody tr')];
-    const legFillTokens={逃:'--c-red-light',追:'--c-teal-light',両:'--c-yellowgreen-light'};
+    const legFillTokens={逃:'--c-red-light',追:'--c-teal-light',両:'--c-lime-light'};
     const legFill=rows.map(row=>{
       const badge=row.querySelector('.leg-tag');
       return {type:badge?.textContent.trim(),correct:!!badge &&
