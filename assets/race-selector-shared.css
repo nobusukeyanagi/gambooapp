@@ -9,7 +9,7 @@
   width: 100%;
   height: 58px;
   flex: 0 0 auto;
-  background: var(--c-surface);
+  background: var(--c-gray-5);
   border-bottom: var(--line-normal);
 }
 .phone-inner .race-selector > .hscroll-inner {
@@ -55,20 +55,20 @@
   overflow: hidden;
   border: var(--line-control);
   border-radius: var(--r-control);
-  background: var(--c-surface);
-  color: var(--c-text-primary);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
   box-shadow: var(--e1);
   text-align: center;
   scroll-snap-align: none;
 }
 .phone-inner .race-selector .race-tab > b {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-size: var(--fs-16);
   line-height: 1.2;
   font-weight: var(--fw-strong);
 }
 .phone-inner .race-selector .race-tab > small {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-size: var(--fs-12);
   line-height: 1.2;
   white-space: nowrap;
@@ -77,46 +77,46 @@
 }
 .phone-inner .race-selector .race-tab.past {
   background: var(--c-bg);
-  border-color: var(--c-border);
+  border-color: var(--c-gray-4);
 }
-.phone-inner .race-selector .race-tab.past > :is(b,small) { color: var(--c-text-secondary); }
+.phone-inner .race-selector .race-tab.past > :is(b,small) { color: var(--c-gray-2); }
 /* Status labels remain dark even when the race number uses the past-race grey. */
 .phone-inner .race-selector .race-tab.past > small.race-status {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-weight: var(--fw-strong);
 }
 .phone-inner .race-selector .race-tab.active:not(.soon):not(.rebate) {
-  background: var(--c-surface);
-  border: var(--line-emphasis-width) solid var(--c-border-control);
+  background: var(--c-gray-5);
+  border: var(--line-emphasis-width) solid var(--c-gray-3);
 }
 .phone-inner .race-selector .race-tab.rebate {
-  background: var(--c-surface);
+  background: var(--c-gray-5);
   border: var(--line-emphasis-width) solid var(--c-gold);
 }
 
 /* Keep SCR-210's 3px red urgent frame, including when the race is selected. */
 .phone-inner .race-selector .race-tab.soon {
   border: var(--line-emphasis-width) solid var(--c-red);
-  background: var(--c-surface);
+  background: var(--c-gray-5);
 }
 /* Neutral canceled race: the same restrained fill as the prediction pages. */
 .phone-inner .race-selector .race-tab.canceled {
-  background: var(--c-border);
-  border-color: var(--c-border);
+  background: var(--c-gray-4);
+  border-color: var(--c-gray-4);
   cursor: default;
 }
 .phone-inner .race-selector .race-tab.canceled > :is(b,small) {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 /* Selected R uses gold fill/white text; do not alter its existing frame. */
 .phone-inner .race-selector .race-tab.active {
   background: var(--c-gold);
 }
 .phone-inner .race-selector .race-tab.active > :is(b,small) {
-  color: var(--c-surface);
+  color: var(--c-gray-5);
 }
 .phone-inner .race-selector .race-tab.active > small.race-status {
-  color: var(--c-surface);
+  color: var(--c-gray-5);
 }
 
 .phone-inner .race-selector > :is(.hscroll-cue,.hscroll-cue-l) {
@@ -136,7 +136,7 @@
   border: 0;
   border-radius: 0;
   background: var(--c-bg);
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   box-shadow: none;
   cursor: pointer;
   pointer-events: auto;
