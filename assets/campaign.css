@@ -166,3 +166,19 @@
   align-items: center;
   justify-content: center;
 }
+
+/* Tablet and desktop: a campaign remains a compact, phone-sized card.
+   More available width produces additional cards per row, not larger banners. */
+@media (min-width: 700px) {
+  #campaign-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    align-content: start;
+  }
+  #campaign-list > .cp-card {
+    min-width: 0;
+  }
+  #campaign-list > .campaign-empty {
+    grid-column: 1 / -1;
+  }
+}
