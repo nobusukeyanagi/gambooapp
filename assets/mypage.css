@@ -252,3 +252,20 @@ button.menu-item.settings-first { border-top:var(--line-normal); }
 .menu-text { flex:1; min-width:0; font-size:var(--fs-16); }
 .menu-arrow { flex:0 0 auto; color:var(--c-text-secondary); font-size:var(--fs-20); }
 .content-end-spacer { height:var(--space-section); }
+
+/* Tablet and desktop: point and favorite buttons keep phone-like dimensions.
+   Rows gain columns instead of stretching the existing two/three buttons. */
+@media (min-width: 600px) {
+  .point-actions {
+    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  }
+  .favorite-player-grid {
+    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  }
+  .user-card-actions {
+    grid-template-columns: repeat(2, minmax(0, 190px));
+  }
+  .mypage-result-actions {
+    grid-template-columns: repeat(2, minmax(0, 190px));
+  }
+}
