@@ -54,7 +54,7 @@
   gap: var(--space-1);
   overflow: hidden;
   border: var(--line-thin) solid var(--c-gray-3);
-  border-radius: var(--r-control);
+  border-radius: var(--r-9);
   background: var(--c-gray-5);
   color: var(--c-gray-1);
   box-shadow: var(--e1);
