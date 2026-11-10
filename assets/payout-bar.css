@@ -51,7 +51,7 @@
         flex-wrap: wrap;
         align-items: baseline;
         justify-content: space-between;
-        column-gap: var(--space-card);
+        column-gap: var(--space-6);
       }
       /* DELCA balance takes users to DELCA My Page. */
       .delca-entry {
@@ -162,6 +162,6 @@
   font-family: var(--ff-ui);
 }
 @media (max-width: 359px) {
-  .payout-bar.pt-h { padding-inline: var(--space-card); }
+  .payout-bar.pt-h { padding-inline: var(--space-6); }
   .pt-h .balance-sep { margin-inline: var(--space-4); }
 }
