@@ -105,7 +105,6 @@
   --line-emphasis-width: 3px;
   --line-normal: var(--line-thin) solid var(--c-border);
   --line-control: var(--line-thin) solid var(--c-border-control);
-  --line-selected: var(--line-emphasis-width) solid var(--c-gold);
   --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
   --line-focus: var(--line-emphasis-width) solid var(--c-keirin);
 
@@ -121,7 +120,6 @@
 
   --e1: 0 1px 2px color-mix(in srgb, var(--c-text-primary) 10%, transparent);
   --e2: 0 2px 6px color-mix(in srgb, var(--c-text-primary) 14%, transparent);
-  --e3: 0 8px 24px color-mix(in srgb, var(--c-text-primary) 22%, transparent);
 
   --tap-min: 44px;
   --tap-dense: 36px;
