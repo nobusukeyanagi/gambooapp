@@ -82,10 +82,10 @@
 .cp-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--space-card);
+  gap: var(--space-6);
   align-items: stretch;
   margin: var(--space-8);
-  padding: var(--space-card);
+  padding: var(--space-6);
 
 }
 .cp-card[hidden] { display: none; }
