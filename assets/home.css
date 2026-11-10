@@ -199,7 +199,7 @@ button,
       .date-tab {
         flex: 1;
         
-        min-height: var(--tap-min);
+        min-height: 44px;
       }
 
       .news-title .ic {
