@@ -33,7 +33,7 @@ html {
   .news-badge, .news-alert-icon, .grade-badge, .rebate-badge,
   .mori-today-strip
 ) :is(span, small, b, strong, em, i, svg, .ic) {
-  color: var(--c-surface) !important;
+  color: var(--c-gray-5) !important;
 }
 /* Explicitly disable the browser's default dark flash on press targets even
    before JavaScript applies the pressed class. */
