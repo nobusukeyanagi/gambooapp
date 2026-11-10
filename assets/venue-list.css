@@ -464,12 +464,15 @@ button, input, select, textarea {
   min-height: 84px;
 }
 
+/* For auto-height race chips, retain a 1px layout border and paint the
+   remaining 2px inward. This preserves both chip geometry and the e1 shadow. */
 /* Final-race rebate uses the same fully-filled first-row band as the
    urgent countdown, but with the canonical dark gold frame and white text. */
 .venue-card .rchip:has(> .rchip-rebate) {
   position: relative;
   overflow: hidden;
-  border: var(--line-emphasis-width) solid var(--c-gold);
+  border: var(--line-thin) solid var(--c-gold);
+  box-shadow: var(--e1), inset 0 0 0 calc(var(--line-emphasis-width) - var(--line-thin)) var(--c-gold);
 }
 .venue-card .rchip > .rchip-rebate {
   position: absolute;
@@ -553,7 +556,8 @@ button, input, select, textarea {
   position: relative;
   overflow: hidden;
   background: var(--c-surface);
-  border: var(--line-emphasis-width) solid var(--c-red);
+  border: var(--line-thin) solid var(--c-red);
+  box-shadow: var(--e1), inset 0 0 0 calc(var(--line-emphasis-width) - var(--line-thin)) var(--c-red);
 }
 
 /* First row is the warning strip. Keep the four-row race button geometry.
