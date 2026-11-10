@@ -52,11 +52,11 @@
   font-size: var(--fs-16);
   font-weight: var(--fw-normal);
   font-variant-numeric: tabular-nums;
-  background: var(--c-surface);
-  color: var(--c-text-primary);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
 }
 .race-detail-scroll .mania-table tbody td.position-stat.position-zero {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 /* Both the current lineup and matching 1着～着外 result cells are
    fully shaded. No text-only chips or colored group headings. */
