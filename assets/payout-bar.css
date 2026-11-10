@@ -92,11 +92,11 @@
 .pt-h .balance-sep { height: auto; align-self: stretch;  }
 
 .pay-toggle .pay-val {
-        gap: var(--space-small);
+        gap: var(--space-4);
         display: inline-grid;
         grid-template-columns: max-content 18px;
         align-items: center;
-        column-gap: var(--space-small);
+        column-gap: var(--space-4);
         margin-left: auto;
       }
       .pay-toggle .pay-val .payout-value {
@@ -145,7 +145,7 @@
         align-self: stretch;
         align-content: center;
         min-height: var(--h-balance);
-        padding: var(--space-section) var(--space-10);
+        padding: var(--space-8) var(--space-10);
         border-radius: 0;
       }
       .payout-bar.pt-h .balance-sep {
@@ -163,5 +163,5 @@
 }
 @media (max-width: 359px) {
   .payout-bar.pt-h { padding-inline: var(--space-card); }
-  .pt-h .balance-sep { margin-inline: var(--space-small); }
+  .pt-h .balance-sep { margin-inline: var(--space-4); }
 }
