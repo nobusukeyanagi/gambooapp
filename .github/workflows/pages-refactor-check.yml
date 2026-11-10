@@ -40,14 +40,14 @@ jobs:
           node-version: '24'
       - name: Install exact dependencies
         run: npm ci --no-audit --no-fund
-      - name: Audit shared racecard CSS structure
+      - name: Audit CSS and HTML asset references across all pages
         run: npm run check:shared-css
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Serve current and optional baseline
         shell: bash
         env:
-          BASELINE_SHA: ${{ github.event.inputs.baseline_commit || '0d0290132bc7363669ce30796c7db957aa9eea1f' }}
+          BASELINE_SHA: ${{ github.event.inputs.baseline_commit }}
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 --directory . > /tmp/gamboo-current.log 2>&1 &
           if [ -n "$BASELINE_SHA" ]; then
