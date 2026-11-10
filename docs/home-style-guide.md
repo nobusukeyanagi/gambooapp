@@ -6,14 +6,11 @@
 
 ## CSS の責務と読込順
 
-`SCR-100_bet.html` の `<head>` で次の順に読み込む。
+ `SCR-100_bet.html` の `<head>` では、次の順にCSSを直接読み込む。
 
-1. `assets/design-tokens.css`：フォント、サイズ、太さ、余白、色、罫線、角丸、影、コントロール寸法の**唯一の定義元**。
-2. `assets/bottom-nav-icons.css`：ボトムナビのSVGアイコンサイズ・形状と有効/無効状態。
-3. `assets/app-base.css`：リセット、ページ全体のフォント、アプリ外枠。
-4. `assets/home.css`：**ホーム固有の**配置、コンポーネント、状態とレスポンシブ指定。
-5. `assets/tap-feedback.css`：共通の押下反応。
-6. `assets/ui-consistency.css`：複数画面にまたがる共通コンポーネント。最後に読み込む。
+1. `assets/design.css`：色、フォント、余白、寸法、罫線、角丸、影の定義元。
+2. `assets/ui.css`：アプリ外枠、ナビゲーション、ヘッダー、押下表現などの共通UI。
+3. `assets/SCR-100_bet.css`：車券購入画面固有の配置、コンポーネント、状態とレスポンシブ指定。
 
 共有コンポーネントの変更は共通CSSを修正する。ホームだけの要件はホーム専用CSSに置く。同じプロパティを両方に重複定義しない。
 
@@ -22,7 +19,7 @@
 - `assets/scroll-controls.js`：スクロール操作の共通制御。
 - `assets/home.js`：ホーム固有のバナー、開催日切替、表示の更新。
 - `assets/payout-bar.js`：払戻金の表示切替。
-- `assets/tap-feedback.js`：共通のタップ・押下表現。
+- `assets/ui.js`：共通のタップ・押下表現と文字の横幅調整。
 
 ホームHTMLから画面固有のインラインスクリプトを排除し、JSの変更は専用ファイルで行う。スクリプトのDOM実行順序を変えない。共有JSの変更は他画面も確認する。
 
