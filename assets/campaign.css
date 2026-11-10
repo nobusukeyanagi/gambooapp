@@ -46,7 +46,7 @@
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
-  height: var(--h-date-tab);
+  height: var(--h-tab);
   padding: 0 var(--space-12);
   background: var(--c-surface);
   border-bottom: var(--line-normal);
