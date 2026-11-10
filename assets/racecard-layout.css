@@ -688,7 +688,7 @@
       .page-header-title { font-size: var(--fs-18); }
       .page-header .back-btn .ic { width: 28px; height: 28px; }
 
-      .info-tabs .info-tab { min-height: 52px; font-size: var(--fs-14); }
+      .info-tabs .info-tab { min-height: var(--h-tab); font-size: var(--fs-14); }
       .rchip { min-width: 62px; min-height: 54px; }
       .rchip b { font-size: var(--fs-16); }
       .rchip small { font-size: var(--fs-12); }
