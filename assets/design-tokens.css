@@ -26,11 +26,11 @@
 
   /* Cross-screen component heights. */
   --h-header: 50px;
+  --h-control: 40px;
   --h-tab: 50px;
   --h-section: 45px;
   --h-bottom-nav: 60px;
   --h-race-info-summary: 120px; /* SCR-210 / SCR-310: tight two-line 12px detail area */
-  --h-control: 40px;
 
   /* ① 競技色 */
   --c-keirin: #477A94;
@@ -86,8 +86,8 @@
   --c-gray-2: #606B76;
   --c-gray-3: #97A1AA;
   --c-gray-4: #D2D6DA;
-  --c-bg: #F8F7F4;
   --c-gray-5: #FFFFFF;
+  --c-bg: #F8F7F4;
 
   /* Canonical stroke policy (2026-11-10):
    * 1px: all ordinary borders and table grid lines across every screen.
