@@ -38,7 +38,7 @@
   height: 36px;
   max-width: 100%;
   margin: 0 auto;
-  border: var(--line-normal);
+  border: var(--line-thin) solid var(--c-gray-4);
   background: var(--c-gray-5);
   box-shadow: var(--e1);
   font: var(--fw-strong) var(--fs-12)/1.25 var(--ff-ui);
@@ -111,7 +111,7 @@
   pointer-events: none;
 }
 .sheet-handle:active { cursor: grabbing; }
-.sheet-handle:focus-visible { outline: var(--line-focus); outline-offset: -3px; }
+.sheet-handle:focus-visible { outline: var(--line-thick) solid var(--c-purple); outline-offset: -3px; }
 .sheet-head {
   display: flex;
   flex: 0 0 auto;
@@ -132,7 +132,7 @@
   width: 40px;
   height: 40px;
   padding: 0;
-  border: var(--line-control);
+  border: var(--line-thin) solid var(--c-gray-3);
   border-radius: var(--r-control);
   background: var(--c-gray-5);
   color: var(--c-gray-1);
@@ -141,7 +141,7 @@
   line-height: 1;
   cursor: pointer;
 }
-.sheet-close:focus-visible { outline: var(--line-focus); outline-offset: var(--space-2); }
+.sheet-close:focus-visible { outline: var(--line-thick) solid var(--c-purple); outline-offset: var(--space-2); }
 .sheet-body {
   flex: 0 1 auto;
   min-height: 0;
@@ -165,8 +165,8 @@
 .sheet .detail-table :is(th,td) {
   box-sizing: border-box;
   padding: var(--space-4) var(--space-2);
-  border-right: var(--line-normal);
-  border-bottom: var(--line-normal);
+  border-right: var(--line-thin) solid var(--c-gray-4);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
   text-align: center;
   vertical-align: middle;
   color: var(--c-gray-1);
@@ -181,7 +181,7 @@
 .sheet .detail-table thead tr:first-child th {
   top: 0;
   height: 28px;
-  border-top: var(--line-normal);
+  border-top: var(--line-thin) solid var(--c-gray-4);
 }
 .sheet .detail-table thead tr:nth-child(2) th {
   top: 28px;
@@ -215,7 +215,7 @@
 }
 /* Fixed first column combines the jersey number and abbreviated rider name. */
 .sheet .detail-table :is(th,td).dt-vehicle {
-  border-left: var(--line-normal);
+  border-left: var(--line-thin) solid var(--c-gray-4);
 }
 .sheet .detail-table .dt-vehicle {
   position: sticky;
@@ -265,7 +265,7 @@
   display: block;
 }
 .sheet .detail-table .dt-car-sort:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: calc(-1 * var(--line-thick));
 }
 /* Match the 3px line separators of the main racecard in predicted-line order. */
