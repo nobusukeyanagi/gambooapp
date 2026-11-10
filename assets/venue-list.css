@@ -319,6 +319,11 @@ button, input, select, textarea {
   align-items: center;
 }
 
+/* SCR-200 featured riders: one spacing step tighter vertically (8px -> 6px). */
+.sport-keirin .comment-row {
+  padding-block: var(--space-6);
+}
+
 .comment-row .cr-r {
   /* Reserve the widest two-digit R label width for all race numbers.
      Keep the label right-aligned so every car number begins on one axis. */
