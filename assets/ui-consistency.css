@@ -122,36 +122,6 @@ body { font-weight: var(--fw-normal); }
   white-space: nowrap;
 }
 
-/* Header actions use the same complete-button feedback and typography on all screens. */
-/* Both header action buttons have a modest, consistent minimum width. */
-/* Interactive header controls share the same subtle elevation as venue tiles. */
-.app-header .header-actions :is(.icon-btn, .cta-btn) {
-  min-width: 80px;
-  box-shadow: var(--e1);
-}
-
-.app-header .header-actions .icon-btn {
-  width: auto;
-  height: var(--h-control);
-  padding: 0 var(--space-section);
-  gap: var(--space-small);
-  background: transparent;
-  border: var(--line-normal);
-  border-radius: var(--r-control);
-  font-size: var(--fs-14);
-  font-weight: var(--fw-strong);
-  white-space: nowrap;
-}
-.app-header .header-actions .icon-btn .ic {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
-.app-header .header-actions .cta-btn {
-  padding: 0 var(--space-10);
-  border-radius: var(--r-control);
-}
-
 /* Canonical sizes. Legacy per-page height overrides have been removed. */
 .app-header { height: var(--h-header); }
 .page-header { height: var(--h-header); }
@@ -238,6 +208,35 @@ body { font-weight: var(--fw-normal); }
 /* Shared bottom breathing room for long scrollable pages. */
 .content-end-spacer { height: var(--space-section); }
 
+/* One shared visual baseline for date tabs across home, predictions and
+   campaign. Widths and intrinsic button behavior stay screen-specific. */
+:where(.date-tabs, .campaign-tabs) {
+  display: flex;
+  flex-shrink: 0;
+  background: var(--c-surface);
+  border-bottom: var(--line-normal);
+}
+:where(.date-tabs, .campaign-tabs) .date-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: var(--line-emphasis-width) solid transparent;
+  cursor: pointer;
+}
+:where(.date-tabs, .campaign-tabs) .date-tab.active {
+  color: var(--c-gold);
+  border-bottom-color: var(--c-gold);
+}
+
+/* Shared surface for cards, without owning their spacing or accent borders.
+   :where keeps page-specific geometry and left stripes authoritative. */
+:where(.vcard, .venue-card, .cp-card, .user-card) {
+  background: var(--c-surface);
+  border: var(--line-normal);
+  border-radius: var(--r-md);
+  box-shadow: var(--e1);
+}
+
 /* Day navigation: one exact font definition, shared by bet and prediction pages. */
 .date-tabs .date-tab {
   font-size: var(--fs-16);
@@ -316,15 +315,20 @@ body { font-weight: var(--fw-normal); }
   min-height: var(--tap-min);
   margin-top: 0;
   padding: 0 var(--space-small);
-  border: var(--line-control);
-  border-radius: var(--r-control);
-  background: var(--c-surface);
-  box-shadow: var(--e1);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
   color: var(--c-text-primary);
   text-decoration: none;
   white-space: nowrap;
+}
+
+/* Common outline-button appearance; layout and typography remain owned
+   by the original components, including the compact Aokei newspaper action. */
+:where(.cp-btn, .point-action, .oshi-act, .os-btn, .favorite-player-card, .race-detail-scroll .aokei-paper-btn) {
+  border: var(--line-control);
+  border-radius: var(--r-control);
+  background: var(--c-surface);
+  box-shadow: var(--e1);
 }
 
 /* Seven production screens have one header layout and the same two controls.
