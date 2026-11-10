@@ -956,3 +956,14 @@ button,
                   min-height: 80px;
                 }
       }
+
+/* Tablet and desktop: retain smartphone-sized venue tiles and banners.
+   The Mori photo tile uses the exact same track width as every venue tile. */
+@media (min-width: 600px) {
+  .venue-grid.g3 {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  .bn-track .bn {
+    flex: 0 0 190px;
+  }
+}
