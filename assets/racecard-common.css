@@ -133,7 +133,7 @@
 }
 .race-detail-scroll .rt-legend dt,
 .race-detail-scroll .rt-legend dl dt {
-  margin: var(--space-card) 0 0;
+  margin: var(--space-6) 0 0;
   color: var(--c-text-primary);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
