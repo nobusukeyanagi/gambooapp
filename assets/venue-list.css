@@ -57,7 +57,7 @@ button, input, select, textarea {
    When the full line is wider than the card, venue-calendar.js applies a
    horizontal fit factor without changing shared typography or clipping text. */
 .venue-header {
-  padding: var(--space-8) var(--space-card) var(--space-card);
+  padding: var(--space-8) var(--space-6) var(--space-6);
   display: block;
   min-height: 48px;
   overflow: hidden;
@@ -144,7 +144,7 @@ button, input, select, textarea {
   align-items: center;
   justify-content: center;
   min-width: 0;
-  gap: var(--space-card);
+  gap: var(--space-6);
 }
 
 .rchips {
@@ -154,7 +154,7 @@ button, input, select, textarea {
   padding: var(--space-8) var(--space-8);
   overflow: visible;
   width: max-content;
-  gap: var(--space-card);
+  gap: var(--space-6);
   align-items: stretch;
 }
 
@@ -218,7 +218,7 @@ button, input, select, textarea {
 /* Venue cards */
 
 .venue-card {
-  margin: var(--space-card) var(--space-8);
+  margin: var(--space-6) var(--space-8);
   overflow: hidden;
 }
 
@@ -271,7 +271,7 @@ button, input, select, textarea {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-8);
-  padding: var(--space-card) var(--space-8) 0 var(--space-12);
+  padding: var(--space-6) var(--space-8) 0 var(--space-12);
 }
 
 .rebate-logo {
@@ -658,7 +658,7 @@ button, input, select, textarea {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-card);
+  gap: var(--space-6);
 }
 
 .cr-line {
@@ -669,7 +669,7 @@ button, input, select, textarea {
 }
 
 .venue-card:has(> .comment-row) {
-  padding-bottom: var(--space-card);
+  padding-bottom: var(--space-6);
 }
 
 .venue-card:not(:has(> .comment-row)) > .hscroll {
