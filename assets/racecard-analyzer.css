@@ -101,7 +101,7 @@
 .sheet-handle::before {
   content: "";
   position: absolute;
-  top: var(--space-card);
+  top: var(--space-6);
   left: 50%;
   width: 36px;
   height: 4px;
@@ -117,7 +117,7 @@
   flex: 0 0 auto;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-2) var(--space-12) var(--space-card);
+  padding: var(--space-2) var(--space-12) var(--space-6);
 }
 .sheet-title {
   font-size: var(--fs-16);
