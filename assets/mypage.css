@@ -59,7 +59,7 @@
   flex-direction: column;
   min-width: 0;
   min-height: calc(var(--h-control) + var(--fs-20) + var(--space-8));
-  padding: var(--space-5) var(--space-2);
+  padding: var(--space-4) var(--space-2);
   line-height: 1.25;
   white-space: normal;
   text-align: center;
@@ -74,7 +74,7 @@
 
 /* Shared headings remain 20px/600 with no decorative accent bar.
    Separate sections by whitespace; competition SVGs stay aligned with text. */
-.section-header .section-title { display:inline-flex; align-items:center; gap:var(--space-5); color:var(--c-text-primary); }
+.section-header .section-title { display:inline-flex; align-items:center; gap:var(--space-4); color:var(--c-text-primary); }
 .scroll-area > .section-header { margin-top:var(--space-8); }
 
 
@@ -95,7 +95,7 @@
 .favorite-group-title {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-5);
+  gap: var(--space-4);
   min-width: 0;
 }
 /* Keirin favorite headings must not break between the sport and group label. */
