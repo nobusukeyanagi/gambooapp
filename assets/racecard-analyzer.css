@@ -26,8 +26,8 @@
   text-align: center;
 }
 .race-detail-scroll .mania-table tbody td.mania-eval {
-  background: var(--c-surface);
-  color: var(--c-text-primary);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
 }
 .item-btn {
   display: flex;
@@ -39,10 +39,10 @@
   max-width: 100%;
   margin: 0 auto;
   border: var(--line-normal);
-  background: var(--c-surface);
+  background: var(--c-gray-5);
   box-shadow: var(--e1);
   font: var(--fw-strong) var(--fs-12)/1.25 var(--ff-ui);
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   white-space: normal;
   cursor: pointer;
 }
@@ -66,7 +66,7 @@
   position: absolute;
   inset: 0 0 var(--h-bottom-nav);
   z-index: 10;
-  background: color-mix(in srgb, var(--c-text-primary) 40%, transparent);
+  background: color-mix(in srgb, var(--c-gray-1) 40%, transparent);
 }
 .sheet {
   position: absolute;
@@ -81,8 +81,8 @@
   flex-direction: column;
   overflow: hidden;
   border-radius: var(--r-lg) var(--r-lg) 0 0;
-  background: var(--c-surface);
-  box-shadow: 0 -4px 16px color-mix(in srgb, var(--c-text-primary) 15%, transparent);
+  background: var(--c-gray-5);
+  box-shadow: 0 -4px 16px color-mix(in srgb, var(--c-gray-1) 15%, transparent);
   touch-action: pan-x pinch-zoom;
 }
 .sheet-handle {
@@ -106,7 +106,7 @@
   width: 36px;
   height: 4px;
   border-radius: var(--r-xs);
-  background: var(--c-border);
+  background: var(--c-gray-4);
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -122,7 +122,7 @@
 .sheet-title {
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 .sheet-close {
   display: inline-flex;
@@ -134,8 +134,8 @@
   padding: 0;
   border: var(--line-control);
   border-radius: var(--r-control);
-  background: var(--c-surface);
-  color: var(--c-text-primary);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
   font-size: var(--fs-18);
   font-weight: var(--fw-strong);
   line-height: 1;
@@ -169,7 +169,7 @@
   border-bottom: var(--line-normal);
   text-align: center;
   vertical-align: middle;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   white-space: nowrap;
 }
 .sheet .detail-table thead th {
@@ -206,7 +206,7 @@
   height: 44px;
   padding-top: 0;
   padding-bottom: 0;
-  background: var(--c-surface);
+  background: var(--c-gray-5);
 }
 /* The bottom-navigation already has a 1px top border. Avoid a second
    coincident line at the bottom of the nine-rider detail table. */
@@ -226,7 +226,7 @@
   max-width: 50px;
   padding: var(--space-1) var(--space-2);
   z-index: 4;
-  background: var(--c-surface);
+  background: var(--c-gray-5);
 }
 .sheet .detail-table thead th.dt-vehicle {
   top: 0;
@@ -270,7 +270,7 @@
 }
 /* Match the 3px line separators of the main racecard in predicted-line order. */
 .sheet .detail-table tbody tr.line-group-start > td {
-  border-top: var(--line-emphasis-width) solid var(--c-border);
+  border-top: var(--line-emphasis-width) solid var(--c-gray-4);
 }
 .sheet .detail-table .dt-vehicle-content {
   display: flex;
@@ -293,7 +293,7 @@
   font-size: var(--fs-12);
   line-height: 1.2;
   font-weight: var(--fw-strong);
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 .sheet .detail-table td.dt-rank {
   min-width: 56px;
@@ -305,7 +305,7 @@
   font-size: var(--fs-16);
   padding: 0 var(--space-2);
   border-radius: var(--r-xs);
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 .sheet .detail-table .rank-tint-1,
 .sheet .detail-table .recent4-rate.recent4-rank-1 {
@@ -339,14 +339,14 @@
   font-size: var(--fs-16);
   font-weight: var(--fw-normal);
   line-height: 1.2;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-variant-numeric: tabular-nums;
 }
 /* Advancement rates alone append the total in the 12px secondary font. */
 .sheet .detail-table .recent4-total {
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
 }
 .sheet .detail-table .recent4-rate {
   display: table;
@@ -357,17 +357,17 @@
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
   line-height: 1.2;
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   font-variant-numeric: tabular-nums;
 }
 .sheet .detail-table .recent4-rate:is(.recent4-rank-1,.recent4-rank-2,.recent4-rank-3) {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 .sheet .detail-table .dt-difference {
   display: inline-block;
   width: 6.5ch;
   text-align: right;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-size: var(--fs-14);
   font-variant-numeric: tabular-nums;
 }
