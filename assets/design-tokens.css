@@ -100,7 +100,14 @@
   /* Venue-day label keeps its distinct H210 / S10 / L41 tone. */
   --c-venue-day: hsl(210 10% 41%);
 
-  /* Unified line system: 1px standard/control, 3px selected/race/focus. */
+  /* Canonical stroke policy (2026-11-10):
+   * 1px: all ordinary borders and table grid lines across every screen.
+   * 3px exceptions ONLY: selected-tab underline, selected/deadline-near
+   * button outline, keirin lineup-order separator, left-edge accent strip,
+   * and keyboard focus outline.
+   * Keep exceptions visually distinct; never increase normal grid widths.
+   * All widths come from these two tokens, without duplicate aliases.
+   */
   --line-thin: 1px;
   --line-emphasis-width: 3px;
   --line-normal: var(--line-thin) solid var(--c-border);
