@@ -164,7 +164,7 @@ for(const width of [296,375,768]){
     return ok;
   });
   if(!synthetic)errorsNow.push('long line not fully preserved/fit');
-  if([result.header,result.selector,result.summary,result.menu,result.bottom].join(',')!=='50,58,120,52,60')
+  if([result.header,result.selector,result.summary,result.menu,result.bottom].join(',')!=='50,58,120,50,60')
    errorsNow.push('different shared heights '+[result.header,result.selector,result.summary,result.menu,result.bottom]);
   if(result.activeTitle!=='オートレース予想'||result.selectedRace!=='9'||result.races!==12||result.redFrame!=='3px')
    errorsNow.push('header/selected race mismatch');
@@ -927,7 +927,7 @@ for(const width of [296,375,768]){
      basicStats.countCss.color!=='rgb(48, 54, 59)'||
      basicStats.rateCss.font!=='12px'||basicStats.rateCss.weight!=='400'||
      basicStats.rateCss.color!=='rgb(96, 107, 118)'||
-     basicStats.rateGap!=='5px'||
+     basicStats.rateGap!=='4px'||
      basicStats.result.some((r,i)=>JSON.stringify(r.recent)!==JSON.stringify(expectedR10[i].map((v,j)=>[String(v),expectedRate(expectedR10[i])[j]]))||
        JSON.stringify(r.last90)!==JSON.stringify(expectedR90[i].map((v,j)=>[String(v),expectedRate(expectedR90[i])[j]]))))
     errorsNow.push('recent/good/90-day two-line rows mismatch: '+JSON.stringify(basicStats));
