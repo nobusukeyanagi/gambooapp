@@ -487,8 +487,7 @@ button, input, select, textarea {
   justify-content: center;
   height: 18px;
   padding: 0;
-  border-radius: calc(var(--r-9) - var(--line-thick))
-                 calc(var(--r-9) - var(--line-thick)) 0 0;
+  border-radius: var(--r-6) var(--r-6) 0 0;
   background: var(--c-gold);
   color: var(--c-gray-5);
   font-size: var(--fs-12);
@@ -575,8 +574,7 @@ button, input, select, textarea {
   justify-content: center;
   height: 18px;
   padding: 0;
-  border-radius: calc(var(--r-9) - var(--line-thick))
-                 calc(var(--r-9) - var(--line-thick)) 0 0;
+  border-radius: var(--r-6) var(--r-6) 0 0;
   background: var(--c-red);
   color: var(--c-gray-5);
   font-size: var(--fs-12);
