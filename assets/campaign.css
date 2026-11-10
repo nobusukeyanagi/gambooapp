@@ -20,31 +20,16 @@
 }
 
 
-/* Match the common "Yesterday / Today / Tomorrow" date tab structure.
-   Shared font sizes, weights and row heights are taken directly from ui-consistency.css. */
-.campaign-tabs {
-  display: flex;
-  flex-shrink: 0;
-  background: var(--c-surface);
-  border-bottom: var(--line-normal);
-}
+/* Shared tab appearance belongs to ui-consistency.css.
+   Preserve campaign-specific width and native button resets. */
 .campaign-tabs .date-tab {
   flex: 1 1 0;
   min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 0;
   border: 0;
-  border-bottom: var(--line-emphasis-width) solid transparent;
   background: transparent;
   color: var(--c-text-primary);
   font-family: inherit;
-  cursor: pointer;
-}
-.campaign-tabs .date-tab.active {
-  color: var(--c-gold);
-  border-bottom-color: var(--c-gold);
 }
 .campaign-tabs .date-tab:focus-visible,
 .campaign-page-arrow:focus-visible,
