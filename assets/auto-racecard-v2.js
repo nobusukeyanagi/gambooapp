@@ -475,7 +475,7 @@ const analysisGroups={
  situation:[["走路状況別成績：湿走路",analysisRates(0)]],
  roadtemp:[["走路温度別成績：低温20℃未満",analysisRates(0)],
            ["季節別成績：秋9～11月",analysisRates(4)]],
- trialrun:[["試走T",[analysisValue(0,"試走T")]],
+ trialrun:[["今回",[analysisValue(0,"試走T")]],
            ["試走タイム傾向",[
              analysisValue(2,"最高"),analysisValue(3,"平均"),
              analysisValue(4,"偏差1"),analysisValue(5,"偏差2")]],
@@ -586,8 +586,10 @@ function openAnalyzer(index,button){
  const renderField=(field,row,car)=>{
    if(field.kind==="value"){
      const original=row[field.i]||"—";
-     // The rank under ハンデ別成績 is a factual ordinal, not a highlighted grade.
-     const rank=entry.path==="handicap"&&field.i===1?0:
+     // The ハンデ順位 and 試走T順位 are plain ordinal labels, without tint.
+     const plainRank=(entry.path==="handicap"&&field.i===1)||
+       (entry.path==="trialrun"&&field.i===6);
+     const rank=plainRank?0:
        (rankByField[field.i]?.[car]||
         (/^[1-4]位$/.test(original)?Number(original[0]):0));
      return '<td class="auto-analyzer-value'+analyzerWidthClass(field)+'">'+
@@ -608,8 +610,13 @@ function openAnalyzer(index,button){
      if(prev)count-=prev.count;
    }
    const rank=rankByField[field.i]?.[car]||0;
+   // Only trialrun's two 2連対率 columns append the source denominator.
+   const showTrialTotal=entry.path==="trialrun"&&
+     (field.i===7||field.i===10);
    return '<td class="dt-rate">'+
-     '<span class="recent4-count">'+count+'</span>'+
+     '<span class="recent4-count">'+count+
+       (showTrialTotal?'<span class="recent4-total">/'+stat.total+'</span>':'')+
+       '</span>'+
      '<span class="recent4-rate'+(rank?' recent4-rank-'+rank:'')+'">'+
        safe(formatAnalyzerPercent(stat.rate))+'</span></td>';
  };
