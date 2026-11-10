@@ -23,7 +23,7 @@ button,
         justify-content: space-between;
         padding: 0 var(--space-12);
         flex-shrink: 0;
-        border-bottom: var(--line-normal);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
         box-shadow: 0 1px 3px color-mix(in srgb, var(--c-gray-1) 6%, transparent);
       }
       .logo {
@@ -119,7 +119,7 @@ button,
         padding: var(--space-6) var(--space-8) var(--space-8);
       }
       .vcard {
-        border-left: var(--line-keirin);
+        border-left: var(--line-thick) solid var(--c-keirin);
         padding: var(--space-8) var(--space-8) var(--space-8);
         cursor: pointer;
         display: flex;
@@ -132,10 +132,10 @@ button,
         text-decoration: none;
       }
       .venue-grid.g3 > a.vcard:focus-visible {
-        outline: var(--line-focus);
+        outline: var(--line-thick) solid var(--c-purple);
         outline-offset: var(--space-2);
       }
-      .vcard.auto { border-left: var(--line-auto); }
+      .vcard.auto { border-left: var(--line-thick) solid var(--c-auto); }
       .vcard-top {
         display: flex;
         align-items: center;
@@ -186,7 +186,7 @@ button,
         margin: 0 var(--space-8) var(--space-6);
         padding: var(--space-8) var(--space-8);
         background: var(--c-gray-5);
-        border: var(--line-normal);
+        border: var(--line-thin) solid var(--c-gray-4);
         border-radius: var(--r-md);
         box-shadow: var(--e1);
         display: flex;
@@ -273,7 +273,7 @@ button,
         align-items: center;
         column-gap: var(--space-4);
         row-gap: var(--space-3);
-        border-bottom: var(--line-normal);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
         background: var(--c-gray-5);
         cursor: pointer;
         min-height: 48px;
@@ -285,7 +285,7 @@ button,
         text-decoration: none;
       }
       a.news-item:focus-visible {
-        outline: var(--line-focus);
+        outline: var(--line-thick) solid var(--c-purple);
         outline-offset: -2px;
       }
       .news-head {
@@ -573,7 +573,7 @@ button,
       }
       .mori-page-link .ic { width: 14px; height: 14px; }
       .mori-page-link:focus-visible {
-        outline: var(--line-focus);
+        outline: var(--line-thick) solid var(--c-purple);
         outline-offset: 2px;
         border-radius: var(--r-sm);
       }
@@ -622,7 +622,7 @@ button,
         white-space: nowrap;
       }
       .bn-track .bn:focus-visible {
-        outline: var(--line-focus);
+        outline: var(--line-thick) solid var(--c-purple);
         outline-offset: var(--space-2);
       }
       .bn-track .bn img {
@@ -651,7 +651,7 @@ button,
       }
       .featured-races-header .see-all .ic { width: 16px; height: 16px; }
       .featured-races-header .see-all:focus-visible {
-        outline: var(--line-focus);
+        outline: var(--line-thick) solid var(--c-purple);
         outline-offset: 2px;
         border-radius: var(--r-sm);
       }
@@ -872,7 +872,7 @@ button,
         position: relative;
         padding: 0;
         overflow: hidden;
-        border-left: var(--line-normal);
+        border-left: var(--line-thin) solid var(--c-gray-4);
         background: var(--c-gray-5);
         cursor: default;
         pointer-events: none;
@@ -905,7 +905,7 @@ button,
       }
       /* The shared tap-feedback stylesheet handles press feedback on every page. */
       .section-header + .news-item {
-        border-top: var(--line-normal);
+        border-top: var(--line-thin) solid var(--c-gray-4);
       }
 
       /* Last in the cascade: protect 16px maximum-balance figures on
