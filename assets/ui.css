@@ -252,19 +252,23 @@ html {
 .tap-pressed .ri-race-purchase {
   background: var(--c-gold-light) !important;
 }
-/* Status strips, race countdown/rebate bands and category badges are
-   independent from the button's press effect: preserve their original
-   colored backgrounds, white text, and borders during the press. */
+/* White-on-color labels remain white when the surrounding button is pressed.
+   Preserve the colored badge/strip surface while the rest of the target
+   keeps the common gold press feedback. */
 .tap-pressed :is(
+  .gbadge, .grade-badge, .rebate-badge,
   .rchip-warning, .rchip-rebate, .bn-status,
-  .news-badge, .news-alert-icon, .grade-badge, .rebate-badge,
-  .mori-today-strip
+  .news-badge, .news-alert-icon, .mori-today-strip,
+  .vcard-dl.soon, .pk-deadline.soon,
+  .carno.w2, .carno.w3, .carno.w4, .carno.w6, .carno.w7, .carno.w9
 ),
 .tap-pressed :is(
+  .gbadge, .grade-badge, .rebate-badge,
   .rchip-warning, .rchip-rebate, .bn-status,
-  .news-badge, .news-alert-icon, .grade-badge, .rebate-badge,
-  .mori-today-strip
-) :is(span, small, b, strong, em, i, svg, .ic) {
+  .news-badge, .news-alert-icon, .mori-today-strip,
+  .vcard-dl.soon, .pk-deadline.soon,
+  .carno.w2, .carno.w3, .carno.w4, .carno.w6, .carno.w7, .carno.w9
+) :is(span, small, b, strong, em, i, svg, .ic, .fit-text-inner) {
   color: var(--c-gray-5) !important;
 }
 /* Explicitly disable the browser's default dark flash on press targets even
