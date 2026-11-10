@@ -831,18 +831,18 @@
 .race-detail-scroll .mania-table :is(th,td).marutoku-combined-heading,
 .race-detail-scroll .mania-table tbody td.marutoku-combined-cell {
   box-sizing: border-box;
-  width: 110px !important;
-  min-width: 110px !important;
-  max-width: 110px !important;
+  width: 90px !important;
+  min-width: 90px !important;
+  max-width: 90px !important;
   padding-left: var(--space-2);
   padding-right: var(--space-2);
 }
 .race-detail-scroll .mania-table thead tr:first-child > th.gindex-combined-heading,
 .race-detail-scroll .mania-table tbody td.gindex-combined-cell {
   box-sizing: border-box;
-  width: 120px !important;
-  min-width: 120px !important;
-  max-width: 120px !important;
+  width: 100px !important;
+  min-width: 100px !important;
+  max-width: 100px !important;
   padding-left: var(--space-2);
   padding-right: var(--space-2);
 }
