@@ -57,7 +57,7 @@ button,
         width: 8px;
         height: 8px;
         background: var(--c-red);
-        border-radius: 50%;
+        border-radius: var(--r-full);
         border: var(--line-thin) solid var(--c-gray-5);
       }
 
@@ -517,12 +517,12 @@ button,
         color: var(--c-gray-2);
       }
       .bn-dots { display: flex; justify-content: center; gap: var(--space-4); }
-      .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-gray-4); transition: width .2s; }
+      .bn-dots i { width: 6px; height: 6px; border-radius: var(--r-full); background: var(--c-gray-4); transition: width .2s; }
       .bn-dots i.on { width: 16px; border-radius: var(--r-3); background: var(--c-gold-light); }
       .pk3 .kun-ic {
         width: 64px;
         height: 64px;
-        border-radius: 50%;
+        border-radius: var(--r-full);
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         line-height: 1.3;
