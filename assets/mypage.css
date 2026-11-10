@@ -19,7 +19,7 @@
 /* Inset avatar on a white identity card with a restrained gold accent line. */
 .user-card { margin:var(--space-8); padding:0; overflow:hidden; }
 .user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-12)) minmax(0, 1fr); align-items:center; column-gap:var(--space-8); row-gap:var(--space-8); padding:var(--space-8) var(--space-12); background:var(--c-gray-5); border-top:var(--line-thick) solid var(--c-gold); border-bottom:var(--line-thin) solid var(--c-gray-4); }
-.user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-12)); height:calc(var(--h-control) + var(--space-12)); flex:0 0 calc(var(--h-control) + var(--space-12)); overflow:hidden; border-radius:var(--r-md); background:var(--c-gold-light); box-shadow:var(--e1); color:var(--c-gold); }
+.user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-12)); height:calc(var(--h-control) + var(--space-12)); flex:0 0 calc(var(--h-control) + var(--space-12)); overflow:hidden; border-radius:var(--r-12); background:var(--c-gold-light); box-shadow:var(--e1); color:var(--c-gold); }
 .user-avatar-photo { display:block; width:100%; height:100%; object-fit:cover; }
 .user-avatar [hidden] { display:none; }
 .user-name { grid-column:2; min-width:0; font-size:var(--fs-18); font-weight:var(--fw-strong); line-height:1.2; overflow-wrap:anywhere; color:var(--c-gray-1); }
@@ -85,7 +85,7 @@
   gap: 0;
   margin: var(--space-6) var(--space-8) var(--space-8);
   border: var(--line-thin) solid var(--c-gray-4);
-  border-radius: var(--r-md);
+  border-radius: var(--r-12);
   background: var(--c-gray-5);
   overflow: hidden;
 }
@@ -139,7 +139,7 @@
 .favorite-group-change:focus-visible {
   outline: var(--line-thick) solid var(--c-purple);
   outline-offset: 2px;
-  border-radius: var(--r-sm);
+  border-radius: var(--r-6);
 }
 .favorite-player-grid {
   display: grid;
