@@ -22,7 +22,7 @@
   width:max-content; max-width:none; white-space:nowrap;
   transform-origin:left center; line-height:1.2;
 }
-.sport-auto .race-detail-scroll .ri-auto-detail-line .ri-auto-inline { gap:var(--space-content); }
+.sport-auto .race-detail-scroll .ri-auto-detail-line .ri-auto-inline { gap:var(--space-12); }
 /* The countdown is nested inside the horizontally compressed span, so it
    requires a descendant selector in addition to SCR-210's shared rule. */
 .sport-auto .race-detail-scroll .race-info-meta .race-countdown {
