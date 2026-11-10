@@ -15,17 +15,17 @@
   --fw-normal: 400;
   --fw-strong: 600;
 
-  /* Spacing: one source for each semantic purpose. */
-  --space-section: 8px;
+  /* Spacing: numeric names match pixel values; no semantic aliases. */
   --space-1: 1px;
   --space-2: 2px;
   --space-3: 3px;
+  --space-4: 4px;
   --space-5: 5px;
-  --space-10: 10px;
-  --space-24: 24px; /* clearance for 18px notice chevron plus 6px gap */
   --space-card: 6px;
-  --space-small: 4px;
-  --space-content: 12px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-24: 24px; /* clearance for 18px notice chevron plus 6px gap */
 
   /* Cross-screen component heights. */
   --h-header: 50px;
