@@ -355,7 +355,7 @@
 
       .tap {
         position: relative;
-        min-height: var(--tap-dense);
+        min-height: 36px;
       }
       .tap::before {
         content: "";
