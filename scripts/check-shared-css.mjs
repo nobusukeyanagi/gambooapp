@@ -27,6 +27,41 @@ const sharedScrollProperties = new Set(['flex', 'overflow-y', 'overflow-x', 'bac
 const issues = [];
 const cssText = name => readFile(path.join(root, 'assets', name), 'utf8');
 
+// Protect the approved 1px baseline and 3px exceptions against accidental changes.
+// Colors and selector ownership remain independent of this width invariant.
+const tokensAST = postcss.parse(await cssText('design-tokens.css'));
+const widths = new Map();
+tokensAST.walkDecls(decl => {
+  if (['--line-thin', '--line-emphasis-width', '--line-normal',
+       '--line-control', '--line-keirin', '--line-focus'].includes(decl.prop)) {
+    widths.set(decl.prop, decl.value.trim());
+  }
+});
+for (const [token, expected] of Object.entries({
+  '--line-thin': '1px',
+  '--line-emphasis-width': '3px',
+  '--line-normal': 'var(--line-thin) solid var(--c-border)',
+  '--line-control': 'var(--line-thin) solid var(--c-border-control)',
+  '--line-keirin': 'var(--line-emphasis-width) solid var(--c-keirin)',
+  '--line-focus': 'var(--line-emphasis-width) solid var(--c-keirin)'
+})) {
+  if (widths.get(token) !== expected) {
+    issues.push(`Stroke policy: ${token} must remain ${expected}; got ${widths.get(token) || '(missing)'}`);
+  }
+}
+// The keirin lineup-order row separator is the sole thick box-table grid line.
+const lineupCSS = postcss.parse(await cssText('keirin-racecard-grouped.css'));
+const lineupRule = [];
+lineupCSS.walkRules(rule => {
+  if (rule.selector.trim() === '.race-detail-scroll .mania-table tbody tr.line-group-start > td') {
+    rule.walkDecls('border-top', decl => lineupRule.push(decl.value.trim()));
+  }
+});
+if (lineupRule.length !== 1 ||
+    lineupRule[0] !== 'var(--line-emphasis-width) solid var(--c-border)') {
+  issues.push('Stroke policy: keirin lineup-order divider must remain the only 3px table separator');
+}
+
 for (const filename of allCSS) {
   const filepath = path.join(root, 'assets', filename);
   try {
