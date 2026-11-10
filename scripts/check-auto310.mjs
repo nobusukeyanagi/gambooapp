@@ -735,7 +735,7 @@ for(const width of [296,375,768]){
   const expectedAwards=[[0,0,10],[3,0,0],[2,0,10],[4,0,20],[1,0,49],[6,1,33],[13,1,57],[10,1,71]];
   if(awardState.header!=='優出・優勝'||awardState.rowSpan!==2||awardState.headerWidth!==100||
      awardState.columnIndex!==8||!awardState.selectedOnPlayer||
-     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近5走出走表','直近10走着度数','直近良10走タイム','直近90日着度数','直近180日良湿別着度数','直近360日対戦成績','スパコン予想','データ解析ラボ'])||
+     JSON.stringify(awardState.labels)!==JSON.stringify(['選手情報','直近5走出走表','直近10走成績','直近良10走タイム','直近90日成績','直近180日良湿別成績','直近360日対戦成績','スパコン予想','データ解析ラボ'])||
      awardState.sheetCount!==2||awardState.lastCells.some(n=>n!==58)||
      awardState.cells.length!==8||
      awardState.cells.some((r,i)=>{
@@ -908,7 +908,7 @@ for(const width of [296,375,768]){
     const p=v=>n?Math.trunc(v*100/n)+'%':'—';
     return [p(a[0]),p(a[0]+a[1]),p(a[0]+a[1]+a[2]),p(a[3])];
   };
-  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','直近5走出走表','直近10走着度数','直近良10走タイム','直近90日着度数'])||
+  if(JSON.stringify(basicStats.menu)!==JSON.stringify(['選手情報','直近5走出走表','直近10走成績','直近良10走タイム','直近90日成績'])||
      basicStats.upperTitles.some(t=>['直近10走','良10走','直近90日'].includes(t))||
      JSON.stringify(basicStats.upperSpan)!==JSON.stringify([2,2,2])||
      JSON.stringify(basicStats.labels)!==JSON.stringify(expectedLabels)||
@@ -1319,7 +1319,7 @@ for (const width of [296,375,768]) {
     minWidth:styles.minWidth
    };
   }));
-  const expectedLabels=['選手情報','直近4ヵ月基本成績','直近7開催着順・タイム',
+  const expectedLabels=['選手情報','直近4ヵ月基本成績','直近7開催着順表',
    '直近20走並び別成績','マル得ポイント','G指数','マニア分析'];
   const bad=measurements.length!==expectedLabels.length||measurements.some((tab,index)=>
     tab.label!==expectedLabels[index]||
