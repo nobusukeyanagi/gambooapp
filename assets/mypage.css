@@ -259,3 +259,11 @@ button.menu-item.settings-first { border-top:var(--line-normal); }
     grid-template-columns: repeat(2, minmax(0, 190px));
   }
 }
+
+/* Phone only: game shortcut spans all three point-action columns.
+   At the shared 600px tablet breakpoint it returns to a normal grid cell. */
+@media (max-width: 599px) {
+  .point-actions .point-game-action {
+    grid-column: 1 / -1;
+  }
+}
