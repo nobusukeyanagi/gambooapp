@@ -138,7 +138,6 @@ button, input, select, textarea {
   align-items: center;
   border-bottom: var(--line-thin) solid var(--c-gray-4);
   flex-shrink: 0;
-  justify-content: center;
 }
 
 .page-header-title {
