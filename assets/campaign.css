@@ -47,7 +47,7 @@
   justify-content: space-between;
   flex-shrink: 0;
   height: var(--h-date-tab);
-  padding: 0 var(--space-content);
+  padding: 0 var(--space-12);
   background: var(--c-surface);
   border-bottom: var(--line-normal);
 }
@@ -84,7 +84,7 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--space-card);
   align-items: stretch;
-  margin: var(--space-section);
+  margin: var(--space-8);
   padding: var(--space-card);
 
 }
@@ -111,7 +111,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  gap: var(--space-small);
+  gap: var(--space-4);
   padding: 0;
 }
 .cp-title {
@@ -141,8 +141,8 @@
 }
 /* Campaign and point shortcut buttons share their complete visual design in ui-consistency.css. */
 .campaign-empty {
-  margin: var(--space-section);
-  padding: var(--space-24) var(--space-content);
+  margin: var(--space-8);
+  padding: var(--space-24) var(--space-12);
   color: var(--c-text-secondary);
   font-size: var(--fs-14);
   text-align: center;
