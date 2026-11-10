@@ -325,7 +325,7 @@ button,
         flex: 0 0 20px;
         width: 20px;
         height: 20px;
-        border-radius: var(--r-9999);
+        border-radius: var(--r-full);
         background: var(--c-red);
         color: var(--c-gray-5);
         font-size: var(--fs-14);
@@ -613,7 +613,7 @@ button,
         box-sizing: border-box;
         width: 100%;
         padding: var(--space-2) var(--space-8);
-        border-radius: var(--r-9999);
+        border-radius: var(--r-full);
         background: var(--c-red);
         color: var(--c-gray-5);
         font-size: var(--fs-16);
