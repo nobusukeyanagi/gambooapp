@@ -21,7 +21,7 @@ button,
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 var(--space-content);
+        padding: 0 var(--space-12);
         flex-shrink: 0;
         border-bottom: var(--line-normal);
         box-shadow: 0 1px 3px color-mix(in srgb, var(--c-text-primary) 6%, transparent);
@@ -86,14 +86,14 @@ button,
          content blocks and headings. Keep the first race heading flush with
          the date tabs rather than adding empty space at the top. */
       .scroll-area > :is(.vgroup-head, .section-header) {
-        margin-top: var(--space-section);
+        margin-top: var(--space-8);
       }
       .scroll-area > .date-tabs + .vgroup-head {
         margin-top: 0;
       }
       /* Override the shared zero-margin Mori header only on SCR-100. */
       .scroll-area > .vgroup-head.mori-heading {
-        margin-top: var(--space-section);
+        margin-top: var(--space-8);
       }
       .unit {
 
@@ -116,11 +116,11 @@ button,
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: var(--space-card);
-        padding: var(--space-card) var(--space-section) var(--space-section);
+        padding: var(--space-card) var(--space-8) var(--space-8);
       }
       .vcard {
         border-left: var(--line-keirin);
-        padding: var(--space-section) var(--space-section) var(--space-section);
+        padding: var(--space-8) var(--space-8) var(--space-8);
         cursor: pointer;
         display: flex;
         flex-direction: column;
@@ -183,15 +183,15 @@ button,
       .vcard.auto .g-g2 { background: var(--c-green); color: var(--c-surface); }
 
       .pickup-card {
-        margin: 0 var(--space-section) var(--space-card);
-        padding: var(--space-section) var(--space-10);
+        margin: 0 var(--space-8) var(--space-card);
+        padding: var(--space-8) var(--space-10);
         background: var(--c-surface);
         border: var(--line-normal);
         border-radius: var(--r-md);
         box-shadow: var(--e1);
         display: flex;
         align-items: center;
-        gap: var(--space-section);
+        gap: var(--space-8);
         cursor: pointer;
       }
 
@@ -248,11 +248,11 @@ button,
       .g3 .vcard {
         /* Equal 4px vertical insets: more space between four rows while
            avoiding an oversized gap below the last R/time row. */
-        padding: var(--space-small) var(--space-card) var(--space-small) var(--space-section);
+        padding: var(--space-4) var(--space-card) var(--space-4) var(--space-8);
         border-left-width: var(--line-emphasis-width);
         gap: var(--space-2);
       }
-      .g3 .vcard-bottom { gap: var(--space-small); justify-content: space-between; }
+      .g3 .vcard-bottom { gap: var(--space-4); justify-content: space-between; }
       .bn {
         flex: 0 0 290px;
         font-size: var(--fs-12);
@@ -271,13 +271,13 @@ button,
         grid-template-columns: minmax(0, 1fr) 18px;
         grid-template-rows: auto auto;
         align-items: center;
-        column-gap: var(--space-small);
+        column-gap: var(--space-4);
         row-gap: var(--space-3);
         border-bottom: var(--line-normal);
         background: var(--c-surface);
         cursor: pointer;
         min-height: 48px;
-        padding: var(--space-section) var(--space-content);
+        padding: var(--space-8) var(--space-12);
       }
       /* Notices and campaigns link to their original source as one tap target. */
       a.news-item {
@@ -293,7 +293,7 @@ button,
         grid-column: 1;
         grid-row: 1;
         align-items: center;
-        gap: var(--space-section);
+        gap: var(--space-8);
         width: 100%;
       }
       .news-badge {
@@ -354,7 +354,7 @@ button,
 
       .venue-grid.g3 {
         gap: var(--space-card);
-        padding: 0 var(--space-section) var(--space-section);
+        padding: 0 var(--space-8) var(--space-8);
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
       .g3 .vcard-dl {
@@ -378,7 +378,7 @@ button,
         text-transform: none;
         line-height: 30px;
         height: 30px;
-        padding: 0 var(--space-content);
+        padding: 0 var(--space-12);
       }
       .screen-wrap:not(:only-child) .phone {
         height: calc(100vh - 30px);
@@ -422,7 +422,7 @@ button,
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: var(--space-small);
+        gap: var(--space-4);
         background: var(--c-keirin);
         
         font-size: var(--fs-14);
@@ -491,15 +491,15 @@ button,
       .venue-grid.g3 > .vcard[data-demo][hidden] { display: none; }
 
       /* Match the 8px section-to-section spacing used by the venue headings. */
-      .scroll-area > .venue-grid.g3 + .bn-carousel { margin-top: var(--space-section); }
-      .bn-carousel { position: relative; padding-bottom: var(--space-section); }
+      .scroll-area > .venue-grid.g3 + .bn-carousel { margin-top: var(--space-8); }
+      .bn-carousel { position: relative; padding-bottom: var(--space-8); }
       .bn-track {
         display: flex;
         gap: var(--space-card);
-        padding: var(--space-2) var(--space-section) var(--space-card);
+        padding: var(--space-2) var(--space-8) var(--space-card);
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        scroll-padding: 0 var(--space-section);
+        scroll-padding: 0 var(--space-8);
         scrollbar-width: none;
       }
       .bn-track::-webkit-scrollbar { display: none; }
@@ -600,7 +600,7 @@ button,
         flex: 0 0 calc((100% - 30px) / 2);
         scroll-snap-align: start;
         position: relative;
-        padding-top: calc(var(--fs-16) + var(--space-section) + var(--space-small));
+        padding-top: calc(var(--fs-16) + var(--space-8) + var(--space-4));
         min-width: 0;
       }
       .bn-status {
@@ -612,7 +612,7 @@ button,
         justify-content: center;
         box-sizing: border-box;
         width: 100%;
-        padding: var(--space-2) var(--space-section);
+        padding: var(--space-2) var(--space-8);
         border-radius: var(--r-full);
         background: var(--c-red);
         color: var(--c-surface);
@@ -656,9 +656,9 @@ button,
         border-radius: var(--r-sm);
       }
       .pk3 {
-        padding: var(--space-10) var(--space-content) var(--space-10) var(--space-10);
+        padding: var(--space-10) var(--space-12) var(--space-10) var(--space-10);
         align-items: center;
-        gap: var(--space-section);
+        gap: var(--space-8);
       }
       .pk3 .kun {
         display: flex;
@@ -688,7 +688,7 @@ button,
         flex: 1 1 auto;
         min-height: 0;
         position: relative;
-        gap: var(--space-small);
+        gap: var(--space-4);
       }
       .pk3 .pk-player {
         display: inline-flex;
@@ -709,7 +709,7 @@ button,
       }
       .pk3 .pk-player .pk-note {
         /* Match SCR-200: 2px flex gap + 7px margin = 9px name/streak spacing. */
-        margin-left: var(--space-section);
+        margin-left: var(--space-8);
         font-weight: var(--fw-strong);
         white-space: nowrap;
         color: var(--c-red);
@@ -751,7 +751,7 @@ button,
         font-variant-numeric: tabular-nums;
       }
       .venue-grid.g3 .vcard-dl.soon {
-        padding: var(--space-2) var(--space-small);
+        padding: var(--space-2) var(--space-4);
         margin-left: auto;
       }
 
@@ -769,7 +769,7 @@ button,
         color: var(--c-surface);
         background: var(--c-red);
         border-radius: var(--r-xs);
-        padding: var(--space-2) var(--space-small);
+        padding: var(--space-2) var(--space-4);
       }
 
       .pk3 .pk-deadline.soon {
@@ -912,7 +912,7 @@ button,
          small viewports without shrinking the text or changing controls. */
 
 /* Eight pixels between the final featured card and the next section. */
-.pickup-card.pk3:has(+ .section-header) { margin-bottom: var(--space-section); }
+.pickup-card.pk3:has(+ .section-header) { margin-bottom: var(--space-8); }
 
       /* Keep notice labels and dates legible at narrow phone widths. */
       /* Responsive adjustments: one breakpoint block per supported width. */
@@ -934,10 +934,10 @@ button,
 
 
         
-        .news-head { flex-wrap: wrap; column-gap: var(--space-small); row-gap: var(--space-small); }
+        .news-head { flex-wrap: wrap; column-gap: var(--space-4); row-gap: var(--space-4); }
       }
       @media (max-width: 330px) {
-        .pk3 { gap: var(--space-5); padding-left: var(--space-section); padding-right: var(--space-section); }
+        .pk3 { gap: var(--space-5); padding-left: var(--space-8); padding-right: var(--space-8); }
                 .pk3 .kun { flex-basis: 54px; min-width: 54px; }
                 .pk3 img.kun-ic { width: 54px; height: 54px; }
                 .pk3 .pk-compact-row {
@@ -948,8 +948,8 @@ button,
                 .pk3 .pk-race-time { flex-shrink: 0; }
         
                 .pk3.pk-two-riders {
-                  padding-top: var(--space-section);
-                  padding-bottom: var(--space-section);
+                  padding-top: var(--space-8);
+                  padding-bottom: var(--space-8);
                 }
                 .pickup-card.pk3:not(:has(.pk-two-rider-stack > .pk-player:nth-child(3))) {
                   height: 80px;
