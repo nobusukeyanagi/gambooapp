@@ -179,7 +179,7 @@
   width: 80px;
   height: 54px;
   min-height: 54px;
-  border: var(--line-emphasis-width) solid var(--c-red);
+  border: var(--line-thick) solid var(--c-red);
   border-radius: var(--r-control);
   background: var(--c-red);
   color: var(--c-gray-5);
