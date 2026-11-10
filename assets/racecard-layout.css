@@ -537,15 +537,15 @@
         font-size: var(--fs-14);
         margin: 0 auto;
       }
-      .f1 { background: var(--w1); color: var(--c-text-primary); border: var(--line-control); }
-      .f2 { background: var(--w2); color: var(--c-surface); border: var(--line-thin) solid var(--w2); }
-      .f3 { background: var(--w3); color: var(--c-surface); border: var(--line-thin) solid var(--w3); }
-      .f4 { background: var(--w4); color: var(--c-surface); border: var(--line-thin) solid var(--w4); }
-      .f5 { background: var(--w5); color: var(--c-text-primary); border: var(--line-thin) solid var(--w5); }
-      .f6 { background: var(--w6); color: var(--c-surface); border: var(--line-thin) solid var(--w6); }
-      .f7 { background: var(--w7); color: var(--c-surface); border: var(--line-thin) solid var(--w7); }
-      .f8 { background: var(--w8); color: color-mix(in srgb, var(--c-text-primary) 70%, black); border: var(--line-thin) solid var(--w8); }
-      .f9 { background: var(--w9); color: var(--c-surface); border: var(--line-thin) solid var(--w9); }
+      .f1 { background: var(--c-w1); color: var(--c-text-primary); border: var(--line-control); }
+      .f2 { background: var(--c-w2); color: var(--c-surface); border: var(--line-thin) solid var(--c-w2); }
+      .f3 { background: var(--c-w3); color: var(--c-surface); border: var(--line-thin) solid var(--c-w3); }
+      .f4 { background: var(--c-w4); color: var(--c-surface); border: var(--line-thin) solid var(--c-w4); }
+      .f5 { background: var(--c-w5); color: var(--c-text-primary); border: var(--line-thin) solid var(--c-w5); }
+      .f6 { background: var(--c-w6); color: var(--c-surface); border: var(--line-thin) solid var(--c-w6); }
+      .f7 { background: var(--c-w7); color: var(--c-surface); border: var(--line-thin) solid var(--c-w7); }
+      .f8 { background: var(--c-w8); color: color-mix(in srgb, var(--c-text-primary) 70%, black); border: var(--line-thin) solid var(--c-w8); }
+      .f9 { background: var(--c-w9); color: var(--c-surface); border: var(--line-thin) solid var(--c-w9); }
       .lineup-car {
         width: 22px;
         height: 22px;
