@@ -119,11 +119,7 @@ button,
         padding: var(--space-card) var(--space-section) var(--space-section);
       }
       .vcard {
-        background: var(--c-surface);
-        border: var(--line-normal);
         border-left: var(--line-keirin);
-        border-radius: var(--r-md);
-        box-shadow: var(--e1);
         padding: var(--space-section) var(--space-section) var(--space-section);
         cursor: pointer;
         display: flex;
@@ -199,20 +195,9 @@ button,
         cursor: pointer;
       }
 
-      .date-tabs {
-        display: flex;
-        background: var(--c-surface);
-        border-bottom: var(--line-normal);
-        flex-shrink: 0;
-      }
+
       .date-tab {
         flex: 1;
-        
-        border-bottom: var(--line-emphasis-width) solid transparent;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         
         min-height: var(--tap-min);
       }
@@ -222,10 +207,6 @@ button,
         vertical-align: -2px;
       }
       .app-header .logo .ic { width: 18px; height: 18px; }
-      .date-tab.active {
-        color: var(--c-gold);
-        border-bottom-color: var(--c-gold);
-      }
 
       .ic {
         width: 20px;
