@@ -70,7 +70,7 @@ button,
         color: var(--c-text-primary);
         display: flex;
         align-items: center;
-        gap: var(--space-5);
+        gap: var(--space-4);
       }
       /* Solid megaphone silhouette distinguishes notices from the header bell. */
       .news-heading-icon {
@@ -224,7 +224,7 @@ button,
       .vgroup-name {
         display: flex;
         align-items: center;
-        gap: var(--space-5);
+        gap: var(--space-4);
       }
       /* Reuse the venue heading pictogram sizes across sport-related headings.
          Decorative left bars remain removed on SCR-100. */
@@ -409,7 +409,7 @@ button,
       .app-header .logo {
         display: flex;
         align-items: center;
-        gap: var(--space-5);
+        gap: var(--space-4);
         font-size: var(--fs-18);
         font-weight: var(--fw-strong);
       }
@@ -516,7 +516,7 @@ button,
         background: var(--c-bg);
         color: var(--c-text-secondary);
       }
-      .bn-dots { display: flex; justify-content: center; gap: var(--space-5); }
+      .bn-dots { display: flex; justify-content: center; gap: var(--space-4); }
       .bn-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c-border); transition: width .2s; }
       .bn-dots i.on { width: 16px; border-radius: var(--r-xs); background: var(--c-gold-light); }
       .pk3 .kun-ic {
@@ -545,7 +545,7 @@ button,
 
       .mori-heading {
         cursor: default;
-        gap: var(--space-5);
+        gap: var(--space-4);
         flex-wrap: wrap;
       }
       .mori-heading .vgroup-name {
@@ -553,7 +553,7 @@ button,
         line-height: 1.3;
         flex: 0 1 auto;
         min-width: max-content;
-        gap: var(--space-5);
+        gap: var(--space-4);
         white-space: nowrap;
         letter-spacing: normal;
       }
@@ -635,7 +635,7 @@ button,
         object-fit: cover;
         object-position: center;
       }
-      .pk3 .pk-compact-row + .pk-compact-row { margin-top: var(--space-5); }
+      .pk3 .pk-compact-row + .pk-compact-row { margin-top: var(--space-4); }
       .pk3 .pk-player .pk-text { flex: 0 0 auto; }
       .news-new {
 
@@ -937,7 +937,7 @@ button,
         .news-head { flex-wrap: wrap; column-gap: var(--space-4); row-gap: var(--space-4); }
       }
       @media (max-width: 330px) {
-        .pk3 { gap: var(--space-5); padding-left: var(--space-8); padding-right: var(--space-8); }
+        .pk3 { gap: var(--space-4); padding-left: var(--space-8); padding-right: var(--space-8); }
                 .pk3 .kun { flex-basis: 54px; min-width: 54px; }
                 .pk3 img.kun-ic { width: 54px; height: 54px; }
                 .pk3 .pk-compact-row {
