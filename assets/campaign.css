@@ -63,7 +63,7 @@
   font-weight: var(--fw-strong);
   color: var(--c-gray-2);
   border: var(--line-thin) solid var(--c-gray-4);
-  border-radius: var(--r-control);
+  border-radius: var(--r-9);
   background: var(--c-bg);
   cursor: pointer;
 }
@@ -95,7 +95,7 @@
   aspect-ratio: 1 / 1;
   align-self: start;
   overflow: hidden;
-  border-radius: var(--r-sm);
+  border-radius: var(--r-6);
   text-decoration: none;
 }
 .cp-banner {
@@ -105,7 +105,7 @@
   aspect-ratio: 1 / 1;
   align-self: start;
   object-fit: cover;
-  border-radius: var(--r-sm);
+  border-radius: var(--r-6);
 }
 .cp-body {
   display: flex;
