@@ -57,7 +57,7 @@ button, input, select, textarea {
    When the full line is wider than the card, venue-calendar.js applies a
    horizontal fit factor without changing shared typography or clipping text. */
 .venue-header {
-  padding: var(--space-section) var(--space-card) var(--space-card);
+  padding: var(--space-8) var(--space-card) var(--space-card);
   display: block;
   min-height: 48px;
   overflow: hidden;
@@ -66,7 +66,7 @@ button, input, select, textarea {
 .venue-header-line {
   display: flex;
   align-items: center;
-  gap: var(--space-small);
+  gap: var(--space-4);
   width: 100%;
   min-width: max-content;
   white-space: nowrap;
@@ -79,7 +79,7 @@ button, input, select, textarea {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: var(--space-small);
+  gap: var(--space-4);
   min-width: max-content;
   white-space: nowrap;
 }
@@ -133,7 +133,7 @@ button, input, select, textarea {
   background: var(--c-surface);
   display: flex;
   align-items: center;
-  padding: 0 var(--space-content);
+  padding: 0 var(--space-12);
   border-bottom: var(--line-normal);
   flex-shrink: 0;
   justify-content: center;
@@ -151,7 +151,7 @@ button, input, select, textarea {
   overflow-x: auto;
   scrollbar-width: none;
   display: flex;
-  padding: var(--space-section) var(--space-section);
+  padding: var(--space-8) var(--space-8);
   overflow: visible;
   width: max-content;
   gap: var(--space-card);
@@ -218,7 +218,7 @@ button, input, select, textarea {
 /* Venue cards */
 
 .venue-card {
-  margin: var(--space-card) var(--space-section);
+  margin: var(--space-card) var(--space-8);
   overflow: hidden;
 }
 
@@ -270,15 +270,15 @@ button, input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-section);
-  padding: var(--space-card) var(--space-section) 0 var(--space-content);
+  gap: var(--space-8);
+  padding: var(--space-card) var(--space-8) 0 var(--space-12);
 }
 
 .rebate-logo {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-small);
+  gap: var(--space-4);
   min-height: 20px;
   color: var(--c-gold);
   font-size: var(--fs-14);
@@ -307,10 +307,10 @@ button, input, select, textarea {
 }
 
 .comment-row {
-  gap: var(--space-section);
+  gap: var(--space-8);
   color: var(--c-text-primary);
   margin: 0;
-  padding: var(--space-section) var(--space-10);
+  padding: var(--space-8) var(--space-10);
   background: transparent;
   border: 0;
   font-size: var(--fs-14);
@@ -422,7 +422,7 @@ button, input, select, textarea {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-small);
+  gap: var(--space-4);
 }
 
 .rcol > .rchip {
@@ -514,7 +514,7 @@ button, input, select, textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-small);
+  gap: var(--space-4);
   height: 18px;
 }
 
@@ -624,7 +624,7 @@ button, input, select, textarea {
   align-items: center;
   gap: var(--space-1);
   margin-left: auto;
-  padding-left: var(--space-small);
+  padding-left: var(--space-4);
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
   color: var(--c-text-primary);
@@ -660,7 +660,7 @@ button, input, select, textarea {
 .cr-line {
   display: flex;
   align-items: center;
-  gap: var(--space-section);
+  gap: var(--space-8);
   min-width: 0;
 }
 
