@@ -43,7 +43,7 @@
   white-space: nowrap;
 }
 .race-detail-scroll .mania-table th.position-col .position-switch:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
 }
 .race-detail-scroll .mania-table tbody tr td.position-stat,
