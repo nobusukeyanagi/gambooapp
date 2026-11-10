@@ -488,7 +488,7 @@ body { font-weight: var(--fw-normal); }
   width: 15px;
   height: 15px;
   border: var(--line-thin) solid var(--c-gray-5);
-  border-radius: var(--r-9999);
+  border-radius: var(--r-full);
   background: var(--c-red);
 }
 .shared-app-header .header-actions :is(.icon-btn, .cta-btn):focus-visible {
