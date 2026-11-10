@@ -201,7 +201,7 @@ body { font-weight: var(--fw-normal); }
   color: var(--c-surface);
   border-color: var(--c-w9);
 }
-.icon-btn { width: var(--h-icon-button); height: var(--h-icon-button); }
+.icon-btn { width: var(--h-control); height: var(--h-control); }
 .cta-btn { min-height: var(--h-control); }
 .date-tab, .top-tab { min-height: var(--h-tab); font-size: var(--fs-14); }
 
