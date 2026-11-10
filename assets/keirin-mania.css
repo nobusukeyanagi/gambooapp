@@ -254,6 +254,12 @@
   cursor: pointer;
   touch-action: manipulation;
 }
+/* Detail-tab car-number header is sortable, like the main racecard. */
+.sheet .detail-table .dt-car-sort > span:first-child {
+  text-decoration-line: underline;
+  text-underline-offset: var(--space-2);
+  text-decoration-thickness: 1px;
+}
 .sheet .detail-table .dt-car-sort .sort-mode-label { display: none; }
 .sheet .detail-table .dt-car-sort[aria-pressed="true"] .sort-mode-label {
   display: block;
