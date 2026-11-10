@@ -47,7 +47,7 @@
 .race-detail-scroll .mania-table td.c-name .rider-name {
   font-size: var(--fs-16);
   line-height: 1;
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
 }
 .race-detail-scroll .mania-table td.c-name .rider-meta {
   display: block;
@@ -283,7 +283,7 @@
   font-size: var(--fs-14);
 }
 .race-detail-scroll .mania-table .meeting-avg-line + .meeting-avg-line {
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
 }
 /* Use 56px rows to accommodate the expanded first-to-second name-line gap. */
 .race-detail-scroll .mania-table tbody tr {
@@ -354,7 +354,7 @@
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
   line-height: 1.2;
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
 }
 .race-detail-scroll .mania-table tbody td.cls .grade-prev {
   display: block;
@@ -460,7 +460,7 @@
 }
 .race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate {
   display: block;
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
   color: var(--c-text-secondary);
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
