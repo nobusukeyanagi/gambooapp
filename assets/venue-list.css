@@ -22,7 +22,7 @@ button, input, select, textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   cursor: pointer;
   
   letter-spacing: normal;
@@ -90,7 +90,7 @@ button, input, select, textarea {
   align-items: center;
   min-width: max-content;
   white-space: nowrap;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-size: var(--fs-14);
   font-weight: var(--fw-normal);
   line-height: 1.25;
@@ -130,7 +130,7 @@ button, input, select, textarea {
 /* Prediction header */
 
 .page-header {
-  background: var(--c-surface);
+  background: var(--c-gray-5);
   display: flex;
   align-items: center;
   padding: 0 var(--space-12);
@@ -169,8 +169,8 @@ button, input, select, textarea {
   border-radius: var(--r-control);
   border: var(--line-control);
   box-shadow: var(--e1);
-  background: var(--c-surface);
-  color: var(--c-text-primary);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -228,7 +228,7 @@ button, input, select, textarea {
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   flex: 0 1 auto;
   font-size: var(--fs-20);
   font-weight: var(--fw-strong);
@@ -237,33 +237,33 @@ button, input, select, textarea {
 /* 競輪: GP/GⅠ=赤紫、GⅡ=青、GⅢ=緑、FⅠ=金、FⅡ=銅。 */
 .grade-gp, .grade-g1, .grade-sg {
   background: var(--c-magenta);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
 }
 .grade-g2 {
   background: var(--c-blue);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
 }
 .grade-g3 {
   background: var(--c-green);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
 }
 .grade-f1 {
   background: var(--c-gold);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
 }
 .grade-f2, .grade-normal {
   background: var(--c-bronze);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
 }
 
 /* オート: SG=赤紫、GⅠ/特GⅠ=青、GⅡ=緑、普通=銅。 */
 .sport-auto .grade-g1 {
   background: var(--c-blue);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
 }
 .sport-auto .grade-g2 {
   background: var(--c-green);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
 }
 
 .list-head {
@@ -308,7 +308,7 @@ button, input, select, textarea {
 
 .comment-row {
   gap: var(--space-8);
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   margin: 0;
   padding: var(--space-8) var(--space-8);
   background: transparent;
@@ -333,7 +333,7 @@ button, input, select, textarea {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   font-weight: var(--fw-strong);
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-size: var(--fs-14);
 }
 
@@ -371,7 +371,7 @@ button, input, select, textarea {
 
 .venue-card > .hscroll {
   border-bottom: var(--line-normal);
-  background: var(--c-surface);
+  background: var(--c-gray-5);
 }
 
 /* Scroll arrows: 44px touch width */
@@ -389,7 +389,7 @@ button, input, select, textarea {
   pointer-events: auto;
   cursor: pointer;
   appearance: none;
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   background: var(--c-bg);
   border: 0;
   border-radius: 0;
@@ -445,13 +445,13 @@ button, input, select, textarea {
 
 /* Canceled races stay visually recessive: light neutral fill and primary text. */
 .rchip.canceled {
-  background: var(--c-border);
-  border: var(--line-thin) solid var(--c-border);
-  color: var(--c-text-primary);
+  background: var(--c-gray-4);
+  border: var(--line-thin) solid var(--c-gray-4);
+  color: var(--c-gray-1);
   cursor: pointer;
 }
 .venue-card .rchip.canceled > :is(b, small) {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 
 /* Canonical 90px race cards */
@@ -490,7 +490,7 @@ button, input, select, textarea {
   border-radius: calc(var(--r-control) - var(--line-emphasis-width))
                  calc(var(--r-control) - var(--line-emphasis-width)) 0 0;
   background: var(--c-gold);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
   line-height: 1;
@@ -554,13 +554,13 @@ button, input, select, textarea {
 }
 
 .venue-card .rchip:not(.closed):not(.live):not(.canceled) > small {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 
 .venue-card .rchip.next.soon {
   position: relative;
   overflow: hidden;
-  background: var(--c-surface);
+  background: var(--c-gray-5);
   border: var(--line-thin) solid var(--c-red);
   box-shadow: var(--e1), inset 0 0 0 calc(var(--line-emphasis-width) - var(--line-thin)) var(--c-red);
 }
@@ -578,7 +578,7 @@ button, input, select, textarea {
   border-radius: calc(var(--r-control) - var(--line-emphasis-width))
                  calc(var(--r-control) - var(--line-emphasis-width)) 0 0;
   background: var(--c-red);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
   line-height: 1;
@@ -595,11 +595,11 @@ button, input, select, textarea {
 }
 
 .venue-card .rchip:not(.canceled) > b {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 
 .venue-card .rchip:is(.closed, .live) > small {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 
 .comment-row .carno {
@@ -615,7 +615,7 @@ button, input, select, textarea {
 .comment-row .cr-name {
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   min-width: 0;
 }
 
@@ -636,7 +636,7 @@ button, input, select, textarea {
   padding-left: var(--space-4);
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   line-height: 22px;
   white-space: nowrap;
   flex: 0 0 auto;
