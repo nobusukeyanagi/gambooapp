@@ -797,6 +797,22 @@
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
+/* Match SCR-310 prediction's mark/number spacing: 24px mark + 3px gap.
+   Keep only 総合P and G指数 as a centered inline pair; other combo columns
+   retain their existing fixed mark/value grid. */
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell) .stat-combined-layout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: var(--space-3);
+  width: max-content;
+  max-width: 100%;
+}
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell) .stat-combined-layout > .stat-combined-mark {
+  width: 24px;
+  min-width: 24px;
+}
+
 .race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell) .stat-combined-score {
   font-weight: var(--fw-strong);
 }
