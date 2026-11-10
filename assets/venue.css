@@ -1,0 +1,739 @@
+@charset "UTF-8";
+/* venue shared styling, preserving original declaration sequence. */
+
+/* ===== venue-list.css ===== */
+/* Shared SCR-200／SCR-300 prediction styles. Each selector is defined once; obsolete dimensions and
+ * earlier overridden states have been removed. Canonical values come from design-tokens.css. */
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* Screen and nav */
+
+.status-bar {
+  display: none;
+}
+
+
+
+
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-gray-2);
+  cursor: pointer;
+  
+  letter-spacing: normal;
+  white-space: nowrap;
+  min-width: 0;
+  font-size: var(--fs-12);
+  gap: var(--space-3);
+}
+
+.tab-item.active {
+  color: var(--c-gold);
+}
+
+.tab-item .tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Day tabs: geometry only; shared ui-consistency.css owns appearance. */
+.date-tab {
+  flex: 1;
+}
+
+.chip {
+  cursor: pointer;
+}
+
+/* Venue headings */
+
+/* All SCR-200／SCR-300 venue metadata belongs to one line, including its rebate mark.
+   When the full line is wider than the card, venue-calendar.js applies a
+   horizontal fit factor without changing shared typography or clipping text. */
+.venue-header {
+  padding: var(--space-8) var(--space-6) var(--space-6);
+  display: block;
+  min-height: 48px;
+  overflow: hidden;
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+}
+.venue-header-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  min-width: max-content;
+  white-space: nowrap;
+  transform-origin: left center;
+}
+.venue-header-line > .grade-badge {
+  flex: 0 0 auto;
+}
+.venue-header-line > .venue-title {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: max-content;
+  white-space: nowrap;
+}
+.venue-header-line .venue-name { flex: 0 0 auto; }
+.venue-header-line .venue-meta {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-width: max-content;
+  white-space: nowrap;
+  color: var(--c-gray-1);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-normal);
+  line-height: 1.25;
+}
+.venue-header-line .venue-day {
+  display: inline;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  color: var(--c-gray-2);
+}
+.venue-header-line > .rebate-logo {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+@media (max-width: 360px) {
+  .venue-header-line > .grade-badge { width: 32px; font-size: var(--fs-12); }
+  .venue-header-line .venue-name { font-size: var(--fs-16); }
+  .venue-header-line .venue-meta,
+  .venue-header-line .rebate-logo { font-size: var(--fs-12); }
+  .venue-header-line .rebate-campaign-icon {
+    width: 16px; height: 16px; flex-basis: 16px;
+  }
+}
+.grade-badge {
+  border-radius: var(--r-6);
+  flex-shrink: 0;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 22px;
+  padding: 0;
+}
+
+/* Prediction header */
+
+.page-header {
+  background: var(--c-gray-5);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-12);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+  flex-shrink: 0;
+  justify-content: center;
+}
+
+.page-header-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  gap: var(--space-6);
+}
+
+.rchips {
+  overflow-x: auto;
+  scrollbar-width: none;
+  display: flex;
+  padding: var(--space-8) var(--space-8);
+  overflow: visible;
+  width: max-content;
+  gap: var(--space-6);
+  align-items: stretch;
+}
+
+.rchips::-webkit-scrollbar {
+  display: none;
+}
+
+/* Race buttons */
+
+.rchip {
+  flex: 0 0 auto;
+  border-radius: var(--r-9);
+  border: var(--line-thin) solid var(--c-gray-3);
+  box-shadow: var(--e1);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.15;
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+}
+
+.ic {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: currentColor;
+  display: block;
+  outline: none;
+  outline-offset: 1px;
+  border-radius: var(--r-3);
+}
+
+/* Horizontal race scrolling */
+
+.hscroll {
+  position: relative;
+}
+
+.hscroll > .hscroll-inner {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hscroll > .hscroll-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.rchip small {
+  font-variant-numeric: tabular-nums;
+}
+
+.rchip.closed {
+  background: var(--c-bg);
+}
+
+/* Venue cards */
+
+.venue-card {
+  margin: var(--space-6) var(--space-8);
+  overflow: hidden;
+}
+
+.venue-name {
+  letter-spacing: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  color: var(--c-gray-1);
+  flex: 0 1 auto;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-strong);
+}
+
+/* 競輪: GP/GⅠ=赤紫、GⅡ=青、GⅢ=緑、FⅠ=金、FⅡ=銅。 */
+.grade-gp, .grade-g1, .grade-sg {
+  background: var(--c-magenta);
+  color: var(--c-gray-5);
+}
+.grade-g2 {
+  background: var(--c-blue);
+  color: var(--c-gray-5);
+}
+.grade-g3 {
+  background: var(--c-green);
+  color: var(--c-gray-5);
+}
+.grade-f1 {
+  background: var(--c-gold);
+  color: var(--c-gray-5);
+}
+.grade-f2, .grade-normal {
+  background: var(--c-bronze);
+  color: var(--c-gray-5);
+}
+
+/* オート: SG=赤紫、GⅠ/特GⅠ=青、GⅡ=緑、普通=銅。 */
+.sport-auto .grade-g1 {
+  background: var(--c-blue);
+  color: var(--c-gray-5);
+}
+.sport-auto .grade-g2 {
+  background: var(--c-green);
+  color: var(--c-gray-5);
+}
+
+.list-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: var(--space-6) var(--space-8) 0 var(--space-12);
+}
+
+.rebate-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 20px;
+  color: var(--c-gold);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  letter-spacing: normal;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.rebate-logo .rebate-label {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--space-1);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.rebate-logo .rebate-campaign-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  color: var(--c-gold);
+  fill: currentColor;
+}
+
+.comment-row {
+  gap: var(--space-8);
+  color: var(--c-gray-1);
+  margin: 0;
+  padding: var(--space-8) var(--space-8);
+  background: transparent;
+  border: 0;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  display: flex;
+  align-items: center;
+}
+
+/* SCR-200 featured riders: one spacing step tighter vertically (8px -> 6px). */
+.sport-keirin .comment-row {
+  padding-block: var(--space-6);
+}
+
+.comment-row .cr-r {
+  /* Reserve the widest two-digit R label width for all race numbers.
+     Keep the label right-aligned so every car number begins on one axis. */
+  flex: 0 0 calc(3ch + var(--space-3));
+  min-width: 0;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--fw-strong);
+  color: var(--c-gray-1);
+  font-size: var(--fs-14);
+}
+
+/* Rider numbers */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.rchip.live {
+  background: var(--c-bg);
+}
+
+.rchip b {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+}
+
+.venue-header .venue-girls, .rcol > .rchip-girls {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.venue-card > .hscroll {
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+  background: var(--c-gray-5);
+}
+
+/* Scroll arrows: 44px touch width */
+
+.venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l) {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  cursor: pointer;
+  appearance: none;
+  color: var(--c-gray-2);
+  background: var(--c-bg);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  font-family: var(--ff-ui);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l) .ic {
+  width: 18px;
+  height: 18px;
+}
+
+.venue-card .hscroll > .hscroll-cue {
+  right: 0;
+  border-left: var(--line-thin) solid var(--c-gray-4);
+}
+
+.venue-card .hscroll > .hscroll-cue-l {
+  left: 0;
+  border-right: var(--line-thin) solid var(--c-gray-4);
+}
+
+.venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l)[hidden] {
+  display: none;
+}
+
+.venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l):focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: var(--space-2);
+}
+
+.rcol {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.rcol > .rchip {
+  flex: 0 0 auto;
+}
+
+.rcol > a.rchip {
+  text-decoration: none;
+}
+
+.rcol > a.rchip:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: var(--space-2);
+}
+
+/* Canceled races stay visually recessive: light neutral fill and primary text. */
+.rchip.canceled {
+  background: var(--c-gray-4);
+  border: var(--line-thin) solid var(--c-gray-4);
+  color: var(--c-gray-1);
+  cursor: pointer;
+}
+.venue-card .rchip.canceled > :is(b, small) {
+  color: var(--c-gray-1);
+}
+
+/* Canonical 90px race cards */
+
+.venue-card .rchip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 16px 20px 20px 18px;
+  align-content: center;
+  justify-items: center;
+  box-sizing: border-box;
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+  min-height: 84px;
+}
+
+/* For auto-height race chips, retain a 1px layout border and paint the
+   remaining 2px inward. This preserves both chip geometry and the e1 shadow. */
+/* Final-race rebate uses the same fully-filled first-row band as the
+   urgent countdown, but with the canonical dark gold frame and white text. */
+.venue-card .rchip:has(> .rchip-rebate) {
+  position: relative;
+  overflow: hidden;
+  border: var(--line-thin) solid var(--c-gold);
+  box-shadow: var(--e1), inset 0 0 0 calc(var(--line-thick) - var(--line-thin)) var(--c-gold);
+}
+.venue-card .rchip > .rchip-rebate {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  padding: 0;
+  border-radius: var(--r-6) var(--r-6) 0 0;
+  background: var(--c-gold);
+  color: var(--c-gray-5);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+  white-space: nowrap;
+}
+/* On a closing final, the red countdown and border override gold.
+   The fourth-row gift icon stays visible. */
+.venue-card .rchip:has(> .rchip-warning) > .rchip-rebate,
+.venue-card .rchip.next.soon > .rchip-rebate { display: none; }
+
+.venue-card .rchip > b {
+  grid-row: 2;
+}
+
+.venue-card .rchip > small {
+  grid-row: 3;
+  white-space: nowrap;
+  font-family: var(--ff-ui);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+}
+
+.venue-card .rchip > :is(.rchip-bottom-icon, .rchip-bottom-icons) {
+  grid-row: 4;
+  align-self: center;
+}
+
+.venue-card .rchip-bottom-icons {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  height: 18px;
+}
+
+.venue-card .rchip-bottom-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.venue-card .rchip-campaign-icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  color: var(--c-gold);
+}
+
+.venue-card .rchip-featured-icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.venue-card .rchip:not(.closed):not(.live):not(.canceled) > small {
+  color: var(--c-gray-1);
+}
+
+.venue-card .rchip.next.soon {
+  position: relative;
+  overflow: hidden;
+  background: var(--c-gray-5);
+  border: var(--line-thin) solid var(--c-red);
+  box-shadow: var(--e1), inset 0 0 0 calc(var(--line-thick) - var(--line-thin)) var(--c-red);
+}
+
+/* First row is the warning strip. Keep the four-row race button geometry.
+   The 20-minute alert wins over any first-row campaign rebate. */
+.venue-card .rchip > .rchip-warning {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  padding: 0;
+  border-radius: var(--r-6) var(--r-6) 0 0;
+  background: var(--c-red);
+  color: var(--c-gray-5);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Adjacent-date snapshots are informational until individual race data is verified. */
+.venue-card .rchip.archive-preview { cursor: default; }
+
+.venue-card .rchip.next.soon > small:not(.rchip-time) {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  color: var(--c-red);
+}
+
+.venue-card .rchip:not(.canceled) > b {
+  color: var(--c-gray-1);
+}
+
+.venue-card .rchip:is(.closed, .live) > small {
+  color: var(--c-gray-1);
+}
+
+.comment-row .carno {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+}
+
+/* Rider commentary */
+
+.comment-row .cr-name {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  color: var(--c-gray-1);
+  min-width: 0;
+}
+
+.comment-row .cr-streak {
+  margin-left: var(--space-1);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  color: var(--c-red);
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.comment-row .cr-kun {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-left: auto;
+  padding-left: var(--space-4);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  color: var(--c-gray-1);
+  line-height: 22px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.comment-row .cr-kun-icon {
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  object-fit: contain;
+}
+
+.comment-row.multi {
+  align-items: flex-start;
+}
+
+.comment-row.multi .cr-r {
+  line-height: 22px;
+}
+
+.cr-lines {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.cr-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-width: 0;
+}
+
+.venue-card:has(> .comment-row) {
+  padding-bottom: var(--space-6);
+}
+
+.venue-card:not(:has(> .comment-row)) > .hscroll {
+  border-bottom: 0;
+}
+
+/* ===== venue-sort.css ===== */
+/* SCR-200／SCR-300 shared inline sorting. Canonical control palette, radius, lines and fonts. */
+.venue-sort-options {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: var(--space-4);
+}
+.venue-sort-options .chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Keep widths constant as the direction marker changes. */
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 var(--space-1);
+  font-family: var(--ff-ui);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  line-height: 1.2;
+  white-space: nowrap;
+  border: var(--line-thin) solid var(--c-gray-3);
+  border-radius: var(--r-9);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
+  box-shadow: var(--e1);
+}
+.venue-sort-options [data-sort="venue"] {
+  justify-content: center;
+  gap: var(--space-2);
+}
+.venue-sort-options .sort-direction {
+  display: inline-block;
+  flex: 0 0 1em;
+  width: 1em;
+  text-align: center;
+  font-family: var(--ff-ui);
+  font-size: inherit;
+  font-weight: inherit;
+}
+.venue-sort-options .sort-direction:empty { display: none; }
+
+.venue-sort-options .chip.active {
+  background: var(--c-gold);
+  color: var(--c-gray-5);
+  border-color: var(--c-gold);
+}
+.venue-sort-options .chip:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: var(--space-2);
+}
+
+/* Preserve 14px labels at narrow viewport widths. */
