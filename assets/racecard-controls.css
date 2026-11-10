@@ -8,7 +8,7 @@
   overflow-x: hidden;
   overscroll-behavior-y: contain;
   scrollbar-width: none;
-  background: var(--c-surface);
+  background: var(--c-gray-5);
 }
 .phone-inner > .race-detail-scroll::-webkit-scrollbar { display: none; }
 .race-detail-scroll > .rt-area {
@@ -35,7 +35,7 @@
   border: 0;
   border-radius: 0;
   background: var(--c-bg);
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   box-shadow: none;
   cursor: pointer;
   pointer-events: auto;
@@ -121,7 +121,7 @@
 }
 .race-detail-scroll .ri-meeting .ri-race-label {
   flex: 0 0 auto;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
 }
@@ -159,7 +159,7 @@
   justify-content: center;
   min-width: 0;
   margin: 0;
-  color: var(--c-surface);
+  color: var(--c-gray-5);
   text-decoration: none;
   cursor: pointer;
 }
@@ -182,7 +182,7 @@
   border: var(--line-emphasis-width) solid var(--c-red);
   border-radius: var(--r-control);
   background: var(--c-red);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
   box-shadow: var(--e1);
   font-family: var(--ff-ui);
   font-weight: var(--fw-strong);
@@ -193,11 +193,11 @@
   width: 22px;
   height: 22px;
   flex: 0 0 22px;
-  color: var(--c-surface);
+  color: var(--c-gray-5);
   fill: currentColor;
 }
 .race-detail-scroll .ri-race .ri-race-number {
-  color: var(--c-surface);
+  color: var(--c-gray-5);
   font-size: var(--fs-20);
   font-weight: var(--fw-strong);
   line-height: 1.2;
@@ -208,7 +208,7 @@
   align-items: center;
   justify-content: center;
   width: max-content;
-  color: var(--c-surface);
+  color: var(--c-gray-5);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
   line-height: 1.2;
@@ -230,7 +230,7 @@
   font-size: var(--fs-16);
   font-weight: var(--fw-strong);
   line-height: 1.2;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 .race-detail-scroll .ri-kind {
   grid-area: kind;
@@ -259,7 +259,7 @@
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
   font-variant-numeric: tabular-nums;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 .race-detail-scroll .race-info-meta > span {
   flex: 0 0 auto;
@@ -283,7 +283,7 @@
   transform: translateY(calc(-1 * var(--space-1)));
   font-size: var(--fs-12);
   line-height: 1.2;
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   font-family: var(--ff-ui);
   font-variant-numeric: tabular-nums;
 }
@@ -319,13 +319,13 @@
   border-radius: var(--r-control);
 }
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live {
-  background: var(--c-surface);
+  background: var(--c-gray-5);
   border: var(--line-control);
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   box-shadow: var(--e1);
 }
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live .ic {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 
 /* Horizontal menu is explicitly one-axis: dragging cannot move it vertically. */
@@ -336,7 +336,7 @@
   height: var(--h-tab);
   overflow: hidden;
   overscroll-behavior-y: none;
-  background: var(--c-surface);
+  background: var(--c-gray-5);
 }
 /* Draw both horizontal rules on the full-width, non-scrolling bar. A border
    attached to the scrolling tabs can disappear at the arrow overlays. */
@@ -348,7 +348,7 @@
   left: 0;
   right: 0;
   height: var(--line-thin);
-  background: var(--c-border);
+  background: var(--c-gray-4);
   pointer-events: none;
 }
 .race-detail-scroll .race-menu-scroll::before { top: 0; }
@@ -427,7 +427,7 @@
 .race-detail-scroll .lineup-bar .lineup-title {
   font-size: var(--fs-14);
   line-height: 1.25;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 .race-detail-scroll .lineup-bar .lineup-row {
   margin: 0;
@@ -476,7 +476,7 @@
   justify-content: center;
   padding: 0;
   margin: 0;
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   font-size: var(--fs-18);
   font-weight: var(--fw-strong);
   line-height: 22px;
@@ -492,7 +492,7 @@
   height: 22px;
   padding: 0;
   margin: 0;
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
 }
 .race-detail-scroll .aokei-paper-btn {
   flex: 0 0 80px;
@@ -504,7 +504,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-family: var(--ff-ui);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
@@ -521,5 +521,5 @@
 .race-detail-scroll .mania-table tbody tr td,
 .race-detail-scroll .mania-table tbody tr:nth-child(even) td,
 .race-detail-scroll .mania-table tbody tr:nth-child(even) td.fx {
-  background: var(--c-surface);
+  background: var(--c-gray-5);
 }
