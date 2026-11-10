@@ -15,7 +15,7 @@
   vertical-align: middle;
   line-height: 1.25;
   padding: var(--space-3) var(--space-6);
-  border-bottom: var(--line-normal);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
 }
 .race-detail-scroll .mania-table thead tr:nth-child(2) th {
   box-sizing: border-box;
@@ -30,10 +30,10 @@
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
-  border-bottom: var(--line-normal);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
 }
 .race-detail-scroll .mania-table thead th.box-group.position-first {
-  border-left: var(--line-normal);
+  border-left: var(--line-thin) solid var(--c-gray-4);
 }
 /* Every column label, including 選手名, is horizontally centered. */
 .race-detail-scroll .mania-table thead th.c-name {
@@ -70,7 +70,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 .race-detail-scroll .mania-table .meeting-cell a.res.res-link:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: calc(-1 * var(--line-thick));
 }
 
@@ -81,7 +81,7 @@
 
 /* First grid line must appear to the left of the frame ("枠") column. */
 .race-detail-scroll .mania-table :is(th,td).c-waku {
-  border-left: var(--line-normal);
+  border-left: var(--line-thin) solid var(--c-gray-4);
 }
 .race-detail-scroll .mania-table :is(
   .player-section-start,.marutoku-section-start,
@@ -89,7 +89,7 @@
   .meeting-section-start,.position-section-start,
   .mania-section-start
 ) {
-  border-left: var(--line-normal);
+  border-left: var(--line-thin) solid var(--c-gray-4);
 }
 /* Meeting information sits to the left in three separate rows:
    date, grade badge, full venue name. Each result is an aligned 3-row tile. */
@@ -532,7 +532,7 @@
   display: block;
 }
 .race-detail-scroll .mania-table thead th .racecard-sort-button:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: calc(-1 * var(--line-thick));
 }
 /* The final rider row already has a 1px bottom border. Do not draw
