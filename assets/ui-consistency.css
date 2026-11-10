@@ -247,28 +247,28 @@ body { font-weight: var(--fw-normal); }
   color: var(--c-text-primary);
 }
 
-/* SCR-100_bet.html reference: a 50px header and a 50px payout row
-   plus a 1px bottom border (51px total). Match both actual outer heights. */
+/* Selection rows (date tabs, race selector and filter chips) share the
+   50px tab height plus a 1px bottom border, independently of balance. */
 .phone-inner > .date-tabs {
-  height: calc(var(--h-balance) + var(--line-thin));
-  min-height: calc(var(--h-balance) + var(--line-thin));
+  height: calc(var(--h-date-tab) + var(--line-thin));
+  min-height: calc(var(--h-date-tab) + var(--line-thin));
 }
 .phone-inner > .date-tabs > .date-tab {
   height: 100%;
   min-height: 0;
 }
 .phone-inner > .hscroll > .hscroll-inner > .race-tabs {
-  height: calc(var(--h-balance) + var(--line-thin));
+  height: calc(var(--h-date-tab) + var(--line-thin));
   padding: var(--space-4) var(--space-8);
   align-items: center;
 }
 .phone-inner > .hscroll .race-tab {
-  height: calc(var(--h-balance) - 2 * var(--space-4));
+  height: calc(var(--h-date-tab) - 2 * var(--space-4));
   min-height: 0;
   padding: var(--space-2) var(--space-4);
 }
 .phone-inner > .filter-chips {
-  height: calc(var(--h-balance) + var(--line-thin));
+  height: calc(var(--h-date-tab) + var(--line-thin));
   align-items: center;
   padding: 0 var(--space-8);
   flex-shrink: 0;
