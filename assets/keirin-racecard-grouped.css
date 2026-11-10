@@ -606,26 +606,54 @@
   max-width: 60px;
 }
 
-/* 注目: fit the 48px featured-player emblem into a 56px column.
-   Multiple emblems continue to stack vertically. */
-.race-detail-scroll .mania-table thead tr:first-child > th.player-featured-heading,
-.race-detail-scroll .mania-table tbody tr > td.player-featured {
+/* Featured rider icons: keep each icon at 48px and expand the entire
+   table column only when a rider has multiple featured labels.
+   One icon: 56px; two: 104px; three: 152px; four: 200px.
+   The header and all rider cells must grow together as a table column. */
+.race-detail-scroll .mania-table :is(
+  thead tr:first-child > th.player-featured-heading,
+  tbody tr > td.player-featured
+) {
   box-sizing: border-box;
   width: 56px;
   min-width: 56px;
   max-width: 56px;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+  padding-inline: 0 !important;
   text-align: center;
+}
+/* The widest featured-icon group on any row determines the shared width. */
+.race-detail-scroll .mania-table:has(.player-featured-icons > img:nth-child(2)) :is(
+  thead tr:first-child > th.player-featured-heading,
+  tbody tr > td.player-featured
+) {
+  width: 104px;
+  min-width: 104px;
+  max-width: 104px;
+}
+.race-detail-scroll .mania-table:has(.player-featured-icons > img:nth-child(3)) :is(
+  thead tr:first-child > th.player-featured-heading,
+  tbody tr > td.player-featured
+) {
+  width: 152px;
+  min-width: 152px;
+  max-width: 152px;
+}
+.race-detail-scroll .mania-table:has(.player-featured-icons > img:nth-child(4)) :is(
+  thead tr:first-child > th.player-featured-heading,
+  tbody tr > td.player-featured
+) {
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
 }
 .race-detail-scroll .mania-table tbody td.player-featured {
   vertical-align: middle;
-  padding-top: var(--space-2);
-  padding-bottom: var(--space-2);
+  padding-block: var(--space-2);
 }
 .race-detail-scroll .mania-table .player-featured-icons {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
@@ -633,6 +661,7 @@
 }
 .race-detail-scroll .mania-table .player-featured-icons img {
   display: block;
+  flex: 0 0 48px;
   width: 48px;
   height: 48px;
   object-fit: contain;
