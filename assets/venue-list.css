@@ -42,22 +42,9 @@ button, input, select, textarea {
   justify-content: center;
 }
 
-/* Day tabs */
-
-.date-tabs {
-  display: flex;
-  background: var(--c-surface);
-  border-bottom: var(--line-normal);
-  flex-shrink: 0;
-}
-
+/* Day tabs: geometry only; shared ui-consistency.css owns appearance. */
 .date-tab {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: var(--line-emphasis-width) solid transparent;
-  cursor: pointer;
 }
 
 .chip {
@@ -277,11 +264,6 @@ button, input, select, textarea {
 .sport-auto .grade-g2 {
   background: var(--c-green);
   color: var(--c-surface);
-}
-
-.date-tab.active {
-  color: var(--c-gold);
-  border-bottom-color: var(--c-gold);
 }
 
 .list-head {
