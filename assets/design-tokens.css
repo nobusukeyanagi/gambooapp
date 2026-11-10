@@ -100,7 +100,7 @@
   --line-thin: 1px;
   --line-thick: 3px;
 
-  /* Shared radii, shadows, and tap dimensions */
+  /* Shared radii and shadows */
   --r-3: 3px; /* compact chips */
   --r-6: 6px;
   --r-9: 9px; /* header control corners */
@@ -110,8 +110,7 @@
 
   --e1: 0 1px 2px color-mix(in srgb, var(--c-gray-1) 10%, transparent);
 
-  --tap-min: 44px;
-  --tap-dense: 36px;
+
 }
 /* Unified horizontal scroll boundary for every Gamboo screen.
    Prevent rubber-band/blank-space reveal at either x edge without changing
