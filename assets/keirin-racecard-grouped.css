@@ -492,12 +492,8 @@
   background: var(--c-bronze-light);
 }
 
-/* One-pixel vertical grid throughout the SCR-210 box table.
-   Right borders are always drawn, including both header rows and merged
-   headings. Do not remove a right border at menu/column-group boundaries:
-   that formerly caused missing header segments. The sole left border is
-   the table's outer edge. !important overrides legacy .bl/.position-first
-   borders in shared CSS without changing those other views. */
+/* The canonical 1px box-table grid is defined in racecard-common.css.
+   SCR-210 keeps only its race-specific column widths and separators here. */
 /* Sortable header cells keep their normal background in every mode.
    A second text line appears only when the corresponding sort is active. */
 .race-detail-scroll .mania-table thead tr:first-child th:is(.c-sha, .recent-section-start) {

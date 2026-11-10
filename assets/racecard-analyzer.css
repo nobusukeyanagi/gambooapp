@@ -1,6 +1,6 @@
 @charset "UTF-8";
-/* SCR-210: evaluation buttons and original slide-up detail sheet.
-   Keep these rules scoped here; global tokens and jersey colors are shared. */
+/* Shared analyzer buttons and slide-up details for SCR-210 and SCR-310.
+   Competition-specific figures and column geometry live in their own files. */
 .info-tabs button.info-tab {
   appearance: none;
   font-family: var(--ff-ui);

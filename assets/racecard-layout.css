@@ -1,5 +1,7 @@
 @charset "UTF-8";
-/* Used by SCR-210_racecardkeirin.html; nine-rider display extensions are in keirin-detail-9car.css. */
+/* Shared by SCR-210 and SCR-310. Screen-specific dimensions remain in
+   keirin-racecard-grouped.css and auto-racecard-v2.css.
+   Repeated component selectors have been consolidated where cascade-safe. */
 
       button,
       input,
@@ -22,8 +24,8 @@
         align-items: center;
       }
       .icon-btn {
-        
-        
+
+
         border-radius: var(--r-full);
         background: var(--c-bg);
         display: flex;
@@ -106,7 +108,7 @@
 
       .page-header {
         background: var(--c-surface);
-        
+
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -153,22 +155,22 @@
         display: none;
       }
       .race-tab {
-        
+
         height: 32px;
-        
-        
-        
+
+
+
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        
+
         border-bottom: var(--line-emphasis-width) solid transparent;
-        
+
         white-space: nowrap;
-        
+
         flex-shrink: 0;
       }
       .race-tab.active {
-        
+
         border-bottom-color: var(--c-gold);
       }
 
@@ -392,18 +394,18 @@
       .icon-btn::before { content: ""; position: absolute; inset: -4px; }
       .race-tab {
         flex: 0 0 auto;
-        
-        
+
+
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        
+
         border: var(--line-normal);
         background: var(--c-surface);
         color: var(--c-text-primary);
         cursor: pointer;
-        
+
         text-decoration: none;
       }
       .race-tab small {
@@ -656,7 +658,7 @@
         padding: 0 var(--space-content);
       }
       .screen-wrap:not(:only-child) .phone {
-        
+
         height: calc(100dvh - 30px);
       }
 
