@@ -1,0 +1,269 @@
+@charset "UTF-8";
+/* SCR-500-specific styles only. Canonical tokens, app shell, racing icons,
+   header hierarchy and navigation styles are directly referenced in HTML.
+   Removed unused legacy rules for race tables, banners, news and other pages. */
+
+/* Page shell: keep only layout not supplied by shared app styles. */
+.page-header { display:flex; align-items:center; flex-shrink:0; }
+
+.scroll-area {
+  min-height: 0;
+}
+
+
+.bottom-tab .tab-item { flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--c-gray-2); }
+.bottom-tab .tab-item.active { color:var(--c-gold); }
+.bottom-tab .tab-icon { display:flex; align-items:center; justify-content:center; }
+.ic { display:block; width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
+
+/* Inset avatar on a white identity card with a restrained gold accent line. */
+.user-card { margin:var(--space-8); padding:0; overflow:hidden; }
+.user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-12)) minmax(0, 1fr); align-items:center; column-gap:var(--space-8); row-gap:var(--space-8); padding:var(--space-8) var(--space-12); background:var(--c-gray-5); border-top:var(--line-thick) solid var(--c-gold); border-bottom:var(--line-thin) solid var(--c-gray-4); }
+.user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-12)); height:calc(var(--h-control) + var(--space-12)); flex:0 0 calc(var(--h-control) + var(--space-12)); overflow:hidden; border-radius:var(--r-12); background:var(--c-gold-light); box-shadow:var(--e1); color:var(--c-gold); }
+.user-avatar-photo { display:block; width:100%; height:100%; object-fit:cover; }
+.user-avatar [hidden] { display:none; }
+.user-name { grid-column:2; min-width:0; font-size:var(--fs-18); font-weight:var(--fw-strong); line-height:1.2; overflow-wrap:anywhere; color:var(--c-gray-1); }
+
+/* The two quick links occupy their own row so neither can collide with the name.
+   Campaign .cp-btn supplies the canonical visual style without duplication. */
+.user-card-actions {
+  display:grid;
+  grid-column:1 / -1;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--space-6);
+}
+.user-card-actions .user-card-action {
+  display:flex;
+  width:100%;
+  min-width:0;
+  align-items:center;
+  justify-content:center;
+  padding-inline:var(--space-6);
+}
+.user-points { display:block; padding:0 var(--space-12); background:var(--c-gray-5); }
+.pt3-row + .pt3-row { border-top:var(--line-thin) solid var(--c-gray-4); }
+.pt3-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-8); min-height:var(--h-control); padding:0; }
+.point-label { flex:1; min-width:0; }
+.point-value { text-align:right; }
+
+
+/* All seven point actions share the same grid, dimensions and visual style. */
+.point-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-12) var(--space-12);
+  background: var(--c-gray-5);
+}
+.point-actions .point-action {
+  flex-direction: column;
+  min-width: 0;
+  min-height: calc(var(--h-control) + var(--fs-20) + var(--space-8));
+  padding: var(--space-4) var(--space-2);
+  line-height: 1.25;
+  white-space: normal;
+  text-align: center;
+  overflow-wrap: anywhere;
+  letter-spacing: -0.04em;
+}
+.point-action > span { display: block; white-space: nowrap; }
+.point-action:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: var(--space-2);
+}
+
+/* Shared headings remain 20px/600 with no decorative accent bar.
+   Separate sections by whitespace; competition SVGs stay aligned with text. */
+.section-header .section-title { display:inline-flex; align-items:center; gap:var(--space-4); color:var(--c-gray-1); }
+.scroll-area > .section-header { margin-top:var(--space-8); }
+
+
+/* One registration section and one card contain both reorderable sports. */
+.favorites-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: var(--space-6) var(--space-8) var(--space-8);
+  border: var(--line-thin) solid var(--c-gray-4);
+  border-radius: var(--r-12);
+  background: var(--c-gray-5);
+  overflow: hidden;
+}
+.favorite-sport { min-width: 0; }
+.favorite-sport + .favorite-sport { border-top: var(--line-thin) solid var(--c-gray-4); }
+.favorite-sport-body { overflow: hidden; }
+.favorite-group-title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+}
+/* Keirin favorite headings must not break between the sport and group label. */
+.favorite-sport--keirin .favorite-group-title {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.favorite-sport--keirin .favorite-group-title > span {
+  white-space: nowrap;
+}
+.favorite-sport-icon { color: var(--c-keirin); }
+.favorite-sport--auto .favorite-sport-icon { color: var(--c-auto); }
+.favorite-group { padding: var(--space-12); }
+.favorite-group + .favorite-group { border-top: var(--line-thin) solid var(--c-gray-4); }
+.favorite-group-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+  color: var(--c-gray-1);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+}
+/* Matches SCR-100's "特設ページ" link typography, color, spacing and chevron. */
+.favorite-group-change {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  min-height: 40px;
+  margin-left: auto;
+  color: var(--c-keirin);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  text-decoration: none;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.favorite-group-change .ic { width: 14px; height: 14px; }
+.favorite-group-change:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: 2px;
+  border-radius: var(--r-6);
+}
+.favorite-player-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+.favorite-player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-width: 0;
+  height: 44px;
+  min-height: 44px;
+  padding: var(--space-2);
+  color: var(--c-gray-1);
+  text-align: center;
+  overflow: hidden;
+}
+.favorite-sport--keirin .favorite-player-card {
+  border-left: var(--line-thick) solid var(--c-keirin);
+}
+.favorite-sport--auto .favorite-player-card {
+  border-left: var(--line-thick) solid var(--c-auto);
+}
+/* 激推しメン and 推しメン share the same one-step-larger player name. */
+.favorite-player-name {
+  display: block;
+  max-width: 100%;
+  font-size: clamp(11px, calc(3vw + 2px), var(--fs-14));
+  line-height: 1.15;
+  font-weight: var(--fw-strong);
+  white-space: nowrap;
+  letter-spacing: -0.04em;
+}
+.favorite-player-affiliation {
+  display: block;
+  max-width: 100%;
+  font-size: clamp(8px, 2.6vw, 10px);
+  line-height: 1.15;
+  font-weight: var(--fw-normal);
+  color: var(--c-gray-2);
+  white-space: nowrap;
+  letter-spacing: -0.06em;
+}
+.favorite-more-count {
+  margin-top: var(--space-8);
+  color: var(--c-gray-2);
+  font-size: var(--fs-12);
+}
+
+/* Competition icons retain their canonical aspect ratios. */
+.profile-race-icon { width:var(--fs-20); height:var(--fs-20); flex-shrink:0; fill:currentColor; }
+.profile-race-icon:has(use[href$="#nav-keirin"]) { width:calc(var(--fs-20) * 1.25); }
+.profile-race-icon:has(use[href$="#nav-auto"]) { width:calc(var(--fs-20) * 1.0833333); }
+/* My Results and all four Favorite headings share the same logo dimensions. */
+.favorite-group-title .favorite-sport-icon,
+.mypage-result-icon {
+  width: 30px;
+  height: 24px;
+  flex: 0 0 30px;
+}
+.favorite-sport--auto .favorite-group-title .favorite-sport-icon,
+.mypage-result-icon.auto {
+  width: 26px;
+  flex-basis: 26px;
+}
+/* My Results: keep the campaign's .cp-btn design as the direct source. */
+.mypage-result-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8);
+  padding: var(--space-6) var(--space-12) var(--space-8);
+}
+.mypage-result-actions .mypage-result-action {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  text-align: center;
+}
+.mypage-result-icon { fill: currentColor; }
+.mypage-result-icon.keirin { color: var(--c-keirin); }
+.mypage-result-icon.auto { color: var(--c-auto); }
+
+/* Settings rows: links share the same dimensions as the order toggle. */
+.divider { height:var(--space-6); background:var(--c-bg); }
+.menu-item { display:flex; align-items:center; gap:var(--space-8); min-height:56px; padding:var(--space-8) var(--space-12); background:var(--c-gray-5); border-bottom:var(--line-thin) solid var(--c-gray-4); }
+.settings-first { border-top:var(--line-thin) solid var(--c-gray-4); }
+a.menu-item { color:var(--c-gray-1); text-decoration:none; }
+button.menu-item { width:100%; border:0; border-bottom:var(--line-thin) solid var(--c-gray-4); color:var(--c-gray-1); font:inherit; text-align:left; cursor:pointer; }
+button.menu-item.settings-first { border-top:var(--line-thin) solid var(--c-gray-4); }
+.menu-item:focus-visible { outline:var(--line-thick) solid var(--c-purple); outline-offset:-3px; }
+.sport-order-value { flex:0 0 auto; font-size:var(--fs-16); font-weight:var(--fw-normal); white-space:nowrap; }
+.menu-icon { flex:0 0 var(--fs-20); display:flex; align-items:center; justify-content:center; color:var(--c-gray-2); }
+.menu-icon .ic { width:var(--fs-20); height:var(--fs-20); }
+.menu-text { flex:1; min-width:0; font-size:var(--fs-16); }
+.menu-arrow { flex:0 0 auto; color:var(--c-gray-2); font-size:var(--fs-20); }
+.content-end-spacer { height:var(--space-8); }
+
+/* Tablet and desktop: point and favorite buttons keep phone-like dimensions.
+   Rows gain columns instead of stretching the existing two/three buttons. */
+@media (min-width: 600px) {
+  .point-actions {
+    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  }
+  .favorite-player-grid {
+    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  }
+  .user-card-actions {
+    grid-template-columns: repeat(2, minmax(0, 190px));
+  }
+  .mypage-result-actions {
+    grid-template-columns: repeat(2, minmax(0, 190px));
+  }
+}
+
+/* Phone only: game shortcut spans all three point-action columns.
+   At the shared 600px tablet breakpoint it returns to a normal grid cell. */
+@media (max-width: 599px) {
+  .point-actions .point-game-action {
+    grid-column: 1 / -1;
+  }
+}
