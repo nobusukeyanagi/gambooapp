@@ -20,7 +20,7 @@
 
       .header-actions {
         display: flex;
-        gap: var(--space-card);
+        gap: var(--space-6);
         align-items: center;
       }
       .icon-btn {
@@ -93,7 +93,7 @@
       .grade-badge {
         color: var(--c-text-primary);
         font-weight: var(--fw-strong);
-        padding: var(--space-1) var(--space-card);
+        padding: var(--space-1) var(--space-6);
         border-radius: var(--r-sm);
         flex-shrink: 0;
         font-size: var(--fs-14);
@@ -142,7 +142,7 @@
         display: flex;
         background: var(--c-surface);
         border-bottom: var(--line-normal);
-        gap: var(--space-card); padding: var(--space-8);
+        gap: var(--space-6); padding: var(--space-8);
       }
       .race-tabs::-webkit-scrollbar {
         display: none;
@@ -157,8 +157,8 @@
         flex-shrink: 0;
         display: flex;
         align-items: center;
-        gap: var(--space-card);
-        padding: var(--space-card) var(--space-10);
+        gap: var(--space-6);
+        padding: var(--space-6) var(--space-10);
       }
       .lineup-row {
         display: flex;
@@ -603,7 +603,7 @@
       .ri-event {
         display: flex;
         align-items: center;
-        gap: var(--space-card);
+        gap: var(--space-6);
         min-width: 0;
         font-weight: var(--fw-strong);
         color: var(--c-text-secondary);
@@ -656,7 +656,7 @@
         flex: 0 0 auto;
         display: flex;
         flex-direction: column;
-        gap: var(--space-card);
+        gap: var(--space-6);
       }
       .ri-btn {
         position: relative;
