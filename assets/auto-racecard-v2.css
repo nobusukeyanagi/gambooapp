@@ -704,6 +704,15 @@
   max-width:60px;
   text-align:center;
 }
+/* Trial timing's 試走T順位 column is 70px; the other numeric fields stay 60px. */
+.sport-auto .auto-analyzer-sheet .detail-table :is(
+  th.auto-analyzer-value-heading.auto-analyzer-70,
+  td.auto-analyzer-value.auto-analyzer-70
+) {
+  width:70px;
+  min-width:70px;
+  max-width:70px;
+}
 .sport-auto .auto-analyzer-sheet .detail-table :is(
   th.auto-analyzer-value-heading.auto-analyzer-wide,
   td.auto-analyzer-value.auto-analyzer-wide
