@@ -47,25 +47,38 @@
   justify-content: space-between;
   flex-shrink: 0;
   height: var(--h-tab);
-  padding: 0 var(--space-12);
+  padding: 0;
   background: var(--c-gray-5);
   border-bottom: var(--line-thin) solid var(--c-gray-4);
 }
 .campaign-pagination[hidden] { display: none; }
+/* Full-height edge bands follow the venue race scroll arrows. */
 .campaign-page-arrow {
-  display: inline-flex;
+  display: flex;
+  flex: 0 0 44px;
+  align-self: stretch;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  font-family: var(--ff-ui);
-  font-size: var(--fs-20);
-  font-weight: var(--fw-strong);
+  appearance: none;
+  padding: 0;
   color: var(--c-gray-2);
-  border: var(--line-thin) solid var(--c-gray-4);
-  border-radius: var(--r-9);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
   background: var(--c-bg);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.campaign-page-arrow[data-page="prev"] {
+  border-right: var(--line-thin) solid var(--c-gray-4);
+}
+.campaign-page-arrow[data-page="next"] {
+  border-left: var(--line-thin) solid var(--c-gray-4);
+}
+.campaign-page-arrow .ic {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
 }
 .campaign-page-arrow:disabled {
   opacity: 0.35;
