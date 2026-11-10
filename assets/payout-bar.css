@@ -63,7 +63,7 @@
         font: inherit;
         text-align: left;
         cursor: pointer;
-        border-radius: var(--r-sm);
+        border-radius: var(--r-6);
         -webkit-tap-highlight-color: transparent;
       }
       .delca-entry.tap-pressed,
