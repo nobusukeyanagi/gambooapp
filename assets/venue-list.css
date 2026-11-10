@@ -61,7 +61,7 @@ button, input, select, textarea {
   display: block;
   min-height: 48px;
   overflow: hidden;
-  border-bottom: var(--line-normal);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
 }
 .venue-header-line {
   display: flex;
@@ -134,7 +134,7 @@ button, input, select, textarea {
   display: flex;
   align-items: center;
   padding: 0 var(--space-12);
-  border-bottom: var(--line-normal);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
   flex-shrink: 0;
   justify-content: center;
 }
@@ -167,7 +167,7 @@ button, input, select, textarea {
 .rchip {
   flex: 0 0 auto;
   border-radius: var(--r-control);
-  border: var(--line-control);
+  border: var(--line-thin) solid var(--c-gray-3);
   box-shadow: var(--e1);
   background: var(--c-gray-5);
   color: var(--c-gray-1);
@@ -370,7 +370,7 @@ button, input, select, textarea {
 }
 
 .venue-card > .hscroll {
-  border-bottom: var(--line-normal);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
   background: var(--c-gray-5);
 }
 
@@ -406,12 +406,12 @@ button, input, select, textarea {
 
 .venue-card .hscroll > .hscroll-cue {
   right: 0;
-  border-left: var(--line-normal);
+  border-left: var(--line-thin) solid var(--c-gray-4);
 }
 
 .venue-card .hscroll > .hscroll-cue-l {
   left: 0;
-  border-right: var(--line-normal);
+  border-right: var(--line-thin) solid var(--c-gray-4);
 }
 
 .venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l)[hidden] {
@@ -419,7 +419,7 @@ button, input, select, textarea {
 }
 
 .venue-card .hscroll > :is(.hscroll-cue, .hscroll-cue-l):focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
 }
 
@@ -439,7 +439,7 @@ button, input, select, textarea {
 }
 
 .rcol > a.rchip:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
 }
 
