@@ -1,14 +1,12 @@
 @charset "UTF-8";
 /* Used by SCR-210_racecardkeirin.html; nine-rider display extensions are in keirin-detail-9car.css. */
 
-
       button,
       input,
       select,
       textarea {
         font-family: var(--ff-ui);
       }
-
 
       .screen-label {
         color: var(--c-border);
@@ -17,7 +15,6 @@
         text-transform: uppercase;
         letter-spacing: 0.1em;
       }
-
 
       .header-actions {
         display: flex;
@@ -47,21 +44,24 @@
         border: var(--line-thin) solid var(--c-surface);
       }
       .cta-btn {
-        
         color: var(--c-surface);
-        
         font-weight: var(--fw-strong);
-        
         border-radius: var(--r-full);
         white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-small);
+        background: var(--c-keirin);
+        padding: 0 var(--space-14); font-size: var(--fs-14);
       }
 
       .bottom-tab {
         background: var(--c-surface);
-        
         display: flex;
         border-top: var(--line-normal);
         flex-shrink: 0;
+        padding-bottom: 0;
       }
       .tab-item {
         flex: 1;
@@ -69,18 +69,23 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        
-        
         color: var(--c-text-secondary);
         cursor: pointer;
+        letter-spacing: normal;
+        white-space: nowrap;
+        min-width: 0;
+        font-size: var(--fs-12); gap: var(--space-3);
       }
       .tab-item.active {
         color: var(--c-gold);
       }
       .tab-item .tab-icon {
         font-size: var(--fs-18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 26px;
       }
-
 
       .venue-card {
         background: var(--c-surface);
@@ -91,13 +96,13 @@
       }
 
       .grade-badge {
-        
-        
-        
-        
         color: var(--c-text-primary);
+        font-weight: var(--fw-strong);
+        padding: var(--space-1) var(--space-card);
+        border-radius: var(--r-sm);
+        flex-shrink: 0;
+        font-size: var(--fs-14);
       }
-
 
       .page-header {
         background: var(--c-surface);
@@ -120,20 +125,29 @@
       .page-header-title {
         font-size: var(--fs-14);
         font-weight: var(--fw-strong);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-5);
+        min-width: 0;
       }
       .race-info-meta {
-        
-        
         margin-top: var(--space-1);
+        font-size: var(--fs-12);
+        color: var(--c-text-secondary);
+        font-family: var(--ff-ui);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
       }
 
       .race-tabs {
-        
-        
         overflow-x: auto;
-        
         scrollbar-width: none;
         flex-shrink: 0;
+        display: flex;
+        background: var(--c-surface);
+        border-bottom: var(--line-normal);
+        gap: var(--space-card); padding: var(--space-section);
       }
       .race-tabs::-webkit-scrollbar {
         display: none;
@@ -160,11 +174,14 @@
 
       .lineup-bar {
         background: var(--c-bg);
-        
         font-size: var(--fs-12);
         color: var(--c-text-secondary);
         border-bottom: var(--line-normal);
         flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: var(--space-card);
+        padding: var(--space-card) var(--space-10);
       }
       .lineup-row {
         display: flex;
@@ -182,8 +199,9 @@
         flex: 1;
         scrollbar-width: thin;
         scrollbar-color: var(--c-border) transparent;
+        min-height: 0;
+        overflow-y: hidden;
       }
-
 
       .score {
         font-family: var(--ff-ui);
@@ -209,16 +227,15 @@
         color: var(--c-text-primary);
       }
 
-
       .mania-table {
         border-collapse: separate;
         border-spacing: 0;
         min-width: max-content;
         font-size: var(--fs-12);
+        height: 100%;
       }
       .mania-table th {
         background: var(--c-bg);
-        
         text-align: center;
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
@@ -228,15 +245,19 @@
         position: sticky;
         top: 0;
         z-index: 2;
+        height: 1px;
+        padding: var(--space-3) var(--space-small);
+        line-height: 1.25;
       }
       .mania-table td {
         background: var(--c-surface);
-        
         text-align: center;
         vertical-align: middle;
         white-space: nowrap;
         border-bottom: var(--line-normal);
-        
+        height: 32px;
+        padding: var(--space-1) var(--space-small);
+        line-height: 1.2;
       }
 
       .mania-table .fx {
@@ -248,6 +269,7 @@
       }
       .mania-table .rider-meta {
         font-size: var(--fs-12);
+        line-height: 1.2;
       }
 
       .g-val {
@@ -282,33 +304,9 @@
         line-height: 1.1;
         color: var(--c-text-secondary);
       }
-
-      .lineup-bar {
-        display: flex;
-        align-items: center;
-        gap: var(--space-card);
-        
-      }
       .lineup-bar .lineup-row {
         margin-top: 0;
-      }
-      .race-table-wrap {
-        min-height: 0;
-        overflow-y: hidden;
-      }
-
-      .mania-table {
-        height: 100%;
-      }
-      .mania-table th {
-        height: 1px;
-        padding: var(--space-3) var(--space-small);
-        
-      }
-      .mania-table td {
-        height: 32px;
-        padding: var(--space-1) var(--space-small);
-        line-height: 1.2;
+        gap: var(--space-3);
       }
       .mania-table .frame-cell {
         height: 22px;
@@ -317,10 +315,6 @@
       .mania-table .rider-name {
         line-height: 1.2;
       }
-      .mania-table .rider-meta {
-        line-height: 1.2;
-      }
-
 
       .num,
       .payout-value,
@@ -343,6 +337,9 @@
         flex-shrink: 0;
         fill: currentColor;
         display: block;
+        outline: none;
+        outline-offset: 1px;
+        border-radius: var(--r-xxs);
       }
 
       .hscroll {
@@ -392,47 +389,7 @@
 
       .ell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 
-      .bottom-tab {
-        
-        padding-bottom: 0;
-      }
-      .tab-item {
-        
-        
-        
-        letter-spacing: normal;
-        white-space: nowrap;
-        min-width: 0;
-      }
-      .tab-item .tab-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-      }
-
-
       .icon-btn::before { content: ""; position: absolute; inset: -4px; }
-
-      .cta-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--space-small);
-        
-        
-        
-        background: var(--c-keirin);
-      }
-
-
-      .race-tabs {
-        display: flex;
-        
-        
-        background: var(--c-surface);
-        border-bottom: var(--line-normal);
-      }
       .race-tab {
         flex: 0 0 auto;
         
@@ -450,11 +407,9 @@
         text-decoration: none;
       }
       .race-tab small {
-        
-        
-        
         font-family: var(--ff-ui);
         font-variant-numeric: tabular-nums;
+        font-size: var(--fs-12); font-weight: var(--fw-normal); color: var(--c-text-secondary);
       }
       .race-tab.active {
         background: var(--c-gold-light);
@@ -483,13 +438,6 @@
         align-items: center;
         gap: var(--space-section);
         margin-top: var(--space-3);
-      }
-      .race-info-meta {
-        font-size: var(--fs-12);
-        color: var(--c-text-secondary);
-        font-family: var(--ff-ui);
-        font-variant-numeric: tabular-nums;
-        white-space: nowrap;
       }
       .race-countdown .ic { width: 13px; height: 13px; }
 
@@ -531,34 +479,34 @@
       }
       .mania-table .c-name {
         left: 42px;
-        
-        
         padding: var(--space-2) var(--space-small);
         text-align: left;
         border-right: var(--line-normal);
+        min-width: 88px; width: 88px;
       }
       .rider-name {
-        
         font-weight: var(--fw-strong);
         text-align: left;
         line-height: 1.2;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: var(--fs-14);
       }
       .rider-meta {
-        
         color: var(--c-text-secondary);
         line-height: 1.2;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: var(--fs-12);
       }
 
       .mania-table td,
       .race-table td {
         height: 46px;
         padding: var(--space-3) var(--space-5);
+        font-size: var(--fs-16);
       }
       .mania-table tbody tr:nth-child(even) td { background: var(--c-bg); }
       .mania-table tbody tr:nth-child(even) td.fx { background: var(--c-bg); }
@@ -623,33 +571,19 @@
         justify-content: center;
       }
 
-      .mark { font-size: var(--fs-14); line-height: 1;  min-width: 16px; display: inline-block; }
+      .mark {
+        font-size: var(--fs-14); line-height: 1;  min-width: 16px; display: inline-block;
+        color: var(--c-text-primary);
+      }
       .mark.tri { color: var(--c-gold); }
       .mark.x { color: var(--c-text-secondary); }
-
 
       .mk, .mark { font-size: var(--fs-14); line-height: 1; display: inline-block; min-width: 16px; }
       .mk-dbl, .mark.dbl { color: var(--c-red); }
       .mk-o, .mark.o { color: var(--c-gold); }
       .mk-tri, .mark.tri { color: var(--c-keirin); }
       .mk-x, .mark.x { color: var(--c-text-secondary); }
-      .mark { color: var(--c-text-primary); }
-
-      .page-header-title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--space-5);
-        min-width: 0;
-      }
       .page-header-title .ic { width: 18px; height: 18px; }
-
-
-      .ic {
-        outline: none;
-        outline-offset: 1px;
-        border-radius: var(--r-xxs);
-      }
 
       .cta-btn .ic,
       .action-btn.primary .ic,
@@ -674,14 +608,6 @@
       }
 
       .page-header .page-header-title { flex: 1; font-size: var(--fs-16); display: flex; align-items: center; justify-content: center; }
-
-      .grade-badge {
-        
-        font-weight: var(--fw-strong);
-        padding: var(--space-1) var(--space-card);
-        border-radius: var(--r-sm);
-        flex-shrink: 0;
-      }
       .grade-gp, .grade-g1 { background: var(--c-magenta); color: var(--c-surface); }
       .grade-g2 { background: var(--c-blue); color: var(--c-surface); }
       .grade-g3 { background: var(--c-green); color: var(--c-surface); }
@@ -693,9 +619,9 @@
         align-items: center;
         gap: var(--space-card);
         min-width: 0;
-        
         font-weight: var(--fw-strong);
         color: var(--c-text-secondary);
+        font-size: var(--fs-14);
       }
       .ri-race {
         display: flex;
@@ -703,15 +629,20 @@
         flex-wrap: wrap;
         column-gap: var(--space-section);
         margin-top: var(--space-3);
-        
         font-weight: var(--fw-strong);
         line-height: 1.3;
+        font-size: var(--fs-20);
       }
-      .ri-race span {  font-weight: var(--fw-strong); }
+      .ri-race span {
+        font-weight: var(--fw-strong);
+        font-size: var(--fs-16);
+      }
       .race-info-bar .race-info-row { margin-top: var(--space-small); }
-      .race-info-bar .race-info-meta {  color: var(--c-text-primary); }
+      .race-info-bar .race-info-meta {
+        color: var(--c-text-primary);
+        font-size: var(--fs-14);
+      }
       .hscroll .race-tabs { overflow: visible; width: max-content; min-width: 100%; }
-      .rider-meta { font-size: var(--fs-12); }
       .screen-wrap:not(:only-child) .screen-label {
         display: block;
         background: var(--c-text-primary);
@@ -762,55 +693,33 @@
       .mania-table td:not(.c-name),
       .mania-table th:not(.c-name) { border-right: var(--line-normal); }
       .mania-table .bl { border-left: var(--line-normal); }
-
-
-      .tab-item { font-size: var(--fs-12); gap: var(--space-3); }
-      .tab-item .tab-icon { height: 26px; }
       .tab-item .ic { width: 26px; height: 26px; }
 
-
       .icon-btn .ic { width: 24px; height: 24px; }
-      .cta-btn {  padding: 0 var(--space-14); font-size: var(--fs-14); }
       .cta-btn .ic { width: 18px; height: 18px; }
 
       .page-header .page-header-title,
       .page-header-title { font-size: var(--fs-18); }
       .page-header .back-btn .ic { width: 28px; height: 28px; }
 
-
       .info-tabs .info-tab { min-height: 52px; font-size: var(--fs-14); }
       .rchip { min-width: 62px; min-height: 54px; }
       .rchip b { font-size: var(--fs-16); }
       .rchip small { font-size: var(--fs-12); }
       .rchip.next { min-width: 90px; }
-
-
-      .grade-badge { font-size: var(--fs-14); }
-      .ri-event { font-size: var(--fs-14); }
-      .ri-race { font-size: var(--fs-20); }
-      .ri-race span { font-size: var(--fs-16); }
-      .race-info-bar .race-info-meta { font-size: var(--fs-14); }
-
-
-      .mania-table td,
-      .race-table td { font-size: var(--fs-16); }
-      .rider-name { font-size: var(--fs-14); }
-      .mania-table .c-name { min-width: 88px; width: 88px; }
       .at td { font-size: var(--fs-16); }
-
 
       .mania-table thead tr + tr th { top: auto; }
       .mania-table td.cls small { font-size: var(--fs-12); color: var(--c-text-secondary); }
       .mania-table td.rate { min-width: 30px; }
       .mania-table .res-cell { min-width: 0; }
       .mania-table .res-wrap { gap: var(--space-section); }
-      .mania-table .res-note {  color: var(--c-gold); }
-
-
-      .race-tabs { gap: var(--space-card); padding: var(--space-section); }
+      .mania-table .res-note {
+        color: var(--c-gold);
+        grid-column: 2; font-size: var(--fs-12); line-height: 1.1; text-align: left;
+      }
       .race-tab { min-width: 62px; min-height: 54px; padding: var(--space-3) var(--space-5); gap: 0; line-height: 1.15; }
       .race-tab b { font-size: var(--fs-16); font-weight: var(--fw-strong); }
-      .race-tab small { font-size: var(--fs-12); font-weight: var(--fw-normal); color: var(--c-text-secondary); }
       .race-tab.past b { color: var(--c-text-secondary); font-weight: var(--fw-strong); }
       .race-tab.past small { color: var(--c-text-secondary); font-weight: var(--fw-strong); }
       .race-tab.active { min-width: 90px; }
@@ -823,8 +732,6 @@
       .ri-sub { margin-top: var(--space-2); font-size: var(--fs-12); color: var(--c-text-secondary); font-family: var(--ff-ui); }
       .lineup-title { font-size: var(--fs-12); font-weight: var(--fw-strong); white-space: nowrap; }
       .lineup-dir { font-size: var(--fs-12); color: var(--c-text-secondary); }
-      .lineup-bar { padding: var(--space-card) var(--space-10); }
-      .lineup-bar .lineup-row { gap: var(--space-3); }
       .lineup-bar .lineup-car { width: 24px; height: 24px; font-size: var(--fs-14); border-radius: var(--r-sm); }
       .lineup-bar .lineup-sep { font-size: var(--fs-12); margin: 0 var(--space-1); }
       .rt-area {
@@ -838,7 +745,6 @@
       .rt-area::-webkit-scrollbar { display: none; }
       .rt-area .race-table-wrap { flex: none; overflow-x: auto; overflow-y: hidden; }
       .rt-area .mania-table { height: auto; }
-      .mania-table th { line-height: 1.25; }
       .mania-table .c-waku,
       .mania-table .c-name { position: static; }
       .mania-table .c-sha {
@@ -863,7 +769,6 @@
       }
       .race-table-wrap.scrolled .sha-nm { display: block; }
 
-
       .mania-table .res-wrap {
         display: grid;
         grid-auto-flow: column;
@@ -876,7 +781,6 @@
 
       .mania-table .res-rank { font-size: var(--fs-16); font-weight: var(--fw-strong); line-height: 1.05; color: var(--c-text-primary); }
       .mania-table .res-time { font-size: var(--fs-12); }
-      .mania-table .res-note { grid-column: 2; font-size: var(--fs-12); line-height: 1.1; text-align: left; }
 
       .rt-legend {
         padding: var(--space-10) var(--space-content) 16px;
