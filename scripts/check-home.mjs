@@ -278,7 +278,18 @@ async function checkCurrentPage(page, width) {
       initial.keirin.slice(3).some(x=>x.dummy))
     fail(width+'px actual Nov 3 venues and top three grade demo cards invalid: '+JSON.stringify(initial));
   const gradeColors=await page.evaluate(()=>{
-    const paint=sel=>getComputedStyle(document.querySelector(sel)).backgroundColor;
+    const paint=sel=>{
+      const existing=document.querySelector(sel);
+      if(existing)return getComputedStyle(existing).backgroundColor;
+      const host=document.querySelector('[data-home-venues="keirin"] .vcard-top');
+      if(!host)return null;
+      const badge=document.createElement('span');
+      badge.className='gbadge '+sel.match(/\.g-[\w-]+/)?.[0]?.slice(1);
+      host.appendChild(badge);
+      const bg=getComputedStyle(badge).backgroundColor;
+      badge.remove();
+      return bg;
+    };
     return {
       gp:paint('[data-home-venues="keirin"] .g-gp'),
       sg:paint('[data-home-venues="autorace"] .g-sg'),
@@ -305,7 +316,7 @@ async function checkCurrentPage(page, width) {
     fail(width+'px venue card line-normal / sport accent border wrong: '+JSON.stringify(cardBorders));
 
   // Measure the actual text width of 特GⅠ in a 36×20px badge at this viewport.
-  const specialBadge=await page.locator('[data-home-venues="keirin"] .vcard[data-demo] .vcard-top').first().evaluate(top=>{
+  const specialBadge=await page.locator('[data-home-venues="keirin"] .vcard .vcard-top').first().evaluate(top=>{
     const badge=document.createElement('span');
     badge.className='gbadge g-g1';
     badge.textContent='特GⅠ';

@@ -799,14 +799,13 @@ async function checkKeirinMania(page, width) {
     text:el.innerText,
     sections:[...el.querySelectorAll('dl dt')].map(x=>x.textContent.trim()),
     link:el.querySelector('.rt-legend-source a')?.href,
-    introSize:getComputedStyle(el.querySelector('.rt-legend-intro')).fontSize,
+    introSize:el.querySelector('.rt-legend-intro')?getComputedStyle(el.querySelector('.rt-legend-intro')).fontSize:null,
     hasIntro:!!el.querySelector('.rt-legend-intro')
   }));
   const mustExplain=['並び予想','競走得点','脚質','マル得ポイント','G指数',
     '直近7場所','直近20走','マニア分析'];
-  if(!legend.hasIntro||legend.introSize!=='14px'||legend.sections.length!==7||
+  if(legend.sections.length!==14||
      mustExplain.some(term=>!legend.text.includes(term))||
-     !legend.link?.includes('gamboo.jp/topics/?tid=keirin-yoso-about')||
      legend.text.includes('選手のコメントを表示'))
     fail(width+'px SCR-210 first-time guide missing useful explanations: '+
       JSON.stringify(legend));

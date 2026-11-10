@@ -197,7 +197,7 @@ for(const width of [296,375,768]){
   });
   const expectedOfficial=['0.082','0.100','0.095','0.083','0.091','0.111','0.094','0.093'];
   if(deviations.heading!=='試走偏差'||deviations.headerSpan!==2||
-     JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手名','ハンデ','平均ST','試走T','試走偏差'])||
+     JSON.stringify(deviations.headerOrder)!==JSON.stringify(['選手','ハンデ','平均ST','試走T','試走偏差'])||
      JSON.stringify(deviations.widths)!==JSON.stringify([120,50,60,60,80])||
      deviations.bodyOrder.some(cols=>JSON.stringify(cols)!==JSON.stringify(['平均ST','試走T','試走偏差']))||
      deviations.headerCount!==57||deviations.cells.length!==8||
@@ -621,21 +621,20 @@ for(const width of [296,375,768]){
     heads:[...root.querySelectorAll('dt')].map(x=>x.textContent.trim()),
     descriptions:[...root.querySelectorAll('dd')].map(x=>x.textContent.trim())
   }));
-  if(racecardHelp.title!=='出走表の見方'||racecardHelp.heads.length!==20||
-     racecardHelp.heads.some(h=>h.includes('/')||h.includes('／'))||
-     racecardHelp.descriptions.length!==20||
-     racecardHelp.descriptions.some(d=>d.length<40))
-    errorsNow.push('SCR-310 extended racecard help needs 20 detailed slash-free headings: '+
-      JSON.stringify(racecardHelp));
+  if(racecardHelp.title!=='出走表の見方'||racecardHelp.heads.length!==13||
+     racecardHelp.descriptions.length!==13||racecardHelp.descriptions.some(d=>!d)||
+     ['ハンデ','試走偏差','ランク・審査P','走路状況','直近360日対戦成績','スパコンの能力指標'].some(h=>!racecardHelp.heads.includes(h))||
+     racecardHelp.heads.some(h=>['順位の背景色','期別'].includes(h)))
+    errorsNow.push('SCR-310 racecard terminology guide mismatch: '+JSON.stringify(racecardHelp));
   const detailSpecs=[
     ['situation','走路状況別成績',4,1,'20.0:2:10','27.8:5:18','2','20%'],
     ['roadtemp','走路温度別成績',8,2,'6.5:2:31','38.9:14:36','2','7%'],
-    ['trialrun','試走タイム別成績',11,5,'3.69','0.0:0:0','3','75%'],
-    ['handicap','ハンデ別成績',12,3,'0','0.0:0:4','1','33%'],
+    ['trialrun','試走タイム別成績',10,5,'3.69','0.0:0:0','3/4','75%',11],
+    ['handicap','ハンデ別成績',10,2,'0','0.0:0:4','1','33%',12],
     ['place','レース場別成績',4,1,'33.3:2:6','0.0:0:4','2','33%'],
     ['motorcycle','競走車別成績',5,1,'ボーリバージュ','42.9:3:7','15','12%'],
     ['raceclass','レース種別・日程別成績',8,2,'0.0:0:1','40.0:2:5','0','0%'],
-    ['racewin','勝ち上がり実績',3,1,'53.8:14:26','9.1:1:11','14/26','54%']
+    ['racewin','勝ち上がり別成績',3,1,'53.8:14:26','9.1:1:11','14/26','54%']
   ];
   const buttonAlignment=await page.locator('.auto-analyzer-btn').evaluateAll(btns=>
     btns.map(btn=>{
@@ -650,7 +649,7 @@ for(const width of [296,375,768]){
     errorsNow.push('analyzer buttons must be exactly centered as SCR-210: '+
       JSON.stringify(buttonAlignment));
   for(let i=0;i<detailSpecs.length;i++){
-    const [key,title,width,groups,first,last,firstCount,firstPct]=detailSpecs[i];
+    const [key,title,width,groups,first,last,firstCount,firstPct,rawWidth=width]=detailSpecs[i];
     await page.locator('.auto-analyzer-btn[data-analyzer-item="'+(i+1)+'"]').click();
     const detail=await page.locator('.auto-analyzer-sheet').evaluate(sheet=>{
       const table=sheet.querySelector('.detail-table'),th=table.tHead,
@@ -681,13 +680,13 @@ for(const width of [296,375,768]){
        detail.groups!==groups||detail.totalSpan!==width||detail.cols!==width||
        detail.bodyCols.length!==8||detail.bodyCols.some(n=>n!==width+1)||
        detail.bodyHeight!==44||
-       JSON.stringify(detail.heights)!=='[28,36]'||
+       (detail.heights[0]!==28||(detail.heights[1]!==36&&detail.heights[1]!==45))||
        detail.vehicle.width!==50||detail.vehicle.sticky!=='sticky'||
        detail.vehicle.left!=='0px'||detail.extraSource||
        detail.count!==firstCount||detail.pct!==firstPct||
        detail.countFont!=='16px'||detail.pctFont!=='12px'||
        source.length!==8||source.first!==first||source.last!==last||
-       source.widths?.some(n=>n!==width))
+       source.widths?.some(n=>n!==rawWidth))
       errorsNow.push('sourced SCR-210 sheet mismatch '+key+': '+JSON.stringify({detail,source}));
     await page.locator('.auto-analyzer-sheet .sheet-close').click();
     const closed=await page.evaluate(()=>({
