@@ -270,7 +270,7 @@ body { font-weight: var(--fw-normal); }
 .phone-inner > .filter-chips {
   height: calc(var(--h-balance) + var(--line-thin));
   align-items: center;
-  padding: 0 var(--space-10);
+  padding: 0 var(--space-8);
   flex-shrink: 0;
 }
 
@@ -458,7 +458,7 @@ body { font-weight: var(--fw-normal); }
   color: var(--c-text-primary);
 }
 .shared-app-header .header-actions .cta-btn {
-  padding: 0 var(--space-10);
+  padding: 0 var(--space-8);
   border: 0;
   background: var(--c-teal);
   color: var(--c-surface);
