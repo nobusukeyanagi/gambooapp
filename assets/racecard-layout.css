@@ -106,7 +106,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 var(--space-12);
-        border-bottom: var(--line-normal);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
         flex-shrink: 0;
       }
       .back-btn {
@@ -141,7 +141,7 @@
         flex-shrink: 0;
         display: flex;
         background: var(--c-gray-5);
-        border-bottom: var(--line-normal);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
         gap: var(--space-6); padding: var(--space-8);
       }
       .race-tabs::-webkit-scrollbar {
@@ -153,7 +153,7 @@
         background: var(--c-bg);
         font-size: var(--fs-12);
         color: var(--c-gray-2);
-        border-bottom: var(--line-normal);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
         flex-shrink: 0;
         display: flex;
         align-items: center;
@@ -217,7 +217,7 @@
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
         color: var(--c-gray-2);
-        border-bottom: var(--line-normal);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
         white-space: nowrap;
         position: sticky;
         top: 0;
@@ -231,7 +231,7 @@
         text-align: center;
         vertical-align: middle;
         white-space: nowrap;
-        border-bottom: var(--line-normal);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
         height: 32px;
         padding: var(--space-1) var(--space-4);
         line-height: 1.2;
@@ -346,7 +346,7 @@
         justify-content: center;
         color: var(--c-gray-2);
         background: var(--c-gray-5);
-        border: var(--line-normal);
+        border: var(--line-thin) solid var(--c-gray-4);
         border-radius: var(--r-full);
         box-shadow: var(--e1);
         pointer-events: none;
@@ -379,7 +379,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        border: var(--line-normal);
+        border: var(--line-thin) solid var(--c-gray-4);
         background: var(--c-gray-5);
         color: var(--c-gray-1);
         cursor: pointer;
@@ -415,7 +415,7 @@
       .race-info-bar {
         background: var(--c-gray-5);
         padding: var(--space-8) var(--space-8) var(--space-8);
-        border-bottom: var(--line-normal);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
         flex-shrink: 0;
       }
       .race-info-row {
@@ -430,7 +430,7 @@
       .info-tabs {
         display: flex;
         gap: 0;
-        border-bottom: var(--line-normal);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
         background: var(--c-gray-5);
         flex-shrink: 0;
       }
@@ -467,7 +467,7 @@
         left: 42px;
         padding: var(--space-2) var(--space-4);
         text-align: left;
-        border-right: var(--line-normal);
+        border-right: var(--line-thin) solid var(--c-gray-4);
         min-width: 88px; width: 88px;
       }
       .rider-name {
@@ -537,7 +537,7 @@
         font-size: var(--fs-14);
         margin: 0 auto;
       }
-      .f1 { background: var(--c-w1); color: var(--c-gray-1); border: var(--line-control); }
+      .f1 { background: var(--c-w1); color: var(--c-gray-1); border: var(--line-thin) solid var(--c-gray-3); }
       .f2 { background: var(--c-w2); color: var(--c-gray-5); border: var(--line-thin) solid var(--c-w2); }
       .f3 { background: var(--c-w3); color: var(--c-gray-5); border: var(--line-thin) solid var(--c-w3); }
       .f4 { background: var(--c-w4); color: var(--c-gray-5); border: var(--line-thin) solid var(--c-w4); }
@@ -677,8 +677,8 @@
       .ri-btn.live { background: var(--c-red); color: var(--c-gray-5); }
       .ri-btn.live .ic { outline-color: color-mix(in srgb, var(--c-gray-5) 75%, transparent); }
       .mania-table td:not(.c-name),
-      .mania-table th:not(.c-name) { border-right: var(--line-normal); }
-      .mania-table .bl { border-left: var(--line-normal); }
+      .mania-table th:not(.c-name) { border-right: var(--line-thin) solid var(--c-gray-4); }
+      .mania-table .bl { border-left: var(--line-thin) solid var(--c-gray-4); }
       .tab-item .ic { width: 26px; height: 26px; }
 
       .icon-btn .ic { width: 24px; height: 24px; }
@@ -771,7 +771,7 @@
 
       .rt-legend {
         padding: var(--space-8) var(--space-12) 16px;
-        border-top: var(--line-normal);
+        border-top: var(--line-thin) solid var(--c-gray-4);
         background: var(--c-bg);
         font-size: var(--fs-12);
         line-height: 1.5;
