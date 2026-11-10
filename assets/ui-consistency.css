@@ -265,7 +265,7 @@ body { font-weight: var(--fw-normal); }
 .phone-inner > .hscroll .race-tab {
   height: calc(var(--h-balance) - 2 * var(--space-4));
   min-height: 0;
-  padding: var(--space-2) var(--space-5);
+  padding: var(--space-2) var(--space-4);
 }
 .phone-inner > .filter-chips {
   height: calc(var(--h-balance) + var(--line-thin));
@@ -365,7 +365,7 @@ body { font-weight: var(--fw-normal); }
   justify-content: flex-start;
   min-width: 0;
   flex: 1 1 auto;
-  gap: var(--space-5);
+  gap: var(--space-4);
   text-align: left;
   color: var(--c-text-primary);
   font-size: var(--fs-18);
@@ -419,7 +419,7 @@ body { font-weight: var(--fw-normal); }
   flex: 0 0 var(--h-control);
 }
 .shared-app-header .header-main:has(.back-btn) {
-  gap: var(--space-5);
+  gap: var(--space-4);
 }
 /* Header fonts remain at their design size; width is adapted when necessary. */
 .shared-app-header .header-actions {
