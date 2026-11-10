@@ -78,16 +78,16 @@
   --c-magenta-light: hsl(305 61.29% 87.84%);
   --c-red-light: hsl(345 63.93% 88.04%);
 
-  /* ④ 根幹カラー：基本文字・補助文字・操作枠線・罫線・背景。
+  /* ④ グレー階調：濃色から白へ。文字・罫線・背景など用途を限定しない。
      共通4色はH210°/S10%、明度21%/42%/63%/84%で統一。
      HSL明度の低い順（暗い→明るい）に定義する。
      「補助文字」は旧「銀」を名称変更し、HSL調整した色。銀の薄色は廃止し罫線色を直接参照する。 */
-  --c-text-primary: #30363B;
-  --c-text-secondary: #606B76;
-  --c-border-control: #97A1AA;
-  --c-border: #D2D6DA;
+  --c-gray-1: #30363B;
+  --c-gray-2: #606B76;
+  --c-gray-3: #97A1AA;
+  --c-gray-4: #D2D6DA;
   --c-bg: #F8F7F4;
-  --c-surface: #FFFFFF;
+  --c-gray-5: #FFFFFF;
 
   /* Venue-day label keeps its distinct H210 / S10 / L41 tone. */
   --c-venue-day: hsl(210 10% 41%);
@@ -102,8 +102,8 @@
    */
   --line-thin: 1px;
   --line-emphasis-width: 3px;
-  --line-normal: var(--line-thin) solid var(--c-border);
-  --line-control: var(--line-thin) solid var(--c-border-control);
+  --line-normal: var(--line-thin) solid var(--c-gray-4);
+  --line-control: var(--line-thin) solid var(--c-gray-3);
   --line-keirin: var(--line-emphasis-width) solid var(--c-keirin);
   --line-focus: var(--line-emphasis-width) solid var(--c-keirin);
 
@@ -115,7 +115,7 @@
   --r-lg: 20px;
   --r-full: 9999px;
 
-  --e1: 0 1px 2px color-mix(in srgb, var(--c-text-primary) 10%, transparent);
+  --e1: 0 1px 2px color-mix(in srgb, var(--c-gray-1) 10%, transparent);
 
   --tap-min: 44px;
   --tap-dense: 36px;
