@@ -11,7 +11,7 @@
   min-width: 0;
   width: max-content;
   padding-inline: 13px;
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   font-family: var(--ff-ui);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
@@ -23,7 +23,7 @@
 /* Unselected menu entries have exactly the same secondary label color
    on both SCR-210 and SCR-310, including two-line button contents. */
 .race-detail-scroll .race-menu-scroll .info-tab:not(.active) {
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
 }
 
 /* One source for box-table foreground, stroke and column-heading typography. */
@@ -31,7 +31,7 @@
   border-collapse: separate;
   border-spacing: 0;
   width: max-content;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-family: var(--ff-ui);
   font-variant-numeric: tabular-nums;
 }
@@ -51,7 +51,7 @@
 .race-detail-scroll .mania-table thead th {
   position: sticky;
   background: var(--c-bg);
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
   white-space: nowrap;
@@ -64,7 +64,7 @@
    same primary text tone, even if the label contains a nested button/span. */
 .race-detail-scroll .mania-table thead th:not(.section-selected),
 .race-detail-scroll .mania-table thead th:not(.section-selected) :is(button,span) {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
 }
 .race-detail-scroll .mania-table thead tr:first-child th {
   top: 0;
@@ -80,21 +80,21 @@
 .race-detail-scroll .mania-table thead tr:first-child th.section-selected,
 .race-detail-scroll .mania-table thead tr:nth-child(2) th.section-selected {
   background: var(--c-gold);
-  color: var(--c-surface);
+  color: var(--c-gray-5);
 }
 .race-detail-scroll .mania-table tbody tr,
 .race-detail-scroll .mania-table tbody tr td,
 .race-detail-scroll .mania-table tbody tr:nth-child(even) td {
   height: 56px;
-  background: var(--c-surface);
+  background: var(--c-gray-5);
 }
 .race-detail-scroll .mania-table tbody td {
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-size: var(--fs-16);
   font-weight: var(--fw-normal);
 }
 .race-detail-scroll .mania-table tbody :is(.rider-meta,.grade-prev) {
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
 }
@@ -134,7 +134,7 @@
 .race-detail-scroll .rt-legend dt,
 .race-detail-scroll .rt-legend dl dt {
   margin: var(--space-6) 0 0;
-  color: var(--c-text-primary);
+  color: var(--c-gray-1);
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
   white-space: normal;
@@ -144,7 +144,7 @@
 .race-detail-scroll .rt-legend dl dd {
   margin: 0;
   padding: 0;
-  color: var(--c-text-secondary);
+  color: var(--c-gray-2);
   font-size: var(--fs-14);
   line-height: 1.6;
   text-align: left;
