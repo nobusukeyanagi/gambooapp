@@ -6,7 +6,7 @@
   const waku = [1,2,3,4,4,5,5,6,6];
   const legCss = {"追":"leg-chase","逃":"leg-escape","両":"leg-both"};
   // Reuse the exact four featured-rider icons from the SCR-200 race buttons.
-  // One rider may have several labels, which render as a vertical stack.
+  // Multiple labels render side by side at full 48px; the CSS expands the column.
   const featuredIconFiles = Object.freeze({
     "ダントツ君":"ic_pickup01.png",
     "超ダントツ君":"ic_pickup01.png",
