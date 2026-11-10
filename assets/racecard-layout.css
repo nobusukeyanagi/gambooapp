@@ -200,7 +200,7 @@
         color: var(--c-gray-1);
       }
       .leg-both {
-        background: var(--c-yellowgreen-light);
+        background: var(--c-lime-light);
         color: var(--c-gray-1);
       }
 
@@ -371,7 +371,7 @@
         height: 32px;
         font-size: var(--fs-12);
         font-weight: var(--fw-strong);
-        border-bottom: var(--line-emphasis-width) solid transparent;
+        border-bottom: var(--line-thick) solid transparent;
         white-space: nowrap;
         flex-shrink: 0;
         flex: 0 0 auto;
@@ -447,7 +447,7 @@
         text-align: center;
         line-height: 1.2;
         cursor: pointer;
-        border-bottom: var(--line-emphasis-width) solid transparent;
+        border-bottom: var(--line-thick) solid transparent;
         margin-bottom: -2px;
       }
       .info-tab.active {
