@@ -4,9 +4,15 @@ on:
     branches: [main]
     paths:
       - 'SCR-310_racecardautorace.html'
-      - 'assets/auto-racecard-v2.css'
+      - 'assets/SCR-310_racecardautorace.css'
+      - 'assets/racecard.css'
+      - 'assets/ui.css'
+      - 'assets/design.css'
+      - 'assets/auto-analyzer-detail-source.js'
       - 'assets/auto-racecard-v2.js'
       - 'scripts/check-auto310.mjs'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/auto310-design-check.yml'
   workflow_dispatch:
 permissions:
