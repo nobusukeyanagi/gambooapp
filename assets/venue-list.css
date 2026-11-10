@@ -231,11 +231,7 @@ button, input, select, textarea {
 /* Venue cards */
 
 .venue-card {
-  background: var(--c-surface);
   margin: var(--space-card) var(--space-section);
-  border: var(--line-normal);
-  border-radius: var(--r-md);
-  box-shadow: var(--e1);
   overflow: hidden;
 }
 
