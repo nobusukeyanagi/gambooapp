@@ -43,7 +43,7 @@ jobs:
       - name: Serve current and optional baseline
         shell: bash
         env:
-          BASELINE_SHA: ${{ github.event.inputs.baseline_commit }}
+          BASELINE_SHA: ${{ github.event.inputs.baseline_commit || '99225da7fa77eb26d5779107702bda1444dd2bca' }}
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 --directory . > /tmp/gamboo-current.log 2>&1 &
           if [ -n "$BASELINE_SHA" ]; then
