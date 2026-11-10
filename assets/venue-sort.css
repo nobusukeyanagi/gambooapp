@@ -5,7 +5,7 @@
   align-items: stretch;
   flex: 1 1 auto;
   min-width: 0;
-  gap: var(--space-small);
+  gap: var(--space-4);
 }
 .venue-sort-options .chip {
   display: inline-flex;
