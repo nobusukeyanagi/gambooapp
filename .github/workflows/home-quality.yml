@@ -8,6 +8,7 @@ on:
       - 'assets/**'
       - 'scripts/check-home.mjs'
       - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/home-quality.yml'
   workflow_dispatch:
     inputs:
