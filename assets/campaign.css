@@ -100,10 +100,7 @@
   align-items: stretch;
   margin: var(--space-section);
   padding: var(--space-card);
-  border: var(--line-normal);
-  border-radius: var(--r-md);
-  background: var(--c-surface);
-  box-shadow: var(--e1);
+
 }
 .cp-card[hidden] { display: none; }
 .cp-banner-link {
