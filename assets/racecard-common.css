@@ -118,8 +118,8 @@
   line-height: 1;
 }
 .race-detail-scroll .race-table-wrap.scrolled .mania-table :is(th,td):is(.c-sha,.col-sha) {
+  /* The shared grid rule already supplies the same 1px right border. */
   box-shadow: none;
-  border-right: var(--line-normal) !important;
 }
 
 /* The glossary is the same compact 14px single-column reading experience. */
