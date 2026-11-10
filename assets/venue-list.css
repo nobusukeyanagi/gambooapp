@@ -381,8 +381,8 @@ button, input, select, textarea {
   top: 0;
   bottom: 0;
   z-index: 2;
-  width: var(--tap-min);
-  min-height: var(--tap-min);
+  width: 44px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
