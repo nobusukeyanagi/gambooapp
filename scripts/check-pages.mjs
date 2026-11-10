@@ -1496,8 +1496,8 @@ async function checkPredictionSort(page, width, isAutorace) {
 }
 
 async function checkSharedReferences(){
- const expected=['design-tokens.css','tap-feedback.css'];
- const tokens=await readFile(path.join(ROOT,'assets','design-tokens.css'),'utf8');
+ const expected=['design.css','ui.css'];
+ const tokens=await readFile(path.join(ROOT,'assets','design.css'),'utf8');
  const icons=await readFile(path.join(ROOT,'assets','bottom-nav-icons.svg'),'utf8');
  const gift=icons.split('<symbol id="nav-campaign"')[1]?.split('</symbol>')[0];
  if(!gift || !gift.includes('<rect x="5.5" y="17" width="15.5" height="7" rx="1.7"/>') ||
@@ -1530,7 +1530,7 @@ async function checkSharedReferences(){
      !html.includes('bottom-nav-icons.svg?v=16')))
     fail(page+': stale shared campaign gift icon cache reference');
   if(page!=='index.html' &&
-    (!/ui-consistency\.css\?v=\d+/.test(html) ||
+    (!/ui\.css\?v=\d+/.test(html) ||
      !html.includes('header-icons.svg?v=1#header-bell') ||
      !html.includes('header-icons.svg?v=1#header-card') ||
      !html.includes('shared-app-header')))
@@ -1545,9 +1545,9 @@ async function checkSharedReferences(){
   const css=[...html.matchAll(/<link\b[^>]*href=["']\.\/assets\/([^"']+\.css\?v=\d+)["']/g)].map(m=>m[1]);
   for(const name of expected)if(!css.some(href=>href.split('?')[0]===name))fail(page+': shared CSS direct reference missing '+name);
   if(css.length!==new Set(css).size)fail(page+': duplicated stylesheet reference');
-  const commonRefs=css.filter(name=>/^ui-consistency\.css\?v=\d+$/.test(name));
+  const commonRefs=css.filter(name=>/^ui\.css\?v=\d+$/.test(name));
   if(commonRefs.length!==1)fail(page+': shared UI stylesheet must be directly referenced exactly once');
-  const commonLast=css.findIndex(name=>/^ui-consistency\.css\?v=\d+$/.test(name));
+  const commonLast=css.findIndex(name=>/^ui\.css\?v=\d+$/.test(name));
   // Both detail pages share the final race-picker stylesheet, after their local styles.
   const detailPage=['SCR-210_racecardkeirin.html','SCR-310_racecardautorace.html'].includes(page);
   const sharedSelectors=css.filter(name=>/^race-selector-shared\.css\?v=\d+$/.test(name));
