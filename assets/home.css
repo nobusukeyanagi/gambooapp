@@ -184,7 +184,7 @@ button,
 
       .pickup-card {
         margin: 0 var(--space-8) var(--space-6);
-        padding: var(--space-8) var(--space-10);
+        padding: var(--space-8) var(--space-8);
         background: var(--c-surface);
         border: var(--line-normal);
         border-radius: var(--r-md);
@@ -656,7 +656,7 @@ button,
         border-radius: var(--r-sm);
       }
       .pk3 {
-        padding: var(--space-10) var(--space-12) var(--space-10) var(--space-10);
+        padding: var(--space-8) var(--space-12) var(--space-8) var(--space-8);
         align-items: center;
         gap: var(--space-8);
       }
