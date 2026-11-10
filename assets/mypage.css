@@ -153,8 +153,8 @@
   justify-content: center;
   gap: var(--space-1);
   min-width: 0;
-  height: var(--tap-min);
-  min-height: var(--tap-min);
+  height: 44px;
+  min-height: 44px;
   padding: var(--space-2);
   color: var(--c-gray-1);
   text-align: center;
@@ -218,7 +218,7 @@
 .mypage-result-actions .mypage-result-action {
   display: inline-flex;
   min-width: 0;
-  min-height: var(--tap-min);
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   gap: var(--space-6);
