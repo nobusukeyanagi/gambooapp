@@ -145,7 +145,7 @@
         align-self: stretch;
         align-content: center;
         min-height: var(--h-balance);
-        padding: var(--space-8) var(--space-10);
+        padding: var(--space-8) var(--space-8);
         border-radius: 0;
       }
       .payout-bar.pt-h .balance-sep {
