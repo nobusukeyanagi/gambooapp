@@ -112,10 +112,10 @@ const referencedAssets = new Map();
 for (const screen of allScreens) {
   const html = await readFile(path.join(root, screen), 'utf8');
   // Sprite definitions must use the shared app-shell rule instead of inline styling.
-  if (/<svg\\b[^>]*\\bstyle=[\"'][^\"']*\\bdisplay\\s*:\\s*none/i.test(html)) {
+  if (/<svg\b[^>]*\bstyle=[\"'][^\"']*\bdisplay\s*:\s*none/i.test(html)) {
     issues.push(`${screen}: SVG sprite hiding must use the shared icon-sprite class`);
   }
-  if (/<symbol\\b/i.test(html) && !/<svg\\b[^>]*\\bclass=[\"'][^\"']*\\bicon-sprite\\b/i.test(html)) {
+  if (/<symbol\b/i.test(html) && !/<svg\b[^>]*\bclass=[\"'][^\"']*\bicon-sprite\b/i.test(html)) {
     issues.push(`${screen}: inline SVG symbol definitions must use icon-sprite`);
   }
   const cssLinks = [...html.matchAll(/<link\b[^>]*\bhref=["']\.\/assets\/([^"'?]+\.css)(?:\?v=(\d+))?["'][^>]*>/g)]
