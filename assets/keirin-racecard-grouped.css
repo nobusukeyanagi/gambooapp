@@ -21,9 +21,6 @@
   padding: var(--space-3) var(--space-card);
   border-bottom: var(--line-normal);
 }
-.race-detail-scroll .mania-table thead tr:first-child th[rowspan="2"] {
-  height: 48px;
-}
 .race-detail-scroll .mania-table thead tr:nth-child(2) th {
   box-sizing: border-box;
   position: sticky;
@@ -84,11 +81,6 @@
 /* Selected menu section: restore the dark-gold/white header highlight.
    Match the specificity of both normal first-row and second-row header
    backgrounds so their :first-child/:nth-child rules cannot override it. */
-.race-detail-scroll .mania-table thead tr:first-child th.section-selected,
-.race-detail-scroll .mania-table thead tr:nth-child(2) th.section-selected {
-  background: var(--c-gold);
-  color: var(--c-surface);
-}
 /* The restored mania evaluation section starts with its first item button. */
 
 /* First grid line must appear to the left of the frame ("枠") column. */
@@ -341,16 +333,8 @@
 }
 /* In the racecard legend, explanations start at the same left edge as
    their terms, rather than occupying the right column of a grid. */
-.race-detail-scroll .rt-legend dl {
-  display: block;
-  margin: 0;
-  padding: 0;
-}
 .race-detail-scroll .rt-legend dt {
   margin: var(--space-card) 0 0;
-}
-.race-detail-scroll .rt-legend dt:first-child {
-  margin-top: 0;
 }
 .race-detail-scroll .rt-legend dd {
   margin: 0;
@@ -519,10 +503,6 @@
   border-left: 0 !important;
   border-right: var(--line-normal) !important;
 }
-.race-detail-scroll .mania-table thead tr:first-child > th:first-child,
-.race-detail-scroll .mania-table tbody tr > td:first-child {
-  border-left: var(--line-normal) !important;
-}
 /* Sortable header cells keep their normal background in every mode.
    A second text line appears only when the corresponding sort is active. */
 .race-detail-scroll .mania-table thead tr:first-child th:is(.c-sha, .recent-section-start) {
@@ -571,9 +551,6 @@
 /* The final rider row already has a 1px bottom border. Do not draw
    another 1px top border on the immediately following legend: the two
    adjacent lines looked like a thick 2px footer. */
-.race-detail-scroll .rt-area .rt-legend {
-  border-top: 0;
-}
 /* Only lineup mode inserts a 3px horizontal separator between lines.
    Apply it to every physical cell, including the sticky car-number cell. */
 .race-detail-scroll .mania-table tbody tr.line-group-start > td {
