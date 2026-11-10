@@ -51,7 +51,7 @@ for (const filename of allCSS) {
     }
     if (filename !== 'design-tokens.css') {
       ast.walkDecls(decl => {
-        if (/(?:#[0-9a-f]{3,8}\\b|(?:rgb|rgba|hsl|hsla)\\s*\\()/i.test(decl.value)) {
+        if (/(?:#[0-9a-f]{3,8}\b|(?:rgb|rgba|hsl|hsla)\s*\()/i.test(decl.value)) {
           issues.push(`${filename}:${decl.source.start.line} defines a literal color on ${decl.prop}; use a canonical design token`);
         }
       });
@@ -97,9 +97,9 @@ for (const name of shared) {
 const referencedAssets = new Map();
 for (const screen of allScreens) {
   const html = await readFile(path.join(root, screen), 'utf8');
-  const cssLinks = [...html.matchAll(/<link\\b[^>]*\\bhref=["']\\.\\/assets\\/([^"'?]+\\.css)(?:\\?v=(\\d+))?["'][^>]*>/g)]
+  const cssLinks = [...html.matchAll(/<link\b[^>]*\bhref=["']\.\/assets\/([^"'?]+\.css)(?:\?v=(\d+))?["'][^>]*>/g)]
     .map(match => ({ file: match[1], version: match[2] || '', type: 'css' }));
-  const scripts = [...html.matchAll(/<script\\b[^>]*\\bsrc=["']\\.\\/assets\\/([^"'?]+\\.js)(?:\\?v=(\\d+))?["'][^>]*>/g)]
+  const scripts = [...html.matchAll(/<script\b[^>]*\bsrc=["']\.\/assets\/([^"'?]+\.js)(?:\?v=(\d+))?["'][^>]*>/g)]
     .map(match => ({ file: match[1], version: match[2] || '', type: 'js' }));
   const expectedLast = screenNames.includes(screen) ? 'racecard-common.css' : 'ui-consistency.css';
   if (cssLinks[0]?.file !== 'design-tokens.css' || cssLinks.at(-1)?.file !== expectedLast) {
