@@ -95,7 +95,7 @@
   border: 0;
 }
 .sport-auto .auto-race-table :is(th,td) {
-  padding:var(--space-2) var(--space-card); white-space:nowrap;
+  padding:var(--space-2) var(--space-6); white-space:nowrap;
 }
 /* Shared 1px grid (left/right/bottom and outer edges) comes directly from
    racecard-common.css. Keep the top clear: the preceding section provides it. */
@@ -465,7 +465,7 @@
    30px rank badge left without overlap; data starts nearer the badge. */
 .sport-auto .auto-race-table :is(th.auto-last5-heading,td.auto-last5-cell) {
   box-sizing:border-box; width:200px; min-width:200px; max-width:200px;
-  padding-inline:var(--space-card);
+  padding-inline:var(--space-6);
 }
 .sport-auto .auto-race-table th.auto-last5-heading {
   font-size:var(--fs-12); font-weight:var(--fw-strong); white-space:nowrap;
