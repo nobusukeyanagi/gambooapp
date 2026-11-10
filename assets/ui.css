@@ -1,8 +1,11 @@
 @charset "UTF-8";
 /* Shared application shell, navigation, interaction and UI. */
 
-/* ===== app-base.css ===== */
-/* Canonical app shell. All screens directly reference this file. */
+/* Prevent horizontal overscroll at both screen edges. */
+* { overscroll-behavior-x: none !important; }
+
+/* ===== App shell and base layout ===== */
+/* Canonical app shell, shared by all application screens. */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 .icon-sprite { display: none; }
 body { background: var(--c-bg); font-family: var(--ff-ui); color: var(--c-gray-1); font-size: var(--fs-14); line-height: 1.5; }
@@ -12,12 +15,9 @@ body { background: var(--c-bg); font-family: var(--ff-ui); color: var(--c-gray-1
 .phone { width: 100%; height: 100vh; height: 100dvh; background: none; border-radius: 0; padding: 0; box-shadow: none; position: relative; overflow: hidden; }
 .phone-inner { width: 100%; height: 100%; background: var(--c-bg); border-radius: 0; overflow: hidden; display: flex; flex-direction: column; position: relative; }
 
-/* ===== bottom-nav-icons.css ===== */
+/* ===== Navigation and race icon styling ===== */
 /* One canonical racing-icon size for bottom navigation and page headings.
    Symbols use currentColor; inactive nav icons stay gray and selected ones gold. */
-:root {
-  --nav-icon-size: 32px;
-}
 .bottom-tab .tab-item .tab-icon {
   height: var(--nav-icon-size);
 }
@@ -62,7 +62,7 @@ body { background: var(--c-bg); font-family: var(--ff-ui); color: var(--c-gray-1
   width: calc(var(--nav-icon-size) * 1.08333333);
 }
 
-/* ===== payout-bar.css ===== */
+/* ===== Payout and account balance controls ===== */
 /* One direct source for SCR-100 and SCR-500 payout balance bar.
    All original home styles moved here without changing their declarations. */
 .payout-value small {
@@ -230,7 +230,7 @@ body { background: var(--c-bg); font-family: var(--ff-ui); color: var(--c-gray-1
   .pt-h .balance-sep { margin-inline: var(--space-4); }
 }
 
-/* ===== tap-feedback.css ===== */
+/* ===== Interaction feedback ===== */
 /* Shared immediate tap feedback: light-gold background with gold labels.
    Do not depend on native WebKit tap effects (which can flash dark). */
 html {
@@ -278,13 +278,13 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ===== ui-consistency.css ===== */
+/* ===== Shared UI components and visual consistency ===== */
 /* Two typography weights across every screen; semantic emphasis must not
    silently fall back to browser-default 700/900. */
 body { font-weight: var(--fw-normal); }
 :where(b, strong, h1, h2, h3, h4, h5, h6) { font-weight: var(--fw-strong); }
 /* Cross-screen semantic hierarchy, based on SCR-100_bet.html.
-   Load after per-page styles; unrelated components retain their own rules. */
+   Shared rules; page-specific exceptions remain in screen styles. */
 :is(.section-header, .vgroup-head) {
   display: flex;
   align-items: center;
