@@ -117,7 +117,7 @@
   flex: 0 0 auto;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-2) var(--space-content) var(--space-card);
+  padding: var(--space-2) var(--space-12) var(--space-card);
 }
 .sheet-title {
   font-size: var(--fs-16);
@@ -164,7 +164,7 @@
 }
 .sheet .detail-table :is(th,td) {
   box-sizing: border-box;
-  padding: var(--space-small) var(--space-2);
+  padding: var(--space-4) var(--space-2);
   border-right: var(--line-normal);
   border-bottom: var(--line-normal);
   text-align: center;
