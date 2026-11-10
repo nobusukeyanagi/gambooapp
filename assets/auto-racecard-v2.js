@@ -488,7 +488,7 @@ const analysisGroups={
              analysisValue(0,"ハンデ"),analysisValue(1,"順位"),
              ...analysisRates(3)]],
            ["ハンデ順位別成績",[
-             analysisValue(7,"H順位"),...analysisRates(8)]]],
+             analysisValue(7,"ハンデ\n順位",70),...analysisRates(8)]]],
  place:[["レース場別成績：川口",analysisRates(0)]],
  motorcycle:[["競走車別成績",[
               analysisValue(0,"競走車",120),...analysisRates(1)]]],
