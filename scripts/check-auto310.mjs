@@ -1290,8 +1290,8 @@ for(const width of [296,375,768]){
  }catch(e){problems.push(width+'px exception '+e.message);console.error(e);}
  finally{await page.close();}
 }
-/* The width policy is managed in racecard-common.css and must match
-   in SCR-210 too (including direct text and two-line span labels). */
+/* The shared width policy in racecard.css must match SCR-210,
+   including direct text and two-line span labels. */
 for (const width of [296,375,768]) {
  const page=await browser.newPage({viewport:{width,height:900},deviceScaleFactor:1});
  try {
