@@ -1,0 +1,2036 @@
+@charset "UTF-8";
+/* racecard shared styling, preserving original declaration sequence. */
+
+/* ===== racecard-layout.css ===== */
+/* Shared by SCR-210 and SCR-310. Screen-specific dimensions remain in
+   keirin-racecard-grouped.css and auto-racecard-v2.css.
+   Repeated component selectors have been consolidated where cascade-safe. */
+
+      button,
+      input,
+      select,
+      textarea {
+        font-family: var(--ff-ui);
+      }
+
+      .screen-label {
+        color: var(--c-gray-4);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-strong);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: var(--space-6);
+        align-items: center;
+      }
+      .icon-btn {
+
+        border-radius: var(--r-full);
+        background: var(--c-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--fs-14);
+        cursor: pointer;
+        position: relative;
+      }
+      .badge {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 8px;
+        height: 8px;
+        background: var(--c-red);
+        border: var(--line-thin) solid var(--c-gray-5);
+      }
+      .cta-btn {
+        color: var(--c-gray-5);
+        font-weight: var(--fw-strong);
+        border-radius: var(--r-full);
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-4);
+        background: var(--c-keirin);
+        padding: 0 var(--space-12); font-size: var(--fs-14);
+      }
+
+
+      .tab-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--c-gray-2);
+        cursor: pointer;
+        letter-spacing: normal;
+        white-space: nowrap;
+        min-width: 0;
+        font-size: var(--fs-12); gap: var(--space-3);
+      }
+      .tab-item.active {
+        color: var(--c-gold);
+      }
+      .tab-item .tab-icon {
+        font-size: var(--fs-18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 26px;
+      }
+
+      .venue-card {
+        background: var(--c-gray-5);
+        margin: var(--space-4) var(--space-8);
+        border-radius: var(--r-12);
+        box-shadow: var(--e1);
+        overflow: hidden;
+      }
+
+      .grade-badge {
+        color: var(--c-gray-1);
+        font-weight: var(--fw-strong);
+        padding: var(--space-1) var(--space-6);
+        border-radius: var(--r-6);
+        flex-shrink: 0;
+        font-size: var(--fs-14);
+      }
+
+      .page-header {
+        background: var(--c-gray-5);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 var(--space-12);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
+        flex-shrink: 0;
+      }
+      .back-btn {
+        font-size: var(--fs-12);
+        color: var(--c-keirin);
+        font-weight: var(--fw-strong);
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+      .page-header-title {
+        font-size: var(--fs-14);
+        font-weight: var(--fw-strong);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-4);
+        min-width: 0;
+      }
+      .race-info-meta {
+        margin-top: var(--space-1);
+        font-size: var(--fs-12);
+        color: var(--c-gray-2);
+        font-family: var(--ff-ui);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
+      .race-tabs {
+        overflow-x: auto;
+        scrollbar-width: none;
+        flex-shrink: 0;
+        display: flex;
+        background: var(--c-gray-5);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
+        gap: var(--space-6); padding: var(--space-8);
+      }
+      .race-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+
+      .lineup-bar {
+        background: var(--c-bg);
+        font-size: var(--fs-12);
+        color: var(--c-gray-2);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: var(--space-6);
+        padding: var(--space-6) var(--space-8);
+      }
+      .lineup-row {
+        display: flex;
+        gap: var(--space-2);
+        align-items: center;
+        margin-top: var(--space-2);
+      }
+      .lineup-sep {
+        font-size: var(--fs-12);
+        color: var(--c-gray-2);
+      }
+
+      .race-table-wrap {
+        overflow-x: auto;
+        flex: 1;
+        scrollbar-width: thin;
+        scrollbar-color: var(--c-gray-4) transparent;
+        min-height: 0;
+        overflow-y: hidden;
+      }
+
+      .score {
+        font-family: var(--ff-ui);
+        font-weight: var(--fw-strong);
+        color: var(--c-gray-1);
+      }
+      .leg-tag {
+        font-size: var(--fs-12);
+        font-weight: var(--fw-strong);
+        padding: var(--space-1) var(--space-4);
+        border-radius: var(--r-3);
+      }
+      .leg-escape {
+        background: var(--c-red-light);
+        color: var(--c-gray-1);
+      }
+      .leg-chase {
+        background: var(--c-teal-light);
+        color: var(--c-gray-1);
+      }
+      .leg-both {
+        background: var(--c-lime-light);
+        color: var(--c-gray-1);
+      }
+
+      .mania-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: max-content;
+        font-size: var(--fs-12);
+        height: 100%;
+      }
+      .mania-table th {
+        background: var(--c-bg);
+        text-align: center;
+        font-size: var(--fs-12);
+        font-weight: var(--fw-strong);
+        color: var(--c-gray-2);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
+        white-space: nowrap;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        height: 1px;
+        padding: var(--space-3) var(--space-4);
+        line-height: 1.25;
+      }
+      .mania-table td {
+        background: var(--c-gray-5);
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
+        height: 32px;
+        padding: var(--space-1) var(--space-4);
+        line-height: 1.2;
+      }
+
+      .mania-table .fx {
+        position: sticky;
+        z-index: 1;
+      }
+      .mania-table th.fx {
+        z-index: 3;
+      }
+      .mania-table .rider-meta {
+        font-size: var(--fs-12);
+        line-height: 1.2;
+      }
+
+      .g-val {
+        display: inline-block;
+        min-width: 16px;
+        text-align: left;
+        font-family: var(--ff-ui);
+      }
+
+      .res-cell {
+        min-width: 112px;
+      }
+      .res-wrap {
+        display: flex;
+        align-items: center;
+        gap: var(--space-8);
+      }
+      .res {
+        display: inline-flex;
+        align-items: flex-start;
+        gap: var(--space-1);
+      }
+      .res-rank {
+        font-size: var(--fs-12);
+      }
+      .res-time {
+        font-size: var(--fs-12);
+        color: var(--c-gray-2);
+      }
+      .res-note {
+        font-size: var(--fs-12);
+        line-height: 1.1;
+        color: var(--c-gray-2);
+      }
+      .lineup-bar .lineup-row {
+        margin-top: 0;
+        gap: var(--space-3);
+      }
+      .mania-table .frame-cell {
+        height: 22px;
+        font-size: var(--fs-12);
+      }
+      .mania-table .rider-name {
+        line-height: 1.2;
+      }
+
+      .num,
+      .payout-value,
+      .point-value,
+      .score,
+      .g-val,
+      .res-time,
+      .race-time,
+      .c-status,
+      .money {
+        font-family: var(--ff-ui);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: "tnum" 1;
+        letter-spacing: 0;
+      }
+
+      .ic {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        fill: currentColor;
+        display: block;
+        outline: none;
+        outline-offset: 1px;
+        border-radius: var(--r-3);
+      }
+
+      .hscroll {
+        position: relative;
+      }
+      .hscroll > .hscroll-inner {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+
+        -webkit-mask-image: linear-gradient(to right, var(--c-gray-1) calc(100% - 28px), color-mix(in srgb, var(--c-gray-1) 15%, transparent) 100%);
+        mask-image: linear-gradient(to right, var(--c-gray-1) calc(100% - 28px), color-mix(in srgb, var(--c-gray-1) 15%, transparent) 100%);
+        padding-right: 26px;
+      }
+      .hscroll > .hscroll-inner::-webkit-scrollbar { display: none; }
+      .hscroll > .hscroll-inner > * { scroll-snap-align: start; }
+      .hscroll > .hscroll-cue {
+        position: absolute;
+        top: 50%;
+        right: 3px;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--c-gray-2);
+        background: var(--c-gray-5);
+        border: var(--line-thin) solid var(--c-gray-4);
+        border-radius: var(--r-full);
+        box-shadow: var(--e1);
+        pointer-events: none;
+        z-index: 2;
+      }
+      .hscroll > .hscroll-cue .ic { width: 13px; height: 13px; }
+
+      .tap {
+        position: relative;
+        min-height: 36px;
+      }
+      .tap::before {
+        content: "";
+        position: absolute;
+        inset: -6px;
+      }
+
+      .ell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+      .icon-btn::before { content: ""; position: absolute; inset: -4px; }
+      .race-tab {
+        height: 32px;
+        font-size: var(--fs-12);
+        font-weight: var(--fw-strong);
+        border-bottom: var(--line-thick) solid transparent;
+        white-space: nowrap;
+        flex-shrink: 0;
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: var(--line-thin) solid var(--c-gray-4);
+        background: var(--c-gray-5);
+        color: var(--c-gray-1);
+        cursor: pointer;
+        text-decoration: none;
+        min-width: 62px;
+        min-height: 54px;
+        padding: var(--space-3) var(--space-4);
+        gap: 0;
+        line-height: 1.15;
+      }
+      .race-tab small {
+        font-family: var(--ff-ui);
+        font-variant-numeric: tabular-nums;
+        font-size: var(--fs-12); font-weight: var(--fw-normal); color: var(--c-gray-2);
+      }
+      .race-tab.active {
+        border-bottom-color: var(--c-gold);
+        background: var(--c-gold-light);
+        border-color: var(--c-gold);
+        color: var(--c-gray-1);
+        box-shadow: var(--e1);
+        min-width: 90px;
+      }
+
+      .race-tab.past {
+        background: var(--c-gray-5);
+        color: var(--c-gray-2);
+        text-decoration: none;
+      }
+      .race-tab.canceled b { color: var(--c-red); }
+      .race-tab.canceled small { color: var(--c-red); font-weight: var(--fw-strong); }
+
+      .race-info-bar {
+        background: var(--c-gray-5);
+        padding: var(--space-8) var(--space-8) var(--space-8);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
+        flex-shrink: 0;
+      }
+      .race-info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--space-8);
+        margin-top: var(--space-3);
+      }
+      .race-countdown .ic { width: 13px; height: 13px; }
+
+      .info-tabs {
+        display: flex;
+        gap: 0;
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
+        background: var(--c-gray-5);
+        flex-shrink: 0;
+      }
+      .info-tab {
+        flex: 0 0 auto;
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--fs-12);
+        font-weight: var(--fw-strong);
+        color: var(--c-gray-2);
+        white-space: nowrap;
+        text-align: center;
+        line-height: 1.2;
+        cursor: pointer;
+        border-bottom: var(--line-thick) solid transparent;
+        margin-bottom: -2px;
+      }
+      .info-tab.active {
+        color: var(--c-gold);
+        border-bottom-color: var(--c-gold);
+      }
+
+      .mania-table .c-waku {
+        left: 0;
+        width: 16px;
+        min-width: 16px;
+        padding: var(--space-2) var(--space-1);
+        font-size: var(--fs-12);
+        color: var(--c-gray-2);
+      }
+      .mania-table .c-name {
+        left: 42px;
+        padding: var(--space-2) var(--space-4);
+        text-align: left;
+        border-right: var(--line-thin) solid var(--c-gray-4);
+        min-width: 88px; width: 88px;
+      }
+      .rider-name {
+        font-weight: var(--fw-strong);
+        text-align: left;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: var(--fs-14);
+      }
+      .rider-meta {
+        color: var(--c-gray-2);
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: var(--fs-12);
+      }
+
+      .mania-table td,
+      .race-table td {
+        height: 46px;
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--fs-16);
+      }
+      .mania-table tbody tr:nth-child(even) td { background: var(--c-bg); }
+      .mania-table tbody tr:nth-child(even) td.fx { background: var(--c-bg); }
+
+      .mania-table td,
+      .race-table td,
+      .mania-table th,
+      .race-table th {
+        font-family: var(--ff-ui);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: "tnum" 1;
+      }
+      .mania-table .c-name,
+      .race-table .c-name,
+      .mania-table th,
+      .race-table th,
+      .rider-name,
+      .rider-meta,
+      .leg-tag,
+      .cls-sub,
+      .item-btn {
+        font-family: var(--ff-ui);
+      }
+      .score,
+      .g-val,
+      .res-time,
+      .num-hi,
+      .num-blue {
+        font-family: var(--ff-ui);
+        font-variant-numeric: tabular-nums;
+        font-weight: var(--fw-strong);
+      }
+
+      .frame-cell {
+        width: 24px;
+        height: 24px;
+        border-radius: var(--r-6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: var(--fw-strong);
+        font-size: var(--fs-14);
+        margin: 0 auto;
+      }
+      .f1 { background: var(--c-w1); color: var(--c-gray-1); border: var(--line-thin) solid var(--c-gray-3); }
+      .f2 { background: var(--c-w2); color: var(--c-gray-5); border: var(--line-thin) solid var(--c-w2); }
+      .f3 { background: var(--c-w3); color: var(--c-gray-5); border: var(--line-thin) solid var(--c-w3); }
+      .f4 { background: var(--c-w4); color: var(--c-gray-5); border: var(--line-thin) solid var(--c-w4); }
+      .f5 { background: var(--c-w5); color: var(--c-gray-1); border: var(--line-thin) solid var(--c-w5); }
+      .f6 { background: var(--c-w6); color: var(--c-gray-5); border: var(--line-thin) solid var(--c-w6); }
+      .f7 { background: var(--c-w7); color: var(--c-gray-5); border: var(--line-thin) solid var(--c-w7); }
+      .f8 { background: var(--c-w8); color: color-mix(in srgb, var(--c-gray-1) 70%, black); border: var(--line-thin) solid var(--c-w8); }
+      .f9 { background: var(--c-w9); color: var(--c-gray-5); border: var(--line-thin) solid var(--c-w9); }
+      .lineup-car {
+        width: 22px;
+        height: 22px;
+        border-radius: var(--r-6);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-strong);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mark {
+        font-size: var(--fs-14); line-height: 1;  min-width: 16px; display: inline-block;
+        color: var(--c-gray-1);
+      }
+      .mark.tri { color: var(--c-gold); }
+      .mark.x { color: var(--c-gray-2); }
+
+      .mk, .mark { font-size: var(--fs-14); line-height: 1; display: inline-block; min-width: 16px; }
+      .mk-dbl, .mark.dbl { color: var(--c-red); }
+      .mk-o, .mark.o { color: var(--c-gold); }
+      .mk-tri, .mark.tri { color: var(--c-keirin); }
+      .mk-x, .mark.x { color: var(--c-gray-2); }
+      .page-header-title .ic { width: 18px; height: 18px; }
+
+      .cta-btn .ic,
+      .action-btn.primary .ic,
+      .cp-btn.primary .ic,
+      .fab .ic,
+      .live-card-badge .ic,
+      .rchip.next .ic,
+      .race-tab.active .ic {
+        outline-color: color-mix(in srgb, var(--c-gray-5) 75%, transparent);
+      }
+
+      .page-header .back-btn {
+        display: flex;
+        align-items: center;
+        width: 44px;
+        height: 44px;
+        margin-left: -10px;
+        justify-content: center;
+        color: var(--c-gray-1);
+        flex-shrink: 0;
+        cursor: pointer;
+      }
+
+      .page-header .page-header-title { flex: 1; font-size: var(--fs-16); display: flex; align-items: center; justify-content: center; }
+      .grade-gp, .grade-g1 { background: var(--c-magenta); color: var(--c-gray-5); }
+      .grade-g2 { background: var(--c-blue); color: var(--c-gray-5); }
+      .grade-g3 { background: var(--c-green); color: var(--c-gray-5); }
+      .grade-f1 { background: var(--c-gold); color: var(--c-gray-5); }
+      .grade-f2 { background: var(--c-bronze); color: var(--c-gray-5); }
+
+      .ri-event {
+        display: flex;
+        align-items: center;
+        gap: var(--space-6);
+        min-width: 0;
+        font-weight: var(--fw-strong);
+        color: var(--c-gray-2);
+        font-size: var(--fs-14);
+      }
+      .ri-race {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        column-gap: var(--space-8);
+        margin-top: var(--space-3);
+        font-weight: var(--fw-strong);
+        line-height: 1.3;
+        font-size: var(--fs-20);
+      }
+      .ri-race span {
+        font-weight: var(--fw-strong);
+        font-size: var(--fs-16);
+      }
+      .race-info-bar .race-info-row { margin-top: var(--space-4); }
+      .race-info-bar .race-info-meta {
+        color: var(--c-gray-1);
+        font-size: var(--fs-14);
+      }
+      .hscroll .race-tabs { overflow: visible; width: max-content; min-width: 100%; }
+      .screen-wrap:not(:only-child) .screen-label {
+        display: block;
+        background: var(--c-gray-1);
+        color: var(--c-bg);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-strong);
+        letter-spacing: 0.04em;
+        text-transform: none;
+        line-height: 30px;
+        height: 30px;
+        padding: 0 var(--space-12);
+      }
+      .screen-wrap:not(:only-child) .phone {
+
+        height: calc(100dvh - 30px);
+      }
+
+      .race-info-bar.ri-has-act {
+        display: flex;
+        align-items: center;
+        gap: var(--space-8);
+      }
+      .ri-main { flex: 1; min-width: 0; }
+      .ri-act {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-6);
+      }
+      .ri-btn {
+        position: relative;
+        width: 84px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-4);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-strong);
+        cursor: pointer;
+        box-shadow: var(--e1);
+      }
+      .ri-btn::before { content: ""; position: absolute; inset: -2px 0; }
+      .ri-btn .ic { width: 18px; height: 18px; }
+
+      .ri-btn.live { background: var(--c-red); color: var(--c-gray-5); }
+      .ri-btn.live .ic { outline-color: color-mix(in srgb, var(--c-gray-5) 75%, transparent); }
+      .mania-table td:not(.c-name),
+      .mania-table th:not(.c-name) { border-right: var(--line-thin) solid var(--c-gray-4); }
+      .mania-table .bl { border-left: var(--line-thin) solid var(--c-gray-4); }
+      .tab-item .ic { width: 26px; height: 26px; }
+
+      .icon-btn .ic { width: 24px; height: 24px; }
+      .cta-btn .ic { width: 18px; height: 18px; }
+
+      .page-header .page-header-title,
+      .page-header-title { font-size: var(--fs-18); }
+      .page-header .back-btn .ic { width: 28px; height: 28px; }
+
+      .info-tabs .info-tab { min-height: var(--h-tab); font-size: var(--fs-14); }
+      .rchip { min-width: 62px; min-height: 54px; }
+      .rchip b { font-size: var(--fs-16); }
+      .rchip small { font-size: var(--fs-12); }
+      .rchip.next { min-width: 90px; }
+      .at td { font-size: var(--fs-16); }
+
+      .mania-table thead tr + tr th { top: auto; }
+      .mania-table td.cls small { font-size: var(--fs-12); color: var(--c-gray-2); }
+      .mania-table td.rate { min-width: 30px; }
+      .mania-table .res-cell { min-width: 0; }
+
+      .mania-table .res-note {
+        color: var(--c-gold);
+        grid-column: 2; font-size: var(--fs-12); line-height: 1.1; text-align: left;
+      }
+
+      .race-tab b { font-size: var(--fs-16); font-weight: var(--fw-strong); }
+      .race-tab.past b { color: var(--c-gray-2); font-weight: var(--fw-strong); }
+      .race-tab.past small { color: var(--c-gray-2); font-weight: var(--fw-strong); }
+
+      .race-tab.active b { color: var(--c-gray-1); }
+      .race-tab.active small { color: var(--c-gold); font-weight: var(--fw-strong); }
+      .race-tab.active.soon small { color: var(--c-red); }
+      .race-tab.canceled { background: var(--c-bg); border-color: var(--c-bg); color: var(--c-gray-2); cursor: default; }
+      .race-tab.canceled b,
+      .race-tab.canceled small { color: var(--c-gray-2); font-weight: var(--fw-strong); }
+      .ri-sub { margin-top: var(--space-2); font-size: var(--fs-12); color: var(--c-gray-2); font-family: var(--ff-ui); }
+      .lineup-title { font-size: var(--fs-12); font-weight: var(--fw-strong); white-space: nowrap; }
+      .lineup-dir { font-size: var(--fs-12); color: var(--c-gray-2); }
+      .lineup-bar .lineup-car { width: 24px; height: 24px; font-size: var(--fs-14); border-radius: var(--r-6); }
+      .lineup-bar .lineup-sep { font-size: var(--fs-12); margin: 0 var(--space-1); }
+      .rt-area {
+        flex: 1;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background: var(--c-gray-5);
+        scrollbar-width: none;
+      }
+      .rt-area::-webkit-scrollbar { display: none; }
+      .rt-area .race-table-wrap { flex: none; overflow-x: auto; overflow-y: hidden; }
+      .rt-area .mania-table { height: auto; }
+      .mania-table .c-waku,
+      .mania-table .c-name { position: static; }
+      .mania-table .c-sha {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        width: 40px;
+        min-width: 40px;
+        padding: var(--space-2);
+      }
+      .mania-table th.c-sha { z-index: 4; }
+      .sha-nm {
+        display: none;
+        margin-top: var(--space-2);
+        font-family: var(--ff-ui);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-strong);
+        line-height: 1.1;
+        letter-spacing: normal;
+        white-space: nowrap;
+        color: var(--c-gray-1);
+      }
+      .race-table-wrap.scrolled .sha-nm { display: block; }
+
+      .mania-table .res-wrap {
+        gap: var(--space-8);
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 40px;
+        column-gap: var(--space-4);
+        align-items: center;
+        justify-content: start;
+      }
+      .mania-table .res { display: grid; grid-template-columns: 24px 14px; column-gap: var(--space-2); align-items: start; }
+
+      .mania-table .res-rank { font-size: var(--fs-16); font-weight: var(--fw-strong); line-height: 1.05; color: var(--c-gray-1); }
+      .mania-table .res-time { font-size: var(--fs-12); }
+
+      .rt-legend {
+        padding: var(--space-8) var(--space-12) 16px;
+        border-top: var(--line-thin) solid var(--c-gray-4);
+        background: var(--c-bg);
+        font-size: var(--fs-12);
+        line-height: 1.5;
+        color: var(--c-gray-2);
+      }
+      .rt-legend-title { font-size: var(--fs-14); font-weight: var(--fw-strong); color: var(--c-gray-1); margin-bottom: var(--space-4); }
+      .rt-legend dl { display: grid; grid-template-columns: auto 1fr; gap: var(--space-4) var(--space-8); }
+      .rt-legend dt { font-weight: var(--fw-strong); color: var(--c-gray-1); white-space: nowrap; }
+      .rt-legend dd { margin: 0; }
+
+/* ===== racecard-analyzer.css ===== */
+/* Shared analyzer buttons and slide-up details for SCR-210 and SCR-310.
+   Competition-specific figures and column geometry live in their own files. */
+.info-tabs button.info-tab {
+  appearance: none;
+  font-family: var(--ff-ui);
+  background: transparent;
+  border: 0;
+  border-bottom: var(--line-thick) solid transparent;
+}
+.info-tabs button.info-tab.active {
+  border-bottom-color: var(--c-gold);
+}
+.mania-table td.c-g {
+  white-space: nowrap;
+}
+.mania-table td.c-g .g-val {
+  margin-right: var(--space-2);
+}
+.race-detail-scroll .mania-table thead th.c-item,
+.race-detail-scroll .mania-table tbody td.mania-eval {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+  text-align: center;
+}
+.race-detail-scroll .mania-table tbody td.mania-eval {
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
+}
+.item-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 54px;
+  height: 36px;
+  max-width: 100%;
+  margin: 0 auto;
+  border: var(--line-thin) solid var(--c-gray-4);
+  background: var(--c-gray-5);
+  box-shadow: var(--e1);
+  font: var(--fw-strong) var(--fs-12)/1.25 var(--ff-ui);
+  color: var(--c-gray-1);
+  white-space: normal;
+  cursor: pointer;
+}
+.item-btn:active,
+.item-btn.active {
+  background: var(--c-gold-light);
+  border-color: var(--c-gold);
+}
+.mk {
+  font-size: var(--fs-16);
+  line-height: 1;
+  font-weight: var(--fw-strong);
+}
+
+/* Restored slide-up analyzer: no extra category tab row or condition strap. */
+.sheet-overlay[hidden],
+.sheet[hidden] {
+  display: none;
+}
+.sheet-overlay {
+  position: absolute;
+  inset: 0 0 var(--h-bottom-nav);
+  z-index: 10;
+  background: color-mix(in srgb, var(--c-gray-1) 40%, transparent);
+}
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: var(--h-bottom-nav);
+  height: max-content;
+  max-height: calc(100% - var(--h-bottom-nav));
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--r-24) var(--r-24) 0 0;
+  background: var(--c-gray-5);
+  box-shadow: 0 -4px 16px color-mix(in srgb, var(--c-gray-1) 15%, transparent);
+  touch-action: pan-x pinch-zoom;
+}
+.sheet-handle {
+  position: relative;
+  display: block;
+  flex: 0 0 16px;
+  width: 100%;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+}
+.sheet-handle::before {
+  content: "";
+  position: absolute;
+  top: var(--space-6);
+  left: 50%;
+  width: 36px;
+  height: 4px;
+  border-radius: var(--r-3);
+  background: var(--c-gray-4);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.sheet-handle:active { cursor: grabbing; }
+.sheet-handle:focus-visible { outline: var(--line-thick) solid var(--c-purple); outline-offset: -3px; }
+.sheet-head {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-12) var(--space-6);
+}
+.sheet-title {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  color: var(--c-gray-1);
+}
+.sheet-close {
+  display: inline-flex;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: var(--line-thin) solid var(--c-gray-3);
+  border-radius: var(--r-9);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
+  font-size: var(--fs-18);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+  cursor: pointer;
+}
+.sheet-close:focus-visible { outline: var(--line-thick) solid var(--c-purple); outline-offset: var(--space-2); }
+.sheet-body {
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x pinch-zoom;
+  scrollbar-width: none;
+}
+.sheet-body::-webkit-scrollbar {
+  display: none;
+}
+.sheet .detail-table {
+  width: max-content;
+  min-width: 100%;
+  height: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--fs-12);
+  font-family: var(--ff-ui);
+}
+.sheet .detail-table :is(th,td) {
+  box-sizing: border-box;
+  padding: var(--space-4) var(--space-2);
+  border-right: var(--line-thin) solid var(--c-gray-4);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+  text-align: center;
+  vertical-align: middle;
+  color: var(--c-gray-1);
+  white-space: nowrap;
+}
+.sheet .detail-table thead th {
+  position: sticky;
+  background: var(--c-bg);
+  font-weight: var(--fw-strong);
+  z-index: 3;
+}
+.sheet .detail-table thead tr:first-child th {
+  top: 0;
+  height: 28px;
+  border-top: var(--line-thin) solid var(--c-gray-4);
+}
+.sheet .detail-table thead tr:nth-child(2) th {
+  top: 28px;
+  height: 36px;
+}
+.sheet .detail-table thead th.dt-stat-heading {
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+}
+.sheet .detail-table thead th.dt-stat-heading .recent4-heading-main,
+.sheet .detail-table thead th.dt-stat-heading .recent4-heading-rate {
+  display: block;
+  font-size: var(--fs-12);
+  line-height: 1.3;
+}
+.sheet .detail-table thead th.dt-grp {
+  font-size: var(--fs-12);
+}
+/* Detail panel only: 44px rows (the main racecard remains 56px). */
+.sheet .detail-table tbody tr,
+.sheet .detail-table tbody td {
+  height: 44px;
+  padding-top: 0;
+  padding-bottom: 0;
+  background: var(--c-gray-5);
+}
+/* The bottom-navigation already has a 1px top border. Avoid a second
+   coincident line at the bottom of the nine-rider detail table. */
+.sheet .detail-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+/* Fixed first column combines the jersey number and abbreviated rider name. */
+.sheet .detail-table :is(th,td).dt-vehicle {
+  border-left: var(--line-thin) solid var(--c-gray-4);
+}
+.sheet .detail-table .dt-vehicle {
+  position: sticky;
+  left: 0;
+  box-sizing: border-box;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  padding: var(--space-1) var(--space-2);
+  z-index: 4;
+  background: var(--c-gray-5);
+}
+.sheet .detail-table thead th.dt-vehicle {
+  top: 0;
+  z-index: 6;
+  padding: 0;
+  background: var(--c-bg);
+}
+.sheet .detail-table .dt-car-sort {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 64px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1.25;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+/* Detail-tab car-number header is sortable, like the main racecard. */
+.sheet .detail-table .dt-car-sort > span:first-child {
+  text-decoration-line: underline;
+  text-underline-offset: var(--space-2);
+  text-decoration-thickness: 1px;
+}
+.sheet .detail-table .dt-car-sort .sort-mode-label { display: none; }
+.sheet .detail-table .dt-car-sort[aria-pressed="true"] .sort-mode-label {
+  display: block;
+}
+.sheet .detail-table .dt-car-sort:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: calc(-1 * var(--line-thick));
+}
+/* Match the 3px line separators of the main racecard in predicted-line order. */
+.sheet .detail-table tbody tr.line-group-start > td {
+  border-top: var(--line-thick) solid var(--c-gray-4);
+}
+.sheet .detail-table .dt-vehicle-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+.sheet .detail-table .dt-vehicle .frame-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  font-size: var(--fs-14);
+}
+.sheet .detail-table .dt-vehicle-short {
+  display: block;
+  font-size: var(--fs-12);
+  line-height: 1.2;
+  font-weight: var(--fw-strong);
+  color: var(--c-gray-1);
+}
+.sheet .detail-table td.dt-rank {
+  min-width: 56px;
+  width: 56px;
+  font-size: var(--fs-16);
+}
+.sheet .detail-table .rank-number {
+  display: inline-block;
+  font-size: var(--fs-16);
+  padding: 0 var(--space-2);
+  border-radius: var(--r-3);
+  color: var(--c-gray-1);
+}
+.sheet .detail-table .rank-tint-1,
+.sheet .detail-table .recent4-rate.recent4-rank-1 {
+  background: var(--c-gold-light);
+}
+.sheet .detail-table .rank-tint-2,
+.sheet .detail-table .recent4-rate.recent4-rank-2 {
+  background: var(--c-blue-light);
+}
+.sheet .detail-table .rank-tint-3,
+.sheet .detail-table .recent4-rate.recent4-rank-3 {
+  background: var(--c-bronze-light);
+}
+.sheet .detail-table .rank-tint-4 {
+  background: var(--c-green-light);
+}
+.sheet .detail-table :is(th.dt-stat-heading, td.dt-rate) {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}
+/* Expand only the four 同県選手不在レース成績差分 columns by 10px. */
+.sheet .detail-table :is(th.dt-difference-heading, td.dt-difference-cell) {
+  width: 70px;
+  min-width: 70px;
+  max-width: 70px;
+}
+.sheet .detail-table .recent4-count {
+  display: block;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-normal);
+  line-height: 1.2;
+  color: var(--c-gray-1);
+  font-variant-numeric: tabular-nums;
+}
+/* Advancement rates alone append the total in the 12px secondary font. */
+.sheet .detail-table .recent4-total {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+  color: var(--c-gray-2);
+}
+.sheet .detail-table .recent4-rate {
+  display: table;
+  width: max-content;
+  margin: var(--space-4) auto 0;
+  padding: 0 var(--space-2);
+  border-radius: var(--r-3);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+  line-height: 1.2;
+  color: var(--c-gray-2);
+  font-variant-numeric: tabular-nums;
+}
+.sheet .detail-table .recent4-rate:is(.recent4-rank-1,.recent4-rank-2,.recent4-rank-3) {
+  color: var(--c-gray-1);
+}
+.sheet .detail-table .dt-difference {
+  display: inline-block;
+  width: 6.5ch;
+  text-align: right;
+  color: var(--c-gray-1);
+  font-size: var(--fs-14);
+  font-variant-numeric: tabular-nums;
+}
+/* Positive 1–3着 deltas only: highlight text background, not the whole cell. */
+.sheet .detail-table .dt-difference-positive {
+  background: var(--c-gold-light);
+  border-radius: var(--r-3);
+}
+
+/* Compact the detail panel further in short viewports instead of
+   stretching its table to screen height. Keep the footer's 60px clear.
+   128px reserves the handle (16), title/close (48), and table headers (64). */
+@media (max-height: 700px) {
+  .sheet .detail-table tbody tr,
+  .sheet .detail-table tbody td {
+    height: min(44px, calc((100dvh - var(--h-bottom-nav) - 128px) / 9));
+  }
+}
+/* Below 520px, reduce non-row overhead by 10px and remove only the
+   internal vertical gaps. This keeps nine two-line riders visible at 480px. */
+@media (max-height: 520px) {
+  .sheet-handle { flex-basis: 12px; height: 12px; }
+  .sheet .detail-table thead tr:first-child th { height: 26px; }
+  .sheet .detail-table thead tr:nth-child(2) th { top: 26px; height: 32px; }
+  .sheet .detail-table .dt-car-sort { min-height: 58px; }
+  .sheet .detail-table tbody tr,
+  .sheet .detail-table tbody td {
+    height: min(44px, max(32px, calc((100dvh - var(--h-bottom-nav) - 118px) / 9)));
+  }
+  .sheet .detail-table .dt-vehicle-content { gap: 0; }
+  .sheet .detail-table .dt-vehicle .frame-cell {
+    width: 18px;
+    height: 18px;
+    font-size: var(--fs-12);
+  }
+  .sheet .detail-table .recent4-count { line-height: 1.1; }
+  .sheet .detail-table .recent4-rate { margin-top: 0; }
+}
+
+/* ===== racecard-controls.css ===== */
+/* SCR-210: one scrollable race-detail page below the shared fixed header.
+   Button semantics/color/radii use the same tokens as SCR-200. */
+.phone-inner > .race-detail-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+  background: var(--c-gray-5);
+}
+.phone-inner > .race-detail-scroll::-webkit-scrollbar { display: none; }
+.race-detail-scroll > .rt-area {
+  flex: none;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+/* Non-race information menu arrows retain SCR-210 layout. */
+.race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l) {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  z-index: 3;
+  width: 44px;
+  height: auto;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--c-bg);
+  color: var(--c-gray-2);
+  box-shadow: none;
+  cursor: pointer;
+  pointer-events: auto;
+  font-family: var(--ff-ui);
+}
+.race-detail-scroll .race-menu-scroll > .hscroll-cue-l {
+  left: 0;
+  border-right: var(--line-thin) solid var(--c-gray-4);
+}
+.race-detail-scroll .race-menu-scroll > .hscroll-cue {
+  right: 0;
+  border-left: var(--line-thin) solid var(--c-gray-4);
+}
+.race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l) .ic {
+  width: 18px;
+  height: 18px;
+}
+.race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l)[hidden] {
+  display: none;
+}
+.race-detail-scroll .race-menu-scroll > :is(.hscroll-cue,.hscroll-cue-l):focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: var(--space-2);
+}
+
+/* SCR-210 detail layout revision: shared token sizes, no other screens affected. */
+
+/* SCR-210 summary: five evenly-spaced information rows on the left;
+   the purchase and LIVE controls remain vertically balanced at the right. */
+.race-detail-scroll .race-info-bar.ri-has-act {
+  box-sizing: border-box;
+  height: var(--h-race-info-summary);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-6);
+  /* The menu's own top rule is authoritative: avoid two adjacent 1px rules. */
+  border-bottom: 0;
+}
+.race-detail-scroll .race-info-bar .ri-main {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 80px;
+  grid-template-areas:
+    "meeting actions"
+    "event actions"
+    "kind actions"
+    "clock actions"
+    "detail actions";
+  /* The 12px clock row must use its intrinsic line height; forcing it to
+     20px made the visual gap after the 16px kind row too large. Keep a
+     consistent 1px gap between rows 1–4. The detail row may expand. */
+  grid-template-rows: repeat(3, minmax(20px, auto)) max-content 29px;
+  column-gap: var(--space-6);
+  row-gap: var(--space-1);
+  align-items: center;
+  min-width: 0;
+}
+.race-detail-scroll .ri-meeting {
+  grid-area: meeting;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  align-self: center;
+  white-space: nowrap;
+  gap: var(--space-4);
+  min-width: 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  line-height: 1.25;
+}
+.race-detail-scroll .ri-meeting .ri-day {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+}
+.race-detail-scroll .ri-meeting .venue-girls {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+.race-detail-scroll .ri-meeting .ri-race-label {
+  flex: 0 0 auto;
+  color: var(--c-gray-1);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .ri-meeting .grade-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 31px;
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--r-6);
+  font-size: var(--fs-12);
+  line-height: 1.3;
+}
+.race-detail-scroll .race-info-bar .ri-actions {
+  grid-area: actions;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  width: 80px;
+  min-width: 80px;
+  align-self: center;
+}
+.race-detail-scroll .race-info-bar .ri-race {
+  grid-area: auto;
+  align-self: center;
+  flex: 0 0 54px;
+  width: 80px;
+  height: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  margin: 0;
+  color: var(--c-gray-5);
+  text-decoration: none;
+  cursor: pointer;
+}
+.race-detail-scroll .race-info-bar .ri-race:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: var(--space-2);
+  border-radius: var(--r-9);
+}
+.race-detail-scroll .ri-race .ri-race-purchase {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 54px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  width: 80px;
+  height: 54px;
+  min-height: 54px;
+  border: var(--line-thick) solid var(--c-red);
+  border-radius: var(--r-9);
+  background: var(--c-red);
+  color: var(--c-gray-5);
+  box-shadow: var(--e1);
+  font-family: var(--ff-ui);
+  font-weight: var(--fw-strong);
+  text-decoration: none;
+}
+.race-detail-scroll .ri-race .ri-ticket-icon {
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  color: var(--c-gray-5);
+  fill: currentColor;
+}
+.race-detail-scroll .ri-race .ri-race-number {
+  color: var(--c-gray-5);
+  font-size: var(--fs-20);
+  font-weight: var(--fw-strong);
+  line-height: 1.2;
+}
+.race-detail-scroll .ri-race .ri-race-purchase-caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  color: var(--c-gray-5);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+/* Override the legacy ".ri-race span" 16px rule for both caption lines. */
+.race-detail-scroll .ri-race .ri-race-purchase-caption > span {
+  display: block;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  line-height: 1.2;
+}
+.race-detail-scroll .race-info-bar .ri-event {
+  grid-area: event;
+  align-self: center;
+  display: block;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  line-height: 1.2;
+  color: var(--c-gray-1);
+}
+.race-detail-scroll .ri-kind {
+  grid-area: kind;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  gap: var(--space-8);
+  min-width: 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  line-height: 1.2;
+}
+.race-detail-scroll .race-info-bar .race-info-row {
+  grid-area: clock;
+  align-self: center;
+  margin: 0;
+}
+.race-detail-scroll .race-info-bar .race-info-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+  white-space: nowrap;
+  font-family: var(--ff-ui);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  font-variant-numeric: tabular-nums;
+  color: var(--c-gray-1);
+}
+.race-detail-scroll .race-info-meta > span {
+  flex: 0 0 auto;
+}
+.race-detail-scroll .race-info-meta > .race-countdown {
+  color: var(--c-red);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  white-space: nowrap;
+}
+.race-detail-scroll .ri-date-line {
+  grid-area: detail;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-wrap: wrap;
+  white-space: normal;
+  column-gap: var(--fs-12);
+  row-gap: 0;
+  /* Visually eliminate the gap after the clock row only. */
+  transform: translateY(calc(-1 * var(--space-1)));
+  font-size: var(--fs-12);
+  line-height: 1.2;
+  color: var(--c-gray-2);
+  font-family: var(--ff-ui);
+  font-variant-numeric: tabular-nums;
+}
+/* The date and distance each stay intact, but may occupy separate lines. */
+.race-detail-scroll .ri-date-line > span {
+  white-space: nowrap;
+}
+.race-detail-scroll .ri-date-line .ri-sub {
+  display: inline;
+  margin: 0;
+  font-size: inherit;
+  color: inherit;
+}
+.race-detail-scroll .race-info-bar .ri-act {
+  grid-area: auto;
+  display: flex;
+  flex: 0 0 var(--h-control);
+  width: 80px;
+  align-self: center;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0;
+}
+.race-detail-scroll .race-info-bar .ri-act .ri-btn {
+  box-sizing: border-box;
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+  height: var(--h-control);
+  min-height: var(--h-control);
+  padding: 0;
+  margin: 0;
+  border-radius: var(--r-9);
+}
+.race-detail-scroll .race-info-bar .ri-act .ri-btn.live {
+  background: var(--c-gray-5);
+  border: var(--line-thin) solid var(--c-gray-3);
+  color: var(--c-gray-1);
+  box-shadow: var(--e1);
+}
+.race-detail-scroll .race-info-bar .ri-act .ri-btn.live .ic {
+  color: var(--c-gray-1);
+}
+
+/* Horizontal menu is explicitly one-axis: dragging cannot move it vertically. */
+.race-detail-scroll .race-menu-scroll {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: var(--h-tab);
+  overflow: hidden;
+  overscroll-behavior-y: none;
+  background: var(--c-gray-5);
+}
+/* Draw both horizontal rules on the full-width, non-scrolling bar. A border
+   attached to the scrolling tabs can disappear at the arrow overlays. */
+.race-detail-scroll .race-menu-scroll::before,
+.race-detail-scroll .race-menu-scroll::after {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  right: 0;
+  height: var(--line-thin);
+  background: var(--c-gray-4);
+  pointer-events: none;
+}
+.race-detail-scroll .race-menu-scroll::before { top: 0; }
+.race-detail-scroll .race-menu-scroll::after { bottom: 0; }
+.race-detail-scroll .race-menu-scroll > .hscroll-inner {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x;
+  overscroll-behavior: contain;
+  scroll-snap-type: none;
+  scrollbar-width: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  padding: 0 44px;
+  height: var(--h-tab);
+}
+.race-detail-scroll .race-menu-scroll .info-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  min-width: 100%;
+  height: var(--h-tab);
+  min-height: var(--h-tab);
+  overflow: hidden;
+  align-items: stretch;
+  border-bottom: 0;
+}
+.race-detail-scroll .race-menu-scroll .info-tab,
+.race-detail-scroll .race-menu-scroll button.info-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  height: var(--h-tab);
+  min-height: var(--h-tab);
+  box-sizing: border-box;
+  padding-block: var(--space-2);
+  margin: 0;
+  margin-bottom: 0;
+  line-height: 1.25;
+  white-space: nowrap;
+  font-size: var(--fs-14);
+  text-align: center;
+  touch-action: pan-x;
+}
+.race-detail-scroll .race-menu-scroll .info-tab > span {
+  display: block;
+  line-height: 1.25;
+  white-space: normal;
+  text-align: center;
+}
+/* All menu label widths / horizontal padding are owned by racecard-common.css. */
+
+/* The lineup has exactly two rows and a right-hand newspaper control. */
+.race-detail-scroll .lineup-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-8);
+  background: var(--c-bg);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+}
+.race-detail-scroll .lineup-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+}
+.race-detail-scroll .lineup-bar .lineup-title {
+  font-size: var(--fs-14);
+  line-height: 1.25;
+  color: var(--c-gray-1);
+}
+.race-detail-scroll .lineup-bar .lineup-row {
+  margin: 0;
+  gap: var(--space-1);
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x;
+  scrollbar-width: none;
+}
+.race-detail-scroll .lineup-bar .lineup-row::-webkit-scrollbar { display: none; }
+.race-detail-scroll .lineup-bar .lineup-car {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  min-width: 22px;
+  max-width: 22px;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  border-radius: var(--r-6);
+}
+
+/* Match the racecard's numbered jersey chips exactly to the lineup chips.
+   Use the existing f1...f9 palette and canonical shared radius/font tokens. */
+.race-detail-scroll .mania-table .c-sha .frame-cell {
+  box-sizing: border-box;
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  min-height: 22px;
+  border-radius: var(--r-6);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+}
+.race-detail-scroll .lineup-bar .lineup-sep {
+  flex: 0 0 22px;
+  display: inline-flex;
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  color: var(--c-gray-2);
+  font-size: var(--fs-18);
+  font-weight: var(--fw-strong);
+  line-height: 22px;
+}
+.race-detail-scroll .lineup-bar .lineup-dir {
+  font-size: var(--fs-14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 22px;
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0;
+  margin: 0;
+  color: var(--c-gray-2);
+}
+.race-detail-scroll .aokei-paper-btn {
+  flex: 0 0 80px;
+  text-decoration: none;
+  cursor: pointer;
+  width: 80px;
+  min-height: var(--h-control);
+  padding: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-gray-1);
+  font-family: var(--ff-ui);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1.25;
+  text-align: center;
+}
+
+.race-detail-scroll .aokei-paper-btn:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: var(--space-2);
+}
+
+/* Headers retain their original background; every rider row remains white. */
+.race-detail-scroll .mania-table tbody tr td,
+.race-detail-scroll .mania-table tbody tr:nth-child(even) td,
+.race-detail-scroll .mania-table tbody tr:nth-child(even) td.fx {
+  background: var(--c-gray-5);
+}
+
+/* ===== race-selector-shared.css ===== */
+/* One race selector for SCR-210 and SCR-310.
+   Shared dimensions, type, status colors, horizontal scrolling and chevrons.
+   Each screen's race list/data remains independent. */
+/* The same edge-to-edge, full-height 44px chevrons as SCR-200. */
+.phone-inner .race-selector {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 58px;
+  flex: 0 0 auto;
+  background: var(--c-gray-5);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+}
+.phone-inner .race-selector > .hscroll-inner {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  padding: var(--space-6) 44px;
+}
+.phone-inner .race-selector > .hscroll-inner::-webkit-scrollbar { display: none; }
+.phone-inner .race-selector .race-tabs {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  height: 46px;
+  align-items: center;
+  gap: var(--space-6);
+  padding: 0;
+  overflow: visible;
+  border: 0;
+}
+.phone-inner .race-selector .race-tab {
+  position: relative;
+  display: flex;
+  flex: 0 0 62px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  min-width: 62px;
+  max-width: 62px;
+  height: 46px;
+  min-height: 46px;
+  padding: var(--space-4) var(--space-2);
+  gap: var(--space-1);
+  overflow: hidden;
+  border: var(--line-thin) solid var(--c-gray-3);
+  border-radius: var(--r-9);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
+  box-shadow: var(--e1);
+  text-align: center;
+  scroll-snap-align: none;
+}
+.phone-inner .race-selector .race-tab > b {
+  color: var(--c-gray-1);
+  font-size: var(--fs-16);
+  line-height: 1.2;
+  font-weight: var(--fw-strong);
+}
+.phone-inner .race-selector .race-tab > small {
+  color: var(--c-gray-1);
+  font-size: var(--fs-12);
+  line-height: 1.2;
+  white-space: nowrap;
+  font-weight: var(--fw-normal);
+  font-variant-numeric: tabular-nums;
+}
+.phone-inner .race-selector .race-tab.past {
+  background: var(--c-bg);
+  border-color: var(--c-gray-4);
+}
+.phone-inner .race-selector .race-tab.past > :is(b,small) { color: var(--c-gray-2); }
+/* Status labels remain dark even when the race number uses the past-race grey. */
+.phone-inner .race-selector .race-tab.past > small.race-status {
+  color: var(--c-gray-1);
+  font-weight: var(--fw-strong);
+}
+.phone-inner .race-selector .race-tab.active:not(.soon):not(.rebate) {
+  background: var(--c-gray-5);
+  border: var(--line-thick) solid var(--c-gray-3);
+}
+.phone-inner .race-selector .race-tab.rebate {
+  background: var(--c-gray-5);
+  border: var(--line-thick) solid var(--c-gold);
+}
+
+/* Keep SCR-210's 3px red urgent frame, including when the race is selected. */
+.phone-inner .race-selector .race-tab.soon {
+  border: var(--line-thick) solid var(--c-red);
+  background: var(--c-gray-5);
+}
+/* Neutral canceled race: the same restrained fill as the prediction pages. */
+.phone-inner .race-selector .race-tab.canceled {
+  background: var(--c-gray-4);
+  border-color: var(--c-gray-4);
+  cursor: default;
+}
+.phone-inner .race-selector .race-tab.canceled > :is(b,small) {
+  color: var(--c-gray-1);
+}
+/* Selected R uses gold fill/white text; do not alter its existing frame. */
+.phone-inner .race-selector .race-tab.active {
+  background: var(--c-gold);
+}
+.phone-inner .race-selector .race-tab.active > :is(b,small) {
+  color: var(--c-gray-5);
+}
+.phone-inner .race-selector .race-tab.active > small.race-status {
+  color: var(--c-gray-5);
+}
+
+.phone-inner .race-selector > :is(.hscroll-cue,.hscroll-cue-l) {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  z-index: 3;
+  width: 44px;
+  height: auto;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--c-bg);
+  color: var(--c-gray-2);
+  box-shadow: none;
+  cursor: pointer;
+  pointer-events: auto;
+  font-family: var(--ff-ui);
+}
+.phone-inner .race-selector > .hscroll-cue-l {
+  left: 0;
+  border-right: var(--line-thin) solid var(--c-gray-4);
+}
+.phone-inner .race-selector > .hscroll-cue {
+  right: 0;
+  border-left: var(--line-thin) solid var(--c-gray-4);
+}
+.phone-inner .race-selector > :is(.hscroll-cue,.hscroll-cue-l) .ic {
+  width: 18px;
+  height: 18px;
+}
+.phone-inner .race-selector > :is(.hscroll-cue,.hscroll-cue-l)[hidden] {
+  display: none;
+}
+.phone-inner .race-selector > :is(.hscroll-cue,.hscroll-cue-l):focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: var(--space-2);
+}
+
+/* ===== racecard-common.css ===== */
+/* Canonical racecard presentation shared directly by SCR-210 and SCR-310.
+   Race-specific column widths and data are intentionally kept in their own CSS. */
+
+/* Both menus keep the same type and selected-state treatment. */
+/* Same horizontal whitespace for both racecards:
+   13px on each side of the actual text, regardless of one/two lines.
+   4 full-width 14px glyphs (選手情報) = 56px + 26px = 82px. */
+.race-detail-scroll .race-menu-scroll .info-tab {
+  flex: 0 0 auto;
+  min-width: 0;
+  width: max-content;
+  padding-inline: 13px;
+  color: var(--c-gray-2);
+  font-family: var(--ff-ui);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .race-menu-scroll .info-tab.active {
+  color: var(--c-gold);
+  border-bottom-color: var(--c-gold);
+}
+/* Unselected menu entries have exactly the same secondary label color
+   on both SCR-210 and SCR-310, including two-line button contents. */
+.race-detail-scroll .race-menu-scroll .info-tab:not(.active) {
+  color: var(--c-gray-2);
+}
+
+/* One source for box-table foreground, stroke and column-heading typography. */
+.race-detail-scroll .mania-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: max-content;
+  color: var(--c-gray-1);
+  font-family: var(--ff-ui);
+  font-variant-numeric: tabular-nums;
+}
+.race-detail-scroll .mania-table :is(th,td) {
+  box-sizing: border-box;
+  font-family: var(--ff-ui);
+  border-left: 0 !important;
+  border-right: var(--line-thin) solid var(--c-gray-4) !important;
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+  text-align: center;
+  vertical-align: middle;
+}
+.race-detail-scroll .mania-table thead tr:first-child > th:first-child,
+.race-detail-scroll .mania-table tbody tr > td:first-child {
+  border-left: var(--line-thin) solid var(--c-gray-4) !important;
+}
+.race-detail-scroll .mania-table thead th {
+  position: sticky;
+  background: var(--c-bg);
+  color: var(--c-gray-1);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  white-space: nowrap;
+  line-height: 1.25;
+}
+.race-detail-scroll .mania-table thead th * {
+  font-weight: var(--fw-strong);
+}
+/* Box-table column names outside the selected menu section always use the
+   same primary text tone, even if the label contains a nested button/span. */
+.race-detail-scroll .mania-table thead th:not(.section-selected),
+.race-detail-scroll .mania-table thead th:not(.section-selected) :is(button,span) {
+  color: var(--c-gray-1);
+}
+.race-detail-scroll .mania-table thead tr:first-child th {
+  top: 0;
+  height: 24px;
+}
+.race-detail-scroll .mania-table thead tr:first-child th[rowspan="2"] {
+  height: 48px;
+}
+.race-detail-scroll .mania-table thead tr:nth-child(2) th {
+  top: 24px;
+  height: 24px;
+}
+.race-detail-scroll .mania-table thead tr:first-child th.section-selected,
+.race-detail-scroll .mania-table thead tr:nth-child(2) th.section-selected {
+  background: var(--c-gold);
+  color: var(--c-gray-5);
+}
+.race-detail-scroll .mania-table tbody tr,
+.race-detail-scroll .mania-table tbody tr td,
+.race-detail-scroll .mania-table tbody tr:nth-child(even) td {
+  height: 56px;
+  background: var(--c-gray-5);
+}
+.race-detail-scroll .mania-table tbody td {
+  color: var(--c-gray-1);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-normal);
+}
+.race-detail-scroll .mania-table tbody :is(.rider-meta,.grade-prev) {
+  color: var(--c-gray-2);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+}
+
+/* Exact same jersey dimensions and font in both fixed vehicle columns.
+   All 1–9 paint, borders and text foregrounds come only from keirin-detail.css,
+   which directly references the common --c-w1 … --c-w9 design tokens. */
+.race-detail-scroll .mania-table :is(.c-sha,.col-sha) .frame-cell {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  min-height: 22px;
+  margin: 0 auto;
+  border-radius: var(--r-6);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+}
+.race-detail-scroll .race-table-wrap.scrolled .mania-table :is(th,td):is(.c-sha,.col-sha) {
+  /* The shared grid rule already supplies the same 1px right border. */
+  box-shadow: none;
+}
+
+/* The glossary is the same compact 14px single-column reading experience. */
+.race-detail-scroll .rt-area .rt-legend {
+  border-top: 0;
+}
+.race-detail-scroll .rt-legend dl {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+.race-detail-scroll .rt-legend dt,
+.race-detail-scroll .rt-legend dl dt {
+  margin: var(--space-6) 0 0;
+  color: var(--c-gray-1);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  white-space: normal;
+}
+.race-detail-scroll .rt-legend dt:first-child { margin-top: 0; }
+.race-detail-scroll .rt-legend dd,
+.race-detail-scroll .rt-legend dl dd {
+  margin: 0;
+  padding: 0;
+  color: var(--c-gray-2);
+  font-size: var(--fs-14);
+  line-height: 1.6;
+  text-align: left;
+}
