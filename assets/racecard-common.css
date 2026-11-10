@@ -101,7 +101,7 @@
 
 /* Exact same jersey dimensions and font in both fixed vehicle columns.
    All 1–9 paint, borders and text foregrounds come only from keirin-detail.css,
-   which directly references the common --w1 … --w9 design tokens. */
+   which directly references the common --c-w1 … --c-w9 design tokens. */
 .race-detail-scroll .mania-table :is(.c-sha,.col-sha) .frame-cell {
   box-sizing: border-box;
   display: flex;
