@@ -10,6 +10,7 @@ on:
       - 'scripts/check-pages.mjs'
       - 'scripts/check-shared-css.mjs'
       - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/pages-refactor-check.yml'
   workflow_dispatch:
     inputs:
