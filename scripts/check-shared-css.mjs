@@ -40,8 +40,8 @@ tokensAST.walkDecls(decl => {
 for (const [token, expected] of Object.entries({
   '--line-thin': '1px',
   '--line-emphasis-width': '3px',
-  '--line-normal': 'var(--line-thin) solid var(--c-border)',
-  '--line-control': 'var(--line-thin) solid var(--c-border-control)',
+  '--line-normal': 'var(--line-thin) solid var(--c-gray-4)',
+  '--line-control': 'var(--line-thin) solid var(--c-gray-3)',
   '--line-keirin': 'var(--line-emphasis-width) solid var(--c-keirin)',
   '--line-focus': 'var(--line-emphasis-width) solid var(--c-keirin)'
 })) {
@@ -58,7 +58,7 @@ lineupCSS.walkRules(rule => {
   }
 });
 if (lineupRule.length !== 1 ||
-    lineupRule[0] !== 'var(--line-emphasis-width) solid var(--c-border)') {
+    lineupRule[0] !== 'var(--line-emphasis-width) solid var(--c-gray-4)') {
   issues.push('Stroke policy: keirin lineup-order divider must remain the only 3px table separator');
 }
 
