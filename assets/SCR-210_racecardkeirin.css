@@ -1,0 +1,1010 @@
+@charset "UTF-8";
+/* SCR-210 page-specific styles, collected in original relative order. */
+
+/* ===== keirin-detail-9car.css ===== */
+/* Page-specific styles extracted without declaration changes. */
+/* Nine-rider-only race number colors. */
+        .f7 { border: none; }
+        .f8 { background: var(--c-w8); color: color-mix(in srgb, var(--c-gray-1) 70%, black); }
+        .f9 { background: var(--c-w9); color: var(--c-gray-5); }
+
+/* ===== keirin-marutoku.css ===== */
+/* SCR-210 Hofu 5R: style Marutoku points and the separate player-comment
+   column, now grouped under 選手情報 in the horizontal menu. */
+.race-detail-scroll .mania-table th.marutoku-section-start,
+.race-detail-scroll .mania-table th.player-comment-heading {
+  text-align: center;
+  min-width: 0;
+  background: var(--c-bg);
+}
+/* Keep the column header at the same width as the comment cells. */
+.race-detail-scroll .mania-table th.player-comment-heading {
+  box-sizing: border-box;
+  white-space: normal;
+}
+.race-detail-scroll .mania-table th.marutoku-score-label {
+  white-space: nowrap;
+  background: var(--c-bg);
+}
+.race-detail-scroll .mania-table tbody td.marutoku-value {
+  text-align: center;
+  white-space: nowrap;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-normal);
+  font-variant-numeric: tabular-nums;
+}
+/* All three stat-and-mark composites share one grid system, defined once
+   in keirin-racecard-grouped.css; this file retains only Marutoku/text. */
+.race-detail-scroll .mania-table tbody td.player-comment {
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: break-word;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+  line-height: 1.35;
+}
+
+/* ===== keirin-position.css ===== */
+/* SCR-210: genuine 2026-11-03 Hofu 5R lineup-position statistics.
+   Inserted immediately before the existing mania-analysis section. */
+.race-detail-scroll .mania-table th.position-section-start {
+  background: var(--c-bg);
+  text-align: center;
+  white-space: nowrap;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table th.position-col {
+  padding: var(--space-3) var(--space-2);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-size: var(--fs-12);
+  background: var(--c-bg);
+}
+
+.race-detail-scroll .mania-table th.position-col .position-group-name,
+.race-detail-scroll .mania-table th.position-col .position-result-name {
+  display: block;
+  font-size: var(--fs-12);
+  line-height: 1.3;
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table th.position-col .position-group-name {
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table th.position-col .position-switch {
+  appearance: none;
+  border: 0;
+  background: none;
+  color: var(--c-keirin);
+  font: inherit;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1.3;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+.race-detail-scroll .mania-table th.position-col .position-switch:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: var(--space-2);
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat,
+.race-detail-scroll .mania-table tbody tr:nth-child(even) td.position-stat {
+  text-align: center;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-normal);
+  font-variant-numeric: tabular-nums;
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
+}
+.race-detail-scroll .mania-table tbody td.position-stat.position-zero {
+  color: var(--c-gray-1);
+}
+/* Both the current lineup and matching 1着～着外 result cells are
+   fully shaded. No text-only chips or colored group headings. */
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-current {
+  font-weight: var(--fw-normal);
+  white-space: nowrap;
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-tone-1 {
+  background: var(--c-magenta-light);
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-tone-2 {
+  background: var(--c-teal-light);
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-tone-3 {
+  background: var(--c-lime-light);
+}
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-tone-4 {
+  background: var(--c-bronze-light);
+}
+
+/* ===== keirin-racecard-grouped.css ===== */
+/* SCR-210: one consolidated seven-section racecard. Shared design tokens
+   and the existing fixed car-number column stay authoritative. */
+/* Two-tier column headers. Group headings occupy the first 24px row;
+   other columns rowspan both rows. Keep both rows sticky while scrolling. */
+.race-detail-scroll .mania-table thead tr:first-child th {
+  box-sizing: border-box;
+  height: 24px;
+  top: 0;
+  background: var(--c-bg);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.25;
+  padding: var(--space-3) var(--space-6);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+}
+.race-detail-scroll .mania-table thead tr:nth-child(2) th {
+  box-sizing: border-box;
+  position: sticky;
+  top: 24px;
+  height: 24px;
+  padding: var(--space-3) var(--space-6);
+  background: var(--c-bg);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1.25;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+}
+.race-detail-scroll .mania-table thead th.box-group.position-first {
+  border-left: var(--line-thin) solid var(--c-gray-4);
+}
+/* Every column label, including 選手名, is horizontally centered. */
+.race-detail-scroll .mania-table thead th.c-name {
+  text-align: center;
+}
+/* Separate the name and home lines a little more within 56px rows. */
+.race-detail-scroll .mania-table tbody tr td.c-name {
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+.race-detail-scroll .mania-table td.c-name .rider-name {
+  font-size: var(--fs-16);
+  line-height: 1;
+  margin-bottom: var(--space-4);
+}
+.race-detail-scroll .mania-table td.c-name .rider-meta {
+  display: block;
+  line-height: 1;
+  white-space: nowrap;
+  /* Keep the home and cohort/age lines aligned with the rider name.
+     The shared table cell remains centered for other numeric columns. */
+  text-align: left;
+}
+.race-detail-scroll .mania-table td.c-name .rider-home {
+  margin-bottom: var(--space-3);
+}
+
+/* Every historical placing is a full-size tap target, while visually
+   preserving the existing two-row placement/time layout. */
+.race-detail-scroll .mania-table .meeting-cell a.res.res-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.race-detail-scroll .mania-table .meeting-cell a.res.res-link:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: calc(-1 * var(--line-thick));
+}
+
+/* Selected menu section: restore the dark-gold/white header highlight.
+   Match the specificity of both normal first-row and second-row header
+   backgrounds so their :first-child/:nth-child rules cannot override it. */
+/* The restored mania evaluation section starts with its first item button. */
+
+/* First grid line must appear to the left of the frame ("枠") column. */
+.race-detail-scroll .mania-table :is(th,td).c-waku {
+  border-left: var(--line-thin) solid var(--c-gray-4);
+}
+.race-detail-scroll .mania-table :is(
+  .player-section-start,.marutoku-section-start,
+  .recent-section-start,
+  .meeting-section-start,.position-section-start,
+  .mania-section-start
+) {
+  border-left: var(--line-thin) solid var(--c-gray-4);
+}
+/* Meeting information sits to the left in three separate rows:
+   date, grade badge, full venue name. Each result is an aligned 3-row tile. */
+.race-detail-scroll .mania-table .meeting-cell {
+  box-sizing: border-box;
+  min-width: 0;
+  text-align: left;
+  padding: var(--space-2) var(--space-6);
+  white-space: nowrap;
+  background: var(--c-gray-5);
+}
+.race-detail-scroll .mania-table .meeting-cell .meeting-entry {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-6);
+}
+.race-detail-scroll .mania-table .meeting-cell .meeting-meta {
+  display: grid;
+  grid-template-rows: 16px 12px 12px;
+  row-gap: var(--space-3);
+  justify-items: start;
+  align-items: center;
+  font-size: var(--fs-12);
+  line-height: 1;
+  color: var(--c-gray-1);
+}
+.race-detail-scroll .mania-table .meeting-cell .meeting-meta .meeting-date,
+.race-detail-scroll .mania-table .meeting-cell .meeting-meta .meeting-venue {
+  display: block;
+  width: 100%;
+  text-align: left;
+  white-space: nowrap;
+}
+/* Equal 3px gaps between grade, venue and date; no per-row margin offset. */
+.race-detail-scroll .mania-table .meeting-cell .meeting-meta .grade-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 31px;
+  box-sizing: border-box;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--fs-12);
+  line-height: 1;
+  border-radius: var(--r-6);
+}
+.race-detail-scroll .mania-table .meeting-cell .res-wrap {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 0;
+  padding-left: 0;
+}
+/* A short divider separates meeting metadata from the first rank. */
+.race-detail-scroll .mania-table .meeting-cell .res-wrap::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--line-thin);
+  height: 26px;
+  background: var(--c-gray-4);
+  pointer-events: none;
+}
+/* Match 50px meeting labels and race-result tiles: four fullwidth characters
+   at the shared 12px font size, with room for 2px of rendering tolerance. */
+.race-detail-scroll .mania-table .meeting-cell .res {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 36px 12px;
+  row-gap: var(--space-2);
+  justify-items: center;
+  align-items: center;
+  height: 50px;
+  min-height: 50px;
+  margin: 0;
+  padding: 0;
+  font-size: var(--fs-12);
+  line-height: 1;
+  text-align: center;
+}
+.race-detail-scroll .mania-table .meeting-cell .res + .res::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--line-thin);
+  height: 26px;
+  background: var(--c-gray-4);
+  pointer-events: none;
+}
+/* Square placing on the left, individual B / 捲 / 差 marks on the
+   right. Up to three marks stack inside the 36px placement row. */
+.race-detail-scroll .mania-table .meeting-cell .res-placement {
+  display: grid;
+  box-sizing: border-box;
+  grid-template-columns: 32px minmax(0, 1fr);
+  padding-left: var(--space-2);
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  height: 36px;
+  min-width: 0;
+}
+.race-detail-scroll .mania-table .meeting-cell .res-notes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 36px;
+  min-width: 0;
+}
+.race-detail-scroll .mania-table .meeting-cell .res-notes .res-note {
+  display: block;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+  line-height: 1;
+  color: var(--c-red);
+  text-align: center;
+  white-space: nowrap;
+}
+.race-detail-scroll .mania-table .meeting-cell .res-rank {
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border: 0;
+  border-radius: var(--r-3);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+  color: var(--c-gray-1);
+  text-align: center;
+}
+.race-detail-scroll .mania-table .meeting-cell .res-rank.race-rank-1 {
+  background: var(--c-gold-light);
+}
+.race-detail-scroll .mania-table .meeting-cell .res-rank.race-rank-2 {
+  background: var(--c-blue-light);
+}
+.race-detail-scroll .mania-table .meeting-cell .res-rank.race-rank-3 {
+  background: var(--c-bronze-light);
+}
+/* One lightness step above the neutral border grey; no badge stroke. */
+.race-detail-scroll .mania-table .meeting-cell .res-rank.race-rank-other {
+  background: color-mix(in srgb, var(--c-gray-4) 70%, var(--c-gray-5) 30%);
+}
+/* Raise the circled-number glyph size so its central digit visually matches
+   the plain placing numerals, without changing the badge size. */
+.race-detail-scroll .mania-table .meeting-cell .res-rank.res-rank-circled {
+  font-size: 19px;
+}
+/* Unreported meeting days are empty placeholders, not a placed finisher. */
+.race-detail-scroll .mania-table .meeting-cell .res.res-empty .res-rank {
+  border: 0;
+  background: transparent;
+}
+.race-detail-scroll .mania-table .meeting-cell .res-time {
+  display: block;
+  grid-column: 1;
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: var(--space-6);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+  line-height: 1;
+  text-align: left;
+  white-space: nowrap;
+}
+.race-detail-scroll .mania-table .meeting-avg {
+  min-width: 102px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+.race-detail-scroll .mania-table .meeting-avg-line {
+  display: block;
+  white-space: nowrap;
+  font-size: var(--fs-14);
+}
+.race-detail-scroll .mania-table .meeting-avg-line + .meeting-avg-line {
+  margin-top: var(--space-4);
+}
+/* Use 56px rows to accommodate the expanded first-to-second name-line gap. */
+.race-detail-scroll .mania-table tbody tr {
+  height: 56px;
+}
+.race-detail-scroll .mania-table tbody tr td {
+  box-sizing: border-box;
+  height: 56px;
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+.race-detail-scroll .mania-table tbody tr td,
+.race-detail-scroll .mania-table tbody tr:nth-child(even) td {
+  background: var(--c-gray-5);
+}
+/* Text-only ranking highlights shared by Marutoku figures and G-index.
+   Keep every table cell's own surface white. */
+.race-detail-scroll .mania-table tbody td .rank-number {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r-3);
+  color: var(--c-gray-1);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}
+.race-detail-scroll .mania-table tbody td .rank-number.rank-tint-1 {
+  background: var(--c-gold-light);
+}
+.race-detail-scroll .mania-table tbody td .rank-number.rank-tint-2 {
+  background: var(--c-blue-light);
+}
+.race-detail-scroll .mania-table tbody td .rank-number.rank-tint-3 {
+  background: var(--c-bronze-light);
+}
+.race-detail-scroll .mania-table tbody td .rank-number.rank-tint-4 {
+  background: var(--c-green-light);
+}
+.race-detail-scroll .mania-table tbody td.c-g .g-val {
+  margin-right: 0;
+}
+/* In the racecard legend, explanations start at the same left edge as
+   their terms, rather than occupying the right column of a grid. */
+.race-detail-scroll .rt-legend dt {
+  margin: var(--space-6) 0 0;
+}
+.race-detail-scroll .rt-legend dd {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* Compact, single-column glossary typography. */
+.race-detail-scroll .rt-legend dl dt {
+  font-size: var(--fs-14);
+  white-space: normal;
+}
+.race-detail-scroll .rt-legend dl dd {
+  font-size: var(--fs-14);
+  line-height: 1.6;
+}
+/* Racecard-only typography: current grade and riding style are 16px;
+   the previous grade appears below at 12px in muted grey. */
+.race-detail-scroll .mania-table tbody td.cls .grade-current {
+  display: block;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+  line-height: 1.2;
+  margin-bottom: var(--space-4);
+}
+.race-detail-scroll .mania-table tbody td.cls .grade-prev {
+  display: block;
+  font-size: var(--fs-12);
+  line-height: 1.2;
+  font-weight: var(--fw-normal);
+  color: var(--c-gray-2);
+}
+.race-detail-scroll .mania-table tbody td .leg-tag {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table tbody td.gear-ratio {
+  font-weight: var(--fw-strong);
+}
+/* Match the specificity of keirin-position.css's 400-weight rule,
+   so the current lineup really renders at 600 (not just the other cells). */
+.race-detail-scroll .mania-table tbody tr td.position-stat.position-current {
+  font-weight: var(--fw-strong);
+}
+/* The extra G-index mark has its own compact column. */
+/* G指数と印は120pxの単一セル内で独立した塗りを使用する。 */
+/* Box-table main symbols and figures follow the shared 16px tier. */
+.race-detail-scroll .mania-table :is(.mark, .mk, .rate2 b, .rn b) {
+  font-size: var(--fs-16);
+}
+/* All marks in the box table (Marutoku, G-index and distance ranking) are bold. */
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell, .distance-combined-cell),
+.race-detail-scroll .mania-table tbody td :is(.mk, .mark) {
+  font-weight: var(--fw-strong);
+}
+/* All grade and rating marks use a consistent black stroke. */
+.race-detail-scroll .mania-table tbody :is(.mk, .mark) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-gray-1);
+  line-height: 1;
+  vertical-align: middle;
+}
+.race-detail-scroll .mania-table tbody .mk-symbol {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* Every ◎○△× mark shares one text-sized background system,
+   both in the racecard and in the mania-detail sheet. */
+.phone-inner .mk {
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  border-radius: var(--r-3);
+  padding: var(--space-1);
+  color: var(--c-gray-1);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+}
+.phone-inner .mk.mk-dbl {
+  color: var(--c-gray-1);
+  background: var(--c-gold-light);
+}
+.phone-inner .mk.mk-o {
+  color: var(--c-gray-1);
+  background: var(--c-blue-light);
+}
+.phone-inner .mk.mk-tri {
+  color: var(--c-gray-1);
+  background: var(--c-bronze-light);
+}
+.phone-inner .mk.mk-x {
+  color: var(--c-gray-1);
+  background: var(--c-green-light);
+}
+
+/* Four-month results: two-line column labels and count / percentage cells. */
+.race-detail-scroll .mania-table thead th.recent4-heading,
+.race-detail-scroll .mania-table tbody td.recent4-cell {
+  min-width: 60px;
+  text-align: center;
+  white-space: nowrap;
+}
+.race-detail-scroll .mania-table thead th.recent4-heading .recent4-heading-main,
+.race-detail-scroll .mania-table thead th.recent4-heading .recent4-heading-rate {
+  display: block;
+  font-size: var(--fs-12);
+  line-height: 1.3;
+}
+.race-detail-scroll .mania-table tbody td.recent4-cell .recent4-count {
+  display: block;
+  color: var(--c-gray-1);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-normal);
+  line-height: 1.2;
+}
+.race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate {
+  display: block;
+  margin-top: var(--space-4);
+  color: var(--c-gray-2);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+  line-height: 1.2;
+}
+
+/* Top three rates are ranked independently for win / 2-place / 3-place.
+   Color only the percentage label, not the entire 60px table cell. */
+.race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate:is(.recent4-rank-1,.recent4-rank-2,.recent4-rank-3) {
+  display: table;
+  box-sizing: border-box;
+  width: max-content;
+  margin-inline: auto;
+  padding-inline: var(--space-2);
+  border-radius: var(--r-3);
+  color: var(--c-gray-1);
+}
+.race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate.recent4-rank-1 {
+  background: var(--c-gold-light);
+}
+.race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate.recent4-rank-2 {
+  background: var(--c-blue-light);
+}
+.race-detail-scroll .mania-table tbody td.recent4-cell .recent4-rate.recent4-rank-3 {
+  background: var(--c-bronze-light);
+}
+
+/* The canonical 1px box-table grid is defined in racecard-common.css.
+   SCR-210 keeps only its race-specific column widths and separators here. */
+/* Sortable header cells keep their normal background in every mode.
+   A second text line appears only when the corresponding sort is active. */
+.race-detail-scroll .mania-table thead tr:first-child th:is(.c-sha, .recent-section-start) {
+  padding: 0;
+}
+.race-detail-scroll .mania-table thead th .racecard-sort-button {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  line-height: 1.25;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+/* Underline only the sortable column name, not its active sort-mode caption. */
+.race-detail-scroll .mania-table thead th :is(.car-line-sort, .score-order-sort) > span:first-child {
+  text-decoration-line: underline;
+  text-underline-offset: var(--space-2);
+  text-decoration-thickness: 1px;
+}
+.race-detail-scroll .mania-table thead th .racecard-sort-button .sort-mode-label {
+  display: none;
+}
+.race-detail-scroll .mania-table thead th .racecard-sort-button[aria-pressed="true"] .sort-mode-label {
+  display: block;
+}
+.race-detail-scroll .mania-table thead th .racecard-sort-button:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: calc(-1 * var(--line-thick));
+}
+/* The final rider row already has a 1px bottom border. Do not draw
+   another 1px top border on the immediately following legend: the two
+   adjacent lines looked like a thick 2px footer. */
+/* Only lineup mode inserts a 3px horizontal separator between lines.
+   Apply it to every physical cell, including the sticky car-number cell. */
+.race-detail-scroll .mania-table tbody tr.line-group-start > td {
+  border-top: var(--line-thick) solid var(--c-gray-4) !important;
+}
+
+/* All box-table header labels, including inner 1着–着外 spans and
+   button labels, use the exact same strong weight regardless of column. */
+.race-detail-scroll .mania-table thead th,
+.race-detail-scroll .mania-table thead th * {
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table tbody td.c-name .rider-meta {
+  font-weight: var(--fw-normal);
+}
+
+/* Exact border-box widths for the first six columns (枠～ギア比).
+   These include padding and grid borders; the car number remains sticky. */
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(1),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(1) {
+  box-sizing: border-box;
+  width: 20px;
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 0;
+  padding-right: 0;
+}
+/* SCR-210: give the sticky vehicle-number column 10px more room. */
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(2),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(2) {
+  box-sizing: border-box;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+}
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(3),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(3) {
+  box-sizing: border-box;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+}
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(4),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(4) {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(5),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(5) {
+  box-sizing: border-box;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+}
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(6),
+.race-detail-scroll .mania-table tbody tr > td:nth-child(6) {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}
+
+/* Featured rider icons: keep each icon at 48px and expand the entire
+   table column only when a rider has multiple featured labels.
+   One icon: 56px; two: 104px; three: 152px; four: 200px.
+   The header and all rider cells must grow together as a table column. */
+.race-detail-scroll .mania-table :is(
+  thead tr:first-child > th.player-featured-heading,
+  tbody tr > td.player-featured
+) {
+  box-sizing: border-box;
+  width: 56px;
+  min-width: 56px;
+  max-width: 56px;
+  padding-inline: 0 !important;
+  text-align: center;
+}
+/* The widest featured-icon group on any row determines the shared width. */
+.race-detail-scroll .mania-table:has(.player-featured-icons > img:nth-child(2)) :is(
+  thead tr:first-child > th.player-featured-heading,
+  tbody tr > td.player-featured
+) {
+  width: 104px;
+  min-width: 104px;
+  max-width: 104px;
+}
+.race-detail-scroll .mania-table:has(.player-featured-icons > img:nth-child(3)) :is(
+  thead tr:first-child > th.player-featured-heading,
+  tbody tr > td.player-featured
+) {
+  width: 152px;
+  min-width: 152px;
+  max-width: 152px;
+}
+.race-detail-scroll .mania-table:has(.player-featured-icons > img:nth-child(4)) :is(
+  thead tr:first-child > th.player-featured-heading,
+  tbody tr > td.player-featured
+) {
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+}
+.race-detail-scroll .mania-table tbody td.player-featured {
+  vertical-align: middle;
+  padding-block: var(--space-2);
+}
+.race-detail-scroll .mania-table .player-featured-icons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: 100%;
+}
+.race-detail-scroll .mania-table .player-featured-icons img {
+  display: block;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+/* The comment cell now immediately follows player information.
+   Marutoku score cells are moved to logical columns 57–61 and sized below
+   with the other 72 logical columns. */
+/* Text-sized badges for top-three current scores; previous scores stay neutral. */
+.race-detail-scroll .mania-table tbody td.score .score-current {
+  display: inline-block;
+  font-weight: var(--fw-strong);
+  box-sizing: border-box;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r-3);
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-16);
+  color: var(--c-gray-1);
+  line-height: 1.2;
+}
+/* Highlighted scores: just enough width for 104.27, centered in the 80px cell.
+   Use a block and automatic side margins for truly even left/right whitespace. */
+.race-detail-scroll .mania-table tbody td.score .score-current:is(.score-rank-1,.score-rank-2,.score-rank-3) {
+  display: block;
+  box-sizing: border-box;
+  width: calc(6ch + var(--space-1) * 2);
+  padding-inline: var(--space-1);
+  margin-inline: auto;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}
+.race-detail-scroll .mania-table tbody td.score .score-current.score-rank-1 {
+  color: var(--c-gray-1);
+  background: var(--c-gold-light);
+}
+.race-detail-scroll .mania-table tbody td.score .score-current.score-rank-2 {
+  color: var(--c-gray-1);
+  background: var(--c-blue-light);
+}
+.race-detail-scroll .mania-table tbody td.score .score-current.score-rank-3 {
+  color: var(--c-gray-1);
+  background: var(--c-bronze-light);
+}
+.race-detail-scroll .mania-table tbody td.score .score-previous {
+  display: block;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-normal);
+  color: var(--c-gray-2);
+  line-height: 1.2;
+}
+
+/* Logical widths of the expanded racecard table.
+   The first six columns retain their declared widths above. Columns 15–18
+   retain 60px minimums. Meeting columns 19–26 use 50px subcells. */
+.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(7), :nth-child(28)),
+.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(7), :nth-child(25)) {
+  box-sizing: border-box;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+}
+.race-detail-scroll .mania-table tbody tr > td:nth-child(9),
+.race-detail-scroll .mania-table thead tr:first-child > th:nth-child(9) {
+  box-sizing: border-box;
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+}
+.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(29), :nth-child(59), :nth-child(60), :nth-child(61)),
+.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(26), .marutoku-score-label:not(.marutoku-combined-heading)),
+.race-detail-scroll .mania-table tbody td.distance-rate,
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th.distance-rate-heading {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}
+.race-detail-scroll .mania-table tbody tr > td:is(:nth-child(10), :nth-child(11), :nth-child(12), :nth-child(13), :nth-child(14), :nth-child(15), :nth-child(30), :nth-child(31), :nth-child(32), :nth-child(33), :nth-child(34), :nth-child(35), :nth-child(36), :nth-child(37), :nth-child(38), :nth-child(39), :nth-child(40), :nth-child(41), :nth-child(42), :nth-child(43), :nth-child(44), :nth-child(45), :nth-child(46), :nth-child(47), :nth-child(48), :nth-child(49), :nth-child(50), :nth-child(51), :nth-child(52), :nth-child(53), :nth-child(54), :nth-child(55), :nth-child(56), :nth-child(57)),
+.race-detail-scroll .mania-table thead tr:first-child > th:is(:nth-child(10), :nth-child(12)),
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th:is(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6), :nth-child(7), :nth-child(8), :nth-child(9), :nth-child(10), :nth-child(11), :nth-child(12), :nth-child(13), :nth-child(14), :nth-child(15), :nth-child(16), :nth-child(17), :nth-child(18), :nth-child(19), :nth-child(20), :nth-child(21), :nth-child(22), :nth-child(23), :nth-child(24), :nth-child(25), :nth-child(26), :nth-child(27), :nth-child(28), :nth-child(29), :nth-child(30), :nth-child(31), :nth-child(32)) {
+  box-sizing: border-box;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+}
+
+/* Each meeting uses 50px for the venue/date panel and every result slot.
+   Four slots are always rendered (even for one-race meetings); longer
+   meetings automatically add more 50px slots. */
+.race-detail-scroll .mania-table .meeting-cell .meeting-meta,
+.race-detail-scroll .mania-table .meeting-cell .res {
+  box-sizing: border-box;
+  flex: 0 0 50px;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+}
+.race-detail-scroll .mania-table tbody td.meeting-avg {
+  min-width: 100px;
+}
+/* Shared fixed mark-left/value-right layout for all integrated columns.
+   Empty mark slots remain occupied so every rider's value stays aligned.
+   A rank-number chip and the mark chip each keep their own background. */
+.race-detail-scroll .mania-table .stat-combined-layout {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  column-gap: var(--space-2);
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 24px;
+  padding: 0;
+  margin: 0;
+}
+.race-detail-scroll .mania-table .stat-combined-layout > .stat-combined-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  width: 32px;
+  min-width: 32px;
+  min-height: 24px;
+}
+.race-detail-scroll .mania-table .stat-combined-layout > .stat-combined-score {
+  display: block;
+  justify-self: center;
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+/* Match SCR-310 prediction's mark/number spacing: 24px mark + 3px gap.
+   Keep only 総合P and G指数 as a centered inline pair; other combo columns
+   retain their existing fixed mark/value grid. */
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell) .stat-combined-layout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: var(--space-3);
+  width: max-content;
+  max-width: 100%;
+}
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell) .stat-combined-layout > .stat-combined-mark {
+  width: 24px;
+  min-width: 24px;
+}
+
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell) .stat-combined-score {
+  font-weight: var(--fw-strong);
+}
+.race-detail-scroll .mania-table tbody td:is(.marutoku-combined-cell, .gindex-combined-cell, .distance-combined-cell, .analyzer-combined-cell) {
+  text-align: center;
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
+  font-size: var(--fs-16);
+}
+.race-detail-scroll .mania-table :is(th,td).marutoku-combined-heading,
+.race-detail-scroll .mania-table tbody td.marutoku-combined-cell {
+  box-sizing: border-box;
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
+.race-detail-scroll .mania-table thead tr:first-child > th.gindex-combined-heading,
+.race-detail-scroll .mania-table tbody td.gindex-combined-cell {
+  box-sizing: border-box;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th:is(.distance-combined-heading, .analyzer-combined-heading),
+.race-detail-scroll .mania-table tbody td:is(.distance-combined-cell, .analyzer-combined-cell) {
+  box-sizing: border-box;
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
+/* The four standalone 周長別 rates match four-month results (60px). */
+.race-detail-scroll .mania-table tbody td:is(.distance-rate, .analyzer-rate-cell) .recent4-rate {
+  color: var(--c-gray-1);
+}
+/* Composite column headings should be centered across their whole cells,
+   not shifted into the numerical slot reserved for row data. */
+.race-detail-scroll .mania-table thead th:is(
+  .marutoku-combined-heading, .gindex-combined-heading,
+  .distance-combined-heading, .analyzer-combined-heading
+) {
+  text-align: center;
+  vertical-align: middle;
+}
+.race-detail-scroll .mania-table tbody td.analyzer-rate-cell,
+.race-detail-scroll .mania-table thead tr:nth-child(2) > th.analyzer-rate-heading {
+  box-sizing: border-box;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+  text-align: center;
+  white-space: nowrap;
+}
+.race-detail-scroll .mania-table tbody td.analyzer-rate-cell {
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
+}
+.race-detail-scroll .mania-table tbody td.distance-rate {
+  text-align: center;
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
+}
+/* Preserve all four short vertical separators even when a race-day result
+   is missing. Every empty placeholder retains the same visible grid cell. */
+.race-detail-scroll .mania-table .meeting-cell .res-wrap > .res.res-empty {
+  display: grid;
+  position: relative;
+  visibility: visible;
+}
+.race-detail-scroll .mania-table .meeting-cell .res-wrap > .res.res-empty::before {
+  visibility: visible;
+}
