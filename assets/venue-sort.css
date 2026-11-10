@@ -14,7 +14,7 @@
   /* Keep widths constant as the direction marker changes. */
   flex: 1 1 0;
   min-width: 0;
-  min-height: var(--tap-min);
+  min-height: 44px;
   padding: 0 var(--space-1);
   font-family: var(--ff-ui);
   font-size: var(--fs-14);
