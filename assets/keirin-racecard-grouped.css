@@ -14,7 +14,7 @@
   text-align: center;
   vertical-align: middle;
   line-height: 1.25;
-  padding: var(--space-3) var(--space-card);
+  padding: var(--space-3) var(--space-6);
   border-bottom: var(--line-normal);
 }
 .race-detail-scroll .mania-table thead tr:nth-child(2) th {
@@ -22,7 +22,7 @@
   position: sticky;
   top: 24px;
   height: 24px;
-  padding: var(--space-3) var(--space-card);
+  padding: var(--space-3) var(--space-6);
   background: var(--c-bg);
   font-size: var(--fs-12);
   font-weight: var(--fw-strong);
@@ -97,7 +97,7 @@
   box-sizing: border-box;
   min-width: 0;
   text-align: left;
-  padding: var(--space-2) var(--space-card);
+  padding: var(--space-2) var(--space-6);
   white-space: nowrap;
   background: var(--c-surface);
 }
@@ -105,7 +105,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: var(--space-card);
+  gap: var(--space-6);
 }
 .race-detail-scroll .mania-table .meeting-cell .meeting-meta {
   display: grid;
@@ -264,7 +264,7 @@
   grid-column: 1;
   box-sizing: border-box;
   width: 100%;
-  padding-left: var(--space-card);
+  padding-left: var(--space-6);
   font-size: var(--fs-12);
   font-weight: var(--fw-normal);
   line-height: 1;
@@ -330,7 +330,7 @@
 /* In the racecard legend, explanations start at the same left edge as
    their terms, rather than occupying the right column of a grid. */
 .race-detail-scroll .rt-legend dt {
-  margin: var(--space-card) 0 0;
+  margin: var(--space-6) 0 0;
 }
 .race-detail-scroll .rt-legend dd {
   margin: 0;
