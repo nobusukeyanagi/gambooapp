@@ -135,7 +135,7 @@ button,
         outline: var(--line-focus);
         outline-offset: var(--space-2);
       }
-      .vcard.auto { border-left-color: var(--c-auto); }
+      .vcard.auto { border-left: var(--line-auto); }
       .vcard-top {
         display: flex;
         align-items: center;
