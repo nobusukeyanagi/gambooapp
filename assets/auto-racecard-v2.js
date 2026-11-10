@@ -494,16 +494,16 @@ const analysisGroups={
               analysisValue(0,"競走車",120),...analysisRates(1)]]],
  raceclass:[["レース種別成績：準決勝戦",analysisRates(0)],
             ["レース日程成績：中間日・準決勝",analysisRates(4)]],
- racewin:[["勝ち上がり実績",[
-            analysisAdvance(0,"準決勝進出率"),
-            analysisAdvance(1,"優勝戦進出率"),
+ racewin:[["勝ち上がり別成績",[
+            analysisAdvance(0,"準決勝\n進出率"),
+            analysisAdvance(1,"優勝戦\n進出率"),
             analysisAdvance(2,"優勝率")]]]
 };
 const analyzerDetailTitles={
  situation:"走路状況別成績",roadtemp:"走路温度別成績",
  trialrun:"試走タイム別成績",handicap:"ハンデ別成績",
  place:"レース場別成績",motorcycle:"競走車別成績",
- raceclass:"レース種別・日程別成績",racewin:"勝ち上がり実績"
+ raceclass:"レース種別・日程別成績",racewin:"勝ち上がり別成績"
 };
 const parseAnalysisRate=value=>{
  const m=/^([0-9]+(?:\.[0-9]+)?):(\d+):(\d+)$/.exec(value||"");
