@@ -18,7 +18,7 @@
 
 /* Inset avatar on a white identity card with a restrained gold accent line. */
 .user-card { margin:var(--space-8); padding:0; overflow:hidden; }
-.user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-12)) minmax(0, 1fr); align-items:center; column-gap:var(--space-8); row-gap:var(--space-8); padding:var(--space-8) var(--space-12); background:var(--c-gray-5); border-top:var(--line-thick) solid var(--c-gold); border-bottom:var(--line-normal); }
+.user-card-top { display:grid; grid-template-columns:calc(var(--h-control) + var(--space-12)) minmax(0, 1fr); align-items:center; column-gap:var(--space-8); row-gap:var(--space-8); padding:var(--space-8) var(--space-12); background:var(--c-gray-5); border-top:var(--line-thick) solid var(--c-gold); border-bottom:var(--line-thin) solid var(--c-gray-4); }
 .user-avatar { display:flex; align-items:center; justify-content:center; width:calc(var(--h-control) + var(--space-12)); height:calc(var(--h-control) + var(--space-12)); flex:0 0 calc(var(--h-control) + var(--space-12)); overflow:hidden; border-radius:var(--r-md); background:var(--c-gold-light); box-shadow:var(--e1); color:var(--c-gold); }
 .user-avatar-photo { display:block; width:100%; height:100%; object-fit:cover; }
 .user-avatar [hidden] { display:none; }
@@ -41,7 +41,7 @@
   padding-inline:var(--space-6);
 }
 .user-points { display:block; padding:0 var(--space-12); background:var(--c-gray-5); }
-.pt3-row + .pt3-row { border-top:var(--line-normal); }
+.pt3-row + .pt3-row { border-top:var(--line-thin) solid var(--c-gray-4); }
 .pt3-row { display:flex; align-items:center; justify-content:space-between; gap:var(--space-8); min-height:var(--h-control); padding:0; }
 .point-label { flex:1; min-width:0; }
 .point-value { text-align:right; }
@@ -68,7 +68,7 @@
 }
 .point-action > span { display: block; white-space: nowrap; }
 .point-action:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
 }
 
@@ -84,13 +84,13 @@
   flex-direction: column;
   gap: 0;
   margin: var(--space-6) var(--space-8) var(--space-8);
-  border: var(--line-normal);
+  border: var(--line-thin) solid var(--c-gray-4);
   border-radius: var(--r-md);
   background: var(--c-gray-5);
   overflow: hidden;
 }
 .favorite-sport { min-width: 0; }
-.favorite-sport + .favorite-sport { border-top: var(--line-normal); }
+.favorite-sport + .favorite-sport { border-top: var(--line-thin) solid var(--c-gray-4); }
 .favorite-sport-body { overflow: hidden; }
 .favorite-group-title {
   display: inline-flex;
@@ -109,7 +109,7 @@
 .favorite-sport-icon { color: var(--c-keirin); }
 .favorite-sport--auto .favorite-sport-icon { color: var(--c-auto); }
 .favorite-group { padding: var(--space-12); }
-.favorite-group + .favorite-group { border-top: var(--line-normal); }
+.favorite-group + .favorite-group { border-top: var(--line-thin) solid var(--c-gray-4); }
 .favorite-group-heading {
   display: flex;
   align-items: center;
@@ -137,7 +137,7 @@
 }
 .favorite-group-change .ic { width: 14px; height: 14px; }
 .favorite-group-change:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: 2px;
   border-radius: var(--r-sm);
 }
@@ -230,12 +230,12 @@
 
 /* Settings rows: links share the same dimensions as the order toggle. */
 .divider { height:var(--space-6); background:var(--c-bg); }
-.menu-item { display:flex; align-items:center; gap:var(--space-8); min-height:56px; padding:var(--space-8) var(--space-12); background:var(--c-gray-5); border-bottom:var(--line-normal); }
-.settings-first { border-top:var(--line-normal); }
+.menu-item { display:flex; align-items:center; gap:var(--space-8); min-height:56px; padding:var(--space-8) var(--space-12); background:var(--c-gray-5); border-bottom:var(--line-thin) solid var(--c-gray-4); }
+.settings-first { border-top:var(--line-thin) solid var(--c-gray-4); }
 a.menu-item { color:var(--c-gray-1); text-decoration:none; }
-button.menu-item { width:100%; border:0; border-bottom:var(--line-normal); color:var(--c-gray-1); font:inherit; text-align:left; cursor:pointer; }
-button.menu-item.settings-first { border-top:var(--line-normal); }
-.menu-item:focus-visible { outline:var(--line-focus); outline-offset:-3px; }
+button.menu-item { width:100%; border:0; border-bottom:var(--line-thin) solid var(--c-gray-4); color:var(--c-gray-1); font:inherit; text-align:left; cursor:pointer; }
+button.menu-item.settings-first { border-top:var(--line-thin) solid var(--c-gray-4); }
+.menu-item:focus-visible { outline:var(--line-thick) solid var(--c-purple); outline-offset:-3px; }
 .sport-order-value { flex:0 0 auto; font-size:var(--fs-16); font-weight:var(--fw-normal); white-space:nowrap; }
 .menu-icon { flex:0 0 var(--fs-20); display:flex; align-items:center; justify-content:center; color:var(--c-gray-2); }
 .menu-icon .ic { width:var(--fs-20); height:var(--fs-20); }
