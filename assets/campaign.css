@@ -36,7 +36,7 @@
 .campaign-page-arrow:focus-visible,
 .cp-banner-link:focus-visible,
 .cp-btn:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: calc(-1 * var(--space-2));
 }
 
@@ -49,7 +49,7 @@
   height: var(--h-tab);
   padding: 0 var(--space-12);
   background: var(--c-gray-5);
-  border-bottom: var(--line-normal);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
 }
 .campaign-pagination[hidden] { display: none; }
 .campaign-page-arrow {
@@ -62,7 +62,7 @@
   font-size: var(--fs-20);
   font-weight: var(--fw-strong);
   color: var(--c-gray-2);
-  border: var(--line-normal);
+  border: var(--line-thin) solid var(--c-gray-4);
   border-radius: var(--r-control);
   background: var(--c-bg);
   cursor: pointer;
