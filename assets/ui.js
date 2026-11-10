@@ -1,5 +1,25 @@
 /* Shared interaction feedback and text fitting; original initialization order preserved. */
 
+/* ===== payout visibility control (SCR-100 / SCR-500) ===== */
+(function () {
+/* Shared balance visibility control: identical on home and mypage. */
+"use strict";
+document.querySelectorAll(".pay-toggle").forEach(function (el) {
+
+        el.addEventListener("click", function () {
+          var m = !el.classList.contains("masked");
+          el.classList.toggle("masked", m);
+          el.setAttribute("aria-pressed", m ? "true" : "false");
+        });
+        el.addEventListener("keydown", function (event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            el.click();
+          }
+        });
+      });
+})();
+
 /* ===== tap-feedback ===== */
 /* Shared immediate tap feedback. No navigation or app logic is added here. */
 (function () {
