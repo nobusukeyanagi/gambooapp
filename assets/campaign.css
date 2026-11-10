@@ -26,7 +26,8 @@
   flex: 1 1 0;
   min-width: 0;
   padding: 0;
-  border: 0;
+  border-top: 0;
+  border-inline: 0;
   background: transparent;
   color: var(--c-text-primary);
   font-family: inherit;
