@@ -310,7 +310,7 @@ button, input, select, textarea {
   gap: var(--space-8);
   color: var(--c-text-primary);
   margin: 0;
-  padding: var(--space-8) var(--space-10);
+  padding: var(--space-8) var(--space-8);
   background: transparent;
   border: 0;
   font-size: var(--fs-14);
