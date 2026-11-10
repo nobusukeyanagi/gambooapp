@@ -249,7 +249,7 @@ button,
         /* Equal 4px vertical insets: more space between four rows while
            avoiding an oversized gap below the last R/time row. */
         padding: var(--space-4) var(--space-6) var(--space-4) var(--space-8);
-        border-left-width: var(--line-emphasis-width);
+        border-left-width: var(--line-thick);
         gap: var(--space-2);
       }
       .g3 .vcard-bottom { gap: var(--space-4); justify-content: space-between; }
