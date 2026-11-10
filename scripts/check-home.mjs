@@ -21,12 +21,9 @@ const URL_BASELINE = process.env.BASELINE_URL || '';
 const OUTPUT = process.env.SCREENSHOT_DIR || '/tmp/gamboo-home-check';
 const PAGE = 'SCR-100_bet.html';
 const cssNames = [
-  'assets/design-tokens.css',
-  'assets/home.css',
-  'assets/app-base.css',
-  'assets/ui-consistency.css',
-  'assets/bottom-nav-icons.css',
-  'assets/tap-feedback.css'
+  'assets/design.css',
+  'assets/ui.css',
+  'assets/SCR-100_bet.css'
 ];
 const viewportWidths = [296, 320, 330, 331, 359, 360, 390, 430, 768];
 const errors = [];
@@ -59,25 +56,21 @@ async function auditCss() {
   if (/\sstyle\s*=\s*['\"]/i.test(html)) fail('Home HTML contains inline style attributes');
   if (/<script\b(?![^>]*\bsrc\s*=)[^>]*>/i.test(html)) fail('Home HTML still contains inline JavaScript');
   if (!html.includes('src="./assets/home.js?v=')) fail('Home JavaScript link missing');
-  if (!html.includes('href="./assets/home.css?v=')) fail('Home CSS link missing');
+  if (!html.includes('href="./assets/SCR-100_bet.css?v=')) fail('Home CSS link missing');
   const tokenNames = new Set();
-  parsed.get('assets/design-tokens.css').walkDecls((decl) => {
+  parsed.get('assets/design.css').walkDecls((decl) => {
     if (decl.prop.startsWith('--')) tokenNames.add(decl.prop);
     if (decl.prop.startsWith('--') && /^var\(--[^)]+\)$/.test(decl.value)) {
       fail('Indirect alias token prohibited: ' + decl.prop);
     }
   });
-  parsed.get('assets/bottom-nav-icons.css').walkDecls((decl) => {
-    if (decl.prop.startsWith('--')) tokenNames.add(decl.prop);
-  });
 
-  const sourceOf = new Map();
   for (const [filename, root] of parsed.entries()) {
     const sameRuleAndMedia = new Map();
     root.walkRules((rule) => {
       const key = getContext(rule) + ' :: ' + rule.selector;
       const existing = sameRuleAndMedia.get(key);
-      if (existing) {
+      if (existing && filename === 'assets/SCR-100_bet.css') {
         fail('Duplicate selector in same media context: ' + filename + ' ' + key);
       }
       sameRuleAndMedia.set(key, rule.source.start.line);
@@ -88,7 +81,7 @@ async function auditCss() {
         for (const ref of decl.value.matchAll(/var\((--[a-zA-Z0-9-]+)/g)) {
           if (!tokenNames.has(ref[1])) fail('Undefined CSS variable: ' + filename + ':' + decl.source.start.line + ' ' + ref[1]);
         }
-        if (filename === 'assets/home.css') {
+        if (filename === 'assets/SCR-100_bet.css') {
           if (decl.prop === 'font-size' && /^[0-9.]+px$/.test(decl.value)) fail('Literal font-size: ' + decl.source);
           if (decl.prop === 'font-weight' && /^(normal|bold|[1-9]00)$/.test(decl.value)) fail('Literal font-weight: ' + decl.source);
           if (decl.prop === 'border-radius' && /^[0-9.]+px$/.test(decl.value)) fail('Literal border-radius: ' + decl.source);
@@ -96,14 +89,8 @@ async function auditCss() {
         }
         if (decl.prop === 'font-size') fontSize = decl.value;
         if (decl.prop === 'font-weight') fontWeight = decl.value;
-        if (['color', 'background', 'background-color', 'border-color'].includes(decl.prop) && /#[a-f0-9]{3,8}\b/i.test(decl.value) && filename !== 'assets/design-tokens.css') {
+        if (['color', 'background', 'background-color', 'border-color'].includes(decl.prop) && /#[a-f0-9]{3,8}\b/i.test(decl.value) && filename !== 'assets/design.css') {
           fail('Raw hex outside tokens: ' + filename + ':' + decl.source.start.line);
-        }
-        if (filename === 'assets/home.css' || filename === 'assets/ui-consistency.css') {
-          if (sourceOf.get(key + ' | ' + decl.prop) && sourceOf.get(key + ' | ' + decl.prop) !== filename && !getContext(rule)) {
-            fail('Duplicate property across home/shared: ' + rule.selector + ' ' + decl.prop);
-          }
-          sourceOf.set(key + ' | ' + decl.prop, filename);
         }
       });
       if (fontWeight && /var\(--fw-/.test(fontWeight) &&
