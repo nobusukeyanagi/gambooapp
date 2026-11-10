@@ -12,7 +12,7 @@
         
         display: flex;
 
-        border-bottom: var(--line-normal);
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
         flex-shrink: 0;
       }
       .payout-label {
@@ -71,7 +71,7 @@
         background: color-mix(in srgb, var(--c-gray-1) 11%, var(--c-gray-5));
       }
       .delca-entry:focus-visible {
-        outline: var(--line-focus);
+        outline: var(--line-thick) solid var(--c-purple);
         outline-offset: 2px;
       }
       .pt-item .payout-value {  margin-left: auto; }
