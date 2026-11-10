@@ -21,7 +21,7 @@
   font-weight: var(--fw-strong);
   line-height: 1.2;
   white-space: nowrap;
-  border: var(--line-control);
+  border: var(--line-thin) solid var(--c-gray-3);
   border-radius: var(--r-control);
   background: var(--c-gray-5);
   color: var(--c-gray-1);
@@ -48,7 +48,7 @@
   border-color: var(--c-gold);
 }
 .venue-sort-options .chip:focus-visible {
-  outline: var(--line-focus);
+  outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
 }
 
