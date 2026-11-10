@@ -5,10 +5,17 @@ on:
     paths:
       - 'SCR-*.html'
       - 'index.html'
-      - 'assets/text-fit.js'
-      - 'assets/ui-consistency.css'
-      - 'assets/auto-racecard-v2.css'
+      - 'assets/ui.js'
+      - 'assets/ui.css'
+      - 'assets/design.css'
+      - 'assets/venue.css'
+      - 'assets/racecard.css'
+      - 'assets/SCR-*.css'
+      - 'assets/auto-racecard-v2.js'
+      - 'assets/venue.js'
       - 'scripts/check-responsive-text.mjs'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/responsive-text-check.yml'
   workflow_dispatch:
 permissions:
