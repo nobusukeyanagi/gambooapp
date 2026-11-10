@@ -6,7 +6,7 @@
   font-family: var(--ff-ui);
   background: transparent;
   border: 0;
-  border-bottom: var(--line-emphasis-width) solid transparent;
+  border-bottom: var(--line-thick) solid transparent;
 }
 .info-tabs button.info-tab.active {
   border-bottom-color: var(--c-gold);
@@ -266,11 +266,11 @@
 }
 .sheet .detail-table .dt-car-sort:focus-visible {
   outline: var(--line-focus);
-  outline-offset: calc(-1 * var(--line-emphasis-width));
+  outline-offset: calc(-1 * var(--line-thick));
 }
 /* Match the 3px line separators of the main racecard in predicted-line order. */
 .sheet .detail-table tbody tr.line-group-start > td {
-  border-top: var(--line-emphasis-width) solid var(--c-gray-4);
+  border-top: var(--line-thick) solid var(--c-gray-4);
 }
 .sheet .detail-table .dt-vehicle-content {
   display: flex;
