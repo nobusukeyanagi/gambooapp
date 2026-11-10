@@ -56,8 +56,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--tap-min);
-  height: var(--tap-min);
+  width: 44px;
+  height: 44px;
   font-family: var(--ff-ui);
   font-size: var(--fs-20);
   font-weight: var(--fw-strong);
