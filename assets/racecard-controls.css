@@ -333,7 +333,7 @@
   position: relative;
   display: flex;
   width: 100%;
-  height: 52px;
+  height: var(--h-tab);
   overflow: hidden;
   overscroll-behavior-y: none;
   background: var(--c-surface);
@@ -367,15 +367,15 @@
   -webkit-mask-image: none;
   mask-image: none;
   padding: 0 var(--tap-min);
-  height: 52px;
+  height: var(--h-tab);
 }
 .race-detail-scroll .race-menu-scroll .info-tabs {
   display: flex;
   flex-wrap: nowrap;
   width: max-content;
   min-width: 100%;
-  height: 52px;
-  min-height: 52px;
+  height: var(--h-tab);
+  min-height: var(--h-tab);
   overflow: hidden;
   align-items: stretch;
   border-bottom: 0;
@@ -386,8 +386,8 @@
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  height: 52px;
-  min-height: 52px;
+  height: var(--h-tab);
+  min-height: var(--h-tab);
   box-sizing: border-box;
   padding-block: var(--space-2);
   margin: 0;
