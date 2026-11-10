@@ -54,7 +54,7 @@
         justify-content: center;
         gap: var(--space-small);
         background: var(--c-keirin);
-        padding: 0 var(--space-14); font-size: var(--fs-14);
+        padding: 0 var(--space-content); font-size: var(--fs-14);
       }
 
 
@@ -262,7 +262,7 @@
       .res-wrap {
         display: flex;
         align-items: center;
-        gap: var(--space-7);
+        gap: var(--space-section);
       }
       .res {
         display: inline-flex;
@@ -316,7 +316,7 @@
         display: block;
         outline: none;
         outline-offset: 1px;
-        border-radius: var(--r-xxs);
+        border-radius: var(--r-xs);
       }
 
       .hscroll {
@@ -414,7 +414,7 @@
 
       .race-info-bar {
         background: var(--c-surface);
-        padding: var(--space-7) var(--space-10) var(--space-section);
+        padding: var(--space-section) var(--space-10) var(--space-section);
         border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
@@ -669,7 +669,7 @@
         font-size: var(--fs-14);
         font-weight: var(--fw-strong);
         cursor: pointer;
-        box-shadow: var(--e2);
+        box-shadow: var(--e1);
       }
       .ri-btn::before { content: ""; position: absolute; inset: -2px 0; }
       .ri-btn .ic { width: 18px; height: 18px; }
