@@ -1,0 +1,806 @@
+@charset "UTF-8";
+/* Shared application shell, navigation, interaction and UI. */
+
+/* ===== app-base.css ===== */
+/* Canonical app shell. All screens directly reference this file. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.icon-sprite { display: none; }
+body { background: var(--c-bg); font-family: var(--ff-ui); color: var(--c-gray-1); font-size: var(--fs-14); line-height: 1.5; }
+.page-title, .screen-label { display: none; }
+.screens-grid { display: block; padding: 0; }
+.screen-wrap { display: block; }
+.phone { width: 100%; height: 100vh; height: 100dvh; background: none; border-radius: 0; padding: 0; box-shadow: none; position: relative; overflow: hidden; }
+.phone-inner { width: 100%; height: 100%; background: var(--c-bg); border-radius: 0; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+
+/* ===== bottom-nav-icons.css ===== */
+/* One canonical racing-icon size for bottom navigation and page headings.
+   Symbols use currentColor; inactive nav icons stay gray and selected ones gold. */
+:root {
+  --nav-icon-size: 32px;
+}
+.bottom-tab .tab-item .tab-icon {
+  height: var(--nav-icon-size);
+}
+/* Inactive footer icons use the lighter control gray, selected ones stay gold. */
+.bottom-tab .tab-item .tab-icon .ic {
+  width: var(--nav-icon-size);
+  height: var(--nav-icon-size);
+  color: var(--c-gray-3);
+  fill: currentColor;
+}
+.bottom-tab .tab-item.active .tab-icon .ic {
+  color: var(--c-gold);
+}
+/* Header icons retain their own sizing and sport-colored overrides. */
+.page-header .page-header-title .header-race-icon {
+  display: block;
+  width: var(--nav-icon-size);
+  height: var(--nav-icon-size);
+  flex: 0 0 auto;
+  color: var(--c-gray-2);
+  fill: currentColor;
+}
+/* Prediction headers: white background, sport-colored shared SVG and dark text. */
+.page-header:has(.header-race-icon) {
+  background: var(--c-gray-5);
+}
+.page-header .page-header-title:has(.header-race-icon) {
+  color: var(--c-gray-1);
+}
+.page-header .page-header-title .header-race-icon:has(use[href$="#nav-keirin"]) {
+  color: var(--c-keirin);
+}
+.page-header .page-header-title .header-race-icon:has(use[href$="#nav-auto"]) {
+  color: var(--c-auto);
+}
+.bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-keirin"]),
+.page-header .page-header-title .header-race-icon:has(use[href$="#nav-keirin"]) {
+  width: calc(var(--nav-icon-size) * 1.25);
+}
+.bottom-tab .tab-item .tab-icon .ic:has(use[href$="#nav-auto"]),
+.page-header .page-header-title .header-race-icon:has(use[href$="#nav-auto"]) {
+  width: calc(var(--nav-icon-size) * 1.08333333);
+}
+
+/* ===== payout-bar.css ===== */
+/* One direct source for SCR-100 and SCR-500 payout balance bar.
+   All original home styles moved here without changing their declarations. */
+.payout-value small {
+        font-size: var(--fs-12);
+        font-weight: var(--fw-strong);
+        margin-left: var(--space-1);
+      }
+
+.payout-bar {
+        background: var(--c-gray-5);
+        
+        display: flex;
+
+        border-bottom: var(--line-thin) solid var(--c-gray-4);
+        flex-shrink: 0;
+      }
+      .payout-label {
+        
+        color: var(--c-gray-2);
+        
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .payout-value {
+        font-family: var(--ff-ui);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: "tnum" 1;
+        letter-spacing: 0;
+        text-align: right;
+        white-space: nowrap;
+        font-size: var(--fs-16);
+        font-weight: var(--fw-strong);
+        color: var(--c-gray-1);
+        flex: none;
+        line-height: 1.15;
+      }
+      .balance-sep {
+        
+        width: 1px;
+        background: var(--c-gray-4);
+        
+        flex: 0 0 1px;
+      }
+
+.pt-item {
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        column-gap: var(--space-6);
+      }
+      /* DELCA balance takes users to DELCA My Page. */
+      .delca-entry {
+        appearance: none;
+        border: 0;
+        background: transparent;
+        text-decoration: none;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        border-radius: var(--r-6);
+        -webkit-tap-highlight-color: transparent;
+      }
+      .delca-entry.tap-pressed,
+      .delca-entry:active {
+        background: color-mix(in srgb, var(--c-gray-1) 11%, var(--c-gray-5));
+      }
+      .delca-entry:focus-visible {
+        outline: var(--line-thick) solid var(--c-purple);
+        outline-offset: 2px;
+      }
+      .pt-item .payout-value {  margin-left: auto; }
+      .pay-toggle {
+        cursor: pointer;
+        position: relative;
+        min-height: 36px;
+        align-items: center;
+      }
+      .pay-toggle .pay-val .ic { width: 18px; height: 18px; color: var(--c-gray-2); }
+      .pay-toggle .eye-off,
+      .pay-toggle .pay-hidden { display: none; }
+      .pay-toggle.masked .eye-on,
+      .pay-toggle.masked .pay-shown { display: none; }
+      .pay-toggle.masked .eye-off { display: block; }
+      .pay-toggle.masked .pay-hidden { display: inline; color: var(--c-gray-2); letter-spacing: 0.1em; }
+
+.pt-h .balance-sep { height: auto; align-self: stretch;  }
+
+.pay-toggle .pay-val {
+        gap: var(--space-4);
+        display: inline-grid;
+        grid-template-columns: max-content 18px;
+        align-items: center;
+        column-gap: var(--space-4);
+        margin-left: auto;
+      }
+      .pay-toggle .pay-val .payout-value {
+        margin-left: 0;
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: end;
+        text-align: right;
+        margin: 0;
+        white-space: nowrap;
+        letter-spacing: 0;
+      }
+      .pay-toggle .pay-val .eye-on,
+      .pay-toggle .pay-val .eye-off {
+        grid-column: 2;
+        grid-row: 1;
+      }
+      /* Visibility, not display:none, preserves the grid's maximum width. */
+      .pay-toggle .pay-val .pay-shown {
+        display: inline;
+        visibility: visible;
+      }
+      .pay-toggle .pay-val .pay-hidden {
+        display: inline;
+        visibility: hidden;
+      }
+      .pay-toggle.masked .pay-val .pay-shown {
+        display: inline;
+        visibility: hidden;
+      }
+      .pay-toggle.masked .pay-val .pay-hidden {
+        display: inline;
+        visibility: visible;
+        color: var(--c-gray-2);
+        letter-spacing: 0;
+      }
+
+/* Full-height, edge-to-divider press areas: no unshaded gutters. */
+      .payout-bar.pt-h {
+        flex-direction: row;
+        gap: 0;
+        padding: 0;
+        align-items: stretch;
+      }
+      .payout-bar.pt-h .pt-item {
+        align-self: stretch;
+        align-content: center;
+        min-height: var(--h-tab);
+        padding: var(--space-8) var(--space-8);
+        border-radius: 0;
+      }
+      .payout-bar.pt-h .balance-sep {
+        align-self: stretch;
+        margin: 0;
+        height: auto;
+      }
+      .payout-bar.pt-h .pt-item:is(.tap-pressed, :active) {
+        background-color: color-mix(in srgb, var(--c-gray-1) 18%, var(--c-gray-5));
+      }
+
+.payout-bar .unit {
+  margin-left: var(--space-1);
+  font-family: var(--ff-ui);
+}
+@media (max-width: 359px) {
+  .payout-bar.pt-h { padding-inline: var(--space-6); }
+  .pt-h .balance-sep { margin-inline: var(--space-4); }
+}
+
+/* ===== tap-feedback.css ===== */
+/* Shared immediate tap feedback: light-gold background with gold labels.
+   Do not depend on native WebKit tap effects (which can flash dark). */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+.tap-pressed {
+  filter: none !important;
+  background: var(--c-gold-light) !important;
+  color: var(--c-gold) !important;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Every text/icon inside a pressed target uses gold, never charcoal/black.
+   This includes the red 210 purchase button and 200 countdown chips. */
+.tap-pressed :is(span, small, b, strong, em, i, svg, .ic) {
+  color: var(--c-gold) !important;
+}
+/* The purchase control draws its button face on a child of the link.
+   Tint that face only; its border remains its original red. */
+.tap-pressed .ri-race-purchase {
+  background: var(--c-gold-light) !important;
+}
+/* Status strips, race countdown/rebate bands and category badges are
+   independent from the button's press effect: preserve their original
+   colored backgrounds, white text, and borders during the press. */
+.tap-pressed :is(
+  .rchip-warning, .rchip-rebate, .bn-status,
+  .news-badge, .news-alert-icon, .grade-badge, .rebate-badge,
+  .mori-today-strip
+),
+.tap-pressed :is(
+  .rchip-warning, .rchip-rebate, .bn-status,
+  .news-badge, .news-alert-icon, .grade-badge, .rebate-badge,
+  .mori-today-strip
+) :is(span, small, b, strong, em, i, svg, .ic) {
+  color: var(--c-gray-5) !important;
+}
+/* Explicitly disable the browser's default dark flash on press targets even
+   before JavaScript applies the pressed class. */
+:is(a, button, [role="button"], [role="link"], [role="tab"], [data-tap-feedback]) {
+  -webkit-tap-highlight-color: transparent;
+}
+/* Links without destinations still receive visible feedback without navigating. */
+.see-all, .vgroup-link, .back-btn, [data-tap-feedback] {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== ui-consistency.css ===== */
+/* Two typography weights across every screen; semantic emphasis must not
+   silently fall back to browser-default 700/900. */
+body { font-weight: var(--fw-normal); }
+:where(b, strong, h1, h2, h3, h4, h5, h6) { font-weight: var(--fw-strong); }
+/* Cross-screen semantic hierarchy, based on SCR-100_bet.html.
+   Load after per-page styles; unrelated components retain their own rules. */
+:is(.section-header, .vgroup-head) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--h-section);
+  padding: 0 var(--space-12);
+}
+:is(.section-header, .vgroup-head) :is(.section-title, .vgroup-name) {
+  font-size: var(--fs-20);
+  font-weight: var(--fw-strong);
+  letter-spacing: normal;
+}
+:is(.section-header, .vgroup-head) :is(.see-all, .vgroup-link, .mori-page-link) {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+}
+:is(.section-header, .vgroup-head) :is(.see-all, .mori-page-link) .ic {
+  width: 16px;
+  height: 16px;
+}
+.vgroup-head.mori-heading {
+  margin-top: 0;
+}
+
+/* Free-standing supporting text: use 14px and regular black. Grade and
+   category badges remain 12px. Home is the reference for shared screens. */
+.venue-grid.g3 .vcard-day,
+.venue-grid.g3 .kubun,
+.pk3 .pk-explain,
+.news-date {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-normal);
+  line-height: 1.25;
+  letter-spacing: normal;
+}
+/* Home venue day and session labels use the next lighter neutral tone. */
+.venue-grid.g3 .vcard-day,
+.venue-grid.g3 .kubun {
+  color: var(--c-gray-2);
+}
+/* Descriptions and news dates retain their primary text tone. */
+.pk3 .pk-explain,
+.news-date {
+  color: var(--c-gray-1);
+}
+/* One shared filled SVG for every Girls mark (home, venue labels and R rows).
+   The 1.15 aspect ratio replaces font-dependent horizontal scaling. */
+:is(.girls, .venue-girls, .rchip-girls) > .girls-heart-icon {
+  display: block;
+  width: calc(var(--fs-14) * 1.08);
+  height: var(--fs-14);
+  flex: 0 0 auto;
+  fill: currentColor;
+  color: var(--c-red);
+}
+.venue-grid.g3 .girls {
+  height: auto;
+  line-height: 1.25;
+}
+/* NEW is free-standing text, whereas the adjacent category badge stays 12px. */
+.news-new {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+}
+/* Balance labels and currency / point units. Do not enlarge table units. */
+:is(.payout-bar.pt-h, .user-points) .payout-label,
+:is(.payout-bar.pt-h, .user-points) .unit {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+}
+/* Bottom navigation labels: one type-scale step below standard 14px labels.
+   Allow long labels to wrap while preserving the existing tap target. */
+.bottom-tab .tab-item {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-strong);
+  white-space: normal;
+  text-align: center;
+  line-height: 1;
+  gap: 0;
+  overflow-wrap: anywhere;
+}
+/* Navigable bottom tabs use native links while retaining standard tab colors. */
+.bottom-tab a.tab-item {
+  color: var(--c-gray-3);
+  text-decoration: none;
+}
+.bottom-tab a.tab-item.active {
+  color: var(--c-gold);
+}
+.bottom-tab a.tab-item:focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: -2px;
+}
+
+/* If a banner image is missing, its fallback filename is legible too. */
+.bn.noimg .bn-fallback {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+}
+
+/* Home venue first row: center grade and day text on the same 20px line.
+   Keep the 12px boxed grade, 14px unboxed day, and 106px tile height. */
+.venue-grid.g3 .vcard-top {
+  align-items: center;
+  min-height: 20px;
+}
+.venue-grid.g3 .vcard-top .gbadge,
+.venue-grid.g3 .vcard-top .vcard-day {
+  line-height: 20px;
+}
+.venue-grid.g3 .vcard-top .vcard-day {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  white-space: nowrap;
+}
+
+/* Canonical sizes. Legacy per-page height overrides have been removed. */
+.app-header { height: var(--h-header); }
+.page-header { height: var(--h-header); }
+.bottom-tab {
+  height: var(--h-bottom-nav);
+  background: var(--c-gray-5);
+  display: flex;
+  border-top: var(--line-thin) solid var(--c-gray-4);
+  flex-shrink: 0;
+  padding-bottom: 0;
+}
+.scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--c-bg);
+  scrollbar-width: none;
+}
+.scroll-area::-webkit-scrollbar { display: none; }
+
+/* Shared race-number chips: same dimensions and jersey palette on all pages. */
+.carno {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--r-6);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  flex-shrink: 0;
+  border: var(--line-thin) solid transparent;
+  font-family: var(--ff-ui);
+}
+.carno.w1 {
+  background: var(--c-w1);
+  color: var(--c-gray-1);
+  border-color: var(--c-gray-3);
+}
+.carno.w2 {
+  background: var(--c-w2);
+  color: var(--c-gray-5);
+  border-color: var(--c-w2);
+}
+.carno.w3 {
+  background: var(--c-w3);
+  color: var(--c-gray-5);
+  border-color: var(--c-w3);
+}
+.carno.w4 {
+  background: var(--c-w4);
+  color: var(--c-gray-5);
+  border-color: var(--c-w4);
+}
+.carno.w5 {
+  background: var(--c-w5);
+  color: var(--c-gray-1);
+  border-color: var(--c-w5);
+}
+.carno.w6 {
+  background: var(--c-w6);
+  color: var(--c-gray-5);
+  border-color: var(--c-w6);
+}
+.carno.w7 {
+  background: var(--c-w7);
+  color: var(--c-gray-5);
+  border-color: var(--c-w7);
+}
+.carno.w8 {
+  background: var(--c-w8);
+  color: color-mix(in srgb, var(--c-gray-1) 70%, black);
+  border-color: var(--c-w8);
+}
+.carno.w9 {
+  background: var(--c-w9);
+  color: var(--c-gray-5);
+  border-color: var(--c-w9);
+}
+.icon-btn { width: var(--h-control); height: var(--h-control); }
+.cta-btn { min-height: var(--h-control); }
+.date-tab, .top-tab { min-height: var(--h-tab); font-size: var(--fs-14); }
+
+/* Shared bottom breathing room for long scrollable pages. */
+.content-end-spacer { height: var(--space-8); }
+
+/* One shared visual baseline for date tabs across home, predictions and
+   campaign. Widths and intrinsic button behavior stay screen-specific. */
+:where(.date-tabs, .campaign-tabs) {
+  display: flex;
+  flex-shrink: 0;
+  background: var(--c-gray-5);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+}
+:where(.date-tabs, .campaign-tabs) .date-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: var(--line-thick) solid transparent;
+  cursor: pointer;
+}
+:where(.date-tabs, .campaign-tabs) .date-tab.active {
+  color: var(--c-gold);
+  border-bottom-color: var(--c-gold);
+}
+
+/* Shared surface for cards, without owning their spacing or accent borders.
+   :where keeps page-specific geometry and left stripes authoritative. */
+:where(.vcard, .venue-card, .cp-card, .user-card) {
+  background: var(--c-gray-5);
+  border: var(--line-thin) solid var(--c-gray-4);
+  border-radius: var(--r-12);
+  box-shadow: var(--e1);
+}
+
+/* Day navigation: one exact font definition, shared by bet and prediction pages. */
+.date-tabs .date-tab {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-strong);
+}
+/* Unselected day tabs use dark UI text; selected day tabs retain gold. */
+.date-tabs .date-tab:not(.active) {
+  color: var(--c-gray-1);
+}
+
+/* Selection rows (date tabs, race selector and filter chips) share the
+   50px tab height plus a 1px bottom border, independently of balance. */
+.phone-inner > .date-tabs {
+  height: calc(var(--h-tab) + var(--line-thin));
+  min-height: calc(var(--h-tab) + var(--line-thin));
+}
+.phone-inner > .date-tabs > .date-tab {
+  height: 100%;
+  min-height: 0;
+}
+.phone-inner > .hscroll > .hscroll-inner > .race-tabs {
+  height: calc(var(--h-tab) + var(--line-thin));
+  padding: var(--space-4) var(--space-8);
+  align-items: center;
+}
+.phone-inner > .hscroll .race-tab {
+  height: calc(var(--h-tab) - 2 * var(--space-4));
+  min-height: 0;
+  padding: var(--space-2) var(--space-4);
+}
+.phone-inner > .filter-chips {
+  height: calc(var(--h-tab) + var(--line-thin));
+  align-items: center;
+  padding: 0 var(--space-8);
+  flex-shrink: 0;
+}
+
+/* A single 18px / 600 header title rule for prediction, details,
+   campaign and profile pages. The body typography stays on the shared scale. */
+.phone-inner > .page-header .page-header-title {
+  font-size: var(--fs-18);
+  font-weight: var(--fw-strong);
+}
+/* Shared compact headings use the same centered title as prediction pages. */
+.page-header.page-header-simple {
+  background: var(--c-gray-5);
+  justify-content: center;
+  padding: 0 var(--space-12);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+}
+.page-header.page-header-simple > .page-header-title {
+  flex: 0 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  min-width: 0;
+  color: var(--c-gray-1);
+}
+.page-header.page-header-simple .page-header-title > .header-page-icon {
+  display: block;
+  width: var(--nav-icon-size);
+  height: var(--nav-icon-size);
+  color: var(--c-gold);
+  fill: currentColor;
+  flex: 0 0 auto;
+}
+
+/* Canonical outline action: the campaign “詳細を見る” button and all point
+   shortcuts share exactly the same source for colors, border, shadow and type. */
+.cp-btn, .point-action, .oshi-act, .os-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-height: 44px;
+  margin-top: 0;
+  padding: 0 var(--space-4);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  color: var(--c-gray-1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Common outline-button appearance; layout and typography remain owned
+   by the original components, including the compact Aokei newspaper action. */
+:where(.cp-btn, .point-action, .oshi-act, .os-btn, .favorite-player-card, .race-detail-scroll .aokei-paper-btn) {
+  border: var(--line-thin) solid var(--c-gray-3);
+  border-radius: var(--r-9);
+  background: var(--c-gray-5);
+  box-shadow: var(--e1);
+}
+
+/* Seven production screens have one header layout and the same two controls.
+   Left label can wrap at 296px while the 40px notification/deposit buttons
+   remain visible at the right without reducing the shared 50px header. */
+.shared-app-header {
+  height: var(--h-header);
+  min-height: var(--h-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 0 var(--space-8);
+  border-bottom: var(--line-thin) solid var(--c-gray-4);
+  background: var(--c-gray-5);
+  flex-shrink: 0;
+}
+.shared-app-header.page-header-simple {
+  justify-content: space-between;
+  padding: 0 var(--space-8);
+}
+.shared-app-header .header-main {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: var(--space-2);
+  justify-content: flex-start;
+}
+.shared-app-header .page-header-title,
+.shared-app-header .header-main > .page-header-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  flex: 1 1 auto;
+  gap: var(--space-4);
+  text-align: left;
+  color: var(--c-gray-1);
+  font-size: var(--fs-18);
+  font-weight: var(--fw-strong);
+  line-height: 1.12;
+}
+.shared-app-header .header-title-text {
+  display: block;
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-wrap: anywhere;
+}
+.shared-app-header :is(.header-page-icon, .header-race-icon) {
+  display: block;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  color: var(--c-gold);
+  fill: currentColor;
+}
+.shared-app-header .header-race-icon:has(use[href$="#nav-keirin"]) {
+  color: var(--c-keirin);
+}
+.shared-app-header .header-race-icon:has(use[href$="#nav-auto"]) {
+  color: var(--c-auto);
+}
+.shared-app-header .back-btn,
+.shared-app-header.page-header .back-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--h-control);
+  height: var(--h-control);
+  flex: 0 0 var(--h-control);
+  margin: 0;
+  color: var(--c-gray-1);
+}
+.shared-app-header .back-btn .ic {
+  width: var(--fs-20);
+  height: var(--fs-20);
+}
+/* Shared header title position: the SCR-200／SCR-300 Keirin text starts 53px
+   from the screen left edge (8px inset + 40px icon + 5px gap).
+   Standard icons retain their original aspect ratios inside a fixed slot. */
+.shared-app-header .header-icon-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-control);
+  height: var(--h-control);
+  flex: 0 0 var(--h-control);
+}
+.shared-app-header .header-main:has(.back-btn) {
+  gap: var(--space-4);
+}
+/* Header fonts remain at their design size; width is adapted when necessary. */
+.shared-app-header .header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--space-6);
+  align-items: center;
+  margin-left: auto;
+}
+.shared-app-header .header-actions :is(.icon-btn, .cta-btn) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  gap: var(--space-4);
+  min-width: 80px;
+  height: var(--h-control);
+  min-height: var(--h-control);
+  padding: 0;
+  border-radius: var(--r-9);
+  box-shadow: var(--e1);
+  font-family: var(--ff-ui);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-strong);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+}
+.shared-app-header .header-actions .icon-btn {
+  width: auto;
+  padding: 0 var(--space-8);
+  border: var(--line-thin) solid var(--c-gray-3);
+  background: var(--c-gray-5);
+  color: var(--c-gray-1);
+}
+.shared-app-header .header-actions .cta-btn {
+  padding: 0 var(--space-8);
+  border: 0;
+  background: var(--c-teal);
+  color: var(--c-gray-5);
+}
+.shared-app-header .header-actions .ic {
+  display: block;
+  width: var(--fs-20);
+  height: var(--fs-20);
+  flex: 0 0 var(--fs-20);
+  color: inherit;
+  fill: currentColor;
+}
+.shared-app-header .header-actions .cta-btn .ic {
+  width: var(--fs-18);
+  height: var(--fs-18);
+  flex-basis: var(--fs-18);
+}
+/* Notification uses the standard neutral button style; deposit is teal. */
+.shared-app-header .header-actions .header-notification {
+  color: var(--c-gray-1);
+}
+.shared-app-header .header-actions .badge {
+  display: block;
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 15px;
+  height: 15px;
+  border: var(--line-thin) solid var(--c-gray-5);
+  border-radius: var(--r-full);
+  background: var(--c-red);
+}
+.shared-app-header .header-actions :is(.icon-btn, .cta-btn):focus-visible {
+  outline: var(--line-thick) solid var(--c-purple);
+  outline-offset: var(--space-2);
+}
+
+/* Canonical racecard control corners: SCR-210 and SCR-310 use the same 8px
+   control token as the SCR-200／SCR-300 race buttons and cross-screen action buttons.
+   These are the actual filled/bordered buttons; underline navigation tabs,
+   vehicle-number badges, and circular close icons remain distinct. */
+.phone-inner .race-tabs .race-tab,
+.phone-inner .ri-act .ri-btn,
+.phone-inner .mania-table .item-btn,
+.phone-inner .at.auto-merged .lb-btn {
+  border-radius: var(--r-9);
+}
+
+/* Bottom labels remain fully visible within each fixed-width navigation cell. */
+.bottom-tab .tab-item > .fit-nav-label {
+  display: block;
+  align-self: stretch;
+  width: 100%;
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* All app headings are informational: never imply clickability.
+   Links/buttons adjacent to headings keep their own pointer behavior. */
+:is(.page-header-title, .vgroup-head, .vgroup-name, .section-title,
+    .venue-header, .venue-title, .favorite-group-title,
+    .lineup-title, .rt-legend-title, .sheet-title) {
+  cursor: default;
+}
