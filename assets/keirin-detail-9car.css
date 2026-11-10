@@ -2,5 +2,5 @@
 /* Page-specific styles extracted without declaration changes. */
 /* Nine-rider-only race number colors. */
         .f7 { border: none; }
-        .f8 { background: var(--c-w8); color: color-mix(in srgb, var(--c-text-primary) 70%, black); }
-        .f9 { background: var(--c-w9); color: var(--c-surface); }
+        .f8 { background: var(--c-w8); color: color-mix(in srgb, var(--c-gray-1) 70%, black); }
+        .f9 { background: var(--c-w9); color: var(--c-gray-5); }
