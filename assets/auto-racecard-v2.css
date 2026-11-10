@@ -88,10 +88,11 @@
 .sport-auto .race-detail-scroll .rt-area { flex:none; height:auto; overflow:visible; }
 .sport-auto .race-detail-scroll .race-table-wrap { display:block; overflow-x:auto; overflow-y:hidden; scrollbar-width:none; }
 .sport-auto .race-detail-scroll .race-table-wrap::-webkit-scrollbar { display:none; }
+/* Generic table layout and font are inherited from racecard-common.css. */
 .sport-auto .race-detail-scroll .auto-race-table {
-  border-collapse:separate; border-spacing:0; width:max-content; min-width:max-content;
-  table-layout:fixed; font-family:var(--ff-ui); font-variant-numeric:tabular-nums;
-  border:0;
+  min-width: max-content;
+  table-layout: fixed;
+  border: 0;
 }
 .sport-auto .auto-race-table :is(th,td) {
   padding:var(--space-2) var(--space-card); white-space:nowrap;
