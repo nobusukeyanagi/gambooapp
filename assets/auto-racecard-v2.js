@@ -475,14 +475,14 @@ const analysisGroups={
  situation:[["走路状況別成績：湿走路",analysisRates(0)]],
  roadtemp:[["走路温度別成績：低温20℃未満",analysisRates(0)],
            ["季節別成績：秋9～11月",analysisRates(4)]],
- trialrun:[["試走T・順位",[analysisValue(0,"試走T"),analysisValue(1,"順位")]],
+ trialrun:[["試走T",[analysisValue(0,"試走T")]],
            ["試走タイム傾向",[
              analysisValue(2,"最高"),analysisValue(3,"平均"),
              analysisValue(4,"偏差1"),analysisValue(5,"偏差2")]],
            ["試走T順位別成績",[
-             analysisValue(6,"試走T順位"),analysisRate(7,"2連対率")]],
-           ["試走／本走順位",[
-             analysisValue(8,"順位差平均"),analysisValue(9,"相関係数")]],
+             analysisValue(6,"試走T\n順位",70),analysisRate(7,"2連対率")]],
+           ["試走・本走順位",[
+             analysisValue(8,"順位差\n平均"),analysisValue(9,"相関係数")]],
            ["再試走",[analysisRate(10,"2連対率")]]],
  handicap:[["ハンデ・順位",[
              analysisValue(0,"ハンデ"),analysisValue(1,"順位")]],
@@ -524,13 +524,17 @@ function openAnalyzer(index,button){
  if(!entry||!Array.isArray(rows)||rows.length!==players.length||
     !groups||!analyzerSheet||!analyzerOverlay)return;
  const fields=groups.flatMap(([,items])=>items);
- if(rows.some(row=>row.length!==fields.length))return;
+ // Keep validating full raw records even when a source field is not displayed.
+ const sourceColumnCount=Math.max(...fields.map(field=>field.i))+1;
+ if(rows.some(row=>row.length!==sourceColumnCount))return;
  analyzerOpenedBy=button;
  analyzerSheet.querySelector(".sheet-title").textContent=analyzerDetailTitles[entry.path];
  const head=analyzerSheet.querySelector(".detail-table thead");
  const tbody=analyzerSheet.querySelector(".detail-table tbody");
  const groupHead=groups.map(([name,items])=>
    '<th class="dt-grp" colspan="'+items.length+'">'+safe(name)+'</th>').join("");
+ const analyzerWidthClass=field=>field.width===70?" auto-analyzer-70":
+   field.width===120?" auto-analyzer-wide":"";
  const columnHead=fields.map(field=>{
    if(field.kind==="rate"&&field.metric>=0)
      return '<th class="dt-stat-heading"><span class="recent4-heading-main">'+
@@ -538,8 +542,8 @@ function openAnalyzer(index,button){
        safe(field.rate)+'</span></th>';
    return '<th class="'+(field.kind==="rate"?"dt-stat-heading":
       field.kind==="advance"?"dt-advance-heading":"auto-analyzer-value-heading")+
-      (field.width===120?" auto-analyzer-wide":"")+'">'+
-     safe(field.label)+'</th>';
+      analyzerWidthClass(field)+'">'+
+     safe(field.label).replaceAll("\n","<br>")+'</th>';
  }).join("");
  head.innerHTML='<tr><th class="dt-vehicle" rowspan="2">車番</th>'+
    groupHead+'</tr><tr>'+columnHead+'</tr>';
@@ -561,11 +565,31 @@ function openAnalyzer(index,button){
    });
    rankByField[field.i]=ranks;
  }
+ // SCR-310 trial timing: the smallest values are fastest.
+ // Competition ranks preserve ties and tint only ranks 1–3.
+ if(entry.path==="trialrun"){
+   for(const sourceIndex of [0,2,3]){
+     const ordered=rows.map((row,car)=>({
+       car,text:String(row[sourceIndex]??"").trim()
+     })).map(o=>({...o,value:Number(o.text)}))
+       .filter(o=>o.text!==""&&Number.isFinite(o.value))
+       .sort((a,b)=>a.value-b.value||a.car-b.car);
+     const ranks=Array(rows.length).fill(0);
+     let previous=NaN,current=0;
+     ordered.forEach(({car,value},index)=>{
+       if(index===0||value!==previous)current=index+1;
+       if(current<=3)ranks[car]=current;
+       previous=value;
+     });
+     rankByField[sourceIndex]=ranks;
+   }
+ }
  const renderField=(field,row,car)=>{
    if(field.kind==="value"){
      const original=row[field.i]||"—";
-     const rank=/^[1-4]位$/.test(original)?Number(original[0]):0;
-     return '<td class="auto-analyzer-value'+(field.width===120?' auto-analyzer-wide':'')+'">'+
+     const rank=rankByField[field.i]?.[car]||
+       (/^[1-4]位$/.test(original)?Number(original[0]):0);
+     return '<td class="auto-analyzer-value'+analyzerWidthClass(field)+'">'+
        '<span class="recent4-count'+(field.width===120?' auto-analyzer-machine':'')+
        (rank?' rank-number rank-tint-'+rank:'')+'">'+safe(original)+'</span></td>';
    }
