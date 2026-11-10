@@ -115,7 +115,7 @@ button, input, select, textarea {
   }
 }
 .grade-badge {
-  border-radius: var(--r-sm);
+  border-radius: var(--r-6);
   flex-shrink: 0;
   font-size: var(--fs-14);
   font-weight: var(--fw-strong);
@@ -166,7 +166,7 @@ button, input, select, textarea {
 
 .rchip {
   flex: 0 0 auto;
-  border-radius: var(--r-control);
+  border-radius: var(--r-9);
   border: var(--line-thin) solid var(--c-gray-3);
   box-shadow: var(--e1);
   background: var(--c-gray-5);
@@ -188,7 +188,7 @@ button, input, select, textarea {
   display: block;
   outline: none;
   outline-offset: 1px;
-  border-radius: var(--r-xs);
+  border-radius: var(--r-3);
 }
 
 /* Horizontal race scrolling */
@@ -487,8 +487,8 @@ button, input, select, textarea {
   justify-content: center;
   height: 18px;
   padding: 0;
-  border-radius: calc(var(--r-control) - var(--line-thick))
-                 calc(var(--r-control) - var(--line-thick)) 0 0;
+  border-radius: calc(var(--r-9) - var(--line-thick))
+                 calc(var(--r-9) - var(--line-thick)) 0 0;
   background: var(--c-gold);
   color: var(--c-gray-5);
   font-size: var(--fs-12);
@@ -575,8 +575,8 @@ button, input, select, textarea {
   justify-content: center;
   height: 18px;
   padding: 0;
-  border-radius: calc(var(--r-control) - var(--line-thick))
-                 calc(var(--r-control) - var(--line-thick)) 0 0;
+  border-radius: calc(var(--r-9) - var(--line-thick))
+                 calc(var(--r-9) - var(--line-thick)) 0 0;
   background: var(--c-red);
   color: var(--c-gray-5);
   font-size: var(--fs-12);
