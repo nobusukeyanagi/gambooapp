@@ -2,7 +2,7 @@
 /* Canonical app shell. All screens directly reference this file. */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 .icon-sprite { display: none; }
-body { background: var(--c-bg); font-family: var(--ff-ui); color: var(--c-text-primary); font-size: var(--fs-14); line-height: 1.5; }
+body { background: var(--c-bg); font-family: var(--ff-ui); color: var(--c-gray-1); font-size: var(--fs-14); line-height: 1.5; }
 .page-title, .screen-label { display: none; }
 .screens-grid { display: block; padding: 0; }
 .screen-wrap { display: block; }
