@@ -147,7 +147,7 @@
 .sport-auto .auto-race-table .deviation-primary {
   display:block; font-size:var(--fs-16); font-weight:var(--fw-strong);
   color:var(--c-text-primary); text-align:center;
-  line-height:1; margin-bottom:var(--space-5);
+  line-height:1; margin-bottom:var(--space-4);
 }
 .sport-auto .auto-race-table .deviation-line {
   display:grid; grid-template-columns:36px minmax(0,1fr);
@@ -197,7 +197,7 @@
   font-weight:var(--fw-normal); line-height:1.2;
 }
 .sport-auto .race-detail-scroll .auto-race-table tbody td.auto-stat-cell .recent4-rate {
-  display:block; margin-top:var(--space-5); color:var(--c-text-secondary);
+  display:block; margin-top:var(--space-4); color:var(--c-text-secondary);
   font-size:var(--fs-12); font-weight:var(--fw-normal); line-height:1.2;
 }
 /* SCR-210 competition-ranked highlights apply to percentage labels only. */
@@ -217,7 +217,7 @@
 }
 .sport-auto .auto-race-table .rider-name {
   display:block; font-size:var(--fs-16); font-weight:var(--fw-strong);
-  line-height:1; margin-bottom:var(--space-5);
+  line-height:1; margin-bottom:var(--space-4);
 }
 .sport-auto .auto-race-table .rider-meta {
   display:block; font-size:var(--fs-12); font-weight:var(--fw-normal);
@@ -228,7 +228,7 @@
    but keep current rank, former rank and examination points regular. */
 .sport-auto .auto-race-table .grade-current {
   display:block; font-size:var(--fs-16); font-weight:var(--fw-strong);
-  line-height:1; margin-bottom:var(--space-5);
+  line-height:1; margin-bottom:var(--space-4);
 }
 .sport-auto .auto-race-table :is(.grade-prev,.grade-power) {
   display:block; font-size:var(--fs-12); font-weight:var(--fw-normal);
@@ -282,7 +282,7 @@
 .sport-auto .auto-race-table .auto-prediction-rank-4 { background:var(--c-green-light); }
 
 .sport-auto .auto-race-table .auto-best90-venue {
-  margin-top:var(--space-5);
+  margin-top:var(--space-4);
   font-size:var(--fs-12); font-weight:var(--fw-normal);
   color:var(--c-text-secondary); line-height:1.2;
 }
@@ -327,7 +327,7 @@
   font-size:var(--fs-16); font-weight:var(--fw-normal); line-height:1.2;
 }
 .sport-auto .auto-race-table .auto-matchup-percent {
-  margin-top:var(--space-5);
+  margin-top:var(--space-4);
   color:var(--c-text-secondary);
   font-size:var(--fs-12); font-weight:var(--fw-normal); line-height:1.2;
 }
