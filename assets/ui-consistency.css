@@ -312,7 +312,7 @@ body { font-weight: var(--fw-normal); }
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  min-height: var(--tap-min);
+  min-height: 44px;
   margin-top: 0;
   padding: 0 var(--space-4);
   font-size: var(--fs-14);
