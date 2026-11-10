@@ -99,11 +99,6 @@
    */
   --line-thin: 1px;
   --line-thick: 3px;
-  --line-normal: var(--line-thin) solid var(--c-gray-4);
-  --line-control: var(--line-thin) solid var(--c-gray-3);
-  --line-keirin: var(--line-thick) solid var(--c-keirin);
-  --line-auto: var(--line-thick) solid var(--c-auto);
-  --line-focus: var(--line-thick) solid var(--c-keirin);
 
   /* Shared radii, shadows, and tap dimensions */
   --r-xs: 3px; /* compact chips */
