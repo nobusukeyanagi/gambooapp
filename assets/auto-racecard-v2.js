@@ -484,10 +484,9 @@ const analysisGroups={
            ["試走・本走順位",[
              analysisValue(8,"順位差\n平均"),analysisValue(9,"相関係数")]],
            ["再試走",[analysisRate(10,"2連対率")]]],
- handicap:[["ハンデ・順位",[
-             analysisValue(0,"ハンデ"),analysisValue(1,"順位")]],
-           ["ハンデ別成績",[
-             analysisValue(2,"ハンデ"),...analysisRates(3)]],
+ handicap:[["ハンデ別成績",[
+             analysisValue(0,"ハンデ"),analysisValue(1,"順位"),
+             ...analysisRates(3)]],
            ["ハンデ順位別成績",[
              analysisValue(7,"H順位"),...analysisRates(8)]]],
  place:[["レース場別成績：川口",analysisRates(0)]],
@@ -587,8 +586,10 @@ function openAnalyzer(index,button){
  const renderField=(field,row,car)=>{
    if(field.kind==="value"){
      const original=row[field.i]||"—";
-     const rank=rankByField[field.i]?.[car]||
-       (/^[1-4]位$/.test(original)?Number(original[0]):0);
+     // The rank under ハンデ別成績 is a factual ordinal, not a highlighted grade.
+     const rank=entry.path==="handicap"&&field.i===1?0:
+       (rankByField[field.i]?.[car]||
+        (/^[1-4]位$/.test(original)?Number(original[0]):0));
      return '<td class="auto-analyzer-value'+analyzerWidthClass(field)+'">'+
        '<span class="recent4-count'+(field.width===120?' auto-analyzer-machine':'')+
        (rank?' rank-number rank-tint-'+rank:'')+'">'+safe(original)+'</span></td>';
