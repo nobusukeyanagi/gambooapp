@@ -107,7 +107,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 var(--space-12);
         border-bottom: var(--line-thin) solid var(--c-gray-4);
         flex-shrink: 0;
       }
