@@ -474,7 +474,7 @@
   display:block; width:100%; color:inherit; text-decoration:none;
 }
 .sport-auto .auto-race-table .auto-last5-link:focus-visible {
-  outline: var(--line-focus); outline-offset: calc(-1 * var(--line-thick));
+  outline: var(--line-thick) solid var(--c-purple); outline-offset: calc(-1 * var(--line-thick));
 }
 /* Match SCR-210's 3-line meeting metadata and 30px result badge. */
 .sport-auto .auto-race-table .auto-last5-entry {
