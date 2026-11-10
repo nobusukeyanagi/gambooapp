@@ -146,7 +146,7 @@ body { font-weight: var(--fw-normal); }
 .carno {
   width: 22px;
   height: 22px;
-  border-radius: var(--r-sm);
+  border-radius: var(--r-6);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -233,7 +233,7 @@ body { font-weight: var(--fw-normal); }
 :where(.vcard, .venue-card, .cp-card, .user-card) {
   background: var(--c-gray-5);
   border: var(--line-thin) solid var(--c-gray-4);
-  border-radius: var(--r-md);
+  border-radius: var(--r-12);
   box-shadow: var(--e1);
 }
 
@@ -326,7 +326,7 @@ body { font-weight: var(--fw-normal); }
    by the original components, including the compact Aokei newspaper action. */
 :where(.cp-btn, .point-action, .oshi-act, .os-btn, .favorite-player-card, .race-detail-scroll .aokei-paper-btn) {
   border: var(--line-thin) solid var(--c-gray-3);
-  border-radius: var(--r-control);
+  border-radius: var(--r-9);
   background: var(--c-gray-5);
   box-shadow: var(--e1);
 }
@@ -440,7 +440,7 @@ body { font-weight: var(--fw-normal); }
   height: var(--h-control);
   min-height: var(--h-control);
   padding: 0;
-  border-radius: var(--r-control);
+  border-radius: var(--r-9);
   box-shadow: var(--e1);
   font-family: var(--ff-ui);
   font-size: var(--fs-14);
@@ -488,7 +488,7 @@ body { font-weight: var(--fw-normal); }
   width: 15px;
   height: 15px;
   border: var(--line-thin) solid var(--c-gray-5);
-  border-radius: var(--r-full);
+  border-radius: var(--r-9999);
   background: var(--c-red);
 }
 .shared-app-header .header-actions :is(.icon-btn, .cta-btn):focus-visible {
@@ -504,7 +504,7 @@ body { font-weight: var(--fw-normal); }
 .phone-inner .ri-act .ri-btn,
 .phone-inner .mania-table .item-btn,
 .phone-inner .at.auto-merged .lb-btn {
-  border-radius: var(--r-control);
+  border-radius: var(--r-9);
 }
 
 /* Bottom labels remain fully visible within each fixed-width navigation cell. */
