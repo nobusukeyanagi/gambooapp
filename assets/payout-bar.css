@@ -144,7 +144,7 @@
       .payout-bar.pt-h .pt-item {
         align-self: stretch;
         align-content: center;
-        min-height: var(--h-balance);
+        min-height: var(--h-tab);
         padding: var(--space-8) var(--space-8);
         border-radius: 0;
       }
