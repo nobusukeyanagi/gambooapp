@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | `assets/design.css` | 全8HTML | 色・フォント・余白・寸法・罫線・角丸・影などの共通変数 |
 | `assets/ui.css` | 全8HTML | 共通レイアウト、ヘッダー、ナビゲーション、操作フィードバック |
-| `assets/ui.js` | 全8HTML | タップフィードバックと文字横幅調整 |
+| `assets/ui.js` | 全8HTML | タップフィードバック・文字横幅調整・残高表示切替 |
 | `assets/bottom-nav-icons.svg` | アプリ7画面 | 競技SVGの共通アイコン素材 |
 | `assets/venue.css`／`assets/venue.js` | 予想2画面 | 開催場一覧、並び替え、日付切替 |
 | `assets/racecard.css` | 出走表2画面 | レース選択、箱表、分析、操作スタイル |
