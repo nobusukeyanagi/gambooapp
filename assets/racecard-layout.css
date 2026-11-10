@@ -158,7 +158,7 @@
         display: flex;
         align-items: center;
         gap: var(--space-6);
-        padding: var(--space-6) var(--space-10);
+        padding: var(--space-6) var(--space-8);
       }
       .lineup-row {
         display: flex;
@@ -414,7 +414,7 @@
 
       .race-info-bar {
         background: var(--c-surface);
-        padding: var(--space-8) var(--space-10) var(--space-8);
+        padding: var(--space-8) var(--space-8) var(--space-8);
         border-bottom: var(--line-normal);
         flex-shrink: 0;
       }
@@ -649,7 +649,7 @@
       .race-info-bar.ri-has-act {
         display: flex;
         align-items: center;
-        gap: var(--space-10);
+        gap: var(--space-8);
       }
       .ri-main { flex: 1; min-width: 0; }
       .ri-act {
@@ -770,7 +770,7 @@
       .mania-table .res-time { font-size: var(--fs-12); }
 
       .rt-legend {
-        padding: var(--space-10) var(--space-12) 16px;
+        padding: var(--space-8) var(--space-12) 16px;
         border-top: var(--line-normal);
         background: var(--c-bg);
         font-size: var(--fs-12);
@@ -778,6 +778,6 @@
         color: var(--c-text-secondary);
       }
       .rt-legend-title { font-size: var(--fs-14); font-weight: var(--fw-strong); color: var(--c-text-primary); margin-bottom: var(--space-4); }
-      .rt-legend dl { display: grid; grid-template-columns: auto 1fr; gap: var(--space-4) var(--space-10); }
+      .rt-legend dl { display: grid; grid-template-columns: auto 1fr; gap: var(--space-4) var(--space-8); }
       .rt-legend dt { font-weight: var(--fw-strong); color: var(--c-text-primary); white-space: nowrap; }
       .rt-legend dd { margin: 0; }
