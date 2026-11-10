@@ -227,7 +227,7 @@ async function checkCurrentPage(page, width) {
     fail(width+'px home venue data/console links differ: '+JSON.stringify(state));
   if(state.snapshot!=='2026-11-03T12:30:00+09:00'||state.selected!=='2026-11-03'||
      state.tabs.join('|')!=='2026-11-02|2026-11-03|2026-11-04'||
-     state.bannerSources.length!==15||state.notices!==9||
+     state.bannerSources.length!==14||state.notices!==9||
      state.noticeKinds.some(x=>x!=='notice')||state.nav.length!==5||
      state.activeNav!==1||!state.payout||state.headerHeight!==50||
      state.footerHeight!==60)

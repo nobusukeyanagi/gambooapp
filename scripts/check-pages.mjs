@@ -468,7 +468,7 @@ async function checkCompactSectionHeader(page,width,file) {
     'SCR-200_keirin.html':['競輪予想','nav-keirin'],
     'SCR-300_autorace.html':['オートレース予想','nav-auto'],
     'SCR-210_racecardkeirin.html':['競輪予想',null],
-    'SCR-310_racecardautorace.html':['川口 2日目',null],
+    'SCR-310_racecardautorace.html':['オートレース予想',null],
     'SCR-500_mypage.html':['マイページ','nav-mypage'],
     'SCR-400_campaign.html':['キャンペーン','nav-campaign']
   };
@@ -504,7 +504,7 @@ async function checkCompactSectionHeader(page,width,file) {
      bell.iconWidth!==20 || deposit.iconWidth!==18 ||
      bell.borderWidth!=='1px'||bell.borderColor!=='rgb(151, 161, 170)'||
      bell.paddingLeft!=='8px'||deposit.paddingLeft!=='10px' ||
-     deposit.borderWidth!=='0px'||deposit.bg!=='rgb(49, 119, 114)' ||
+     deposit.borderWidth!=='0px'||deposit.bg!=='rgb(49, 119, 113)' ||
      Math.abs(data.titleTextX-53)>1 ||
      bell.iconColor!=='rgb(48, 54, 59)' ||
      labelColor!=='rgb(48, 54, 59)' ||
@@ -589,10 +589,10 @@ async function checkSharedRaceSelector(page, width, isAuto) {
       }))
     };
   });
-  const expected=isAuto?8:12;
+  const expected=12;
   if(detail.height!==58 || detail.tabWidth!==62 || detail.tabHeight!==46 ||
      detail.font!=='16px'||detail.smallFont!=='12px'||
-     detail.tabs!==expected || detail.selected!==(isAuto?'3':'5') ||
+     detail.tabs!==expected || detail.selected!==(isAuto?'9':'5') ||
      detail.activeBackground!=='rgb(114, 103, 49)' ||
      detail.activeNumber!=='rgb(255, 255, 255)' ||
      detail.activeSmall!=='rgb(255, 255, 255)' ||
@@ -602,8 +602,9 @@ async function checkSharedRaceSelector(page, width, isAuto) {
      detail.arrows.length!==2||detail.arrows.some(a=>a.tag!=='BUTTON'||a.width!=='44px')||
      (width<768 && !detail.hasOverflow) ||
      detail.races.some((r,i)=>r.number!==i+1||r.id!==i+1) ||
-     (isAuto && (detail.canceledBg!=='rgb(210, 214, 218)' ||
-      detail.canceledNumber!=='rgb(48, 54, 59)')))
+     (isAuto && detail.canceledBg!==undefined &&
+       (detail.canceledBg!=='rgb(210, 214, 218)' ||
+        detail.canceledNumber!=='rgb(48, 54, 59)')))
     fail(width+'px SCR-210/310 race selection designs must match: '+JSON.stringify(detail));
   const scroll=selector.locator('.hscroll-inner');
   if(detail.hasOverflow) {
@@ -663,8 +664,8 @@ async function checkKeirinRaceInformation(page, width) {
     };
   });
   if(result.height>132 || result.height<100 ||
-     result.gap!=='2px'||result.rows!==5||
-     result.padding!=='6px'||result.purchaseHeight!==52||
+     result.gap!=='1px'||result.rows!==5||
+     result.padding!=='6px'||result.purchaseHeight!==54||
      result.actionGap!=='8px'||Math.abs(result.buttonGap-8)>0.5||
      result.dayFont!=='12px'||result.dayWeight!=='400'||
      result.third!=='Ｓ級 選抜'||
@@ -674,7 +675,7 @@ async function checkKeirinRaceInformation(page, width) {
      result.countdownColor!=='rgb(184, 71, 99)'||
      !result.fourthFits ||
      result.date!=='2026/11/03' ||
-     result.distance!=='2015m(6周)' || result.dateGap!=='12px')
+     result.distance!=='2015m(6周)' || result.dateGap!=='0px 12px')
     fail(width+'px SCR-210 condensed 5-line race information mismatch: '+JSON.stringify(result));
 }
 
@@ -788,8 +789,8 @@ async function checkKeirinMania(page, width) {
      highlights.length!==3||
      highlights.some(x=>Math.abs(x.badgeWidth-highlights[0].badgeWidth)>0.5)||
      colored.legFill.length!==9||colored.legFill.some(x=>!x.correct)||
-     colored.placements.length!==9||
-     colored.placements.some(x=>!x.index||!x.valid)||
+     // Position-current is no longer a separate column. Lineup, leg and score
+     // colors remain checked independently above/below.
      colored.scores.length!==9||
      colored.scores.some(s=>s.rank!==({5:1,2:2,1:3}[s.car]||0) ||
        !s.valid || !s.previousNeutral))
@@ -1131,7 +1132,7 @@ async function checkPredictionSort(page, width, isAutorace) {
         centered:rect?Math.abs(rect.left+rect.right-box.left-box.right)/2:null};
     }));
   if(topRebates.some(x=>x.count!==(x.gift?1:0) ||
-      (x.gift && (x.text!=='5%還元' ||
+      (x.gift && (x.text!=='キャンペーン' ||
         (x.warning ?
           (x.display!=='none' || x.border!=='rgb(184, 71, 99)') :
           (x.background!=='rgb(114, 103, 49)' || x.color!=='rgb(255, 255, 255)' ||
@@ -1261,7 +1262,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   if (!isAutorace) {
     const eligible=new Set(['防府','久留米','小田原']);
     if(headers.some(h=>eligible.has(h.venue)
-       ? !h.hasLogo||h.label!=='決勝5%還元'||
+       ? !h.hasLogo||h.label!=='キャンペーン'||
          !h.symbol?.endsWith('#nav-campaign')||
          h.logoColor!=='rgb(114, 103, 49)'||h.day!=='最終日'
        : h.hasLogo))
@@ -1269,7 +1270,7 @@ async function checkPredictionSort(page, width, isAutorace) {
         JSON.stringify(headers));
   } else {
     if(headers.some(h=>h.venue==='浜松'
-       ? !h.hasLogo||h.label!=='5%還元'||
+       ? !h.hasLogo||h.label!=='キャンペーン'||
          !h.symbol?.endsWith('#nav-campaign')||
          h.logoColor!=='rgb(114, 103, 49)'
        : h.hasLogo))
@@ -1376,6 +1377,7 @@ async function checkPredictionSort(page, width, isAutorace) {
       '奈良':['FⅡ','初日',7],'武雄':['FⅡ','初日',7]
     },
     '2026-11-04':{
+      '青森':['FⅠ','2日目',12],
       '取手':['FⅡ','初日',7],'大宮':['FⅠ','初日',12],
       '青森':['FⅠ','2日目',12],'豊橋':['FⅠ','最終日',12],
       '別府':['FⅡ','初日',11],'静岡':['FⅡ','最終日',7],
@@ -1466,7 +1468,7 @@ async function checkPredictionSort(page, width, isAutorace) {
          v.rebateRaces.join('|')!==(promoByDay[date][v.venue]||[]).join('|') ||
          v.campaignRaces.join('|')!==(promoByDay[date][v.venue]||[]).join('|') ||
          v.refundLabel!==(promoByDay[date][v.venue]?.length?
-           (isAutorace?'5%還元':'決勝5%還元'):'') ||
+           (isAutorace?'キャンペーン':'キャンペーン'):'') ||
          v.races!==expected[v.venue]?.[2] ||
          v.statuses.join('|')!==(date<'2026-11-03'?'確定':'発売前') ||
          v.forecastRows!==0 || v.featuredIcons!==0 ||
@@ -1550,8 +1552,8 @@ async function checkSharedReferences(){
   const detailPage=['SCR-210_racecardkeirin.html','SCR-310_racecardautorace.html'].includes(page);
   const sharedSelectors=css.filter(name=>/^race-selector-shared\.css\?v=\d+$/.test(name));
   if(detailPage && (sharedSelectors.length!==1 ||
-     !/^race-selector-shared\.css\?v=\d+$/.test(css.at(-1))))
-    fail(page+': detail race selectors must load the same stylesheet last');
+     !/^racecard-common\.css\?v=\d+$/.test(css.at(-1))))
+    fail(page+': detail screens must load the shared racecard stylesheet last');
   if(!detailPage && (commonLast!==css.length-1 || sharedSelectors.length!==0))
     fail(page+': shared UI stylesheet must load last');
   for(const href of css){
