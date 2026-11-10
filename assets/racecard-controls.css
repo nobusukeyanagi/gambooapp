@@ -504,10 +504,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: var(--line-control);
-  border-radius: var(--r-control);
-  background: var(--c-surface);
-  box-shadow: var(--e1);
   color: var(--c-text-primary);
   font-family: var(--ff-ui);
   font-size: var(--fs-12);
