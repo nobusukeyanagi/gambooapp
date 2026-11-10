@@ -97,6 +97,9 @@
   --c-bg: #F8F7F4;
   --c-surface: #FFFFFF;
 
+  /* Venue-day label keeps its distinct H210 / S10 / L41 tone. */
+  --c-venue-day: hsl(210 10% 41%);
+
   /* Unified line system: 1px standard/control, 3px selected/race/focus. */
   --line-thin: 1px;
   --line-emphasis-width: 3px;

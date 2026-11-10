@@ -1,9 +1,9 @@
 /**
- * Structural quality gate for the CSS shared by SCR-210 and SCR-310.
- * Top-level duplicates are prohibited; @media overrides are intentional.
+ * Structural quality gate for all app CSS and directly linked assets.
+ * Top-level duplicate selectors, raw CSS colors and mismatched asset versions are prohibited.\n * Responsive @media overrides remain intentional.
  * Run: npm run check:shared-css
  */
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import postcss from 'postcss';
 
@@ -17,10 +17,14 @@ const shared = [
 ];
 const noImportant = new Set(shared.filter(name => name !== 'racecard-common.css'));
 const screenNames = ['SCR-210_racecardkeirin.html', 'SCR-310_racecardautorace.html'];
+const allScreens = ['SCR-100_bet.html', 'SCR-200_keirin.html', ...screenNames,
+  'SCR-300_autorace.html', 'SCR-400_campaign.html', 'SCR-500_mypage.html', 'index.html'];
+const allAssets = new Set(await readdir(path.join(root, 'assets')));
+const allCSS = [...allAssets].filter(filename => filename.endsWith('.css')).sort();
 const issues = [];
 const cssText = name => readFile(path.join(root, 'assets', name), 'utf8');
 
-for (const filename of shared) {
+for (const filename of allCSS) {
   const filepath = path.join(root, 'assets', filename);
   try {
     const ast = postcss.parse(await cssText(filename), { from: filepath });
@@ -42,6 +46,13 @@ for (const filename of shared) {
       ast.walkDecls(decl => {
         if (decl.important) {
           issues.push(`${filename}:${decl.source.start.line} has unnecessary !important on ${decl.prop}`);
+        }
+      });
+    }
+    if (filename !== 'design-tokens.css') {
+      ast.walkDecls(decl => {
+        if (/(?:#[0-9a-f]{3,8}\\b|(?:rgb|rgba|hsl|hsla)\\s*\\()/i.test(decl.value)) {
+          issues.push(`${filename}:${decl.source.start.line} defines a literal color on ${decl.prop}; use a canonical design token`);
         }
       });
     }
@@ -82,9 +93,41 @@ for (const name of shared) {
   }
 }
 
+
+const referencedAssets = new Map();
+for (const screen of allScreens) {
+  const html = await readFile(path.join(root, screen), 'utf8');
+  const cssLinks = [...html.matchAll(/<link\\b[^>]*\\bhref=["']\\.\\/assets\\/([^"'?]+\\.css)(?:\\?v=(\\d+))?["'][^>]*>/g)]
+    .map(match => ({ file: match[1], version: match[2] || '', type: 'css' }));
+  const scripts = [...html.matchAll(/<script\\b[^>]*\\bsrc=["']\\.\\/assets\\/([^"'?]+\\.js)(?:\\?v=(\\d+))?["'][^>]*>/g)]
+    .map(match => ({ file: match[1], version: match[2] || '', type: 'js' }));
+  const expectedLast = screenNames.includes(screen) ? 'racecard-common.css' : 'ui-consistency.css';
+  if (cssLinks[0]?.file !== 'design-tokens.css' || cssLinks.at(-1)?.file !== expectedLast) {
+    issues.push(`${screen}: shared stylesheet order must start with design-tokens.css and end with ${expectedLast}`);
+  }
+  const local = new Set();
+  for (const item of [...cssLinks, ...scripts]) {
+    if (!allAssets.has(item.file)) issues.push(`${screen}: missing assets/${item.file}`);
+    if (local.has(item.file)) issues.push(`${screen}: duplicate direct reference to assets/${item.file}`);
+    local.add(item.file);
+    if (!item.version && item.file !== 'qrcode-generator.js') {
+      issues.push(`${screen}: unversioned shared asset assets/${item.file}`);
+    }
+    if (!referencedAssets.has(item.file)) referencedAssets.set(item.file, []);
+    referencedAssets.get(item.file).push({ screen, version: item.version });
+  }
+}
+for (const [file, uses] of referencedAssets) {
+  if (uses.length < 2) continue;
+  const versions = [...new Set(uses.map(use => use.version))];
+  if (versions.length !== 1) {
+    issues.push(`${file}: cache versions differ across pages: ${uses.map(use => use.screen + '=' + use.version).join(', ')}`);
+  }
+}
+
 if (issues.length) {
   for (const issue of issues) console.error('STYLE ERROR: ' + issue);
   process.exitCode = 1;
 } else {
-  console.log('Shared racecard CSS OK: unique top-level selectors, direct references, and synchronized versions');
+  console.log(`All CSS/HTML assets OK: ${allCSS.length} stylesheets, ${allScreens.length} pages, direct references and synchronized versions`);
 }

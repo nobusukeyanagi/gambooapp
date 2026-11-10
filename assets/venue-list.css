@@ -127,8 +127,7 @@ button, input, select, textarea {
   display: inline;
   flex: 0 0 auto;
   white-space: nowrap;
-  /* H210 / S10 / L41: brighten the day label only, not the session text. */
-  color: hsl(210 10% 41%);
+  color: var(--c-venue-day);
 }
 .venue-header-line > .rebate-logo {
   flex: 0 0 auto;
