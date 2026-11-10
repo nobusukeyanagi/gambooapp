@@ -5,7 +5,8 @@
   "description": "CSS and browser regression checks for Gamboo app",
   "type": "module",
   "scripts": {
-    "check:home": "node scripts/check-home.mjs"
+    "check:home": "node scripts/check-home.mjs",
+    "check:shared-css": "node scripts/check-shared-css.mjs"
   },
   "devDependencies": {
     "pixelmatch": "6.0.0",

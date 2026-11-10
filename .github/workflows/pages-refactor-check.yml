@@ -8,6 +8,8 @@ on:
       - 'index.html'
       - 'assets/**'
       - 'scripts/check-pages.mjs'
+      - 'scripts/check-shared-css.mjs'
+      - 'package.json'
       - '.github/workflows/pages-refactor-check.yml'
   workflow_dispatch:
     inputs:
@@ -38,12 +40,14 @@ jobs:
           node-version: '24'
       - name: Install exact dependencies
         run: npm ci --no-audit --no-fund
+      - name: Audit shared racecard CSS structure
+        run: npm run check:shared-css
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Serve current and optional baseline
         shell: bash
         env:
-          BASELINE_SHA: ${{ github.event.inputs.baseline_commit || '98bc30e2ba4d79097d6629e963920e7731b7f1a3' }}
+          BASELINE_SHA: ${{ github.event.inputs.baseline_commit }}
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 --directory . > /tmp/gamboo-current.log 2>&1 &
           if [ -n "$BASELINE_SHA" ]; then
