@@ -552,6 +552,12 @@
   cursor: pointer;
   touch-action: manipulation;
 }
+/* Underline only the sortable column name, not its active sort-mode caption. */
+.race-detail-scroll .mania-table thead th :is(.car-line-sort, .score-order-sort) > span:first-child {
+  text-decoration-line: underline;
+  text-underline-offset: var(--space-2);
+  text-decoration-thickness: 1px;
+}
 .race-detail-scroll .mania-table thead th .racecard-sort-button .sort-mode-label {
   display: none;
 }
