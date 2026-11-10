@@ -71,7 +71,7 @@
 }
 .race-detail-scroll .mania-table .meeting-cell a.res.res-link:focus-visible {
   outline: var(--line-focus);
-  outline-offset: calc(-1 * var(--line-emphasis-width));
+  outline-offset: calc(-1 * var(--line-thick));
 }
 
 /* Selected menu section: restore the dark-gold/white header highlight.
@@ -533,7 +533,7 @@
 }
 .race-detail-scroll .mania-table thead th .racecard-sort-button:focus-visible {
   outline: var(--line-focus);
-  outline-offset: calc(-1 * var(--line-emphasis-width));
+  outline-offset: calc(-1 * var(--line-thick));
 }
 /* The final rider row already has a 1px bottom border. Do not draw
    another 1px top border on the immediately following legend: the two
@@ -541,7 +541,7 @@
 /* Only lineup mode inserts a 3px horizontal separator between lines.
    Apply it to every physical cell, including the sticky car-number cell. */
 .race-detail-scroll .mania-table tbody tr.line-group-start > td {
-  border-top: var(--line-emphasis-width) solid var(--c-gray-4) !important;
+  border-top: var(--line-thick) solid var(--c-gray-4) !important;
 }
 
 /* All box-table header labels, including inner 1着–着外 spans and
