@@ -119,7 +119,7 @@ async function checkCampaignPage(page, width) {
     })));
   if (detailAppearance.length !== 16 || detailAppearance.some(a =>
       a.border !== 'rgb(151, 161, 170)' || a.borderWidth !== '1px' ||
-      a.background !== 'rgb(255, 255, 255)' || a.shadow === 'none' || a.radius !== '8px'))
+      a.background !== 'rgb(255, 255, 255)' || a.shadow === 'none' || a.radius !== '9px'))
     fail(width+'px campaign detail buttons must use white background with a shared control border: '+
       JSON.stringify(detailAppearance));
   const tabAppearance = await page.locator('.campaign-tabs.date-tabs > .date-tab').evaluateAll(els =>
@@ -134,7 +134,7 @@ async function checkCampaignPage(page, width) {
       a.font !== '16px' || a.weight !== '600' || a.height !== 50 ||
       a.bottomWidth !== '3px' || a.background !== 'rgba(0, 0, 0, 0)' ||
       a.shadow !== 'none' || a.radius !== '0px') ||
-      tabAppearance[0].color !== 'rgb(114, 103, 49)' ||
+      tabAppearance[0].color !== 'rgb(48, 54, 59)' ||
       tabAppearance[0].bottomColor !== 'rgb(114, 103, 49)' ||
       tabAppearance[1].color !== 'rgb(48, 54, 59)' ||
       tabAppearance[1].bottomColor !== 'rgba(0, 0, 0, 0)')
@@ -503,9 +503,9 @@ async function checkCompactSectionHeader(page,width,file) {
      data.controls.some(x=>x.h!==40||x.w<80||x.font!=='14px'||x.weight!=='600') ||
      bell.iconWidth!==20 || deposit.iconWidth!==18 ||
      bell.borderWidth!=='1px'||bell.borderColor!=='rgb(151, 161, 170)'||
-     bell.paddingLeft!=='8px'||deposit.paddingLeft!=='10px' ||
+     bell.paddingLeft!=='8px'||deposit.paddingLeft!=='8px' ||
      deposit.borderWidth!=='0px'||deposit.bg!=='rgb(49, 119, 113)' ||
-     Math.abs(data.titleTextX-53)>1 ||
+     Math.abs(data.titleTextX-56)>1 ||
      bell.iconColor!=='rgb(48, 54, 59)' ||
      labelColor!=='rgb(48, 54, 59)' ||
      data.titleX<data.left-1 || data.titleRight>bell.x+1 ||
@@ -995,8 +995,11 @@ async function checkPredictionSort(page, width, isAutorace) {
     if (st.shadow === 'none') fail(width + 'px race button missing shadow: ' + st.classes);
     if (st.classes.includes('canceled') || st.classes.includes('soon')) continue;
     const expectedBorder=st.hasRebate?'rgb(114, 103, 49)':'rgb(151, 161, 170)';
-    const expectedWidth=st.hasRebate?'3px':'1px';
-    if(st.border!==expectedBorder || st.borderWidth!==expectedWidth)
+    const expectedWidth='1px';
+    // The emphasized three-pixel edge comprises a normal 1px border
+    // and an inset 2px shadow, preserving the chip's outer dimensions.
+    if(st.border!==expectedBorder || st.borderWidth!==expectedWidth ||
+       (st.hasRebate && !st.shadow.includes('0px 0px 0px 2px inset')))
       fail(width + 'px rebate buttons need gold 3px borders; other actions use grey 1px: '+
         JSON.stringify(st));
   }
@@ -1043,7 +1046,7 @@ async function checkPredictionSort(page, width, isAutorace) {
   const urgent = await page.locator('.venue-card .rchip.next.soon').evaluateAll(nodes =>
     nodes.map(el => ({width:getComputedStyle(el).borderTopWidth,color:getComputedStyle(el).borderTopColor,
       boxWidth:el.getBoundingClientRect().width})));
-  if (urgent.some(s => s.width !== '3px' || s.color !== 'rgb(184, 71, 99)' ||
+  if (urgent.some(s => s.width !== '1px' || s.color !== 'rgb(184, 71, 99)' ||
      s.boxWidth !== 90))
     fail(width + 'px urgent button border or canonical width mismatch: ' + JSON.stringify(urgent));
   if (!isAutorace) {
@@ -1138,9 +1141,9 @@ async function checkPredictionSort(page, width, isAutorace) {
           (x.background!=='rgb(114, 103, 49)' || x.color!=='rgb(255, 255, 255)' ||
            x.font!=='12px' || x.weight!=='600' || x.position!=='absolute' ||
            x.height!==18 || x.border!=='rgb(114, 103, 49)' ||
-           x.borderWidth!=='3px' || x.centered>1 ||
-           Math.abs(x.inset.top-3)>1 || Math.abs(x.inset.left-3)>1 ||
-           Math.abs(x.inset.right-3)>1))))))
+           x.borderWidth!=='1px' || x.centered>1 ||
+           Math.abs(x.inset.top-1)>1 || Math.abs(x.inset.left-1)>1 ||
+           Math.abs(x.inset.right-1)>1))))))
     fail(width+'px Gamboo promotional band priority/geometry invalid: '+
       JSON.stringify(topRebates.filter(x=>x.gift||x.count)));
   // Temporary DOM-only warning fixture: urgent text must hide the 5% rebate.
@@ -1253,7 +1256,7 @@ async function checkPredictionSort(page, width, isAutorace) {
     }));
   if(headers.length!==(isAutorace?2:8)||headers.some(h=>
       !h.title||!h.badge||!h.name||!h.day||!h.dayRight||
-      h.dayColor!=='rgb(94, 105, 115)' ||
+      h.dayColor!=='rgb(96, 107, 118)' ||
       h.sessionColor!=='rgb(48, 54, 59)' ||
       !h.allOneLine||!h.nowrap||!h.fits||!h.rightAligned||
       !h.logoSingle||!h.scaleOk))
