@@ -21,7 +21,6 @@ button,
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 var(--space-12);
         flex-shrink: 0;
         border-bottom: var(--line-thin) solid var(--c-gray-4);
         box-shadow: 0 1px 3px color-mix(in srgb, var(--c-gray-1) 6%, transparent);
