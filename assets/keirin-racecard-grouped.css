@@ -548,12 +548,6 @@
   border-top: var(--line-emphasis-width) solid var(--c-border) !important;
 }
 
-/* Fixed vehicle number: use its regular 1px border instead of the 2px
-   inset shadow that made the separator oversized on horizontal scroll. */
-.race-detail-scroll .race-table-wrap.scrolled .mania-table :is(th,td).c-sha {
-  box-shadow: none;
-  border-right: var(--line-normal);
-}
 /* All box-table header labels, including inner 1着–着外 spans and
    button labels, use the exact same strong weight regardless of column. */
 .race-detail-scroll .mania-table thead th,
