@@ -20,9 +20,9 @@
 .race-detail-scroll .mania-table thead th.c-item,
 .race-detail-scroll .mania-table tbody td.mania-eval {
   box-sizing: border-box;
-  width: 60px !important;
-  min-width: 60px !important;
-  max-width: 60px !important;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
   text-align: center;
 }
 .race-detail-scroll .mania-table tbody td.mania-eval {
