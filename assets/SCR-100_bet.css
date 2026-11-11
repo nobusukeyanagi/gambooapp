@@ -958,7 +958,7 @@ button,
 /* Tablet and desktop: 140px fixed venue tiles keep the square Mori
    photo flush against its 32px status strip, without widening any tile.
    Auto-fill adds columns rather than stretching the last column. */
-@media (min-width: 600px) {
+@media (min-width: 640px) {
   .venue-grid.g3 {
     grid-template-columns: repeat(auto-fill, 140px);
   }
