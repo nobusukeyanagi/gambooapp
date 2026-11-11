@@ -182,7 +182,7 @@
 
 /* Tablet and desktop: a campaign remains a compact, phone-sized card.
    More available width produces additional cards per row, not larger banners. */
-@media (min-width: 600px) {
+@media (min-width: 640px) {
   #campaign-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(0, 340px));
