@@ -245,7 +245,7 @@ button.menu-item.settings-first { border-top:var(--line-thin) solid var(--c-gray
 
 /* Tablet and desktop: point and favorite buttons keep phone-like dimensions.
    Rows gain columns instead of stretching the existing two/three buttons. */
-@media (min-width: 600px) {
+@media (min-width: 640px) {
   .point-actions {
     grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
   }
@@ -261,8 +261,8 @@ button.menu-item.settings-first { border-top:var(--line-thin) solid var(--c-gray
 }
 
 /* Phone only: game shortcut spans all three point-action columns.
-   At the shared 600px tablet breakpoint it returns to a normal grid cell. */
-@media (max-width: 599px) {
+   At the shared 640px tablet breakpoint it returns to a normal grid cell. */
+@media (max-width: 639px) {
   .point-actions .point-game-action {
     grid-column: 1 / -1;
   }
