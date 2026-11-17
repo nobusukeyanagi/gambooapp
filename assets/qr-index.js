@@ -6,7 +6,8 @@
     { "file": "SCR-300_autorace.html", "code": "SCR-300", "title": "オートレース予想" },
     { "file": "SCR-310_racecardautorace.html", "code": "SCR-310", "title": "オートレース出走表" },
     { "file": "SCR-400_campaign.html", "code": "SCR-400", "title": "キャンペーン" },
-    { "file": "SCR-500_mypage.html", "code": "SCR-500", "title": "マイページ" }
+    { "file": "SCR-500_mypage.html", "code": "SCR-500", "title": "マイページ" },
+    { "file": "SCR-600_update.html", "code": "SCR-600", "title": "アプリのバージョン更新" }
   ];
     // This is a client-side display gate only, not HTTP Basic authentication.
     // GitHub Pages is static; the original HTML files can still be opened directly.
