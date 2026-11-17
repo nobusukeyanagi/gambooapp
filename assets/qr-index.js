@@ -69,8 +69,6 @@
         const qrLink = document.createElement('a');
         qrLink.className = 'qr-link';
         qrLink.href = url;
-        qrLink.target = '_blank';
-        qrLink.rel = 'noopener noreferrer';
         qrLink.title = `${page.code}${page.title}を開く`;
         qrLink.appendChild(createQR(url));
         const code = document.createElement('div');
