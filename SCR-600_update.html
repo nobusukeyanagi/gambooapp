@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>SCR-600アプリのバージョン更新 | Gambooアプリ</title>
+  <link rel="stylesheet" href="./assets/design.css?v=2">
+  <link rel="stylesheet" href="./assets/ui.css?v=4">
+  <link rel="stylesheet" href="./assets/SCR-600_update.css?v=1">
+  <script src="./assets/SCR-600_update.js?v=1" defer></script>
+  <script src="./assets/ui.js?v=2" defer></script>
+</head>
+<body class="update-preview-page">
+  <div class="update-preview">
+    <header class="update-preview-toolbar">
+      <div class="update-preview-title">SCR-600 アプリのバージョン更新</div>
+      <div class="update-preview-switch" role="group" aria-label="更新通知の表示パターン">
+        <button class="update-preview-option" type="button" data-mode="recommended" aria-pressed="true">推奨更新</button>
+        <button class="update-preview-option" type="button" data-mode="required" aria-pressed="false">必須更新</button>
+      </div>
+    </header>
+    <main class="update-preview-stage" aria-label="アプリのバージョン更新ダイアログのプレビュー">
+      <iframe class="update-preview-app" src="./SCR-100_bet.html" title="背後に表示する車券購入画面（プレビュー）" tabindex="-1" aria-hidden="true" inert></iframe>
+      <div class="update-backdrop" id="update-backdrop"></div>
+      <section class="update-dialog" id="update-dialog" role="alertdialog" aria-modal="true"
+        aria-labelledby="update-dialog-title" aria-describedby="update-dialog-description" tabindex="-1">
+        <div class="update-dialog-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 11a8 8 0 1 1-2.5-5.8"></path>
+            <path d="M20 4v6h-6"></path>
+          </svg>
+        </div>
+        <h1 class="update-dialog-title" id="update-dialog-title">新しいバージョンがあります</h1>
+        <p class="update-dialog-description" id="update-dialog-description">より快適にご利用いただくため、最新バージョンへのアップデートをおすすめします。</p>
+        <div class="update-dialog-actions">
+          <button class="update-button update-button-primary" id="update-store" type="button">アップデートする</button>
+          <button class="update-button update-button-secondary" id="update-later" type="button">あとで</button>
+        </div>
+        <p class="update-demo-message" id="update-demo-message" role="status" hidden>画面イメージのため、ストアへの遷移は行いません。実装時にアプリストアへの遷移を設定します。</p>
+      </section>
+    </main>
+    <p class="update-preview-note">画面確認用のモックです。推奨更新は「あとで」で閉じられ、必須更新は閉じられません。切替ボタンから再表示できます。</p>
+  </div>
+</body>
+</html>
