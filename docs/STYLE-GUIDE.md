@@ -16,7 +16,7 @@
 | `SCR-310_racecardautorace.html` | オートレース出走表 | `assets/SCR-310_racecardautorace.css` |
 | `SCR-400_campaign.html` | キャンペーン | `assets/SCR-400_campaign.css` |
 | `SCR-500_mypage.html` | マイページ | `assets/SCR-500_mypage.css` |
-| `SCR-600_update.html` | バージョン更新（画面案） | `assets/SCR-600_update.css` |
+| `SCR-600_update.html` | ダイアログ | `assets/SCR-600_update.css` |
 
 ### CSSの責務
 
