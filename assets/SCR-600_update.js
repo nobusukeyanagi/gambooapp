@@ -17,8 +17,14 @@
   }
 
   later.addEventListener('click', dismiss);
+  document.addEventListener('pointerdown', () => {
+    document.body.classList.remove('update-keyboard-nav');
+  });
   document.addEventListener('keydown', event => {
     if (dialog.hidden) return;
+    if (event.key === 'Tab') {
+      document.body.classList.add('update-keyboard-nav');
+    }
     if (event.key === 'Escape') {
       event.preventDefault();
       dismiss();
