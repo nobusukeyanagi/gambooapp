@@ -4,7 +4,7 @@
 
 ## 1. 対象画面とファイル構成
 
-対象はアプリ7画面とQRコード一覧の計8画面です。
+対象はアプリ7画面、SCR-600の更新ダイアログ画面案、QRコード一覧の計9画面です。
 
 | HTML | 画面 | ページ固有CSS |
 | --- | --- | --- |
@@ -16,13 +16,14 @@
 | `SCR-310_racecardautorace.html` | オートレース出走表 | `assets/SCR-310_racecardautorace.css` |
 | `SCR-400_campaign.html` | キャンペーン | `assets/SCR-400_campaign.css` |
 | `SCR-500_mypage.html` | マイページ | `assets/SCR-500_mypage.css` |
+| `SCR-600_update.html` | バージョン更新（画面案） | `assets/SCR-600_update.css` |
 
 ### CSSの責務
 
 | 共通CSS | 対象 | 内容 |
 | --- | --- | --- |
-| `assets/design.css` | 全8画面 | 色、文字、余白、高さ、罫線、角丸、影などのCSS変数 |
-| `assets/ui.css` | 全8画面 | 基本レイアウト、ヘッダー、ボタン、ナビゲーション、残高表示、タップ反応など |
+| `assets/design.css` | 全9画面 | 色、文字、余白、高さ、罫線、角丸、影などのCSS変数 |
+| `assets/ui.css` | 全9画面 | 基本レイアウト、ヘッダー、ボタン、ナビゲーション、残高表示、タップ反応など |
 | `assets/venue.css` | SCR-200・300 | 開催場一覧、開催場の並び順、レースボタンなど |
 | `assets/racecard.css` | SCR-210・310 | レース選択、出走表の箱表、分析、共通操作部品など |
 
@@ -41,6 +42,7 @@
 | `assets/home.js` | SCR-100 | 車券購入画面の表示処理 |
 | `assets/campaign.js` | SCR-400 | キャンペーンの表示・切替 |
 | `assets/qr-index.js`／`assets/qrcode-generator.js` | index | QRコード一覧・QR生成 |
+| `assets/SCR-600_update.js` | SCR-600 | 更新通知の推奨／必須パターン切替、画面案操作 |
 | `assets/keirin-*.js`、`assets/race-link-context.js` | SCR-210 | 競輪出走表、レース選択、分析、参照データ |
 | `assets/auto-*.js` | SCR-310 | オートレース出走表、分析、参照データ |
 
@@ -148,6 +150,8 @@
 **SCR-210／SCR-310（出走表）**：レース選択バー、横スクロールする箱表、分析の共通スタイルは `racecard.css` が担当します。競技固有の列・データ・表示処理はそれぞれのページ固有CSSとJavaScriptで管理します。
 
 **SCR-100／SCR-400／SCR-500**：共通シェルは `ui.css`、各画面固有の配置と状態はHTML名に一致するCSSで管理します。
+
+**SCR-600（画面案）**：推奨更新は「あとで」で閉じられ、必須更新は閉じられない単一デザインのダイアログです。切替UIとストア遷移案内はモック専用です。ネイティブ側のバージョン判定・ストアURL連携は含みません。
 
 **index**：QRコード一覧の表示は `index.css`、QR生成・一覧制御は対応するJavaScriptで管理します。
 
