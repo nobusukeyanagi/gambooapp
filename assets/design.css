@@ -32,6 +32,7 @@
   --h-bottom-nav: 60px;
   --nav-icon-size: 32px;
   --h-race-info-summary: 120px; /* SCR-210 / SCR-310: tight two-line 12px detail area */
+  --w-dialog: 360px; /* Shared modal dialog width, independent of button height */
 
   /* ① 競技色 */
   --c-keirin: #477A94;
