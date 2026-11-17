@@ -102,7 +102,11 @@
   color: var(--c-gray-1);
   border: var(--line-thin) solid var(--c-gray-3);
 }
-.update-button:focus-visible {
+/* Programmatic initial focus stays invisible; keyboard navigation reveals it. */
+.update-button:focus {
+  outline: none;
+}
+.update-preview-page.update-keyboard-nav .update-button:focus-visible {
   outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
 }
