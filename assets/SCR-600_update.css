@@ -107,16 +107,8 @@
   outline: var(--line-thick) solid var(--c-purple);
   outline-offset: var(--space-2);
 }
-.update-demo-message {
-  margin-top: var(--space-12);
-  color: var(--c-gray-2);
-  font-size: var(--fs-12);
-  line-height: 1.5;
-  text-align: left;
-}
 .update-dialog[hidden],
-.update-backdrop[hidden],
-.update-demo-message[hidden] {
+.update-backdrop[hidden] {
   display: none;
 }
 @media (max-width: 640px) {
