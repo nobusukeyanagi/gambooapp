@@ -19,6 +19,30 @@
   video.setAttribute("aria-label", title);
   label.textContent = title;
 
+  // Static visual reference only; actual playback controls depend on the
+  // production player and the supported device / WebView. No fake actions.
+  const icon = path => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">' + path + '</svg>';
+  const playback = digest
+    ? icon('<path d="M8 5l12 7-12 7z" fill="currentColor" stroke="none"/>')
+    : icon('<path d="M8 5v14M16 5v14" stroke-width="4"/>');
+  const volume = icon('<path d="M3 9h4l5-4v14l-5-4H3zM16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/>');
+  const fullscreen = icon('<path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5"/>');
+  const controls = document.createElement("div");
+  controls.className = "race-video-preview-controls";
+  controls.setAttribute("aria-hidden", "true");
+  controls.innerHTML = (digest
+    ? '<div class="race-video-preview-progress"><span></span></div>'
+    : '') +
+    '<div class="race-video-preview-row">' +
+      '<span class="race-video-preview-icon" data-preview-control="playback">' + playback + '</span>' +
+      '<span class="race-video-preview-icon" data-preview-control="volume">' + volume + '</span>' +
+      (digest
+        ? '<span class="race-video-preview-time">0:00 / 2:30</span>'
+        : '<span class="race-video-preview-live"><span></span>LIVE</span>') +
+      '<span class="race-video-preview-icon race-video-preview-fullscreen" data-preview-control="fullscreen">' + fullscreen + '</span>' +
+    '</div>';
+  label.after(controls);
+
   // Use a single native scroll flow when the video is open. Move the
   // existing header, not a copy, so all shared controls retain their state.
   // There is no scroll listener, offset compensation or animation.

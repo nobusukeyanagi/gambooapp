@@ -2075,6 +2075,66 @@
   font-weight: var(--fw-strong);
   pointer-events: none;
 }
+/* Static player controls: shared preview for both sports. No browser-native
+   control overlay is shown on a source-less video element. */
+.race-video-preview-controls {
+  position: absolute;
+  inset: auto 0 0;
+  padding: var(--space-4) var(--space-12) var(--space-8);
+  color: var(--c-gray-5);
+  font-size: var(--fs-12);
+  pointer-events: none;
+  background: linear-gradient(transparent, var(--c-gray-1));
+}
+.race-video-preview-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: var(--h-control);
+}
+.race-video-preview-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  font-size: var(--fs-20);
+}
+.race-video-preview-icon svg {
+  width: 1em;
+  height: 1em;
+}
+.race-video-preview-fullscreen {
+  margin-inline-start: auto;
+}
+.race-video-preview-live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-weight: var(--fw-strong);
+}
+.race-video-preview-live > span {
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: var(--r-full);
+  background: var(--c-red);
+}
+.race-video-preview-progress {
+  display: flex;
+  align-items: center;
+  height: var(--space-3);
+  border-radius: var(--r-full);
+  background: var(--c-gray-3);
+}
+.race-video-preview-progress > span {
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: var(--r-full);
+  background: var(--c-gray-5);
+}
+.race-video-preview-time {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live[data-video-toggle][aria-pressed="true"] {
   background: var(--c-gold);
   border-color: var(--c-gold);

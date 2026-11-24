@@ -735,6 +735,21 @@ async function checkRaceVideo(page, width) {
     await button.click();
     await settleTap();
     const initial=await geometry();
+    const controls=await panel.evaluate(el=>{
+      const ui=el.querySelector('.race-video-preview-controls');
+      return {native:el.querySelector('video').controls,
+        dummy:ui?.getAttribute('aria-hidden')==='true',
+        items:[...ui.querySelectorAll('[data-preview-control]')].map(x=>x.dataset.previewControl),
+        live:!!ui.querySelector('.race-video-preview-live'),
+        progress:!!ui.querySelector('.race-video-preview-progress'),
+        time:!!ui.querySelector('.race-video-preview-time'),
+        interactive:ui.querySelectorAll('button,a,input,[tabindex]').length,
+        fits:ui.scrollWidth<=ui.clientWidth+1};
+    });
+    if(controls.native||!controls.dummy||controls.items.join(',')!=='playback,volume,fullscreen'||
+       controls.live!==(mode==='live')||controls.progress!==(mode==='digest')||
+       controls.time!==(mode==='digest')||controls.interactive||!controls.fits)
+      fail(label+' incorrect static player controls '+JSON.stringify(controls));
     if(!await panel.isVisible() || await button.getAttribute('aria-pressed')!=='true' ||
        await color()!==gold || initial.position!=='sticky' || !initial.headerInScroll ||
        !near(initial.scrollportTop,initial.shellTop) ||
