@@ -697,6 +697,9 @@ async function checkKeirinVideo(page, width) {
       return {top:el.getBoundingClientRect().top, bottom:el.getBoundingClientRect().bottom,
         width:video.getBoundingClientRect().width,height:video.getBoundingClientRect().height,
         header:scroll.previousElementSibling.getBoundingClientRect().bottom,
+        headerVisible:getComputedStyle(scroll.previousElementSibling).display!=="none",
+        scrollportTop:scroll.getBoundingClientRect().top,
+        footerHeight:scroll.parentElement.querySelector(".bottom-tab").getBoundingClientRect().height,
         infoBottom:el.previousElementSibling.getBoundingClientRect().bottom,
         menuTop:el.nextElementSibling.getBoundingClientRect().top,
         position:getComputedStyle(el).position,scrollTop:scroll.scrollTop};
@@ -719,18 +722,26 @@ async function checkKeirinVideo(page, width) {
     const distance=initial.top-initial.header;
     await setScroll(distance+80);
     const pinned=await geometry();
-    if(!near(pinned.top,pinned.header) || pinned.scrollTop<distance)
-      fail(label+' failed to pin below header '+JSON.stringify(pinned));
+    if(pinned.headerVisible || !near(pinned.top,pinned.scrollportTop) ||
+       !near(pinned.scrollportTop,initial.header-initial.scrollportTop+0) ||
+       pinned.scrollTop<distance || !near(pinned.footerHeight,initial.footerHeight))
+      fail(label+' failed to hide header and pin video at screen top '+JSON.stringify(pinned));
     await setScroll(distance+20);
-    if(!near((await geometry()).top,pinned.header)) fail(label+' released sticky area too early');
+    const up=await geometry();
+    if(!up.headerVisible || !near(up.top,up.header))
+      fail(label+' failed to restore header on upward scroll '+JSON.stringify(up));
+    await setScroll(distance+60);
+    const repinned=await geometry();
+    if(repinned.headerVisible || !near(repinned.top,repinned.scrollportTop))
+      fail(label+' failed to hide header again '+JSON.stringify(repinned));
     await setScroll(Math.max(0,distance/2));
     const released=await geometry();
-    if(!near(released.top,released.infoBottom) || released.top<=released.header)
+    if(!released.headerVisible || !near(released.top,released.infoBottom) || released.top<=released.header)
       fail(label+' failed to return to natural position '+JSON.stringify(released));
     await setScroll(0);
     await button.click();
     if(await panel.isVisible() || await button.getAttribute('aria-pressed')!=='false' ||
-       await color()!==closedColor) fail(label+' video close state not restored');
+       await color()!==closedColor || !(await geometry()).headerVisible) fail(label+' video close state not restored');
   };
   await verify(page,'live');
   const digest=await page.context().newPage();

@@ -1009,7 +1009,14 @@
   visibility: visible;
 }
 
-/* Inline LIVE / digest preview: the scrollport starts below the header. */
+/* Video viewing mode reclaims the common header height once the video pins. */
+.phone-inner.race-video-open > .race-detail-scroll {
+  overflow-anchor: none;
+}
+.phone-inner.race-video-header-hidden > .shared-app-header {
+  display: none;
+}
+/* Inline LIVE / digest preview: sticky within the current scrollport. */
 .race-detail-scroll > .race-video-panel {
   position: sticky;
   top: 0;
