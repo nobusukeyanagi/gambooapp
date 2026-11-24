@@ -2135,6 +2135,38 @@
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
+.race-video-label[hidden] {
+  display: none;
+}
+.race-video-test .race-video-label {
+  text-align: center;
+  padding-inline: var(--space-12);
+  font-size: var(--fs-14);
+}
+.race-video-test .race-video-preview-controls {
+  background: linear-gradient(transparent, var(--c-gray-1));
+}
+.race-video-test button.race-video-preview-icon {
+  pointer-events: auto;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  width: var(--h-control);
+  height: var(--h-control);
+  cursor: pointer;
+}
+.race-video-test button.race-video-preview-icon:disabled {
+  opacity: .5;
+  cursor: default;
+}
+.race-video-player:fullscreen {
+  max-width: none;
+  width: 100%;
+  height: 100%;
+}
+.race-video-player:fullscreen video {
+  height: 100%;
+}
 .race-detail-scroll .race-info-bar .ri-act .ri-btn.live[data-video-toggle][aria-pressed="true"] {
   background: var(--c-gold);
   border-color: var(--c-gold);

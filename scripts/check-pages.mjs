@@ -819,6 +819,35 @@ async function checkRaceVideo(page, width) {
     await digest.goto(url.href,{waitUntil:'load'});
     await verify(digest,'digest');
   }finally{await digest.close();}
+  const testPage=await page.context().newPage();
+  try{
+    // Isolate the network-dependent integration in CI. Verify lifecycle
+    // and opt-in behavior with a deterministic stub, not the public server.
+    let requests=0;
+    await testPage.route('https://cdn.dashjs.org/v5.0.3/modern/umd/dash.all.min.js',async route=>{
+      requests++;
+      await route.fulfill({contentType:'application/javascript',body:
+        'window.dashjs={MediaPlayer:Object.assign(()=>({create:()=>({on(){},initialize(v,u,a){window.testInit={url:u,autoplay:a,muted:v.muted};},reset(){window.testReset=true;}})}),{events:{ERROR:"error"}})};'});
+    });
+    const url=new URL(page.url());
+    url.searchParams.set('video','test');
+    await testPage.goto(url.href,{waitUntil:'load'});
+    if(requests!==0)fail(width+' test stream library requested before opening');
+    const toggle=testPage.locator('[data-video-toggle]');
+    await toggle.click();
+    await testPage.waitForFunction(()=>window.testInit||document.querySelector('.race-video-label').textContent==='テスト映像を再生できません');
+    const result=await testPage.evaluate(()=>({
+      init:window.testInit,
+      buttons:document.querySelectorAll('.race-video-test .race-video-preview-icon button').length,
+      controls:document.querySelectorAll('.race-video-test button[data-preview-control]').length,
+      label:document.querySelector('.race-video-preview-live').textContent
+    }));
+    if(requests!==1||result.init?.url!=='https://livesim.dashif.org/livesim2/testrotate_2s/Manifest.mpd'||
+       !result.init?.autoplay||!result.init?.muted||result.controls!==3||!result.label.includes('LIVE TEST'))
+      fail(width+' invalid test playback setup '+JSON.stringify(result));
+    await toggle.click();
+    if(!await testPage.evaluate(()=>window.testReset===true))fail(width+' test player not reset on close');
+  }finally{await testPage.close();}
 }
 
 async function checkKeirinMania(page, width) {
