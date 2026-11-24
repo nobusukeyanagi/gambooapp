@@ -682,8 +682,8 @@ async function checkKeirinRaceInformation(page, width) {
     fail(width+'px SCR-210 condensed 5-line race information mismatch: '+JSON.stringify(result));
 }
 
-// Both video modes use one sticky panel; verify natural position and release.
-async function checkKeirinVideo(page, width) {
+// Both racecards use the shared player and a pixel-linked header offset.
+async function checkRaceVideo(page, width) {
   const verify = async (p, mode) => {
     const button = p.locator('[data-video-toggle]');
     const panel = p.locator('#race-video-panel');
@@ -694,54 +694,91 @@ async function checkKeirinVideo(page, width) {
     };
     const geometry = () => panel.evaluate(el => {
       const scroll=el.parentElement, video=el.querySelector('video');
-      return {top:el.getBoundingClientRect().top, bottom:el.getBoundingClientRect().bottom,
+      const header=scroll.previousElementSibling;
+      const shellTop=scroll.parentElement.getBoundingClientRect().top;
+      const headerRect=header.getBoundingClientRect();
+      return {top:el.getBoundingClientRect().top,bottom:el.getBoundingClientRect().bottom,
         width:video.getBoundingClientRect().width,height:video.getBoundingClientRect().height,
-        header:scroll.previousElementSibling.getBoundingClientRect().bottom,
-        headerVisible:getComputedStyle(scroll.previousElementSibling).display!=="none",
-        scrollportTop:scroll.getBoundingClientRect().top,
+        header:headerRect.bottom,headerHeight:headerRect.height,
+        visibleHeader:Math.max(0,headerRect.bottom-shellTop),
+        shellTop,scrollportTop:scroll.getBoundingClientRect().top,
+        headerInert:header.inert,
         footerHeight:scroll.parentElement.querySelector(".bottom-tab").getBoundingClientRect().height,
         infoBottom:el.previousElementSibling.getBoundingClientRect().bottom,
         menuTop:el.nextElementSibling.getBoundingClientRect().top,
         position:getComputedStyle(el).position,scrollTop:scroll.scrollTop};
     });
     const color = () => button.evaluate(el => getComputedStyle(el).backgroundColor);
-    const near = (a,b) => Math.abs(a-b)<2;
-    const label = width+'px '+mode;
+    const gold = await button.evaluate(el => {
+      const probe=document.createElement('span');
+      probe.style.backgroundColor='var(--c-gold)';
+      el.appendChild(probe);
+      const result=getComputedStyle(probe).backgroundColor;
+      probe.remove();
+      return result;
+    });
+    const settleTap=() => p.waitForFunction(() =>
+      !document.querySelector('[data-video-toggle]').classList.contains('tap-pressed'));
+    const near=(a,b)=>Math.abs(a-b)<2;
+    const label=p.url()+' '+width+'px '+mode;
     await setScroll(0);
     if(await panel.isVisible() || await button.getAttribute('aria-pressed')!=='false' ||
        (await button.innerText()).trim()!==(mode==='digest'?'映像':'LIVE'))
       fail(label+' incorrect initial video state');
-    const closedColor = await color();
+    const closedColor=await color();
     await button.click();
-    const initial = await geometry();
+    await settleTap();
+    const initial=await geometry();
     if(!await panel.isVisible() || await button.getAttribute('aria-pressed')!=='true' ||
-       await color()!=='rgb(114, 103, 49)' ||
-       initial.position!=='sticky' || !near(initial.top,initial.infoBottom) ||
-       !near(initial.bottom,initial.menuTop) || Math.abs(initial.width/initial.height-16/9)>0.02)
-      fail(label+' incorrect open video layout '+JSON.stringify(initial));
-    const distance=initial.top-initial.header;
-    await setScroll(distance+80);
+       await color()!==gold || initial.position!=='sticky' ||
+       !near(initial.top,initial.infoBottom) || !near(initial.bottom,initial.menuTop) ||
+       Math.abs(initial.width/initial.height-16/9)>0.02)
+      fail(label+' incorrect open video layout '+JSON.stringify(initial)+' color='+await color());
+    const distance=initial.top-initial.header, height=initial.headerHeight;
+    await setScroll(distance-10);
+    const before=await geometry();
+    if(!near(before.visibleHeader,height)||!near(before.top,before.infoBottom))
+      fail(label+' header moved before player reached sticky position');
+    await setScroll(distance);
+    const reached=await geometry();
+    if(!near(reached.visibleHeader,height)||!near(reached.top,reached.header))
+      fail(label+' header should remain fully visible at the sticky threshold');
+    for(const shift of [10,30,height]){
+      await setScroll(distance+shift);
+      const g=await geometry();
+      if(!near(g.visibleHeader,height-shift)||!near(g.top,g.scrollportTop)||
+         !near(g.headerHeight,height)||!near(g.footerHeight,initial.footerHeight)||
+         g.headerInert!==(shift===height))
+        fail(label+' incorrect progressive hide '+shift+'px '+JSON.stringify(g));
+    }
+    await setScroll(distance+height+80);
     const pinned=await geometry();
-    if(pinned.headerVisible || !near(pinned.top,pinned.scrollportTop) ||
-       !near(pinned.scrollportTop,initial.header-initial.scrollportTop+0) ||
-       pinned.scrollTop<distance || !near(pinned.footerHeight,initial.footerHeight))
-      fail(label+' failed to hide header and pin video at screen top '+JSON.stringify(pinned));
-    await setScroll(distance+20);
+    if(!near(pinned.visibleHeader,0)||!near(pinned.top,pinned.shellTop)||!pinned.headerInert)
+      fail(label+' failed to pin video at screen top '+JSON.stringify(pinned));
+    await setScroll(distance+height+60);
     const up=await geometry();
-    if(!up.headerVisible || !near(up.top,up.header))
-      fail(label+' failed to restore header on upward scroll '+JSON.stringify(up));
-    await setScroll(distance+60);
-    const repinned=await geometry();
-    if(repinned.headerVisible || !near(repinned.top,repinned.scrollportTop))
-      fail(label+' failed to hide header again '+JSON.stringify(repinned));
+    if(!near(up.visibleHeader,20)||!near(up.top,up.header)||up.headerInert)
+      fail(label+' failed progressive reveal '+JSON.stringify(up));
+    await setScroll(distance+height+40);
+    const upMore=await geometry();
+    if(!near(upMore.visibleHeader,40)||!near(upMore.top,upMore.header))
+      fail(label+' failed further progressive reveal '+JSON.stringify(upMore));
+    await setScroll(distance+height+70);
+    const reverse=await geometry();
+    if(!near(reverse.visibleHeader,10)||!near(reverse.top,reverse.header))
+      fail(label+' incorrect reversal '+JSON.stringify(reverse));
     await setScroll(Math.max(0,distance/2));
     const released=await geometry();
-    if(!released.headerVisible || !near(released.top,released.infoBottom) || released.top<=released.header)
+    if(!near(released.visibleHeader,height)||!near(released.top,released.infoBottom)||
+       released.top<=released.header)
       fail(label+' failed to return to natural position '+JSON.stringify(released));
     await setScroll(0);
     await button.click();
+    await settleTap();
+    const closed=await geometry();
     if(await panel.isVisible() || await button.getAttribute('aria-pressed')!=='false' ||
-       await color()!==closedColor || !(await geometry()).headerVisible) fail(label+' video close state not restored');
+       await color()!==closedColor || !near(closed.visibleHeader,height)||closed.headerInert)
+      fail(label+' video close state not restored');
   };
   await verify(page,'live');
   const digest=await page.context().newPage();
@@ -1680,7 +1717,8 @@ try {
     if (file === 'SCR-210_racecardkeirin.html'||file === 'SCR-310_racecardautorace.html')
       await checkSharedRaceSelector(a.page,w,file === 'SCR-310_racecardautorace.html');
     if (file === 'SCR-210_racecardkeirin.html') await checkKeirinRaceInformation(a.page,w);
-    if (file === 'SCR-210_racecardkeirin.html') { await checkKeirinVideo(a.page,w); await checkKeirinMania(a.page,w); }
+    if (file === 'SCR-210_racecardkeirin.html'||file === 'SCR-310_racecardautorace.html') await checkRaceVideo(a.page,w);
+    if (file === 'SCR-210_racecardkeirin.html') await checkKeirinMania(a.page,w);
     if (file === "SCR-310_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
     if (file !== "index.html") await checkNavPredictionLinks(a.page,w,file);
    }finally {await a.context.close();if(b)await b.context.close();}
