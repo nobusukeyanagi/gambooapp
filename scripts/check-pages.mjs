@@ -682,6 +682,66 @@ async function checkKeirinRaceInformation(page, width) {
     fail(width+'px SCR-210 condensed 5-line race information mismatch: '+JSON.stringify(result));
 }
 
+// Both video modes use one sticky panel; verify natural position and release.
+async function checkKeirinVideo(page, width) {
+  const verify = async (p, mode) => {
+    const button = p.locator('[data-video-toggle]');
+    const panel = p.locator('#race-video-panel');
+    const scroller = p.locator('.race-detail-scroll');
+    const setScroll = async y => {
+      await scroller.evaluate((el,value) => { el.scrollTop = value; }, y);
+      await p.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
+    };
+    const geometry = () => panel.evaluate(el => {
+      const scroll=el.parentElement, video=el.querySelector('video');
+      return {top:el.getBoundingClientRect().top, bottom:el.getBoundingClientRect().bottom,
+        width:video.getBoundingClientRect().width,height:video.getBoundingClientRect().height,
+        header:scroll.previousElementSibling.getBoundingClientRect().bottom,
+        infoBottom:el.previousElementSibling.getBoundingClientRect().bottom,
+        menuTop:el.nextElementSibling.getBoundingClientRect().top,
+        position:getComputedStyle(el).position,scrollTop:scroll.scrollTop};
+    });
+    const color = () => button.evaluate(el => getComputedStyle(el).backgroundColor);
+    const near = (a,b) => Math.abs(a-b)<2;
+    const label = width+'px '+mode;
+    await setScroll(0);
+    if(await panel.isVisible() || await button.getAttribute('aria-pressed')!=='false' ||
+       (await button.innerText()).trim()!==(mode==='digest'?'映像':'LIVE'))
+      fail(label+' incorrect initial video state');
+    const closedColor = await color();
+    await button.click();
+    const initial = await geometry();
+    if(!await panel.isVisible() || await button.getAttribute('aria-pressed')!=='true' ||
+       await color()!=='rgb(114, 103, 49)' ||
+       initial.position!=='sticky' || !near(initial.top,initial.infoBottom) ||
+       !near(initial.bottom,initial.menuTop) || Math.abs(initial.width/initial.height-16/9)>0.02)
+      fail(label+' incorrect open video layout '+JSON.stringify(initial));
+    const distance=initial.top-initial.header;
+    await setScroll(distance+80);
+    const pinned=await geometry();
+    if(!near(pinned.top,pinned.header) || pinned.scrollTop<distance)
+      fail(label+' failed to pin below header '+JSON.stringify(pinned));
+    await setScroll(distance+20);
+    if(!near((await geometry()).top,pinned.header)) fail(label+' released sticky area too early');
+    await setScroll(Math.max(0,distance/2));
+    const released=await geometry();
+    if(!near(released.top,released.infoBottom) || released.top<=released.header)
+      fail(label+' failed to return to natural position '+JSON.stringify(released));
+    await setScroll(0);
+    await button.click();
+    if(await panel.isVisible() || await button.getAttribute('aria-pressed')!=='false' ||
+       await color()!==closedColor) fail(label+' video close state not restored');
+  };
+  await verify(page,'live');
+  const digest=await page.context().newPage();
+  try{
+    const url=new URL(page.url());
+    url.searchParams.set('video','digest');
+    await digest.goto(url.href,{waitUntil:'load'});
+    await verify(digest,'digest');
+  }finally{await digest.close();}
+}
+
 async function checkKeirinMania(page, width) {
   const wrap = page.locator(".race-table-wrap");
   const table = wrap.locator("table.mania-table");
@@ -1609,7 +1669,7 @@ try {
     if (file === 'SCR-210_racecardkeirin.html'||file === 'SCR-310_racecardautorace.html')
       await checkSharedRaceSelector(a.page,w,file === 'SCR-310_racecardautorace.html');
     if (file === 'SCR-210_racecardkeirin.html') await checkKeirinRaceInformation(a.page,w);
-    if (file === 'SCR-210_racecardkeirin.html') await checkKeirinMania(a.page,w);
+    if (file === 'SCR-210_racecardkeirin.html') { await checkKeirinVideo(a.page,w); await checkKeirinMania(a.page,w); }
     if (file === "SCR-310_racecardautorace.html") await checkAutoraceLabMerged(a.page,w);
     if (file !== "index.html") await checkNavPredictionLinks(a.page,w,file);
    }finally {await a.context.close();if(b)await b.context.close();}
