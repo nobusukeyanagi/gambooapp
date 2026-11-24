@@ -682,7 +682,7 @@ async function checkKeirinRaceInformation(page, width) {
     fail(width+'px SCR-210 condensed 5-line race information mismatch: '+JSON.stringify(result));
 }
 
-// Both racecards prioritize header movement without double-scrolling content.
+// Both racecards scroll the header first, then pin only the video.
 async function checkRaceVideo(page, width) {
   const verify = async (p, mode) => {
     const button = p.locator('[data-video-toggle]');
@@ -694,7 +694,8 @@ async function checkRaceVideo(page, width) {
     };
     const geometry = () => panel.evaluate(el => {
       const scroll=el.parentElement, video=el.querySelector('video');
-      const header=scroll.previousElementSibling;
+      const header=scroll.parentElement.querySelector('.shared-app-header');
+      const selector=scroll.querySelector('.race-selector');
       const shellTop=scroll.parentElement.getBoundingClientRect().top;
       const headerRect=header.getBoundingClientRect();
       return {top:el.getBoundingClientRect().top,bottom:el.getBoundingClientRect().bottom,
@@ -702,7 +703,8 @@ async function checkRaceVideo(page, width) {
         header:headerRect.bottom,headerHeight:headerRect.height,
         visibleHeader:Math.max(0,headerRect.bottom-shellTop),
         shellTop,scrollportTop:scroll.getBoundingClientRect().top,
-        headerInert:header.inert,
+        headerInScroll:header.parentElement===scroll,
+        selectorTop:selector.getBoundingClientRect().top,
         footerHeight:scroll.parentElement.querySelector(".bottom-tab").getBoundingClientRect().height,
         infoBottom:el.previousElementSibling.getBoundingClientRect().bottom,
         menuTop:el.nextElementSibling.getBoundingClientRect().top,
@@ -724,7 +726,9 @@ async function checkRaceVideo(page, width) {
     const near=(a,b)=>Math.abs(a-b)<2;
     const label=p.url()+' '+width+'px '+mode;
     await setScroll(0);
+    const initiallyClosed=await geometry();
     if(await panel.isVisible() || await button.getAttribute('aria-pressed')!=='false' ||
+       initiallyClosed.headerInScroll ||
        (await button.innerText()).trim()!==(mode==='digest'?'映像':'LIVE'))
       fail(label+' incorrect initial video state');
     const closedColor=await color();
@@ -732,61 +736,65 @@ async function checkRaceVideo(page, width) {
     await settleTap();
     const initial=await geometry();
     if(!await panel.isVisible() || await button.getAttribute('aria-pressed')!=='true' ||
-       await color()!==gold || initial.position!=='sticky' ||
+       await color()!==gold || initial.position!=='sticky' || !initial.headerInScroll ||
+       !near(initial.scrollportTop,initial.shellTop) ||
        !near(initial.top,initial.infoBottom) || !near(initial.bottom,initial.menuTop) ||
+       !near(initial.visibleHeader,initial.headerHeight) ||
+       !near(initial.selectorTop,initiallyClosed.selectorTop) ||
        Math.abs(initial.width/initial.height-16/9)>0.02)
       fail(label+' incorrect open video layout '+JSON.stringify(initial)+' color='+await color());
-    const distance=initial.top-initial.header, height=initial.headerHeight;
-    await setScroll(distance-10);
-    const before=await geometry();
-    if(!near(before.visibleHeader,height)||!near(before.top,before.infoBottom))
-      fail(label+' header moved before player reached sticky position');
+    const distance=initial.top-initial.shellTop, height=initial.headerHeight;
+    // Every pixel of native scroll moves all pre-video content together.
+    for(const shift of [10,30,height,height+20,distance-10]){
+      await setScroll(shift);
+      const g=await geometry();
+      if(!near(g.visibleHeader,Math.max(0,height-shift))||
+         !near(g.selectorTop,initial.selectorTop-shift)||
+         !near(g.top,initial.top-shift)||!near(g.top,g.infoBottom)||
+         !near(g.menuTop,initial.menuTop-shift)||
+         !near(g.menuRelative,initial.menuRelative)||
+         !near(g.range,initial.range)||!near(g.footerHeight,initial.footerHeight))
+        fail(label+' incorrect native scroll '+shift+'px '+JSON.stringify(g));
+    }
     await setScroll(distance);
     const reached=await geometry();
-    if(!near(reached.visibleHeader,height)||!near(reached.top,reached.header))
-      fail(label+' header should remain fully visible at the sticky threshold');
-    for(const shift of [10,30,height]){
-      await setScroll(distance+shift);
-      const g=await geometry();
-      if(!near(g.visibleHeader,height-shift)||!near(g.top,g.scrollportTop)||
-         !near(g.menuRelative,reached.menuRelative)||!near(g.range,reached.range)||
-         !near(g.menuTop,reached.menuTop-shift)||
-         !near(g.headerHeight,height)||!near(g.footerHeight,initial.footerHeight)||
-         g.headerInert!==(shift===height))
-        fail(label+' incorrect progressive hide '+shift+'px '+JSON.stringify(g));
-    }
-    await setScroll(distance+height+80);
+    if(!near(reached.visibleHeader,0)||!near(reached.top,reached.shellTop)||
+       !near(reached.menuRelative,initial.menuRelative))
+      fail(label+' incorrect sticky threshold '+JSON.stringify(reached));
+    await setScroll(distance+80);
     const pinned=await geometry();
-    if(!near(pinned.visibleHeader,0)||!near(pinned.top,pinned.shellTop)||!pinned.headerInert||
+    if(!near(pinned.top,pinned.shellTop)||!near(pinned.visibleHeader,0)||
        !near(pinned.menuRelative,reached.menuRelative-80))
-      fail(label+' failed to pin video at screen top '+JSON.stringify(pinned));
-    await setScroll(distance+height+60);
+      fail(label+' failed to pin video '+JSON.stringify(pinned));
+    // Reverse scroll restores the menu and race information before the header.
+    await setScroll(distance+20);
     const up=await geometry();
-    if(!near(up.visibleHeader,20)||!near(up.top,up.header)||up.headerInert||
-       !near(up.menuRelative,pinned.menuRelative)||!near(up.menuTop,pinned.menuTop+20))
-      fail(label+' failed progressive reveal '+JSON.stringify(up));
-    await setScroll(distance+height+40);
-    const upMore=await geometry();
-    if(!near(upMore.visibleHeader,40)||!near(upMore.top,upMore.header)||
-       !near(upMore.menuRelative,pinned.menuRelative))
-      fail(label+' failed further progressive reveal '+JSON.stringify(upMore));
-    await setScroll(distance+height+70);
-    const reverse=await geometry();
-    if(!near(reverse.visibleHeader,10)||!near(reverse.top,reverse.header)||
-       !near(reverse.menuRelative,pinned.menuRelative))
-      fail(label+' incorrect reversal '+JSON.stringify(reverse));
-    await setScroll(Math.max(0,distance/2));
+    if(!near(up.top,up.shellTop)||!near(up.visibleHeader,0)||
+       !near(up.menuRelative,reached.menuRelative-20))
+      fail(label+' incorrect reverse scroll while pinned '+JSON.stringify(up));
+    await setScroll(distance-20);
     const released=await geometry();
-    if(!near(released.visibleHeader,height)||!near(released.top,released.infoBottom)||
-       released.top<=released.header)
-      fail(label+' failed to return to natural position '+JSON.stringify(released));
+    if(!near(released.top,released.infoBottom)||!near(released.top,released.shellTop+20)||
+       !near(released.visibleHeader,0))
+      fail(label+' failed to release sticky video '+JSON.stringify(released));
+    await setScroll(height/2);
+    const returning=await geometry();
+    if(!near(returning.visibleHeader,height/2)||
+       !near(returning.top,initial.top-height/2))
+      fail(label+' header should return naturally last '+JSON.stringify(returning));
     await setScroll(0);
     await button.click();
     await settleTap();
     const closed=await geometry();
     if(await panel.isVisible() || await button.getAttribute('aria-pressed')!=='false' ||
-       await color()!==closedColor || !near(closed.visibleHeader,height)||closed.headerInert)
+       await color()!==closedColor || !near(closed.visibleHeader,height)||closed.headerInScroll)
       fail(label+' video close state not restored');
+    await setScroll(height+20);
+    const fixed=await geometry();
+    if(!near(fixed.visibleHeader,height)||!near(fixed.header,closed.header)||
+       !near(fixed.selectorTop,closed.selectorTop-height-20))
+      fail(label+' closed mode header must remain fixed '+JSON.stringify(fixed));
+    await setScroll(0);
   };
   await verify(page,'live');
   const digest=await page.context().newPage();
