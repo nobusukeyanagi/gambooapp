@@ -2042,6 +2042,14 @@
 .phone-inner.race-video-open > .shared-app-header {
   margin-block-start: calc(0px - var(--race-video-header-offset, 0px));
 }
+/* Consume header movement within the native scroll distance. The invisible
+   spacer is always above the visible content when its height is nonzero. */
+.phone-inner.race-video-open > .race-detail-scroll::before {
+  content: "";
+  display: block;
+  height: var(--race-video-header-offset, 0px);
+  pointer-events: none;
+}
 /* The player sticks to the current top of the scrolling viewport. */
 .race-detail-scroll > .race-video-panel {
   position: sticky;

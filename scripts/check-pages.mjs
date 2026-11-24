@@ -682,7 +682,7 @@ async function checkKeirinRaceInformation(page, width) {
     fail(width+'px SCR-210 condensed 5-line race information mismatch: '+JSON.stringify(result));
 }
 
-// Both racecards use the shared player and a pixel-linked header offset.
+// Both racecards prioritize header movement without double-scrolling content.
 async function checkRaceVideo(page, width) {
   const verify = async (p, mode) => {
     const button = p.locator('[data-video-toggle]');
@@ -706,6 +706,8 @@ async function checkRaceVideo(page, width) {
         footerHeight:scroll.parentElement.querySelector(".bottom-tab").getBoundingClientRect().height,
         infoBottom:el.previousElementSibling.getBoundingClientRect().bottom,
         menuTop:el.nextElementSibling.getBoundingClientRect().top,
+        menuRelative:el.nextElementSibling.getBoundingClientRect().top-el.getBoundingClientRect().bottom,
+        range:scroll.scrollHeight-scroll.clientHeight,
         position:getComputedStyle(el).position,scrollTop:scroll.scrollTop};
     });
     const color = () => button.evaluate(el => getComputedStyle(el).backgroundColor);
@@ -747,25 +749,31 @@ async function checkRaceVideo(page, width) {
       await setScroll(distance+shift);
       const g=await geometry();
       if(!near(g.visibleHeader,height-shift)||!near(g.top,g.scrollportTop)||
+         !near(g.menuRelative,reached.menuRelative)||!near(g.range,reached.range)||
+         !near(g.menuTop,reached.menuTop-shift)||
          !near(g.headerHeight,height)||!near(g.footerHeight,initial.footerHeight)||
          g.headerInert!==(shift===height))
         fail(label+' incorrect progressive hide '+shift+'px '+JSON.stringify(g));
     }
     await setScroll(distance+height+80);
     const pinned=await geometry();
-    if(!near(pinned.visibleHeader,0)||!near(pinned.top,pinned.shellTop)||!pinned.headerInert)
+    if(!near(pinned.visibleHeader,0)||!near(pinned.top,pinned.shellTop)||!pinned.headerInert||
+       !near(pinned.menuRelative,reached.menuRelative-80))
       fail(label+' failed to pin video at screen top '+JSON.stringify(pinned));
     await setScroll(distance+height+60);
     const up=await geometry();
-    if(!near(up.visibleHeader,20)||!near(up.top,up.header)||up.headerInert)
+    if(!near(up.visibleHeader,20)||!near(up.top,up.header)||up.headerInert||
+       !near(up.menuRelative,pinned.menuRelative)||!near(up.menuTop,pinned.menuTop+20))
       fail(label+' failed progressive reveal '+JSON.stringify(up));
     await setScroll(distance+height+40);
     const upMore=await geometry();
-    if(!near(upMore.visibleHeader,40)||!near(upMore.top,upMore.header))
+    if(!near(upMore.visibleHeader,40)||!near(upMore.top,upMore.header)||
+       !near(upMore.menuRelative,pinned.menuRelative))
       fail(label+' failed further progressive reveal '+JSON.stringify(upMore));
     await setScroll(distance+height+70);
     const reverse=await geometry();
-    if(!near(reverse.visibleHeader,10)||!near(reverse.top,reverse.header))
+    if(!near(reverse.visibleHeader,10)||!near(reverse.top,reverse.header)||
+       !near(reverse.menuRelative,pinned.menuRelative))
       fail(label+' incorrect reversal '+JSON.stringify(reverse));
     await setScroll(Math.max(0,distance/2));
     const released=await geometry();

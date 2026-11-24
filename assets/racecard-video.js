@@ -29,12 +29,12 @@
     const next = clamp(value, height);
     if (next !== headerOffset) {
       headerOffset = next;
-      if (next) header.style.setProperty("--race-video-header-offset", next + "px");
-      else header.style.removeProperty("--race-video-header-offset");
+      if (next) shell.style.setProperty("--race-video-header-offset", next + "px");
+      else shell.style.removeProperty("--race-video-header-offset");
     }
     header.inert = height > 0 && next >= height;
-    // Layout can clamp the scroll position at the very bottom. Do not
-    // interpret the resulting scroll event as a reversal of the gesture.
+    // The equal-height scroll spacer and header offset preserve the native
+    // scroll range. Record the actual position after any layout adjustment.
     previousScroll = scroller.scrollTop;
   }
   scroller.addEventListener("scroll", () => {
@@ -43,18 +43,19 @@
     previousScroll = current;
     if (panel.hidden || !delta) return;
 
-    // Natural panel position, relative to the start of the scroll content.
-    // Use the preceding race-info box because the player itself is sticky.
+    // The spacer consumes exactly the scroll distance allocated to the header.
+    // Subtract the current spacer height to recover the natural sticky threshold.
     const threshold = current + info.getBoundingClientRect().bottom -
-      scroller.getBoundingClientRect().top;
+      scroller.getBoundingClientRect().top - headerOffset;
     const beyond = Math.max(0, current - threshold);
     if (header.contains(document.activeElement)) {
       setHeaderOffset(0);
       return;
     }
     const movement = delta > 0 ? Math.min(delta, beyond) : delta;
-    // After reaching the sticky position, each additional scroll pixel
-    // hides one pixel of header; an upward scroll restores it in reverse.
+    // Allocate the available delta to the header first. The spacer offsets
+    // the corresponding native scroll so the content does not scroll relative
+    // to the player until the header reaches its limit. No scrollTop writes.
     setHeaderOffset(Math.min(headerOffset + movement, beyond));
   }, { passive: true });
 
@@ -62,7 +63,7 @@
   window.addEventListener("resize", () => {
     if (panel.hidden) return;
     const beyond = Math.max(0, scroller.getBoundingClientRect().top -
-      info.getBoundingClientRect().bottom);
+      info.getBoundingClientRect().bottom + headerOffset);
     setHeaderOffset(Math.min(headerOffset, beyond));
   }, { passive: true });
 
